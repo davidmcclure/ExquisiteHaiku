@@ -17,12 +17,18 @@ exports.loadUser = function (req, res, next) {
                 req.user = user;
                 next();
             } else {
-                res.redirect('/login');
+                res.redirect('/admin/login');
             }
         });
     }
 
     // If no session id, redirect to login.
-    else res.redirect('/login');
+    else res.redirect('/admin/login');
 
+}
+
+// If there is a user session, redirect to the admin.
+exports.anonUser = function (req, res, next) {
+    if (req.session.user_id) res.redirect('/admin');
+    else next();
 }

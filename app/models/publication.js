@@ -9,7 +9,7 @@ var Publication = new Schema({
 });
 
 // Id getter.
-College.virtual('id').get(function() {
+Publication.virtual('id').get(function() {
     return this._id.toHexString();
 });
 

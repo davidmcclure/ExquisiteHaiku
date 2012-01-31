@@ -17,7 +17,7 @@ exports.authForms = {
         return forms.create({
 
             username: fields.string({
-                label: 'username',
+                label: 'Username: *',
                 required: 'Enter a username.',
                 validators: [
                   customValidators.usernameExists('Does not exist.')
@@ -25,7 +25,7 @@ exports.authForms = {
             }),
 
             password: fields.password({
-                label: 'password',
+                label: 'Password: *',
                 required: 'Enter a password.',
                 validators: [
                   customValidators.passwordCorrectness('Incorrect.')

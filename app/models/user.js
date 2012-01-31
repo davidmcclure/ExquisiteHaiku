@@ -7,10 +7,10 @@ var crypto = require('crypto');
 
 // Schema definition.
 var User = new Schema({
-    username :  { type: String, unique: true },
-    hash :      String,
-    salt :      String,
-    email :     { type: String, unique: true }
+    username :          { type: String, unique: true },
+    hash :              String,
+    salt :              String,
+    email :             { type: String, unique: true }
 });
 
 // Id getter.

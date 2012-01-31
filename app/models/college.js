@@ -3,7 +3,7 @@
  */
 
 // Module dependencies.
-var states = import('./_states');
+var states = require('./_states');
 
 // Load models.
 require('./publication.js');

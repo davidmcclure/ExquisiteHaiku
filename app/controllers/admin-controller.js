@@ -16,8 +16,8 @@ module.exports = function(app) {
      * GET /admin
      */
     app.get('/admin', auth.loadUser, function(req, res) {
-        res.render('admin/browse', {
-            title: 'poems',
+        res.render('admin/index', {
+            title: '',
             user: req.user,
             layout: '_layouts/admin'
         });

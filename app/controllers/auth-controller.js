@@ -15,18 +15,18 @@ module.exports = function(app) {
     /*
      * GET /login
      */
-    app.get('/login', auth.anonUser, function(req, res) {
+    app.get('/admin/login', auth.anonUser, function(req, res) {
         res.render('auth/login', {
-            title: 'login',
+            title: 'Login',
             form: forms.authForms.login(),
-            layout: '_layouts/index'
+            layout: '_layouts/admin'
         });
     });
 
     /*
      * POST /login
      */
-    app.post('/login', auth.anonUser, function(req, res) {
+    app.post('/admin/login', auth.anonUser, function(req, res) {
 
         // Pass control to form.
         forms.authForms.login().handle(req, {
@@ -52,9 +52,9 @@ module.exports = function(app) {
             // If field validations fail.
             other: function(form) {
                 res.render('auth/login', {
-                    title: 'login',
+                    title: 'Login',
                     form: form,
-                    layout: '_layouts/index'
+                    layout: '_layouts/admin'
                 });
             }
 
@@ -65,7 +65,7 @@ module.exports = function(app) {
     /*
      * GET /logout
      */
-    app.get('/logout', function(req, res) {
+    app.get('/admin/logout', function(req, res) {
         req.session.destroy(function() {});
         res.redirect('/');
     });

@@ -1,0 +1,9 @@
+development:
+  db:
+    uri: "mongodb://localhost/eh_development"
+staging:
+  db:
+    uri: "mongodb://localhost/eh_staging"
+production:
+  db:
+    uri: "mongodb://localhost/eh_production"

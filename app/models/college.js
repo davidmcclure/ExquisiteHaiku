@@ -3,7 +3,11 @@
  */
 
 // Module dependencies.
-var states = import('./states');
+var states = import('./_states');
+
+// Load models.
+require('./publication.js');
+var Publication = mongoose.model('Publication');
 
 // Schema definition.
 var College = new Schema({
@@ -24,7 +28,8 @@ var College = new Schema({
     satW25 :            Number,
     satW75 :            Number,
     act25 :             Number,
-    act75 :             Number
+    act75 :             Number,
+    publications :      [Publication]
 });
 
 // Id getter.

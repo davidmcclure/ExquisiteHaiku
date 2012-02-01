@@ -1,13 +1,36 @@
 form.form-stacked.login(method='post')
   fieldset
+
     legend.logo CollegeSpyder
-    div.clearfix
-      label(for='username')= form.fields.username.label
-      div.input
-        input(type="text")= form.fields.username.data
-    div.clearfix
-      label(for='password')= form.fields.password.label
-      div.input
-        input(type="password")= form.fields.password.data
+
+    - var username =  form.fields.username
+    - var password =  form.fields.password
+
+    // Username.
+    if username.errorHTML() == ''
+      div.clearfix
+        label(for='username')= username.label
+        div.input
+          input(type="text", name="username", value=username.data)
+    else
+      div.clearfix.error
+        label(for='username')= username.label
+        div.input
+          input.error(type="text", name="username", value=username.data)
+          span.help-inline= username.error
+
+    // Password.
+    if password.errorHTML() == ''
+      div.clearfix
+        label(for='password')= password.label
+        div.input
+          input(type="password", name="password", value=password.data)
+    else
+      div.clearfix.error
+        label(for='password')= password.label
+        div.input
+          input.error(type="password", name="password", value=password.data)
+          span.help-inline= password.error
+
   div.actions
     button.btn.primary.large(type='submit') Submit

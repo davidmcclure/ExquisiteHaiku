@@ -19,7 +19,7 @@ module.exports = function(app) {
         res.render('auth/install', {
             title: 'Installation',
             form: forms.authForms.install(),
-            layout: '_layouts/admin'
+            layout: '_layouts/auth'
         });
     });
 
@@ -54,7 +54,7 @@ module.exports = function(app) {
                 res.render('auth/install', {
                     title: 'Install',
                     form: form,
-                    layout: '_layouts/admin'
+                    layout: '_layouts/auth'
                 });
             }
 

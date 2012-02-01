@@ -19,7 +19,7 @@ module.exports = function(app) {
         res.render('auth/login', {
             title: 'Login',
             form: forms.authForms.login(),
-            layout: '_layouts/admin'
+            layout: '_layouts/auth'
         });
     });
 
@@ -54,7 +54,7 @@ module.exports = function(app) {
                 res.render('auth/login', {
                     title: 'Login',
                     form: form,
-                    layout: '_layouts/admin'
+                    layout: '_layouts/auth'
                 });
             }
 
@@ -67,7 +67,7 @@ module.exports = function(app) {
      */
     app.get('/admin/logout', function(req, res) {
         req.session.destroy(function() {});
-        res.redirect('/');
+        res.redirect('/admin/login');
     });
 
 }

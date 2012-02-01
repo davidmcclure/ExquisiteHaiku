@@ -1,0 +1,20 @@
+div.topbar-wrapper
+  div.topbar
+    div.topbar-inner
+      div.container
+        h3
+          a.logo(href='/admin') CollegeSpyder
+        ul.nav
+          li
+            a(href="/admin/colleges") Colleges
+          li
+            a(href="/admin/publications") Publications
+          li
+            a(href="/admin/articles") Articles
+          li
+            a(href="/admin/logs") Logs
+          li
+            a(href="/admin/users") Users
+        ul.nav.secondary-nav
+          li
+            a(href="/admin/logout") Logout ( #{user.username} )

@@ -32,3 +32,11 @@ exports.anonUser = function (req, res, next) {
     if (req.session.user_id) res.redirect('/admin');
     else next();
 }
+
+// If a user exists, redirect to login.
+exports.noUsers = function (req, res, next) {
+    User.count({}, function(err, count) {
+        if (count > 0) res.redirect('/admin/login');
+        else next();
+    });
+}

@@ -11,7 +11,8 @@ var Publication = mongoose.model('Publication');
 
 // Schema definition.
 var College = new Schema({
-    name :              { type: String, unique: true },
+    name :              { type: String, required: true, unique: true },
+    slug :              { type: String, required: true, unique: true },
     url :               String,
     city :              String,
     state :             { type: String, enum: states },

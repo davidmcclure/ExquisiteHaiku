@@ -1,9 +1,9 @@
 development:
   db:
-    uri: "mongodb://localhost/eh_development"
+    uri: "mongodb://localhost/spyder_development"
 staging:
   db:
-    uri: "mongodb://localhost/eh_staging"
+    uri: "mongodb://localhost/spyder_staging"
 production:
   db:
-    uri: "mongodb://localhost/eh_production"
+    uri: "mongodb://localhost/spyder_production"

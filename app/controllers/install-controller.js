@@ -16,7 +16,6 @@ module.exports = function(app) {
      * GET /install
      */
     app.get('/admin/install', auth.noUsers, function(req, res) {
-        console.log(forms.authForms.install());
         res.render('auth/install', {
             title: 'Installation',
             form: forms.authForms.install(),
@@ -35,11 +34,23 @@ module.exports = function(app) {
             // If field validations pass.
             success: function(form) {
 
+                // Create the user.
+                var user = new User({
+                    username: form.data.username,
+                    email: form.data.email,
+                    password: form.data.password
+                });
+
+                // Save and redirect.
+                user.save(function() {
+                    req.session.user_id = user.id;
+                    res.redirect('/admin');
+                });
+
             },
 
             // If field validations fail.
             other: function(form) {
-                console.log(form);
                 res.render('auth/install', {
                     title: 'Install',
                     form: form,

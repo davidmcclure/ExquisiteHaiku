@@ -19,7 +19,7 @@ module.exports = function(app) {
         res.render('admin/users/index', {
             title: 'Users',
             user: req.user,
-            layout: '_layouts/admin'
+            layout: '_layouts/users'
         });
     });
 

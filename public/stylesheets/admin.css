@@ -1,7 +1,7 @@
-div.actions{background:none;border:none;padding-top:0;margin-bottom:0}
 input,textarea,select{padding:9px;color:#3a3a3a;font-size:15px}
 form.login,form.install{margin:10em auto 0 20em;}
-form.login legend,form.install legend{font-family:Damion;font-size:3em;padding-bottom:.2em}
+form.login legend,form.install legend{font-family:Damion;font-size:3em;padding-bottom:.5em;border:none}
 form.login div.clearfix.error,form.install div.clearfix.error{padding-top:0;padding-bottom:0}
 form.login h4,form.install h4{padding-bottom:.9em}
-a.logo{font-family:Damion}
+form div.form-actions{background:none;border:none;padding:0}
+a.brand{font-family:Damion}

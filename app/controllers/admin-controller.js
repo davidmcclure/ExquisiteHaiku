@@ -6,9 +6,6 @@
 var forms = require('../../helpers/forms')
 var auth = require('../../helpers/auth')
 
-// Models.
-// var User = mongoose.model('User');
-
 // Controller actions.
 module.exports = function(app) {
 

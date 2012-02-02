@@ -8,29 +8,29 @@ form.form-stacked.login(method='post')
 
     // Username.
     if username.errorHTML() == ''
-      div.clearfix
-        label(for='username')= username.label
-        div.input
+      div.control-group
+        label.control-label(for='username')= username.label
+        div.controls
           input(type="text", name="username", value=username.data)
     else
-      div.clearfix.error
-        label(for='username')= username.label
-        div.input
-          input.error(type="text", name="username", value=username.data)
+      div.control-group.error
+        label.control-label(for='username')= username.label
+        div.controls
+          input(type="text", name="username", value=username.data)
           span.help-inline= username.error
 
     // Password.
     if password.errorHTML() == ''
-      div.clearfix
-        label(for='password')= password.label
-        div.input
+      div.control-group
+        label.control-label(for='password')= password.label
+        div.controls
           input(type="password", name="password", value=password.data)
     else
-      div.clearfix.error
-        label(for='password')= password.label
-        div.input
-          input.error(type="password", name="password", value=password.data)
+      div.control-group.error
+        label.control-label(for='password')= password.label
+        div.controls
+          input(type="password", name="password", value=password.data)
           span.help-inline= password.error
 
   div.actions
-    button.btn.primary.large(type='submit') Submit
+    button.btn.btn-primary.btn-large(type='submit') Submit

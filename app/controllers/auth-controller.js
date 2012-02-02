@@ -13,7 +13,7 @@ var User = mongoose.model('User');
 module.exports = function(app) {
 
     /*
-     * GET /login
+     * GET /admin/login
      */
     app.get('/admin/login', auth.anonUser, function(req, res) {
         res.render('auth/login', {
@@ -24,7 +24,7 @@ module.exports = function(app) {
     });
 
     /*
-     * POST /login
+     * POST /admin/login
      */
     app.post('/admin/login', auth.anonUser, function(req, res) {
 
@@ -63,7 +63,7 @@ module.exports = function(app) {
     });
 
     /*
-     * GET /logout
+     * GET /admin/logout
      */
     app.get('/admin/logout', function(req, res) {
         req.session.destroy(function() {});

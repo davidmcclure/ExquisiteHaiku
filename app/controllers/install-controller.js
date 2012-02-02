@@ -13,7 +13,7 @@ var User = mongoose.model('User');
 module.exports = function(app) {
 
     /*
-     * GET /install
+     * GET /admin/install
      */
     app.get('/admin/install', auth.noUsers, function(req, res) {
         res.render('auth/install', {
@@ -24,7 +24,7 @@ module.exports = function(app) {
     });
 
     /*
-     * POST /install
+     * POST /admin/install
      */
     app.post('/admin/install', auth.anonUser, function(req, res) {
 
@@ -38,7 +38,8 @@ module.exports = function(app) {
                 var user = new User({
                     username: form.data.username,
                     email: form.data.email,
-                    password: form.data.password
+                    password: form.data.password,
+                    super: true
                 });
 
                 // Save and redirect.

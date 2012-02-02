@@ -11,8 +11,9 @@ div.navbar.navbar-fixed-top
           a(href="/admin/articles") Articles
         li
           a(href="/admin/logs") Logs
-        li
-          a(href="/admin/users") Users
+        if user.super
+          li
+            a(href="/admin/users") Users
       ul.nav.pull-right
         li
           a(href="/admin/logout") Logout ( #{user.username} )

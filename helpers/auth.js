@@ -27,6 +27,12 @@ exports.loadUser = function (req, res, next) {
 
 }
 
+// Only allow super users.
+exports.isSuper = function (req, res, next) {
+    if (req.user.super) next();
+    else res.redirect('/admin');
+}
+
 // If there is a user session, redirect to the admin.
 exports.anonUser = function (req, res, next) {
     if (req.session.user_id) res.redirect('/admin');

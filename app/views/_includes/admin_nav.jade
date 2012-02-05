@@ -4,20 +4,20 @@ div.navbar.navbar-fixed-top
       a.brand(href='/admin') CollegeSpyder
       ul.nav
 
-        li
+        li(class = (active == 'colleges') ? 'active' : '')
           a(href="/admin/colleges") Colleges
 
-        li
+        li(class = (active == 'publications') ? 'active' : '')
           a(href="/admin/publications") Publications
 
-        li
+        li(class = (active == 'articles') ? 'active' : '')
           a(href="/admin/articles") Articles
 
-        li
+        li(class = (active == 'crawls') ? 'active' : '')
           a(href="/admin/logs") Crawl Logs
 
         if user.super && user.active
-          li
+          li(class = (active == 'users') ? 'active' : '')
             a(href="/admin/users") Users
 
       ul.nav.pull-right

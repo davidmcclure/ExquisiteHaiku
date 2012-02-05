@@ -15,6 +15,7 @@ module.exports = function(app) {
         res.render('admin/index', {
             title: '',
             user: req.user,
+            active: '',
             layout: '_layouts/admin'
         });
     });

@@ -17,9 +17,9 @@ module.exports = function(app) {
      */
     app.get('/admin/login', auth.anonUser, function(req, res) {
         res.render('auth/login', {
-            title: 'Login',
-            form: forms.authForms.login(),
-            layout: '_layouts/auth'
+            title:      'Login',
+            form:       forms.authForms.login(),
+            layout:     '_layouts/auth'
         });
     });
 
@@ -52,9 +52,9 @@ module.exports = function(app) {
             // If field validations fail.
             other: function(form) {
                 res.render('auth/login', {
-                    title: 'Login',
-                    form: form,
-                    layout: '_layouts/auth'
+                    title:      'Login',
+                    form:       form,
+                    layout:     '_layouts/auth'
                 });
             }
 

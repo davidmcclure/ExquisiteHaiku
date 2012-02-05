@@ -17,9 +17,9 @@ module.exports = function(app) {
      */
     app.get('/admin/install', auth.noUsers, function(req, res) {
         res.render('auth/install', {
-            title: 'Installation',
-            form: forms.authForms.install(),
-            layout: '_layouts/auth'
+            title:      'Installation',
+            form:       forms.authForms.install(),
+            layout:     '_layouts/auth'
         });
     });
 
@@ -36,11 +36,11 @@ module.exports = function(app) {
 
                 // Create the user.
                 var user = new User({
-                    username: form.data.username,
-                    email: form.data.email,
-                    password: form.data.password,
-                    super: true,
-                    active: true
+                    username:   form.data.username,
+                    email:      form.data.email,
+                    password:   form.data.password,
+                    super:      true,
+                    active:     true
                 });
 
                 // Save and redirect.
@@ -54,9 +54,9 @@ module.exports = function(app) {
             // If field validations fail.
             other: function(form) {
                 res.render('auth/install', {
-                    title: 'Install',
-                    form: form,
-                    layout: '_layouts/auth'
+                    title:      'Install',
+                    form:       form,
+                    layout:     '_layouts/auth'
                 });
             }
 

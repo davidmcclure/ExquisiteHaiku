@@ -3,23 +3,17 @@ div.navbar.navbar-fixed-top
     div.container
       a.brand(href='/admin') CollegeSpyder
       ul.nav
-
-        li(class = (active == 'colleges') ? 'active' : '')
+        li
           a(href="/admin/colleges") Colleges
-
-        li(class = (active == 'publications') ? 'active' : '')
+        li
           a(href="/admin/publications") Publications
-
-        li(class = (active == 'articles') ? 'active' : '')
+        li
           a(href="/admin/articles") Articles
-
-        li(class = (active == 'crawls') ? 'active' : '')
+        li
           a(href="/admin/logs") Crawl Logs
-
-        if user.super && user.active
-          li(class = (active == 'users') ? 'active' : '')
+        if user.super
+          li
             a(href="/admin/users") Users
-
       ul.nav.pull-right
         li
-          a(href="/admin/logout") Logout ( #{user.username} )
+          a(href="/admin/logout") logout [ #{user.username} ]

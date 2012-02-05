@@ -6,7 +6,7 @@
 var User = mongoose.model('User');
 
 // Check for user session, pass user record.
-exports.loadUser = function (req, res, next) {
+exports.isUser = function (req, res, next) {
 
     // Check for user id in session.
     if (req.session.user_id) {

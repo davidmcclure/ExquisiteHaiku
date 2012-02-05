@@ -121,38 +121,4 @@ exports.userForms = {
 
     },
 
-    // Edit user.
-    edit: function() {
-
-        return forms.create({
-
-            username: fields.string({
-                label: 'Username: *',
-                required: 'Enter a username.',
-                validators: [
-                    validators.rangeLength(4, 20, '4-20 characters.'),
-                    customValidators.uniqueUsername('Username taken.')
-                ]
-            }),
-
-            email: fields.email({
-                label: 'Email: *',
-                required: 'Enter an email address.',
-                validators: [
-                    customValidators.uniqueEmail('Email taken.')
-                ]
-            }),
-
-            superUser: fields.boolean({
-                label: 'Super User:'
-            }),
-
-            active: fields.boolean({
-                label: 'Active:'
-            })
-
-        });
-
-    },
-
 };

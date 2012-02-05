@@ -1,5 +1,5 @@
 body{padding-top:50px}
-form.login,form.install{margin:10em auto 0 20em;}
+form.login,form.install{margin:6em auto 0 20em;}
 form.login legend,form.install legend{font-family:Damion;font-size:3em;padding-bottom:.5em;border:none}
 form.login div.clearfix.error,form.install div.clearfix.error{padding-top:0;padding-bottom:0}
 form.login h4,form.install h4{padding-bottom:.9em}

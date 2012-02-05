@@ -9,3 +9,5 @@ a.brand{font-family:Damion}
 div.subnav{margin-bottom:1em;}
 div.subnav a,div.subnav input{margin:0 1em 0 0}
 div.subnav input{position:relative}
+table.list a{margin:0 .5em 0 0;}
+table.list a.delete{color:#bd362f}

@@ -16,12 +16,18 @@ module.exports = function(app) {
      * GET /admin/users
      */
     app.get('/admin/users', auth.loadUser, auth.isSuper, function(req, res) {
-        res.render('admin/users/index', {
-            title: 'Users',
-            user: req.user,
-            active: 'users',
-            layout: '_layouts/users'
+
+        // Get users.
+        User.find(function(err, users) {
+            res.render('admin/users/index', {
+                title: 'Users',
+                users: users,
+                user: req.user,
+                active: 'users',
+                layout: '_layouts/users'
+            });
         });
+
     });
 
     /*

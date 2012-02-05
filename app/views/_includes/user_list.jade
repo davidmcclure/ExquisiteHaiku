@@ -1,0 +1,17 @@
+table.table.list.table-condensed
+  thead
+    tr
+      th username
+      th email
+      th superuser
+      th active
+  tbody
+    each user in users
+      tr
+        td
+          h2= user.username
+          a(href='/admin/users/edit/' + user.username) edit
+          a.delete(href='/admin/users/delete/' + user.username) delete
+        td= user.email
+        td= (user.super) ? 'yes' : 'no'
+        td= (user.active) ? 'yes' : 'no'

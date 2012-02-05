@@ -3,7 +3,6 @@
  */
 
 // Module dependencies.
-var forms = require('../../helpers/forms')
 var auth = require('../../helpers/auth')
 
 // Controller actions.

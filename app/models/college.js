@@ -14,7 +14,6 @@ var College = new Schema({
     name :              { type: String, required: true, unique: true },
     slug :              { type: String, required: true, unique: true },
     url :               String,
-    description :       String,
     city :              String,
     state :             { type: String, enum: states },
     public :            Boolean,

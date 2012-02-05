@@ -11,7 +11,8 @@ var User = new Schema({
     hash :              String,
     salt :              String,
     email :             { type: String, unique: true },
-    super :             Boolean
+    super :             Boolean,
+    active :            Boolean
 });
 
 // Id getter.

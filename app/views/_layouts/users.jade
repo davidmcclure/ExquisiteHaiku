@@ -2,9 +2,10 @@ extends admin
 
 block subnav
   div.row
-    div.span5
+    div.span12
       div.subnav
-        a.btn.btn-primary(href='/admin/users/new')
-          i.icon-plus-sign.icon-white
-          |  New User
-        input.span3(type='text', placeholder='Search')
+        ul.nav.nav-tabs
+          li
+            a(href='/admin/users') Browse
+          li
+            a(href='/admin/users/new') New User

@@ -13,7 +13,7 @@ exports.loadUser = function (req, res, next) {
 
         // Get the user record, push into request.
         User.findById(req.session.user_id, function(err, user) {
-            if (user) {
+            if (user && user.active) {
                 req.user = user;
                 next();
             } else {

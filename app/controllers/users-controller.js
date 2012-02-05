@@ -85,4 +85,67 @@ module.exports = function(app) {
 
     });
 
+    /*
+     * GET /admin/users/new
+     */
+    app.get('/admin/users/edit/:username', auth.loadUser, auth.isSuper, function(req, res) {
+
+        // Get user.
+        User.findOne({ username: req.params.username }, function(err, user) {
+
+            // Get form and bind data.
+            var form = forms.userForms.edit().bind({
+                username: user.username,
+                email: user.email,
+                superUser: user.super,
+                active: user.active
+            });
+
+            // Render.
+            res.render('admin/users/edit', {
+                title: 'Edit User',
+                user: req.user,
+                active: 'users',
+                form: form,
+                layout: '_layouts/users'
+            });
+        });
+
+    });
+
+    /*
+     * POST /admin/users/new
+     */
+    app.post('/admin/users/edit/:username', auth.loadUser, auth.isSuper, function(req, res) {
+
+        // Pass control to form.
+        forms.userForms.edit().handle(req, {
+
+            // If field validations pass.
+            success: function(form) {
+
+                // Get the user.
+
+                // Save and redirect.
+                user.save(function() {
+                    res.redirect('/admin/users');
+                });
+
+            },
+
+            // If field validations fail.
+            other: function(form) {
+                res.render('admin/users/edit', {
+                    title: 'Edit User',
+                    user: req.user,
+                    active: 'users',
+                    form: form,
+                    layout: '_layouts/users'
+                });
+            }
+
+        });
+
+    });
+
 }

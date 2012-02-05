@@ -3,15 +3,17 @@ table.table.list.table-condensed
     tr
       th username
       th email
-      th superuser
+      th super
       th active
+      th
   tbody
     each user in users
       tr
         td
-          h2= user.username
-          a(href='/admin/users/edit/' + user.username) edit
-          a.delete(href='/admin/users/delete/' + user.username) delete
+          div.list-title= user.username
         td= user.email
         td= (user.super) ? 'yes' : 'no'
         td= (user.active) ? 'yes' : 'no'
+        td
+          a(href='/admin/users/edit/' + user.username) edit
+          a.delete(href='/admin/users/delete/' + user.username) delete

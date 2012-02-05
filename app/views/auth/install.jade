@@ -8,57 +8,10 @@ form.form-stacked.install(method='post')
     - var confirm =   form.fields.confirm
     - var email =     form.fields.email
 
-    // Username.
-    if username.errorHTML() == ''
-      div.control-group
-        label.control-label(for='username')= username.label
-        div.controls
-          input(type="text", name="username", value=username.data)
-    else
-      div.control-group.error
-        label.control-label(for='username')= username.label
-        div.controls
-          input(type="text", name="username", value=username.data)
-          span.help-inline= username.error
-
-    // Password.
-    if password.errorHTML() == ''
-      div.control-group
-        label.control-label(for='password')= password.label
-        div.controls
-          input(type="password", name="password", value=password.data)
-    else
-      div.control-group.error
-        label.control-label(for='password')= password.label
-        div.controls
-          input(type="password", name="password", value=password.data)
-          span.help-inline= password.error
-
-    // Confirm.
-    if confirm.errorHTML() == ''
-      div.control-group
-        label.control-label(for='confirm')= confirm.label
-        div.controls
-          input(type="password", name="confirm", value=confirm.data)
-    else
-      div.control-group.error
-        label.control-label(for='confirm')= confirm.label
-        div.controls
-          input(type="password", name="confirm", value=confirm.data)
-          span.help-inline= confirm.error
-
-    // Email.
-    if email.errorHTML() == ''
-      div.control-group
-        label.control-label(for='email')= email.label
-        div.controls
-          input(type="text", name="email", value=email.data)
-    else
-      div.control-group.error
-        label.control-label(for='email')= email.label
-        div.controls
-          input(type="text", name="email", value=email.data)
-          span.help-inline= email.error
+    != partial('../_includes/text_field', { field: username, name: 'username' })
+    != partial('../_includes/password_field', { field: password, name: 'password' })
+    != partial('../_includes/password_field', { field: confirm, name: 'confirm' })
+    != partial('../_includes/text_field', { field: email, name: 'email' })
 
   div.form-actions
     button.btn.btn-primary.btn-large(type='submit') Submit

@@ -6,6 +6,7 @@
 var express = require('express')
   , mongoStore = require('connect-mongodb');
 
+// Boot hook.
 exports.boot = function(app) {
     bootApplication(app);
 }
@@ -50,5 +51,8 @@ function bootApplication(app) {
     app.configure('production', function() {
       app.use(express.errorHandler());
     });
+
+    // Register view helpers.
+    require('./helpers/views').boot(app);
 
 }

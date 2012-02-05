@@ -6,31 +6,8 @@ form.form-stacked.login(method='post')
     - var username =  form.fields.username
     - var password =  form.fields.password
 
-    // Username.
-    if username.errorHTML() == ''
-      div.control-group
-        label.control-label(for='username')= username.label
-        div.controls
-          input(type="text", name="username", value=username.data)
-    else
-      div.control-group.error
-        label.control-label(for='username')= username.label
-        div.controls
-          input(type="text", name="username", value=username.data)
-          span.help-inline= username.error
-
-    // Password.
-    if password.errorHTML() == ''
-      div.control-group
-        label.control-label(for='password')= password.label
-        div.controls
-          input(type="password", name="password", value=password.data)
-    else
-      div.control-group.error
-        label.control-label(for='password')= password.label
-        div.controls
-          input(type="password", name="password", value=password.data)
-          span.help-inline= password.error
+    != partial('../_includes/text_field', { field: username, name: 'username' })
+    != partial('../_includes/password_field', { field: password, name: 'password' })
 
   div.actions
     button.btn.btn-primary.btn-large(type='submit') Submit

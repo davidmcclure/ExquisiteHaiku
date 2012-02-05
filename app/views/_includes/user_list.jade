@@ -11,6 +11,6 @@ table.table.list.table-condensed
       tr
         td= user.username
         td= user.email
-        td
-        td
+        td= boolYesNo(user.super)
+        td= boolYesNo(user.active)
         td

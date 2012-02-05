@@ -3,16 +3,16 @@ div.navbar.navbar-fixed-top
     div.container
       a.brand(href='/admin') CollegeSpyder
       ul.nav
-        li
+        li(class=activeLi(nav.main, 'colleges'))
           a(href="/admin/colleges") Colleges
-        li
+        li(class=activeLi(nav.main, 'publications'))
           a(href="/admin/publications") Publications
-        li
+        li(class=activeLi(nav.main, 'articles'))
           a(href="/admin/articles") Articles
-        li
+        li(class=activeLi(nav.main, 'logs'))
           a(href="/admin/logs") Crawl Logs
         if user.super
-          li
+          li(class=activeLi(nav.main, 'users'))
             a(href="/admin/users") Users
       ul.nav.pull-right
         li

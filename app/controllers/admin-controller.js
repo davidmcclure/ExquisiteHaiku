@@ -13,9 +13,10 @@ module.exports = function(app) {
      */
     app.get('/admin', auth.isUser, function(req, res) {
         res.render('admin/index', {
-            user:       req.user,
             title:      'CollegeSypder',
-            layout:     '_layouts/admin'
+            layout:     '_layouts/admin',
+            user:       req.user,
+            nav:        { main: '', sub: '' }
         });
     });
 

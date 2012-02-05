@@ -23,7 +23,8 @@ module.exports = function(app) {
                 title:      'Users',
                 layout:     '_layouts/users',
                 user:       req.user,
-                users:      users
+                users:      users,
+                nav:        { main: 'users', sub: 'browse' }
             });
         });
 

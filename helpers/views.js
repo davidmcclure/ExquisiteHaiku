@@ -14,6 +14,10 @@ function registerHelpers(app) {
 
         boolYesNo: function(boolean) {
             return boolean ? 'yes' : 'no';
+        },
+
+        activeLi: function(current, local) {
+            return (current == local) ? 'active' : '';
         }
 
     });

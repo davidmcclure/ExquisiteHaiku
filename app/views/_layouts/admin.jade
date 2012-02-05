@@ -5,4 +5,6 @@ html
     title= title
   body
     include ../_includes/admin_nav
-    != body
+    div.container
+      block subnav
+      != body

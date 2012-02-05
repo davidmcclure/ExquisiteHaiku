@@ -3,17 +3,23 @@ div.navbar.navbar-fixed-top
     div.container
       a.brand(href='/admin') CollegeSpyder
       ul.nav
+
         li
           a(href="/admin/colleges") Colleges
+
         li
           a(href="/admin/publications") Publications
+
         li
           a(href="/admin/articles") Articles
+
         li
-          a(href="/admin/logs") Logs
-        if user.super
+          a(href="/admin/logs") Crawl Logs
+
+        if user.super && user.active
           li
             a(href="/admin/users") Users
+
       ul.nav.pull-right
         li
           a(href="/admin/logout") Logout ( #{user.username} )

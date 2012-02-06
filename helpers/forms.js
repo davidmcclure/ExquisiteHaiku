@@ -20,7 +20,8 @@ exports.authForms = {
                 label: 'Username: *',
                 required: 'Enter a username.',
                 validators: [
-                    customValidators.usernameExists('Does not exist.')
+                    customValidators.usernameExists('Does not exist.'),
+                    customValidators.usernameActive('Inactive account.')
                 ]
             }),
 

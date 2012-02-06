@@ -38,6 +38,16 @@ exports.usernameExists = function(msg) {
     }
 }
 
+// Username active.
+exports.usernameActive = function(msg) {
+    return function(form, field, callback) {
+        User.findOne({username: field.data}, function(err, user) {
+            if (user !== null && !user.active) callback(msg);
+            else callback();
+        });
+    }
+}
+
 // Password correctness.
 exports.passwordCorrectness = function(msg) {
     return function(form, field, callback) {

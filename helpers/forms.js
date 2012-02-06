@@ -122,4 +122,59 @@ exports.userForms = {
 
     },
 
+    // Edit user information.
+    editInformation: function(user) {
+
+        return forms.create({
+
+            username: fields.string({
+                label: 'Username: *',
+                required: 'Enter a username.',
+                validators: [
+                    validators.rangeLength(4, 20, '4-20 characters.'),
+                    customValidators.uniqueUsernameOnEdit(user, 'Username taken.')
+                ]
+            }),
+
+            email: fields.email({
+                label: 'Email: *',
+                required: 'Enter an email address.',
+                validators: [
+                    customValidators.uniqueEmailOnEdit(user, 'Email taken.')
+                ]
+            }),
+
+            superUser: fields.boolean({
+                label: 'Super User:'
+            }),
+
+            active: fields.boolean({
+                label: 'Active:'
+            })
+
+        });
+
+    },
+
+    // Change password.
+    changePassword: function() {
+
+        return forms.create({
+
+            password: fields.password({
+                label: 'Password: *',
+                required: 'Enter a password.',
+                validators: [validators.minLength(6, 'At least 6 characters')]
+            }),
+
+            confirm: fields.password({
+                label: 'Retype Password: *',
+                required: 'Confirm password.',
+                validators: [validators.matchField('password', 'Does not match.')]
+            })
+
+        });
+
+    }
+
 };

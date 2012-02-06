@@ -11,5 +11,5 @@ div.subnav a,div.subnav input{margin:0 1em 0 0}
 div.subnav input{position:relative}
 table.list td.title{font-weight:bold}
 table.list th{font-weight:normal;color:#808080}
-table.list a{margin-right:.4em;}
+table.list a{font-weight:bold;margin-right:.6em;}
 table.list a.danger{color:#bd362f}

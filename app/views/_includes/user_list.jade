@@ -7,12 +7,13 @@ table.table.list.table-condensed
       th active
       th
   tbody
-    each user in users
+    each listUser in users
       tr
-        td.title= user.username
-        td= user.email
-        td= boolYesNo(user.super)
-        td= boolYesNo(user.active)
+        td.title= listUser.username
+        td= listUser.email
+        td= boolYesNo(listUser.super)
+        td= boolYesNo(listUser.active)
         td
-          a(href='') edit
-          a.danger(href='') delete
+          a(href='/admin/users/edit/#{listUser.username}') edit
+          if listUser.id != user.id
+            a.danger(href='/admin/users/delete/#{listUser.username}') delete

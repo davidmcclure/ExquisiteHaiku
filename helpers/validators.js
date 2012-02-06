@@ -18,11 +18,31 @@ exports.uniqueUsername = function(msg) {
     }
 }
 
+// Username availability, not counting self.
+exports.uniqueUsernameOnEdit = function(user, msg) {
+    return function(form, field, callback) {
+        User.findOne({username: field.data}, function(err, retrievedUser) {
+            if (retrievedUser === null || retrievedUser.id == user.id) callback();
+            else callback(msg);
+        });
+    }
+}
+
 // Email availability.
 exports.uniqueEmail = function(msg) {
     return function(form, field, callback) {
         User.findOne({email: field.data}, function(err, user) {
             if (user === null) callback();
+            else callback(msg);
+        });
+    }
+}
+
+// Email availability, not counting self.
+exports.uniqueEmailOnEdit = function(user, msg) {
+    return function(form, field, callback) {
+        User.findOne({email: field.data}, function(err, retrievedUser) {
+            if (retrievedUser === null || retrievedUser.id == user.id) callback();
             else callback(msg);
         });
     }
@@ -52,9 +72,8 @@ exports.usernameActive = function(msg) {
 exports.passwordCorrectness = function(msg) {
     return function(form, field, callback) {
         User.findOne({username: form.data.username}, function(err, user) {
-            if (!_.isNull(user)) {
-                if (user.authenticate(field.data)) callback();
-            } else callback(msg);
+            if (user.authenticate(field.data)) callback();
+            else callback(msg)
         });
     }
 }

@@ -25,8 +25,10 @@ module.exports = function(app) {
         auth.isSuper,
         function(req, res) {
 
-        // Get users.
-        User.find(function(err, users) {
+        // Get users, sorting alphabetically ascending on username.
+        User.find().sort('username', 1).execFind(function(err, users) {
+
+            // Render the list.
             res.render('admin/users/index', {
                 title:      'Users',
                 layout:     '_layouts/users',
@@ -34,6 +36,7 @@ module.exports = function(app) {
                 users:      users,
                 nav:        { main: 'users', sub: 'browse' }
             });
+
         });
 
     });
@@ -296,6 +299,8 @@ module.exports = function(app) {
 
         // Get the user.
         User.findOne({ username: req.params.username }, function(err, user) {
+
+            // Render the form.
             res.render('admin/users/delete', {
                 title:          'Delete User',
                 layout:         '_layouts/users',
@@ -303,6 +308,7 @@ module.exports = function(app) {
                 deleteUser:     user,
                 nav:            { main: 'users', sub: '' }
             });
+
         });
 
     });
@@ -320,7 +326,7 @@ module.exports = function(app) {
         auth.isSuper,
         function(req, res) {
 
-        // Get the user.
+        // Get the user and delete.
         User.findOne({ username: req.params.username }, function(err, user) {
           user.remove(function(err) {
               res.redirect('/admin/users');

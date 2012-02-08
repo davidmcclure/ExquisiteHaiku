@@ -12,8 +12,11 @@ var User = mongoose.model('User');
 // Controller actions.
 module.exports = function(app) {
 
+
     /*
-     * GET /admin/login
+     * Show login form.
+     *
+     * - middleware auth.anonUser: Block signed-in users.
      */
     app.get('/admin/login', auth.anonUser, function(req, res) {
         res.render('auth/login', {
@@ -23,8 +26,11 @@ module.exports = function(app) {
         });
     });
 
+
     /*
-     * POST /admin/login
+     * Process login form.
+     *
+     * - middleware auth.anonUser: Block signed-in users.
      */
     app.post('/admin/login', auth.anonUser, function(req, res) {
 
@@ -62,8 +68,9 @@ module.exports = function(app) {
 
     });
 
+
     /*
-     * GET /admin/logout
+     * Log user out. Unset the user_id session key.
      */
     app.get('/admin/logout', function(req, res) {
         req.session.destroy(function() {});

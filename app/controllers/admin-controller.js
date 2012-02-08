@@ -8,8 +8,11 @@ var auth = require('../../helpers/auth')
 // Controller actions.
 module.exports = function(app) {
 
+
     /*
-     * GET /admin
+     * Show admin index.
+     *
+     * - middleware auth.isUser: Block anonymous.
      */
     app.get('/admin', auth.isUser, function(req, res) {
         res.render('admin/index', {
@@ -19,5 +22,6 @@ module.exports = function(app) {
             nav:        { main: '', sub: '' }
         });
     });
+
 
 }

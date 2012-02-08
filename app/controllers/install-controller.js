@@ -12,8 +12,12 @@ var User = mongoose.model('User');
 // Controller actions.
 module.exports = function(app) {
 
+
     /*
-     * GET /admin/install
+     * Show install form.
+     *
+     * - middleware auth.noUsers: Block if there are any users in the
+     *   database.
      */
     app.get('/admin/install', auth.noUsers, function(req, res) {
         res.render('auth/install', {
@@ -23,8 +27,12 @@ module.exports = function(app) {
         });
     });
 
+
     /*
-     * POST /admin/install
+     * Process install form.
+     *
+     * - middleware auth.noUsers: Block if there are any users in the
+     *   database.
      */
     app.post('/admin/install', auth.anonUser, function(req, res) {
 

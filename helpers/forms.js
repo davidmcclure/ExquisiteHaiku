@@ -8,14 +8,21 @@ var forms = require('forms')
   , validators = forms.validators
   , customValidators = require('./validators');
 
+
 // Authorization forms.
 exports.authForms = {
 
-    // Login.
+
+    /*
+     * Login form.
+     *
+     * - return object form: The form.
+     */
     login: function() {
 
         return forms.create({
 
+            // Username.
             username: fields.string({
                 label: 'Username: *',
                 required: 'Enter a username.',
@@ -25,6 +32,7 @@ exports.authForms = {
                 ]
             }),
 
+            // Password.
             password: fields.password({
                 label: 'Password: *',
                 required: 'Enter a password.',
@@ -37,11 +45,17 @@ exports.authForms = {
 
     },
 
-    // Installation.
+
+    /*
+     * Installation form. Used to set starting admin account.
+     *
+     * - return object form: The form.
+     */
     install: function() {
 
         return forms.create({
 
+            // Username.
             username: fields.string({
                 label: 'Username: *',
                 required: 'Enter a username.',
@@ -50,18 +64,25 @@ exports.authForms = {
                 ]
             }),
 
+            // Password.
             password: fields.password({
                 label: 'Password: *',
                 required: 'Enter a password.',
-                validators: [validators.minLength(6, 'At least 6 characters')]
+                validators: [
+                    validators.minLength(6, 'At least 6 characters')
+                ]
             }),
 
+            // Password confirmation.
             confirm: fields.password({
                 label: 'Retype Password: *',
                 required: 'Confirm your password.',
-                validators: [validators.matchField('password', 'Does not match.')]
+                validators: [
+                    validators.matchField('password', 'Does not match.')
+                ]
             }),
 
+            // Email.
             email: fields.email({
                 label: 'Email: *',
                 required: 'Enter an email address.'
@@ -71,16 +92,24 @@ exports.authForms = {
 
     }
 
+
 };
+
 
 // User administration forms.
 exports.userForms = {
 
-    // New user.
+
+    /*
+     * New user form.
+     *
+     * - return object form: The form.
+     */
     new: function() {
 
         return forms.create({
 
+            // Username.
             username: fields.string({
                 label: 'Username: *',
                 required: 'Enter a username.',
@@ -90,18 +119,25 @@ exports.userForms = {
                 ]
             }),
 
+            // Password.
             password: fields.password({
                 label: 'Password: *',
                 required: 'Enter a password.',
-                validators: [validators.minLength(6, 'At least 6 characters')]
+                validators: [
+                    validators.minLength(6, 'At least 6 characters')
+                ]
             }),
 
+            // Password confirmation.
             confirm: fields.password({
                 label: 'Retype Password: *',
                 required: 'Confirm your password.',
-                validators: [validators.matchField('password', 'Does not match.')]
+                validators: [
+                    validators.matchField('password', 'Does not match.')
+                ]
             }),
 
+            // Email.
             email: fields.email({
                 label: 'Email: *',
                 required: 'Enter an email address.',
@@ -110,10 +146,12 @@ exports.userForms = {
                 ]
             }),
 
+            // Super/regular.
             superUser: fields.boolean({
                 label: 'Super User:'
             }),
 
+            // Active/inactive.
             active: fields.boolean({
                 label: 'Active:'
             })
@@ -122,32 +160,43 @@ exports.userForms = {
 
     },
 
-    // Edit user information.
+
+    /*
+     * Edit user form.
+     *
+     * - param object user: The user that is being edited.
+     *
+     * - return object form: The form.
+     */
     editInformation: function(user) {
 
         return forms.create({
 
+            // Username.
             username: fields.string({
                 label: 'Username: *',
                 required: 'Enter a username.',
                 validators: [
                     validators.rangeLength(4, 20, '4-20 characters.'),
-                    customValidators.uniqueUsernameOnEdit(user, 'Username taken.')
+                    customValidators.uniqueNonSelfUsername(user, 'Username taken.')
                 ]
             }),
 
+            // Email.
             email: fields.email({
                 label: 'Email: *',
                 required: 'Enter an email address.',
                 validators: [
-                    customValidators.uniqueEmailOnEdit(user, 'Email taken.')
+                    customValidators.uniqueNonSelfEmail(user, 'Email taken.')
                 ]
             }),
 
+            // Super/regular.
             superUser: fields.boolean({
                 label: 'Super User:'
             }),
 
+            // Active/inactive.
             active: fields.boolean({
                 label: 'Active:'
             })
@@ -156,25 +205,37 @@ exports.userForms = {
 
     },
 
-    // Change password.
+
+    /*
+     * Change password form.
+     *
+     * - return object form: The form.
+     */
     changePassword: function() {
 
         return forms.create({
 
+            // Password.
             password: fields.password({
                 label: 'Password: *',
                 required: 'Enter a password.',
-                validators: [validators.minLength(6, 'At least 6 characters')]
+                validators: [
+                    validators.minLength(6, 'At least 6 characters')
+                ]
             }),
 
+            // Password confirmation.
             confirm: fields.password({
                 label: 'Retype Password: *',
                 required: 'Confirm password.',
-                validators: [validators.matchField('password', 'Does not match.')]
+                validators: [
+                    validators.matchField('password', 'Does not match.')
+                ]
             })
 
         });
 
     }
+
 
 };

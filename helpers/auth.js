@@ -5,7 +5,12 @@
 // Models.
 var User = mongoose.model('User');
 
-// Check for user session, pass user record.
+
+/*
+ * Check for user session, pass user record to action.
+ *
+ * - return void.
+ */
 exports.isUser = function (req, res, next) {
 
     // Check for user id in session.
@@ -27,19 +32,34 @@ exports.isUser = function (req, res, next) {
 
 }
 
-// Only allow super users.
+
+/*
+ * Only allow superusers.
+ *
+ * - return void.
+ */
 exports.isSuper = function (req, res, next) {
     if (req.user.super) next();
     else res.redirect('/admin');
 }
 
-// If there is a user session, redirect to the admin.
+
+/*
+ * If there is a user session, redirect to admin index.
+ *
+ * - return void.
+ */
 exports.anonUser = function (req, res, next) {
     if (req.session.user_id) res.redirect('/admin');
     else next();
 }
 
-// If a user exists, redirect to login.
+
+/*
+ * If a user exists, redirect to login.
+ *
+ * - return void.
+ */
 exports.noUsers = function (req, res, next) {
     User.count({}, function(err, count) {
         if (count > 0) res.redirect('/admin/login');

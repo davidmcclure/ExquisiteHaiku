@@ -9,11 +9,16 @@ var forms = require('../../helpers/forms')
 // Models.
 var User = mongoose.model('User');
 
+
 // Controller actions.
 module.exports = function(app) {
 
+
     /*
-     * GET /admin/users
+     * Browse users.
+     *
+     * - middleware auth.isUser: Block anonymous.
+     * - middleware auth.isSuper: Block non-super users.
      */
     app.get('/admin/users',
         auth.isUser,
@@ -33,8 +38,12 @@ module.exports = function(app) {
 
     });
 
+
     /*
-     * GET /admin/users/new
+     * New user form.
+     *
+     * - middleware auth.isUser: Block anonymous.
+     * - middleware auth.isSuper: Block non-super users.
      */
     app.get('/admin/users/new',
         auth.isUser,
@@ -52,8 +61,13 @@ module.exports = function(app) {
 
     });
 
+
     /*
-     * POST /admin/users/new
+     * Process new user form submission. Rerender the form if validations
+     * fail; create new user and redirect to users index if valid.
+     *
+     * - middleware auth.isUser: Block anonymous.
+     * - middleware auth.isSuper: Block non-super users.
      */
     app.post('/admin/users/new',
         auth.isUser,
@@ -97,8 +111,13 @@ module.exports = function(app) {
 
     });
 
+
     /*
-     * GET /admin/users/edit/:username
+     * Edit a user account.
+     *
+     * - param string username: The username of the user being edited.
+     * - middleware auth.isUser: Block anonymous.
+     * - middleware auth.isSuper: Block non-super users.
      */
     app.get('/admin/users/edit/:username',
         auth.isUser,
@@ -134,8 +153,13 @@ module.exports = function(app) {
 
     });
 
+
     /*
-     * POST /admin/users/edit/:username/info
+     * Process the edit information form on the edit user page.
+     *
+     * - param string username: The username of the user being edited.
+     * - middleware auth.isUser: Block anonymous.
+     * - middleware auth.isSuper: Block non-super users.
      */
     app.post('/admin/users/edit/:username/info',
         auth.isUser,
@@ -192,8 +216,13 @@ module.exports = function(app) {
 
     });
 
+
     /*
-     * POST /admin/users/edit/:username/password
+     * Process the change password form on the edit user page.
+     *
+     * - param string username: The username of the user being edited.
+     * - middleware auth.isUser: Block anonymous.
+     * - middleware auth.isSuper: Block non-super users.
      */
     app.post('/admin/users/edit/:username/password',
         auth.isUser,
@@ -252,8 +281,13 @@ module.exports = function(app) {
 
     });
 
+
     /*
-     * GET /admin/users/delete/:username
+     * Show delete user confirmation form.
+     *
+     * - param string username: The username of the user being deleted.
+     * - middleware auth.isUser: Block anonymous.
+     * - middleware auth.isSuper: Block non-super users.
      */
     app.get('/admin/users/delete/:username',
         auth.isUser,
@@ -273,8 +307,13 @@ module.exports = function(app) {
 
     });
 
+
     /*
-     * POST /admin/users/delete/:username
+     * Delete a user.
+     *
+     * - param string username: The username of the user being deleted.
+     * - middleware auth.isUser: Block anonymous.
+     * - middleware auth.isSuper: Block non-super users.
      */
     app.post('/admin/users/delete/:username',
         auth.isUser,
@@ -289,5 +328,6 @@ module.exports = function(app) {
         });
 
     });
+
 
 }

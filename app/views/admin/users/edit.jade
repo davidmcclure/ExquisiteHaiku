@@ -10,8 +10,10 @@ form.form-horizontal(method='post', action='/admin/users/edit/#{editUser.usernam
 
     != partial('../../_includes/text_field', { field: username, name: 'username' })
     != partial('../../_includes/text_field', { field: email, name: 'email' })
-    != partial('../../_includes/checkbox_field', { field: superUser, name: 'superUser' })
-    != partial('../../_includes/checkbox_field', { field: active, name: 'active' })
+
+    if editUser.id != user.id
+      != partial('../../_includes/checkbox_field', { field: superUser, name: 'superUser' })
+      != partial('../../_includes/checkbox_field', { field: active, name: 'active' })
 
   div.form-actions
     button.btn.btn-primary(type='submit') Save

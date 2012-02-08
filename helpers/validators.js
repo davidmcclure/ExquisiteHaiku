@@ -8,7 +8,14 @@ var _ = require('underscore');
 // Models.
 var User = mongoose.model('User');
 
-// Username availability.
+
+/*
+ * Check to see if a username is available.
+ *
+ * - param string msg: The failure error message.
+ *
+ * - return void.
+ */
 exports.uniqueUsername = function(msg) {
     return function(form, field, callback) {
         User.findOne({username: field.data}, function(err, user) {
@@ -18,8 +25,17 @@ exports.uniqueUsername = function(msg) {
     }
 }
 
-// Username availability, not counting self.
-exports.uniqueUsernameOnEdit = function(user, msg) {
+/*
+ * Check to see if a username is available, excluding the username of
+ * the passed record. Used during user edit flow to allow an unchanged
+ * username to be re-saved.
+ *
+ * - param object User: The user.
+ * - param string msg: The failure error message.
+ *
+ * - return void.
+ */
+exports.uniqueNonSelfUsername = function(user, msg) {
     return function(form, field, callback) {
         User.findOne({username: field.data}, function(err, retrievedUser) {
             if (retrievedUser === null || retrievedUser.id == user.id) callback();
@@ -28,7 +44,13 @@ exports.uniqueUsernameOnEdit = function(user, msg) {
     }
 }
 
-// Email availability.
+/*
+ * Check to see if an email address is available.
+ *
+ * - param string msg: The failure error message.
+ *
+ * - return void.
+ */
 exports.uniqueEmail = function(msg) {
     return function(form, field, callback) {
         User.findOne({email: field.data}, function(err, user) {
@@ -38,8 +60,17 @@ exports.uniqueEmail = function(msg) {
     }
 }
 
-// Email availability, not counting self.
-exports.uniqueEmailOnEdit = function(user, msg) {
+/*
+ * Check to see if an email address is available, excluding the email
+ * of the passed record. Used during user edit flow to allow an unchanged
+ * address to be re-saved.
+ *
+ * - param object User: The user.
+ * - param string msg: The failure error message.
+ *
+ * - return void.
+ */
+exports.uniqueNonSelfEmail = function(user, msg) {
     return function(form, field, callback) {
         User.findOne({email: field.data}, function(err, retrievedUser) {
             if (retrievedUser === null || retrievedUser.id == user.id) callback();
@@ -48,7 +79,13 @@ exports.uniqueEmailOnEdit = function(user, msg) {
     }
 }
 
-// Username existence.
+/*
+ * Check to see a user with a given username exists.
+ *
+ * - param string msg: The failure error message.
+ *
+ * - return void.
+ */
 exports.usernameExists = function(msg) {
     return function(form, field, callback) {
         User.findOne({username: field.data}, function(err, user) {
@@ -58,7 +95,13 @@ exports.usernameExists = function(msg) {
     }
 }
 
-// Username active.
+/*
+ * Check to see a user with a given username is active.
+ *
+ * - param string msg: The failure error message.
+ *
+ * - return void.
+ */
 exports.usernameActive = function(msg) {
     return function(form, field, callback) {
         User.findOne({username: field.data}, function(err, user) {

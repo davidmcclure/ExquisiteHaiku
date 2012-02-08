@@ -1,5 +1,5 @@
 /*
- * Installation routes.
+ * User administration routes.
  */
 
 // Module dependencies.

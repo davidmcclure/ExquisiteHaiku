@@ -179,7 +179,7 @@ exports.uniqueCollegeSlug = function(msg) {
  */
 exports.validState = function(msg) {
     return function(form, field, callback) {
-        if (_.include(states, field.data)) callback();
+        if (_.include(states, field.data.toUpperCase())) callback();
         else callback(msg);
     }
 }

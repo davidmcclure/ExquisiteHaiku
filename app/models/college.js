@@ -2,9 +2,6 @@
  * College model.
  */
 
-// Module dependencies.
-var states = require('./_states').states;
-
 // Load models.
 require('./publication.js');
 var Publication = mongoose.model('Publication');
@@ -15,7 +12,7 @@ var College = new Schema({
     slug :              { type: String, required: true, unique: true },
     url :               String,
     city :              String,
-    state :             { type: String, enum: states },
+    state :             String,
     numUndergrads :     Number,
     numGrads :          Number,
     admitRate :         Number,

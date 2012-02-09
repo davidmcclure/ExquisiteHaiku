@@ -2,11 +2,13 @@ table.table.list.table-condensed
   thead
     tr
       th college
+      th slug
       th
   tbody
     each college in colleges
       tr
         td.title= college.name
+        td= college.slug
         td
           a(href='/admin/colleges/edit/#{college.slug}') edit
           a.danger(href='/admin/colleges/delete/#{college.slug}') delete

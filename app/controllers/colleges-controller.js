@@ -66,53 +66,50 @@ module.exports = function(app) {
 
 
     /*
-     * Process new user form submission. Rerender the form if validations
-     * fail; create new user and redirect to users index if valid.
+     * Process new college form submission. Rerender the form if validations
+     * fail; create new college and redirect to colleges index if valid.
      *
      * - middleware auth.isUser: Block anonymous.
      * - middleware auth.isSuper: Block non-super users.
      */
-    // app.post('/admin/users/new',
-    //     auth.isUser,
-    //     auth.isSuper,
-    //     function(req, res) {
+    app.post('/admin/colleges/new',
+        auth.isUser,
+        auth.isSuper,
+        function(req, res) {
 
-    //     // Pass control to form.
-    //     forms.userForms.new().handle(req, {
+        // Pass control to form.
+        forms.collegeForms.new().handle(req, {
 
-    //         // If field validations pass.
-    //         success: function(form) {
+            // If field validations pass.
+            success: function(form) {
 
-    //             // Create the user.
-    //             var user = new User({
-    //                 username:   form.data.username,
-    //                 email:      form.data.email,
-    //                 password:   form.data.password,
-    //                 super:      form.data.superUser,
-    //                 active:     form.data.active
-    //             });
+                // Create the college.
+                var college = new College(form.data);
 
-    //             // Save and redirect.
-    //             user.save(function() {
-    //                 res.redirect('/admin/users');
-    //             });
+                // Save and redirect.
+                college.save(function(err) {
+                    res.redirect('/admin/colleges');
+                });
 
-    //         },
+            },
 
-    //         // If field validations fail.
-    //         other: function(form) {
-    //             res.render('admin/users/new', {
-    //                 title:      'New User',
-    //                 layout:     '_layouts/users',
-    //                 user:       req.user,
-    //                 form:       form,
-    //                 nav:        { main: 'users', sub: 'new' }
-    //             });
-    //         }
+            // If field validations fail.
+            other: function(form) {
 
-    //     });
+                // Render the form.
+                res.render('admin/colleges/new', {
+                    title:      'New College',
+                    layout:     '_layouts/colleges',
+                    user:       req.user,
+                    form:       form,
+                    nav:        { main: 'colleges', sub: 'new' }
+                });
 
-    // });
+            }
+
+        });
+
+    });
 
 
     /*

@@ -2,10 +2,10 @@ if field.errorHTML() == ''
   div.control-group
     label.control-label(for=name)= field.label
     div.controls
-      input(type="text", name=name, value=field.data)
+      input(type="text", name=name, value=field.value)
 else
   div.control-group.error
     label.control-label(for=name)= field.label
     div.controls
-      input(type="text", name=name, value=field.data)
+      input(type="text", name=name, value=field.value)
       span.help-inline= field.error

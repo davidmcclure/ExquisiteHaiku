@@ -1,0 +1,21 @@
+form.form-horizontal(method='post')
+  fieldset
+
+    legend New User
+
+    - var username =    form.fields.username
+    - var password =    form.fields.password
+    - var confirm =     form.fields.confirm
+    - var email =       form.fields.email
+    - var superUser =   form.fields.superUser
+    - var active =      form.fields.active
+
+    != partial('../../_includes/text_field', { field: username, name: 'username' })
+    != partial('../../_includes/password_field', { field: password, name: 'password' })
+    != partial('../../_includes/password_field', { field: confirm, name: 'confirm' })
+    != partial('../../_includes/text_field', { field: email, name: 'email' })
+    != partial('../../_includes/checkbox_field', { field: superUser, name: 'superUser' })
+    != partial('../../_includes/checkbox_field', { field: active, name: 'active' })
+
+  div.form-actions
+    button.btn.btn-primary(type='submit') Create

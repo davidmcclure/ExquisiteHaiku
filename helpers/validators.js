@@ -25,6 +25,7 @@ exports.uniqueUsername = function(msg) {
     }
 }
 
+
 /*
  * Check to see if a username is available, excluding the username of
  * the passed record. Used during user edit flow to allow an unchanged
@@ -44,6 +45,7 @@ exports.uniqueNonSelfUsername = function(user, msg) {
     }
 }
 
+
 /*
  * Check to see if an email address is available.
  *
@@ -59,6 +61,7 @@ exports.uniqueEmail = function(msg) {
         });
     }
 }
+
 
 /*
  * Check to see if an email address is available, excluding the email
@@ -79,6 +82,7 @@ exports.uniqueNonSelfEmail = function(user, msg) {
     }
 }
 
+
 /*
  * Check to see a user with a given username exists.
  *
@@ -94,6 +98,7 @@ exports.usernameExists = function(msg) {
         });
     }
 }
+
 
 /*
  * Check to see a user with a given username is active.
@@ -111,7 +116,14 @@ exports.usernameActive = function(msg) {
     }
 }
 
-// Password correctness.
+
+/*
+ * Check for password correctness
+ *
+ * - param string msg: The failure error message.
+ *
+ * - return void.
+ */
 exports.passwordCorrectness = function(msg) {
     return function(form, field, callback) {
         User.findOne({username: form.data.username}, function(err, user) {

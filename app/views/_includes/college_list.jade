@@ -1,0 +1,12 @@
+table.table.list.table-condensed
+  thead
+    tr
+      th college
+      th
+  tbody
+    each college in colleges
+      tr
+        td.title= college.name
+        td
+          a(href='/admin/colleges/edit/#{college.slug}') edit
+          a.danger(href='/admin/colleges/delete/#{college.slug}') delete

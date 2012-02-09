@@ -181,11 +181,18 @@ module.exports = function(app) {
                 // If field validations pass.
                 success: function(form) {
 
+                    console.log(form);
+
                     // Update the user.
                     user.username =     form.data.username;
                     user.email =        form.data.email;
-                    user.superUser =    form.data.superUser;
-                    user.active =       form.data.active;
+
+                    // Only set active and super if the user being edited is
+                    // not the same as the editing user.
+                    if (user.id != req.user.id) {
+                        user.superUser =    form.data.superUser;
+                        user.active =       form.data.active;
+                    }
 
                     // Save and redirect.
                     user.save(function() {

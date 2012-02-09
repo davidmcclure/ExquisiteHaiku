@@ -30,8 +30,7 @@ exports.uniqueUsername = function(msg) {
 
 /*
  * Check to see if a username is available, excluding the username of
- * the passed record. Used during user edit flow to allow an unchanged
- * username to be re-saved.
+ * the passed record.
  *
  * - param object User: The user.
  * - param string msg: The failure error message.
@@ -40,8 +39,8 @@ exports.uniqueUsername = function(msg) {
  */
 exports.uniqueNonSelfUsername = function(user, msg) {
     return function(form, field, callback) {
-        User.findOne({username: field.data}, function(err, retrievedUser) {
-            if (retrievedUser === null || retrievedUser.id == user.id) callback();
+        User.findOne({username: field.data}, function(err, foundUser) {
+            if (foundUser === null || foundUser.id == user.id) callback();
             else callback(msg);
         });
     }
@@ -67,8 +66,7 @@ exports.uniqueEmail = function(msg) {
 
 /*
  * Check to see if an email address is available, excluding the email
- * of the passed record. Used during user edit flow to allow an unchanged
- * address to be re-saved.
+ * of the passed record.
  *
  * - param object User: The user.
  * - param string msg: The failure error message.
@@ -77,8 +75,8 @@ exports.uniqueEmail = function(msg) {
  */
 exports.uniqueNonSelfEmail = function(user, msg) {
     return function(form, field, callback) {
-        User.findOne({email: field.data}, function(err, retrievedUser) {
-            if (retrievedUser === null || retrievedUser.id == user.id) callback();
+        User.findOne({email: field.data}, function(err, foundUser) {
+            if (foundUser === null || foundUser.id == user.id) callback();
             else callback(msg);
         });
     }
@@ -154,6 +152,24 @@ exports.uniqueCollegeName = function(msg) {
 
 
 /*
+ * Check to see if a college name is available, excluding the name
+ * of the passed college.
+ *
+ * - param string msg: The failure error message.
+ *
+ * - return void.
+ */
+exports.uniqueNonSelfCollegeName = function(college, msg) {
+    return function(form, field, callback) {
+        College.findOne({name: field.data}, function(err, foundCollege) {
+            if (foundCollege === null || foundCollege.id == college.id) callback();
+            else callback(msg);
+        });
+    }
+}
+
+
+/*
  * Check to see if a college slug is available.
  *
  * - param string msg: The failure error message.
@@ -164,6 +180,24 @@ exports.uniqueCollegeSlug = function(msg) {
     return function(form, field, callback) {
         College.findOne({slug: field.data}, function(err, college) {
             if (college === null) callback();
+            else callback(msg);
+        });
+    }
+}
+
+
+/*
+ * Check to see if a college slug is available, excluding the slug of
+ * the passed college.
+ *
+ * - param string msg: The failure error message.
+ *
+ * - return void.
+ */
+exports.uniqueNonSelfCollegeSlug = function(college, msg) {
+    return function(form, field, callback) {
+        College.findOne({slug: field.data}, function(err, foundCollege) {
+            if (foundCollege === null || foundCollege.id == college.id) callback();
             else callback(msg);
         });
     }

@@ -47,7 +47,7 @@ module.exports = function(app) {
                     username:   form.data.username,
                     email:      form.data.email,
                     password:   form.data.password,
-                    super:      true,
+                    superUser:  true,
                     active:     true
                 });
 

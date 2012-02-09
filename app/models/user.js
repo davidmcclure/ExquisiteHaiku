@@ -11,7 +11,7 @@ var User = new Schema({
     hash :              String,
     salt :              String,
     email :             { type: String, unique: true },
-    super :             Boolean,
+    superUser :         Boolean,
     active :            Boolean
 });
 

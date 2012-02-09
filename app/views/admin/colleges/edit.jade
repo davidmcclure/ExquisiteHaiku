@@ -1,33 +1,44 @@
-form.form-horizontal(method='post', action='/admin/users/edit/#{editUser.username}/info')
+form.form-horizontal(method='post')
   fieldset
 
-    legend Edit Information
+    legend Edit <strong>#{college.name}</strong>
 
-    - var username =    infoForm.fields.username
-    - var email =       infoForm.fields.email
-    - var superUser =   infoForm.fields.superUser
-    - var active =      infoForm.fields.active
+    - var name =          form.fields.name
+    - var slug =          form.fields.slug
+    - var url =           form.fields.url
+    - var city =          form.fields.city
+    - var state =         form.fields.state
+    - var numUndergrads = form.fields.numUndergrads
+    - var numGrads =      form.fields.numGrads
+    - var admitRate =     form.fields.admitRate
+    - var rank =          form.fields.rank
+    - var satCR25 =       form.fields.satCR25
+    - var satCR75 =       form.fields.satCR75
+    - var satM25 =        form.fields.satM25
+    - var satM75 =        form.fields.satM75
+    - var satW25 =        form.fields.satW25
+    - var satW75 =        form.fields.satW75
+    - var act25 =         form.fields.act25
+    - var act75 =         form.fields.act75
 
-    != partial('../../_includes/text_field', { field: username, name: 'username' })
-    != partial('../../_includes/text_field', { field: email, name: 'email' })
-
-    if editUser.id != user.id
-      != partial('../../_includes/checkbox_field', { field: superUser, name: 'superUser' })
-      != partial('../../_includes/checkbox_field', { field: active, name: 'active' })
+    != partial('../../_includes/text_field', { field: name, name: 'name' })
+    != partial('../../_includes/text_field', { field: slug, name: 'slug' })
+    != partial('../../_includes/text_field', { field: url, name: 'url' })
+    != partial('../../_includes/text_field', { field: city, name: 'city' })
+    != partial('../../_includes/text_field', { field: state, name: 'state' })
+    != partial('../../_includes/text_field', { field: numUndergrads, name: 'numUndergrads' })
+    != partial('../../_includes/text_field', { field: numGrads, name: 'numGrads' })
+    != partial('../../_includes/text_field', { field: admitRate, name: 'admitRate' })
+    != partial('../../_includes/text_field', { field: rank, name: 'rank' })
+    != partial('../../_includes/text_field', { field: satCR25, name: 'satCR25' })
+    != partial('../../_includes/text_field', { field: satCR75, name: 'satCR75' })
+    != partial('../../_includes/text_field', { field: satM25, name: 'satM25' })
+    != partial('../../_includes/text_field', { field: satM75, name: 'satM75' })
+    != partial('../../_includes/text_field', { field: satW25, name: 'satW25' })
+    != partial('../../_includes/text_field', { field: satW75, name: 'satW75' })
+    != partial('../../_includes/text_field', { field: act25, name: 'act25' })
+    != partial('../../_includes/text_field', { field: act75, name: 'act75' })
 
   div.form-actions
     button.btn.btn-primary(type='submit') Save
 
-form.form-horizontal(method='post', action='/admin/users/edit/#{editUser.username}/password')
-  fieldset
-
-    legend Change Password
-
-    - var password =    passwordForm.fields.password
-    - var confirm =     passwordForm.fields.confirm
-
-    != partial('../../_includes/password_field', { field: password, name: 'password' })
-    != partial('../../_includes/password_field', { field: confirm, name: 'confirm' })
-
-  div.form-actions
-    button.btn.btn-primary(type='submit') Save

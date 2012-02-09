@@ -88,7 +88,7 @@ module.exports = function(app) {
                     username:   form.data.username,
                     email:      form.data.email,
                     password:   form.data.password,
-                    super:      form.data.superUser,
+                    superUser:  form.data.superUser,
                     active:     form.data.active
                 });
 
@@ -134,7 +134,7 @@ module.exports = function(app) {
             var infoForm = forms.userForms.editInformation(user).bind({
                 username:   user.username,
                 email:      user.email,
-                superUser:  user.super,
+                superUser:  user.superUser,
                 active:     user.active
             });
 
@@ -182,10 +182,10 @@ module.exports = function(app) {
                 success: function(form) {
 
                     // Update the user.
-                    user.username = form.data.username;
-                    user.email =    form.data.email;
-                    user.super =    form.data.superUser;
-                    user.active =   form.data.active;
+                    user.username =     form.data.username;
+                    user.email =        form.data.email;
+                    user.superUser =    form.data.superUser;
+                    user.active =       form.data.active;
 
                     // Save and redirect.
                     user.save(function() {
@@ -261,7 +261,7 @@ module.exports = function(app) {
                     var infoForm = forms.userForms.editInformation(user).bind({
                         username:   user.username,
                         email:      user.email,
-                        superUser:  user.super,
+                        superUser:  user.superUser,
                         active:     user.active
                     });
 

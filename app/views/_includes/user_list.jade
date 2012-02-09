@@ -11,7 +11,7 @@ table.table.list.table-condensed
       tr
         td.title= listUser.username
         td= listUser.email
-        td= boolYesNo(listUser.super)
+        td= boolYesNo(listUser.superUser)
         td= boolYesNo(listUser.active)
         td
           a(href='/admin/users/edit/#{listUser.username}') edit

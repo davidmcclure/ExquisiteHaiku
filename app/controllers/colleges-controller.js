@@ -113,45 +113,36 @@ module.exports = function(app) {
 
 
     /*
-     * Edit a user account.
+     * Edit a college.
      *
-     * - param string username: The username of the user being edited.
+     * - param string slug: The slug of the college being edited.
      * - middleware auth.isUser: Block anonymous.
      * - middleware auth.isSuper: Block non-super users.
      */
-    // app.get('/admin/users/edit/:username',
-    //     auth.isUser,
-    //     auth.isSuper,
-    //     function(req, res) {
+    app.get('/admin/colleges/edit/:slug',
+        auth.isUser,
+        auth.isSuper,
+        function(req, res) {
 
-    //     // Get the user.
-    //     User.findOne({ username: req.params.username }, function(err, user) {
+        // Get the college.
+        College.findOne({ slug: req.params.slug }, function(err, college) {
 
-    //         // Information form.
-    //         var infoForm = forms.userForms.editInformation(user).bind({
-    //             username:   user.username,
-    //             email:      user.email,
-    //             superUser:  user.super,
-    //             active:     user.active
-    //         });
+            // Edit form.
+            var form = forms.collegeForms.edit(college).bind(college);
 
-    //         // Password form.
-    //         var passwordForm = forms.userForms.changePassword();
+            // Render form.
+            res.render('admin/colleges/edit', {
+                title:          'Edit College',
+                layout:         '_layouts/colleges',
+                user:           req.user,
+                college:        college,
+                form:           form,
+                nav:            { main: 'colleges', sub: '' }
+            });
 
-    //         // Render forms.
-    //         res.render('admin/users/edit', {
-    //             title:          'Edit User',
-    //             layout:         '_layouts/users',
-    //             user:           req.user,
-    //             editUser:       user,
-    //             infoForm:       infoForm,
-    //             passwordForm:   passwordForm,
-    //             nav:            { main: 'users', sub: '' }
-    //         });
+        });
 
-    //     });
-
-    // });
+    });
 
 
     /*

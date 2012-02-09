@@ -39,7 +39,7 @@ exports.isUser = function (req, res, next) {
  * - return void.
  */
 exports.isSuper = function (req, res, next) {
-    if (req.user.super) next();
+    if (req.user.superUser) next();
     else res.redirect('/admin');
 }
 

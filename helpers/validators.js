@@ -3,10 +3,12 @@
  */
 
 // Module dependencies.
-var _ = require('underscore');
+var _ = require('underscore')
+  , states = require('../app/models/_states').states;
 
 // Models.
 var User = mongoose.model('User');
+var College = mongoose.model('College');
 
 
 /*
@@ -130,5 +132,86 @@ exports.passwordCorrectness = function(msg) {
             if (user.authenticate(field.data)) callback();
             else callback(msg)
         });
+    }
+}
+
+
+/*
+ * Check to see if a college name is available.
+ *
+ * - param string msg: The failure error message.
+ *
+ * - return void.
+ */
+exports.uniqueCollegeName = function(msg) {
+    return function(form, field, callback) {
+        College.findOne({name: field.data}, function(err, college) {
+            if (college === null) callback();
+            else callback(msg);
+        });
+    }
+}
+
+
+/*
+ * Check to see if a college slug is available.
+ *
+ * - param string msg: The failure error message.
+ *
+ * - return void.
+ */
+exports.uniqueCollegeSlug = function(msg) {
+    return function(form, field, callback) {
+        College.findOne({slug: field.data}, function(err, college) {
+            if (college === null) callback();
+            else callback(msg);
+        });
+    }
+}
+
+
+/*
+ * Check to see a state abbreviation is valid.
+ *
+ * - param string msg: The failure error message.
+ *
+ * - return void.
+ */
+exports.validState = function(msg) {
+    return function(form, field, callback) {
+        if (_.include(states, field.data)) callback();
+        else callback(msg);
+    }
+}
+
+
+/*
+ * Check to see a value is positive.
+ *
+ * - param string msg: The failure error message.
+ *
+ * - return void.
+ */
+exports.positive = function(msg) {
+    return function(form, field, callback) {
+        if (field.data >= 0) callback()
+        else callback(msg);
+    };
+}
+
+
+/*
+ * Check to see a value is a positive integer.
+ *
+ * - param string msg: The failure error message.
+ *
+ * - return void.
+ */
+exports.positiveInteger = function(msg) {
+    return function(form, field, callback) {
+        if ((parseFloat(field.data) == parseInt(field.data)) &&
+            !isNaN(field.data) && parseInt(field.data) >= 0) {
+                callback();
+        } else callback(msg);
     }
 }

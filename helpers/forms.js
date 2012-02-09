@@ -239,3 +239,211 @@ exports.userForms = {
 
 
 };
+
+
+// College administration forms.
+exports.collegeForms = {
+
+    /*
+     * New college form.
+     *
+     * - return object form: The form.
+     */
+    new: function() {
+
+        return forms.create({
+
+            // Name.
+            name: fields.string({
+                label: 'Name: *',
+                required: 'Enter a name.',
+                validators: [
+                    validators.maxLength(50, 'Less than 50 characters.'),
+                    customValidators.uniqueCollegeName('Name taken.')
+                ]
+            }),
+
+            // Slug.
+            slug: fields.string({
+                label: 'Slug: *',
+                required: 'Enter a slug.',
+                validators: [
+                    validators.maxLength(50, 'Less than 50 characters.'),
+                    customValidators.uniqueCollegeSlug('Slug taken.')
+                ]
+            }),
+
+            // Url.
+            url: fields.url({
+                label: 'Url:'
+            }),
+
+            // City.
+            city: fields.string({
+                label: 'City:'
+            }),
+
+            // State.
+            state: fields.string({
+                label: 'State:',
+                validators: [
+                    customValidators.validState('Enter a valid state code.')
+                ]
+            }),
+
+            // Number of undergraduates.
+            numUndergrads: fields.number({
+                label: '# Undergrads:',
+                validators: [
+                    customValidators.positiveInteger('Enter a positive integer.')
+                ]
+            }),
+
+            // Number of graduate students.
+            numGrads: fields.number({
+                label: '# Grads:',
+                validators: [
+                    customValidators.positiveInteger('Enter a positive integer.')
+                ]
+            }),
+
+            // Acceptance rate.
+            admitRate: fields.number({
+                label: 'Acceptance Rate:',
+                validators: [
+                    validators.max(100, '0-100.'),
+                    customValidators.positive('Enter a positive number.')
+                ]
+            }),
+
+            // Rank.
+            rank: fields.number({
+                label: 'Rank:',
+                validators: [
+                    customValidators.positiveInteger('Enter a positive integer.')
+                ]
+            }),
+
+            // SAT CR 25.
+            satCR25: fields.number({
+                label: 'SAT CR 25%:',
+                validators: [
+                    validators.range(200, 800, '200-800.'),
+                    customValidators.positiveInteger('Enter a positive integer.')
+                ]
+            }),
+
+            // SAT CR 75.
+            satCR75: fields.number({
+                label: 'SAT CR 75%:',
+                validators: [
+                    validators.range(200, 800, '200-800.'),
+                    customValidators.positiveInteger('Enter a positive integer.')
+                ]
+            }),
+
+            // SAT M 25.
+            satM25: fields.number({
+                label: 'SAT M 25%:',
+                validators: [
+                    validators.range(200, 800, '200-800.'),
+                    customValidators.positiveInteger('Enter a positive integer.')
+                ]
+            }),
+
+            // SAT M 75.
+            satM75: fields.number({
+                label: 'SAT M 75%:',
+                validators: [
+                    validators.range(200, 800, '200-800.'),
+                    customValidators.positiveInteger('Enter a positive integer.')
+                ]
+            }),
+
+            // SAT W 25.
+            satW25: fields.number({
+                label: 'SAT W 25%:',
+                validators: [
+                    validators.range(200, 800, '200-800.'),
+                    customValidators.positiveInteger('Enter a positive integer.')
+                ]
+            }),
+
+            // SAT W 75.
+            satW75: fields.number({
+                label: 'SAT W 75%:',
+                validators: [
+                    validators.range(200, 800, '200-800.'),
+                    customValidators.positiveInteger('Enter a positive integer.')
+                ]
+            }),
+
+            // ACT 25.
+            act25: fields.number({
+                label: 'ACT 25%:',
+                validators: [
+                    validators.range(1, 36, '1-36.'),
+                    customValidators.positiveInteger('Enter a positive integer.')
+                ]
+            }),
+
+            // ACT 75.
+            act75: fields.number({
+                label: 'ACT 75%:',
+                validators: [
+                    validators.range(1, 36, '1-36.'),
+                    customValidators.positiveInteger('Enter a positive integer.')
+                ]
+            })
+
+        });
+
+    },
+
+
+    /*
+     * Edit user form.
+     *
+     * - param object user: The user that is being edited.
+     *
+     * - return object form: The form.
+     */
+    // editInformation: function(user) {
+
+    //     return forms.create({
+
+    //         // Username.
+    //         username: fields.string({
+    //             label: 'Username: *',
+    //             required: 'Enter a username.',
+    //             validators: [
+    //                 validators.rangeLength(4, 20, '4-20 characters.'),
+    //                 customValidators.uniqueNonSelfUsername(user, 'Username taken.')
+    //             ]
+    //         }),
+
+    //         // Email.
+    //         email: fields.email({
+    //             label: 'Email: *',
+    //             required: 'Enter an email address.',
+    //             validators: [
+    //                 customValidators.uniqueNonSelfEmail(user, 'Email taken.')
+    //             ]
+    //         }),
+
+    //         // Super/regular.
+    //         superUser: fields.boolean({
+    //             label: 'Super User:'
+    //         }),
+
+    //         // Active/inactive.
+    //         active: fields.boolean({
+    //             label: 'Active:'
+    //         })
+
+    //     });
+
+    // }
+
+
+};

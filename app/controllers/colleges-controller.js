@@ -43,26 +43,26 @@ module.exports = function(app) {
 
 
     /*
-     * New user form.
+     * New college form.
      *
      * - middleware auth.isUser: Block anonymous.
      * - middleware auth.isSuper: Block non-super users.
      */
-    // app.get('/admin/users/new',
-    //     auth.isUser,
-    //     auth.isSuper,
-    //     function(req, res) {
+    app.get('/admin/colleges/new',
+        auth.isUser,
+        auth.isSuper,
+        function(req, res) {
 
-    //     // Render form.
-    //     res.render('admin/users/new', {
-    //         title:      'New User',
-    //         layout:     '_layouts/users',
-    //         user:       req.user,
-    //         form:       forms.userForms.new(),
-    //         nav:        { main: 'users', sub: 'new' }
-    //     });
+        // Render form.
+        res.render('admin/colleges/new', {
+            title:      'New College',
+            layout:     '_layouts/colleges',
+            user:       req.user,
+            form:       forms.collegeForms.new(),
+            nav:        { main: 'colleges', sub: 'new' }
+        });
 
-    // });
+    });
 
 
     /*

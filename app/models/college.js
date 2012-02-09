@@ -3,7 +3,7 @@
  */
 
 // Module dependencies.
-var states = require('./_states');
+var states = require('./_states').states;
 
 // Load models.
 require('./publication.js');
@@ -16,13 +16,10 @@ var College = new Schema({
     url :               String,
     city :              String,
     state :             { type: String, enum: states },
-    public :            Boolean,
     numUndergrads :     Number,
     numGrads :          Number,
-    tuition :           Number,
     admitRate :         Number,
     rank :              Number,
-    aidPercent :        Number,
     satCR25 :           Number,
     satCR75 :           Number,
     satM25 :            Number,

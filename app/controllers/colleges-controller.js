@@ -26,7 +26,7 @@ module.exports = function(app) {
         function(req, res) {
 
         // Get colleges.
-        College.find(function(err, colleges) {
+        College.find().sort('rank', 1).execFind(function(err, colleges) {
 
             // Render the list.
             res.render('admin/colleges/index', {

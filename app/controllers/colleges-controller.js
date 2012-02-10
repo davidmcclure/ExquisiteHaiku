@@ -58,7 +58,7 @@ module.exports = function(app) {
             title:      'New College',
             layout:     '_layouts/colleges',
             user:       req.user,
-            form:       forms.collegeForms.new(),
+            form:       forms.collegeForms.college({}),
             nav:        { main: 'colleges', sub: 'new' }
         });
 
@@ -78,7 +78,7 @@ module.exports = function(app) {
         function(req, res) {
 
         // Pass control to form.
-        forms.collegeForms.new().handle(req, {
+        forms.collegeForms.college({}).handle(req, {
 
             // If field validations pass.
             success: function(form) {
@@ -128,7 +128,7 @@ module.exports = function(app) {
         College.findOne({ slug: req.params.slug }, function(err, college) {
 
             // Edit form.
-            var form = forms.collegeForms.edit(college).bind(college);
+            var form = forms.collegeForms.college(college).bind(college);
 
             // Render form.
             res.render('admin/colleges/edit', {
@@ -146,66 +146,75 @@ module.exports = function(app) {
 
 
     /*
-     * Process the edit information form on the edit user page.
+     * Process the edit college form on the edit college page.
      *
      * - param string username: The username of the user being edited.
      * - middleware auth.isUser: Block anonymous.
      * - middleware auth.isSuper: Block non-super users.
      */
-    // app.post('/admin/users/edit/:username/info',
-    //     auth.isUser,
-    //     auth.isSuper,
-    //     function(req, res) {
+    app.post('/admin/colleges/edit/:slug',
+        auth.isUser,
+        auth.isSuper,
+        function(req, res) {
 
-    //     // Get the user.
-    //     User.findOne({ username: req.params.username }, function(err, user) {
+        // Get the college.
+        College.findOne({ slug: req.params.slug }, function(err, college) {
 
-    //         // Information form.
-    //         var infoForm = forms.userForms.editInformation(user);
+            // College form.
+            var form = forms.collegeForms.college(college);
 
-    //         // Pass control to form.
-    //         infoForm.handle(req, {
+            // Pass control to form.
+            form.handle(req, {
 
-    //             // If field validations pass.
-    //             success: function(form) {
+                // If field validations pass.
+                success: function(form) {
 
-    //                 // Update the user.
-    //                 user.username = form.data.username;
-    //                 user.email =    form.data.email;
-    //                 user.super =    form.data.superUser;
-    //                 user.active =   form.data.active;
+                    // Update the college.
+                    college.name =             form.data.name;
+                    college.slug =             form.data.slug;
+                    college.url =              form.data.url;
+                    college.city =             form.data.city;
+                    college.state =            form.data.state;
+                    college.numUndergrads =    form.data.numUndergrads;
+                    college.numGrads =         form.data.numGrads;
+                    college.admitRate =        form.data.admitRate;
+                    college.rank =             form.data.rank;
+                    college.satCR25 =          form.data.satCR25;
+                    college.satCR75 =          form.data.satCR75;
+                    college.satM25 =           form.data.satM25;
+                    college.satM75 =           form.data.satM75;
+                    college.satW25 =           form.data.satW25;
+                    college.satW75 =           form.data.satW75;
+                    college.act25 =            form.data.act25;
+                    college.act75 =            form.data.act75;
 
-    //                 // Save and redirect.
-    //                 user.save(function() {
-    //                     res.redirect('/admin/users');
-    //                 });
+                    // Save and redirect.
+                    college.save(function() {
+                        res.redirect('/admin/colleges');
+                    });
 
-    //             },
+                },
 
-    //             // If field validations fail.
-    //             other: function(form) {
+                // If field validations fail.
+                other: function(form) {
 
-    //                 // Password form.
-    //                 var passwordForm = forms.userForms.changePassword();
+                    // Render form.
+                    res.render('admin/colleges/edit', {
+                        title:          'Edit College',
+                        layout:         '_layouts/colleges',
+                        user:           req.user,
+                        college:        college,
+                        form:           form,
+                        nav:            { main: 'colleges', sub: '' }
+                    });
 
-    //                 // Render forms.
-    //                 res.render('admin/users/edit', {
-    //                     title:          'Edit User',
-    //                     layout:         '_layouts/users',
-    //                     user:           req.user,
-    //                     editUser:       user,
-    //                     infoForm:       infoForm,
-    //                     passwordForm:   passwordForm,
-    //                     nav:            { main: 'users', sub: '' }
-    //                 });
+                }
 
-    //             }
+            });
 
-    //         });
+        });
 
-    //     });
-
-    // });
+    });
 
 
     /*

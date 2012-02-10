@@ -58,7 +58,7 @@ module.exports = function(app) {
             title:      'New User',
             layout:     '_layouts/users',
             user:       req.user,
-            form:       forms.userForms.new(),
+            form:       forms.userForms.newUser(),
             nav:        { main: 'users', sub: 'new' }
         });
 
@@ -78,7 +78,7 @@ module.exports = function(app) {
         function(req, res) {
 
         // Pass control to form.
-        forms.userForms.new().handle(req, {
+        forms.userForms.newUser().handle(req, {
 
             // If field validations pass.
             success: function(form) {

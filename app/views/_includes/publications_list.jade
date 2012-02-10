@@ -1,0 +1,16 @@
+table.table.list.table-condensed
+  thead
+    tr
+      th name
+      th college
+      th url
+      th
+  tbody
+    each pub in pubs
+      tr
+        td.title= pub.name
+        td= pub.parent.name
+        td= pub.url
+        td
+          a(href='/admin/publications/edit/#{pub.id}') edit
+          a.danger(href='/admin/colleges/delete/#{pub.id}') delete

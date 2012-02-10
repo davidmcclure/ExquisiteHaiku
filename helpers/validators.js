@@ -135,23 +135,6 @@ exports.passwordCorrectness = function(msg) {
 
 
 /*
- * Check to see if a college name is available.
- *
- * - param string msg: The failure error message.
- *
- * - return void.
- */
-exports.uniqueCollegeName = function(msg) {
-    return function(form, field, callback) {
-        College.findOne({name: field.data}, function(err, college) {
-            if (college === null) callback();
-            else callback(msg);
-        });
-    }
-}
-
-
-/*
  * Check to see if a college name is available, excluding the name
  * of the passed college.
  *
@@ -161,26 +144,11 @@ exports.uniqueCollegeName = function(msg) {
  */
 exports.uniqueNonSelfCollegeName = function(college, msg) {
     return function(form, field, callback) {
-        College.findOne({name: field.data}, function(err, foundCollege) {
-            if (foundCollege === null || foundCollege.id == college.id) callback();
-            else callback(msg);
-        });
-    }
-}
-
-
-/*
- * Check to see if a college slug is available.
- *
- * - param string msg: The failure error message.
- *
- * - return void.
- */
-exports.uniqueCollegeSlug = function(msg) {
-    return function(form, field, callback) {
-        College.findOne({slug: field.data}, function(err, college) {
-            if (college === null) callback();
-            else callback(msg);
+        College.findOne(
+            { name: { $regex: new RegExp(field.data, 'i') } },
+            function(err, foundCollege) {
+                if (foundCollege === null || foundCollege.id == college.id) callback();
+                else callback(msg);
         });
     }
 }
@@ -196,9 +164,11 @@ exports.uniqueCollegeSlug = function(msg) {
  */
 exports.uniqueNonSelfCollegeSlug = function(college, msg) {
     return function(form, field, callback) {
-        College.findOne({slug: field.data}, function(err, foundCollege) {
-            if (foundCollege === null || foundCollege.id == college.id) callback();
-            else callback(msg);
+        College.findOne(
+            { slug: { $regex: new RegExp(field.data, 'i') } },
+            function(err, foundCollege) {
+                if (foundCollege === null || foundCollege.id == college.id) callback();
+                else callback(msg);
         });
     }
 }

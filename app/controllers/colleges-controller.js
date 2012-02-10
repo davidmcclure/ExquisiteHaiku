@@ -148,7 +148,7 @@ module.exports = function(app) {
     /*
      * Process the edit college form on the edit college page.
      *
-     * - param string username: The username of the user being edited.
+     * - param string username: The slug of the college being edited.
      * - middleware auth.isUser: Block anonymous.
      * - middleware auth.isSuper: Block non-super users.
      */
@@ -218,119 +218,54 @@ module.exports = function(app) {
 
 
     /*
-     * Process the change password form on the edit user page.
+     * Show delete college confirmation form.
      *
-     * - param string username: The username of the user being edited.
+     * - param string username: The slug of the college being deleted.
      * - middleware auth.isUser: Block anonymous.
      * - middleware auth.isSuper: Block non-super users.
      */
-    // app.post('/admin/users/edit/:username/password',
-    //     auth.isUser,
-    //     auth.isSuper,
-    //     function(req, res) {
+    app.get('/admin/colleges/delete/:slug',
+        auth.isUser,
+        auth.isSuper,
+        function(req, res) {
 
-    //     // Get the user.
-    //     User.findOne({ username: req.params.username }, function(err, user) {
+        // Get the college.
+        College.findOne({ slug: req.params.slug }, function(err, college) {
 
-    //         // Information form.
-    //         var passwordForm = forms.userForms.changePassword();
+            // Render the form.
+            res.render('admin/colleges/delete', {
+                title:          'Delete College',
+                layout:         '_layouts/colleges',
+                user:           req.user,
+                college:        college,
+                nav:            { main: 'colleges', sub: '' }
+            });
 
-    //         // Pass control to form.
-    //         passwordForm.handle(req, {
+        });
 
-    //             // If field validations pass.
-    //             success: function(form) {
-
-    //                 // Update the user.
-    //                 user.password = form.data.password;
-
-    //                 // Save and redirect.
-    //                 user.save(function() {
-    //                     res.redirect('/admin/users');
-    //                 });
-
-    //             },
-
-    //             // If field validations fail.
-    //             other: function(form) {
-
-    //                 // Information form.
-    //                 var infoForm = forms.userForms.editInformation(user).bind({
-    //                     username:   user.username,
-    //                     email:      user.email,
-    //                     superUser:  user.super,
-    //                     active:     user.active
-    //                 });
-
-    //                 // Render forms.
-    //                 res.render('admin/users/edit', {
-    //                     title:          'Edit User',
-    //                     layout:         '_layouts/users',
-    //                     user:           req.user,
-    //                     editUser:       user,
-    //                     infoForm:       infoForm,
-    //                     passwordForm:   passwordForm,
-    //                     nav:            { main: 'users', sub: '' }
-    //                 });
-
-    //             }
-
-    //         });
-
-    //     });
-
-    // });
+    });
 
 
     /*
-     * Show delete user confirmation form.
+     * Delete a college.
      *
-     * - param string username: The username of the user being deleted.
+     * - param string username: The name of the college being deleted.
      * - middleware auth.isUser: Block anonymous.
      * - middleware auth.isSuper: Block non-super users.
      */
-    // app.get('/admin/users/delete/:username',
-    //     auth.isUser,
-    //     auth.isSuper,
-    //     function(req, res) {
+    app.post('/admin/colleges/delete/:slug',
+        auth.isUser,
+        auth.isSuper,
+        function(req, res) {
 
-    //     // Get the user.
-    //     User.findOne({ username: req.params.username }, function(err, user) {
+        // Get the college and delete.
+        College.findOne({ slug: req.params.slug }, function(err, college) {
+          college.remove(function(err) {
+              res.redirect('/admin/colleges');
+          });
+        });
 
-    //         // Render the form.
-    //         res.render('admin/users/delete', {
-    //             title:          'Delete User',
-    //             layout:         '_layouts/users',
-    //             user:           req.user,
-    //             deleteUser:     user,
-    //             nav:            { main: 'users', sub: '' }
-    //         });
-
-    //     });
-
-    // });
-
-
-    /*
-     * Delete a user.
-     *
-     * - param string username: The username of the user being deleted.
-     * - middleware auth.isUser: Block anonymous.
-     * - middleware auth.isSuper: Block non-super users.
-     */
-    // app.post('/admin/users/delete/:username',
-    //     auth.isUser,
-    //     auth.isSuper,
-    //     function(req, res) {
-
-    //     // Get the user and delete.
-    //     User.findOne({ username: req.params.username }, function(err, user) {
-    //       user.remove(function(err) {
-    //           res.redirect('/admin/users');
-    //       });
-    //     });
-
-    // });
+    });
 
 
 }

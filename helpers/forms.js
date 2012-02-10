@@ -405,3 +405,50 @@ exports.collegeForms = {
 
 
 };
+
+
+// Publication administration forms.
+exports.publicationForms = {
+
+
+    /*
+     * Add/edit publication form.
+     *
+     * - param object pub: The publication being edited.
+     *
+     * - return object form: The form.
+     */
+    publication: function(pub) {
+
+        return forms.create({
+
+            // Name.
+            name: fields.string({
+                label: 'Name: *',
+                required: 'Enter a name.',
+                validators: [
+                    validators.maxLength(50, 'Less than 50 characters.')
+                    // customValidators.uniqueNonSelfPublicationName(pub, 'Name taken.')
+                ]
+            }),
+
+            // Url.
+            url: fields.url({
+                label: 'Url: *',
+                required: 'Enter a url.',
+                validators: [
+                    // customValidators.uniqueNonSelfPublicationUrl(pub, 'Name taken.')
+                ]
+            }),
+
+            // College.
+            college: fields.array({
+                label: 'College: *'
+            })
+
+        });
+
+    }
+
+
+};

@@ -7,6 +7,7 @@ var forms = require('../../helpers/forms')
   , auth = require('../../helpers/auth');
 
 // Models.
+var College = mongoose.model('College');
 var Publication = mongoose.model('Publication');
 
 
@@ -43,26 +44,32 @@ module.exports = function(app) {
 
 
     /*
-     * New college form.
+     * New publication form.
      *
      * - middleware auth.isUser: Block anonymous.
      * - middleware auth.isSuper: Block non-super users.
      */
-    // app.get('/admin/colleges/new',
-    //     auth.isUser,
-    //     auth.isSuper,
-    //     function(req, res) {
+    app.get('/admin/publications/new',
+        auth.isUser,
+        auth.isSuper,
+        function(req, res) {
 
-    //     // Render form.
-    //     res.render('admin/colleges/new', {
-    //         title:      'New College',
-    //         layout:     '_layouts/colleges',
-    //         user:       req.user,
-    //         form:       forms.collegeForms.college({}),
-    //         nav:        { main: 'colleges', sub: 'new' }
-    //     });
+        // Get colleges.
+        var colleges = College.find().sort('name', 1).execFind(function(err, colleges) {
 
-    // });
+            // Render form.
+            res.render('admin/publications/new', {
+                title:      'New Publication',
+                layout:     '_layouts/publications',
+                user:       req.user,
+                form:       forms.publicationForms.publication({}),
+                colleges:   colleges,
+                nav:        { main: 'publications', sub: 'new' }
+            });
+
+        });
+
+    });
 
 
     /*

@@ -181,8 +181,6 @@ module.exports = function(app) {
                 // If field validations pass.
                 success: function(form) {
 
-                    console.log(form);
-
                     // Update the user.
                     user.username =     form.data.username;
                     user.email =        form.data.email;

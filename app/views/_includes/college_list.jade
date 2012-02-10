@@ -2,13 +2,39 @@ table.table.list.table-condensed
   thead
     tr
       th college
-      th slug
+      th city
+      th state
+      th # ugras
+      th # gras
+      th admit
+      th rank
+      th sC25
+      th sC75
+      th sM25
+      th sM75
+      th sW25
+      th sW75
+      th a25
+      th a75
       th
   tbody
     each college in colleges
       tr
         td.title= college.name
-        td= college.slug
+        td= college.city
+        td= college.state
+        td= college.numUndergrads
+        td= college.numGrads
+        td= college.admitRate
+        td= college.rank
+        td= college.satCR25
+        td= college.satCR75
+        td= college.satM25
+        td= college.satM75
+        td= college.satW25
+        td= college.satW75
+        td= college.act25
+        td= college.act75
         td
           a(href='/admin/colleges/edit/#{college.slug}') edit
           a.danger(href='/admin/colleges/delete/#{college.slug}') delete

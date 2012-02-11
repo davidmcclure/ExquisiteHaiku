@@ -105,7 +105,6 @@ module.exports = function(app) {
 
                     // Save and redirect.
                     publication.save(function(err) {
-                        console.log(err);
                         res.redirect('/admin/publications');
                     });
 
@@ -139,159 +138,165 @@ module.exports = function(app) {
 
 
     /*
-     * Edit a college.
+     * Edit a publication.
      *
-     * - param string slug: The slug of the college being edited.
+     * - param string slug: The slug of the publication being edited.
      * - middleware auth.isUser: Block anonymous.
      * - middleware auth.isSuper: Block non-super users.
      */
-    // app.get('/admin/colleges/edit/:slug',
-    //     auth.isUser,
-    //     auth.isSuper,
-    //     function(req, res) {
+    app.get('/admin/publications/edit/:slug',
+        auth.isUser,
+        auth.isSuper,
+        function(req, res) {
 
-    //     // Get the college.
-    //     College.findOne({ slug: req.params.slug }, function(err, college) {
+        // Get the publication.
+        Publication.findOne({ slug: req.params.slug }, function(err, pub) {
 
-    //         // Edit form.
-    //         var form = forms.collegeForms.college(college).bind(college);
+            // Edit form.
+            var form = forms.publicationForms.publication(pub).bind(pub);
 
-    //         // Render form.
-    //         res.render('admin/colleges/edit', {
-    //             title:          'Edit College',
-    //             layout:         '_layouts/colleges',
-    //             user:           req.user,
-    //             college:        college,
-    //             form:           form,
-    //             nav:            { main: 'colleges', sub: '' }
-    //         });
+            // Get colleges.
+            College.find().sort('name', 1).execFind(function(err, colleges) {
 
-    //     });
+                // Render form.
+                res.render('admin/publications/edit', {
+                    title:          'Edit Publication',
+                    layout:         '_layouts/publications',
+                    user:           req.user,
+                    colleges:       colleges,
+                    pub:            pub,
+                    form:           form,
+                    nav:            { main: 'colleges', sub: '' }
+                });
 
-    // });
+            });
+
+        });
+
+    });
 
 
     /*
-     * Process the edit college form on the edit college page.
+     * Process the edit publication form.
      *
-     * - param string username: The slug of the college being edited.
+     * - param string slug: The slug of the publication being edited.
      * - middleware auth.isUser: Block anonymous.
      * - middleware auth.isSuper: Block non-super users.
      */
-    // app.post('/admin/colleges/edit/:slug',
-    //     auth.isUser,
-    //     auth.isSuper,
-    //     function(req, res) {
+    app.post('/admin/publications/edit/:slug',
+        auth.isUser,
+        auth.isSuper,
+        function(req, res) {
 
-    //     // Get the college.
-    //     College.findOne({ slug: req.params.slug }, function(err, college) {
+        // Get the publication.
+        Publication.findOne({ slug: req.params.slug }, function(err, pub) {
 
-    //         // College form.
-    //         var form = forms.collegeForms.college(college);
+            // Publication form.
+            var form = forms.publicationForms.publication(pub);
 
-    //         // Pass control to form.
-    //         form.handle(req, {
+            // Pass control to form.
+            form.handle(req, {
 
-    //             // If field validations pass.
-    //             success: function(form) {
+                // If field validations pass.
+                success: function(form) {
 
-    //                 // Update the college.
-    //                 college.name =             form.data.name;
-    //                 college.slug =             form.data.slug;
-    //                 college.url =              form.data.url;
-    //                 college.city =             form.data.city;
-    //                 college.state =            form.data.state;
-    //                 college.numUndergrads =    form.data.numUndergrads;
-    //                 college.numGrads =         form.data.numGrads;
-    //                 college.admitRate =        form.data.admitRate;
-    //                 college.rank =             form.data.rank;
-    //                 college.satCR25 =          form.data.satCR25;
-    //                 college.satCR75 =          form.data.satCR75;
-    //                 college.satM25 =           form.data.satM25;
-    //                 college.satM75 =           form.data.satM75;
-    //                 college.satW25 =           form.data.satW25;
-    //                 college.satW75 =           form.data.satW75;
-    //                 college.act25 =            form.data.act25;
-    //                 college.act75 =            form.data.act75;
+                    // Get the parent college.
+                    College.findOne({
+                        slug: form.data.college
+                    }, function(err, college) {
 
-    //                 // Save and redirect.
-    //                 college.save(function() {
-    //                     res.redirect('/admin/colleges');
-    //                 });
+                        // Update the publication.
+                        pub.name =          form.data.name;
+                        pub.slug =          form.data.slug;
+                        pub.url =           form.data.url;
+                        pub.college_id =    college.id;
 
-    //             },
+                        // Save and redirect.
+                        pub.save(function(err) {
+                            res.redirect('/admin/publications');
+                        });
 
-    //             // If field validations fail.
-    //             other: function(form) {
+                    });
 
-    //                 // Render form.
-    //                 res.render('admin/colleges/edit', {
-    //                     title:          'Edit College',
-    //                     layout:         '_layouts/colleges',
-    //                     user:           req.user,
-    //                     college:        college,
-    //                     form:           form,
-    //                     nav:            { main: 'colleges', sub: '' }
-    //                 });
+                },
 
-    //             }
+                // If field validations fail.
+                other: function(form) {
 
-    //         });
+                    // Get colleges.
+                    College.find().sort('name', 1).execFind(function(err, colleges) {
 
-    //     });
+                        // Render form.
+                        res.render('admin/publications/edit', {
+                            title:      'Edit Publication',
+                            layout:     '_layouts/publications',
+                            user:       req.user,
+                            form:       form,
+                            pub:        pub,
+                            colleges:   colleges,
+                            nav:        { main: 'publications', sub: '' }
+                        });
 
-    // });
+                    });
+
+                }
+
+            });
+
+        });
+
+    });
 
 
     /*
-     * Show delete college confirmation form.
+     * Show delete publication confirmation form.
      *
-     * - param string username: The slug of the college being deleted.
+     * - param string slug: The slug of the publication being deleted.
      * - middleware auth.isUser: Block anonymous.
      * - middleware auth.isSuper: Block non-super users.
      */
-    // app.get('/admin/colleges/delete/:slug',
-    //     auth.isUser,
-    //     auth.isSuper,
-    //     function(req, res) {
+    app.get('/admin/publications/delete/:slug',
+        auth.isUser,
+        auth.isSuper,
+        function(req, res) {
 
-    //     // Get the college.
-    //     College.findOne({ slug: req.params.slug }, function(err, college) {
+        // Get the publication.
+        Publication.findOne({ slug: req.params.slug }, function(err, pub) {
 
-    //         // Render the form.
-    //         res.render('admin/colleges/delete', {
-    //             title:          'Delete College',
-    //             layout:         '_layouts/colleges',
-    //             user:           req.user,
-    //             college:        college,
-    //             nav:            { main: 'colleges', sub: '' }
-    //         });
+            // Render the form.
+            res.render('admin/publications/delete', {
+                title:          'Delete Publication',
+                layout:         '_layouts/publications',
+                user:           req.user,
+                pub:            pub,
+                nav:            { main: 'publications', sub: '' }
+            });
 
-    //     });
+        });
 
-    // });
+    });
 
 
     /*
-     * Delete a college.
+     * Delete a publication.
      *
-     * - param string username: The name of the college being deleted.
+     * - param string slug: The slug of the college being deleted.
      * - middleware auth.isUser: Block anonymous.
      * - middleware auth.isSuper: Block non-super users.
      */
-    // app.post('/admin/colleges/delete/:slug',
-    //     auth.isUser,
-    //     auth.isSuper,
-    //     function(req, res) {
+    app.post('/admin/publications/delete/:slug',
+        auth.isUser,
+        auth.isSuper,
+        function(req, res) {
 
-    //     // Get the college and delete.
-    //     College.findOne({ slug: req.params.slug }, function(err, college) {
-    //       college.remove(function(err) {
-    //           res.redirect('/admin/colleges');
-    //       });
-    //     });
+        // Get the publication and delete.
+        Publication.findOne({ slug: req.params.slug }, function(err, pub) {
+            pub.remove(function(err) {
+                res.redirect('/admin/publications');
+            });
+        });
 
-    // });
+    });
 
 
 };

@@ -2,15 +2,16 @@ table.table.list.table-condensed
   thead
     tr
       th name
-      th college
+      th slug
       th url
       th
   tbody
     each pub in pubs
       tr
         td.title= pub.name
-        td= pub.college_id
-        td= pub.url
+        td= pub.slug
         td
-          a(href='/admin/publications/edit/#{pub.id}') edit
-          a.danger(href='/admin/colleges/delete/#{pub.id}') delete
+          a(href=pub.url)= pub.url
+        td
+          a(href='/admin/publications/edit/#{pub.slug}') edit
+          a.danger(href='/admin/publications/delete/#{pub.slug}') delete

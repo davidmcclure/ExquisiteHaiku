@@ -4,6 +4,7 @@ form.form-horizontal(method='post')
     legend Edit <strong>#{pub.name}</strong>
 
     - var name =          form.fields.name
+    - var slug =          form.fields.slug
     - var url =           form.fields.url
     - var college =       form.fields.college
 
@@ -11,6 +12,7 @@ form.form-horizontal(method='post')
     - var selectField =   '../../_includes/form/select_field'
 
     != partial(textField, { field: name, name: 'name' })
+    != partial(textField, { field: slug, name: 'slug' })
     != partial(textField, { field: url, name: 'url' })
     != partial(selectField, { field: college, name: 'college', data: colleges })
 

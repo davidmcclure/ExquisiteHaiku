@@ -4,9 +4,9 @@
 
  // Module dependencies.
 var express = require('express'),
-    connect = require('connect'),
-    configFile = require('yaml-config'),
-    fs = require('fs');
+  connect = require('connect'),
+  configFile = require('yaml-config'),
+  fs = require('fs');
 
 // Load configuration.
 config = configFile.readConfig('config/config.yaml');
@@ -18,7 +18,7 @@ require('./db-connect');
 var modelsPath = __dirname + '/app/models';
 var modelFiles = fs.readdirSync(modelsPath);
 modelFiles.forEach(function(file) {
-    require(modelsPath + '/' + file);
+  require(modelsPath + '/' + file);
 });
 
 // Create server and do settings.
@@ -29,13 +29,13 @@ require('./settings').boot(app);
 var controllersPath = __dirname + '/app/controllers';
 var controllerFiles = fs.readdirSync(controllersPath);
 controllerFiles.forEach(function(file){
-    require(controllersPath + '/' + file)(app);
+  require(controllersPath + '/' + file)(app);
 });
 
 // Run.
 app.listen(3000);
 console.log(
-    "Listening on port %d in %s mode",
-    app.address().port,
-    app.settings.env
+  "Listening on port %d in %s mode",
+  app.address().port,
+  app.settings.env
 );

@@ -427,8 +427,7 @@ exports.publicationForms = {
                 label: 'Name: *',
                 required: 'Enter a name.',
                 validators: [
-                    validators.maxLength(50, 'Less than 50 characters.')
-                    // customValidators.uniqueNonSelfPublicationName(pub, 'Name taken.')
+                    customValidators.uniqueNonSelfPublicationName(pub, 'Name taken.')
                 ]
             }),
 
@@ -437,7 +436,7 @@ exports.publicationForms = {
                 label: 'Slug: *',
                 required: 'Enter a slug.',
                 validators: [
-                    // customValidators.uniqueNonSelfPublicationUrl(pub, 'Name taken.')
+                    customValidators.uniqueNonSelfPublicationSlug(pub, 'Slug taken.')
                 ]
             }),
 
@@ -446,13 +445,13 @@ exports.publicationForms = {
                 label: 'Url: *',
                 required: 'Enter a url.',
                 validators: [
-                    // customValidators.uniqueNonSelfPublicationUrl(pub, 'Name taken.')
+                    customValidators.uniqueNonSelfPublicationUrl(pub, 'URL taken.')
                 ]
             }),
 
             // College.
             college: fields.array({
-                label: 'College: *'
+                label: 'College:'
             })
 
         });

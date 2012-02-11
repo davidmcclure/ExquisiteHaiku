@@ -9,6 +9,7 @@ var _ = require('underscore'),
 // Models.
 var User = mongoose.model('User');
 var College = mongoose.model('College');
+var Publication = mongoose.model('Publication');
 
 
 /*
@@ -168,6 +169,66 @@ exports.uniqueNonSelfCollegeSlug = function(college, msg) {
             { slug: { $regex: new RegExp(field.data, 'i') } },
             function(err, foundCollege) {
                 if (foundCollege === null || foundCollege.id == college.id) callback();
+                else callback(msg);
+        });
+    };
+};
+
+
+/*
+ * Check to see if a publication name is available, excluding the name
+ * of the passed publication.
+ *
+ * - param string msg: The failure error message.
+ *
+ * - return void.
+ */
+exports.uniqueNonSelfPublicationName = function(pub, msg) {
+    return function(form, field, callback) {
+        Publication.findOne(
+            { name: { $regex: new RegExp(field.data, 'i') } },
+            function(err, foundPub) {
+                if (foundPub === null || foundPub.id == pub.id) callback();
+                else callback(msg);
+        });
+    };
+};
+
+
+/*
+ * Check to see if a publication slug is available, excluding the slug
+ * of the passed publication.
+ *
+ * - param string msg: The failure error message.
+ *
+ * - return void.
+ */
+exports.uniqueNonSelfPublicationSlug = function(pub, msg) {
+    return function(form, field, callback) {
+        Publication.findOne(
+            { slug: { $regex: new RegExp(field.data, 'i') } },
+            function(err, foundPub) {
+                if (foundPub === null || foundPub.id == pub.id) callback();
+                else callback(msg);
+        });
+    };
+};
+
+
+/*
+ * Check to see if a publication url is available, excluding the url
+ * of the passed publication.
+ *
+ * - param string msg: The failure error message.
+ *
+ * - return void.
+ */
+exports.uniqueNonSelfPublicationUrl = function(pub, msg) {
+    return function(form, field, callback) {
+        Publication.findOne(
+            { url: { $regex: new RegExp(field.data, 'i') } },
+            function(err, foundPub) {
+                if (foundPub === null || foundPub.id == pub.id) callback();
                 else callback(msg);
         });
     };

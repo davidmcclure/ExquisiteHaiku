@@ -28,7 +28,7 @@ require('./settings').boot(app);
 // Bootstrap controllers
 var controllersPath = __dirname + '/app/controllers';
 var controllerFiles = fs.readdirSync(controllersPath);
-controllerFiles.forEach(function(file){
+controllerFiles.forEach(function(file) {
   require(controllersPath + '/' + file)(app);
 });
 

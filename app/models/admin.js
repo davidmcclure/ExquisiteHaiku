@@ -1,22 +1,19 @@
 /*
- * Administrator model.
+ * User model.
  */
 
 // Module dependencies.
 var crypto = require('crypto');
 
 // Schema definition.
-var Admin = new Schema({
-    username :          { type: String, unique: true },
-    hash :              String,
-    salt :              String,
-    email :             { type: String, unique: true },
-    superUser :         Boolean,
-    active :            Boolean
+var User = new Schema({
+  username :          { type: String, unique: true },
+  email :             { type: String, unique: true },
+  hash :              String,
+  salt :              String,
+  superUser :         Boolean,
+  active :            Boolean
 });
-
-// Register model.
-mongoose.model('Admin', Admin);
 
 
 /*
@@ -30,8 +27,8 @@ mongoose.model('Admin', Admin);
  *
  * @return string: The id.
  */
-Admin.virtual('id').get(function() {
-    return this._id.toHexString();
+User.virtual('id').get(function() {
+  return this._id.toHexString();
 });
 
 /*
@@ -39,10 +36,10 @@ Admin.virtual('id').get(function() {
  *
  * @return void.
  */
-Admin.virtual('password').set(function(password) {
-    this._password = password;
-    this.salt = this.generateSalt();
-    this.hash = this.encryptPassword(password);
+User.virtual('password').set(function(password) {
+  this._password = password;
+  this.salt = this.generateSalt();
+  this.hash = this.encryptPassword(password);
 });
 
 /*
@@ -50,8 +47,8 @@ Admin.virtual('password').set(function(password) {
  *
  * @return string: The password.
  */
-Admin.virtual('password').get(function() {
-    return this._password;
+User.virtual('password').get(function() {
+  return this._password;
 });
 
 /*
@@ -61,8 +58,8 @@ Admin.virtual('password').get(function() {
  *
  * @return boolean: True the plaintext is the password.
  */
-Admin.methods.authenticate = function(plainText) {
-    return this.encryptPassword(plainText) === this.hash;
+User.methods.authenticate = function(plainText) {
+  return this.encryptPassword(plainText) === this.hash;
 };
 
 /*
@@ -70,8 +67,8 @@ Admin.methods.authenticate = function(plainText) {
  *
  * @return string: The salt.
  */
-Admin.methods.generateSalt = function() {
-    return Math.round((new Date().valueOf() + Math.random())) + '';
+User.methods.generateSalt = function() {
+  return Math.round((new Date().valueOf() + Math.random())) + '';
 };
 
 /*
@@ -81,8 +78,13 @@ Admin.methods.generateSalt = function() {
  *
  * @param string: The encrypted password.
  */
-Admin.methods.encryptPassword = function(password) {
-    return crypto.createHmac('sha1', this.salt).
-      update(password).
-      digest('hex');
+User.methods.encryptPassword = function(password) {
+  return crypto.createHmac('sha1', this.salt).
+    update(password).
+    digest('hex');
 };
+
+
+// Register model.
+mongoose.model('User', User);
+var User = mongoose.model('User');

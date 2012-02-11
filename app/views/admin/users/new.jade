@@ -10,12 +10,16 @@ form.form-horizontal(method='post')
     - var superUser =   form.fields.superUser
     - var active =      form.fields.active
 
-    != partial('../../_includes/text_field', { field: username, name: 'username' })
-    != partial('../../_includes/password_field', { field: password, name: 'password' })
-    != partial('../../_includes/password_field', { field: confirm, name: 'confirm' })
-    != partial('../../_includes/text_field', { field: email, name: 'email' })
-    != partial('../../_includes/checkbox_field', { field: superUser, name: 'superUser' })
-    != partial('../../_includes/checkbox_field', { field: active, name: 'active' })
+    - var textField =     '../../_includes/form/text_field'
+    - var checkboxField = '../../_includes/form/checkbox_field'
+    - var passwordField = '../../_includes/form/password_field'
+
+    != partial(textField, { field: username, name: 'username' })
+    != partial(passwordField, { field: password, name: 'password' })
+    != partial(passwordField, { field: confirm, name: 'confirm' })
+    != partial(textField, { field: email, name: 'email' })
+    != partial(checkboxField, { field: superUser, name: 'superUser' })
+    != partial(checkboxField, { field: active, name: 'active' })
 
   div.form-actions
     button.btn.btn-primary(type='submit') Create

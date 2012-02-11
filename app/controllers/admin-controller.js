@@ -3,7 +3,7 @@
  */
 
 // Module dependencies.
-var auth = require('../../helpers/auth')
+var auth = require('../../helpers/auth');
 
 // Controller actions.
 module.exports = function(app) {
@@ -24,4 +24,4 @@ module.exports = function(app) {
     });
 
 
-}
+};

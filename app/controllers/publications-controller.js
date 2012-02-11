@@ -3,8 +3,8 @@
  */
 
 // Module dependencies.
-var forms = require('../../helpers/forms')
-  , auth = require('../../helpers/auth');
+var forms = require('../../helpers/forms'),
+    auth = require('../../helpers/auth');
 
 // Models.
 var College = mongoose.model('College');
@@ -275,4 +275,4 @@ module.exports = function(app) {
     // });
 
 
-}
+};

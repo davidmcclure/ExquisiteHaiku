@@ -21,23 +21,25 @@ form.form-horizontal(method='post')
     - var act25 =         form.fields.act25
     - var act75 =         form.fields.act75
 
-    != partial('../../_includes/text_field', { field: name, name: 'name' })
-    != partial('../../_includes/text_field', { field: slug, name: 'slug' })
-    != partial('../../_includes/text_field', { field: url, name: 'url' })
-    != partial('../../_includes/text_field', { field: city, name: 'city' })
-    != partial('../../_includes/text_field', { field: state, name: 'state' })
-    != partial('../../_includes/text_field', { field: numUndergrads, name: 'numUndergrads' })
-    != partial('../../_includes/text_field', { field: numGrads, name: 'numGrads' })
-    != partial('../../_includes/text_field', { field: admitRate, name: 'admitRate' })
-    != partial('../../_includes/text_field', { field: rank, name: 'rank' })
-    != partial('../../_includes/text_field', { field: satCR25, name: 'satCR25' })
-    != partial('../../_includes/text_field', { field: satCR75, name: 'satCR75' })
-    != partial('../../_includes/text_field', { field: satM25, name: 'satM25' })
-    != partial('../../_includes/text_field', { field: satM75, name: 'satM75' })
-    != partial('../../_includes/text_field', { field: satW25, name: 'satW25' })
-    != partial('../../_includes/text_field', { field: satW75, name: 'satW75' })
-    != partial('../../_includes/text_field', { field: act25, name: 'act25' })
-    != partial('../../_includes/text_field', { field: act75, name: 'act75' })
+    - var textField =     '../../_includes/form/text_field'
+
+    != partial(textField, { field: name, name: 'name' })
+    != partial(textField, { field: slug, name: 'slug' })
+    != partial(textField, { field: url, name: 'url' })
+    != partial(textField, { field: city, name: 'city' })
+    != partial(textField, { field: state, name: 'state' })
+    != partial(textField, { field: numUndergrads, name: 'numUndergrads' })
+    != partial(textField, { field: numGrads, name: 'numGrads' })
+    != partial(textField, { field: admitRate, name: 'admitRate' })
+    != partial(textField, { field: rank, name: 'rank' })
+    != partial(textField, { field: satCR25, name: 'satCR25' })
+    != partial(textField, { field: satCR75, name: 'satCR75' })
+    != partial(textField, { field: satM25, name: 'satM25' })
+    != partial(textField, { field: satM75, name: 'satM75' })
+    != partial(textField, { field: satW25, name: 'satW25' })
+    != partial(textField, { field: satW75, name: 'satW75' })
+    != partial(textField, { field: act25, name: 'act25' })
+    != partial(textField, { field: act75, name: 'act75' })
 
   div.form-actions
     button.btn.btn-primary(type='submit') Create

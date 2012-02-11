@@ -7,9 +7,12 @@ form.form-horizontal(method='post')
     - var url =           form.fields.url
     - var college =       form.fields.college
 
-    != partial('../../_includes/text_field', { field: name, name: 'name' })
-    != partial('../../_includes/text_field', { field: url, name: 'url' })
-    != partial('../../_includes/select_field', { field: college, name: 'college', data: colleges })
+    - var textField =     '../../_includes/form/text_field'
+    - var selectField =   '../../_includes/form/select_field'
+
+    != partial(textField, { field: name, name: 'name' })
+    != partial(textField, { field: url, name: 'url' })
+    != partial(selectField, { field: college, name: 'college', data: colleges })
 
   div.form-actions
     button.btn.btn-primary(type='submit') Create

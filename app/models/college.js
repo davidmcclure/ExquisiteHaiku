@@ -33,4 +33,4 @@ College.virtual('id').get(function() {
     return this._id.toHexString();
 });
 
-mongoose.model('College', College)
+mongoose.model('College', College);

@@ -3,10 +3,10 @@
  */
 
  // Module dependencies.
-var express = require('express')
-  , connect = require('connect')
-  , configFile = require('yaml-config')
-  , fs = require('fs');
+var express = require('express'),
+    connect = require('connect'),
+    configFile = require('yaml-config'),
+    fs = require('fs');
 
 // Load configuration.
 config = configFile.readConfig('config/config.yaml');
@@ -18,7 +18,7 @@ require('./db-connect');
 var modelsPath = __dirname + '/app/models';
 var modelFiles = fs.readdirSync(modelsPath);
 modelFiles.forEach(function(file) {
-    require(modelsPath + '/' + file)
+    require(modelsPath + '/' + file);
 });
 
 // Create server and do settings.

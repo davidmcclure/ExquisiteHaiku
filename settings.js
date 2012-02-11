@@ -3,13 +3,13 @@
  */
 
  // Module dependencies and import hook.
-var express = require('express')
-  , mongoStore = require('connect-mongodb');
+var express = require('express'),
+    mongoStore = require('connect-mongodb');
 
 // Boot hook.
 exports.boot = function(app) {
     bootApplication(app);
-}
+};
 
 // Start-up routine.
 function bootApplication(app) {

@@ -8,10 +8,10 @@ form.form-stacked.install(method='post')
     - var confirm =   form.fields.confirm
     - var email =     form.fields.email
 
-    != partial('../_includes/text_field', { field: username, name: 'username' })
-    != partial('../_includes/password_field', { field: password, name: 'password' })
-    != partial('../_includes/password_field', { field: confirm, name: 'confirm' })
-    != partial('../_includes/text_field', { field: email, name: 'email' })
+    != partial('../_includes/form/text_field', { field: username, name: 'username' })
+    != partial('../_includes/form/password_field', { field: password, name: 'password' })
+    != partial('../_includes/form/password_field', { field: confirm, name: 'confirm' })
+    != partial('../_includes/form/text_field', { field: email, name: 'email' })
 
   div.form-actions
     button.btn.btn-primary.btn-large(type='submit') Submit

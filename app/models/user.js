@@ -46,4 +46,4 @@ User.methods.encryptPassword = function(password) {
       digest('hex');
 };
 
-mongoose.model('User', User)
+mongoose.model('User', User);

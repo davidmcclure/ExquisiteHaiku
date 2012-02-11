@@ -3,8 +3,8 @@
  */
 
 // Module dependencies.
-var _ = require('underscore')
-  , states = require('../app/models/_states').states;
+var _ = require('underscore'),
+    states = require('../app/models/_states').states;
 
 // Models.
 var User = mongoose.model('User');
@@ -24,8 +24,8 @@ exports.uniqueUsername = function(msg) {
             if (user === null) callback();
             else callback(msg);
         });
-    }
-}
+    };
+};
 
 
 /*
@@ -43,8 +43,8 @@ exports.uniqueNonSelfUsername = function(user, msg) {
             if (foundUser === null || foundUser.id == user.id) callback();
             else callback(msg);
         });
-    }
-}
+    };
+};
 
 
 /*
@@ -60,8 +60,8 @@ exports.uniqueEmail = function(msg) {
             if (user === null) callback();
             else callback(msg);
         });
-    }
-}
+    };
+};
 
 
 /*
@@ -79,8 +79,8 @@ exports.uniqueNonSelfEmail = function(user, msg) {
             if (foundUser === null || foundUser.id == user.id) callback();
             else callback(msg);
         });
-    }
-}
+    };
+};
 
 
 /*
@@ -96,8 +96,8 @@ exports.usernameExists = function(msg) {
             if (user === null) callback(msg);
             else callback();
         });
-    }
-}
+    };
+};
 
 
 /*
@@ -113,8 +113,8 @@ exports.usernameActive = function(msg) {
             if (user !== null && !user.active) callback(msg);
             else callback();
         });
-    }
-}
+    };
+};
 
 
 /*
@@ -128,10 +128,10 @@ exports.passwordCorrectness = function(msg) {
     return function(form, field, callback) {
         User.findOne({username: form.data.username}, function(err, user) {
             if (user.authenticate(field.data)) callback();
-            else callback(msg)
+            else callback(msg);
         });
-    }
-}
+    };
+};
 
 
 /*
@@ -150,8 +150,8 @@ exports.uniqueNonSelfCollegeName = function(college, msg) {
                 if (foundCollege === null || foundCollege.id == college.id) callback();
                 else callback(msg);
         });
-    }
-}
+    };
+};
 
 
 /*
@@ -170,8 +170,8 @@ exports.uniqueNonSelfCollegeSlug = function(college, msg) {
                 if (foundCollege === null || foundCollege.id == college.id) callback();
                 else callback(msg);
         });
-    }
-}
+    };
+};
 
 
 /*
@@ -185,8 +185,8 @@ exports.validState = function(msg) {
     return function(form, field, callback) {
         if (_.include(states, field.data.toUpperCase())) callback();
         else callback(msg);
-    }
-}
+    };
+};
 
 
 /*
@@ -198,10 +198,10 @@ exports.validState = function(msg) {
  */
 exports.positive = function(msg) {
     return function(form, field, callback) {
-        if (field.data >= 0) callback()
+        if (field.data >= 0) callback();
         else callback(msg);
     };
-}
+};
 
 
 /*
@@ -213,9 +213,9 @@ exports.positive = function(msg) {
  */
 exports.positiveInteger = function(msg) {
     return function(form, field, callback) {
-        if ((parseFloat(field.data) == parseInt(field.data)) &&
-            !isNaN(field.data) && parseInt(field.data) >= 0) {
+        if ((parseFloat(field.data) == parseInt(field.data, 10)) &&
+            !isNaN(field.data) && parseInt(field.data, 10) >= 0) {
                 callback();
         } else callback(msg);
-    }
-}
+    };
+};

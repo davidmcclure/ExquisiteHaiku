@@ -3,17 +3,21 @@ form.form-horizontal(method='post', action='/admin/users/edit/#{editUser.usernam
 
     legend Edit Information
 
-    - var username =    infoForm.fields.username
-    - var email =       infoForm.fields.email
-    - var superUser =   infoForm.fields.superUser
-    - var active =      infoForm.fields.active
+    - var username =      infoForm.fields.username
+    - var email =         infoForm.fields.email
+    - var superUser =     infoForm.fields.superUser
+    - var active =        infoForm.fields.active
 
-    != partial('../../_includes/text_field', { field: username, name: 'username' })
-    != partial('../../_includes/text_field', { field: email, name: 'email' })
+    - var textField =     '../../_includes/form/text_field'
+    - var checkboxField = '../../_includes/form/checkbox_field'
+    - var passwordField = '../../_includes/form/password_field'
+
+    != partial(textField, { field: username, name: 'username' })
+    != partial(textField, { field: email, name: 'email' })
 
     if editUser.id != user.id
-      != partial('../../_includes/checkbox_field', { field: superUser, name: 'superUser' })
-      != partial('../../_includes/checkbox_field', { field: active, name: 'active' })
+      != partial(checkboxField, { field: superUser, name: 'superUser' })
+      != partial(checkboxField, { field: active, name: 'active' })
 
   div.form-actions
     button.btn.btn-primary(type='submit') Save
@@ -26,8 +30,8 @@ form.form-horizontal(method='post', action='/admin/users/edit/#{editUser.usernam
     - var password =    passwordForm.fields.password
     - var confirm =     passwordForm.fields.confirm
 
-    != partial('../../_includes/password_field', { field: password, name: 'password' })
-    != partial('../../_includes/password_field', { field: confirm, name: 'confirm' })
+    != partial(passwordField, { field: password, name: 'password' })
+    != partial(passwordField, { field: confirm, name: 'confirm' })
 
   div.form-actions
     button.btn.btn-primary(type='submit') Save

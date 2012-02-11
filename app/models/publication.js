@@ -4,8 +4,10 @@
 
 // Schema definition.
 var Publication = new Schema({
-    name :              String,
-    url :               String
+    name :              { type: String, required: true, unique: true },
+    slug :              { type: String, required: true, unique: true },
+    url :               { type: String, required: true, unique: true },
+    college_id :        { type: Schema.ObjectId, ref: 'College' }
 });
 
 // Id getter.

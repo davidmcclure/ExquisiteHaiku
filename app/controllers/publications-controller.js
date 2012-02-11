@@ -55,7 +55,7 @@ module.exports = function(app) {
         function(req, res) {
 
         // Get colleges.
-        var colleges = College.find().sort('name', 1).execFind(function(err, colleges) {
+        College.find().sort('name', 1).execFind(function(err, colleges) {
 
             // Render form.
             res.render('admin/publications/new', {
@@ -73,50 +73,69 @@ module.exports = function(app) {
 
 
     /*
-     * Process new college form submission. Rerender the form if validations
-     * fail; create new college and redirect to colleges index if valid.
+     * Process new publication form submission. Rerender the form if validations
+     * fail; create new publication and redirect to publications index if valid.
      *
      * - middleware auth.isUser: Block anonymous.
      * - middleware auth.isSuper: Block non-super users.
      */
-    // app.post('/admin/colleges/new',
-    //     auth.isUser,
-    //     auth.isSuper,
-    //     function(req, res) {
+    app.post('/admin/publications/new',
+        auth.isUser,
+        auth.isSuper,
+        function(req, res) {
 
-    //     // Pass control to form.
-    //     forms.collegeForms.college({}).handle(req, {
+        // Pass control to form.
+        forms.publicationForms.publication({}).handle(req, {
 
-    //         // If field validations pass.
-    //         success: function(form) {
+            // If field validations pass.
+            success: function(form) {
 
-    //             // Create the college.
-    //             var college = new College(form.data);
+                // Get the parent college.
+                College.findOne({
+                    slug: form.data.college
+                }, function(err, college) {
 
-    //             // Save and redirect.
-    //             college.save(function(err) {
-    //                 res.redirect('/admin/colleges');
-    //             });
+                    // Create the publication.
+                    var publication = new Publication({
+                        name:           form.data.name,
+                        slug:           form.data.slug,
+                        url:            form.data.url,
+                        college_id:     college.id
+                    });
 
-    //         },
+                    // Save and redirect.
+                    publication.save(function(err) {
+                        console.log(err);
+                        res.redirect('/admin/publications');
+                    });
 
-    //         // If field validations fail.
-    //         other: function(form) {
+                });
 
-    //             // Render the form.
-    //             res.render('admin/colleges/new', {
-    //                 title:      'New College',
-    //                 layout:     '_layouts/colleges',
-    //                 user:       req.user,
-    //                 form:       form,
-    //                 nav:        { main: 'colleges', sub: 'new' }
-    //             });
+            },
 
-    //         }
+            // If field validations fail.
+            other: function(form) {
 
-    //     });
+                // Get colleges.
+                College.find().sort('name', 1).execFind(function(err, colleges) {
 
-    // });
+                    // Render form.
+                    res.render('admin/publications/new', {
+                        title:      'New Publication',
+                        layout:     '_layouts/publications',
+                        user:       req.user,
+                        form:       form,
+                        colleges:   colleges,
+                        nav:        { main: 'publications', sub: 'new' }
+                    });
+
+                });
+
+            }
+
+        });
+
+    });
 
 
     /*

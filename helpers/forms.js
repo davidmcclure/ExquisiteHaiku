@@ -432,6 +432,15 @@ exports.publicationForms = {
                 ]
             }),
 
+            // Slug.
+            slug: fields.string({
+                label: 'Slug: *',
+                required: 'Enter a slug.',
+                validators: [
+                    // customValidators.uniqueNonSelfPublicationUrl(pub, 'Name taken.')
+                ]
+            }),
+
             // Url.
             url: fields.url({
                 label: 'Url: *',

@@ -2,10 +2,6 @@
  * College model.
  */
 
-// Load models.
-require('./publication.js');
-var Publication = mongoose.model('Publication');
-
 // Schema definition.
 var College = new Schema({
     name :              { type: String, required: true, unique: true },
@@ -24,8 +20,7 @@ var College = new Schema({
     satW25 :            Number,
     satW75 :            Number,
     act25 :             Number,
-    act75 :             Number,
-    publications :      [Publication]
+    act75 :             Number
 });
 
 // Id getter.

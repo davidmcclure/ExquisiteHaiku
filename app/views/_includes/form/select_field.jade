@@ -1,6 +1,6 @@
 div.control-group
   label.control-label(for=name)= field.label
   div.controls
-    select
-      each college in colleges
-        option= college.name
+    select(name=name)
+      each college in data
+        option(value=college.slug)= college.name

@@ -9,7 +9,7 @@ table.table.list.table-condensed
     each pub in pubs
       tr
         td.title= pub.name
-        td= pub.parent.name
+        td= pub.college_id
         td= pub.url
         td
           a(href='/admin/publications/edit/#{pub.id}') edit

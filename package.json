@@ -1,5 +1,5 @@
 {
-    "name": "project-name"
+    "name": "college-sypder"
   , "version": "0.0.1"
   , "private": true
   , "author": "David McClure"
@@ -15,6 +15,7 @@
     , "yaml-config": ">= 0.1.0"
     , "underscore": ">= 1.3.1"
     , "vows": ">= 0.6.1"
+    , "jasmine-node": ">= 1.0.2"
     , "forms": "https://github.com/davidmcclure/forms/tarball/master"
   }
 }

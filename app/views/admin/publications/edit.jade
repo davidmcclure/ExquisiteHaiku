@@ -14,7 +14,15 @@ form.form-horizontal(method='post')
     != partial(textField, { field: name, name: 'name' })
     != partial(textField, { field: slug, name: 'slug' })
     != partial(textField, { field: url, name: 'url' })
-    != partial(selectField, { field: college, name: 'college', data: colleges })
+    div.control-group
+      label.control-label(for=name)= college.label
+      div.controls
+        select(name='college')
+          each listCollege in colleges
+            if listCollege.id == pub.college_id
+              option(value=listCollege.slug, selected)= listCollege.name
+            else
+              option(value=listCollege.slug)= listCollege.name
 
   div.form-actions
     button.btn.btn-primary(type='submit') Save

@@ -1,62 +1,66 @@
 /*
- * Unit tests for user model.
+ * Unit tests for college model.
  */
 
 // Module dependencies.
 var vows = require('mocha'),
-  assert = require('should');
+  should = require('should'),
+  assert = require('assert');
 
 // Boostrap the application.
 process.env.NODE_ENV = 'testing';
 require('../../../app');
 
 // Bootstrap models.
-var User = mongoose.model('User');
+var College = mongoose.model('College');
 
 
 /*
  * ----------------------
- * User model unit tests.
+ * College model unit tests.
  * ----------------------
  */
 
 
-describe('User', function() {
+describe('College', function() {
 
-  // Clear user collection after each suite.
+  // Clear college collection after each suite.
   afterEach(function(done) {
-    User.collection.remove(function(err) { done(); });
+    College.collection.remove(function(err) { done(); });
   });
 
   describe('uniqueness constraints', function() {
 
-    // Stub user.
+    // Stub college.
     beforeEach(function(done) {
 
-      // Create user.
-      var user = new User({
-        username:   'david',
-        email:      'david@spyder.com'
+      // Create college.
+      var college = new College({
+        name: 'Yale',
+        slug: 'yale'
       });
 
       // Save.
-      user.save(function(err) { done(); });
+      college.save(function(err) { done(); });
 
     });
 
-    it('should block duplicate usernames', function(done) {
+    it('should block duplicate names', function(done) {
 
-      // Create a new user with a duplicate username.
-      var dupUser = new User({ username: 'david' });
+      // Create a new college with a duplicate name.
+      var dupCollege = new College({
+        name: 'Yale',
+        slug: 'different'
+      });
 
       // Save.
-      dupUser.save(function(err) {
+      dupCollege.save(function(err) {
 
         // Check for error.
         err.code.should.eql(11000);
 
         // Check for 1 document.
-        User.count({}, function(err, count) {
+        College.count({}, function(err, count) {
           count.should.eql(1);
           done();
         });
@@ -65,54 +69,26 @@ describe('User', function() {
 
     });
 
-    it('should block duplicate emails', function(done) {
+    it('should block duplicate slugs', function(done) {
 
-      // Create a new user with a duplicate email.
-      var dupUser = new User({ email: 'david@spyder.com' });
+      // Create a new college with a duplicate slug.
+      var dupCollege = new College({
+        name: 'Harvard',
+        slug: 'yale'
+      });
 
       // Save.
-      dupUser.save(function(err) {
+      dupCollege.save(function(err) {
 
         // Check for error.
         err.code.should.eql(11000);
 
         // Check for 1 document.
-        User.count({}, function(err, count) {
+        College.count({}, function(err, count) {
           count.should.eql(1);
           done();
         });
 
-      });
-
-    });
-
-  });
-
-  describe('boolean field defaults', function() {
-
-    var user;
-
-    // Stub user.
-    beforeEach(function() {
-      user = new User();
-    });
-
-    it('should set superUser false by default', function(done) {
-
-      // Check for superUser false.
-      user.save(function(err) {
-        user.superUser.should.be.false;
-        done();
-      });
-
-    });
-
-    it('should set active false by default', function(done) {
-
-      // Check for superUser false.
-      user.save(function(err) {
-        user.active.should.be.false;
-        done();
       });
 
     });
@@ -121,60 +97,74 @@ describe('User', function() {
 
   describe('virtual field "id"', function() {
 
-    var user;
+    var college;
 
-    // Stub user.
+    // Stub college.
     beforeEach(function(done) {
-      user = new User();
-      user.save(function(err) { done(); });
+      college = new College();
+      college.save(function(err) { done(); });
     });
 
     it('should have a virtual field for "id"', function() {
-      user.id.should.be.ok;
+      college.id.should.be.ok;
     });
 
     it('should be a string', function() {
-      user.id.should.be.a('string');
+      college.id.should.be.a('string');
     });
 
   });
 
-  describe('virtual field "password"', function() {
+  describe('states enum', function() {
 
-    var user;
+    it('should block non-existent state abbreviations', function(done) {
 
-    // Stub user.
-    beforeEach(function() {
-      user = new User({ password: 'password' });
+      // Create college with non-existent state.
+      var college = new College({
+        name:   'Yale',
+        slug:   'yale',
+        state:  'NA'
+      });
+
+      // Save.
+      college.save(function(err) {
+
+        // Check for error.
+        err.errors.state.should.be.ok;
+
+        // Check for 0 documents.
+        College.count({}, function(err, count) {
+          count.should.eql(0);
+          done();
+        });
+
+      });
+
     });
 
-    it('should set _password, salt, and hash', function() {
-      user._password.should.be.ok;
-      user.salt.should.be.ok;
-      user.hash.should.be.ok;
-    });
+    it('should allow valid state abbreviations', function(done) {
 
-    it('should have a virtual field for "password"', function() {
-      user.password.should.be.ok;
-    });
+      // Create college with valid state.
+      var college = new College({
+        name:   'Yale',
+        slug:   'yale',
+        state:  'CT'
+      });
 
-  });
+      // Save.
+      college.save(function(err) {
 
-  describe('password authentication', function() {
+        // Check for no error.
+        assert(!err);
 
-    var user;
+        // Check for 1 documents.
+        College.count({}, function(err, count) {
+          count.should.eql(1);
+          done();
+        });
 
-    // Stub user.
-    beforeEach(function() {
-      user = new User({ password: 'password' });
-    });
+      });
 
-    it('should return true for correct password', function() {
-      user.authenticate('password').should.be.true;
-    });
-
-    it('should return false for incorrect password', function() {
-      user.authenticate('wrong').should.be.false;
     });
 
   });

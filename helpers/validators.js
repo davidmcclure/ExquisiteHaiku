@@ -4,7 +4,7 @@
 
 // Module dependencies.
 var _ = require('underscore'),
-    states = require('../app/models/_states').states;
+    states = require('../lib/states').states;
 
 // Models.
 var User = mongoose.model('User');

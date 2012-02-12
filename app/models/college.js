@@ -2,13 +2,16 @@
  * College model.
  */
 
+// Module dependencies.
+var states = require('../../lib/states').states;
+
 // Schema definition.
 var College = new Schema({
   name :                { type: String, required: true, unique: true },
   slug :                { type: String, required: true, unique: true },
   url :                 String,
   city :                String,
-  state :               String,
+  state :               { type: String, enum: states },
   numUndergrads :       Number,
   numGrads :            Number,
   admitRate :           Number,

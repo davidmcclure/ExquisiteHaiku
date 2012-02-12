@@ -53,17 +53,6 @@ User.virtual('password').get(function() {
 });
 
 /*
- * Check plaintext string against encrypted password.
- *
- * @param string plainText: The plaintext submission.
- *
- * @return boolean: True the plaintext is the password.
- */
-User.methods.authenticate = function(plainText) {
-  return this.encryptPassword(plainText) === this.hash;
-};
-
-/*
  * Generate salt.
  *
  * @return string: The salt.
@@ -83,6 +72,17 @@ User.methods.encryptPassword = function(password) {
   return crypto.createHmac('sha1', this.salt).
     update(password).
     digest('hex');
+};
+
+/*
+ * Check plaintext string against encrypted password.
+ *
+ * @param string plainText: The plaintext submission.
+ *
+ * @return boolean: True the plaintext is the password.
+ */
+User.methods.authenticate = function(plainText) {
+  return this.encryptPassword(plainText) === this.hash;
 };
 
 

@@ -119,4 +119,64 @@ describe('User', function() {
 
   });
 
+  describe('virtual field "id"', function() {
+
+    var user;
+
+    // Stub user.
+    beforeEach(function(done) {
+      user = new User();
+      user.save(function(err) { done(); });
+    });
+
+    it('should have a virtual field for "id"', function() {
+      user.id.should.be.ok;
+    });
+
+    it('should be a string', function() {
+      user.id.should.be.a('string');
+    });
+
+  });
+
+  describe('virtual field "id"', function() {
+
+    var user;
+
+    // Stub user.
+    beforeEach(function() {
+      user = new User({ password: 'password' });
+    });
+
+    it('should set _password, salt, and hash', function() {
+      user._password.should.be.ok;
+      user.salt.should.be.ok;
+      user.hash.should.be.ok;
+    });
+
+    it('should have a virtual field for "password"', function() {
+      user.password.should.be.ok;
+    });
+
+  });
+
+  describe('password authentication', function() {
+
+    var user;
+
+    // Stub user.
+    beforeEach(function() {
+      user = new User({ password: 'password' });
+    });
+
+    it('should return true for correct password', function() {
+      user.authenticate('password').should.be.true;
+    });
+
+    it('should return false for incorrect password', function() {
+      user.authenticate('wrong').should.be.false;
+    });
+
+  });
+
 });

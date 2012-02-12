@@ -40,7 +40,18 @@ var College = new Schema({
  * @return string: The id.
  */
 College.virtual('id').get(function() {
-    return this._id.toHexString();
+  return this._id.toHexString();
 });
+
+/*
+ * Check plaintext string against encrypted password.
+ *
+ * @param string plainText: The plaintext submission.
+ *
+ * @return boolean: True the plaintext is the password.
+ */
+College.methods.addPublication = function(publication) {
+  this.publications.push(publication);
+};
 
 mongoose.model('College', College);

@@ -2,20 +2,29 @@
  * Publication model.
  */
 
-// Models.
-var College = mongoose.model('College');
-
 // Schema definition.
 var Publication = new Schema({
-    name :              { type: String, required: true, unique: true },
-    slug :              { type: String, required: true, unique: true },
-    url :               { type: String, required: true, unique: true },
-    college_id :        { type: Schema.ObjectId, ref: 'College' }
+  name :    { type: String, required: true, unique: true },
+  slug :    { type: String, required: true, unique: true },
+  url :     { type: String, required: true, unique: true },
+  college : { type: Schema.ObjectId, ref: 'College', required: true }
 });
 
-// Id getter.
+
+/*
+ * -----------------
+ * Document methods.
+ * -----------------
+ */
+
+
+/*
+ * Get id.
+ *
+ * @return string: The id.
+ */
 Publication.virtual('id').get(function() {
-    return this._id.toHexString();
+  return this._id.toHexString();
 });
 
 mongoose.model('Publication', Publication);

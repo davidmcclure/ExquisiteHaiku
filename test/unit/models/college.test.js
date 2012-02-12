@@ -13,6 +13,7 @@ require('../../../app');
 
 // Bootstrap models.
 var College = mongoose.model('College');
+var Publication = mongoose.model('Publication');
 
 
 /*

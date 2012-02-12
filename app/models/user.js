@@ -9,10 +9,10 @@ var crypto = require('crypto');
 var User = new Schema({
   username :          { type: String, unique: true },
   email :             { type: String, unique: true },
+  superUser :         { type: Boolean, default: false },
+  active :            { type: Boolean, default: false },
   hash :              String,
-  salt :              String,
-  superUser :         Boolean,
-  active :            Boolean
+  salt :              String
 });
 
 

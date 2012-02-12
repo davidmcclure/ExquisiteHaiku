@@ -1,3 +1,6 @@
+testing:
+  db:
+    uri: "mongodb://localhost/spyder_testing"
 development:
   db:
     uri: "mongodb://localhost/spyder_development"

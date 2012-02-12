@@ -139,7 +139,7 @@ describe('User', function() {
 
   });
 
-  describe('virtual field "id"', function() {
+  describe('virtual field "password"', function() {
 
     var user;
 

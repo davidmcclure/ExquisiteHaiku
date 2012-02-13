@@ -1,16 +1,48 @@
 /*
- * Installation routes.
+ * Installation controller.
  */
 
 // Module dependencies.
-var forms = require('../../helpers/forms'),
-    auth = require('../../helpers/auth');
+var forms = require('../../helpers/forms/install'),
+  auth = require('../../helpers/auth');
 
 // Models.
 var User = mongoose.model('User');
 
+
+/*
+ * ---------------
+ * Install routes.
+ * ---------------
+ */
+
+
 // Controller actions.
 module.exports = function(app) {
+
+  /*
+   * Show installation form.
+   *
+   * @middleware auth.noUsers: Block if there is an existing user.
+   */
+  app.get('/admin/install',
+    auth.noUsers,
+    function(req, res) {
+      res.send('GET /admin/install');
+  });
+
+  /*
+   * Process installation form.
+   *
+   * @middleware auth.noUsers: Block if there is an existing user.
+   */
+  app.post('/admin/install',
+    auth.noUsers,
+    function(req, res) {
+      res.send('POST /admin/install');
+  });
+
+
 
 
     /*
@@ -19,13 +51,13 @@ module.exports = function(app) {
      * - middleware auth.noUsers: Block if there are any users in the
      *   database.
      */
-    app.get('/admin/install', auth.noUsers, function(req, res) {
-        res.render('auth/install', {
-            title:      'Installation',
-            form:       forms.authForms.install(),
-            layout:     '_layouts/auth'
-        });
-    });
+    // app.get('/admin/install', auth.noUsers, function(req, res) {
+    //     res.render('auth/install', {
+    //         title:      'Installation',
+    //         form:       forms.authForms.install(),
+    //         layout:     '_layouts/auth'
+    //     });
+    // });
 
 
     /*
@@ -34,43 +66,43 @@ module.exports = function(app) {
      * - middleware auth.noUsers: Block if there are any users in the
      *   database.
      */
-    app.post('/admin/install', auth.anonUser, function(req, res) {
+    // app.post('/admin/install', auth.anonUser, function(req, res) {
 
-        // Pass control to form.
-        forms.authForms.install().handle(req, {
+    //     // Pass control to form.
+    //     forms.authForms.install().handle(req, {
 
-            // If field validations pass.
-            success: function(form) {
+    //         // If field validations pass.
+    //         success: function(form) {
 
-                // Create the user.
-                var user = new User({
-                    username:   form.data.username,
-                    email:      form.data.email,
-                    password:   form.data.password,
-                    superUser:  true,
-                    active:     true
-                });
+    //             // Create the user.
+    //             var user = new User({
+    //                 username:   form.data.username,
+    //                 email:      form.data.email,
+    //                 password:   form.data.password,
+    //                 superUser:  true,
+    //                 active:     true
+    //             });
 
-                // Save and redirect.
-                user.save(function() {
-                    req.session.user_id = user.id;
-                    res.redirect('/admin');
-                });
+    //             // Save and redirect.
+    //             user.save(function() {
+    //                 req.session.user_id = user.id;
+    //                 res.redirect('/admin');
+    //             });
 
-            },
+    //         },
 
-            // If field validations fail.
-            other: function(form) {
-                res.render('auth/install', {
-                    title:      'Install',
-                    form:       form,
-                    layout:     '_layouts/auth'
-                });
-            }
+    //         // If field validations fail.
+    //         other: function(form) {
+    //             res.render('auth/install', {
+    //                 title:      'Install',
+    //                 form:       form,
+    //                 layout:     '_layouts/auth'
+    //             });
+    //         }
 
-        });
+    //     });
 
-    });
+    // });
 
 
 };

@@ -25,9 +25,134 @@ var College = mongoose.model('College');
 
 describe('Publication', function() {
 
-  // Clear publication collection after each suite.
+  var college;
+
+  // Stub college.
+  beforeEach(function(done) {
+
+    // Create college.
+    college = new College({
+      name: 'Yale',
+      slug: 'yale'
+    });
+
+    // Save.
+    college.save(function(err) { done(); });
+
+  });
+
+  // Clear publications.
   afterEach(function(done) {
     Publication.collection.remove(function(err) { done(); });
+  });
+
+  // Clear colleges.
+  afterEach(function(done) {
+    College.collection.remove(function(err) { done(); });
+  });
+
+  describe('required field validations', function() {
+
+    it('should require a name', function(done) {
+
+      // Create publication with no name.
+      var publication = new Publication({
+        slug:     'yale-herald',
+        url:      'http://yaleherald.com',
+        college:  college._id
+      });
+
+      // Save.
+      publication.save(function(err) {
+
+        // Check for error.
+        err.errors.name.type.should.eql('required');
+
+        // Check for 0 documents.
+        Publication.count({}, function(err, count) {
+          count.should.eql(0);
+          done();
+        });
+
+      });
+
+    });
+
+    it('should require a slug', function(done) {
+
+      // Create publication with no slug.
+      var publication = new Publication({
+        name:     'The Yale Herald',
+        url:      'http://yaleherald.com',
+        college:  college._id
+      });
+
+      // Save.
+      publication.save(function(err) {
+
+        // Check for error.
+        err.errors.slug.type.should.eql('required');
+
+        // Check for 0 documents.
+        Publication.count({}, function(err, count) {
+          count.should.eql(0);
+          done();
+        });
+
+      });
+
+    });
+
+    it('should require a url', function(done) {
+
+      // Create publication with no url.
+      var publication = new Publication({
+        name:     'The Yale Herald',
+        slug:     'yale-herald',
+        college:  college._id
+      });
+
+      // Save.
+      publication.save(function(err) {
+
+        // Check for error.
+        err.errors.url.type.should.eql('required');
+
+        // Check for 0 documents.
+        Publication.count({}, function(err, count) {
+          count.should.eql(0);
+          done();
+        });
+
+      });
+
+    });
+
+    it('should require a college reference', function(done) {
+
+      // Create publication with no college reference.
+      var publication = new Publication({
+        name:     'The Yale Herald',
+        slug:     'yale-herald',
+        url:      'http://yaleherald.com'
+      });
+
+      // Save.
+      publication.save(function(err) {
+
+        // Check for error.
+        err.errors.college.type.should.eql('required');
+
+        // Check for 0 documents.
+        Publication.count({}, function(err, count) {
+          count.should.eql(0);
+          done();
+        });
+
+      });
+
+    });
+
   });
 
   describe('uniqueness constraints', function() {
@@ -141,138 +266,33 @@ describe('Publication', function() {
 
   });
 
-  //   it('should block duplicate slugs', function(done) {
+  describe('virtual field "id"', function() {
 
-  //     // Create a new college with a duplicate slug.
-  //     var dupCollege = new College({
-  //       name: 'Harvard',
-  //       slug: 'yale'
-  //     });
+    var publication;
 
-  //     // Save.
-  //     dupCollege.save(function(err) {
+    // Stub publication.
+    beforeEach(function(done) {
 
-  //       // Check for error.
-  //       err.code.should.eql(11000);
+      publication = new Publication({
+        name:     'The Yale Herald',
+        slug:     'yale-herald',
+        url:      'http://yaleherald.com',
+        college:  college._id
+      });
 
-  //       // Check for 1 document.
-  //       College.count({}, function(err, count) {
-  //         count.should.eql(1);
-  //         done();
-  //       });
+      // Save.
+      publication.save(function(err) { done(); });
 
-  //     });
+    });
 
-  //   });
+    it('should have a virtual field for "id"', function() {
+      publication.id.should.be.ok;
+    });
 
-  // });
+    it('should be a string', function() {
+      publication.id.should.be.a('string');
+    });
 
-  // describe('virtual field "id"', function() {
-
-  //   var college;
-
-  //   // Stub college.
-  //   beforeEach(function(done) {
-  //     college = new College();
-  //     college.save(function(err) { done(); });
-  //   });
-
-  //   it('should have a virtual field for "id"', function() {
-  //     college.id.should.be.ok;
-  //   });
-
-  //   it('should be a string', function() {
-  //     college.id.should.be.a('string');
-  //   });
-
-  // });
-
-  // describe('states enum', function() {
-
-  //   it('should block non-existent state abbreviations', function(done) {
-
-  //     // Create college with non-existent state.
-  //     var college = new College({
-  //       name:   'Yale',
-  //       slug:   'yale',
-  //       state:  'NA'
-  //     });
-
-  //     // Save.
-  //     college.save(function(err) {
-
-  //       // Check for error.
-  //       err.errors.state.should.be.ok;
-
-  //       // Check for 0 documents.
-  //       College.count({}, function(err, count) {
-  //         count.should.eql(0);
-  //         done();
-  //       });
-
-  //     });
-
-  //   });
-
-  //   it('should allow valid state abbreviations', function(done) {
-
-  //     // Create college with valid state.
-  //     var college = new College({
-  //       name:   'Yale',
-  //       slug:   'yale',
-  //       state:  'CT'
-  //     });
-
-  //     // Save.
-  //     college.save(function(err) {
-
-  //       // Check for no error.
-  //       assert(!err);
-
-  //       // Check for 1 documents.
-  //       College.count({}, function(err, count) {
-  //         count.should.eql(1);
-  //         done();
-  //       });
-
-  //     });
-
-  //   });
-
-  // });
-
-  // describe('addPublication', function() {
-
-  //   it('should push the passed publication', function(done) {
-
-  //     // Create college.
-  //     var college = new College({
-  //       name:   'Yale',
-  //       slug:   'yale',
-  //       state:  'CT'
-  //     });
-
-  //     // Push publication.
-  //     college.addPublication({
-  //       name:   'The Yale Herald',
-  //       slug:   'yale-herald',
-  //       url:    'http://yaleherald.com'
-  //     });
-
-  //     // Save.
-  //     college.save(function(err) {
-
-  //       // Check for no error.
-  //       assert(!err);
-
-  //       // Check for 1 publication.
-  //       college.publications.length.should.eql(1);
-  //       done();
-
-  //     });
-
-  //   });
-
-  // });
+  });
 
 });

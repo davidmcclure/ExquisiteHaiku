@@ -23,9 +23,59 @@ var User = mongoose.model('User');
 
 describe('User', function() {
 
-  // Clear user collection after each suite.
+  // Clear users.
   afterEach(function(done) {
     User.collection.remove(function(err) { done(); });
+  });
+
+  describe('required field validations', function() {
+
+    it('should require a username', function(done) {
+
+      // Create user with no username.
+      var user = new User({
+        email:    'david@spyder.com'
+      });
+
+      // Save.
+      user.save(function(err) {
+
+        // Check for error.
+        err.errors.username.type.should.eql('required');
+
+        // Check for 0 documents.
+        User.count({}, function(err, count) {
+          count.should.eql(0);
+          done();
+        });
+
+      });
+
+    });
+
+    it('should require an email', function(done) {
+
+      // Create user with no email.
+      var user = new User({
+        username: 'david'
+      });
+
+      // Save.
+      user.save(function(err) {
+
+        // Check for error.
+        err.errors.email.type.should.eql('required');
+
+        // Check for 0 documents.
+        User.count({}, function(err, count) {
+          count.should.eql(0);
+          done();
+        });
+
+      });
+
+    });
+
   });
 
   describe('uniqueness constraints', function() {
@@ -47,7 +97,10 @@ describe('User', function() {
     it('should block duplicate usernames', function(done) {
 
       // Create a new user with a duplicate username.
-      var dupUser = new User({ username: 'david' });
+      var dupUser = new User({
+        username:   'david',
+        email:      'different@spyder.com',
+      });
 
       // Save.
       dupUser.save(function(err) {
@@ -68,7 +121,10 @@ describe('User', function() {
     it('should block duplicate emails', function(done) {
 
       // Create a new user with a duplicate email.
-      var dupUser = new User({ email: 'david@spyder.com' });
+      var dupUser = new User({
+        username:   'different',
+        email:      'david@spyder.com'
+      });
 
       // Save.
       dupUser.save(function(err) {

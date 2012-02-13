@@ -25,9 +25,59 @@ var Publication = mongoose.model('Publication');
 
 describe('College', function() {
 
-  // Clear college collection after each suite.
+  // Clear colleges.
   afterEach(function(done) {
     College.collection.remove(function(err) { done(); });
+  });
+
+  describe('required field validations', function() {
+
+    it('should require a name', function(done) {
+
+      // Create college with no name.
+      var college = new College({
+        slug:     'yale'
+      });
+
+      // Save.
+      college.save(function(err) {
+
+        // Check for error.
+        err.errors.name.type.should.eql('required');
+
+        // Check for 0 documents.
+        College.count({}, function(err, count) {
+          count.should.eql(0);
+          done();
+        });
+
+      });
+
+    });
+
+    it('should require a slug', function(done) {
+
+      // Create college with no slug.
+      var college = new College({
+        name:     'Yale'
+      });
+
+      // Save.
+      college.save(function(err) {
+
+        // Check for error.
+        err.errors.slug.type.should.eql('required');
+
+        // Check for 0 documents.
+        College.count({}, function(err, count) {
+          count.should.eql(0);
+          done();
+        });
+
+      });
+
+    });
+
   });
 
   describe('uniqueness constraints', function() {

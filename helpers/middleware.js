@@ -33,7 +33,7 @@ exports.isUser = function (req, res, next) {
 
 
 /*
- * Only allow superusers.
+ * Only allow superusers. Depends on isUser to pass user document.
  *
  * @return void.
  */

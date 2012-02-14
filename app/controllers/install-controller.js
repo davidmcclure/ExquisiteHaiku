@@ -4,7 +4,7 @@
 
 // Module dependencies.
 var forms = require('../../helpers/forms/install'),
-  auth = require('../../helpers/auth');
+  auth = require('../../helpers/middleware');
 
 // Models.
 var User = mongoose.model('User');

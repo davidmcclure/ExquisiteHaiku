@@ -21,7 +21,7 @@ var Publication = new Schema({
 /*
  * Get id.
  *
- * @return string: The id.
+ * @return {String}: The id.
  */
 Publication.virtual('id').get(function() {
   return this._id.toHexString();

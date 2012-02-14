@@ -26,7 +26,7 @@ var User = new Schema({
 /*
  * Get id.
  *
- * @return string: The id.
+ * @return {String}: The id.
  */
 User.virtual('id').get(function() {
   return this._id.toHexString();
@@ -46,7 +46,7 @@ User.virtual('password').set(function(password) {
 /*
  * Get encrypted password.
  *
- * @return string: The password.
+ * @return {String}: The password.
  */
 User.virtual('password').get(function() {
   return this._password;
@@ -55,7 +55,7 @@ User.virtual('password').get(function() {
 /*
  * Generate salt.
  *
- * @return string: The salt.
+ * @return {String}: The salt.
  */
 User.methods.generateSalt = function() {
   return Math.round((new Date().valueOf() + Math.random())) + '';
@@ -64,9 +64,9 @@ User.methods.generateSalt = function() {
 /*
  * Encrypt plaintext password.
  *
- * @param string password: The plaintext.
+ * @param {String} password: The plaintext.
  *
- * @param string: The encrypted password.
+ * @param {String}: The encrypted password.
  */
 User.methods.encryptPassword = function(password) {
   return crypto.createHmac('sha1', this.salt).
@@ -77,9 +77,9 @@ User.methods.encryptPassword = function(password) {
 /*
  * Check plaintext string against encrypted password.
  *
- * @param string plainText: The plaintext submission.
+ * @param {String} plainText: The plaintext submission.
  *
- * @return boolean: True the plaintext is the password.
+ * @return {Boolean}: True the plaintext is the password.
  */
 User.methods.authenticate = function(plainText) {
   return this.encryptPassword(plainText) === this.hash;

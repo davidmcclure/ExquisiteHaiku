@@ -37,7 +37,7 @@ var College = new Schema({
 /*
  * Get id.
  *
- * @return string: The id.
+ * @return {String}: The id.
  */
 College.virtual('id').get(function() {
   return this._id.toHexString();
@@ -46,9 +46,9 @@ College.virtual('id').get(function() {
 /*
  * Check plaintext string against encrypted password.
  *
- * @param string plainText: The plaintext submission.
+ * @param {String} plainText: The plaintext submission.
  *
- * @return boolean: True the plaintext is the password.
+ * @return {Boolean}: True the plaintext is the password.
  */
 College.methods.addPublication = function(publication) {
   this.publications.push(publication);

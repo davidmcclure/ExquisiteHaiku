@@ -18,7 +18,7 @@ exports.isUser = function (req, res, next) {
 
     // Get the user record, push into request.
     User.findById(req.session.user_id, function(err, user) {
-      if (user && user.active) {
+      if (user.active) {
         req.user = user;
         next();
       } else res.redirect('/admin/login');

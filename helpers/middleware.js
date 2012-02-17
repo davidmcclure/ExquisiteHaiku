@@ -14,7 +14,11 @@ var User = mongoose.model('User');
 
 
 /*
- * Only allow authenticated users. Pass user to action.
+ * Only allow authenticated users.
+ *
+ * @param {Object} req: The request.
+ * @param {Object} res: The response.
+ * @param {Callback} next: The next middleware.
  *
  * @return void.
  */
@@ -25,10 +29,8 @@ exports.isUser = function (req, res, next) {
 
     // Get the user record, push into request.
     User.findById(req.session.user_id, function(err, user) {
-      if (user.active) {
-        req.user = user;
-        next();
-      } else res.redirect('/admin/login');
+      if (user.active) next();
+      else res.redirect('/admin/login');
     });
 
   }
@@ -39,15 +41,19 @@ exports.isUser = function (req, res, next) {
 };
 
 
+
+
+
+
 /*
  * Only allow superusers. Depends on isUser to pass user document.
  *
  * @return void.
  */
-exports.isSuper = function (req, res, next) {
-  if (req.user.superUser) next();
-  else res.redirect('/admin');
-};
+// exports.isSuper = function (req, res, next) {
+//   if (req.user.superUser) next();
+//   else res.redirect('/admin');
+// };
 
 
 /*
@@ -55,10 +61,10 @@ exports.isSuper = function (req, res, next) {
  *
  * @return void.
  */
-exports.anonUser = function (req, res, next) {
-  if (req.session.user_id) res.redirect('/admin');
-  else next();
-};
+// exports.anonUser = function (req, res, next) {
+//   if (req.session.user_id) res.redirect('/admin');
+//   else next();
+// };
 
 
 /*
@@ -66,9 +72,9 @@ exports.anonUser = function (req, res, next) {
  *
  * - return void.
  */
-exports.noUsers = function (req, res, next) {
-  User.count({}, function(err, count) {
-    if (count > 0) res.redirect('/admin/login');
-    else next();
-  });
-};
+// exports.noUsers = function (req, res, next) {
+//   User.count({}, function(err, count) {
+//     if (count > 0) res.redirect('/admin/login');
+//     else next();
+//   });
+// };

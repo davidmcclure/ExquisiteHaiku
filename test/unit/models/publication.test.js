@@ -9,7 +9,7 @@ var vows = require('mocha'),
 
 // Boostrap the application.
 process.env.NODE_ENV = 'testing';
-require('./db-connect');
+require('../db-connect');
 
 // College model.
 require('../../../app/models/college');

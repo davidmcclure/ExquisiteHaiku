@@ -9,11 +9,15 @@ var vows = require('mocha'),
 
 // Boostrap the application.
 process.env.NODE_ENV = 'testing';
-require('../../../app');
+require('./db-connect');
 
-// Bootstrap models.
-var Publication = mongoose.model('Publication');
+// College model.
+require('../../../app/models/college');
 var College = mongoose.model('College');
+
+// Publication model.
+require('../../../app/models/publication');
+var Publication = mongoose.model('Publication');
 
 
 /*

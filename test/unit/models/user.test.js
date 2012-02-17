@@ -4,13 +4,14 @@
 
 // Module dependencies.
 var vows = require('mocha'),
-  assert = require('should');
+  should = require('should');
 
 // Boostrap the application.
 process.env.NODE_ENV = 'testing';
-require('../../../app');
+require('./db-connect');
 
-// Bootstrap models.
+// User model.
+require('../../../app/models/user');
 var User = mongoose.model('User');
 
 

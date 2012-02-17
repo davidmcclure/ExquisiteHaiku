@@ -7,6 +7,13 @@ var User = mongoose.model('User');
 
 
 /*
+ * -----------------
+ * Route middleware.
+ * -----------------
+ */
+
+
+/*
  * Only allow authenticated users. Pass user to action.
  *
  * @return void.

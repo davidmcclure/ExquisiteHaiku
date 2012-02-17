@@ -29,14 +29,13 @@ exports.isUser = function (req, res, next) {
 
     // Get the user record, push into request.
     User.findById(req.session.user_id, function(err, user) {
-      if (user.active) next();
-      else res.redirect('/admin/login');
+      if (user && user.active) next();
     });
 
   }
 
   // If no session id, redirect to login.
-  else res.redirect('/admin/login');
+  res.redirect('/admin/login');
 
 };
 

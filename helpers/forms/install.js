@@ -5,8 +5,7 @@
  // Module dependencies.
 var forms = require('forms'),
   fields = forms.fields,
-  validators = forms.validators,
-  customValidators = require('../validators');
+  validators = forms.validators;
 
 
 /*

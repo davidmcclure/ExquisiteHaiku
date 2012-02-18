@@ -29,9 +29,13 @@ var auth = require('../../../helpers/middleware');
 
 describe('Route Middleware', function() {
 
-  var req = { session: {} };
-  var res = {};
-  var next;
+  var req, res, next;
+
+  // Reset req/res mocks.
+  beforeEach(function() {
+    req = { session: {} };
+    res = {};
+  });
 
   // Clear users.
   afterEach(function(done) {
@@ -50,37 +54,76 @@ describe('Route Middleware', function() {
 
     });
 
-    it('should redirect a non-existent user', function() {
+    it('should redirect a non-existent user', function(done) {
 
       // Spy on res.
-      res.redirect = sinon.spy();
+      res.redirect = sinon.spy(function() {
+        sinon.assert.calledWith(res.redirect, '/admin/login');
+        done();
+      });
 
-      req.session.user_id = 1;
-      auth.isUser(req, res, next);
-      sinon.assert.calledWith(res.redirect, '/admin/login');
+      // Spy on next.
+      next = sinon.spy(function() {
+        sinon.assert.calledWith(res.redirect, '/admin/login');
+        done();
+      });
+
+      // Create inactive user.
+      var user = new User({
+        username: 'david',
+        email:    'david@spyder.com',
+        password: 'password',
+        active:   false
+      });
+
+      // Save.
+      user.save(function(err) {
+
+        // Set user id.
+        req.session.user_id = user.id;
+
+        // Delete the user.
+        user.remove(function(err) {
+
+          // Call isUser.
+          auth.isUser(req, res, next);
+
+        });
+
+      });
 
     });
 
     it('should redirect an inactive user', function(done) {
 
       // Spy on res.
-      res.redirect = sinon.spy();
+      res.redirect = sinon.spy(function() {
+        sinon.assert.calledWith(res.redirect, '/admin/login');
+        done();
+      });
+
+      // Spy on next.
+      next = sinon.spy(function() {
+        sinon.assert.calledWith(res.redirect, '/admin/login');
+        done();
+      });
 
       // Create inactive user.
       var user = new User({
         username: 'david',
         email:    'david@spyder.com',
-        password: 'password'
+        password: 'password',
+        active:   false
       });
 
       // Save.
       user.save(function(err) {
 
-        // Set user id and call isUser.
+        // Set user id.
         req.session.user_id = user.id;
+
+        // Call isUser, check for res.redirect();
         auth.isUser(req, res, next);
-        sinon.assert.calledWith(res.redirect, '/admin/login');
-        done();
 
       });
 
@@ -88,7 +131,13 @@ describe('Route Middleware', function() {
 
     it('should call next() for an active user', function(done) {
 
-      // Spy on next;
+      // Spy on res.
+      res.redirect = sinon.spy(function() {
+        sinon.assert.called(next);
+        done();
+      });
+
+      // Spy on next.
       next = sinon.spy(function() {
         sinon.assert.called(next);
         done();
@@ -105,8 +154,10 @@ describe('Route Middleware', function() {
       // Save.
       user.save(function(err) {
 
-        // Set user id and call isUser.
+        // Set user id.
         req.session.user_id = user.id;
+
+        // Call isUser, check for next().
         auth.isUser(req, res, next);
 
       });

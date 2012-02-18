@@ -3,7 +3,7 @@
  */
 
 // Module dependencies.
-var forms = require('../../helpers/forms/install'),
+var installForm = require('../../helpers/forms/install'),
   auth = require('../../helpers/middleware');
 
 // Models.
@@ -28,7 +28,14 @@ module.exports = function(app) {
   app.get('/admin/install',
     auth.noUsers,
     function(req, res) {
-      res.send('GET /admin/install');
+
+      // Render form.
+      res.render('auth/install', {
+        title:  'Installation',
+        form:   installForm.form(),
+        layout: '_layouts/auth'
+      });
+
   });
 
   /*

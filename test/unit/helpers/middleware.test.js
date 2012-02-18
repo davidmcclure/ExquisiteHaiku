@@ -164,6 +164,43 @@ describe('Route Middleware', function() {
 
     });
 
+    it('should pass user document into controller action', function(done) {
+
+      // Create inactive user.
+      var user = new User({
+        username: 'david',
+        email:    'david@spyder.com',
+        password: 'password',
+        active:   true
+      });
+
+      // Save.
+      user.save(function(err) {
+
+        // Spy on res.
+        res.redirect = sinon.spy(function() {
+          req.user.should.be.ok;
+          req.user.id.should.eql(user.id);
+          done();
+        });
+
+        // Spy on next.
+        next = sinon.spy(function() {
+          req.user.should.be.ok;
+          req.user.id.should.eql(user.id);
+          done();
+        });
+
+        // Set user id.
+        req.session.user_id = user.id;
+
+        // Call isUser, check for next().
+        auth.isUser(req, res, next);
+
+      });
+
+    });
+
   });
 
 });

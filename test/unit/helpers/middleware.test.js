@@ -203,4 +203,174 @@ describe('Route Middleware', function() {
 
   });
 
+  describe('isSuper', function() {
+
+    it('should redirect when the user is not a super', function(done) {
+
+      // Spy on res.
+      res.redirect = sinon.spy();
+
+      // Create non-super user.
+      var user = new User({
+        username:   'david',
+        email:      'david@spyder.com',
+        password:   'password',
+        active:     true,
+        superUser:  false
+      });
+
+      // Save.
+      user.save(function(err) {
+
+        // Set user id.
+        req.user = user;
+
+        // Call isSuper, check for next().
+        auth.isSuper(req, res, next);
+        sinon.assert.calledWith(res.redirect, '/admin/login');
+        done();
+
+      });
+
+    });
+
+    it('should call next() when the user is a super', function(done) {
+
+      // Spy on next.
+      next = sinon.spy();
+
+      // Create non-super user.
+      var user = new User({
+        username:   'david',
+        email:      'david@spyder.com',
+        password:   'password',
+        active:     true,
+        superUser:  true
+      });
+
+      // Save.
+      user.save(function(err) {
+
+        // Set user id.
+        req.user = user;
+
+        // Call isSuper, check for next().
+        auth.isSuper(req, res, next);
+        sinon.assert.called(next);
+        done();
+
+      });
+
+    });
+
+  });
+
+  describe('noUser', function() {
+
+    it('should redirect when there is a user session', function(done) {
+
+      // Spy on res.
+      res.redirect = sinon.spy();
+
+      // Create user.
+      var user = new User({
+        username:   'david',
+        email:      'david@spyder.com',
+        password:   'password',
+        active:     true,
+        superUser:  true
+      });
+
+      // Save.
+      user.save(function(err) {
+
+        // Set user id.
+        req.session.user_id = user.id;
+
+        // Call noUser, check for res.redirect().
+        auth.noUser(req, res, next);
+        sinon.assert.calledWith(res.redirect, '/admin');
+        done();
+
+      });
+
+    });
+
+    it('should call next() when the user is not a user session', function(done) {
+
+      // Spy on next.
+      next = sinon.spy();
+
+      // Create user.
+      var user = new User({
+        username:   'david',
+        email:      'david@spyder.com',
+        password:   'password',
+        active:     true,
+        superUser:  true
+      });
+
+      // Save.
+      user.save(function(err) {
+
+        // Call noUser, check for next().
+        auth.noUser(req, res, next);
+        sinon.assert.called(next);
+        done();
+
+      });
+
+    });
+
+  });
+
+  describe('noUsers', function() {
+
+    it('should redirect when there is at least 1 user', function(done) {
+
+      // Spy on res.
+      res.redirect = sinon.spy(function() {
+        sinon.assert.calledWith(res.redirect, '/admin/login');
+        done();
+      });
+
+      // Spy on next.
+      next = sinon.spy(function() {
+        sinon.assert.calledWith(res.redirect, '/admin/login');
+        done();
+      });
+
+      // Create user.
+      var user = new User({
+        username:   'david',
+        email:      'david@spyder.com',
+        password:   'password',
+        active:     true,
+        superUser:  true
+      });
+
+      // Save.
+      user.save(function(err) {
+
+        // Call noUsers, check for res.redirect().
+        auth.noUsers(req, res, next);
+
+      });
+
+    });
+
+    it('should call next() there are 0 users', function(done) {
+
+      // Spy on next.
+      next = sinon.spy();
+
+      // Call noUsers, check for next().
+      auth.noUser(req, res, next);
+      sinon.assert.called(next);
+      done();
+
+    });
+
+  });
+
 });

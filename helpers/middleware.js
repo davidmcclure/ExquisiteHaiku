@@ -44,41 +44,49 @@ exports.isUser = function (req, res, next) {
 };
 
 
-
-
-
-
-
 /*
- * Only allow superusers. Depends on isUser to pass user document.
+ * Only allow super users. Called after isUser, which passes user
+ * document.
+ *
+ * @param {Object} req: The request, with a user attribute.
+ * @param {Object} res: The response.
+ * @param {Callback} next: The next middleware.
  *
  * @return void.
  */
-// exports.isSuper = function (req, res, next) {
-//   if (req.user.superUser) next();
-//   else res.redirect('/admin');
-// };
+exports.isSuper = function (req, res, next) {
+  if (req.user.superUser) next();
+  else res.redirect('/admin/login');
+};
 
 
 /*
- * Only allow anonymous users.
+ * Only allow anonymous sessions.
+ *
+ * @param {Object} req: The request.
+ * @param {Object} res: The response.
+ * @param {Callback} next: The next middleware.
  *
  * @return void.
  */
-// exports.anonUser = function (req, res, next) {
-//   if (req.session.user_id) res.redirect('/admin');
-//   else next();
-// };
+exports.noUser = function (req, res, next) {
+  if (req.session.user_id) res.redirect('/admin');
+  else next();
+};
 
 
 /*
- * Only allow when no users are registered in the system.
+ * Only allow anonymous sessions when there are no users in the system.
  *
- * - return void.
+ * @param {Object} req: The request.
+ * @param {Object} res: The response.
+ * @param {Callback} next: The next middleware.
+ *
+ * @return void.
  */
-// exports.noUsers = function (req, res, next) {
-//   User.count({}, function(err, count) {
-//     if (count > 0) res.redirect('/admin/login');
-//     else next();
-//   });
-// };
+exports.noUsers = function (req, res, next) {
+  User.count({}, function(err, count) {
+    if (count > 0) res.redirect('/admin/login');
+    else next();
+  });
+};

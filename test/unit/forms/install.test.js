@@ -30,7 +30,8 @@ describe('Install Form', function() {
   describe('username', function() {
 
     it('should exist');
-    it('should be 4-20 characters');
+    it('should be > 4 characters');
+    it('should be < 20 characters');
 
   });
 

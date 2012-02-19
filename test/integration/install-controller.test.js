@@ -6,8 +6,15 @@
 var vows = require('mocha'),
   should = require('should'),
   assert = require('assert'),
-  sinon = require('sinon');
+  Browser = require('zombie'),
+  configFile = require('yaml-config');
 
+// Bootstrap the application.
+process.env.NODE_ENV = 'testing';
+require('../../app');
+
+// Models.
+var User = mongoose.model('User');
 
 /*
  * -------------------------------------
@@ -18,16 +25,61 @@ var vows = require('mocha'),
 
 describe('Install Controller', function() {
 
+  var browser = new Browser();
+  var r = 'http://localhost:3000/';
+
   beforeEach(function() {
   });
 
-  afterEach(function(done) {
+  afterEach(function() {
   });
 
   describe('GET /admin/install', function() {
 
-    it('should redirect when there is an existing user');
-    it('should render the form when there are no users');
+    it('should render the form when there are no users', function(done) {
+
+      // Hit the install route.
+      browser.visit(r+'admin/install', function() {
+
+        // Check for form and fields.
+        browser.query('form.install').should.be.ok;
+        browser.query('form.install input[name="username"]').should.be.ok;
+        browser.query('form.install input[name="password"]').should.be.ok;
+        browser.query('form.install input[name="confirm"]').should.be.ok;
+        browser.query('form.install input[name="email"]').should.be.ok;
+        browser.query('form.install button[type="submit"]').should.be.ok;
+        done();
+
+      });
+
+    });
+
+    it('should redirect when there is an existing user', function(done) {
+
+      // Create a user.
+      var user = new User({
+        username:   'david',
+        password:   'password',
+        email:      'david@spyder.com',
+        superUser:  true,
+        active:     true
+      });
+
+      // Save.
+      user.save(function(err) {
+
+        // Hit the install route.
+        browser.visit(r+'admin/install', function() {
+
+          // Check for redirect.
+          browser.location.pathname.should.eql('/admin/login');
+          done();
+
+        });
+
+      });
+
+    });
 
   });
 

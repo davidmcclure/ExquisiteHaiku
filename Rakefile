@@ -4,7 +4,7 @@ namespace :test do
 
   desc 'Run the Mocha test suite'
   task :mocha do
-    sh %{mocha test/**/**/*}
+    sh %{mocha test/**/**/*.test.js test/**/*.test.js}
   end
 
 end

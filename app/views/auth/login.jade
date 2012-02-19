@@ -1,13 +1,6 @@
 form.form-stacked.login(method='post')
   fieldset
-
     legend.logo CollegeSpyder
-
-    - var username =  form.fields.username
-    - var password =  form.fields.password
-
-    != partial('../_includes/form/text_field', { field: username, name: 'username' })
-    != partial('../_includes/form/password_field', { field: password, name: 'password' })
-
+    != partial('../_includes/form/form', { form: form })
   div.actions
     button.btn.btn-primary.btn-large(type='submit') Submit

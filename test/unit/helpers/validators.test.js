@@ -29,27 +29,203 @@ var validators = require('../../../helpers/validators');
 
 describe('Custom Validators', function() {
 
+  var form = {}, field = {}, callback;
+
+  // Clear users.
+  afterEach(function(done) {
+    User.collection.remove(function(err) { done(); });
+  });
+
   describe('usernameExists', function() {
 
-    it('should not pass if there is not a user with the username');
+    beforeEach(function() {
+      field.data = 'david';
+    });
 
-    it('should pass if there is a user with the username');
+    it('should not pass if there is not a user with the username', function(done) {
+
+      // Get the validator.
+      var validator = validators.usernameExists('err');
+
+      // Spy on callback.
+      callback = sinon.spy(function() {
+        sinon.assert.calledWith(callback, 'err');
+        done();
+      });
+
+      // Call the validator.
+      validator(form, field, callback);
+
+    });
+
+    it('should pass if there is a user with the username', function(done) {
+
+      // Get the validator.
+      var validator = validators.usernameExists('err');
+
+      // Spy on callback.
+      callback = sinon.spy(function() {
+        sinon.assert.neverCalledWith(callback, 'err');
+        done();
+      });
+
+      // Create a user.
+      var user = new User({
+        username:   'david',
+        email:      'david@spyder.com',
+        password:   'password',
+        superUser:  true,
+        active:     true
+      });
+
+      // Save.
+      user.save(function(err) {
+
+        // Call the validator.
+        validator(form, field, callback);
+
+      });
+
+    });
 
   });
 
   describe('usernameActive', function() {
 
-    it('should not pass if the user is inactive');
+    var user;
 
-    it('should pass if the user is active');
+    beforeEach(function() {
+
+      // Create user.
+      user = new User({
+        username:   'david',
+        email:      'david@spyder.com',
+        password:   'password',
+        superUser:  true
+      });
+
+      // Set field value.
+      field.data = 'david';
+
+    });
+
+    it('should not pass if the user is inactive', function(done) {
+
+      // Set inactive.
+      user.active = false;
+
+      // Get the validator.
+      var validator = validators.usernameActive('err');
+
+      // Spy on callback.
+      callback = sinon.spy(function() {
+        sinon.assert.calledWith(callback, 'err');
+        done();
+      });
+
+      // Save the user.
+      user.save(function(err) {
+
+        // Call the validator.
+        validator(form, field, callback);
+
+      });
+
+    });
+
+    it('should pass if the user is active', function(done) {
+
+      // Set active.
+      user.active = true;
+
+      // Get the validator.
+      var validator = validators.usernameActive('err');
+
+      // Spy on callback.
+      callback = sinon.spy(function() {
+        sinon.assert.neverCalledWith(callback, 'err');
+        done();
+      });
+
+      // Save the user.
+      user.save(function(err) {
+
+        // Call the validator.
+        validator(form, field, callback);
+
+      });
+
+    });
 
   });
 
   describe('passwordCorrect', function() {
 
-    it('should not pass if the password is incorrect');
+    var user;
 
-    it('should pass if the password is correct');
+    beforeEach(function() {
+
+      // Create user.
+      user = new User({
+        username:   'david',
+        email:      'david@spyder.com',
+        password:   'password',
+        superUser:  true,
+        active:     true
+      });
+
+      // Set field value.
+      form.data = { username: 'david' };
+
+    });
+
+    it('should not pass if the password is incorrect', function(done) {
+
+      // Set incorrect password.
+      field.data = 'incorrect';
+
+      // Get the validator.
+      var validator = validators.passwordCorrect('err');
+
+      // Spy on callback.
+      callback = sinon.spy(function() {
+        sinon.assert.calledWith(callback, 'err');
+        done();
+      });
+
+      // Save the user.
+      user.save(function(err) {
+
+        // Call the validator.
+        validator(form, field, callback);
+
+      });
+
+    });
+
+    it('should pass if the password is correct', function(done) {
+
+      // Set correct password.
+      field.data = 'password';
+
+      // Get the validator.
+      var validator = validators.passwordCorrect('err');
+
+      // Spy on callback.
+      callback = sinon.spy(function() {
+        sinon.assert.neverCalledWith(callback, 'err');
+        done();
+      });
+
+      // Save the user.
+      user.save(function(err) {
+
+        // Call the validator.
+        validator(form, field, callback);
+
+      });
+
+    });
 
   });
 

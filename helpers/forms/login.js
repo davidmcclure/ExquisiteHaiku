@@ -5,7 +5,8 @@
  // Module dependencies.
 var forms = require('forms'),
   fields = forms.fields,
-  validators = forms.validators;
+  validators = forms.validators,
+  customValidators = require('../validators');
 
 
 /*
@@ -35,7 +36,7 @@ exports.form = function() {
       label: 'Password: *',
       required: 'Enter a password.',
       validators: [
-        customValidators.passwordCorrectness('Incorrect.')
+        customValidators.passwordCorrect('Incorrect.')
       ]
     })
 

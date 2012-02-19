@@ -50,6 +50,23 @@ exports.usernameActive = function (msg) {
 };
 
 
+/*
+ * Pass if the password is correct..
+ *
+ * @param {String} msg: The failure message.
+ *
+ * @return void.
+ */
+exports.passwordCorrect = function (msg) {
+  return function(form, field, callback) {
+    User.findOne({ username: form.data.username }, function(err, user) {
+      if (user.authenticate(field.data)) callback();
+      else callback(msg);
+    });
+  };
+};
+
+
 
 
 

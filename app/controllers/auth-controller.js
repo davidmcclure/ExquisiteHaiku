@@ -32,7 +32,7 @@ module.exports = function(app) {
       // Render form.
       res.render('auth/login', {
         title:  'Login',
-        form:   installForm.form(),
+        form:   loginForm.form(),
         layout: '_layouts/auth'
       });
 

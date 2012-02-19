@@ -34,7 +34,7 @@ exports.form = function() {
       label: 'Password: *',
       required: 'Enter a password.',
       validators: [
-        validators.minLength(6, 'At least 6 characters')
+        validators.minLength(6, 'At least 6 characters.')
       ]
     }),
 

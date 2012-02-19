@@ -28,10 +28,9 @@ describe('Install Controller', function() {
   var browser = new Browser();
   var r = 'http://localhost:3000/';
 
-  beforeEach(function() {
-  });
-
-  afterEach(function() {
+  // Clear users.
+  afterEach(function(done) {
+    User.collection.remove(function(err) { done(); });
   });
 
   describe('GET /admin/install', function() {
@@ -68,7 +67,7 @@ describe('Install Controller', function() {
       // Save.
       user.save(function(err) {
 
-        // Hit the install route.
+        // GET admin/install.
         browser.visit(r+'admin/install', function() {
 
           // Check for redirect.
@@ -87,30 +86,293 @@ describe('Install Controller', function() {
 
     describe('username', function() {
 
-      it('should flash error for no username');
-      it('should flash error for username < 4 characters');
-      it('should flash error for username > 20 characters');
+      it('should flash error for no username', function(done) {
+
+        // GET admin/install.
+        browser.visit(r+'admin/install', function() {
+
+          // Fill in form.
+          browser.pressButton('Submit', function() {
+
+            // Check for error.
+            browser.query('span.help-inline.username').should.be.ok;
+            done();
+
+          });
+
+        });
+
+      });
+
+      it('should flash error for username < 4 characters', function(done) {
+
+        // GET admin/install.
+        browser.visit(r+'admin/install', function() {
+
+          // Fill in form, submit.
+          browser.fill('username', 'dav');
+          browser.pressButton('Submit', function() {
+
+            // Check for error.
+            browser.query('span.help-inline.username').should.be.ok;
+            done();
+
+          });
+
+        });
+
+      });
+
+      it('should flash error for username > 20 characters', function(done) {
+
+        // GET admin/install.
+        browser.visit(r+'admin/install', function() {
+
+          // Fill in form, submit.
+          browser.fill('username', 'srdavidwilliamcclurejr');
+          browser.pressButton('Submit', function() {
+
+            // Check for error.
+            browser.query('span.help-inline.username').should.be.ok;
+            done();
+
+          });
+
+        });
+
+      });
+
+      it('should not flash an error when the username is valid', function(done) {
+
+        // GET admin/install.
+        browser.visit(r+'admin/install', function() {
+
+          // Fill in form, submit.
+          browser.fill('username', 'david');
+          browser.pressButton('Submit', function() {
+
+            // Check for error.
+            assert(!browser.query('span.help-inline.username'));
+            done();
+
+          });
+
+        });
+
+      });
 
     });
 
     describe('password', function() {
 
-      it('should flash error for no password');
-      it('should flash error for username < 6 characters');
+      it('should flash error for no password', function(done) {
+
+        // GET admin/install.
+        browser.visit(r+'admin/install', function() {
+
+          // Fill in form.
+          browser.pressButton('Submit', function() {
+
+            // Check for error.
+            browser.query('span.help-inline.password').should.be.ok;
+            done();
+
+          });
+
+        });
+
+      });
+
+      it('should flash error for password < 6 characters', function(done) {
+
+        // GET admin/install.
+        browser.visit(r+'admin/install', function() {
+
+          // Fill in form, submit.
+          browser.fill('password', 'pass');
+          browser.pressButton('Submit', function() {
+
+            // Check for error.
+            browser.query('span.help-inline.password').should.be.ok;
+            done();
+
+          });
+
+        });
+
+      });
+
+      it('should not flash an error when the password is valid', function(done) {
+
+        // GET admin/install.
+        browser.visit(r+'admin/install', function() {
+
+          // Fill in form, submit.
+          browser.fill('password', 'password');
+          browser.pressButton('Submit', function() {
+
+            // Check for error.
+            assert(!browser.query('span.help-inline.password'));
+            done();
+
+          });
+
+        });
+
+      });
 
     });
 
     describe('confirm', function() {
 
-      it('should flash error for no confirmation');
-      it('should flash error for mismatch with password');
+      it('should flash error for no confirmation', function(done) {
+
+        // GET admin/install.
+        browser.visit(r+'admin/install', function() {
+
+          // Fill in form.
+          browser.pressButton('Submit', function() {
+
+            // Check for error.
+            browser.query('span.help-inline.confirm').should.be.ok;
+            done();
+
+          });
+
+        });
+
+      });
+
+      it('should flash error for mismatch with password', function(done) {
+
+        // GET admin/install.
+        browser.visit(r+'admin/install', function() {
+
+          // Fill in form, submit.
+          browser.fill('password', 'password');
+          browser.fill('confirm', 'mismatch');
+          browser.pressButton('Submit', function() {
+
+            // Check for error.
+            browser.query('span.help-inline.confirm').should.be.ok;
+            done();
+
+          });
+
+        });
+
+      });
+
+      it('should not flash an error when the confirmation is valid', function(done) {
+
+        // GET admin/install.
+        browser.visit(r+'admin/install', function() {
+
+          // Fill in form, submit.
+          browser.fill('password', 'password');
+          browser.fill('confirm', 'password');
+          browser.pressButton('Submit', function() {
+
+            // Check for error.
+            assert(!browser.query('span.help-inline.confirm'));
+            done();
+
+          });
+
+        });
+
+      });
 
     });
 
     describe('email', function() {
 
-      it('should flash error for no email');
-      it('should flash error for invalid email');
+      it('should flash error for no email', function(done) {
+
+        // GET admin/install.
+        browser.visit(r+'admin/install', function() {
+
+          // Fill in form.
+          browser.pressButton('Submit', function() {
+
+            // Check for error.
+            browser.query('span.help-inline.email').should.be.ok;
+            done();
+
+          });
+
+        });
+
+      });
+
+      it('should flash error for invalid email', function(done) {
+
+        // GET admin/install.
+        browser.visit(r+'admin/install', function() {
+
+          // Fill in form, submit.
+          browser.fill('email', 'invalid');
+          browser.pressButton('Submit', function() {
+
+            // Check for error.
+            browser.query('span.help-inline.email').should.be.ok;
+            done();
+
+          });
+
+        });
+
+      });
+
+      it('should not flash an error when the email is valid', function(done) {
+
+        // GET admin/install.
+        browser.visit(r+'admin/install', function() {
+
+          // Fill in form, submit.
+          browser.fill('email', 'david@spyder.com');
+          browser.pressButton('Submit', function() {
+
+            // Check for error.
+            assert(!browser.query('span.help-inline.email'));
+            done();
+
+          });
+
+        });
+
+      });
+
+    });
+
+    describe('success', function() {
+
+      it('should create a new user and redirect for valid form', function(done) {
+
+        // GET admin/install.
+        browser.visit(r+'admin/install', function() {
+
+          // Fill in form, submit.
+          browser.fill('username', 'david');
+          browser.fill('password', 'password');
+          browser.fill('confirm', 'password');
+          browser.fill('email', 'david@spyder.com');
+          browser.pressButton('Submit', function() {
+
+            // Check for redirect.
+            browser.location.pathname.should.eql('/admin');
+
+            // Get user.
+            User.findOne({ username: 'david' }, function(err, user) {
+              user.should.be.ok;
+              done();
+            });
+
+          });
+
+        });
+
+      });
 
     });
 

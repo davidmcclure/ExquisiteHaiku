@@ -6,8 +6,7 @@
 var vows = require('mocha'),
   should = require('should'),
   assert = require('assert'),
-  Browser = require('zombie'),
-  configFile = require('yaml-config');
+  Browser = require('zombie');
 
 // Bootstrap the application.
 process.env.NODE_ENV = 'testing';

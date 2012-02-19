@@ -38,70 +38,62 @@ module.exports = function(app) {
 
   });
 
+  /*
+   * Process login form.
+   *
+   * @middleware auth.noUser: Block if there is a user session.
+   */
+  app.post('/admin/login',
+    auth.noUser,
+    function(req, res) {
 
-    /*
-     * Show login form.
-     *
-     * - middleware auth.anonUser: Block signed-in users.
-     */
-    // app.get('/admin/login', auth.anonUser, function(req, res) {
-    //     res.render('auth/login', {
-    //         title:      'Login',
-    //         form:       forms.authForms.login(),
-    //         layout:     '_layouts/auth'
-    //     });
-    // });
+      loginForm.form().handle(req, {
 
+        // If validations pass.
+        success: function(form) {
 
-    /*
-     * Process login form.
-     *
-     * - middleware auth.anonUser: Block signed-in users.
-     */
-    // app.post('/admin/login', auth.anonUser, function(req, res) {
+          // Get the user.
+          User.findOne({
+            username: form.data.username
+          }, function(err, user) {
 
-    //     // Pass control to form.
-    //     forms.authForms.login().handle(req, {
+            // Authenticate and redirect.
+            if (user.authenticate(form.data.password)) {
+              req.session.user_id = user.id;
+              res.redirect('/admin');
+            }
 
-    //         // If field validations pass.
-    //         success: function(form) {
+          });
 
-    //             // Try to find the user.
-    //             User.findOne({
-    //                 username: form.data.username
-    //             }, function(err, user) {
+        },
 
-    //                 // Authenticate and redirect.
-    //                 if (user.authenticate(form.data.password)) {
-    //                     req.session.user_id = user.id;
-    //                     res.redirect('/admin');
-    //                 }
+        // If validations fail.
+        other: function(form) {
 
-    //             });
+          // Re-render the form.
+          res.render('auth/login', {
+            title:  'Login',
+            form:   form,
+            layout: '_layouts/auth'
+          });
 
-    //         },
+        }
 
-    //         // If field validations fail.
-    //         other: function(form) {
-    //             res.render('auth/login', {
-    //                 title:      'Login',
-    //                 form:       form,
-    //                 layout:     '_layouts/auth'
-    //             });
-    //         }
+      });
 
-    //     });
+  });
 
-    // });
+  /*
+   * Log user out.
+   */
+  app.get('/admin/login',
+    function(req, res) {
 
+      // Unset the session object.
+      req.session.destroy(function() {
+        res.redirect('/admin/login');
+      });
 
-    /*
-     * Log user out. Unset the user_id session key.
-     */
-    // app.get('/admin/logout', function(req, res) {
-    //     req.session.destroy(function() {});
-    //     res.redirect('/admin/login');
-    // });
-
+  });
 
 };

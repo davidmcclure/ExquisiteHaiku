@@ -86,7 +86,7 @@ module.exports = function(app) {
   /*
    * Log user out.
    */
-  app.get('/admin/login',
+  app.get('/admin/logout',
     function(req, res) {
 
       // Unset the session object.

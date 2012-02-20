@@ -94,6 +94,7 @@ describe('Install Controller', function() {
           browser.pressButton('Submit', function() {
 
             // Check for error.
+            browser.location.pathname.should.eql('/admin/install');
             browser.query('span.help-inline.username').should.be.ok;
             done();
 
@@ -113,6 +114,7 @@ describe('Install Controller', function() {
           browser.pressButton('Submit', function() {
 
             // Check for error.
+            browser.location.pathname.should.eql('/admin/install');
             browser.query('span.help-inline.username').should.be.ok;
             done();
 
@@ -132,6 +134,7 @@ describe('Install Controller', function() {
           browser.pressButton('Submit', function() {
 
             // Check for error.
+            browser.location.pathname.should.eql('/admin/install');
             browser.query('span.help-inline.username').should.be.ok;
             done();
 
@@ -151,6 +154,7 @@ describe('Install Controller', function() {
           browser.pressButton('Submit', function() {
 
             // Check for error.
+            browser.location.pathname.should.eql('/admin/install');
             assert(!browser.query('span.help-inline.username'));
             done();
 
@@ -173,6 +177,7 @@ describe('Install Controller', function() {
           browser.pressButton('Submit', function() {
 
             // Check for error.
+            browser.location.pathname.should.eql('/admin/install');
             browser.query('span.help-inline.password').should.be.ok;
             done();
 
@@ -192,6 +197,7 @@ describe('Install Controller', function() {
           browser.pressButton('Submit', function() {
 
             // Check for error.
+            browser.location.pathname.should.eql('/admin/install');
             browser.query('span.help-inline.password').should.be.ok;
             done();
 
@@ -211,6 +217,7 @@ describe('Install Controller', function() {
           browser.pressButton('Submit', function() {
 
             // Check for error.
+            browser.location.pathname.should.eql('/admin/install');
             assert(!browser.query('span.help-inline.password'));
             done();
 
@@ -233,6 +240,7 @@ describe('Install Controller', function() {
           browser.pressButton('Submit', function() {
 
             // Check for error.
+            browser.location.pathname.should.eql('/admin/install');
             browser.query('span.help-inline.confirm').should.be.ok;
             done();
 
@@ -253,6 +261,7 @@ describe('Install Controller', function() {
           browser.pressButton('Submit', function() {
 
             // Check for error.
+            browser.location.pathname.should.eql('/admin/install');
             browser.query('span.help-inline.confirm').should.be.ok;
             done();
 
@@ -273,6 +282,7 @@ describe('Install Controller', function() {
           browser.pressButton('Submit', function() {
 
             // Check for error.
+            browser.location.pathname.should.eql('/admin/install');
             assert(!browser.query('span.help-inline.confirm'));
             done();
 
@@ -295,6 +305,7 @@ describe('Install Controller', function() {
           browser.pressButton('Submit', function() {
 
             // Check for error.
+            browser.location.pathname.should.eql('/admin/install');
             browser.query('span.help-inline.email').should.be.ok;
             done();
 
@@ -314,6 +325,7 @@ describe('Install Controller', function() {
           browser.pressButton('Submit', function() {
 
             // Check for error.
+            browser.location.pathname.should.eql('/admin/install');
             browser.query('span.help-inline.email').should.be.ok;
             done();
 
@@ -333,6 +345,7 @@ describe('Install Controller', function() {
           browser.pressButton('Submit', function() {
 
             // Check for error.
+            browser.location.pathname.should.eql('/admin/install');
             assert(!browser.query('span.help-inline.email'));
             done();
 

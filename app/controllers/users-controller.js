@@ -58,7 +58,7 @@ module.exports = function(app) {
     auth.isSuper,
     function(req, res) {
 
-      // Render the list.
+      // Render the form.
       res.render('admin/users/new', {
         title:  'Users',
         layout: '_layouts/users',
@@ -69,31 +69,61 @@ module.exports = function(app) {
 
   });
 
+  /*
+   * Handle new user form submission.
+   *
+   * @middleware auth.isUser: Block if there is no user session.
+   * @middleware auth.isSuper: Block if user is not a super user.
+   */
+  app.post('/admin/users/new',
+    auth.isUser,
+    auth.isSuper,
+    function(req, res) {
+
+      // Pass control to the form.
+      userForms.newUser().handle(req, {
+
+        // If field validations pass.
+        success: function(form) {
+
+          // Create the user.
+          var user = new User({
+            username:   form.data.username,
+            email:      form.data.email,
+            password:   form.data.password,
+            superUser:  form.data.superUser,
+            active:     form.data.active
+          });
+
+          // Save and redirect.
+          user.save(function() {
+            res.redirect('/admin/users');
+          });
+
+        },
+
+        // If field validations fail.
+        other: function(form) {
+
+          // Re-render the form.
+          res.render('admin/users/new', {
+            title:  'Users',
+            layout: '_layouts/users',
+            user:   req.user,
+            nav:    { main: 'users', sub: 'browse' },
+            form:   form
+          });
+
+        }
+
+      });
+
+  });
 
 
 
 
-    /*
-     * New user form.
-     *
-     * - middleware auth.isUser: Block anonymous.
-     * - middleware auth.isSuper: Block non-super users.
-     */
-    // app.get('/admin/users/new',
-    //     auth.isUser,
-    //     auth.isSuper,
-    //     function(req, res) {
 
-    //     // Render form.
-    //     res.render('admin/users/new', {
-    //         title:      'New User',
-    //         layout:     '_layouts/users',
-    //         user:       req.user,
-    //         form:       forms.userForms.newUser(),
-    //         nav:        { main: 'users', sub: 'new' }
-    //     });
-
-    // });
 
 
     /*

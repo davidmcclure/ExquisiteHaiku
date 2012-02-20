@@ -43,8 +43,8 @@ exports.usernameExists = function (msg) {
 exports.usernameActive = function (msg) {
   return function(form, field, callback) {
     User.findOne({ username: field.data }, function(err, user) {
-      if (!_.isNull(user) && !user.active) callback(msg);
-      else callback();
+      if (!_.isNull(user) && user.active) callback();
+      else callback(msg);
     });
   };
 };

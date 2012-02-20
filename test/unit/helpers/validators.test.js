@@ -163,7 +163,7 @@ describe('Custom Validators', function() {
 
     var user;
 
-    beforeEach(function() {
+    beforeEach(function(done) {
 
       // Create user.
       user = new User({
@@ -176,6 +176,9 @@ describe('Custom Validators', function() {
 
       // Set field value.
       form.data = { username: 'david' };
+
+      // Save user.
+      user.save(function(err) { done(); });
 
     });
 
@@ -193,13 +196,8 @@ describe('Custom Validators', function() {
         done();
       });
 
-      // Save the user.
-      user.save(function(err) {
-
-        // Call the validator.
-        validator(form, field, callback);
-
-      });
+      // Call the validator.
+      validator(form, field, callback);
 
     });
 
@@ -217,13 +215,68 @@ describe('Custom Validators', function() {
         done();
       });
 
-      // Save the user.
-      user.save(function(err) {
+      // Call the validator.
+      validator(form, field, callback);
 
-        // Call the validator.
-        validator(form, field, callback);
+    });
 
+  });
+
+  describe('uniqueField', function() {
+
+    var user;
+
+    beforeEach(function(done) {
+
+      // Create user.
+      user = new User({
+        username:   'david',
+        email:      'david@spyder.com',
+        password:   'password',
+        superUser:  true,
+        active:     true
       });
+
+      // Save.
+      user.save(function(err) { done(); });
+
+    });
+
+    it('should not pass if there is a doc with the column/field', function(done) {
+
+      // Set existing username.
+      field.data = 'david';
+
+      // Get the validator.
+      var validator = validators.uniqueField(User, 'username', 'err');
+
+      // Spy on callback.
+      callback = sinon.spy(function() {
+        sinon.assert.calledWith(callback, 'err');
+        done();
+      });
+
+      // Call the validator.
+      validator(form, field, callback);
+
+    });
+
+    it('should pass if there is not a doc with the column/field', function(done) {
+
+      // Set existing username.
+      field.data = 'kara';
+
+      // Get the validator.
+      var validator = validators.uniqueField(User, 'username', 'err');
+
+      // Spy on callback.
+      callback = sinon.spy(function() {
+        sinon.assert.neverCalledWith(callback, 'err');
+        done();
+      });
+
+      // Call the validator.
+      validator(form, field, callback);
 
     });
 

@@ -51,7 +51,7 @@ exports.usernameActive = function (msg) {
 
 
 /*
- * Pass if the password is correct..
+ * Pass if the password is correct.
  *
  * @param {String} msg: The failure message.
  *
@@ -61,6 +61,25 @@ exports.passwordCorrect = function (msg) {
   return function(form, field, callback) {
     User.findOne({ username: form.data.username }, function(err, user) {
       if (user.authenticate(field.data)) callback();
+      else callback(msg);
+    });
+  };
+};
+
+/*
+ * Pass if there is not already a document in the collection that
+ * has the form field value in the passed column.
+ *
+ * @param {Model} coll: The collection.
+ * @param {String} column: The name of the field.
+ * @param {String} msg: The failure message.
+ *
+ * @return void.
+ */
+exports.uniqueField = function (coll, column, msg) {
+  return function(form, field, callback) {
+    coll.findOne().where(column, field.data).run(function(err, doc) {
+      if (_.isNull(doc)) callback();
       else callback(msg);
     });
   };

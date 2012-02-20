@@ -1,21 +1,25 @@
 /*
- * Installation form.
+ * User forms.
  */
 
  // Module dependencies.
 var forms = require('forms'),
   fields = forms.fields,
-  validators = forms.validators;
+  validators = forms.validators,
+  customValidators = require('../validators');
+
+// Models.
+var User = mongoose.model('User');
 
 
 /*
  * ----------------------
- * Installation form.
+ * User forms.
  * ----------------------
  */
 
 
-exports.form = function() {
+exports.newUser = function() {
 
   return forms.create({
 
@@ -25,7 +29,8 @@ exports.form = function() {
       label: 'Username: *',
       required: 'Enter a username.',
       validators: [
-        validators.rangeLength(4, 20, '4-20 characters.')
+        validators.rangeLength(4, 20, '4-20 characters.'),
+        customValidators.uniqueField(User, 'username', 'Username taken.')
       ]
     }),
 
@@ -53,7 +58,20 @@ exports.form = function() {
     email: fields.email({
       name: 'email',
       label: 'Email: *',
-      required: 'Enter an email address.'
+      required: 'Enter an email address.',
+      validators: [
+        customValidators.uniqueField(User, 'email', 'Username taken.')
+      ]
+    }),
+
+    // Super/regular.
+    superUser: fields.boolean({
+        label: 'Super User:'
+    }),
+
+    // Active/inactive.
+    active: fields.boolean({
+        label: 'Active:'
     })
 
   });

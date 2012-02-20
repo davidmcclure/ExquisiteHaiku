@@ -3,15 +3,50 @@
  */
 
 // Module dependencies.
-var forms = require('../../helpers/forms'),
+var userForms = require('../../helpers/forms/user'),
   auth = require('../../helpers/middleware');
 
 // Models.
 var User = mongoose.model('User');
 
 
+/*
+ * ----------------------
+ * User administration routes.
+ * ----------------------
+ */
+
+
 // Controller actions.
 module.exports = function(app) {
+
+  /*
+   * Browse users.
+   *
+   * @middleware auth.isUser: Block if there is no user session.
+   * @middleware auth.isSuper: Block if user is not a super user.
+   */
+  app.get('/admin/users',
+    auth.isUser,
+    auth.isSuper,
+    function(req, res) {
+
+      // Get users, sort alphabetically ascending on username.
+      User.find().sort('username', 1).execFind(function(err, users) {
+
+        // Render the list.
+        res.render('admin/users/index', {
+          title:  'Users',
+          form:   userForms.newUser(),
+          layout: '_layouts/users',
+          user:   req.user,
+          nav:    { main: 'users', sub: 'browse' },
+          users:  users
+        });
+
+      });
+
+  });
 
 
     /*
@@ -20,26 +55,26 @@ module.exports = function(app) {
      * - middleware auth.isUser: Block anonymous.
      * - middleware auth.isSuper: Block non-super users.
      */
-    app.get('/admin/users',
-        auth.isUser,
-        auth.isSuper,
-        function(req, res) {
+    // app.get('/admin/users',
+    //     auth.isUser,
+    //     auth.isSuper,
+    //     function(req, res) {
 
-        // Get users, sorting alphabetically ascending on username.
-        User.find().sort('username', 1).execFind(function(err, users) {
+    //     // Get users, sorting alphabetically ascending on username.
+    //     User.find().sort('username', 1).execFind(function(err, users) {
 
-            // Render the list.
-            res.render('admin/users/index', {
-                title:      'Users',
-                layout:     '_layouts/users',
-                user:       req.user,
-                users:      users,
-                nav:        { main: 'users', sub: 'browse' }
-            });
+    //         // Render the list.
+    //         res.render('admin/users/index', {
+    //             title:      'Users',
+    //             layout:     '_layouts/users',
+    //             user:       req.user,
+    //             users:      users,
+    //             nav:        { main: 'users', sub: 'browse' }
+    //         });
 
-        });
+    //     });
 
-    });
+    // });
 
 
     /*
@@ -48,21 +83,21 @@ module.exports = function(app) {
      * - middleware auth.isUser: Block anonymous.
      * - middleware auth.isSuper: Block non-super users.
      */
-    app.get('/admin/users/new',
-        auth.isUser,
-        auth.isSuper,
-        function(req, res) {
+    // app.get('/admin/users/new',
+    //     auth.isUser,
+    //     auth.isSuper,
+    //     function(req, res) {
 
-        // Render form.
-        res.render('admin/users/new', {
-            title:      'New User',
-            layout:     '_layouts/users',
-            user:       req.user,
-            form:       forms.userForms.newUser(),
-            nav:        { main: 'users', sub: 'new' }
-        });
+    //     // Render form.
+    //     res.render('admin/users/new', {
+    //         title:      'New User',
+    //         layout:     '_layouts/users',
+    //         user:       req.user,
+    //         form:       forms.userForms.newUser(),
+    //         nav:        { main: 'users', sub: 'new' }
+    //     });
 
-    });
+    // });
 
 
     /*
@@ -72,47 +107,47 @@ module.exports = function(app) {
      * - middleware auth.isUser: Block anonymous.
      * - middleware auth.isSuper: Block non-super users.
      */
-    app.post('/admin/users/new',
-        auth.isUser,
-        auth.isSuper,
-        function(req, res) {
+    // app.post('/admin/users/new',
+    //     auth.isUser,
+    //     auth.isSuper,
+    //     function(req, res) {
 
-        // Pass control to form.
-        forms.userForms.newUser().handle(req, {
+    //     // Pass control to form.
+    //     forms.userForms.newUser().handle(req, {
 
-            // If field validations pass.
-            success: function(form) {
+    //         // If field validations pass.
+    //         success: function(form) {
 
-                // Create the user.
-                var user = new User({
-                    username:   form.data.username,
-                    email:      form.data.email,
-                    password:   form.data.password,
-                    superUser:  form.data.superUser,
-                    active:     form.data.active
-                });
+    //             // Create the user.
+    //             var user = new User({
+    //                 username:   form.data.username,
+    //                 email:      form.data.email,
+    //                 password:   form.data.password,
+    //                 superUser:  form.data.superUser,
+    //                 active:     form.data.active
+    //             });
 
-                // Save and redirect.
-                user.save(function() {
-                    res.redirect('/admin/users');
-                });
+    //             // Save and redirect.
+    //             user.save(function() {
+    //                 res.redirect('/admin/users');
+    //             });
 
-            },
+    //         },
 
-            // If field validations fail.
-            other: function(form) {
-                res.render('admin/users/new', {
-                    title:      'New User',
-                    layout:     '_layouts/users',
-                    user:       req.user,
-                    form:       form,
-                    nav:        { main: 'users', sub: 'new' }
-                });
-            }
+    //         // If field validations fail.
+    //         other: function(form) {
+    //             res.render('admin/users/new', {
+    //                 title:      'New User',
+    //                 layout:     '_layouts/users',
+    //                 user:       req.user,
+    //                 form:       form,
+    //                 nav:        { main: 'users', sub: 'new' }
+    //             });
+    //         }
 
-        });
+    //     });
 
-    });
+    // });
 
 
     /*
@@ -122,39 +157,39 @@ module.exports = function(app) {
      * - middleware auth.isUser: Block anonymous.
      * - middleware auth.isSuper: Block non-super users.
      */
-    app.get('/admin/users/edit/:username',
-        auth.isUser,
-        auth.isSuper,
-        function(req, res) {
+    // app.get('/admin/users/edit/:username',
+    //     auth.isUser,
+    //     auth.isSuper,
+    //     function(req, res) {
 
-        // Get the user.
-        User.findOne({ username: req.params.username }, function(err, user) {
+    //     // Get the user.
+    //     User.findOne({ username: req.params.username }, function(err, user) {
 
-            // Information form.
-            var infoForm = forms.userForms.editInformation(user).bind({
-                username:   user.username,
-                email:      user.email,
-                superUser:  user.superUser,
-                active:     user.active
-            });
+    //         // Information form.
+    //         var infoForm = forms.userForms.editInformation(user).bind({
+    //             username:   user.username,
+    //             email:      user.email,
+    //             superUser:  user.superUser,
+    //             active:     user.active
+    //         });
 
-            // Password form.
-            var passwordForm = forms.userForms.changePassword();
+    //         // Password form.
+    //         var passwordForm = forms.userForms.changePassword();
 
-            // Render forms.
-            res.render('admin/users/edit', {
-                title:          'Edit User',
-                layout:         '_layouts/users',
-                user:           req.user,
-                editUser:       user,
-                infoForm:       infoForm,
-                passwordForm:   passwordForm,
-                nav:            { main: 'users', sub: '' }
-            });
+    //         // Render forms.
+    //         res.render('admin/users/edit', {
+    //             title:          'Edit User',
+    //             layout:         '_layouts/users',
+    //             user:           req.user,
+    //             editUser:       user,
+    //             infoForm:       infoForm,
+    //             passwordForm:   passwordForm,
+    //             nav:            { main: 'users', sub: '' }
+    //         });
 
-        });
+    //     });
 
-    });
+    // });
 
 
     /*
@@ -164,65 +199,65 @@ module.exports = function(app) {
      * - middleware auth.isUser: Block anonymous.
      * - middleware auth.isSuper: Block non-super users.
      */
-    app.post('/admin/users/edit/:username/info',
-        auth.isUser,
-        auth.isSuper,
-        function(req, res) {
+    // app.post('/admin/users/edit/:username/info',
+    //     auth.isUser,
+    //     auth.isSuper,
+    //     function(req, res) {
 
-        // Get the user.
-        User.findOne({ username: req.params.username }, function(err, user) {
+    //     // Get the user.
+    //     User.findOne({ username: req.params.username }, function(err, user) {
 
-            // Information form.
-            var infoForm = forms.userForms.editInformation(user);
+    //         // Information form.
+    //         var infoForm = forms.userForms.editInformation(user);
 
-            // Pass control to form.
-            infoForm.handle(req, {
+    //         // Pass control to form.
+    //         infoForm.handle(req, {
 
-                // If field validations pass.
-                success: function(form) {
+    //             // If field validations pass.
+    //             success: function(form) {
 
-                    // Update the user.
-                    user.username =     form.data.username;
-                    user.email =        form.data.email;
+    //                 // Update the user.
+    //                 user.username =     form.data.username;
+    //                 user.email =        form.data.email;
 
-                    // Only set active and super if the user being edited is
-                    // not the same as the editing user.
-                    if (user.id != req.user.id) {
-                        user.superUser =    form.data.superUser;
-                        user.active =       form.data.active;
-                    }
+    //                 // Only set active and super if the user being edited is
+    //                 // not the same as the editing user.
+    //                 if (user.id != req.user.id) {
+    //                     user.superUser =    form.data.superUser;
+    //                     user.active =       form.data.active;
+    //                 }
 
-                    // Save and redirect.
-                    user.save(function() {
-                        res.redirect('/admin/users');
-                    });
+    //                 // Save and redirect.
+    //                 user.save(function() {
+    //                     res.redirect('/admin/users');
+    //                 });
 
-                },
+    //             },
 
-                // If field validations fail.
-                other: function(form) {
+    //             // If field validations fail.
+    //             other: function(form) {
 
-                    // Password form.
-                    var passwordForm = forms.userForms.changePassword();
+    //                 // Password form.
+    //                 var passwordForm = forms.userForms.changePassword();
 
-                    // Render forms.
-                    res.render('admin/users/edit', {
-                        title:          'Edit User',
-                        layout:         '_layouts/users',
-                        user:           req.user,
-                        editUser:       user,
-                        infoForm:       infoForm,
-                        passwordForm:   passwordForm,
-                        nav:            { main: 'users', sub: '' }
-                    });
+    //                 // Render forms.
+    //                 res.render('admin/users/edit', {
+    //                     title:          'Edit User',
+    //                     layout:         '_layouts/users',
+    //                     user:           req.user,
+    //                     editUser:       user,
+    //                     infoForm:       infoForm,
+    //                     passwordForm:   passwordForm,
+    //                     nav:            { main: 'users', sub: '' }
+    //                 });
 
-                }
+    //             }
 
-            });
+    //         });
 
-        });
+    //     });
 
-    });
+    // });
 
 
     /*
@@ -232,62 +267,62 @@ module.exports = function(app) {
      * - middleware auth.isUser: Block anonymous.
      * - middleware auth.isSuper: Block non-super users.
      */
-    app.post('/admin/users/edit/:username/password',
-        auth.isUser,
-        auth.isSuper,
-        function(req, res) {
+    // app.post('/admin/users/edit/:username/password',
+    //     auth.isUser,
+    //     auth.isSuper,
+    //     function(req, res) {
 
-        // Get the user.
-        User.findOne({ username: req.params.username }, function(err, user) {
+    //     // Get the user.
+    //     User.findOne({ username: req.params.username }, function(err, user) {
 
-            // Information form.
-            var passwordForm = forms.userForms.changePassword();
+    //         // Information form.
+    //         var passwordForm = forms.userForms.changePassword();
 
-            // Pass control to form.
-            passwordForm.handle(req, {
+    //         // Pass control to form.
+    //         passwordForm.handle(req, {
 
-                // If field validations pass.
-                success: function(form) {
+    //             // If field validations pass.
+    //             success: function(form) {
 
-                    // Update the user.
-                    user.password = form.data.password;
+    //                 // Update the user.
+    //                 user.password = form.data.password;
 
-                    // Save and redirect.
-                    user.save(function() {
-                        res.redirect('/admin/users');
-                    });
+    //                 // Save and redirect.
+    //                 user.save(function() {
+    //                     res.redirect('/admin/users');
+    //                 });
 
-                },
+    //             },
 
-                // If field validations fail.
-                other: function(form) {
+    //             // If field validations fail.
+    //             other: function(form) {
 
-                    // Information form.
-                    var infoForm = forms.userForms.editInformation(user).bind({
-                        username:   user.username,
-                        email:      user.email,
-                        superUser:  user.superUser,
-                        active:     user.active
-                    });
+    //                 // Information form.
+    //                 var infoForm = forms.userForms.editInformation(user).bind({
+    //                     username:   user.username,
+    //                     email:      user.email,
+    //                     superUser:  user.superUser,
+    //                     active:     user.active
+    //                 });
 
-                    // Render forms.
-                    res.render('admin/users/edit', {
-                        title:          'Edit User',
-                        layout:         '_layouts/users',
-                        user:           req.user,
-                        editUser:       user,
-                        infoForm:       infoForm,
-                        passwordForm:   passwordForm,
-                        nav:            { main: 'users', sub: '' }
-                    });
+    //                 // Render forms.
+    //                 res.render('admin/users/edit', {
+    //                     title:          'Edit User',
+    //                     layout:         '_layouts/users',
+    //                     user:           req.user,
+    //                     editUser:       user,
+    //                     infoForm:       infoForm,
+    //                     passwordForm:   passwordForm,
+    //                     nav:            { main: 'users', sub: '' }
+    //                 });
 
-                }
+    //             }
 
-            });
+    //         });
 
-        });
+    //     });
 
-    });
+    // });
 
 
     /*
@@ -297,26 +332,26 @@ module.exports = function(app) {
      * - middleware auth.isUser: Block anonymous.
      * - middleware auth.isSuper: Block non-super users.
      */
-    app.get('/admin/users/delete/:username',
-        auth.isUser,
-        auth.isSuper,
-        function(req, res) {
+    // app.get('/admin/users/delete/:username',
+    //     auth.isUser,
+    //     auth.isSuper,
+    //     function(req, res) {
 
-        // Get the user.
-        User.findOne({ username: req.params.username }, function(err, user) {
+    //     // Get the user.
+    //     User.findOne({ username: req.params.username }, function(err, user) {
 
-            // Render the form.
-            res.render('admin/users/delete', {
-                title:          'Delete User',
-                layout:         '_layouts/users',
-                user:           req.user,
-                deleteUser:     user,
-                nav:            { main: 'users', sub: '' }
-            });
+    //         // Render the form.
+    //         res.render('admin/users/delete', {
+    //             title:          'Delete User',
+    //             layout:         '_layouts/users',
+    //             user:           req.user,
+    //             deleteUser:     user,
+    //             nav:            { main: 'users', sub: '' }
+    //         });
 
-        });
+    //     });
 
-    });
+    // });
 
 
     /*
@@ -326,19 +361,19 @@ module.exports = function(app) {
      * - middleware auth.isUser: Block anonymous.
      * - middleware auth.isSuper: Block non-super users.
      */
-    app.post('/admin/users/delete/:username',
-        auth.isUser,
-        auth.isSuper,
-        function(req, res) {
+    // app.post('/admin/users/delete/:username',
+    //     auth.isUser,
+    //     auth.isSuper,
+    //     function(req, res) {
 
-        // Get the user and delete.
-        User.findOne({ username: req.params.username }, function(err, user) {
-          user.remove(function(err) {
-              res.redirect('/admin/users');
-          });
-        });
+    //     // Get the user and delete.
+    //     User.findOne({ username: req.params.username }, function(err, user) {
+    //       user.remove(function(err) {
+    //           res.redirect('/admin/users');
+    //       });
+    //     });
 
-    });
+    // });
 
 
 };

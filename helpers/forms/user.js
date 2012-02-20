@@ -48,7 +48,7 @@ exports.newUser = function() {
     confirm: fields.password({
       name: 'confirm',
       label: 'Retype Password: *',
-      required: 'Confirm your password.',
+      required: 'Confirm the password.',
       validators: [
         validators.matchField('password', 'Does not match.')
       ]

@@ -8,6 +8,14 @@ var vows = require('mocha'),
   assert = require('assert'),
   sinon = require('sinon');
 
+// Boostrap the application.
+process.env.NODE_ENV = 'testing';
+require('../db-connect');
+
+// User model.
+require('../../../app/models/user');
+var User = mongoose.model('User');
+
 // Form.
 var userForms = require('../../../helpers/forms/user');
 
@@ -30,47 +38,193 @@ describe('User Forms', function() {
 
   describe('newUser', function() {
 
+    beforeEach(function() {
+      form = userForms.newUser();
+    });
+
     describe('username', function() {
 
-      it('should exist');
+      it('should exist', function(done) {
 
-      it('should be >= 4 characters');
+        form.bind({
+          username: ''
+        }).validate(function(err, form) {
+          form.fields.username.error.should.be.ok;
+          done();
+        });
 
-      it('should be <= 20 characters');
+      });
 
-      it('should be unique');
+      it('should be >= 4 characters', function(done) {
 
-      it('should validate when valid');
+        form.bind({
+          username: 'dav'
+        }).validate(function(err, form) {
+          form.fields.username.error.should.be.ok;
+          done();
+        });
+
+      });
+
+      it('should be <= 20 characters', function(done) {
+
+        form.bind({
+          username: 'supercalafragalisticexpialadocious'
+        }).validate(function(err, form) {
+          form.fields.username.error.should.be.ok;
+          done();
+        });
+
+      });
+
+      it('should be unique', function(done) {
+
+        // Create a user.
+        var user = new User({
+          username:   'david',
+          email:      'david@spyder.com',
+          password:   'password',
+          superUser:  true,
+          active:     true
+        });
+
+        // Save.
+        user.save(function(err) {
+
+          form.bind({
+            username: 'david'
+          }).validate(function(err, form) {
+            form.fields.username.error.should.be.ok;
+            done();
+          });
+
+        });
+
+      });
+
+      it('should validate when valid', function(done) {
+
+        form.bind({
+          username: 'david'
+        }).validate(function(err, form) {
+          assert(!form.fields.username.error);
+          done();
+        });
+
+      });
 
     });
 
     describe('password', function() {
 
-      it('should exist');
+      it('should exist', function(done) {
 
-      it('should be greater than 6 characters');
+        form.bind({
+          password: ''
+        }).validate(function(err, form) {
+          form.fields.password.error.should.be.ok;
+          done();
+        });
 
-      it('should validate when valid');
+      });
+
+      it('should be greater than 6 characters', function(done) {
+
+        form.bind({
+          password: 'short'
+        }).validate(function(err, form) {
+          form.fields.password.error.should.be.ok;
+          done();
+        });
+
+      });
+
+      it('should validate when valid', function(done) {
+
+        form.bind({
+          password: 'password'
+        }).validate(function(err, form) {
+          assert(!form.fields.password.error);
+          done();
+        });
+
+      });
 
     });
 
     describe('confirm', function() {
 
-      it('should exist');
+      it('should exist', function(done) {
 
-      it('should match the password');
+        form.bind({
+          confirm: ''
+        }).validate(function(err, form) {
+          form.fields.confirm.error.should.be.ok;
+          done();
+        });
 
-      it('should validate when valid');
+      });
+
+      it('should match the password', function(done) {
+
+        form.bind({
+          password: 'password',
+          confirm: 'mismatch'
+        }).validate(function(err, form) {
+          form.fields.confirm.error.should.be.ok;
+          done();
+        });
+
+      });
+
+      it('should validate when valid', function(done) {
+
+        form.bind({
+          password: 'password',
+          confirm: 'password'
+        }).validate(function(err, form) {
+          assert(!form.fields.confirm.error);
+          done();
+        });
+
+      });
 
     });
 
     describe('email', function() {
 
-      it('should exist');
+      it('should exist', function(done) {
 
-      it('should be valid');
+        form.bind({
+          email: ''
+        }).validate(function(err, form) {
+          form.fields.email.error.should.be.ok;
+          done();
+        });
 
-      it('should validate when valid');
+      });
+
+      it('should be valid', function(done) {
+
+        form.bind({
+          email: 'invalid'
+        }).validate(function(err, form) {
+          form.fields.email.error.should.be.ok;
+          done();
+        });
+
+      });
+
+      it('should validate when valid', function(done) {
+
+        form.bind({
+          email: 'david@spyder.com'
+        }).validate(function(err, form) {
+          assert(!form.fields.email.error);
+          done();
+        });
+
+      });
 
     });
 

@@ -23,3 +23,12 @@ each field in form.fields
         div.controls
           input(type="password", name=field.name, value=field.data)
           span.help-inline(class=field.name)= field.error
+  else if field.widget.type == 'checkbox'
+    div.control-group
+      label.control-label(for=field.name)= field.label
+      div.controls
+        label.checkbox
+          if field.data
+            input(type="checkbox", name=field.name, checked)
+          else
+            input(type="checkbox", name=field.name)

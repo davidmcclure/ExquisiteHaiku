@@ -37,7 +37,6 @@ module.exports = function(app) {
         // Render the list.
         res.render('admin/users/index', {
           title:  'Users',
-          form:   userForms.newUser(),
           layout: '_layouts/users',
           user:   req.user,
           nav:    { main: 'users', sub: 'browse' },
@@ -48,33 +47,30 @@ module.exports = function(app) {
 
   });
 
+  /*
+   * New user form.
+   *
+   * @middleware auth.isUser: Block if there is no user session.
+   * @middleware auth.isSuper: Block if user is not a super user.
+   */
+  app.get('/admin/users/new',
+    auth.isUser,
+    auth.isSuper,
+    function(req, res) {
 
-    /*
-     * Browse users.
-     *
-     * - middleware auth.isUser: Block anonymous.
-     * - middleware auth.isSuper: Block non-super users.
-     */
-    // app.get('/admin/users',
-    //     auth.isUser,
-    //     auth.isSuper,
-    //     function(req, res) {
+      // Render the list.
+      res.render('admin/users/new', {
+        title:  'Users',
+        layout: '_layouts/users',
+        user:   req.user,
+        nav:    { main: 'users', sub: 'browse' },
+        form:   userForms.newUser()
+      });
 
-    //     // Get users, sorting alphabetically ascending on username.
-    //     User.find().sort('username', 1).execFind(function(err, users) {
+  });
 
-    //         // Render the list.
-    //         res.render('admin/users/index', {
-    //             title:      'Users',
-    //             layout:     '_layouts/users',
-    //             user:       req.user,
-    //             users:      users,
-    //             nav:        { main: 'users', sub: 'browse' }
-    //         });
 
-    //     });
 
-    // });
 
 
     /*

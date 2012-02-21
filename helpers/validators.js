@@ -68,7 +68,7 @@ exports.passwordCorrect = function (msg) {
 
 /*
  * Pass if there is not already a document in the collection that
- * has the form field value in the passed column.
+ * has the form value in the {column} field.
  *
  * @param {Model} coll: The collection.
  * @param {String} column: The name of the field.
@@ -80,6 +80,27 @@ exports.uniqueField = function (coll, column, msg) {
   return function(form, field, callback) {
     coll.findOne().where(column, field.data).run(function(err, doc) {
       if (_.isNull(doc)) callback();
+      else callback(msg);
+    });
+  };
+};
+
+/*
+ * Pass if there is not already a document in the collection that
+ * has the form value in the {column} field, excluding the {self}
+ * document. Used for edit forms to allow unchanged unique parameters.
+ *
+ * @param {Model} coll: The collection.
+ * @param {String} column: The name of the field.
+ * @param {Document} self: The document to exclude.
+ * @param {String} msg: The failure message.
+ *
+ * @return void.
+ */
+exports.uniqueNonSelfField = function (coll, column, self, msg) {
+  return function(form, field, callback) {
+    coll.findOne().where(column, field.data).run(function(err, doc) {
+      if (_.isNull(doc) || doc.id == self.id) callback();
       else callback(msg);
     });
   };

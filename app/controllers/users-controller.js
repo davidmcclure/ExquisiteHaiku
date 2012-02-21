@@ -120,60 +120,92 @@ module.exports = function(app) {
 
   });
 
+  /*
+   * Show user account details.
+   *
+   * @middleware auth.isUser: Block if there is no user session.
+   * @middleware auth.isSuper: Block if user is not a super user.
+   */
+  app.get('/admin/users/show/:username',
+    auth.isUser,
+    auth.isSuper,
+    function(req, res) {
+
+
+  });
+
+  /*
+   * Edit a user account.
+   *
+   * @middleware auth.isUser: Block if there is no user session.
+   * @middleware auth.isSuper: Block if user is not a super user.
+   */
+  app.get('/admin/users/edit/:username',
+    auth.isUser,
+    auth.isSuper,
+    function(req, res) {
+
+
+  });
+
+  /*
+   * Handle edit information form.
+   *
+   * @middleware auth.isUser: Block if there is no user session.
+   * @middleware auth.isSuper: Block if user is not a super user.
+   */
+  app.post('/admin/users/edit/:username/info',
+    auth.isUser,
+    auth.isSuper,
+    function(req, res) {
+
+
+  });
+
+  /*
+   * Handle change password form.
+   *
+   * @middleware auth.isUser: Block if there is no user session.
+   * @middleware auth.isSuper: Block if user is not a super user.
+   */
+  app.post('/admin/users/edit/:username/password',
+    auth.isUser,
+    auth.isSuper,
+    function(req, res) {
+
+
+  });
+
+  /*
+   * Delete user confirmation page.
+   *
+   * @middleware auth.isUser: Block if there is no user session.
+   * @middleware auth.isSuper: Block if user is not a super user.
+   */
+  app.get('/admin/users/delete/:username',
+    auth.isUser,
+    auth.isSuper,
+    function(req, res) {
+
+
+  });
+
+  /*
+   * Delete user.
+   *
+   * @middleware auth.isUser: Block if there is no user session.
+   * @middleware auth.isSuper: Block if user is not a super user.
+   */
+  app.post('/admin/users/delete/:username',
+    auth.isUser,
+    auth.isSuper,
+    function(req, res) {
+
+
+  });
 
 
 
-
-
-
-    /*
-     * Process new user form submission. Rerender the form if validations
-     * fail; create new user and redirect to users index if valid.
-     *
-     * - middleware auth.isUser: Block anonymous.
-     * - middleware auth.isSuper: Block non-super users.
-     */
-    // app.post('/admin/users/new',
-    //     auth.isUser,
-    //     auth.isSuper,
-    //     function(req, res) {
-
-    //     // Pass control to form.
-    //     forms.userForms.newUser().handle(req, {
-
-    //         // If field validations pass.
-    //         success: function(form) {
-
-    //             // Create the user.
-    //             var user = new User({
-    //                 username:   form.data.username,
-    //                 email:      form.data.email,
-    //                 password:   form.data.password,
-    //                 superUser:  form.data.superUser,
-    //                 active:     form.data.active
-    //             });
-
-    //             // Save and redirect.
-    //             user.save(function() {
-    //                 res.redirect('/admin/users');
-    //             });
-
-    //         },
-
-    //         // If field validations fail.
-    //         other: function(form) {
-    //             res.render('admin/users/new', {
-    //                 title:      'New User',
-    //                 layout:     '_layouts/users',
-    //                 user:       req.user,
-    //                 form:       form,
-    //                 nav:        { main: 'users', sub: 'new' }
-    //             });
-    //         }
-
-    //     });
-
-    // });
 
 
     /*

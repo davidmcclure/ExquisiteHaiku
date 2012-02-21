@@ -228,6 +228,72 @@ describe('User Forms', function() {
 
     });
 
-   });
+  });
+
+  describe('editInfo', function() {
+
+    beforeEach(function() {
+      form = userForms.newUser();
+    });
+
+    describe('username', function() {
+
+      it('should exist');
+
+      it('should be unique');
+
+      it('should be >= 4 characters');
+
+      it('should be <= 20 characters');
+
+      it('should validate when it does not match current username');
+
+      it('should validate when it matches current username');
+
+    });
+
+    describe('email', function() {
+
+      it('should exist');
+
+      it('should be unique');
+
+      it('should be valid');
+
+      it('should validate when it does not match current email');
+
+      it('should validate when it matches current email');
+
+    });
+
+  });
+
+  describe('editPassword', function() {
+
+    beforeEach(function() {
+      form = userForms.newUser();
+    });
+
+    describe('password', function() {
+
+      it('should exist');
+
+      it('should be <= 6 characters');
+
+      it('should validate when valid');
+
+    });
+
+    describe('confirm', function() {
+
+      it('should exist');
+
+      it('should match the password');
+
+      it('should validate when valid');
+
+    });
+
+  });
 
 });

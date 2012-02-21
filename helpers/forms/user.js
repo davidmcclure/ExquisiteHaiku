@@ -60,7 +60,7 @@ exports.newUser = function() {
       label: 'Email: *',
       required: 'Enter an email address.',
       validators: [
-        customValidators.uniqueField(User, 'email', 'Username taken.')
+        customValidators.uniqueField(User, 'email', 'Email taken.')
       ]
     }),
 
@@ -109,7 +109,7 @@ exports.editInfo = function(user) {
           User,
           'email',
           user,
-          'Username taken.'
+          'Email taken.'
         )
       ]
     }),

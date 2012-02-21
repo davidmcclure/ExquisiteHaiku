@@ -232,23 +232,109 @@ describe('User Forms', function() {
 
   describe('editInfo', function() {
 
-    beforeEach(function() {
-      form = userForms.newUser();
+    beforeEach(function(done) {
+
+      // Create a user.
+      var user = new User({
+        username:   'david',
+        email:      'david@spyder.com',
+        password:   'password',
+        superUser:  true,
+        active:     true
+      });
+
+      // Save and create form.
+      user.save(function(err) {
+        form = userForms.editInfo(user);
+        done();
+      });
+
     });
 
     describe('username', function() {
 
-      it('should exist');
+      it('should exist', function(done) {
 
-      it('should be unique');
+        form.bind({
+          username: ''
+        }).validate(function(err, form) {
+          form.fields.username.error.should.be.ok;
+          done();
+        });
 
-      it('should be >= 4 characters');
+      });
 
-      it('should be <= 20 characters');
+      it('should be >= 4 characters', function(done) {
 
-      it('should validate when it does not match current username');
+        form.bind({
+          username: 'dav'
+        }).validate(function(err, form) {
+          form.fields.username.error.should.be.ok;
+          done();
+        });
 
-      it('should validate when it matches current username');
+      });
+
+      it('should be <= 20 characters', function(done) {
+
+        form.bind({
+          username: 'supercalafragalisticexpialadocious'
+        }).validate(function(err, form) {
+          form.fields.username.error.should.be.ok;
+          done();
+        });
+
+      });
+
+      it('should be unique', function(done) {
+
+        // Create a user.
+        var user = new User({
+          username:   'kara',
+          email:      'kara@spyder.com',
+          password:   'password',
+          superUser:  true,
+          active:     true
+        });
+
+        // Save.
+        user.save(function(err) {
+
+          form.bind({
+            username: 'kara'
+          }).validate(function(err, form) {
+            form.fields.username.error.should.be.ok;
+            done();
+          });
+
+        });
+
+      });
+
+      it('should validate when it does not match current username', function(done) {
+
+        form.bind({
+          username: 'rosie'
+        }).validate(function(err, form) {
+          assert(!form.fields.username.error);
+          done();
+        });
+
+      });
+
+      it('should validate when it matches current username', function(done) {
+
+        console.log('before');
+
+        form.bind({
+          username: 'david'
+        }).validate(function(err, form) {
+          console.log(form.fields.username);
+          assert(!form.fields.username.error);
+          done();
+        });
+
+      });
 
     });
 

@@ -100,7 +100,7 @@ exports.uniqueField = function (coll, column, msg) {
 exports.uniqueNonSelfField = function (coll, column, self, msg) {
   return function(form, field, callback) {
     coll.findOne().where(column, field.data).run(function(err, doc) {
-      if (_.isNull(doc) || doc.id == self.id) callback();
+      if (_.isNull(doc) || doc.id === self.id) callback();
       else callback(msg);
     });
   };

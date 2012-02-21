@@ -211,8 +211,6 @@ module.exports = function(app) {
           // If field validations pass.
           success: function(form) {
 
-            console.log(form);
-
             // Update the user.
             user.username = form.data.username;
             user.email = form.data.email;
@@ -266,6 +264,53 @@ module.exports = function(app) {
     auth.isSuper,
     function(req, res) {
 
+      // Get the user.
+      User.findOne({
+        username: req.params.username
+      }, function(err, user) {
+
+        var infoForm;
+        var passForm = userForms.editPassword();
+
+        // Pass control to form.
+        passForm.handle(req, {
+
+          // If field validations pass.
+          success: function(form) {
+
+            // Update the user.
+            user.password = form.data.password;
+
+            // Save and redirect.
+            user.save(function() {
+              res.redirect('/admin/users');
+            });
+
+          },
+
+          // If field validations fail.
+          other: function(form) {
+
+            // Information form.
+            if (user.id !== req.user.id) infoForm = userForms.editInfo(user);
+            else infoForm = userForms.editSelfInfo(user);
+
+            // Render forms.
+            res.render('admin/users/edit', {
+              title:      'Edit User',
+              layout:     '_layouts/users',
+              user:       req.user,
+              nav:        { main: 'users', sub: '' },
+              editUser:   user,
+              infoForm:   infoForm,
+              passForm:   form
+            });
+
+          }
+
+        });
+
+      });
 
   });
 
@@ -302,74 +347,6 @@ module.exports = function(app) {
 
 
 
-
-
-    /*
-     * Process the edit information form on the edit user page.
-     *
-     * - param string username: The username of the user being edited.
-     * - middleware auth.isUser: Block anonymous.
-     * - middleware auth.isSuper: Block non-super users.
-     */
-    // app.post('/admin/users/edit/:username/info',
-    //     auth.isUser,
-    //     auth.isSuper,
-    //     function(req, res) {
-
-    //     // Get the user.
-    //     User.findOne({ username: req.params.username }, function(err, user) {
-
-    //         // Information form.
-    //         var infoForm = forms.userForms.editInformation(user);
-
-    //         // Pass control to form.
-    //         infoForm.handle(req, {
-
-    //             // If field validations pass.
-    //             success: function(form) {
-
-    //                 // Update the user.
-    //                 user.username =     form.data.username;
-    //                 user.email =        form.data.email;
-
-    //                 // Only set active and super if the user being edited is
-    //                 // not the same as the editing user.
-    //                 if (user.id != req.user.id) {
-    //                     user.superUser =    form.data.superUser;
-    //                     user.active =       form.data.active;
-    //                 }
-
-    //                 // Save and redirect.
-    //                 user.save(function() {
-    //                     res.redirect('/admin/users');
-    //                 });
-
-    //             },
-
-    //             // If field validations fail.
-    //             other: function(form) {
-
-    //                 // Password form.
-    //                 var passwordForm = forms.userForms.changePassword();
-
-    //                 // Render forms.
-    //                 res.render('admin/users/edit', {
-    //                     title:          'Edit User',
-    //                     layout:         '_layouts/users',
-    //                     user:           req.user,
-    //                     editUser:       user,
-    //                     infoForm:       infoForm,
-    //                     passwordForm:   passwordForm,
-    //                     nav:            { main: 'users', sub: '' }
-    //                 });
-
-    //             }
-
-    //         });
-
-    //     });
-
-    // });
 
 
     /*

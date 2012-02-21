@@ -410,6 +410,186 @@ describe('User Forms', function() {
 
   });
 
+  describe('editSelfInfo', function() {
+
+    beforeEach(function(done) {
+
+      // Create a user.
+      var user = new User({
+        username:   'david',
+        email:      'david@spyder.com',
+        password:   'password',
+        superUser:  true,
+        active:     true
+      });
+
+      // Save and create form.
+      user.save(function(err) {
+        form = userForms.editSelfInfo(user);
+        done();
+      });
+
+    });
+
+    describe('username', function() {
+
+      it('should exist', function(done) {
+
+        form.bind({
+          username: ''
+        }).validate(function(err, form) {
+          form.fields.username.error.should.be.ok;
+          done();
+        });
+
+      });
+
+      it('should be >= 4 characters', function(done) {
+
+        form.bind({
+          username: 'dav'
+        }).validate(function(err, form) {
+          form.fields.username.error.should.be.ok;
+          done();
+        });
+
+      });
+
+      it('should be <= 20 characters', function(done) {
+
+        form.bind({
+          username: 'supercalafragalisticexpialadocious'
+        }).validate(function(err, form) {
+          form.fields.username.error.should.be.ok;
+          done();
+        });
+
+      });
+
+      it('should be unique', function(done) {
+
+        // Create a user.
+        var user = new User({
+          username:   'kara',
+          email:      'kara@spyder.com',
+          password:   'password',
+          superUser:  true,
+          active:     true
+        });
+
+        // Save.
+        user.save(function(err) {
+
+          form.bind({
+            username: 'kara'
+          }).validate(function(err, form) {
+            form.fields.username.error.should.be.ok;
+            done();
+          });
+
+        });
+
+      });
+
+      it('should validate when it does not match current username', function(done) {
+
+        form.bind({
+          username: 'rosie'
+        }).validate(function(err, form) {
+          assert(!form.fields.username.error);
+          done();
+        });
+
+      });
+
+      it('should validate when it matches current username', function(done) {
+
+        form.bind({
+          username: 'david'
+        }).validate(function(err, form) {
+          assert(!form.fields.username.error);
+          done();
+        });
+
+      });
+
+    });
+
+    describe('email', function() {
+
+      it('should exist', function(done) {
+
+        form.bind({
+          email: ''
+        }).validate(function(err, form) {
+          form.fields.email.error.should.be.ok;
+          done();
+        });
+
+      });
+
+      it('should be unique', function(done) {
+
+        // Create a user.
+        var user = new User({
+          username:   'kara',
+          email:      'kara@spyder.com',
+          password:   'password',
+          superUser:  true,
+          active:     true
+        });
+
+        // Save.
+        user.save(function(err) {
+
+          form.bind({
+            email: 'kara@spyder.com'
+          }).validate(function(err, form) {
+            form.fields.email.error.should.be.ok;
+            done();
+          });
+
+        });
+
+      });
+
+      it('should be valid', function(done) {
+
+        form.bind({
+          email: 'invalid'
+        }).validate(function(err, form) {
+          form.fields.email.error.should.be.ok;
+          done();
+        });
+
+      });
+
+      it('should validate when it does not match current email', function(done) {
+
+        form.bind({
+          email: 'rosie@spyder.com'
+        }).validate(function(err, form) {
+          assert(!form.fields.email.error);
+          done();
+        });
+
+      });
+
+      it('should validate when it matches current email', function(done) {
+
+        form.bind({
+          email: 'david@spyder.com'
+        }).validate(function(err, form) {
+          assert(!form.fields.email.error);
+          done();
+        });
+
+      });
+
+    });
+
+  });
+
   describe('editPassword', function() {
 
     beforeEach(function(done) {

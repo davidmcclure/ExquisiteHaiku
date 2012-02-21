@@ -145,6 +145,41 @@ module.exports = function(app) {
     auth.isSuper,
     function(req, res) {
 
+      // Get the user.
+      User.findOne({
+        username: req.params.username
+      }, function(err, user) {
+
+        // Information form.
+        if (req.user.id !== user.id) {
+          var infoForm = userForms.editInfo(user).bind({
+            username:   user.username,
+            email:      user.email,
+            superUser:  user.superUser,
+            active:     user.active
+          });
+        } else {
+          var infoForm = userForms.editSelfInfo(user).bind({
+            username:   user.username,
+            email:      user.email
+          });
+        }
+
+        // Password form.
+        var passForm = userForms.editPassword();
+
+        // Render forms.
+        res.render('admin/users/edit', {
+          title:      'Edit User',
+          layout:     '_layouts/users',
+          user:       req.user,
+          nav:        { main: 'users', sub: '' },
+          editUser:   user,
+          infoForm:   infoForm,
+          passForm:   passForm
+        });
+
+      });
 
   });
 

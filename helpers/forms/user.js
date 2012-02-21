@@ -129,6 +129,46 @@ exports.editInfo = function(user) {
 };
 
 
+exports.editSelfInfo = function(user) {
+
+  return forms.create({
+
+    // Username.
+    username: fields.string({
+      name: 'username',
+      label: 'Username: *',
+      required: 'Enter a username.',
+      validators: [
+        validators.rangeLength(4, 20, '4-20 characters.'),
+        customValidators.uniqueNonSelfField(
+          User,
+          'username',
+          user,
+          'Username taken.'
+        )
+      ]
+    }),
+
+    // Email.
+    email: fields.email({
+      name: 'email',
+      label: 'Email: *',
+      required: 'Enter an email address.',
+      validators: [
+        customValidators.uniqueNonSelfField(
+          User,
+          'email',
+          user,
+          'Email taken.'
+        )
+      ]
+    })
+
+  });
+
+};
+
+
 exports.editPassword = function() {
 
   return forms.create({

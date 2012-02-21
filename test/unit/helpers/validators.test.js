@@ -282,4 +282,96 @@ describe('Custom Validators', function() {
 
   });
 
+  describe('uniqueNonSelfField', function() {
+
+    var user1, user2;
+
+    beforeEach(function(done) {
+
+      // Create user1.
+      user1 = new User({
+        username:   'david',
+        email:      'david@spyder.com',
+        password:   'password',
+        superUser:  true,
+        active:     true
+      });
+
+      // Create user2.
+      user2 = new User({
+        username:   'kara',
+        email:      'kara@spyder.com',
+        password:   'password',
+        superUser:  true,
+        active:     true
+      });
+
+      // Save.
+      user1.save(function(err) {
+        user2.save(function(err) {
+          done();
+        });
+      });
+
+    });
+
+    it('should not pass when there is a non-self doc with the column/field', function(done) {
+
+      // Set existing username.
+      field.data = 'kara';
+
+      // Get the validator.
+      var validator = validators.uniqueNonSelfField(User, 'username', user1, 'err');
+
+      // Spy on callback.
+      callback = sinon.spy(function() {
+        sinon.assert.calledWith(callback, 'err');
+        done();
+      });
+
+      // Call the validator.
+      validator(form, field, callback);
+
+    });
+
+    it('should pass when the self doc has the column/field', function(done) {
+
+      // Set existing username.
+      field.data = 'david';
+
+      // Get the validator.
+      var validator = validators.uniqueNonSelfField(User, 'username', user1, 'err');
+
+      // Spy on callback.
+      callback = sinon.spy(function() {
+        sinon.assert.neverCalledWith(callback, 'err');
+        done();
+      });
+
+      // Call the validator.
+      validator(form, field, callback);
+
+    });
+
+    it('should pass when the self doc does not have the column/field', function(done) {
+
+      // Set existing username.
+      field.data = 'rosie';
+
+      // Get the validator.
+      var validator = validators.uniqueNonSelfField(User, 'username', user1, 'err');
+
+      // Spy on callback.
+      callback = sinon.spy(function() {
+        sinon.assert.neverCalledWith(callback, 'err');
+        done();
+      });
+
+      // Call the validator.
+      validator(form, field, callback);
+
+    });
+
+  });
+
 });

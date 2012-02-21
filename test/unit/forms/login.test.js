@@ -56,6 +56,10 @@ describe('Login Form', function() {
 
   describe('username', function() {
 
+    it('should have a name attribute', function() {
+      form.fields.username.name.should.be.ok;
+    });
+
     it('should exist', function(done) {
 
       form.bind({
@@ -111,6 +115,10 @@ describe('Login Form', function() {
   });
 
   describe('password', function() {
+
+    it('should have a name attribute', function() {
+      form.fields.password.name.should.be.ok;
+    });
 
     it('should exist', function(done) {
 

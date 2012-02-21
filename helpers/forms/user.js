@@ -66,12 +66,14 @@ exports.newUser = function() {
 
     // Super/regular.
     superUser: fields.boolean({
-        label: 'Super User:'
+      name: 'superUser',
+      label: 'Super User:'
     }),
 
     // Active/inactive.
     active: fields.boolean({
-        label: 'Active:'
+      name: 'active',
+      label: 'Active:'
     })
 
   });

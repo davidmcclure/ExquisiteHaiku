@@ -44,6 +44,10 @@ describe('User Forms', function() {
 
     describe('username', function() {
 
+      it('should have a name attribute', function() {
+        form.fields.username.name.should.be.ok;
+      });
+
       it('should exist', function(done) {
 
         form.bind({
@@ -117,6 +121,10 @@ describe('User Forms', function() {
 
     describe('password', function() {
 
+      it('should have a name attribute', function() {
+        form.fields.password.name.should.be.ok;
+      });
+
       it('should exist', function(done) {
 
         form.bind({
@@ -153,6 +161,10 @@ describe('User Forms', function() {
     });
 
     describe('confirm', function() {
+
+      it('should have a name attribute', function() {
+        form.fields.confirm.name.should.be.ok;
+      });
 
       it('should exist', function(done) {
 
@@ -193,6 +205,10 @@ describe('User Forms', function() {
 
     describe('email', function() {
 
+      it('should have a name attribute', function() {
+        form.fields.email.name.should.be.ok;
+      });
+
       it('should exist', function(done) {
 
         form.bind({
@@ -228,6 +244,22 @@ describe('User Forms', function() {
 
     });
 
+    describe('superUser', function() {
+
+      it('should have a name attribute', function() {
+        form.fields.superUser.name.should.be.ok;
+      });
+
+    });
+
+    describe('active', function() {
+
+      it('should have a name attribute', function() {
+        form.fields.active.name.should.be.ok;
+      });
+
+    });
+
   });
 
   describe('editInfo', function() {
@@ -252,6 +284,10 @@ describe('User Forms', function() {
     });
 
     describe('username', function() {
+
+      it('should have a name attribute', function() {
+        form.fields.username.name.should.be.ok;
+      });
 
       it('should exist', function(done) {
 
@@ -336,6 +372,10 @@ describe('User Forms', function() {
     });
 
     describe('email', function() {
+
+      it('should have a name attribute', function() {
+        form.fields.email.name.should.be.ok;
+      });
 
       it('should exist', function(done) {
 
@@ -433,6 +473,10 @@ describe('User Forms', function() {
 
     describe('username', function() {
 
+      it('should have a name attribute', function() {
+        form.fields.username.name.should.be.ok;
+      });
+
       it('should exist', function(done) {
 
         form.bind({
@@ -516,6 +560,10 @@ describe('User Forms', function() {
     });
 
     describe('email', function() {
+
+      it('should have a name attribute', function() {
+        form.fields.email.name.should.be.ok;
+      });
 
       it('should exist', function(done) {
 
@@ -613,6 +661,10 @@ describe('User Forms', function() {
 
     describe('password', function() {
 
+      it('should have a name attribute', function() {
+        form.fields.password.name.should.be.ok;
+      });
+
       it('should exist', function(done) {
 
         form.bind({
@@ -649,6 +701,10 @@ describe('User Forms', function() {
     });
 
     describe('confirm', function() {
+
+      it('should have a name attribute', function() {
+        form.fields.confirm.name.should.be.ok;
+      });
 
       it('should exist', function(done) {
 

@@ -29,6 +29,10 @@ describe('Install Form', function() {
 
   describe('username', function() {
 
+    it('should have a name attribute', function() {
+      form.fields.username.name.should.be.ok;
+    });
+
     it('should exist', function(done) {
 
       form.bind({
@@ -77,6 +81,10 @@ describe('Install Form', function() {
 
   describe('password', function() {
 
+    it('should have a name attribute', function() {
+      form.fields.password.name.should.be.ok;
+    });
+
     it('should exist', function(done) {
 
       form.bind({
@@ -113,6 +121,10 @@ describe('Install Form', function() {
   });
 
   describe('confirm', function() {
+
+    it('should have a name attribute', function() {
+      form.fields.confirm.name.should.be.ok;
+    });
 
     it('should exist', function(done) {
 
@@ -153,6 +165,10 @@ describe('Install Form', function() {
   });
 
   describe('email', function() {
+
+    it('should have a name attribute', function() {
+      form.fields.email.name.should.be.ok;
+    });
 
     it('should exist', function(done) {
 

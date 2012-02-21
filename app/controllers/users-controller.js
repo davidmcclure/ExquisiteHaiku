@@ -325,6 +325,21 @@ module.exports = function(app) {
     auth.isSuper,
     function(req, res) {
 
+      // Get the user.
+      User.findOne({
+        username: req.params.username
+      }, function(err, user) {
+
+        // Render the form.
+        res.render('admin/users/delete', {
+          title:    'Delete User',
+          layout:   '_layouts/users',
+          user:     req.user,
+          nav:      { main: 'users', sub: '' },
+          delUser:  user
+        });
+
+      });
 
   });
 
@@ -339,130 +354,19 @@ module.exports = function(app) {
     auth.isSuper,
     function(req, res) {
 
+      // Get the user.
+      User.findOne({
+        username: req.params.username
+      }, function(err, user) {
+
+        // Remove and redirect.
+        user.remove(function(err) {
+          res.redirect('/admin/users');
+        });
+
+      });
+
 
   });
-
-
-
-
-
-
-
-
-    /*
-     * Process the change password form on the edit user page.
-     *
-     * - param string username: The username of the user being edited.
-     * - middleware auth.isUser: Block anonymous.
-     * - middleware auth.isSuper: Block non-super users.
-     */
-    // app.post('/admin/users/edit/:username/password',
-    //     auth.isUser,
-    //     auth.isSuper,
-    //     function(req, res) {
-
-    //     // Get the user.
-    //     User.findOne({ username: req.params.username }, function(err, user) {
-
-    //         // Information form.
-    //         var passwordForm = forms.userForms.changePassword();
-
-    //         // Pass control to form.
-    //         passwordForm.handle(req, {
-
-    //             // If field validations pass.
-    //             success: function(form) {
-
-    //                 // Update the user.
-    //                 user.password = form.data.password;
-
-    //                 // Save and redirect.
-    //                 user.save(function() {
-    //                     res.redirect('/admin/users');
-    //                 });
-
-    //             },
-
-    //             // If field validations fail.
-    //             other: function(form) {
-
-    //                 // Information form.
-    //                 var infoForm = forms.userForms.editInformation(user).bind({
-    //                     username:   user.username,
-    //                     email:      user.email,
-    //                     superUser:  user.superUser,
-    //                     active:     user.active
-    //                 });
-
-    //                 // Render forms.
-    //                 res.render('admin/users/edit', {
-    //                     title:          'Edit User',
-    //                     layout:         '_layouts/users',
-    //                     user:           req.user,
-    //                     editUser:       user,
-    //                     infoForm:       infoForm,
-    //                     passwordForm:   passwordForm,
-    //                     nav:            { main: 'users', sub: '' }
-    //                 });
-
-    //             }
-
-    //         });
-
-    //     });
-
-    // });
-
-
-    /*
-     * Show delete user confirmation form.
-     *
-     * - param string username: The username of the user being deleted.
-     * - middleware auth.isUser: Block anonymous.
-     * - middleware auth.isSuper: Block non-super users.
-     */
-    // app.get('/admin/users/delete/:username',
-    //     auth.isUser,
-    //     auth.isSuper,
-    //     function(req, res) {
-
-    //     // Get the user.
-    //     User.findOne({ username: req.params.username }, function(err, user) {
-
-    //         // Render the form.
-    //         res.render('admin/users/delete', {
-    //             title:          'Delete User',
-    //             layout:         '_layouts/users',
-    //             user:           req.user,
-    //             deleteUser:     user,
-    //             nav:            { main: 'users', sub: '' }
-    //         });
-
-    //     });
-
-    // });
-
-
-    /*
-     * Delete a user.
-     *
-     * - param string username: The username of the user being deleted.
-     * - middleware auth.isUser: Block anonymous.
-     * - middleware auth.isSuper: Block non-super users.
-     */
-    // app.post('/admin/users/delete/:username',
-    //     auth.isUser,
-    //     auth.isSuper,
-    //     function(req, res) {
-
-    //     // Get the user and delete.
-    //     User.findOne({ username: req.params.username }, function(err, user) {
-    //       user.remove(function(err) {
-    //           res.redirect('/admin/users');
-    //       });
-    //     });
-
-    // });
-
 
 };

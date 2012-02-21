@@ -194,6 +194,64 @@ module.exports = function(app) {
     auth.isSuper,
     function(req, res) {
 
+      // Get the user.
+      User.findOne({
+        username: req.params.username
+      }, function(err, user) {
+
+        var infoForm;
+
+        // Information form.
+        if (user.id !== req.user.id) infoForm = userForms.editInfo(user);
+        else infoForm = userForms.editSelfInfo(user);
+
+        // Pass control to form.
+        infoForm.handle(req, {
+
+          // If field validations pass.
+          success: function(form) {
+
+            console.log(form);
+
+            // Update the user.
+            user.username = form.data.username;
+            user.email = form.data.email;
+
+            // Only set active and super for non-self edit
+            if (user.id !== req.user.id) {
+              user.superUser = form.data.superUser;
+              user.active = form.data.active;
+            }
+
+            // Save and redirect.
+            user.save(function() {
+              res.redirect('/admin/users');
+            });
+
+          },
+
+          // If field validations fail.
+          other: function(form) {
+
+            // Password form.
+            var passForm = userForms.editPassword();
+
+            // Render forms.
+            res.render('admin/users/edit', {
+              title:      'Edit User',
+              layout:     '_layouts/users',
+              user:       req.user,
+              nav:        { main: 'users', sub: '' },
+              editUser:   user,
+              infoForm:   form,
+              passForm:   passForm
+            });
+
+          }
+
+        });
+
+      });
 
   });
 
@@ -243,46 +301,7 @@ module.exports = function(app) {
 
 
 
-    /*
-     * Edit a user account.
-     *
-     * - param string username: The username of the user being edited.
-     * - middleware auth.isUser: Block anonymous.
-     * - middleware auth.isSuper: Block non-super users.
-     */
-    // app.get('/admin/users/edit/:username',
-    //     auth.isUser,
-    //     auth.isSuper,
-    //     function(req, res) {
 
-    //     // Get the user.
-    //     User.findOne({ username: req.params.username }, function(err, user) {
-
-    //         // Information form.
-    //         var infoForm = forms.userForms.editInformation(user).bind({
-    //             username:   user.username,
-    //             email:      user.email,
-    //             superUser:  user.superUser,
-    //             active:     user.active
-    //         });
-
-    //         // Password form.
-    //         var passwordForm = forms.userForms.changePassword();
-
-    //         // Render forms.
-    //         res.render('admin/users/edit', {
-    //             title:          'Edit User',
-    //             layout:         '_layouts/users',
-    //             user:           req.user,
-    //             editUser:       user,
-    //             infoForm:       infoForm,
-    //             passwordForm:   passwordForm,
-    //             nav:            { main: 'users', sub: '' }
-    //         });
-
-    //     });
-
-    // });
 
 
     /*

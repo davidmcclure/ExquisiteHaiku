@@ -92,8 +92,8 @@ module.exports = function(app) {
             username:   form.data.username,
             email:      form.data.email,
             password:   form.data.password,
-            superUser:  _.has(form.data, 'superUser'),
-            active:     _.has(form.data, 'active')
+            superUser:  _.has(req.body, 'superUser'),
+            active:     _.has(req.body, 'active')
           });
 
           // Save and redirect.
@@ -204,8 +204,8 @@ module.exports = function(app) {
 
             // Only set active and super for non-self edit
             if (user.id !== req.user.id) {
-              user.superUser = form.data.superUser;
-              user.active = form.data.active;
+              user.superUser = _.has(req.body, 'superUser');
+              user.active = _.has(req.body, 'active');
             }
 
             // Save and redirect.

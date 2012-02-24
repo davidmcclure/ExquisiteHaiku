@@ -37,7 +37,7 @@ describe('User Controller', function() {
     user1 = new User({
       username:   'david',
       password:   'password',
-      email:      'david@spyder.com',
+      email:      'david@test.com',
       superUser:  true,
       active:     true
     });
@@ -46,7 +46,7 @@ describe('User Controller', function() {
     user2 = new User({
       username:   'kara',
       password:   'password',
-      email:      'kara@spyder.com',
+      email:      'kara@test.com',
       superUser:  true,
       active:     true
     });
@@ -55,7 +55,7 @@ describe('User Controller', function() {
     user3 = new User({
       username:   'rosie',
       password:   'password',
-      email:      'rosie@spyder.com',
+      email:      'rosie@test.com',
       superUser:  true,
       active:     true
     });
@@ -423,7 +423,7 @@ describe('User Controller', function() {
         browser.visit(r+'admin/users/new', function() {
 
           // Fill in form.
-          browser.fill('email', 'david@spyder.com');
+          browser.fill('email', 'david@test.com');
           browser.pressButton('Create', function() {
 
             // Check for error.
@@ -488,7 +488,7 @@ describe('User Controller', function() {
           browser.fill('username', 'valid');
           browser.fill('password', 'password');
           browser.fill('confirm', 'password');
-          browser.fill('email', 'valid@spyder.com');
+          browser.fill('email', 'valid@test.com');
           browser.check('superUser');
           browser.check('active');
           browser.pressButton('Create', function() {
@@ -500,7 +500,7 @@ describe('User Controller', function() {
             User.findOne({ username: 'valid' }, function(err, user) {
               user.should.be.ok;
               user.username.should.eql('valid');
-              user.email.should.eql('valid@spyder.com');
+              user.email.should.eql('valid@test.com');
               user.superUser.should.be.true;
               user.active.should.be.true;
               done();
@@ -516,7 +516,33 @@ describe('User Controller', function() {
 
   describe('GET /admin/users/edit/:username', function() {
 
-    it('should render the edit information form');
+    beforeEach(function(done) {
+
+      // Go to non-self user edit page.
+      browser.visit(r+'admin/users/edit/kara', function() { done(); });
+
+    });
+
+    it('should render the edit information form', function(done) {
+
+      // Check for form.
+      browser.query('form.edit-info').should.be.ok;
+
+      // Username input and value.
+      browser.query('form.edit-info input[name="username"]').should.be.ok;
+
+      // Email input and value.
+      browser.query('form.edit-info input[name="email"]').should.be.ok;
+
+      // Super user input and value.
+      browser.query('form.edit-info input[name="superUser"]').should.be.ok;
+
+      // Active input and value.
+      browser.query('form.edit-info input[name="active"]').should.be.ok;
+
+      done();
+
+    });
 
     it('should not render the Super User and Active checkboxes for self edit');
 

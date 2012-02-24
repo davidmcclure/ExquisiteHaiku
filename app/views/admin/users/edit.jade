@@ -1,11 +1,11 @@
-form.form-horizontal(method='post', action='/admin/users/edit/#{editUser.username}/info')
+form.form-horizontal.edit-info(method='post', action='/admin/users/edit/#{editUser.username}/info')
   fieldset
     legend Edit Information
     != partial('../../_includes/form/form', { form: infoForm })
   div.form-actions
     button.btn.btn-primary(type='submit') Save
 
-form.form-horizontal(method='post', action='/admin/users/edit/#{editUser.username}/password')
+form.form-horizontal.edit-password(method='post', action='/admin/users/edit/#{editUser.username}/password')
   fieldset
     legend Change Password
     != partial('../../_includes/form/form', { form: passForm })

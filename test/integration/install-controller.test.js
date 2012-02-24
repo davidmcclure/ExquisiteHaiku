@@ -60,7 +60,7 @@ describe('Install Controller', function() {
       var user = new User({
         username:   'david',
         password:   'password',
-        email:      'david@spyder.com',
+        email:      'david@test.com',
         superUser:  true,
         active:     true
       });
@@ -343,7 +343,7 @@ describe('Install Controller', function() {
         browser.visit(r+'admin/install', function() {
 
           // Fill in form, submit.
-          browser.fill('email', 'david@spyder.com');
+          browser.fill('email', 'david@test.com');
           browser.pressButton('Submit', function() {
 
             // Check for error.
@@ -370,7 +370,7 @@ describe('Install Controller', function() {
           browser.fill('username', 'david');
           browser.fill('password', 'password');
           browser.fill('confirm', 'password');
-          browser.fill('email', 'david@spyder.com');
+          browser.fill('email', 'david@test.com');
           browser.pressButton('Submit', function() {
 
             // Check for redirect.
@@ -380,7 +380,7 @@ describe('Install Controller', function() {
             User.findOne({ username: 'david' }, function(err, user) {
               user.should.be.ok;
               user.username.should.eql('david');
-              user.email.should.eql('david@spyder.com');
+              user.email.should.eql('david@test.com');
               user.superUser.should.be.true;
               user.active.should.be.true;
               done();

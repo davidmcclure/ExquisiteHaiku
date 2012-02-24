@@ -4,7 +4,8 @@
 
 // Module dependencies.
 var userForms = require('../../helpers/forms/user'),
-  auth = require('../../helpers/middleware');
+  auth = require('../../helpers/middleware'),
+  _ = require('underscore');
 
 // Models.
 var User = mongoose.model('User');
@@ -63,7 +64,7 @@ module.exports = function(app) {
         title:  'Users',
         layout: '_layouts/users',
         user:   req.user,
-        nav:    { main: 'users', sub: 'browse' },
+        nav:    { main: 'users', sub: 'new' },
         form:   userForms.newUser()
       });
 
@@ -91,8 +92,8 @@ module.exports = function(app) {
             username:   form.data.username,
             email:      form.data.email,
             password:   form.data.password,
-            superUser:  form.data.superUser,
-            active:     form.data.active
+            superUser:  _.has(form.data, 'superUser'),
+            active:     _.has(form.data, 'active')
           });
 
           // Save and redirect.
@@ -110,7 +111,7 @@ module.exports = function(app) {
             title:  'Users',
             layout: '_layouts/users',
             user:   req.user,
-            nav:    { main: 'users', sub: 'browse' },
+            nav:    { main: 'users', sub: 'new' },
             form:   form
           });
 

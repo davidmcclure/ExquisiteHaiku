@@ -35,7 +35,7 @@ describe('User', function() {
 
       // Create user with no username.
       var user = new User({
-        email:    'david@spyder.com'
+        email:    'david@test.com'
       });
 
       // Save.
@@ -87,7 +87,7 @@ describe('User', function() {
       // Create user.
       var user = new User({
         username:   'david',
-        email:      'david@spyder.com'
+        email:      'david@test.com'
       });
 
       // Save.
@@ -100,7 +100,7 @@ describe('User', function() {
       // Create a new user with a duplicate username.
       var dupUser = new User({
         username:   'david',
-        email:      'different@spyder.com',
+        email:      'different@test.com',
       });
 
       // Save.
@@ -124,7 +124,7 @@ describe('User', function() {
       // Create a new user with a duplicate email.
       var dupUser = new User({
         username:   'different',
-        email:      'david@spyder.com'
+        email:      'david@test.com'
       });
 
       // Save.

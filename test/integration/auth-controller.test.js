@@ -36,7 +36,7 @@ describe('Auth Controller', function() {
     user = new User({
       username:   'david',
       password:   'password',
-      email:      'david@spyder.com',
+      email:      'david@test.com',
       superUser:  true,
       active:     true
     });

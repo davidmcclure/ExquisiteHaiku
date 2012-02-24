@@ -90,3 +90,27 @@ exports.noUsers = function (req, res, next) {
     else next();
   });
 };
+
+
+/*
+ * Only allow non-self users. Called after isUser, which passed user
+ * document.
+ *
+ * @param {Object} req: The request.
+ * @param {Object} res: The response.
+ * @param {Callback} next: The next middleware.
+ *
+ * @return void.
+ */
+exports.nonSelf = function (req, res, next) {
+
+  // Get the user record, push into request.
+  User.findOne({ username: req.params.username }, function(err, user) {
+    if (user.id !== req.user.id) {
+      req.user = user;
+      next();
+    }
+    else res.redirect('/admin');
+  });
+
+};

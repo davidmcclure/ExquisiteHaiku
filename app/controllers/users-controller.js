@@ -310,6 +310,7 @@ module.exports = function(app) {
   app.get('/admin/users/delete/:username',
     auth.isUser,
     auth.isSuper,
+    auth.nonSelf,
     function(req, res) {
 
       // Get the user.
@@ -339,6 +340,7 @@ module.exports = function(app) {
   app.post('/admin/users/delete/:username',
     auth.isUser,
     auth.isSuper,
+    auth.nonSelf,
     function(req, res) {
 
       // Get the user.

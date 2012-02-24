@@ -836,7 +836,36 @@ describe('User Controller', function() {
 
     });
 
-    it('should correctly edit the user and redirect on success');
+    it('should correctly edit the user and redirect on success', function(done) {
+
+      // GET admin/users.
+      browser.visit(r+'admin/users/edit/kara', function() {
+
+        // Fill in form (empty username to trigger form re-show).
+        browser.fill('username', 'newusername');
+        browser.fill('email', 'new@test.com');
+        browser.uncheck('superUser');
+        browser.check('active');
+        browser.pressButton('form.edit-info button', function() {
+
+          // Check for redirect.
+          browser.location.pathname.should.eql('/admin/users');
+
+          // Get user.
+          User.findOne({ username: 'newusername' }, function(err, user) {
+            user.should.be.ok;
+            user.username.should.eql('newusername');
+            user.email.should.eql('new@test.com');
+            user.superUser.should.be.false;
+            user.active.should.be.true;
+            done();
+          });
+
+        });
+
+      });
+
+    });
 
   });
 
@@ -844,39 +873,206 @@ describe('User Controller', function() {
 
     describe('password', function() {
 
-      it('should flash error for no password');
+      it('should flash error for no password', function(done) {
 
-      it('should flash error for password < 6 characters');
+        // GET admin/users.
+        browser.visit(r+'admin/users/edit/kara', function() {
 
-      it('should not flash error when password is valid');
+          // Fill in form.
+          browser.fill('password', '');
+          browser.pressButton('form.edit-password button', function() {
+
+            // Check for error.
+            browser.location.pathname.should.eql('/admin/users/edit/kara/password');
+            browser.query('span.help-inline.password').should.be.ok;
+            done();
+
+          });
+
+        });
+
+      });
+
+      it('should flash error for password < 6 characters', function(done) {
+
+        // GET admin/users.
+        browser.visit(r+'admin/users/edit/kara', function() {
+
+          // Fill in form.
+          browser.fill('password', 'pass');
+          browser.pressButton('form.edit-password button', function() {
+
+            // Check for error.
+            browser.location.pathname.should.eql('/admin/users/edit/kara/password');
+            browser.query('span.help-inline.password').should.be.ok;
+            done();
+
+          });
+
+        });
+
+      });
+
+      it('should not flash error when password is valid', function(done) {
+
+        // GET admin/users.
+        browser.visit(r+'admin/users/edit/kara', function() {
+
+          // Fill in form (empty confirm to trigger form re-show).
+          browser.fill('password', 'newpassword');
+          browser.fill('confirm', '');
+          browser.pressButton('form.edit-password button', function() {
+
+            // Check for error.
+            browser.location.pathname.should.eql('/admin/users/edit/kara/password');
+            assert(!browser.query('span.help-inline.password'));
+            done();
+
+          });
+
+        });
+
+      });
 
     });
 
     describe('confirm', function() {
 
-      it('should flash error for no confirm');
+      it('should flash error for no confirm', function(done) {
 
-      it('should flash error for mismatch');
+        // GET admin/users.
+        browser.visit(r+'admin/users/edit/kara', function() {
 
-      it('should not flash error when confirm is valid');
+          // Fill in form.
+          browser.fill('confirm', '');
+          browser.pressButton('form.edit-password button', function() {
+
+            // Check for error.
+            browser.location.pathname.should.eql('/admin/users/edit/kara/password');
+            browser.query('span.help-inline.confirm').should.be.ok;
+            done();
+
+          });
+
+        });
+
+      });
+
+      it('should flash error for mismatch', function(done) {
+
+        // GET admin/users.
+        browser.visit(r+'admin/users/edit/kara', function() {
+
+          // Fill in form.
+          browser.fill('password', 'password');
+          browser.fill('confirm', 'mismatch');
+          browser.pressButton('form.edit-password button', function() {
+
+            // Check for error.
+            browser.location.pathname.should.eql('/admin/users/edit/kara/password');
+            browser.query('span.help-inline.confirm').should.be.ok;
+            done();
+
+          });
+
+        });
+
+      });
 
     });
 
-    it('should update password and redirect on success');
+    it('should update password and redirect on success', function(done) {
+
+      // GET admin/users.
+      browser.visit(r+'admin/users/edit/kara', function() {
+
+        // Fill in form.
+        browser.fill('password', 'newpassword');
+        browser.fill('confirm', 'newpassword');
+        browser.pressButton('form.edit-password button', function() {
+
+          // Check for redirect.
+          browser.location.pathname.should.eql('/admin/users');
+
+          // Get user, check new password.
+          User.findOne({ username: 'kara' }, function(err, user) {
+            user.authenticate('newpassword').should.be.true;
+            done();
+          });
+
+        });
+
+      });
+
+    });
 
   });
 
   describe('GET /admin/users/:username/delete', function() {
 
-    it('should show the confirmation form');
+    it('should block self user', function(done) {
+
+      // GET admin/users.
+      browser.visit(r+'admin/users/delete/david', function() {
+
+        // Check for redirect.
+        browser.location.pathname.should.eql('/admin');
+        done();
+
+      });
+
+    });
+
+    it('should show the confirmation form', function(done) {
+
+      // GET admin/users.
+      browser.visit(r+'admin/users/delete/kara', function() {
+
+        // Check for form and fields.
+        browser.query('form').should.be.ok;
+        browser.query('form button[type="submit"]').should.be.ok;
+        done();
+
+      });
+
+    });
 
   });
 
   describe('GET /admin/users/:username/delete', function() {
 
-    it('should block self user');
+    it('should block self user', function(done) {
 
-    it('should delete the user and redirect');
+      // GET admin/users.
+      browser.visit(r+'admin/users/delete/david', function() {
+
+        // Check for redirect.
+        browser.location.pathname.should.eql('/admin');
+        done();
+
+      });
+
+    });
+
+    it('should delete the user and redirect', function(done) {
+
+      // GET admin/users.
+      browser.visit(r+'admin/users/delete/kara', function() {
+
+        // Click confirm button.
+        browser.pressButton('form button[type="submit"]', function() {
+
+          // Try to get the  user, check for null.
+          User.findOne({ username: 'kara' }, function(err, user) {
+            assert(!user);
+            done();
+          });
+
+        });
+
+      });
+
+    });
 
   });
 

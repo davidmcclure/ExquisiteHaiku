@@ -6,7 +6,8 @@
 var vows = require('mocha'),
   should = require('should'),
   assert = require('assert'),
-  sinon = require('sinon');
+  sinon = require('sinon'),
+  async = require('async');
 
 // Boostrap the application.
 process.env.NODE_ENV = 'testing';
@@ -368,6 +369,92 @@ describe('Route Middleware', function() {
       auth.noUser(req, res, next);
       sinon.assert.called(next);
       done();
+
+    });
+
+  });
+
+  describe('nonSelf', function() {
+
+    var user1, user2;
+
+    beforeEach(function(done) {
+
+      // Create user1.
+      user1 = new User({
+        username:   'david',
+        password:   'password',
+        email:      'david@test.com',
+        superUser:  true,
+        active:     true
+      });
+
+      // Create user2.
+      user2 = new User({
+        username:   'kara',
+        password:   'password',
+        email:      'kara@test.com',
+        superUser:  true,
+        active:     false
+      });
+
+      // Save worker.
+      var save = function(user, callback) {
+        user.save(function(err) {
+          callback(null, user);
+        });
+      };
+
+      // Save.
+      async.map([user1, user2], save, function(err, users) {
+        done();
+      });
+
+    });
+
+    it('should redirect when the current user matches the topic user', function(done) {
+
+      // Spy on res.
+      res.redirect = sinon.spy(function() {
+        sinon.assert.calledWith(res.redirect, '/admin');
+        done();
+      });
+
+      // Spy on next.
+      next = sinon.spy(function() {
+        sinon.assert.calledWith(res.redirect, '/admin');
+        done();
+      });
+
+      // Mock request object.
+      req.params = { username: 'david' };
+      req.user = user1;
+
+      // Call nonSelf, check for res.redirect().
+      auth.nonSelf(req, res, next);
+
+    });
+
+    it('should call next() when the current user does not match the topic user', function(done) {
+
+      // Spy on res.
+      res.redirect = sinon.spy(function() {
+        sinon.assert.called(next);
+        done();
+      });
+
+      // Spy on next.
+      next = sinon.spy(function() {
+        sinon.assert.called(next);
+        done();
+      });
+
+      // Mock request object.
+      req.params = { username: 'kara' };
+      req.user = user1;
+
+      // Call nonSelf, check for res.redirect().
+      auth.nonSelf(req, res, next);
 
     });
 

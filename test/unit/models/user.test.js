@@ -31,40 +31,16 @@ describe('User', function() {
 
   describe('required field validations', function() {
 
-    it('should require a username', function(done) {
+    it('should require username and email', function(done) {
 
-      // Create user with no username.
-      var user = new User({
-        email:    'david@test.com'
-      });
+      // Create user with no username or email.
+      var user = new User();
 
       // Save.
       user.save(function(err) {
 
-        // Check for error.
+        // Check for errors.
         err.errors.username.type.should.eql('required');
-
-        // Check for 0 documents.
-        User.count({}, function(err, count) {
-          count.should.eql(0);
-          done();
-        });
-
-      });
-
-    });
-
-    it('should require an email', function(done) {
-
-      // Create user with no email.
-      var user = new User({
-        username: 'david'
-      });
-
-      // Save.
-      user.save(function(err) {
-
-        // Check for error.
         err.errors.email.type.should.eql('required');
 
         // Check for 0 documents.

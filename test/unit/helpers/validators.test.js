@@ -374,4 +374,59 @@ describe('Custom Validators', function() {
 
   });
 
+  describe('validSlug', function() {
+
+    var validator;
+
+    beforeEach(function() {
+
+      // Get the validator.
+      validator = validators.validSlug('err');
+
+    });
+
+    it('should not pass when the slug has spaces', function(done) {
+
+      // Spy on callback.
+      callback = sinon.spy(function() {
+        sinon.assert.calledWith(callback, 'err');
+        done();
+      });
+
+      // Set invalid slug.
+      field.data = 'slug with spaces';
+      validator(form, field, callback);
+
+    });
+
+    it('should not pass when the slug has capital letters', function(done) {
+
+      // Spy on callback.
+      callback = sinon.spy(function() {
+        sinon.assert.calledWith(callback, 'err');
+        done();
+      });
+
+      // Set invalid slug.
+      field.data = 'Slug-With-Capitals';
+      validator(form, field, callback);
+
+    });
+
+    it('should not pass when the slug has non-alphanumeric chars', function(done) {
+
+      // Spy on callback.
+      callback = sinon.spy(function() {
+        sinon.assert.calledWith(callback, 'err');
+        done();
+      });
+
+      // Set invalid slug.
+      field.data = 'slug-with-non-alphas!';
+      validator(form, field, callback);
+
+    });
+
+  });
+
 });

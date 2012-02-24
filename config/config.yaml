@@ -1,12 +1,12 @@
 testing:
   db:
-    uri: "mongodb://localhost/spyder_testing"
+    uri: "mongodb://localhost/oversoul_testing"
 development:
   db:
-    uri: "mongodb://localhost/spyder_development"
+    uri: "mongodb://localhost/oversoul_development"
 staging:
   db:
-    uri: "mongodb://localhost/spyder_staging"
+    uri: "mongodb://localhost/oversoul_staging"
 production:
   db:
-    uri: "mongodb://localhost/spyder_production"
+    uri: "mongodb://localhost/oversoul_production"

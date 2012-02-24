@@ -1,19 +1,11 @@
 div.navbar.navbar-fixed-top
   div.navbar-inner
     div.container
-      a.brand(href='/admin') CollegeSpyder
+      a.brand(href='/admin') Oversoul
       ul.nav
-        li(class=activeLi(nav.main, 'colleges'))
-          a(href="/admin/colleges") Colleges
-        li(class=activeLi(nav.main, 'publications'))
-          a(href="/admin/publications") Publications
-        li(class=activeLi(nav.main, 'articles'))
-          a(href="/admin/articles") Articles
-        li(class=activeLi(nav.main, 'logs'))
-          a(href="/admin/logs") Crawl Logs
         if user.superUser
           li(class=activeLi(nav.main, 'users'))
             a(href="/admin/users") Users
       ul.nav.pull-right
         li
-          a(href="/admin/logout") logout ( #{user.username} )
+          a(href="/admin/logout") Logout <strong>#{user.username}</strong>

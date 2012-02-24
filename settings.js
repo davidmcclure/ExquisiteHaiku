@@ -34,6 +34,7 @@ function bootApplication(app) {
     // Set stylus source and public directory.
     app.use(require("stylus").middleware({
         src: __dirname + "/stylus",
+        dest: __dirname + "/public",
         compress: true }));
     app.use(express.static(__dirname + '/public'));
 

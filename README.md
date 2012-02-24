@@ -1,1 +1,1 @@
-What's the best college for \_\_?
+And you whose pastime is to make midnight mushrooms.

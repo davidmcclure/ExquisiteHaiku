@@ -121,20 +121,6 @@ module.exports = function(app) {
   });
 
   /*
-   * Show user account details.
-   *
-   * @middleware auth.isUser: Block if there is no user session.
-   * @middleware auth.isSuper: Block if user is not a super user.
-   */
-  app.get('/admin/users/show/:username',
-    auth.isUser,
-    auth.isSuper,
-    function(req, res) {
-
-
-  });
-
-  /*
    * Edit a user account.
    *
    * @middleware auth.isUser: Block if there is no user session.

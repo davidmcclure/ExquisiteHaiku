@@ -5,23 +5,33 @@
 // Module dependencies.
 var auth = require('../../helpers/middleware');
 
+
+/*
+ * ----------------------
+ * Admin index routes.
+ * ----------------------
+ */
+
 // Controller actions.
 module.exports = function(app) {
 
+  /*
+   * Show poems.
+   *
+   * @middleware auth.isUser: Block if there is no user session.
+   */
+  app.get('/admin',
+    auth.isUser,
+    function(req, res) {
 
-    /*
-     * Show admin index.
-     *
-     * - middleware auth.isUser: Block anonymous.
-     */
-    app.get('/admin', auth.isUser, function(req, res) {
-        res.render('admin/index', {
-            title:      'CollegeSypder',
-            layout:     '_layouts/admin',
-            user:       req.user,
-            nav:        { main: '', sub: '' }
-        });
-    });
+      // Render the list.
+      res.render('admin/index', {
+        title:  'Oversoul',
+        layout: '_layouts/admin',
+        user:   req.user,
+        nav:    { main: '', sub: '' }
+      });
 
+  });
 
 };

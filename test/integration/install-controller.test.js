@@ -27,9 +27,11 @@ describe('Install Controller', function() {
   var browser = new Browser();
   var r = 'http://localhost:3000/';
 
-  // Clear users.
+  // Clear users and logout.
   afterEach(function(done) {
-    User.collection.remove(function(err) { done(); });
+    User.collection.remove(function(err) {
+      browser.visit(r+'admin/logout', function() { done(); });
+    });
   });
 
   describe('GET /admin/install', function() {
@@ -377,6 +379,10 @@ describe('Install Controller', function() {
             // Get user.
             User.findOne({ username: 'david' }, function(err, user) {
               user.should.be.ok;
+              user.username.should.eql('david');
+              user.email.should.eql('david@spyder.com');
+              user.superUser.should.be.true;
+              user.active.should.be.true;
               done();
             });
 

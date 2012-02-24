@@ -46,9 +46,11 @@ describe('Auth Controller', function() {
 
   });
 
-  // Clear users.
+  // Clear users and logout.
   afterEach(function(done) {
-    User.collection.remove(function(err) { done(); });
+    User.collection.remove(function(err) {
+      browser.visit(r+'admin/logout', function() { done(); });
+    });
   });
 
   describe('GET /admin/login', function() {

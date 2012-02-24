@@ -1,11 +1,10 @@
 body{padding-top:50px}
+.logo{font-family:Lusitana}
 form.login,form.install{margin:6em auto 0 20em;}
-form.login legend,form.install legend{font-family:Damion;font-size:3em;padding-bottom:.5em;border:none}
+form.login legend,form.install legend{font-size:3em;padding-bottom:.5em;border:none}
 form.login div.clearfix.error,form.install div.clearfix.error{padding-top:0;padding-bottom:0}
 form.login h4,form.install h4{padding-bottom:.9em}
-form.login input,form.install input,form.login textarea,form.install textarea,form.login select,form.install select{padding:9px;color:#3a3a3a;font-size:15px}
 form div.form-actions{background:none;border:none;padding:0}
-a.brand{font-family:Damion}
 div.subnav{margin-bottom:1em;}
 div.subnav a,div.subnav input{margin:0 1em 0 0}
 div.subnav input{position:relative}

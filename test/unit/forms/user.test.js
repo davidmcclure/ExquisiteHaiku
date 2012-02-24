@@ -231,6 +231,31 @@ describe('User Forms', function() {
 
       });
 
+      it('should be unique', function(done) {
+
+        // Create a user.
+        var user = new User({
+          username:   'david',
+          email:      'david@spyder.com',
+          password:   'password',
+          superUser:  true,
+          active:     true
+        });
+
+        // Save.
+        user.save(function(err) {
+
+          form.bind({
+            email: 'david@spyder.com'
+          }).validate(function(err, form) {
+            form.fields.email.error.should.be.ok;
+            done();
+          });
+
+        });
+
+      });
+
       it('should validate when valid', function(done) {
 
         form.bind({

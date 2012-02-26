@@ -1,4 +1,5 @@
 body{padding-top:50px}
+div.container{width:640px}
 .logo{font-family:Lusitana}
 .navbar a.brand{font-family:Lusitana;font-size:1.6em;line-height:0;position:relative;top:11px}
 form.login,form.install{margin:6em auto 0 20em;}

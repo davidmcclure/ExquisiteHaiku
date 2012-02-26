@@ -57,8 +57,7 @@ module.exports = function(app) {
               username:   form.data.username,
               email:      form.data.email,
               password:   form.data.password,
-              superUser:  true,
-              active:     true
+              admin:      true
           });
 
           // Save and redirect.

@@ -381,8 +381,7 @@ describe('Install Controller', function() {
               user.should.be.ok;
               user.username.should.eql('david');
               user.email.should.eql('david@test.com');
-              user.superUser.should.be.true;
-              user.active.should.be.true;
+              user.admin.should.be.true;
               done();
             });
 

@@ -95,41 +95,6 @@ describe('Route Middleware', function() {
 
     });
 
-    it('should redirect an inactive user', function(done) {
-
-      // Spy on res.
-      res.redirect = sinon.spy(function() {
-        sinon.assert.calledWith(res.redirect, '/admin/login');
-        done();
-      });
-
-      // Spy on next.
-      next = sinon.spy(function() {
-        sinon.assert.calledWith(res.redirect, '/admin/login');
-        done();
-      });
-
-      // Create inactive user.
-      var user = new User({
-        username: 'david',
-        email:    'david@spyder.com',
-        password: 'password',
-        active:   false
-      });
-
-      // Save.
-      user.save(function(err) {
-
-        // Set user id.
-        req.session.user_id = user.id;
-
-        // Call isUser, check for res.redirect();
-        auth.isUser(req, res, next);
-
-      });
-
-    });
-
     it('should call next() for an active user', function(done) {
 
       // Spy on res.

@@ -29,6 +29,7 @@ module.exports = function(app) {
    */
   app.get('/admin/users',
     auth.isUser,
+    auth.isAdmin,
     auth.isSuper,
     function(req, res) {
 
@@ -56,6 +57,7 @@ module.exports = function(app) {
    */
   app.get('/admin/users/new',
     auth.isUser,
+    auth.isAdmin,
     auth.isSuper,
     function(req, res) {
 
@@ -78,6 +80,7 @@ module.exports = function(app) {
    */
   app.post('/admin/users/new',
     auth.isUser,
+    auth.isAdmin,
     auth.isSuper,
     function(req, res) {
 
@@ -130,6 +133,7 @@ module.exports = function(app) {
    */
   app.get('/admin/users/edit/:username',
     auth.isUser,
+    auth.isAdmin,
     auth.isSuper,
     function(req, res) {
 
@@ -179,6 +183,7 @@ module.exports = function(app) {
    */
   app.post('/admin/users/edit/:username/info',
     auth.isUser,
+    auth.isAdmin,
     auth.isSuper,
     function(req, res) {
 
@@ -249,6 +254,7 @@ module.exports = function(app) {
    */
   app.post('/admin/users/edit/:username/password',
     auth.isUser,
+    auth.isAdmin,
     auth.isSuper,
     function(req, res) {
 
@@ -310,6 +316,7 @@ module.exports = function(app) {
    */
   app.get('/admin/users/delete/:username',
     auth.isUser,
+    auth.isAdmin,
     auth.isSuper,
     auth.nonSelf,
     function(req, res) {
@@ -340,6 +347,7 @@ module.exports = function(app) {
    */
   app.post('/admin/users/delete/:username',
     auth.isUser,
+    auth.isAdmin,
     auth.isSuper,
     auth.nonSelf,
     function(req, res) {

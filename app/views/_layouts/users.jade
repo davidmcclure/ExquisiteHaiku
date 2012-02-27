@@ -1,8 +1,11 @@
 extends admin
 
 block subnav
-  ul.nav.nav-pills
-    li(class=activeLi(nav.sub, 'browse'))
-      a(href='/admin/users') Browse
-    li(class=activeLi(nav.sub, 'new'))
-      a(href='/admin/users/new') New User
+  if nav.sub === 'new'
+    a.btn.btn-primary(href='/admin/users/new')
+      i.icon-plus-sign.icon-white
+      |  New User
+  else
+    a.btn(href='/admin/users/new')
+      i.icon-plus-sign
+      |  New User

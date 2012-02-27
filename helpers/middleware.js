@@ -56,7 +56,23 @@ exports.isUser = function (req, res, next) {
  */
 exports.isSuper = function (req, res, next) {
   if (req.user.superUser) next();
-  else res.redirect('/admin/login');
+  else res.redirect('/admin');
+};
+
+
+/*
+ * Only allow admininstrators. Called after isUser, which passes user
+ * document.
+ *
+ * @param {Object} req: The request, with a user attribute.
+ * @param {Object} res: The response.
+ * @param {Callback} next: The next middleware.
+ *
+ * @return void.
+ */
+exports.isAdmin = function (req, res, next) {
+  if (req.user.admin) next();
+  else res.redirect('/admin');
 };
 
 

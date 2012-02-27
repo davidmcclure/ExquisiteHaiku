@@ -109,7 +109,7 @@ describe('Route Middleware', function() {
         done();
       });
 
-      // Create inactive user.
+      // Create active user.
       var user = new User({
         username: 'david',
         email:    'david@spyder.com',
@@ -191,9 +191,9 @@ describe('Route Middleware', function() {
         // Set user id.
         req.user = user;
 
-        // Call isSuper, check for next().
+        // Call isSuper, check for redirect.
         auth.isSuper(req, res, next);
-        sinon.assert.calledWith(res.redirect, '/admin/login');
+        sinon.assert.calledWith(res.redirect, '/admin');
         done();
 
       });
@@ -205,7 +205,7 @@ describe('Route Middleware', function() {
       // Spy on next.
       next = sinon.spy();
 
-      // Create non-super user.
+      // Create super user.
       var user = new User({
         username:   'david',
         email:      'david@spyder.com',
@@ -222,6 +222,70 @@ describe('Route Middleware', function() {
 
         // Call isSuper, check for next().
         auth.isSuper(req, res, next);
+        sinon.assert.called(next);
+        done();
+
+      });
+
+    });
+
+  });
+
+  describe('isAdmin', function() {
+
+    it('should redirect when the user is not an admin', function(done) {
+
+      // Spy on res.
+      res.redirect = sinon.spy();
+
+      // Create non-admin user.
+      var user = new User({
+        username:   'david',
+        email:      'david@spyder.com',
+        password:   'password',
+        admin:      false,
+        active:     true,
+        superUser:  true
+      });
+
+      // Save.
+      user.save(function(err) {
+
+        // Set user id.
+        req.user = user;
+
+        // Call isAdmin, check for redirect.
+        auth.isAdmin(req, res, next);
+        sinon.assert.calledWith(res.redirect, '/admin');
+        done();
+
+      });
+
+    });
+
+    it('should call next() when the user is an admin', function(done) {
+
+      // Spy on next.
+      next = sinon.spy();
+
+      // Create admin user.
+      var user = new User({
+        username:   'david',
+        email:      'david@spyder.com',
+        password:   'password',
+        admin:      true,
+        active:     true,
+        superUser:  true
+      });
+
+      // Save.
+      user.save(function(err) {
+
+        // Set user id.
+        req.user = user;
+
+        // Call isAdmin, check for next().
+        auth.isAdmin(req, res, next);
         sinon.assert.called(next);
         done();
 

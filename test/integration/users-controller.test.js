@@ -38,6 +38,7 @@ describe('User Controller', function() {
       username:   'david',
       password:   'password',
       email:      'david@test.com',
+      admin:      true,
       superUser:  true,
       active:     true
     });
@@ -47,6 +48,7 @@ describe('User Controller', function() {
       username:   'kara',
       password:   'password',
       email:      'kara@test.com',
+      admin:      true,
       superUser:  true,
       active:     false
     });
@@ -56,6 +58,7 @@ describe('User Controller', function() {
       username:   'rosie',
       password:   'password',
       email:      'rosie@test.com',
+      admin:      true,
       superUser:  true,
       active:     false
     });
@@ -94,6 +97,53 @@ describe('User Controller', function() {
   });
 
   describe('GET /admin/users', function() {
+
+    it('should block anonymous sessions', function(done) {
+
+      // Log out.
+      browser.visit(r+'admin/logout', function() {
+
+        // Hit the route, check for redirect.
+        browser.visit(r+'admin/users', function() {
+          browser.location.pathname.should.eql('/admin/login');
+          done();
+        });
+
+      });
+
+    });
+
+    it('should block non-admin users', function(done) {
+
+      // Set user admin=false.
+      user1.admin = false;
+      user1.save(function(err) {
+
+        // Hit the route, check for redirect.
+        browser.visit(r+'admin/users', function() {
+          browser.location.pathname.should.eql('/admin');
+          done();
+        });
+
+      });
+
+    });
+
+    it('should block non-super users', function(done) {
+
+      // Set user superUser=false.
+      user1.superUser = false;
+      user1.save(function(err) {
+
+        // Hit the route, check for redirect.
+        browser.visit(r+'admin/users', function() {
+          browser.location.pathname.should.eql('/admin');
+          done();
+        });
+
+      });
+
+    });
 
     it('should render the users list', function(done) {
 
@@ -141,6 +191,53 @@ describe('User Controller', function() {
   });
 
   describe('GET /admin/users/new', function() {
+
+    it('should block anonymous sessions', function(done) {
+
+      // Log out.
+      browser.visit(r+'admin/logout', function() {
+
+        // Hit the route, check for redirect.
+        browser.visit(r+'admin/users/new', function() {
+          browser.location.pathname.should.eql('/admin/login');
+          done();
+        });
+
+      });
+
+    });
+
+    it('should block non-admin users', function(done) {
+
+      // Set user admin=false.
+      user1.admin = false;
+      user1.save(function(err) {
+
+        // Hit the route, check for redirect.
+        browser.visit(r+'admin/users/new', function() {
+          browser.location.pathname.should.eql('/admin');
+          done();
+        });
+
+      });
+
+    });
+
+    it('should block non-super users', function(done) {
+
+      // Set user superUser=false.
+      user1.superUser = false;
+      user1.save(function(err) {
+
+        // Hit the route, check for redirect.
+        browser.visit(r+'admin/users/new', function() {
+          browser.location.pathname.should.eql('/admin');
+          done();
+        });
+
+      });
+
+    });
 
     it('should render the form', function(done) {
 
@@ -516,6 +613,53 @@ describe('User Controller', function() {
   });
 
   describe('GET /admin/users/edit/:username', function() {
+
+    it('should block anonymous sessions', function(done) {
+
+      // Log out.
+      browser.visit(r+'admin/logout', function() {
+
+        // Hit the route, check for redirect.
+        browser.visit(r+'admin/users/edit/kara', function() {
+          browser.location.pathname.should.eql('/admin/login');
+          done();
+        });
+
+      });
+
+    });
+
+    it('should block non-admin users', function(done) {
+
+      // Set user admin=false.
+      user1.admin = false;
+      user1.save(function(err) {
+
+        // Hit the route, check for redirect.
+        browser.visit(r+'admin/users/edit/kara', function() {
+          browser.location.pathname.should.eql('/admin');
+          done();
+        });
+
+      });
+
+    });
+
+    it('should block non-super users', function(done) {
+
+      // Set user superUser=false.
+      user1.superUser = false;
+      user1.save(function(err) {
+
+        // Hit the route, check for redirect.
+        browser.visit(r+'admin/users/edit/kara', function() {
+          browser.location.pathname.should.eql('/admin');
+          done();
+        });
+
+      });
+
+    });
 
     it('should render the edit information form', function(done) {
 
@@ -1011,6 +1155,53 @@ describe('User Controller', function() {
 
   describe('GET /admin/users/:username/delete', function() {
 
+    it('should block anonymous sessions', function(done) {
+
+      // Log out.
+      browser.visit(r+'admin/logout', function() {
+
+        // Hit the route, check for redirect.
+        browser.visit(r+'admin/users/delete/kara', function() {
+          browser.location.pathname.should.eql('/admin/login');
+          done();
+        });
+
+      });
+
+    });
+
+    it('should block non-admin users', function(done) {
+
+      // Set user admin=false.
+      user1.admin = false;
+      user1.save(function(err) {
+
+        // Hit the route, check for redirect.
+        browser.visit(r+'admin/users/delete/kara', function() {
+          browser.location.pathname.should.eql('/admin');
+          done();
+        });
+
+      });
+
+    });
+
+    it('should block non-super users', function(done) {
+
+      // Set user superUser=false.
+      user1.superUser = false;
+      user1.save(function(err) {
+
+        // Hit the route, check for redirect.
+        browser.visit(r+'admin/users/delete/kara', function() {
+          browser.location.pathname.should.eql('/admin');
+          done();
+        });
+
+      });
+
+    });
+
     it('should block self user', function(done) {
 
       // GET admin/users.
@@ -1040,7 +1231,7 @@ describe('User Controller', function() {
 
   });
 
-  describe('GET /admin/users/:username/delete', function() {
+  describe('POST /admin/users/delete/:username', function() {
 
     it('should block self user', function(done) {
 

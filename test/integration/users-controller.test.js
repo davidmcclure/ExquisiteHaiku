@@ -59,7 +59,7 @@ describe('User Controller', function() {
       username:   'rosie',
       password:   'password',
       email:      'rosie@test.com',
-      admin:      true,
+      admin:      false,
       superUser:  true,
       active:     false
     });
@@ -151,10 +151,21 @@ describe('User Controller', function() {
       browser.visit(r+'admin/users', function() {
 
         // Check for listings.
-        browser.queryAll('td.title').should.have.length(3);
+        browser.queryAll('td.title').should.have.length(2);
         browser.text('td.title').should.include('david');
         browser.text('td.title').should.include('kara');
-        browser.text('td.title').should.include('rosie');
+        done();
+
+      });
+
+    });
+
+    it('should not list non-admin users', function(done) {
+
+      browser.visit(r+'admin/users', function() {
+
+        // Check for listings.
+        browser.text('td.title').should.not.include('rosie');
         done();
 
       });
@@ -169,8 +180,6 @@ describe('User Controller', function() {
         browser.query('a[href="/admin/users/edit/david"]').should.be.ok;
         browser.query('a[href="/admin/users/edit/kara"]').should.be.ok;
         browser.query('a[href="/admin/users/delete/kara"]').should.be.ok;
-        browser.query('a[href="/admin/users/edit/rosie"]').should.be.ok;
-        browser.query('a[href="/admin/users/delete/rosie"]').should.be.ok;
         done();
 
       });

@@ -3,7 +3,7 @@ div.navbar.navbar-fixed-top
     div.container
       a.brand(href='/admin') Oversoul
       ul.nav
-        if user.superUser
+        if user.admin && user.superUser
           li(class=activeLi(nav.main, 'users'))
             a(href="/admin/users") Users
       ul.nav.pull-right

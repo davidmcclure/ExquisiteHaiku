@@ -34,7 +34,9 @@ module.exports = function(app) {
     function(req, res) {
 
       // Get users, sort alphabetically ascending on username.
-      User.find().sort('username', 1).execFind(function(err, users) {
+      User.find({
+        admin: true
+      }).sort('username', 1).execFind(function(err, users) {
 
         // Render the list.
         res.render('admin/users/index', {

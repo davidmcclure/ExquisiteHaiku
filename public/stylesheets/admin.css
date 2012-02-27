@@ -2,10 +2,10 @@ body{padding-top:50px}
 div.container{width:640px}
 .logo{font-family:Lusitana}
 .navbar a.brand{font-family:Lusitana;font-size:1.6em;line-height:0;position:relative;top:11px}
-form.login,form.install{margin:6em auto 0 20em;}
-form.login legend,form.install legend{font-size:3em;padding-bottom:.5em;border:none}
-form.login div.clearfix.error,form.install div.clearfix.error{padding-top:0;padding-bottom:0}
-form.login h4,form.install h4{padding-bottom:.9em}
+form.login,form.install,form.register{margin:6em auto 0 20em;}
+form.login legend,form.install legend,form.register legend{font-size:3em;padding-bottom:.5em;border:none}
+form.login div.clearfix.error,form.install div.clearfix.error,form.register div.clearfix.error{padding-top:0;padding-bottom:0}
+form.login h4,form.install h4,form.register h4{padding-bottom:.9em}
 form div.form-actions{background:none;border:none;padding:0}
 div.subnav{margin:.5em 0 1em 0;}
 div.subnav a,div.subnav input{margin:0 1em 0 0}

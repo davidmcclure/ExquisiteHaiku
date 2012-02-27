@@ -130,6 +130,16 @@ describe('User', function() {
       user = new User();
     });
 
+    it('should set admin false by default', function(done) {
+
+      // Check for admin false.
+      user.save(function(err) {
+        user.admin.should.be.false;
+        done();
+      });
+
+    });
+
     it('should set superUser false by default', function(done) {
 
       // Check for superUser false.

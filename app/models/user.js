@@ -9,6 +9,7 @@ var crypto = require('crypto');
 var User = new Schema({
   username :      { type: String, required: true, unique: true },
   email :         { type: String, required: true, unique: true },
+  admin :         { type: Boolean, default: false },
   superUser :     { type: Boolean, default: false },
   active :        { type: Boolean, default: false },
   hash :          String,

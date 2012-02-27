@@ -501,6 +501,7 @@ describe('User Controller', function() {
               user.should.be.ok;
               user.username.should.eql('valid');
               user.email.should.eql('valid@test.com');
+              user.admin.should.be.true;
               user.superUser.should.be.true;
               user.active.should.be.true;
               done();

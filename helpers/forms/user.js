@@ -11,6 +11,9 @@ var forms = require('forms'),
 // Models.
 var User = mongoose.model('User');
 
+// Reserved slugs.
+var _slugs = require('./_slugs');
+
 
 /*
  * ----------------------
@@ -30,7 +33,8 @@ exports.newUser = function() {
       required: 'Enter a username.',
       validators: [
         validators.rangeLength(4, 20, '4-20 characters.'),
-        customValidators.uniqueField(User, 'username', 'Username taken.')
+        customValidators.uniqueField(User, 'username', 'Username taken.'),
+        customValidators.fieldAllowed(_slugs.blacklist, 'Reserved.')
       ]
     }),
 
@@ -92,6 +96,7 @@ exports.editInfo = function(user) {
       required: 'Enter a username.',
       validators: [
         validators.rangeLength(4, 20, '4-20 characters.'),
+        customValidators.fieldAllowed(_slugs.blacklist, 'Reserved.'),
         customValidators.uniqueNonSelfField(
           User,
           'username',
@@ -144,6 +149,7 @@ exports.editSelfInfo = function(user) {
       required: 'Enter a username.',
       validators: [
         validators.rangeLength(4, 20, '4-20 characters.'),
+        customValidators.fieldAllowed(_slugs.blacklist, 'Reserved.'),
         customValidators.uniqueNonSelfField(
           User,
           'username',

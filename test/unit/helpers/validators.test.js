@@ -429,4 +429,48 @@ describe('Custom Validators', function() {
 
   });
 
+  describe('fieldAllowed', function() {
+
+    var validator, blacklist;
+
+    beforeEach(function() {
+
+      // Define a blacklist.
+      blacklist = ['value1', 'value2'];
+
+      // Get the validator.
+      validator = validators.fieldAllowed(blacklist, 'err');
+
+    });
+
+    it('should not pass when the field is present on the list', function(done) {
+
+      // Spy on callback.
+      callback = sinon.spy(function() {
+        sinon.assert.calledWith(callback, 'err');
+        done();
+      });
+
+      // Set value on the blacklist.
+      field.data = 'value1';
+      validator(form, field, callback);
+
+    });
+
+    it('should not pass when the field is not present on the list', function(done) {
+
+      // Spy on callback.
+      callback = sinon.spy(function() {
+        sinon.assert.neverCalledWith(callback, 'err');
+        done();
+      });
+
+      // Set invalid slug.
+      field.data = 'value3';
+      validator(form, field, callback);
+
+    });
+
+  });
+
 });

@@ -13,8 +13,9 @@ var vows = require('mocha'),
 process.env.NODE_ENV = 'testing';
 require('../../app');
 
-// Models.
-var User = mongoose.model('User');
+// Models and reserved slugs.
+var User = mongoose.model('User'),
+  _slugs = require('../../helpers/forms/_slugs');
 
 /*
  * ---------------------------------
@@ -355,6 +356,26 @@ describe('User Controller', function() {
             // Check for error.
             browser.location.pathname.should.eql('/admin/users/new');
             assert(!browser.query('span.help-inline.username'));
+            done();
+
+          });
+
+        });
+
+      });
+
+      it('should not flash error for reserved slug', function(done) {
+
+        // GET admin/users.
+        browser.visit(r+'admin/users/new', function() {
+
+          // Fill in form.
+          browser.fill('username', _slugs.blacklist[0]);
+          browser.pressButton('Create', function() {
+
+            // Check for error.
+            browser.location.pathname.should.eql('/admin/users/new');
+            browser.query('span.help-inline.username').should.be.ok;
             done();
 
           });
@@ -842,6 +863,26 @@ describe('User Controller', function() {
 
             // Check for error.
             browser.location.pathname.should.eql('/admin/users/edit/kara/info');
+            browser.query('span.help-inline.username').should.be.ok;
+            done();
+
+          });
+
+        });
+
+      });
+
+      it('should not flash error for reserved slug', function(done) {
+
+        // GET admin/users.
+        browser.visit(r+'admin/users/new', function() {
+
+          // Fill in form.
+          browser.fill('username', _slugs.blacklist[0]);
+          browser.pressButton('Create', function() {
+
+            // Check for error.
+            browser.location.pathname.should.eql('/admin/users/new');
             browser.query('span.help-inline.username').should.be.ok;
             done();
 

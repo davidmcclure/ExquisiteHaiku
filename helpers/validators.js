@@ -51,6 +51,22 @@ exports.usernameActive = function (msg) {
 
 
 /*
+ * Pass if field is not in blacklist.
+ *
+ * @param {Array} blacklist: The list of prohibited usernames.
+ * @param {String} msg: The failure message.
+ *
+ * @return void.
+ */
+exports.fieldAllowed = function (blacklist, msg) {
+  return function(form, field, callback) {
+    if (_.include(blacklist, field.data)) callback(msg);
+    else callback();
+  };
+};
+
+
+/*
  * Pass if the password is correct.
  *
  * @param {String} msg: The failure message.

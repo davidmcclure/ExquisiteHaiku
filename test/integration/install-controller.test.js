@@ -13,7 +13,8 @@ process.env.NODE_ENV = 'testing';
 require('../../app');
 
 // Models.
-var User = mongoose.model('User');
+var User = mongoose.model('User'),
+  _slugs = require('../../helpers/forms/_slugs');
 
 /*
  * -------------------------------------
@@ -133,6 +134,26 @@ describe('Install Controller', function() {
 
           // Fill in form, submit.
           browser.fill('username', 'srdavidwilliamcclurejr');
+          browser.pressButton('Submit', function() {
+
+            // Check for error.
+            browser.location.pathname.should.eql('/admin/install');
+            browser.query('span.help-inline.username').should.be.ok;
+            done();
+
+          });
+
+        });
+
+      });
+
+      it('should flash error for reserved slug', function(done) {
+
+        // GET admin/install.
+        browser.visit(r+'admin/install', function() {
+
+          // Fill in form, submit.
+          browser.fill('username', _slugs.blacklist[0]);
           browser.pressButton('Submit', function() {
 
             // Check for error.

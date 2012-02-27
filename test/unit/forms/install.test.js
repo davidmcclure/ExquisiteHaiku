@@ -8,8 +8,17 @@ var vows = require('mocha'),
   assert = require('assert'),
   sinon = require('sinon');
 
-// Form.
-var installForm = require('../../../helpers/forms/install');
+// Boostrap the application.
+process.env.NODE_ENV = 'testing';
+require('../db-connect');
+
+// User model.
+require('../../../app/models/user');
+var User = mongoose.model('User');
+
+// Form and reserved slugs.
+var installForm = require('../../../helpers/forms/install'),
+  _slugs = require('../../../helpers/forms/_slugs');
 
 
 /*
@@ -59,6 +68,17 @@ describe('Install Form', function() {
 
       form.bind({
         username: 'supercalafragalisticexpialadocious'
+      }).validate(function(err, form) {
+        form.fields.username.error.should.be.ok;
+        done();
+      });
+
+    });
+
+    it('should not be a reserved slug', function(done) {
+
+      form.bind({
+        username: _slugs.blacklist[0]
       }).validate(function(err, form) {
         form.fields.username.error.should.be.ok;
         done();

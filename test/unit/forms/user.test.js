@@ -16,8 +16,9 @@ require('../db-connect');
 require('../../../app/models/user');
 var User = mongoose.model('User');
 
-// Form.
-var userForms = require('../../../helpers/forms/user');
+// Form and reserved slugs.
+var userForms = require('../../../helpers/forms/user'),
+  _slugs = require('../../../helpers/forms/_slugs');
 
 
 /*
@@ -74,6 +75,17 @@ describe('User Forms', function() {
 
         form.bind({
           username: 'supercalafragalisticexpialadocious'
+        }).validate(function(err, form) {
+          form.fields.username.error.should.be.ok;
+          done();
+        });
+
+      });
+
+      it('should not be a reserved slug', function(done) {
+
+        form.bind({
+          username: _slugs.blacklist[0]
         }).validate(function(err, form) {
           form.fields.username.error.should.be.ok;
           done();
@@ -347,6 +359,17 @@ describe('User Forms', function() {
 
       });
 
+      it('should not be a reserved slug', function(done) {
+
+        form.bind({
+          username: _slugs.blacklist[0]
+        }).validate(function(err, form) {
+          form.fields.username.error.should.be.ok;
+          done();
+        });
+
+      });
+
       it('should be unique', function(done) {
 
         // Create a user.
@@ -528,6 +551,17 @@ describe('User Forms', function() {
 
         form.bind({
           username: 'supercalafragalisticexpialadocious'
+        }).validate(function(err, form) {
+          form.fields.username.error.should.be.ok;
+          done();
+        });
+
+      });
+
+      it('should not be a reserved slug', function(done) {
+
+        form.bind({
+          username: _slugs.blacklist[0]
         }).validate(function(err, form) {
           form.fields.username.error.should.be.ok;
           done();

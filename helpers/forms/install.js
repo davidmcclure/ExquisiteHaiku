@@ -5,7 +5,14 @@
  // Module dependencies.
 var forms = require('forms'),
   fields = forms.fields,
-  validators = forms.validators;
+  validators = forms.validators,
+  customValidators = require('../validators');
+
+// Models.
+var User = mongoose.model('User');
+
+// Reserved slugs.
+var _slugs = require('./_slugs');
 
 
 /*
@@ -25,7 +32,8 @@ exports.form = function() {
       label: 'Username: *',
       required: 'Enter a username.',
       validators: [
-        validators.rangeLength(4, 20, '4-20 characters.')
+        validators.rangeLength(4, 20, '4-20 characters.'),
+        customValidators.fieldAllowed(_slugs.blacklist, 'Reserved.')
       ]
     }),
 

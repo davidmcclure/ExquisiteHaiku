@@ -473,4 +473,22 @@ describe('Custom Validators', function() {
 
   });
 
+  describe('uniqueSlug', function() {
+
+    describe('when user is passed', function() {
+
+      it('should not pass when there is another poem owned by the user with the slug');
+      it('should pass when there is not another poem owned by the user with the slug');
+
+    });
+
+    describe('when a user is not passed', function() {
+
+      it('should not pass when there is another poem owned by an admin user with the slug');
+      it('should pass when there is not another poem owned by an admin user with the slug');
+
+    });
+
+  });
+
 });

@@ -19,7 +19,7 @@ var Poem = mongoose.model('Poem');
  */
 
 
-exports.newPoem = function() {
+exports.newPoem = function(user) {
 
   return forms.create({
 
@@ -29,7 +29,8 @@ exports.newPoem = function() {
       label: 'Slug: *',
       required: 'Enter a slug.',
       validators: [
-        customValidators.validSlug('Lowercase letters, numbers, hyphens.')
+        customValidators.validSlug('Lowercase letters, numbers, hyphens.'),
+        customValidators.uniqueSlug(user, 'Slug taken.')
       ]
     })
 

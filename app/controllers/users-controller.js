@@ -36,7 +36,7 @@ module.exports = function(app) {
       // Get users, sort alphabetically ascending on username.
       User.find({
         admin: true
-      }).sort('username', 1).execFind(function(err, users) {
+      }).sort('created', 1).execFind(function(err, users) {
 
         // Render the list.
         res.render('admin/users/index', {

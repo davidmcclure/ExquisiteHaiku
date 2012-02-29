@@ -121,7 +121,7 @@ describe('User', function() {
 
   });
 
-  describe('boolean field defaults', function() {
+  describe('field defaults', function() {
 
     var user;
 
@@ -158,6 +158,10 @@ describe('User', function() {
         done();
       });
 
+    });
+
+    it('should set "created" to the current date by default', function() {
+      user.created.should.be.ok;
     });
 
   });

@@ -201,6 +201,28 @@ describe('Custom Validators', function() {
 
     });
 
+    it('should not pass if the user does not exist', function(done) {
+
+      // Set non-existent user.
+      form.data = { username: 'doesnotexist' };
+
+      // Set incorrect password.
+      field.data = 'password';
+
+      // Get the validator.
+      var validator = validators.passwordCorrect('err');
+
+      // Spy on callback.
+      callback = sinon.spy(function() {
+        sinon.assert.calledWith(callback, 'err');
+        done();
+      });
+
+      // Call the validator.
+      validator(form, field, callback);
+
+    });
+
     it('should pass if the password is correct', function(done) {
 
       // Set correct password.

@@ -12,6 +12,7 @@ var User = new Schema({
   admin :         { type: Boolean, default: false },
   superUser :     { type: Boolean, default: false },
   active :        { type: Boolean, default: false },
+  created :       { type: Date, required: true, default: Date.now() },
   hash :          String,
   salt :          String
 });

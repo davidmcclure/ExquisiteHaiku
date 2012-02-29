@@ -76,7 +76,7 @@ exports.fieldAllowed = function (blacklist, msg) {
 exports.passwordCorrect = function (msg) {
   return function(form, field, callback) {
     User.findOne({ username: form.data.username }, function(err, user) {
-      if (user.authenticate(field.data)) callback();
+      if (user && user.authenticate(field.data)) callback();
       else callback(msg);
     });
   };

@@ -131,11 +131,7 @@ exports.uniqueNonSelfField = function (coll, column, self, msg) {
  */
 exports.validSlug = function (msg) {
   return function(form, field, callback) {
-    var pattern = new RegExp('/[a-z0-9_\-]+/');
-    if (pattern.test(field.data)) {
-      console.log('match');
-      callback();
-    }
+    if (field.data.match(/^[a-z0-9_\-]+$/)) callback();
     else callback(msg);
   };
 };

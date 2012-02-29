@@ -19,12 +19,12 @@ var Poem = mongoose.model('Poem');
  */
 
 
-exports.newPoem = function(user) {
+exports.form = function(user) {
 
   return forms.create({
 
     // Slug.
-    username: fields.string({
+    slug: fields.string({
       name: 'slug',
       label: 'Slug: *',
       required: 'Enter a slug.',
@@ -35,7 +35,7 @@ exports.newPoem = function(user) {
     }),
 
     // Word round length.
-    username: fields.string({
+    roundLength: fields.string({
       name: 'roundLength',
       label: 'Round Length: *',
       required: 'Enter a round length.',
@@ -45,7 +45,7 @@ exports.newPoem = function(user) {
     }),
 
     // Slice interval.
-    username: fields.string({
+    sliceInterval: fields.string({
       name: 'sliceInterval',
       label: 'Slice Interval: *',
       required: 'Enter a slice interval.',
@@ -55,7 +55,7 @@ exports.newPoem = function(user) {
     }),
 
     // Minimum submssions.
-    username: fields.string({
+    minSubmissions: fields.string({
       name: 'minSubmissions',
       label: 'Minimum Submissions: *',
       required: 'Enter a minimum number of submissions.',
@@ -65,7 +65,7 @@ exports.newPoem = function(user) {
     }),
 
     // Submission value.
-    username: fields.string({
+    submissionVal: fields.string({
       name: 'submissionVal',
       label: 'Blind Submission Value: *',
       required: 'Enter a point value for blind submissions.',
@@ -75,7 +75,7 @@ exports.newPoem = function(user) {
     }),
 
     // Decay lifetime.
-    username: fields.string({
+    decayLifetime: fields.string({
       name: 'decayLifetime',
       label: 'Decay Lifetime: *',
       required: 'Enter a decay lifetime.',
@@ -85,7 +85,7 @@ exports.newPoem = function(user) {
     }),
 
     // Seed capital.
-    username: fields.string({
+    seedCapital: fields.string({
       name: 'seedCapital',
       label: 'Seed Capital: *',
       required: 'Enter a seed capital amount.',

@@ -427,6 +427,20 @@ describe('Custom Validators', function() {
 
     });
 
+    it('should pass when slug is valid', function(done) {
+
+      // Spy on callback.
+      callback = sinon.spy(function() {
+        sinon.assert.neverCalledWith(callback, 'err');
+        done();
+      });
+
+      // Set valid slug.
+      field.data = 'valid-slug';
+      validator(form, field, callback);
+
+    });
+
   });
 
   describe('fieldAllowed', function() {

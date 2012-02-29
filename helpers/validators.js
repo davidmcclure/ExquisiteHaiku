@@ -154,9 +154,27 @@ exports.validSlug = function (msg) {
 exports.uniqueSlug = function (user, msg) {
   return function(form, field, callback) {
     if (_.isUndefined(user)) {
-
+      // TMP
+      callback();
     } else {
-
+      // TMP
+      callback();
     }
+  };
+};
+
+/*
+ * Check to see a value is a positive integer.
+ *
+ * @param string msg: The failure error message.
+ *
+ * @return void.
+ */
+exports.positiveInteger = function(msg) {
+  return function(form, field, callback) {
+    if ((parseFloat(field.data) == parseInt(field.data, 10)) &&
+      !isNaN(field.data) && parseInt(field.data, 10) >= 0) {
+        callback();
+    } else callback(msg);
   };
 };

@@ -491,4 +491,87 @@ describe('Custom Validators', function() {
 
   });
 
+  describe('positiveInteger', function() {
+
+    var validator;
+
+    beforeEach(function() {
+
+      // Get the validator.
+      validator = validators.positiveInteger('err');
+
+    });
+
+    it('should not pass for negative integer', function(done) {
+
+      // Spy on callback.
+      callback = sinon.spy(function() {
+        sinon.assert.calledWith(callback, 'err');
+        done();
+      });
+
+      // Set negative integer.
+      field.data = -4;
+      validator(form, field, callback);
+
+    });
+
+    it('should not pass for negative float', function(done) {
+
+      // Spy on callback.
+      callback = sinon.spy(function() {
+        sinon.assert.calledWith(callback, 'err');
+        done();
+      });
+
+      // Set negative float.
+      field.data = -4.5;
+      validator(form, field, callback);
+
+    });
+
+    it('should not pass for positive float', function(done) {
+
+      // Spy on callback.
+      callback = sinon.spy(function() {
+        sinon.assert.calledWith(callback, 'err');
+        done();
+      });
+
+      // Set positive float.
+      field.data = 4.5;
+      validator(form, field, callback);
+
+    });
+
+    it('should not pass for NaN', function(done) {
+
+      // Spy on callback.
+      callback = sinon.spy(function() {
+        sinon.assert.calledWith(callback, 'err');
+        done();
+      });
+
+      // Set NaN.
+      field.data = 'NaN';
+      validator(form, field, callback);
+
+    });
+
+    it('should pass for a positive integer', function(done) {
+
+      // Spy on callback.
+      callback = sinon.spy(function() {
+        sinon.assert.neverCalledWith(callback, 'err');
+        done();
+      });
+
+      // Set positive integer.
+      field.data = 4;
+      validator(form, field, callback);
+
+    });
+
+  });
+
 });

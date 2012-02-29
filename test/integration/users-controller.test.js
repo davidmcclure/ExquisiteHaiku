@@ -7,6 +7,7 @@ var vows = require('mocha'),
   should = require('should'),
   assert = require('assert'),
   Browser = require('zombie'),
+  request = require('request'),
   async = require('async');
 
 // Bootstrap the application.
@@ -93,7 +94,7 @@ describe('User Controller', function() {
   // Clear users and logout.
   afterEach(function(done) {
     User.collection.remove(function(err) {
-      browser.visit(r+'admin/logout', function() { done(); });
+      done();
     });
   });
 

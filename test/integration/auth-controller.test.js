@@ -49,7 +49,7 @@ describe('Auth Controller', function() {
   // Clear users and logout.
   afterEach(function(done) {
     User.collection.remove(function(err) {
-      browser.visit(r+'admin/logout', function() { done(); });
+      done();
     });
   });
 

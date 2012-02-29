@@ -32,8 +32,14 @@ describe('Install Form', function() {
 
   var form;
 
+  // Construct form.
   beforeEach(function() {
     form = installForm.form();
+  });
+
+  // Clear collections.
+  afterEach(function(done) {
+    User.collection.remove(function(err) { done(); });
   });
 
   describe('username', function() {

@@ -49,7 +49,7 @@ describe('Login Form', function() {
 
   });
 
-  // Clear users.
+  // Clear collections.
   afterEach(function(done) {
     User.collection.remove(function(err) { done(); });
   });

@@ -36,6 +36,11 @@ describe('Install Form', function() {
     form = registerForm.form();
   });
 
+  // Clear collections.
+  afterEach(function(done) {
+    User.collection.remove(function(err) { done(); });
+  });
+
   describe('username', function() {
 
     it('should have a name attribute', function() {

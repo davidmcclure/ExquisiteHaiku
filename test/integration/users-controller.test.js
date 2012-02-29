@@ -273,6 +273,32 @@ describe('User Controller', function() {
 
   describe('POST /admin/users/new', function() {
 
+    it('should block anonymous requests', function(done) {
+
+      // Generate the request.
+      request.post({
+        url: r+'admin/users/new',
+        form: {
+          username: 'valid',
+          password: 'password',
+          confirm: 'password',
+          email: 'valid@test.com'
+        }
+      }, function(e, r, body) {
+
+        // Check for redirect.
+        r.statusCode.should.eql(302);
+
+        // Still should just be 3 users..
+        User.count(function(err, count) {
+          count.should.eql(3);
+          done();
+        });
+
+      });
+
+    });
+
     describe('username', function() {
 
       it('should flash error for no username', function(done) {
@@ -793,10 +819,28 @@ describe('User Controller', function() {
 
   describe('POST /admin/users/edit/:username/info', function() {
 
-    beforeEach(function(done) {
+    it('should block anonymous requests', function(done) {
 
-      // Go to non-self user edit page.
-      browser.visit(r+'admin/users/edit/kara', function() { done(); });
+      // Generate the request.
+      request.post({
+        url: r+'admin/users/edit/kara/info',
+        form: {
+          username: 'valid',
+          email: 'valid@test.com'
+        }
+      }, function(e, r, body) {
+
+        // Check for redirect.
+        r.statusCode.should.eql(302);
+
+        // Check for unchanged user.
+        User.findOne({ username: 'kara' }, function(err, user) {
+          user.should.be.ok;
+          user.email.should.eql('kara@test.com');
+          done();
+        });
+
+      });
 
     });
 
@@ -1067,6 +1111,30 @@ describe('User Controller', function() {
 
   describe('POST /admin/users/:username/password', function() {
 
+    it('should block anonymous requests', function(done) {
+
+      // Generate the request.
+      request.post({
+        url: r+'admin/users/edit/kara/password',
+        form: {
+          password: 'newpassword',
+          password: 'newpassword'
+        }
+      }, function(e, r, body) {
+
+        // Check for redirect.
+        r.statusCode.should.eql(302);
+
+        // Check for unchanged user.
+        User.findOne({ username: 'kara' }, function(err, user) {
+          user.authenticate('password').should.be.true;
+          done();
+        });
+
+      });
+
+    });
+
     describe('password', function() {
 
       it('should flash error for no password', function(done) {
@@ -1283,6 +1351,26 @@ describe('User Controller', function() {
   });
 
   describe('POST /admin/users/delete/:username', function() {
+
+    it('should block anonymous requests', function(done) {
+
+      // Generate the request.
+      request.post({
+        url: r+'admin/users/delete/kara'
+      }, function(e, r, body) {
+
+        // Check for redirect.
+        r.statusCode.should.eql(302);
+
+        // Check for unchanged user.
+        User.findOne({ username: 'kara' }, function(err, user) {
+          user.should.be.ok;
+          done();
+        });
+
+      });
+
+    });
 
     it('should block self user', function(done) {
 

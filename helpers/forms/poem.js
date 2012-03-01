@@ -26,7 +26,7 @@ exports.form = function(user) {
     // Slug.
     slug: fields.string({
       name: 'slug',
-      label: 'Slug: *',
+      label: 'URL Slug:',
       required: 'Enter a slug.',
       validators: [
         customValidators.validSlug('Lowercase letters, numbers, hyphens.'),
@@ -37,7 +37,7 @@ exports.form = function(user) {
     // Word round length.
     roundLength: fields.string({
       name: 'roundLength',
-      label: 'Round Length: *',
+      label: 'Round Length:',
       required: 'Enter a round length.',
       validators: [
         customValidators.positiveInteger('Must be a positive integer.')
@@ -47,7 +47,7 @@ exports.form = function(user) {
     // Slice interval.
     sliceInterval: fields.string({
       name: 'sliceInterval',
-      label: 'Slice Interval: *',
+      label: 'Slicing Interval:',
       required: 'Enter a slice interval.',
       validators: [
         customValidators.positiveInteger('Must be a positive integer.')
@@ -57,7 +57,7 @@ exports.form = function(user) {
     // Minimum submssions.
     minSubmissions: fields.string({
       name: 'minSubmissions',
-      label: 'Minimum Submissions: *',
+      label: 'Minimum Submissions:',
       required: 'Enter a minimum number of submissions.',
       validators: [
         customValidators.positiveInteger('Must be a positive integer.')
@@ -67,7 +67,7 @@ exports.form = function(user) {
     // Submission value.
     submissionVal: fields.string({
       name: 'submissionVal',
-      label: 'Blind Submission Value: *',
+      label: 'Submission Value:',
       required: 'Enter a point value for blind submissions.',
       validators: [
         customValidators.positiveInteger('Must be a positive integer.')
@@ -77,7 +77,7 @@ exports.form = function(user) {
     // Decay lifetime.
     decayLifetime: fields.string({
       name: 'decayLifetime',
-      label: 'Decay Lifetime: *',
+      label: 'Decay Lifetime:',
       required: 'Enter a decay lifetime.',
       validators: [
         customValidators.positiveInteger('Must be a positive integer.')
@@ -87,7 +87,7 @@ exports.form = function(user) {
     // Seed capital.
     seedCapital: fields.string({
       name: 'seedCapital',
-      label: 'Seed Capital: *',
+      label: 'Seed Capital:',
       required: 'Enter a seed capital amount.',
       validators: [
         customValidators.positiveInteger('Must be a positive integer.')

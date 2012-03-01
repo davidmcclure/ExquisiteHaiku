@@ -3,7 +3,8 @@
  */
 
 // Module dependencies.
-var auth = require('../../helpers/middleware');
+var poemForm = require('../../helpers/forms/poem'),
+  auth = require('../../helpers/middleware');
 
 
 /*
@@ -27,7 +28,7 @@ module.exports = function(app) {
       // Render the list.
       res.render('admin/poems/index', {
         title:  'Oversoul',
-        layout: '_layouts/admin',
+        layout: '_layouts/poems',
         user:   req.user,
         nav:    { main: '', sub: '' }
       });
@@ -42,6 +43,15 @@ module.exports = function(app) {
   app.get('/admin/new',
     auth.isUser,
     function(req, res) {
+
+      // Render the form.
+      res.render('admin/poems/new', {
+        title:  'New Poem',
+        layout: '_layouts/poems',
+        user:   req.user,
+        nav:    { main: 'poems', sub: 'new' },
+        form:   poemForm.form()
+      });
 
   });
 

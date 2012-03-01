@@ -65,7 +65,7 @@ module.exports = function(app) {
 
       // Render the form.
       res.render('admin/users/new', {
-        title:  'Users',
+        title:  'New User',
         layout: '_layouts/users',
         user:   req.user,
         nav:    { main: 'users', sub: 'new' },
@@ -114,7 +114,7 @@ module.exports = function(app) {
 
           // Re-render the form.
           res.render('admin/users/new', {
-            title:  'Users',
+            title:  'New User',
             layout: '_layouts/users',
             user:   req.user,
             nav:    { main: 'users', sub: 'new' },

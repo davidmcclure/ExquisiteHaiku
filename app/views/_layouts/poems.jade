@@ -1,0 +1,11 @@
+extends admin
+
+block subnav
+  if nav.sub === 'new'
+    a.btn.btn-primary(href='/admin/new')
+      i.icon-plus-sign.icon-white
+      |  New Poem
+  else
+    a.btn(href='/admin/new')
+      i.icon-plus-sign
+      |  New Poem

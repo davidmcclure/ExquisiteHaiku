@@ -19,9 +19,9 @@ var User = mongoose.model('User'),
   _slugs = require('../../helpers/forms/_slugs');
 
 /*
- * ---------------------------------
- * Use controller integration tests.
- * ---------------------------------
+ * ----------------------------------
+ * User controller integration tests.
+ * ----------------------------------
  */
 
 

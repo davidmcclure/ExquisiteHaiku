@@ -6,6 +6,9 @@
 var poemForm = require('../../helpers/forms/poem'),
   auth = require('../../helpers/middleware');
 
+// Models.
+var Poem = mongoose.model('Poem');
+
 
 /*
  * ------------
@@ -63,6 +66,100 @@ module.exports = function(app) {
   app.post('/admin/new',
     auth.isUser,
     function(req, res) {
+
+      // Admin user.
+      if (req.user.admin) {
+
+        // Pass control to the form.
+        poemForm.form().handle(req, {
+
+          // If field validations pass.
+          success: function(form) {
+
+            // Create the poem.
+            var poem = new Poem({
+              slug:           form.data.slug,
+              user:           req.user.id,
+              admin:          true,
+              roundLength:    form.data.roundLength,
+              sliceInterval:  form.data.sliceInterval,
+              minSubmissions: form.data.minSubmissions,
+              submissionVal:  form.data.submissionVal,
+              decayLifetime:  form.data.decayLifetime,
+              seedCapital:    form.data.seedCapital
+            });
+
+            // Save and redirect.
+            poem.save(function(err) {
+              res.redirect('/admin');
+            });
+
+          },
+
+          // If field validations fail.
+          other: function(form) {
+
+            // Re-render the form.
+            res.render('admin/poems/new', {
+              title:  'New Poem',
+              layout: '_layouts/poems',
+              user:   req.user,
+              nav:    { main: 'poems', sub: 'new' },
+              form:   form
+            });
+
+          }
+
+        });
+
+      }
+
+      // Public user.
+      else {
+
+        // Pass control to the form.
+        poemForm.form(req.user).handle(req, {
+
+          // If field validations pass.
+          success: function(form) {
+
+            // Create the poem.
+            var poem = new Poem({
+              slug:           form.data.slug,
+              user:           req.user.id,
+              admin:          false,
+              roundLength:    form.data.roundLength,
+              sliceInterval:  form.data.sliceInterval,
+              minSubmissions: form.data.minSubmissions,
+              submissionVal:  form.data.submissionVal,
+              decayLifetime:  form.data.decayLifetime,
+              seedCapital:    form.data.seedCapital
+            });
+
+            // Save and redirect.
+            poem.save(function(err) {
+              res.redirect('/admin');
+            });
+
+          },
+
+          // If field validations fail.
+          other: function(form) {
+
+            // Re-render the form.
+            res.render('admin/poems/new', {
+              title:  'New Poem',
+              layout: '_layouts/poems',
+              user:   req.user,
+              nav:    { main: 'poems', sub: 'new' },
+              form:   form
+            });
+
+          }
+
+        });
+
+      }
 
   });
 

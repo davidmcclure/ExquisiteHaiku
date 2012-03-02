@@ -16,6 +16,10 @@ require('../db-connect');
 require('../../../app/models/user');
 var User = mongoose.model('User');
 
+// Poem model.
+require('../../../app/models/poem');
+var User = mongoose.model('Poem');
+
 // Form and reserved slugs.
 var installForm = require('../../../helpers/forms/install'),
   _slugs = require('../../../helpers/forms/_slugs');

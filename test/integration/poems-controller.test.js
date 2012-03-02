@@ -105,8 +105,6 @@ describe('User Controller', function() {
 
       });
 
-      it('should block anonymous sessions');
-
       it('should render the form', function(done) {
 
         browser.visit(r+'admin/new', function() {

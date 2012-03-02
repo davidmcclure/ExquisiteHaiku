@@ -7,6 +7,7 @@ var _ = require('underscore');
 
 // Models.
 var User = mongoose.model('User');
+var Poem = mongoose.model('Poem');
 
 
 /*
@@ -150,11 +151,15 @@ exports.validSlug = function (msg) {
 exports.uniqueSlug = function (user, msg) {
   return function(form, field, callback) {
     if (_.isUndefined(user)) {
-      // TMP
-      callback();
+      Poem.findOne({ admin: true, slug: field.data }, function(err, poem) {
+        if (poem) callback(msg);
+        else callback();
+      });
     } else {
-      // TMP
-      callback();
+      Poem.findOne({ user: user.id, slug: field.data }, function(err, poem) {
+        if (poem) callback(msg);
+        else callback();
+      });
     }
   };
 };

@@ -11,6 +11,9 @@ var forms = require('forms'),
 // Models.
 var Poem = mongoose.model('Poem');
 
+// Reserved slugs.
+var _slugs = require('./_slugs');
+
 
 /*
  * ----------
@@ -30,7 +33,8 @@ exports.form = function(user) {
       required: 'Enter a slug.',
       validators: [
         customValidators.validSlug('Lowercase letters, numbers, hyphens.'),
-        customValidators.uniqueSlug(user, 'Slug taken.')
+        customValidators.uniqueSlug(user, 'Slug taken.'),
+        customValidators.fieldAllowed(_slugs.blacklist, 'Reserved.')
       ]
     }),
 

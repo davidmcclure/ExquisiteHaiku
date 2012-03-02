@@ -6,7 +6,8 @@
 var vows = require('mocha'),
   should = require('should'),
   assert = require('assert'),
-  sinon = require('sinon');
+  sinon = require('sinon'),
+  async = require('async');
 
 // Boostrap the application.
 process.env.NODE_ENV = 'testing';
@@ -15,6 +16,10 @@ require('../db-connect');
 // User model.
 require('../../../app/models/user');
 var User = mongoose.model('User');
+
+// Poem model.
+require('../../../app/models/poem');
+var Poem = mongoose.model('Poem');
 
 // Validators.
 var validators = require('../../../helpers/validators');
@@ -33,7 +38,19 @@ describe('Custom Validators', function() {
 
   // Clear users.
   afterEach(function(done) {
-    User.collection.remove(function(err) { done(); });
+
+    // Truncate worker.
+    var remove = function(model, callback) {
+      model.collection.remove(function(err) {
+        callback(err, model);
+      });
+    };
+
+    // Truncate.
+    async.map([User, Poem], remove, function(err, models) {
+      done();
+    });
+
   });
 
   describe('usernameExists', function() {
@@ -72,7 +89,7 @@ describe('Custom Validators', function() {
       // Create a user.
       var user = new User({
         username:   'david',
-        email:      'david@spyder.com',
+        email:      'david@test.com',
         password:   'password',
         superUser:  true,
         active:     true
@@ -99,7 +116,7 @@ describe('Custom Validators', function() {
       // Create user.
       user = new User({
         username:   'david',
-        email:      'david@spyder.com',
+        email:      'david@test.com',
         password:   'password',
         superUser:  true
       });
@@ -168,7 +185,7 @@ describe('Custom Validators', function() {
       // Create user.
       user = new User({
         username:   'david',
-        email:      'david@spyder.com',
+        email:      'david@test.com',
         password:   'password',
         superUser:  true,
         active:     true
@@ -253,7 +270,7 @@ describe('Custom Validators', function() {
       // Create user.
       user = new User({
         username:   'david',
-        email:      'david@spyder.com',
+        email:      'david@test.com',
         password:   'password',
         superUser:  true,
         active:     true
@@ -313,7 +330,7 @@ describe('Custom Validators', function() {
       // Create user1.
       user1 = new User({
         username:   'david',
-        email:      'david@spyder.com',
+        email:      'david@test.com',
         password:   'password',
         superUser:  true,
         active:     true
@@ -322,7 +339,7 @@ describe('Custom Validators', function() {
       // Create user2.
       user2 = new User({
         username:   'kara',
-        email:      'kara@spyder.com',
+        email:      'kara@test.com',
         password:   'password',
         superUser:  true,
         active:     true
@@ -511,17 +528,189 @@ describe('Custom Validators', function() {
 
   describe('uniqueSlug', function() {
 
+    var validator;
+
     describe('when user is passed', function() {
 
-      it('should not pass when there is another poem owned by the user with the slug');
-      it('should pass when there is not another poem owned by the user with the slug');
+      beforeEach(function(done) {
+
+        // Create user.
+        var user = new User({
+          username:   'david',
+          email:      'david@test.com',
+          password:   'password',
+          admin:      false,
+          superUser:  false,
+          active:     true
+        });
+
+        // Save user.
+        user.save(function(err) {
+
+          // Create poem.
+          var poem = new Poem({
+            slug: 'taken-slug',
+            user: user.id,
+            admin: false,
+            roundLength : 10000,
+            sliceInterval : 3,
+            minSubmissions : 5,
+            submissionVal : 100,
+            decayLifetime : 50,
+            seedCapital : 1000
+          });
+
+          // Save poem.
+          poem.save(function(err) {
+            validator = validators.uniqueSlug(user, 'err');
+            done();
+          });
+
+        });
+
+      });
+
+      it('should not pass when there is another poem owned by the user with the slug', function(done) {
+
+        // Spy on callback.
+        callback = sinon.spy(function() {
+          sinon.assert.calledWith(callback, 'err');
+          done();
+        });
+
+        // Set taken slug.
+        field.data = 'taken-slug';
+        validator(form, field, callback);
+
+      });
+
+      it('should pass when there is not another poem owned by the user with the slug', function(done) {
+
+        // Spy on callback.
+        callback = sinon.spy(function() {
+          sinon.assert.neverCalledWith(callback, 'err');
+          done();
+        });
+
+        // Set available slug.
+        field.data = 'available-slug';
+        validator(form, field, callback);
+
+      });
 
     });
 
     describe('when a user is not passed', function() {
 
-      it('should not pass when there is another poem owned by an admin user with the slug');
-      it('should pass when there is not another poem owned by an admin user with the slug');
+      beforeEach(function(done) {
+
+        // Create user1.
+        var user1 = new User({
+          username:   'david',
+          email:      'david@test.com',
+          password:   'password',
+          admin:      true,
+          superUser:  true,
+          active:     true
+        });
+
+        // Create user2.
+        var user2 = new User({
+          username:   'david',
+          email:      'david@test.com',
+          password:   'password',
+          admin:      true,
+          superUser:  true,
+          active:     true
+        });
+
+        // Save worker.
+        var save = function(user, callback) {
+          user.save(function(err) {
+            callback(null, user);
+          });
+        };
+
+        // Save users.
+        async.map([user1, user2], save, function(err, users) {
+
+          // Create poem1.
+          var poem1 = new Poem({
+            slug: 'taken-slug',
+            user: user1.id,
+            admin: true,
+            roundLength : 10000,
+            sliceInterval : 3,
+            minSubmissions : 5,
+            submissionVal : 100,
+            decayLifetime : 50,
+            seedCapital : 1000
+          });
+
+          // Create poem2.
+          var poem2 = new Poem({
+            slug: 'another-taken-slug',
+            user: user1.id,
+            admin: false,
+            roundLength : 10000,
+            sliceInterval : 3,
+            minSubmissions : 5,
+            submissionVal : 100,
+            decayLifetime : 50,
+            seedCapital : 1000
+          });
+
+          // Save poems.
+          async.map([poem1, poem2], save, function(err, poems) {
+            validator = validators.uniqueSlug(undefined, 'err');
+            done();
+          });
+
+        });
+
+      });
+
+      it('should not pass when there is another poem owned by an admin user with the slug', function(done) {
+
+        // Spy on callback.
+        callback = sinon.spy(function() {
+          sinon.assert.calledWith(callback, 'err');
+          done();
+        });
+
+        // Set taken slug.
+        field.data = 'taken-slug';
+        validator(form, field, callback);
+
+      });
+
+      it('should pass when there is not another poem owned by an admin user with the slug', function(done) {
+
+        // Spy on callback.
+        callback = sinon.spy(function() {
+          sinon.assert.neverCalledWith(callback, 'err');
+          done();
+        });
+
+        // Set available slug.
+        field.data = 'available-slug';
+        validator(form, field, callback);
+
+      });
+
+      it('should pass when there is a non-admin poem owned by an admin user with the slug', function(done) {
+
+        // Spy on callback.
+        callback = sinon.spy(function() {
+          sinon.assert.neverCalledWith(callback, 'err');
+          done();
+        });
+
+        // Set available slug.
+        field.data = 'another-taken-slug';
+        validator(form, field, callback);
+
+      });
 
     });
 

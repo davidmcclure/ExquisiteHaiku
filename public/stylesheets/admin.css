@@ -10,6 +10,7 @@ form div.form-actions{background:none;border:none;padding:0}
 div.subnav{margin:.5em 0 1em 0;}
 div.subnav a,div.subnav input{margin:0 1em 0 0}
 div.subnav input{position:relative}
+div.subnav a.new{float:left}
 table.list td.title{font-weight:bold}
 table.list th{font-weight:normal;color:#808080}
 table.list a{font-weight:bold;margin-right:.6em;}

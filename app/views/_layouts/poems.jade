@@ -2,10 +2,19 @@ extends admin
 
 block subnav
   if nav.sub === 'new'
-    a.btn.btn-primary(href='/admin/new')
+    a.new.btn.btn-primary(href='/admin/new')
       i.icon-plus-sign.icon-white
       |  New Poem
   else
-    a.btn(href='/admin/new')
+    a.new.btn(href='/admin/new')
       i.icon-plus-sign
       |  New Poem
+  ul.nav.nav-pills
+    li
+      a(href='#') <strong>all</strong>
+    li
+      a(href='#') idle
+    li
+      a(href='#') running
+    li
+      a(href='#') done

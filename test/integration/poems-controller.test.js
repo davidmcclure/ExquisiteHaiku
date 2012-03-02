@@ -299,59 +299,337 @@ describe('User Controller', function() {
 
       });
 
-      it('should flash error for dup admin slug');
+      it('should flash error for dup admin slug', function(done) {
 
-      it('should flash error for dup user slug');
+        // GET admin/new.
+        browser.visit(r+'admin/new', function() {
 
-      it('should flash error for reserved slug');
+          // Fill in form.
+          browser.fill('slug', 'poem1');
+          browser.pressButton('Create', function() {
+
+            // Check for error.
+            browser.location.pathname.should.eql('/admin/new');
+            browser.query('span.help-inline.slug').should.be.ok;
+            done();
+
+          });
+
+        });
+
+      });
+
+      it('should flash error for dup user slug', function(done) {
+
+        browser = new Browser();
+
+        // Login as a public user.
+        browser.visit(r+'admin/login', function() {
+
+          // Fill in form, submit.
+          browser.fill('username', 'rosie');
+          browser.fill('password', 'password');
+          browser.pressButton('Submit', function() {
+
+            // GET admin/new.
+            browser.visit(r+'admin/new', function() {
+
+              // Fill in form.
+              browser.fill('slug', 'poem3');
+              browser.pressButton('Create', function() {
+
+                // Check for error.
+                browser.location.pathname.should.eql('/admin/new');
+                browser.query('span.help-inline.slug').should.be.ok;
+                done();
+
+              });
+
+            });
+
+          });
+
+        });
+
+      });
+
+      it('should flash error for reserved slug', function(done) {
+
+        // GET admin/new.
+        browser.visit(r+'admin/new', function() {
+
+          // Fill in form.
+          browser.fill('slug', _slugs.blacklist[0]);
+          browser.pressButton('Create', function() {
+
+            // Check for error.
+            browser.location.pathname.should.eql('/admin/new');
+            browser.query('span.help-inline.slug').should.be.ok;
+            done();
+
+          });
+
+        });
+
+      });
 
     });
 
     describe('round length', function() {
 
-      it('should flash error for no slug');
+      it('should flash error for no round length', function(done) {
 
-      it('should flash error for not positive integer');
+        // GET admin/new.
+        browser.visit(r+'admin/new', function() {
+
+          // Fill in form.
+          browser.pressButton('Create', function() {
+
+            // Check for error.
+            browser.location.pathname.should.eql('/admin/new');
+            browser.query('span.help-inline.roundLength').should.be.ok;
+            done();
+
+          });
+
+        });
+
+      });
+
+      it('should flash error for not positive integer', function(done) {
+
+        // GET admin/new.
+        browser.visit(r+'admin/new', function() {
+
+          // Fill in form.
+          browser.fill('roundLength', '-5');
+          browser.pressButton('Create', function() {
+
+            // Check for error.
+            browser.location.pathname.should.eql('/admin/new');
+            browser.query('span.help-inline.roundLength').should.be.ok;
+            done();
+
+          });
+
+        });
+
+      });
 
     });
 
     describe('slicing interval', function() {
 
-      it('should flash error for no slug');
+      it('should flash error for no slicing interval', function(done) {
 
-      it('should flash error for not positive integer');
+        // GET admin/new.
+        browser.visit(r+'admin/new', function() {
+
+          // Fill in form.
+          browser.pressButton('Create', function() {
+
+            // Check for error.
+            browser.location.pathname.should.eql('/admin/new');
+            browser.query('span.help-inline.sliceInterval').should.be.ok;
+            done();
+
+          });
+
+        });
+
+      });
+
+      it('should flash error for not positive integer', function(done) {
+
+        // GET admin/new.
+        browser.visit(r+'admin/new', function() {
+
+          // Fill in form.
+          browser.fill('sliceInterval', '-5');
+          browser.pressButton('Create', function() {
+
+            // Check for error.
+            browser.location.pathname.should.eql('/admin/new');
+            browser.query('span.help-inline.sliceInterval').should.be.ok;
+            done();
+
+          });
+
+        });
+
+      });
 
     });
 
     describe('min submissions', function() {
 
-      it('should flash error for no slug');
+      it('should flash error for no min submissions', function(done) {
 
-      it('should flash error for not positive integer');
+        // GET admin/new.
+        browser.visit(r+'admin/new', function() {
+
+          // Fill in form.
+          browser.pressButton('Create', function() {
+
+            // Check for error.
+            browser.location.pathname.should.eql('/admin/new');
+            browser.query('span.help-inline.minSubmissions').should.be.ok;
+            done();
+
+          });
+
+        });
+
+      });
+
+      it('should flash error for not positive integer', function(done) {
+
+        // GET admin/new.
+        browser.visit(r+'admin/new', function() {
+
+          // Fill in form.
+          browser.fill('minSubmissions', '-5');
+          browser.pressButton('Create', function() {
+
+            // Check for error.
+            browser.location.pathname.should.eql('/admin/new');
+            browser.query('span.help-inline.minSubmissions').should.be.ok;
+            done();
+
+          });
+
+        });
+
+      });
 
     });
 
     describe('submission val', function() {
 
-      it('should flash error for no slug');
+      it('should flash error for no submission val', function(done) {
 
-      it('should flash error for not positive integer');
+        // GET admin/new.
+        browser.visit(r+'admin/new', function() {
+
+          // Fill in form.
+          browser.pressButton('Create', function() {
+
+            // Check for error.
+            browser.location.pathname.should.eql('/admin/new');
+            browser.query('span.help-inline.submissionVal').should.be.ok;
+            done();
+
+          });
+
+        });
+
+      });
+
+      it('should flash error for not positive integer', function(done) {
+
+        // GET admin/new.
+        browser.visit(r+'admin/new', function() {
+
+          // Fill in form.
+          browser.fill('submissionVal', '-5');
+          browser.pressButton('Create', function() {
+
+            // Check for error.
+            browser.location.pathname.should.eql('/admin/new');
+            browser.query('span.help-inline.submissionVal').should.be.ok;
+            done();
+
+          });
+
+        });
+
+      });
 
     });
 
     describe('decay lifetime', function() {
 
-      it('should flash error for no slug');
+      it('should flash error for no decay lifetime', function(done) {
 
-      it('should flash error for not positive integer');
+        // GET admin/new.
+        browser.visit(r+'admin/new', function() {
+
+          // Fill in form.
+          browser.pressButton('Create', function() {
+
+            // Check for error.
+            browser.location.pathname.should.eql('/admin/new');
+            browser.query('span.help-inline.decayLifetime').should.be.ok;
+            done();
+
+          });
+
+        });
+
+      });
+
+      it('should flash error for not positive integer', function(done) {
+
+        // GET admin/new.
+        browser.visit(r+'admin/new', function() {
+
+          // Fill in form.
+          browser.fill('decayLifetime', '-5');
+          browser.pressButton('Create', function() {
+
+            // Check for error.
+            browser.location.pathname.should.eql('/admin/new');
+            browser.query('span.help-inline.decayLifetime').should.be.ok;
+            done();
+
+          });
+
+        });
+
+      });
 
     });
 
     describe('seed capital', function() {
 
-      it('should flash error for no slug');
+      it('should flash error for no seed capital', function(done) {
 
-      it('should flash error for not positive integer');
+        // GET admin/new.
+        browser.visit(r+'admin/new', function() {
+
+          // Fill in form.
+          browser.pressButton('Create', function() {
+
+            // Check for error.
+            browser.location.pathname.should.eql('/admin/new');
+            browser.query('span.help-inline.seedCapital').should.be.ok;
+            done();
+
+          });
+
+        });
+
+      });
+
+      it('should flash error for not positive integer', function(done) {
+
+        // GET admin/new.
+        browser.visit(r+'admin/new', function() {
+
+          // Fill in form.
+          browser.fill('seedCapital', '-5');
+          browser.pressButton('Create', function() {
+
+            // Check for error.
+            browser.location.pathname.should.eql('/admin/new');
+            browser.query('span.help-inline.seedCapital').should.be.ok;
+            done();
+
+          });
+
+        });
+
+      });
 
     });
 

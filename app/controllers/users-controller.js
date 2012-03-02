@@ -33,7 +33,7 @@ module.exports = function(app) {
     auth.isSuper,
     function(req, res) {
 
-      // Get users, sort alphabetically ascending on username.
+      // Get users, sort by date created.
       User.find({
         admin: true
       }).sort('created', 1).execFind(function(err, users) {

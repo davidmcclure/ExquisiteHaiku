@@ -1,0 +1,22 @@
+table.table.list.table-condensed
+  thead
+    tr
+      th slug
+      th round len
+      th slice int
+      th min sub
+      th sub val
+      th decay
+      th capital
+      th
+  tbody
+    each poem in poems
+      tr
+        td.title= poem.slug
+        td= poem.roundLength
+        td= poem.sliceInterval
+        td= poem.minSubmissions
+        td= poem.submissionVal
+        td= poem.decayLifetime
+        td= poem.seedCapital
+        td

@@ -28,13 +28,47 @@ module.exports = function(app) {
     auth.isUser,
     function(req, res) {
 
-      // Render the list.
-      res.render('admin/poems/index', {
-        title:  'Oversoul',
-        layout: '_layouts/poems',
-        user:   req.user,
-        nav:    { main: '', sub: '' }
-      });
+      // Admin user.
+      if (req.user.admin) {
+
+        // Get admin poems, sorting by date created.
+        Poem.find({
+          admin: true
+        }).sort('created', 1).execFind(function(err, poems) {
+
+          // Render the list.
+          res.render('admin/poems/index', {
+            title:  'Oversoul',
+            layout: '_layouts/poems',
+            user:   req.user,
+            nav:    { main: '', sub: '' },
+            poems:  poems
+          });
+
+        });
+
+      }
+
+      // Public user.
+      else {
+
+        // Get user's poems, sorting by date created.
+        Poem.find({
+          user: req.user.id
+        }).sort('created', 1).execFind(function(err, poems) {
+
+          // Render the list.
+          res.render('admin/poems/index', {
+            title:  'Oversoul',
+            layout: '_layouts/poems',
+            user:   req.user,
+            nav:    { main: '', sub: '' },
+            poems:  poems
+          });
+
+        });
+
+      }
 
   });
 

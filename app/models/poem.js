@@ -2,10 +2,6 @@
  * Poem model.
  */
 
-// Module dependencies.
-var integrator = require('../../lib/slicer').slicer;
-var slicer;
-
 // Schema definition.
 var Poem = new Schema({
   slug :            { type: String, required: true },

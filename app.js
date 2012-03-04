@@ -32,6 +32,10 @@ controllerFiles.forEach(function(file) {
   require(controllersPath + '/' + file)(app);
 });
 
+// ** DEV **
+// Declare the global timer tracker object.
+Oversoul = { timers: {} };
+
 // Run.
 app.listen(3000);
 console.log(

@@ -246,9 +246,16 @@ module.exports = function(app) {
    *
    * @middleware auth.isUser: Block if there is no user session.
    */
-  app.get('/admin/start/:slug',
+  app.post('/admin/start/:slug',
     auth.isUser,
     function(req, res) {
+
+      // Get the poem.
+      Poem.findOne({
+        slug: req.params.slug
+      }, function(err, poem) {
+        poem.start();
+      });
 
   });
 
@@ -257,9 +264,16 @@ module.exports = function(app) {
    *
    * @middleware auth.isUser: Block if there is no user session.
    */
-  app.get('/admin/stop/:slug',
+  app.post('/admin/stop/:slug',
     auth.isUser,
     function(req, res) {
+
+      // Get the poem.
+      Poem.findOne({
+        slug: req.params.slug
+      }, function(err, poem) {
+        poem.stop();
+      });
 
   });
 

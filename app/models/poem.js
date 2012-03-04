@@ -2,6 +2,9 @@
  * Poem model.
  */
 
+// Module dependencies.
+var slicer = require('../../lib/slicer');
+
 // Schema definition.
 var Poem = new Schema({
   slug :            { type: String, required: true },
@@ -32,6 +35,28 @@ var Poem = new Schema({
 Poem.virtual('id').get(function() {
   return this._id.toHexString();
 });
+
+/*
+ * Start slicer.
+ *
+ * @return void.
+ */
+Poem.methods.start = function() {
+  Oversoul.timers[this.id] = setInterval(
+    slicer.integrator,
+    this.sliceInterval,
+    this
+  );
+};
+
+/*
+ * Stop slicer.
+ *
+ * @return void.
+ */
+Poem.methods.stop = function() {
+  clearInterval(Oversoul.timers[this.id]);
+};
 
 
 // Register model.

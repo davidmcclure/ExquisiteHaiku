@@ -144,12 +144,12 @@ describe('User Controller', function() {
 
   });
 
-  describe('GET /admin', function() {
+  describe('GET /admin/poems', function() {
 
     it('should block anonymous sessions', function(done) {
 
       // Hit the route, check for redirect.
-      browser.visit(r+'admin', function() {
+      browser.visit(r+'admin/poems', function() {
         browser.location.pathname.should.eql('/admin/login');
         done();
       });
@@ -202,7 +202,7 @@ describe('User Controller', function() {
 
   });
 
-  describe('GET /admin/new', function() {
+  describe('GET /admin/poems/new', function() {
 
     describe('admin user', function() {
 
@@ -228,7 +228,7 @@ describe('User Controller', function() {
         browser.visit(r+'admin/logout', function() {
 
           // Hit the route, check for redirect.
-          browser.visit(r+'admin/users/new', function() {
+          browser.visit(r+'admin/poems/new', function() {
             browser.location.pathname.should.eql('/admin/login');
             done();
           });
@@ -239,7 +239,7 @@ describe('User Controller', function() {
 
       it('should render the form', function(done) {
 
-        browser.visit(r+'admin/new', function() {
+        browser.visit(r+'admin/poems/new', function() {
 
           // Check for form and fields.
           browser.query('form').should.be.ok;
@@ -260,7 +260,7 @@ describe('User Controller', function() {
 
   });
 
-  describe('POST /admin/new', function() {
+  describe('POST /admin/poems/new', function() {
 
     beforeEach(function(done) {
 
@@ -283,13 +283,13 @@ describe('User Controller', function() {
       it('should flash error for no slug', function(done) {
 
         // GET admin/new.
-        browser.visit(r+'admin/new', function() {
+        browser.visit(r+'admin/poems/new', function() {
 
           // Fill in form.
           browser.pressButton('Create', function() {
 
             // Check for error.
-            browser.location.pathname.should.eql('/admin/new');
+            browser.location.pathname.should.eql('/admin/poems/new');
             browser.query('span.help-inline.slug').should.be.ok;
             done();
 
@@ -302,14 +302,14 @@ describe('User Controller', function() {
       it('should flash error for dup admin slug', function(done) {
 
         // GET admin/new.
-        browser.visit(r+'admin/new', function() {
+        browser.visit(r+'admin/poems/new', function() {
 
           // Fill in form.
           browser.fill('slug', 'poem1');
           browser.pressButton('Create', function() {
 
             // Check for error.
-            browser.location.pathname.should.eql('/admin/new');
+            browser.location.pathname.should.eql('/admin/poems/new');
             browser.query('span.help-inline.slug').should.be.ok;
             done();
 
@@ -332,14 +332,14 @@ describe('User Controller', function() {
           browser.pressButton('Submit', function() {
 
             // GET admin/new.
-            browser.visit(r+'admin/new', function() {
+            browser.visit(r+'admin/poems/new', function() {
 
               // Fill in form.
               browser.fill('slug', 'poem3');
               browser.pressButton('Create', function() {
 
                 // Check for error.
-                browser.location.pathname.should.eql('/admin/new');
+                browser.location.pathname.should.eql('/admin/poems/new');
                 browser.query('span.help-inline.slug').should.be.ok;
                 done();
 
@@ -356,14 +356,14 @@ describe('User Controller', function() {
       it('should flash error for reserved slug', function(done) {
 
         // GET admin/new.
-        browser.visit(r+'admin/new', function() {
+        browser.visit(r+'admin/poems/new', function() {
 
           // Fill in form.
           browser.fill('slug', _slugs.blacklist[0]);
           browser.pressButton('Create', function() {
 
             // Check for error.
-            browser.location.pathname.should.eql('/admin/new');
+            browser.location.pathname.should.eql('/admin/poems/new');
             browser.query('span.help-inline.slug').should.be.ok;
             done();
 
@@ -380,13 +380,13 @@ describe('User Controller', function() {
       it('should flash error for no round length', function(done) {
 
         // GET admin/new.
-        browser.visit(r+'admin/new', function() {
+        browser.visit(r+'admin/poems/new', function() {
 
           // Fill in form.
           browser.pressButton('Create', function() {
 
             // Check for error.
-            browser.location.pathname.should.eql('/admin/new');
+            browser.location.pathname.should.eql('/admin/poems/new');
             browser.query('span.help-inline.roundLength').should.be.ok;
             done();
 
@@ -399,14 +399,14 @@ describe('User Controller', function() {
       it('should flash error for not positive integer', function(done) {
 
         // GET admin/new.
-        browser.visit(r+'admin/new', function() {
+        browser.visit(r+'admin/poems/new', function() {
 
           // Fill in form.
           browser.fill('roundLength', '-5');
           browser.pressButton('Create', function() {
 
             // Check for error.
-            browser.location.pathname.should.eql('/admin/new');
+            browser.location.pathname.should.eql('/admin/poems/new');
             browser.query('span.help-inline.roundLength').should.be.ok;
             done();
 
@@ -423,13 +423,13 @@ describe('User Controller', function() {
       it('should flash error for no slicing interval', function(done) {
 
         // GET admin/new.
-        browser.visit(r+'admin/new', function() {
+        browser.visit(r+'admin/poems/new', function() {
 
           // Fill in form.
           browser.pressButton('Create', function() {
 
             // Check for error.
-            browser.location.pathname.should.eql('/admin/new');
+            browser.location.pathname.should.eql('/admin/poems/new');
             browser.query('span.help-inline.sliceInterval').should.be.ok;
             done();
 
@@ -442,14 +442,14 @@ describe('User Controller', function() {
       it('should flash error for not positive integer', function(done) {
 
         // GET admin/new.
-        browser.visit(r+'admin/new', function() {
+        browser.visit(r+'admin/poems/new', function() {
 
           // Fill in form.
           browser.fill('sliceInterval', '-5');
           browser.pressButton('Create', function() {
 
             // Check for error.
-            browser.location.pathname.should.eql('/admin/new');
+            browser.location.pathname.should.eql('/admin/poems/new');
             browser.query('span.help-inline.sliceInterval').should.be.ok;
             done();
 
@@ -466,13 +466,13 @@ describe('User Controller', function() {
       it('should flash error for no min submissions', function(done) {
 
         // GET admin/new.
-        browser.visit(r+'admin/new', function() {
+        browser.visit(r+'admin/poems/new', function() {
 
           // Fill in form.
           browser.pressButton('Create', function() {
 
             // Check for error.
-            browser.location.pathname.should.eql('/admin/new');
+            browser.location.pathname.should.eql('/admin/poems/new');
             browser.query('span.help-inline.minSubmissions').should.be.ok;
             done();
 
@@ -485,14 +485,14 @@ describe('User Controller', function() {
       it('should flash error for not positive integer', function(done) {
 
         // GET admin/new.
-        browser.visit(r+'admin/new', function() {
+        browser.visit(r+'admin/poems/new', function() {
 
           // Fill in form.
           browser.fill('minSubmissions', '-5');
           browser.pressButton('Create', function() {
 
             // Check for error.
-            browser.location.pathname.should.eql('/admin/new');
+            browser.location.pathname.should.eql('/admin/poems/new');
             browser.query('span.help-inline.minSubmissions').should.be.ok;
             done();
 
@@ -509,13 +509,13 @@ describe('User Controller', function() {
       it('should flash error for no submission val', function(done) {
 
         // GET admin/new.
-        browser.visit(r+'admin/new', function() {
+        browser.visit(r+'admin/poems/new', function() {
 
           // Fill in form.
           browser.pressButton('Create', function() {
 
             // Check for error.
-            browser.location.pathname.should.eql('/admin/new');
+            browser.location.pathname.should.eql('/admin/poems/new');
             browser.query('span.help-inline.submissionVal').should.be.ok;
             done();
 
@@ -528,14 +528,14 @@ describe('User Controller', function() {
       it('should flash error for not positive integer', function(done) {
 
         // GET admin/new.
-        browser.visit(r+'admin/new', function() {
+        browser.visit(r+'admin/poems/new', function() {
 
           // Fill in form.
           browser.fill('submissionVal', '-5');
           browser.pressButton('Create', function() {
 
             // Check for error.
-            browser.location.pathname.should.eql('/admin/new');
+            browser.location.pathname.should.eql('/admin/poems/new');
             browser.query('span.help-inline.submissionVal').should.be.ok;
             done();
 
@@ -552,13 +552,13 @@ describe('User Controller', function() {
       it('should flash error for no decay lifetime', function(done) {
 
         // GET admin/new.
-        browser.visit(r+'admin/new', function() {
+        browser.visit(r+'admin/poems/new', function() {
 
           // Fill in form.
           browser.pressButton('Create', function() {
 
             // Check for error.
-            browser.location.pathname.should.eql('/admin/new');
+            browser.location.pathname.should.eql('/admin/poems/new');
             browser.query('span.help-inline.decayLifetime').should.be.ok;
             done();
 
@@ -571,14 +571,14 @@ describe('User Controller', function() {
       it('should flash error for not positive integer', function(done) {
 
         // GET admin/new.
-        browser.visit(r+'admin/new', function() {
+        browser.visit(r+'admin/poems/new', function() {
 
           // Fill in form.
           browser.fill('decayLifetime', '-5');
           browser.pressButton('Create', function() {
 
             // Check for error.
-            browser.location.pathname.should.eql('/admin/new');
+            browser.location.pathname.should.eql('/admin/poems/new');
             browser.query('span.help-inline.decayLifetime').should.be.ok;
             done();
 
@@ -595,13 +595,13 @@ describe('User Controller', function() {
       it('should flash error for no seed capital', function(done) {
 
         // GET admin/new.
-        browser.visit(r+'admin/new', function() {
+        browser.visit(r+'admin/poems/new', function() {
 
           // Fill in form.
           browser.pressButton('Create', function() {
 
             // Check for error.
-            browser.location.pathname.should.eql('/admin/new');
+            browser.location.pathname.should.eql('/admin/poems/new');
             browser.query('span.help-inline.seedCapital').should.be.ok;
             done();
 
@@ -614,14 +614,14 @@ describe('User Controller', function() {
       it('should flash error for not positive integer', function(done) {
 
         // GET admin/new.
-        browser.visit(r+'admin/new', function() {
+        browser.visit(r+'admin/poems/new', function() {
 
           // Fill in form.
           browser.fill('seedCapital', '-5');
           browser.pressButton('Create', function() {
 
             // Check for error.
-            browser.location.pathname.should.eql('/admin/new');
+            browser.location.pathname.should.eql('/admin/poems/new');
             browser.query('span.help-inline.seedCapital').should.be.ok;
             done();
 
@@ -635,27 +635,27 @@ describe('User Controller', function() {
 
   });
 
-  describe('GET /admin/edit/:slug', function() {
+  describe('GET /admin/poems/edit/:slug', function() {
 
   });
 
-  describe('POST /admin/edit/:slug', function() {
+  describe('POST /admin/poems/edit/:slug', function() {
 
   });
 
-  describe('GET /admin/delete/:slug', function() {
+  describe('GET /admin/poems/delete/:slug', function() {
 
   });
 
-  describe('POST /admin/delete/:slug', function() {
+  describe('POST /admin/poems/delete/:slug', function() {
 
   });
 
-  describe('GET /admin/start/:slug', function() {
+  describe('GET /admin/poems/start/:slug', function() {
 
   });
 
-  describe('GET /admin/stop/:slug', function() {
+  describe('GET /admin/poems/stop/:slug', function() {
 
   });
 

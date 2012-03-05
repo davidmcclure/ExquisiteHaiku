@@ -395,7 +395,7 @@ describe('Install Controller', function() {
           browser.pressButton('Submit', function() {
 
             // Check for redirect.
-            browser.location.pathname.should.eql('/admin');
+            browser.location.pathname.should.eql('/admin/poems');
 
             // Get user.
             User.findOne({ username: 'david' }, function(err, user) {

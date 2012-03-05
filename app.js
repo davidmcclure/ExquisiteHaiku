@@ -34,7 +34,7 @@ controllerFiles.forEach(function(file) {
 
 // ** DEV **
 // Declare the global timer tracker object.
-Oversoul = { timers: {} };
+global.Oversoul = { timers: {} };
 
 // Run.
 app.listen(3000);

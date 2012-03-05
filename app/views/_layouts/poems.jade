@@ -2,11 +2,11 @@ extends admin
 
 block subnav
   if nav.sub === 'new'
-    a.new.btn.btn-primary(href='/admin/new')
+    a.new.btn.btn-primary(href='/admin/poems/new')
       i.icon-plus-sign.icon-white
       |  New Poem
   else
-    a.new.btn(href='/admin/new')
+    a.new.btn(href='/admin/poems/new')
       i.icon-plus-sign
       |  New Poem
   ul.nav.nav-pills

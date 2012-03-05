@@ -60,7 +60,7 @@ module.exports = function(app) {
             // Authenticate and redirect.
             if (user.authenticate(form.data.password)) {
               req.session.user_id = user.id;
-              res.redirect('/admin');
+              res.redirect('/admin/poems');
             }
 
           });

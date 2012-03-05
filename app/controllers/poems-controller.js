@@ -24,7 +24,7 @@ module.exports = function(app) {
    *
    * @middleware auth.isUser: Block if there is no user session.
    */
-  app.get('/admin',
+  app.get('/admin/poems',
     auth.isUser,
     function(req, res) {
 
@@ -77,7 +77,7 @@ module.exports = function(app) {
    *
    * @middleware auth.isUser: Block if there is no user session.
    */
-  app.get('/admin/new',
+  app.get('/admin/poems/new',
     auth.isUser,
     function(req, res) {
 
@@ -97,7 +97,7 @@ module.exports = function(app) {
    *
    * @middleware auth.isUser: Block if there is no user session.
    */
-  app.post('/admin/new',
+  app.post('/admin/poems/new',
     auth.isUser,
     function(req, res) {
 
@@ -125,7 +125,7 @@ module.exports = function(app) {
 
             // Save and redirect.
             poem.save(function(err) {
-              res.redirect('/admin');
+              res.redirect('/admin/poems');
             });
 
           },
@@ -172,7 +172,7 @@ module.exports = function(app) {
 
             // Save and redirect.
             poem.save(function(err) {
-              res.redirect('/admin');
+              res.redirect('/admin/poems');
             });
 
           },
@@ -202,7 +202,7 @@ module.exports = function(app) {
    *
    * @middleware auth.isUser: Block if there is no user session.
    */
-  app.get('/admin/edit/:slug',
+  app.get('/admin/poems/edit/:slug',
     auth.isUser,
     function(req, res) {
 
@@ -213,7 +213,7 @@ module.exports = function(app) {
    *
    * @middleware auth.isUser: Block if there is no user session.
    */
-  app.post('/admin/edit/:slug',
+  app.post('/admin/poems/edit/:slug',
     auth.isUser,
     function(req, res) {
 
@@ -224,7 +224,7 @@ module.exports = function(app) {
    *
    * @middleware auth.isUser: Block if there is no user session.
    */
-  app.get('/admin/delete/:slug',
+  app.get('/admin/poems/delete/:slug',
     auth.isUser,
     function(req, res) {
 
@@ -235,7 +235,7 @@ module.exports = function(app) {
    *
    * @middleware auth.isUser: Block if there is no user session.
    */
-  app.post('/admin/delete/:slug',
+  app.post('/admin/poems/delete/:slug',
     auth.isUser,
     function(req, res) {
 
@@ -246,7 +246,7 @@ module.exports = function(app) {
    *
    * @middleware auth.isUser: Block if there is no user session.
    */
-  app.post('/admin/start/:slug',
+  app.post('/admin/poems/start/:slug',
     auth.isUser,
     function(req, res) {
 
@@ -264,7 +264,7 @@ module.exports = function(app) {
    *
    * @middleware auth.isUser: Block if there is no user session.
    */
-  app.post('/admin/stop/:slug',
+  app.post('/admin/poems/stop/:slug',
     auth.isUser,
     function(req, res) {
 

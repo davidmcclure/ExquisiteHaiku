@@ -56,7 +56,7 @@ exports.isUser = function (req, res, next) {
  */
 exports.isSuper = function (req, res, next) {
   if (req.user.superUser) next();
-  else res.redirect('/admin');
+  else res.redirect('/admin/poems');
 };
 
 
@@ -72,7 +72,7 @@ exports.isSuper = function (req, res, next) {
  */
 exports.isAdmin = function (req, res, next) {
   if (req.user.admin) next();
-  else res.redirect('/admin');
+  else res.redirect('/admin/poems');
 };
 
 
@@ -86,7 +86,7 @@ exports.isAdmin = function (req, res, next) {
  * @return void.
  */
 exports.noUser = function (req, res, next) {
-  if (req.session.user_id) res.redirect('/admin');
+  if (req.session.user_id) res.redirect('/admin/poems');
   else next();
 };
 
@@ -126,7 +126,7 @@ exports.nonSelf = function (req, res, next) {
       req.user = user;
       next();
     }
-    else res.redirect('/admin');
+    else res.redirect('/admin/poems');
   });
 
 };

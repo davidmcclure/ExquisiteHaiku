@@ -123,7 +123,7 @@ describe('User Controller', function() {
 
         // Hit the route, check for redirect.
         browser.visit(r+'admin/users', function() {
-          browser.location.pathname.should.eql('/admin');
+          browser.location.pathname.should.eql('/admin/poems');
           done();
         });
 
@@ -139,7 +139,7 @@ describe('User Controller', function() {
 
         // Hit the route, check for redirect.
         browser.visit(r+'admin/users', function() {
-          browser.location.pathname.should.eql('/admin');
+          browser.location.pathname.should.eql('/admin/poems');
           done();
         });
 
@@ -226,7 +226,7 @@ describe('User Controller', function() {
 
         // Hit the route, check for redirect.
         browser.visit(r+'admin/users/new', function() {
-          browser.location.pathname.should.eql('/admin');
+          browser.location.pathname.should.eql('/admin/poems');
           done();
         });
 
@@ -242,7 +242,7 @@ describe('User Controller', function() {
 
         // Hit the route, check for redirect.
         browser.visit(r+'admin/users/new', function() {
-          browser.location.pathname.should.eql('/admin');
+          browser.location.pathname.should.eql('/admin/poems');
           done();
         });
 
@@ -694,7 +694,7 @@ describe('User Controller', function() {
 
         // Hit the route, check for redirect.
         browser.visit(r+'admin/users/edit/kara', function() {
-          browser.location.pathname.should.eql('/admin');
+          browser.location.pathname.should.eql('/admin/poems');
           done();
         });
 
@@ -710,7 +710,7 @@ describe('User Controller', function() {
 
         // Hit the route, check for redirect.
         browser.visit(r+'admin/users/edit/kara', function() {
-          browser.location.pathname.should.eql('/admin');
+          browser.location.pathname.should.eql('/admin/poems');
           done();
         });
 
@@ -1297,7 +1297,7 @@ describe('User Controller', function() {
 
         // Hit the route, check for redirect.
         browser.visit(r+'admin/users/delete/kara', function() {
-          browser.location.pathname.should.eql('/admin');
+          browser.location.pathname.should.eql('/admin/poems');
           done();
         });
 
@@ -1313,7 +1313,7 @@ describe('User Controller', function() {
 
         // Hit the route, check for redirect.
         browser.visit(r+'admin/users/delete/kara', function() {
-          browser.location.pathname.should.eql('/admin');
+          browser.location.pathname.should.eql('/admin/poems');
           done();
         });
 
@@ -1327,7 +1327,7 @@ describe('User Controller', function() {
       browser.visit(r+'admin/users/delete/david', function() {
 
         // Check for redirect.
-        browser.location.pathname.should.eql('/admin');
+        browser.location.pathname.should.eql('/admin/poems');
         done();
 
       });
@@ -1378,7 +1378,7 @@ describe('User Controller', function() {
       browser.visit(r+'admin/users/delete/david', function() {
 
         // Check for redirect.
-        browser.location.pathname.should.eql('/admin');
+        browser.location.pathname.should.eql('/admin/poems');
         done();
 
       });

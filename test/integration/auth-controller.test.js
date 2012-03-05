@@ -85,7 +85,7 @@ describe('Auth Controller', function() {
           browser.visit(r+'admin/login', function() {
 
             // Check for redirect.
-            browser.location.pathname.should.eql('/admin');
+            browser.location.pathname.should.eql('/admin/poems');
             done();
 
           });
@@ -249,7 +249,7 @@ describe('Auth Controller', function() {
           browser.pressButton('Submit', function() {
 
             // Check for redirect.
-            browser.location.pathname.should.eql('/admin');
+            browser.location.pathname.should.eql('/admin/poems');
             done();
 
           });

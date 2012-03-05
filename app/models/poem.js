@@ -11,6 +11,8 @@ var Poem = new Schema({
   user :            { type: Schema.ObjectId, ref: 'User', required: true },
   admin :           { type: Boolean, required: true },
   created :         { type: Date, required: true, default: Date.now() },
+  running :         { type: Boolean, required: true, default: false },
+  complete :        { type: Boolean, required: true, default: false },
   roundLength :     { type: Number, required: true },
   sliceInterval :   { type: Number, required: true },
   minSubmissions :  { type: Number, required: true },
@@ -42,7 +44,7 @@ Poem.virtual('id').get(function() {
  * @return void.
  */
 Poem.methods.start = function() {
-  Oversoul.timers[this.id] = setInterval(
+  global.Oversoul.timers[this.id] = setInterval(
     slicer.integrator,
     this.sliceInterval,
     this
@@ -55,7 +57,7 @@ Poem.methods.start = function() {
  * @return void.
  */
 Poem.methods.stop = function() {
-  clearInterval(Oversoul.timers[this.id]);
+  clearInterval(global.Oversoul.timers[this.id]);
 };
 
 

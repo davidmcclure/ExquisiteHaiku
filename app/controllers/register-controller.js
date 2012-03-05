@@ -59,7 +59,7 @@ module.exports = function(app) {
           // Save and redirect.
           user.save(function() {
               req.session.user_id = user.id;
-              res.redirect('/admin');
+              res.redirect('/admin/poems');
           });
 
         },

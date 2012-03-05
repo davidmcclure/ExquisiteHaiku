@@ -193,7 +193,7 @@ describe('Route Middleware', function() {
 
         // Call isSuper, check for redirect.
         auth.isSuper(req, res, next);
-        sinon.assert.calledWith(res.redirect, '/admin');
+        sinon.assert.calledWith(res.redirect, '/admin/poems');
         done();
 
       });
@@ -256,7 +256,7 @@ describe('Route Middleware', function() {
 
         // Call isAdmin, check for redirect.
         auth.isAdmin(req, res, next);
-        sinon.assert.calledWith(res.redirect, '/admin');
+        sinon.assert.calledWith(res.redirect, '/admin/poems');
         done();
 
       });
@@ -319,7 +319,7 @@ describe('Route Middleware', function() {
 
         // Call noUser, check for res.redirect().
         auth.noUser(req, res, next);
-        sinon.assert.calledWith(res.redirect, '/admin');
+        sinon.assert.calledWith(res.redirect, '/admin/poems');
         done();
 
       });
@@ -445,13 +445,13 @@ describe('Route Middleware', function() {
 
       // Spy on res.
       res.redirect = sinon.spy(function() {
-        sinon.assert.calledWith(res.redirect, '/admin');
+        sinon.assert.calledWith(res.redirect, '/admin/poems');
         done();
       });
 
       // Spy on next.
       next = sinon.spy(function() {
-        sinon.assert.calledWith(res.redirect, '/admin');
+        sinon.assert.calledWith(res.redirect, '/admin/poems');
         done();
       });
 

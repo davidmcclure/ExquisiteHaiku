@@ -127,6 +127,14 @@ describe('Poem', function() {
       poem.created.should.be.ok;
     });
 
+    it('should set "running" to false by default', function() {
+      poem.running.should.be.false;
+    });
+
+    it('should set "complete" to false by default', function() {
+      poem.running.should.be.false;
+    });
+
   });
 
   describe('virtual field "id"', function() {

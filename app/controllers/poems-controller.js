@@ -28,13 +28,38 @@ module.exports = function(app) {
     auth.isUser,
     function(req, res) {
 
+      // Build the filter object.
+      var filter = {};
+      switch (req.query.filter) {
+
+        // Not-running, not-complete.
+        case 'idle':
+          filter.running = false;
+          filter.complete = false;
+        break;
+
+        // In progress.
+        case 'running':
+          filter.running = true;
+        break;
+
+        // Finished.
+        case 'done':
+          filter.complete = true;
+        break;
+
+      }
+
       // Admin user.
       if (req.user.admin) {
 
+        // Add admin clause to filter.
+        filter.admin = true;
+
         // Get admin poems, sorting by date created.
-        Poem.find({
-          admin: true
-        }).sort('created', 1).execFind(function(err, poems) {
+        Poem.find(
+          filter
+        ).sort('created', 1).execFind(function(err, poems) {
 
           // Render the list.
           res.render('admin/poems/index', {
@@ -52,10 +77,13 @@ module.exports = function(app) {
       // Public user.
       else {
 
+        // Add user clause to filter.
+        filter.user = req.user.id;
+
         // Get user's poems, sorting by date created.
-        Poem.find({
-          user: req.user.id
-        }).sort('created', 1).execFind(function(err, poems) {
+        Poem.find(
+          filter
+        ).sort('created', 1).execFind(function(err, poems) {
 
           // Render the list.
           res.render('admin/poems/index', {

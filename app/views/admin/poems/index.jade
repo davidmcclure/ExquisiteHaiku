@@ -12,7 +12,8 @@ table.table.list.table-condensed
   tbody
     each poem in poems
       tr
-        td.title= poem.slug
+        td.title
+          a(href='/admin/poems/show/#{poem.slug}')= poem.slug
         td= poem.roundLength
         td= poem.sliceInterval
         td= poem.minSubmissions
@@ -20,4 +21,4 @@ table.table.list.table-condensed
         td= poem.decayLifetime
         td= poem.seedCapital
         td
-          a(href='/admin/edit/#{poem.slug}') edit
+          a(href='/admin/poems/edit/#{poem.slug}') edit

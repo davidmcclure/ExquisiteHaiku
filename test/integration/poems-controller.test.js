@@ -26,10 +26,11 @@ var User = mongoose.model('User'),
  */
 
 
-describe('User Controller', function() {
+describe('Poem Controller', function() {
 
   var r = 'http://localhost:3000/';
-  var browser, user1, user2, user3, poem1, poem2, poem3;
+  var browser, user1, user2, user3, poem1, poem2,
+    poem3, poem4, poem5, poem6, poem7;
 
   // Create documents.
   beforeEach(function(done) {
@@ -72,6 +73,8 @@ describe('User Controller', function() {
       slug:             'poem1',
       user:             user1.id,
       admin:            true,
+      running:          false,
+      complete:         false,
       roundLength :     10000,
       sliceInterval :   3,
       minSubmissions :  5,
@@ -83,8 +86,10 @@ describe('User Controller', function() {
     // Create poem2.
     poem2 = new Poem({
       slug:             'poem2',
-      user:             user2.id,
+      user:             user1.id,
       admin:            true,
+      running:          true,
+      complete:         false,
       roundLength :     10000,
       sliceInterval :   3,
       minSubmissions :  5,
@@ -96,8 +101,70 @@ describe('User Controller', function() {
     // Create poem3.
     poem3 = new Poem({
       slug:             'poem3',
+      user:             user1.id,
+      admin:            true,
+      running:          false,
+      complete:         true,
+      roundLength :     10000,
+      sliceInterval :   3,
+      minSubmissions :  5,
+      submissionVal :   100,
+      decayLifetime :   50,
+      seedCapital :     1000
+    });
+
+    // Create poem4.
+    poem4 = new Poem({
+      slug:             'poem4',
+      user:             user2.id,
+      admin:            true,
+      running:          false,
+      complete:         false,
+      roundLength :     10000,
+      sliceInterval :   3,
+      minSubmissions :  5,
+      submissionVal :   100,
+      decayLifetime :   50,
+      seedCapital :     1000
+    });
+
+    // Create poem5.
+    poem5 = new Poem({
+      slug:             'poem5',
       user:             user3.id,
       admin:            false,
+      running:          false,
+      complete:         false,
+      roundLength :     10000,
+      sliceInterval :   3,
+      minSubmissions :  5,
+      submissionVal :   100,
+      decayLifetime :   50,
+      seedCapital :     1000
+    });
+
+    // Create poem6.
+    poem6 = new Poem({
+      slug:             'poem6',
+      user:             user3.id,
+      admin:            false,
+      running:          true,
+      complete:         false,
+      roundLength :     10000,
+      sliceInterval :   3,
+      minSubmissions :  5,
+      submissionVal :   100,
+      decayLifetime :   50,
+      seedCapital :     1000
+    });
+
+    // Create poem7.
+    poem7 = new Poem({
+      slug:             'poem7',
+      user:             user3.id,
+      admin:            false,
+      running:          false,
+      complete:         true,
       roundLength :     10000,
       sliceInterval :   3,
       minSubmissions :  5,
@@ -120,7 +187,11 @@ describe('User Controller', function() {
       user3,
       poem1,
       poem2,
-      poem3
+      poem3,
+      poem4,
+      poem5,
+      poem6,
+      poem7
     ], save, function(err, documents) {
       done();
     });
@@ -156,47 +227,71 @@ describe('User Controller', function() {
 
     });
 
-    it('should show all admin-owned poems for admin users', function(done) {
+    describe('admin user', function() {
 
-      // Login as an admin user.
-      browser.visit(r+'admin/login', function() {
+      it('should show all admin-owned poems for admin users', function(done) {
 
-        // Fill in form, submit.
-        browser.fill('username', 'david');
-        browser.fill('password', 'password');
-        browser.pressButton('Submit', function() {
+        // Login as an admin user.
+        browser.visit(r+'admin/login', function() {
 
-          // Check for admin poems.
-          browser.text('td.title').should.include('poem1');
-          browser.text('td.title').should.include('poem2');
-          browser.text('td.title').should.not.include('poem3');
-          done();
+          // Fill in form, submit.
+          browser.fill('username', 'david');
+          browser.fill('password', 'password');
+          browser.pressButton('Submit', function() {
+
+            // Check for admin poems.
+            browser.text('td.title').should.include('poem1');
+            browser.text('td.title').should.include('poem2');
+            browser.text('td.title').should.include('poem3');
+            browser.text('td.title').should.include('poem4');
+            browser.text('td.title').should.not.include('poem5');
+            done();
+
+          });
 
         });
 
       });
+
+      it('should show all admin-owned poems for admin users when the "all" filter is active');
+      it('should show all admin-owned idle poems for admin users when the "idle" filter is active');
+      it('should show all admin-owned running poems for admin users when the "running" filter is active');
+      it('should show all admin-owned complete poems for admin users when the "done" filter is active');
 
     });
 
-    it('should show user-owned poems for non-admin users', function(done) {
+    describe('public user', function() {
 
-      // Login as an admin user.
-      browser.visit(r+'admin/login', function() {
+      it('should show user-owned poems for non-admin users', function(done) {
 
-        // Fill in form, submit.
-        browser.fill('username', 'rosie');
-        browser.fill('password', 'password');
-        browser.pressButton('Submit', function() {
+        // Login as an admin user.
+        browser.visit(r+'admin/login', function() {
 
-          // Check for admin poems.
-          browser.text('td.title').should.not.include('poem1');
-          browser.text('td.title').should.not.include('poem2');
-          browser.text('td.title').should.include('poem3');
-          done();
+          // Fill in form, submit.
+          browser.fill('username', 'rosie');
+          browser.fill('password', 'password');
+          browser.pressButton('Submit', function() {
+
+            // Check for admin poems.
+            browser.text('td.title').should.not.include('poem1');
+            browser.text('td.title').should.not.include('poem2');
+            browser.text('td.title').should.not.include('poem3');
+            browser.text('td.title').should.not.include('poem4');
+            browser.text('td.title').should.include('poem5');
+            browser.text('td.title').should.include('poem6');
+            browser.text('td.title').should.include('poem7');
+            done();
+
+          });
 
         });
 
       });
+
+      it('should show all user-owned poems for public users when the "all" filter is active');
+      it('should show all user-owned idle poems for public users when the "idle" filter is active');
+      it('should show all user-owned running poems for public users when the "running" filter is active');
+      it('should show all user-owned complete poems for public users when the "done" filter is active');
 
     });
 
@@ -335,7 +430,7 @@ describe('User Controller', function() {
             browser.visit(r+'admin/poems/new', function() {
 
               // Fill in form.
-              browser.fill('slug', 'poem3');
+              browser.fill('slug', 'poem5');
               browser.pressButton('Create', function() {
 
                 // Check for error.

@@ -4,7 +4,8 @@
 
 // Module dependencies.
 var poemForm = require('../../helpers/forms/poem'),
-  auth = require('../../helpers/middleware');
+  auth = require('../../helpers/middleware'),
+  _ = require('underscore');
 
 // Models.
 var Poem = mongoose.model('Poem');
@@ -50,6 +51,10 @@ module.exports = function(app) {
 
       }
 
+      // Get subnav string.
+      var subnav = _.isUndefined(req.query.filter) ?
+        'all' : req.query.filter;
+
       // Admin user.
       if (req.user.admin) {
 
@@ -66,7 +71,7 @@ module.exports = function(app) {
             title:  'Oversoul',
             layout: '_layouts/poems',
             user:   req.user,
-            nav:    { main: '', sub: '' },
+            nav:    { main: 'poems', sub: subnav },
             poems:  poems
           });
 
@@ -90,7 +95,7 @@ module.exports = function(app) {
             title:  'Oversoul',
             layout: '_layouts/poems',
             user:   req.user,
-            nav:    { main: '', sub: '' },
+            nav:    { main: 'poems', sub: subnav },
             poems:  poems
           });
 

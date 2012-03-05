@@ -635,6 +635,10 @@ describe('User Controller', function() {
 
   });
 
+  describe('GET /admin/poems/show/:slug', function() {
+
+  });
+
   describe('GET /admin/poems/edit/:slug', function() {
 
   });

@@ -198,6 +198,33 @@ module.exports = function(app) {
   });
 
   /*
+   * View a poem.
+   *
+   * @middleware auth.isUser: Block if there is no user session.
+   */
+  app.get('/admin/poems/show/:slug',
+    auth.isUser,
+    function(req, res) {
+
+      // Get the poem.
+      Poem.findOne({
+        slug: req.params.slug
+      }, function(err, poem) {
+
+        // Show the info.
+        res.render('admin/poems/show', {
+          title:  poem.slug,
+          layout: '_layouts/poems',
+          user:   req.user,
+          nav:    { main: 'poems', sub: 'show' },
+          poem:   poem
+        });
+
+      });
+
+  });
+
+  /*
    * Edit a poem.
    *
    * @middleware auth.isUser: Block if there is no user session.

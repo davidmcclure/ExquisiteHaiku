@@ -229,7 +229,7 @@ describe('Poem Controller', function() {
 
     describe('admin user', function() {
 
-      it('should show all admin-owned poems for admin users', function(done) {
+      beforeEach(function(done) {
 
         // Login as an admin user.
         browser.visit(r+'admin/login', function() {
@@ -238,60 +238,190 @@ describe('Poem Controller', function() {
           browser.fill('username', 'david');
           browser.fill('password', 'password');
           browser.pressButton('Submit', function() {
-
-            // Check for admin poems.
-            browser.text('td.title').should.include('poem1');
-            browser.text('td.title').should.include('poem2');
-            browser.text('td.title').should.include('poem3');
-            browser.text('td.title').should.include('poem4');
-            browser.text('td.title').should.not.include('poem5');
             done();
-
           });
 
         });
 
       });
 
-      it('should show all admin-owned poems for admin users when the "all" filter is active');
-      it('should show all admin-owned idle poems for admin users when the "idle" filter is active');
-      it('should show all admin-owned running poems for admin users when the "running" filter is active');
-      it('should show all admin-owned complete poems for admin users when the "done" filter is active');
+      it('should show all admin-owned poems for admin users by default', function(done) {
+
+        // Check for admin poems.
+        browser.location.pathname.should.eql('/admin/poems');
+        browser.text('td.title').should.include('poem1');
+        browser.text('td.title').should.include('poem2');
+        browser.text('td.title').should.include('poem3');
+        browser.text('td.title').should.include('poem4');
+        browser.text('td.title').should.not.include('poem5');
+        browser.text('td.title').should.not.include('poem6');
+        browser.text('td.title').should.not.include('poem7');
+        done();
+
+      });
+
+      it('should show admin-owned poems when the "all" filter is active', function(done) {
+
+        // Activate 'all' filter.
+        browser.visit(r+'admin/poems?filter=all', function() {
+          browser.text('td.title').should.include('poem1');
+          browser.text('td.title').should.include('poem2');
+          browser.text('td.title').should.include('poem3');
+          browser.text('td.title').should.include('poem4');
+          browser.text('td.title').should.not.include('poem5');
+          browser.text('td.title').should.not.include('poem6');
+          browser.text('td.title').should.not.include('poem7');
+          done();
+        });
+
+      });
+
+      it('should show admin-owned idle poems when the "idle" filter is active', function(done) {
+
+        // Activate 'idle' filter.
+        browser.visit(r+'admin/poems?filter=idle', function() {
+          browser.text('td.title').should.include('poem1');
+          browser.text('td.title').should.not.include('poem2');
+          browser.text('td.title').should.not.include('poem3');
+          browser.text('td.title').should.include('poem4');
+          browser.text('td.title').should.not.include('poem5');
+          browser.text('td.title').should.not.include('poem6');
+          browser.text('td.title').should.not.include('poem7');
+          done();
+        });
+
+      });
+
+      it('should show admin-owned running poems when the "running" filter is active', function(done) {
+
+        // Activate 'idle' filter.
+        browser.visit(r+'admin/poems?filter=running', function() {
+          browser.text('td.title').should.not.include('poem1');
+          browser.text('td.title').should.include('poem2');
+          browser.text('td.title').should.not.include('poem3');
+          browser.text('td.title').should.not.include('poem4');
+          browser.text('td.title').should.not.include('poem5');
+          browser.text('td.title').should.not.include('poem6');
+          browser.text('td.title').should.not.include('poem7');
+          done();
+        });
+
+      });
+
+      it('should show admin-owned complete poems when the "done" filter is active', function(done) {
+
+        // Activate 'idle' filter.
+        browser.visit(r+'admin/poems?filter=done', function() {
+          browser.text('td.title').should.not.include('poem1');
+          browser.text('td.title').should.not.include('poem2');
+          browser.text('td.title').should.include('poem3');
+          browser.text('td.title').should.not.include('poem4');
+          browser.text('td.title').should.not.include('poem5');
+          browser.text('td.title').should.not.include('poem6');
+          browser.text('td.title').should.not.include('poem7');
+          done();
+        });
+
+      });
 
     });
 
     describe('public user', function() {
 
-      it('should show user-owned poems for non-admin users', function(done) {
+      beforeEach(function(done) {
 
-        // Login as an admin user.
+        // Login as a public user.
         browser.visit(r+'admin/login', function() {
 
           // Fill in form, submit.
           browser.fill('username', 'rosie');
           browser.fill('password', 'password');
           browser.pressButton('Submit', function() {
-
-            // Check for admin poems.
-            browser.text('td.title').should.not.include('poem1');
-            browser.text('td.title').should.not.include('poem2');
-            browser.text('td.title').should.not.include('poem3');
-            browser.text('td.title').should.not.include('poem4');
-            browser.text('td.title').should.include('poem5');
-            browser.text('td.title').should.include('poem6');
-            browser.text('td.title').should.include('poem7');
             done();
-
           });
 
         });
 
       });
 
-      it('should show all user-owned poems for public users when the "all" filter is active');
-      it('should show all user-owned idle poems for public users when the "idle" filter is active');
-      it('should show all user-owned running poems for public users when the "running" filter is active');
-      it('should show all user-owned complete poems for public users when the "done" filter is active');
+      it('should show user-owned poems for non-admin users by default', function(done) {
+
+        // Check for user poems.
+        browser.location.pathname.should.eql('/admin/poems');
+        browser.text('td.title').should.not.include('poem1');
+        browser.text('td.title').should.not.include('poem2');
+        browser.text('td.title').should.not.include('poem3');
+        browser.text('td.title').should.not.include('poem4');
+        browser.text('td.title').should.include('poem5');
+        browser.text('td.title').should.include('poem6');
+        browser.text('td.title').should.include('poem7');
+        done();
+
+      });
+
+      it('should show user-owned poems when the "all" filter is active', function(done) {
+
+        // Activate 'all' filter.
+        browser.visit(r+'admin/poems?filter=all', function() {
+          browser.text('td.title').should.not.include('poem1');
+          browser.text('td.title').should.not.include('poem2');
+          browser.text('td.title').should.not.include('poem3');
+          browser.text('td.title').should.not.include('poem4');
+          browser.text('td.title').should.include('poem5');
+          browser.text('td.title').should.include('poem6');
+          browser.text('td.title').should.include('poem7');
+          done();
+        });
+
+      });
+
+      it('should show user-owned idle poems when the "idle" filter is active', function(done) {
+
+        // Activate 'idle' filter.
+        browser.visit(r+'admin/poems?filter=idle', function() {
+          browser.text('td.title').should.not.include('poem1');
+          browser.text('td.title').should.not.include('poem2');
+          browser.text('td.title').should.not.include('poem3');
+          browser.text('td.title').should.not.include('poem4');
+          browser.text('td.title').should.include('poem5');
+          browser.text('td.title').should.not.include('poem6');
+          browser.text('td.title').should.not.include('poem7');
+          done();
+        });
+
+      });
+
+      it('should show user-owned running poems when the "running" filter is active', function(done) {
+
+        // Activate 'running' filter.
+        browser.visit(r+'admin/poems?filter=running', function() {
+          browser.text('td.title').should.not.include('poem1');
+          browser.text('td.title').should.not.include('poem2');
+          browser.text('td.title').should.not.include('poem3');
+          browser.text('td.title').should.not.include('poem4');
+          browser.text('td.title').should.not.include('poem5');
+          browser.text('td.title').should.include('poem6');
+          browser.text('td.title').should.not.include('poem7');
+          done();
+        });
+
+      });
+
+      it('should show user-owned complete poems when the "done" filter is active', function(done) {
+
+        // Activate 'running' filter.
+        browser.visit(r+'admin/poems?filter=done', function() {
+          browser.text('td.title').should.not.include('poem1');
+          browser.text('td.title').should.not.include('poem2');
+          browser.text('td.title').should.not.include('poem3');
+          browser.text('td.title').should.not.include('poem4');
+          browser.text('td.title').should.not.include('poem5');
+          browser.text('td.title').should.not.include('poem6');
+          browser.text('td.title').should.include('poem7');
+          done();
+        });
+
+      });
 
     });
 

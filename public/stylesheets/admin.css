@@ -1,6 +1,5 @@
 body{padding-top:50px}
 div.container{width:640px}
-.logo{font-family:Lusitana}
 form.login,form.install,form.register{margin:6em auto 0 20em;}
 form.login legend,form.install legend,form.register legend{font-size:3em;padding-bottom:.5em;border:none}
 form.login div.clearfix.error,form.install div.clearfix.error,form.register div.clearfix.error{padding-top:0;padding-bottom:0}
@@ -14,3 +13,4 @@ table.list td.title{font-weight:bold}
 table.list th{font-weight:normal;color:#808080}
 table.list a{font-weight:bold;margin-right:.6em;}
 table.list a.danger{color:#bd362f}
+h1.slug{font-size:30px;margin-bottom:9px;letter-spacing:-1px;line-height:1}

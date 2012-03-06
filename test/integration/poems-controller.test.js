@@ -227,6 +227,10 @@ describe('Poem Controller', function() {
 
     });
 
+    it('should show edit links for poems that have not been started');
+
+    it('should show delete links');
+
     describe('admin user', function() {
 
       beforeEach(function(done) {
@@ -862,9 +866,43 @@ describe('Poem Controller', function() {
 
   describe('GET /admin/poems/show/:slug', function() {
 
+    describe('authorization', function() {
+
+      it('should block anonymous sessions');
+
+      it('should block admins from accessing public-user-owned poems');
+
+      it('should block public users from accessing admin-owned poems');
+
+      it('should block public users from accessing poems owned by other public users');
+
+    });
+
+    it('should show the start button when the poem is idle');
+
+    it('should show the stop button when the poem is running');
+
+    it('should not show a start or stop button when the poem is done');
+
   });
 
   describe('GET /admin/poems/edit/:slug', function() {
+
+    describe('authorization', function() {
+
+      it('should block anonymous sessions');
+
+      it('should block admins from accessing public-user-owned poems');
+
+      it('should block public users from accessing admin-owned poems');
+
+      it('should block public users from accessing poems owned by other public users');
+
+    });
+
+    it('should block if the poem has been started');
+
+    it('should render the form');
 
   });
 
@@ -874,17 +912,43 @@ describe('Poem Controller', function() {
 
   describe('GET /admin/poems/delete/:slug', function() {
 
+    describe('authorization', function() {
+
+      it('should block anonymous sessions');
+
+      it('should block admins from accessing public-user-owned poems');
+
+      it('should block public users from accessing admin-owned poems');
+
+      it('should block public users from accessing poems owned by other public users');
+
+    });
+
+    it('should show the confirmation form');
+
   });
 
   describe('POST /admin/poems/delete/:slug', function() {
 
+    it('should block anonymous requests');
+
+    it('should delete the poem and redirect');
+
   });
 
-  describe('GET /admin/poems/start/:slug', function() {
+  describe('POST /admin/poems/start/:slug', function() {
+
+    it('should block anonymous requests');
+
+    it('should start the poem');
 
   });
 
-  describe('GET /admin/poems/stop/:slug', function() {
+  describe('POST /admin/poems/stop/:slug', function() {
+
+    it('should block anonymous requests');
+
+    it('should stop the poem');
 
   });
 

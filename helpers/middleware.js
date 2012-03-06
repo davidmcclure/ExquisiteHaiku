@@ -4,6 +4,7 @@
 
 // Models.
 var User = mongoose.model('User');
+var Poem = mongoose.model('Poem');
 
 
 /*
@@ -128,5 +129,20 @@ exports.nonSelf = function (req, res, next) {
     }
     else res.redirect('/admin/poems');
   });
+
+};
+
+
+/*
+ * Only allow users that have access to the poem with the :slug passed
+ * in from the route. Called after isUser, which passed user document.
+ *
+ * @param {Object} req: The request.
+ * @param {Object} res: The response.
+ * @param {Callback} next: The next middleware.
+ *
+ * @return void.
+ */
+exports.ownsPoem = function (req, res, next) {
 
 };

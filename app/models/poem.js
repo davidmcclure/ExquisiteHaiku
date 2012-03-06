@@ -44,11 +44,16 @@ Poem.virtual('id').get(function() {
  * @return void.
  */
 Poem.methods.start = function() {
+
+  // Create and store timer.
   global.Oversoul.timers[this.id] = setInterval(
     slicer.integrator,
     this.sliceInterval,
     this
   );
+
+  this.running = true;
+
 };
 
 /*
@@ -57,7 +62,13 @@ Poem.methods.start = function() {
  * @return void.
  */
 Poem.methods.stop = function() {
+
+  // Clear the timer, delete the tracker.
   clearInterval(global.Oversoul.timers[this.id]);
+  delete global.Oversoul.timers[this.id];
+
+  this.running = false;
+
 };
 
 

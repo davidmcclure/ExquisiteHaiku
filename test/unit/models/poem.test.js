@@ -137,7 +137,7 @@ describe('Poem', function() {
 
   });
 
-  describe('virtual field "id"', function() {
+  describe('virtual fields', function() {
 
     var poem;
 
@@ -160,12 +160,81 @@ describe('Poem', function() {
 
     });
 
-    it('should have a virtual field for "id"', function() {
-      poem.id.should.be.ok;
+    describe('id', function() {
+
+      it('should have a virtual field for "id"', function() {
+        poem.id.should.be.ok;
+      });
+
+      it('should be a string', function() {
+        poem.id.should.be.a('string');
+      });
+
     });
 
-    it('should be a string', function() {
-      poem.id.should.be.a('string');
+  });
+
+  describe('methods', function() {
+
+    var poem;
+
+    beforeEach(function(done) {
+
+      // Create poem.
+      poem = new Poem({
+        slug: 'test-poem',
+        user: user.id,
+        admin: true,
+        running: false,
+        complete: false,
+        roundLength : 10000,
+        sliceInterval : 3,
+        minSubmissions : 5,
+        submissionVal : 100,
+        decayLifetime : 50,
+        seedCapital : 1000
+      });
+
+      // Save and start.
+      poem.save(function(err) {
+        poem.start();
+        done();
+      });
+
+    });
+
+    // Stop and clear timers global.
+    afterEach(function() {
+      poem.stop();
+      global.Oversoul.timers = {};
+    });
+
+    describe('start', function() {
+
+      it('should register the slicer in the tracker object', function() {
+        global.Oversoul.timers.should.have.keys(poem.id);
+      });
+
+      it('should set "running" to true', function() {
+        poem.running.should.be.true;
+      });
+
+    });
+
+    describe('stop', function() {
+
+      beforeEach(function() {
+        poem.stop();
+      });
+
+      it('should remove the slicer from the tracker object', function() {
+        global.Oversoul.timers.should.not.have.keys(poem.id);
+      });
+
+      it('should set "running" to false', function() {
+        poem.running.should.be.false;
+      });
+
     });
 
   });

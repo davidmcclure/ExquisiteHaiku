@@ -134,8 +134,29 @@ exports.nonSelf = function (req, res, next) {
 
 
 /*
+ * Load poem by way of :slug parameter on request.
+ *
+ * @param {Object} req: The request.
+ * @param {Object} res: The response.
+ * @param {Callback} next: The next middleware.
+ *
+ * @return void.
+ */
+exports.getPoem = function (req, res, next) {
+
+  // Get the poem record, push into request.
+  Poem.findOne({ slug: req.params.slug }, function(err, poem) {
+    req.poem = poem;
+    next();
+  });
+
+};
+
+
+/*
  * Only allow users that have access to the poem with the :slug passed
- * in from the route. Called after isUser, which passed user document.
+ * in from the route. Called after isUser and getPoem, which pass user
+ * document and poem documents on {req}.
  *
  * @param {Object} req: The request.
  * @param {Object} res: The response.

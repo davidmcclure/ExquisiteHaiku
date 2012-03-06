@@ -29,8 +29,8 @@ var User = mongoose.model('User'),
 describe('Poem Controller', function() {
 
   var r = 'http://localhost:3000/';
-  var browser, user1, user2, user3, poem1, poem2,
-    poem3, poem4, poem5, poem6, poem7;
+  var browser, user1, user2, user3, user4,  poem1, poem2,
+  poem3, poem4, poem5, poem6, poem7, poem8, poem9, poem10;
 
   // Create documents.
   beforeEach(function(done) {
@@ -63,6 +63,16 @@ describe('Poem Controller', function() {
       username:   'rosie',
       password:   'password',
       email:      'rosie@test.com',
+      admin:      false,
+      superUser:  false,
+      active:     true
+    });
+
+    // Create user4.
+    user4 = new User({
+      username:   'wayne',
+      password:   'password',
+      email:      'wayne@test.com',
       admin:      false,
       superUser:  false,
       active:     true
@@ -173,6 +183,51 @@ describe('Poem Controller', function() {
       seedCapital :     1000
     });
 
+    // Create poem8.
+    poem8 = new Poem({
+      slug:             'poem8',
+      user:             user4.id,
+      admin:            false,
+      running:          false,
+      complete:         false,
+      roundLength :     10000,
+      sliceInterval :   3,
+      minSubmissions :  5,
+      submissionVal :   100,
+      decayLifetime :   50,
+      seedCapital :     1000
+    });
+
+    // Create poem9.
+    poem9 = new Poem({
+      slug:             'poem9',
+      user:             user4.id,
+      admin:            false,
+      running:          true,
+      complete:         false,
+      roundLength :     10000,
+      sliceInterval :   3,
+      minSubmissions :  5,
+      submissionVal :   100,
+      decayLifetime :   50,
+      seedCapital :     1000
+    });
+
+    // Create poem10.
+    poem10 = new Poem({
+      slug:             'poem10',
+      user:             user4.id,
+      admin:            false,
+      running:          false,
+      complete:         true,
+      roundLength :     10000,
+      sliceInterval :   3,
+      minSubmissions :  5,
+      submissionVal :   100,
+      decayLifetime :   50,
+      seedCapital :     1000
+    });
+
     // Save worker.
     var save = function(document, callback) {
       document.save(function(err) {
@@ -185,13 +240,17 @@ describe('Poem Controller', function() {
       user1,
       user2,
       user3,
+      user4,
       poem1,
       poem2,
       poem3,
       poem4,
       poem5,
       poem6,
-      poem7
+      poem7,
+      poem8,
+      poem9,
+      poem10,
     ], save, function(err, documents) {
       done();
     });
@@ -260,6 +319,9 @@ describe('Poem Controller', function() {
         browser.text('td.title').should.not.include('poem5');
         browser.text('td.title').should.not.include('poem6');
         browser.text('td.title').should.not.include('poem7');
+        browser.text('td.title').should.not.include('poem8');
+        browser.text('td.title').should.not.include('poem9');
+        browser.text('td.title').should.not.include('poem10');
         done();
 
       });
@@ -275,6 +337,9 @@ describe('Poem Controller', function() {
           browser.text('td.title').should.not.include('poem5');
           browser.text('td.title').should.not.include('poem6');
           browser.text('td.title').should.not.include('poem7');
+          browser.text('td.title').should.not.include('poem8');
+          browser.text('td.title').should.not.include('poem9');
+          browser.text('td.title').should.not.include('poem10');
           done();
         });
 
@@ -291,6 +356,9 @@ describe('Poem Controller', function() {
           browser.text('td.title').should.not.include('poem5');
           browser.text('td.title').should.not.include('poem6');
           browser.text('td.title').should.not.include('poem7');
+          browser.text('td.title').should.not.include('poem8');
+          browser.text('td.title').should.not.include('poem9');
+          browser.text('td.title').should.not.include('poem10');
           done();
         });
 
@@ -307,6 +375,9 @@ describe('Poem Controller', function() {
           browser.text('td.title').should.not.include('poem5');
           browser.text('td.title').should.not.include('poem6');
           browser.text('td.title').should.not.include('poem7');
+          browser.text('td.title').should.not.include('poem8');
+          browser.text('td.title').should.not.include('poem9');
+          browser.text('td.title').should.not.include('poem10');
           done();
         });
 
@@ -323,6 +394,9 @@ describe('Poem Controller', function() {
           browser.text('td.title').should.not.include('poem5');
           browser.text('td.title').should.not.include('poem6');
           browser.text('td.title').should.not.include('poem7');
+          browser.text('td.title').should.not.include('poem8');
+          browser.text('td.title').should.not.include('poem9');
+          browser.text('td.title').should.not.include('poem10');
           done();
         });
 
@@ -359,6 +433,9 @@ describe('Poem Controller', function() {
         browser.text('td.title').should.include('poem5');
         browser.text('td.title').should.include('poem6');
         browser.text('td.title').should.include('poem7');
+        browser.text('td.title').should.not.include('poem8');
+        browser.text('td.title').should.not.include('poem9');
+        browser.text('td.title').should.not.include('poem10');
         done();
 
       });
@@ -374,6 +451,9 @@ describe('Poem Controller', function() {
           browser.text('td.title').should.include('poem5');
           browser.text('td.title').should.include('poem6');
           browser.text('td.title').should.include('poem7');
+          browser.text('td.title').should.not.include('poem8');
+          browser.text('td.title').should.not.include('poem9');
+          browser.text('td.title').should.not.include('poem10');
           done();
         });
 
@@ -390,6 +470,9 @@ describe('Poem Controller', function() {
           browser.text('td.title').should.include('poem5');
           browser.text('td.title').should.not.include('poem6');
           browser.text('td.title').should.not.include('poem7');
+          browser.text('td.title').should.not.include('poem8');
+          browser.text('td.title').should.not.include('poem9');
+          browser.text('td.title').should.not.include('poem10');
           done();
         });
 
@@ -406,6 +489,9 @@ describe('Poem Controller', function() {
           browser.text('td.title').should.not.include('poem5');
           browser.text('td.title').should.include('poem6');
           browser.text('td.title').should.not.include('poem7');
+          browser.text('td.title').should.not.include('poem8');
+          browser.text('td.title').should.not.include('poem9');
+          browser.text('td.title').should.not.include('poem10');
           done();
         });
 
@@ -422,6 +508,9 @@ describe('Poem Controller', function() {
           browser.text('td.title').should.not.include('poem5');
           browser.text('td.title').should.not.include('poem6');
           browser.text('td.title').should.include('poem7');
+          browser.text('td.title').should.not.include('poem8');
+          browser.text('td.title').should.not.include('poem9');
+          browser.text('td.title').should.not.include('poem10');
           done();
         });
 

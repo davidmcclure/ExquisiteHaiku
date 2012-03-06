@@ -17,6 +17,10 @@ require('../db-connect');
 require('../../../app/models/user');
 var User = mongoose.model('User');
 
+// Poem model.
+require('../../../app/models/poem');
+var Poem = mongoose.model('Poem');
+
 // Middleware.
 var auth = require('../../../helpers/middleware');
 
@@ -40,7 +44,19 @@ describe('Route Middleware', function() {
 
   // Clear users.
   afterEach(function(done) {
-    User.collection.remove(function(err) { done(); });
+
+    // Truncate worker.
+    var remove = function(model, callback) {
+      model.collection.remove(function(err) {
+        callback(err, model);
+      });
+    };
+
+    // Truncate.
+    async.map([User, Poem], remove, function(err, models) {
+      done();
+    });
+
   });
 
   describe('isUser', function() {
@@ -484,6 +500,92 @@ describe('Route Middleware', function() {
 
       // Call nonSelf, check for res.redirect().
       auth.nonSelf(req, res, next);
+
+    });
+
+  });
+
+  describe('getPoem', function() {
+
+    var user, poem;
+
+    beforeEach(function(done) {
+
+      // Create user.
+      user = new User({
+        username:   'david',
+        password:   'password',
+        email:      'david@test.com',
+        admin:      true,
+        superUser:  true,
+        active:     true
+      });
+
+      // Create poem.
+      poem = new Poem({
+        slug:             'poem',
+        user:             user.id,
+        admin:            true,
+        running:          true,
+        complete:         false,
+        roundLength :     10000,
+        sliceInterval :   3,
+        minSubmissions :  5,
+        submissionVal :   100,
+        decayLifetime :   50,
+        seedCapital :     1000
+      });
+
+      // Save worker.
+      var save = function(document, callback) {
+        document.save(function(err) {
+          callback(null, document);
+        });
+      };
+
+      // Save.
+      async.map([user, poem], save, function(err, documents) {
+        done();
+      });
+
+    });
+
+    it('should load the poem and call next()', function(done) {
+
+      // Spy on next.
+      next = sinon.spy(function() {
+        sinon.assert.called(next);
+        req.poem.id.should.eql(poem.id);
+        done();
+      });
+
+      // Set slug.
+      req.params = { slug: 'poem' };
+
+      // Call getPoem, check for next() and poem.
+      auth.getPoem(req, res, next);
+
+    });
+
+  });
+
+  describe('ownsPoem', function() {
+
+    describe('admin user', function() {
+
+      it('should redirect when the poem is not an admin poem');
+
+      it('should call next() when the poem is an admin poem');
+
+    });
+
+    describe('public user', function() {
+
+      it('should redirect when the poem is an admin poem');
+
+      it('should redirect when the poem is owned by another public user');
+
+      it('should call next() when the poem is owned by the user');
 
     });
 

@@ -5,7 +5,8 @@
 // Module dependencies.
 var vows = require('mocha'),
   should = require('should'),
-  async = require('async');
+  async = require('async'),
+  assert = require('assert');
 
 // Boostrap the application.
 process.env.NODE_ENV = 'testing';
@@ -127,12 +128,157 @@ describe('Poem', function() {
       poem.created.should.be.ok;
     });
 
+    it('should set "started" to false by default', function() {
+      poem.started.should.be.false;
+    });
+
     it('should set "running" to false by default', function() {
       poem.running.should.be.false;
     });
 
     it('should set "complete" to false by default', function() {
       poem.running.should.be.false;
+    });
+
+  });
+
+  describe('validators', function() {
+
+    var poem;
+
+    beforeEach(function() {
+
+      // Create poem.
+      poem = new Poem({
+        slug: 'test-poem',
+        user: user.id,
+        admin: true,
+        roundLength : 10000,
+        sliceInterval : 3,
+        minSubmissions : 5,
+        submissionVal : 100,
+        decayLifetime : 50,
+        seedCapital : 1000
+      });
+
+    });
+
+    describe('started', function() {
+
+      describe('is false', function() {
+
+        beforeEach(function() {
+          poem.started = false;
+        });
+
+        it('should block when running is true', function(done) {
+          poem.running = true;
+          poem.save(function(err) {
+            err.errors.started.should.be.ok;
+            done();
+          });
+        });
+
+        it('should block when complete is true', function(done) {
+          poem.complete = true;
+          poem.save(function(err) {
+            err.errors.started.should.be.ok;
+            done();
+          });
+        });
+
+      });
+
+    });
+
+    describe('running', function() {
+
+      describe('is true', function() {
+
+        beforeEach(function() {
+          poem.running = true;
+        });
+
+        it('should block when started is false', function(done) {
+          poem.started = false;
+          poem.save(function(err) {
+            err.errors.running.should.be.ok;
+            done();
+          });
+        });
+
+        it('should block when complete is true', function(done) {
+          poem.complete = false;
+          poem.save(function(err) {
+            err.errors.running.should.be.ok;
+            done();
+          });
+        });
+
+      });
+
+    });
+
+    describe('complete', function() {
+
+      describe('is true', function() {
+
+        beforeEach(function() {
+          poem.complete = true;
+        });
+
+        it('should block when started is false', function(done) {
+          poem.started = false;
+          poem.save(function(err) {
+            err.errors.complete.should.be.ok;
+            done();
+          });
+        });
+
+        it('should block when running is true', function(done) {
+          poem.running = true;
+          poem.save(function(err) {
+            err.errors.complete.should.be.ok;
+            done();
+          });
+        });
+
+      });
+
+    });
+
+    describe('valid permutations', function() {
+
+      it('should pass with !started, !running, !complete', function(done) {
+        poem.started = false;
+        poem.running = false;
+        poem.complete = false;
+        poem.save(function(err) {
+          assert(!err);
+          done();
+        });
+      });
+
+      it('should pass with started, running, !complete', function(done) {
+        poem.started = true;
+        poem.running = true;
+        poem.complete = false;
+        poem.save(function(err) {
+          assert(!err);
+          done();
+        });
+      });
+
+      it('should pass with started, !running, complete', function(done) {
+        poem.started = true;
+        poem.running = false;
+        poem.complete = true;
+        poem.save(function(err) {
+          assert(!err);
+          done();
+        });
+      });
+
     });
 
   });

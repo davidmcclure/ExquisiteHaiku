@@ -526,8 +526,6 @@ describe('Route Middleware', function() {
         slug:             'poem',
         user:             user.id,
         admin:            true,
-        running:          true,
-        complete:         false,
         roundLength :     10000,
         sliceInterval :   3,
         minSubmissions :  5,

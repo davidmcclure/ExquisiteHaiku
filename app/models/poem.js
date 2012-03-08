@@ -11,6 +11,7 @@ var Poem = new Schema({
   user :            { type: Schema.ObjectId, ref: 'User', required: true },
   admin :           { type: Boolean, required: true },
   created :         { type: Date, required: true, default: Date.now() },
+  started :         { type: Boolean, required: true, default: false },
   running :         { type: Boolean, required: true, default: false },
   complete :        { type: Boolean, required: true, default: false },
   roundLength :     { type: Number, required: true },
@@ -19,6 +20,44 @@ var Poem = new Schema({
   submissionVal :   { type: Number, required: true },
   decayLifetime :   { type: Number, required: true },
   seedCapital :     { type: Number, required: true }
+});
+
+
+/*
+ * -----------
+ * Validators.
+ * -----------
+ */
+
+
+/*
+ * If the poem has not been started, then running and complete
+ * must be false.
+ *
+ * @return {Boolean}: True if the statuses are valid.
+ */
+Poem.path('started').validate(function(v) {
+  return v || (!this.running && !this.complete);
+});
+
+/*
+ * If the poem is running, started must be true and complete
+ * must be false.
+ *
+ * @return {Boolean}: True if the statuses are valid.
+ */
+Poem.path('running').validate(function(v) {
+  return !v || (this.started && !this.complete);
+});
+
+/*
+ * If the poem is complete, started must be true and running
+ * must be false.
+ *
+ * @return {Boolean}: True if the statuses are valid.
+ */
+Poem.path('complete').validate(function(v) {
+  return !v || (this.started && !this.running);
 });
 
 

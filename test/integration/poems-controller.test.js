@@ -38,7 +38,7 @@ describe('Poem Controller', function() {
     // Create browser.
     browser = new Browser();
 
-    // Create user1.
+    // Create user1 -- admin super.
     user1 = new User({
       username:   'david',
       password:   'password',
@@ -48,7 +48,7 @@ describe('Poem Controller', function() {
       active:     true
     });
 
-    // Create user2.
+    // Create user2 -- admin non-super.
     user2 = new User({
       username:   'kara',
       password:   'password',
@@ -58,7 +58,7 @@ describe('Poem Controller', function() {
       active:     true
     });
 
-    // Create user3.
+    // Create user3 -- public.
     user3 = new User({
       username:   'rosie',
       password:   'password',
@@ -68,7 +68,7 @@ describe('Poem Controller', function() {
       active:     true
     });
 
-    // Create user4.
+    // Create user4 -- public.
     user4 = new User({
       username:   'wayne',
       password:   'password',
@@ -78,11 +78,12 @@ describe('Poem Controller', function() {
       active:     true
     });
 
-    // Create poem1.
+    // Create poem1 -- user1, admin, idle.
     poem1 = new Poem({
       slug:             'poem1',
       user:             user1.id,
       admin:            true,
+      started:          false,
       running:          false,
       complete:         false,
       roundLength :     10000,
@@ -93,11 +94,12 @@ describe('Poem Controller', function() {
       seedCapital :     1000
     });
 
-    // Create poem2.
+    // Create poem2 -- user1, admin, running.
     poem2 = new Poem({
       slug:             'poem2',
       user:             user1.id,
       admin:            true,
+      started:          true,
       running:          true,
       complete:         false,
       roundLength :     10000,
@@ -108,11 +110,12 @@ describe('Poem Controller', function() {
       seedCapital :     1000
     });
 
-    // Create poem3.
+    // Create poem3 -- user1, admin, complete.
     poem3 = new Poem({
       slug:             'poem3',
       user:             user1.id,
       admin:            true,
+      started:          true,
       running:          false,
       complete:         true,
       roundLength :     10000,
@@ -123,11 +126,12 @@ describe('Poem Controller', function() {
       seedCapital :     1000
     });
 
-    // Create poem4.
+    // Create poem4 -- user2, admin, idle.
     poem4 = new Poem({
       slug:             'poem4',
       user:             user2.id,
       admin:            true,
+      started:          false,
       running:          false,
       complete:         false,
       roundLength :     10000,
@@ -138,11 +142,12 @@ describe('Poem Controller', function() {
       seedCapital :     1000
     });
 
-    // Create poem5.
+    // Create poem5 -- user3, public, idle.
     poem5 = new Poem({
       slug:             'poem5',
       user:             user3.id,
       admin:            false,
+      started:          false,
       running:          false,
       complete:         false,
       roundLength :     10000,
@@ -153,11 +158,12 @@ describe('Poem Controller', function() {
       seedCapital :     1000
     });
 
-    // Create poem6.
+    // Create poem6 -- user3, public, running.
     poem6 = new Poem({
       slug:             'poem6',
       user:             user3.id,
       admin:            false,
+      started:          true,
       running:          true,
       complete:         false,
       roundLength :     10000,
@@ -168,11 +174,12 @@ describe('Poem Controller', function() {
       seedCapital :     1000
     });
 
-    // Create poem7.
+    // Create poem7 -- user3, public, complete.
     poem7 = new Poem({
       slug:             'poem7',
       user:             user3.id,
       admin:            false,
+      started:          true,
       running:          false,
       complete:         true,
       roundLength :     10000,
@@ -183,11 +190,12 @@ describe('Poem Controller', function() {
       seedCapital :     1000
     });
 
-    // Create poem8.
+    // Create poem8 -- user4, public, idle.
     poem8 = new Poem({
       slug:             'poem8',
       user:             user4.id,
       admin:            false,
+      started:          false,
       running:          false,
       complete:         false,
       roundLength :     10000,
@@ -198,11 +206,12 @@ describe('Poem Controller', function() {
       seedCapital :     1000
     });
 
-    // Create poem9.
+    // Create poem9 -- user4, public, running.
     poem9 = new Poem({
       slug:             'poem9',
       user:             user4.id,
       admin:            false,
+      started:          true,
       running:          true,
       complete:         false,
       roundLength :     10000,
@@ -213,11 +222,12 @@ describe('Poem Controller', function() {
       seedCapital :     1000
     });
 
-    // Create poem10.
+    // Create poem10 -- user 4, public, complete.
     poem10 = new Poem({
       slug:             'poem10',
       user:             user4.id,
       admin:            false,
+      started:          true,
       running:          false,
       complete:         true,
       roundLength :     10000,
@@ -310,7 +320,8 @@ describe('Poem Controller', function() {
 
       it('should show all admin-owned poems for admin users by default', function(done) {
 
-        // Check for admin poems.
+        // Should show all self-owned poems (#1-3) and all poems owned by other
+        // admin users (#4).
         browser.location.pathname.should.eql('/admin/poems');
         browser.text('td.title').should.include('poem1');
         browser.text('td.title').should.include('poem2');
@@ -328,7 +339,8 @@ describe('Poem Controller', function() {
 
       it('should show admin-owned poems when the "all" filter is active', function(done) {
 
-        // Activate 'all' filter.
+        // Should show all self-owned poems (#1-3) and all poems owned by other
+        // admin users (#4).
         browser.visit(r+'admin/poems?filter=all', function() {
           browser.text('td.title').should.include('poem1');
           browser.text('td.title').should.include('poem2');
@@ -347,7 +359,8 @@ describe('Poem Controller', function() {
 
       it('should show admin-owned idle poems when the "idle" filter is active', function(done) {
 
-        // Activate 'idle' filter.
+        // Should show all self-owned poems (#1-3) and all poems owned by other
+        // admin users (#4) that are idle (#1,3).
         browser.visit(r+'admin/poems?filter=idle', function() {
           browser.text('td.title').should.include('poem1');
           browser.text('td.title').should.not.include('poem2');
@@ -366,7 +379,8 @@ describe('Poem Controller', function() {
 
       it('should show admin-owned running poems when the "running" filter is active', function(done) {
 
-        // Activate 'idle' filter.
+        // Should show all self-owned poems (#1-3) and all poems owned by other
+        // admin users (#4) that are running (#2).
         browser.visit(r+'admin/poems?filter=running', function() {
           browser.text('td.title').should.not.include('poem1');
           browser.text('td.title').should.include('poem2');
@@ -385,7 +399,8 @@ describe('Poem Controller', function() {
 
       it('should show admin-owned complete poems when the "done" filter is active', function(done) {
 
-        // Activate 'idle' filter.
+        // Should show all self-owned poems (#1-3) and all poems owned by other
+        // admin users (#4) that are done (#3).
         browser.visit(r+'admin/poems?filter=done', function() {
           browser.text('td.title').should.not.include('poem1');
           browser.text('td.title').should.not.include('poem2');
@@ -424,7 +439,8 @@ describe('Poem Controller', function() {
 
       it('should show user-owned poems for non-admin users by default', function(done) {
 
-        // Check for user poems.
+        // Should show all self-owned poems (#5-7) and not any poems by non-self
+        // users or admin users.
         browser.location.pathname.should.eql('/admin/poems');
         browser.text('td.title').should.not.include('poem1');
         browser.text('td.title').should.not.include('poem2');
@@ -442,7 +458,8 @@ describe('Poem Controller', function() {
 
       it('should show user-owned poems when the "all" filter is active', function(done) {
 
-        // Activate 'all' filter.
+        // Should show all self-owned poems (#5-7) and not any poems by non-self
+        // users or admin users.
         browser.visit(r+'admin/poems?filter=all', function() {
           browser.text('td.title').should.not.include('poem1');
           browser.text('td.title').should.not.include('poem2');
@@ -461,7 +478,8 @@ describe('Poem Controller', function() {
 
       it('should show user-owned idle poems when the "idle" filter is active', function(done) {
 
-        // Activate 'idle' filter.
+        // Should show all self-owned poems (#5-7) that are idle (#5) and not any
+        // poems by non-self users or admin users.
         browser.visit(r+'admin/poems?filter=idle', function() {
           browser.text('td.title').should.not.include('poem1');
           browser.text('td.title').should.not.include('poem2');
@@ -480,7 +498,8 @@ describe('Poem Controller', function() {
 
       it('should show user-owned running poems when the "running" filter is active', function(done) {
 
-        // Activate 'running' filter.
+        // Should show all self-owned poems (#5-7) that are idle (#6) and not any
+        // poems by non-self users or admin users.
         browser.visit(r+'admin/poems?filter=running', function() {
           browser.text('td.title').should.not.include('poem1');
           browser.text('td.title').should.not.include('poem2');
@@ -499,7 +518,8 @@ describe('Poem Controller', function() {
 
       it('should show user-owned complete poems when the "done" filter is active', function(done) {
 
-        // Activate 'running' filter.
+        // Should show all self-owned poems (#5-7) that are complete (#7) and not any
+        // poems by non-self users or admin users.
         browser.visit(r+'admin/poems?filter=done', function() {
           browser.text('td.title').should.not.include('poem1');
           browser.text('td.title').should.not.include('poem2');

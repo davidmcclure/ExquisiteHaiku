@@ -107,6 +107,74 @@ describe('Custom Validators', function() {
 
   });
 
+  describe('usernameAdmin', function() {
+
+    var user;
+
+    beforeEach(function() {
+
+      // Create user.
+      user = new User({
+        username:   'david',
+        email:      'david@test.com',
+        password:   'password'
+      });
+
+      // Set field value.
+      field.data = 'david';
+
+    });
+
+    it('should not pass if the user is an admin', function(done) {
+
+      // Set non-admin.
+      user.admin = false;
+
+      // Get the validator.
+      var validator = validators.usernameAdmin('err');
+
+      // Spy on callback.
+      callback = sinon.spy(function() {
+        sinon.assert.calledWith(callback, 'err');
+        done();
+      });
+
+      // Save the user.
+      user.save(function(err) {
+
+        // Call the validator.
+        validator(form, field, callback);
+
+      });
+
+    });
+
+    it('should pass if the user is an admin', function(done) {
+
+      // Set admin.
+      user.admin = true;
+
+      // Get the validator.
+      var validator = validators.usernameAdmin('err');
+
+      // Spy on callback.
+      callback = sinon.spy(function() {
+        sinon.assert.neverCalledWith(callback, 'err');
+        done();
+      });
+
+      // Save the user.
+      user.save(function(err) {
+
+        // Call the validator.
+        validator(form, field, callback);
+
+      });
+
+    });
+
+  });
+
   describe('passwordCorrect', function() {
 
     var user;

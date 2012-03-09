@@ -6,7 +6,8 @@
 var vows = require('mocha'),
   should = require('should'),
   assert = require('assert'),
-  sinon = require('sinon');
+  sinon = require('sinon'),
+  async = require('async');
 
 // Boostrap the application.
 process.env.NODE_ENV = 'testing';
@@ -29,21 +30,43 @@ var loginForm = require('../../../helpers/forms/login');
 
 describe('Login Form', function() {
 
-  var form, user;
+  var form, user1, user2;
 
   beforeEach(function(done) {
 
     // Create the form.
     form = loginForm.form();
 
-    // Create user.
-    user = new User({
+    // Create admin user.
+    user1 = new User({
       username:   'david',
-      email:      'david@spyder.com',
-      password:   'password'
+      email:      'david@test.com',
+      password:   'password',
+      admin:      true
     });
 
-    user.save(function(err) { done(); });
+    // Create nont-admin user.
+    user2 = new User({
+      username:   'kara',
+      email:      'kara@test.com',
+      password:   'password',
+      admin:      false
+    });
+
+    // Save worker.
+    var save = function(document, callback) {
+      document.save(function(err) {
+        callback(null, document);
+      });
+    };
+
+    // Save.
+    async.map([
+      user1,
+      user2
+    ], save, function(err, documents) {
+      done()
+    });
 
   });
 
@@ -70,6 +93,17 @@ describe('Login Form', function() {
     });
 
     it('should match a user in the database', function(done) {
+
+      form.bind({
+        username: 'rosie'
+      }).validate(function(err, form) {
+        form.fields.username.error.should.be.ok;
+        done();
+      });
+
+    });
+
+    it('should match an active user in the database', function(done) {
 
       form.bind({
         username: 'kara'

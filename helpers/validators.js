@@ -35,6 +35,23 @@ exports.usernameExists = function (msg) {
 
 
 /*
+ * Pass if admin user exists with username.
+ *
+ * @param {String} msg: The failure message.
+ *
+ * @return void.
+ */
+exports.usernameAdmin = function (msg) {
+  return function(form, field, callback) {
+    User.findOne({ username: field.data }, function(err, user) {
+      if (!_.isNull(user) && user.admin) callback();
+      else callback(msg);
+    });
+  };
+};
+
+
+/*
  * Pass if field is not in blacklist.
  *
  * @param {Array} blacklist: The list of prohibited usernames.

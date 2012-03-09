@@ -27,6 +27,7 @@ module.exports = function(app) {
    */
   app.get('/admin/poems',
     auth.isUser,
+    auth.isAdmin,
     function(req, res) {
 
       // Build the filter object.
@@ -80,6 +81,7 @@ module.exports = function(app) {
    */
   app.get('/admin/poems/new',
     auth.isUser,
+    auth.isAdmin,
     function(req, res) {
 
       // Render the form.
@@ -100,6 +102,7 @@ module.exports = function(app) {
    */
   app.post('/admin/poems/new',
     auth.isUser,
+    auth.isAdmin,
     function(req, res) {
 
       // Pass control to the form.
@@ -153,6 +156,7 @@ module.exports = function(app) {
    */
   app.get('/admin/poems/show/:slug',
     auth.isUser,
+    auth.isAdmin,
     function(req, res) {
 
       // Get the poem.
@@ -180,6 +184,7 @@ module.exports = function(app) {
    */
   app.get('/admin/poems/edit/:slug',
     auth.isUser,
+    auth.isAdmin,
     function(req, res) {
 
   });
@@ -191,6 +196,7 @@ module.exports = function(app) {
    */
   app.post('/admin/poems/edit/:slug',
     auth.isUser,
+    auth.isAdmin,
     function(req, res) {
 
   });
@@ -202,6 +208,7 @@ module.exports = function(app) {
    */
   app.get('/admin/poems/delete/:slug',
     auth.isUser,
+    auth.isAdmin,
     function(req, res) {
 
   });
@@ -213,6 +220,7 @@ module.exports = function(app) {
    */
   app.post('/admin/poems/delete/:slug',
     auth.isUser,
+    auth.isAdmin,
     function(req, res) {
 
   });
@@ -224,6 +232,7 @@ module.exports = function(app) {
    */
   app.post('/admin/poems/start/:slug',
     auth.isUser,
+    auth.isAdmin,
     function(req, res) {
 
       // Get the poem.
@@ -242,6 +251,7 @@ module.exports = function(app) {
    */
   app.post('/admin/poems/stop/:slug',
     auth.isUser,
+    auth.isAdmin,
     function(req, res) {
 
       // Get the poem.

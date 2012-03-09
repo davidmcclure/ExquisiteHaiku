@@ -147,24 +147,30 @@ describe('Poem Controller', function() {
 
     });
 
-    it('should block anonymous sessions', function(done) {
+    describe('authorization', function() {
 
-      // Logout.
-      browser.visit(r+'admin/logout', function() {
+      it('should block anonymous sessions', function(done) {
 
-        // Hit the route, check for redirect.
-        browser.visit(r+'admin/poems', function() {
-          browser.location.pathname.should.eql('/admin/login');
-          done();
+        // Logout.
+        browser.visit(r+'admin/logout', function() {
+
+          // Hit the route, check for redirect.
+          browser.visit(r+'admin/poems', function() {
+            browser.location.pathname.should.eql('/admin/login');
+            done();
+          });
+
         });
 
       });
 
+      it('should block non-admin users');
+
     });
 
-    it('should show edit links for poems that have not been started');
+    it('should show edit links for idle poems');
 
-    it('should show delete links');
+    it('should show delete links for all poems');
 
     it('should show all poems by default', function(done) {
 
@@ -243,18 +249,24 @@ describe('Poem Controller', function() {
 
       });
 
-      it('should block anonymous sessions', function(done) {
+      describe('authorization', function() {
 
-        // Log out.
-        browser.visit(r+'admin/logout', function() {
+        it('should block anonymous sessions', function(done) {
 
-          // Hit the route, check for redirect.
-          browser.visit(r+'admin/poems/new', function() {
-            browser.location.pathname.should.eql('/admin/login');
-            done();
+          // Logout.
+          browser.visit(r+'admin/logout', function() {
+
+            // Hit the route, check for redirect.
+            browser.visit(r+'admin/poems', function() {
+              browser.location.pathname.should.eql('/admin/login');
+              done();
+            });
+
           });
 
         });
+
+        it('should block non-admin users');
 
       });
 
@@ -296,6 +308,12 @@ describe('Poem Controller', function() {
         });
 
       });
+
+    });
+
+    describe('authorization', function() {
+
+      it('should block anonymous sessions');
 
     });
 
@@ -645,39 +663,13 @@ describe('Poem Controller', function() {
 
   });
 
-  describe('GET /admin/poems/show/:slug', function() {
-
-    describe('authorization', function() {
-
-      it('should block anonymous sessions');
-
-      it('should block admins from accessing public-user-owned poems');
-
-      it('should block public users from accessing admin-owned poems');
-
-      it('should block public users from accessing poems owned by other public users');
-
-    });
-
-    it('should show the start button when the poem is idle');
-
-    it('should show the stop button when the poem is running');
-
-    it('should not show a start or stop button when the poem is done');
-
-  });
-
   describe('GET /admin/poems/edit/:slug', function() {
 
     describe('authorization', function() {
 
       it('should block anonymous sessions');
 
-      it('should block admins from accessing public-user-owned poems');
-
-      it('should block public users from accessing admin-owned poems');
-
-      it('should block public users from accessing poems owned by other public users');
+      it('should block non-admins');
 
     });
 
@@ -697,11 +689,7 @@ describe('Poem Controller', function() {
 
       it('should block anonymous sessions');
 
-      it('should block admins from accessing public-user-owned poems');
-
-      it('should block public users from accessing admin-owned poems');
-
-      it('should block public users from accessing poems owned by other public users');
+      it('should block non-admins');
 
     });
 
@@ -711,7 +699,11 @@ describe('Poem Controller', function() {
 
   describe('POST /admin/poems/delete/:slug', function() {
 
-    it('should block anonymous requests');
+    describe('authorization', function() {
+
+      it('should block anonymous sessions');
+
+    });
 
     it('should delete the poem and redirect');
 
@@ -719,7 +711,11 @@ describe('Poem Controller', function() {
 
   describe('POST /admin/poems/start/:slug', function() {
 
-    it('should block anonymous requests');
+    describe('authorization', function() {
+
+      it('should block anonymous sessions');
+
+    });
 
     it('should start the poem');
 
@@ -727,7 +723,11 @@ describe('Poem Controller', function() {
 
   describe('POST /admin/poems/stop/:slug', function() {
 
-    it('should block anonymous requests');
+    describe('authorization', function() {
+
+      it('should block anonymous sessions');
+
+    });
 
     it('should stop the poem');
 

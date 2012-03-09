@@ -115,7 +115,8 @@ describe('Poem', function() {
         minSubmissions : 5,
         submissionVal : 100,
         decayLifetime : 50,
-        seedCapital : 1000
+        seedCapital : 1000,
+        visibleWords : 500
       });
 
       poem.save(function(err) { done(); });
@@ -155,7 +156,8 @@ describe('Poem', function() {
         minSubmissions : 5,
         submissionVal : 100,
         decayLifetime : 50,
-        seedCapital : 1000
+        seedCapital : 1000,
+        visibleWords : 500
       });
 
     });
@@ -295,7 +297,8 @@ describe('Poem', function() {
         minSubmissions : 5,
         submissionVal : 100,
         decayLifetime : 50,
-        seedCapital : 1000
+        seedCapital : 1000,
+        visibleWords : 500
       });
 
       poem.save(function(err) { done(); });
@@ -333,7 +336,8 @@ describe('Poem', function() {
         minSubmissions : 5,
         submissionVal : 100,
         decayLifetime : 50,
-        seedCapital : 1000
+        seedCapital : 1000,
+        visibleWords : 500
       });
 
       // Save and start.

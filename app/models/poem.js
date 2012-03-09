@@ -18,7 +18,8 @@ var Poem = new Schema({
   minSubmissions :  { type: Number, required: true },
   submissionVal :   { type: Number, required: true },
   decayLifetime :   { type: Number, required: true },
-  seedCapital :     { type: Number, required: true }
+  seedCapital :     { type: Number, required: true },
+  visibleWords :    { type: Number, required: true }
 });
 
 

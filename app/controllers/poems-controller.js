@@ -121,7 +121,8 @@ module.exports = function(app) {
             minSubmissions: form.data.minSubmissions,
             submissionVal:  form.data.submissionVal,
             decayLifetime:  form.data.decayLifetime,
-            seedCapital:    form.data.seedCapital
+            seedCapital:    form.data.seedCapital,
+            visibleWords:   form.data.visibleWords
           });
 
           // Save and redirect.
@@ -190,7 +191,7 @@ module.exports = function(app) {
   });
 
   /*
-   * Handle poem form.
+   * Handle edit form.
    *
    * @middleware auth.isUser: Block if there is no user session.
    */
@@ -230,7 +231,7 @@ module.exports = function(app) {
    *
    * @middleware auth.isUser: Block if there is no user session.
    */
-  app.post('/admin/poems/start/:slug',
+  app.get('/admin/poems/start/:slug',
     auth.isUser,
     auth.isAdmin,
     function(req, res) {
@@ -249,7 +250,7 @@ module.exports = function(app) {
    *
    * @middleware auth.isUser: Block if there is no user session.
    */
-  app.post('/admin/poems/stop/:slug',
+  app.get('/admin/poems/stop/:slug',
     auth.isUser,
     auth.isAdmin,
     function(req, res) {

@@ -379,7 +379,8 @@ describe('Route Middleware', function() {
         minSubmissions :  5,
         submissionVal :   100,
         decayLifetime :   50,
-        seedCapital :     1000
+        seedCapital :     1000,
+        visibleWords :    500
       });
 
       // Save worker.

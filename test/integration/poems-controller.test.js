@@ -84,7 +84,8 @@ describe('Poem Controller', function() {
         minSubmissions :  5,
         submissionVal :   100,
         decayLifetime :   50,
-        seedCapital :     1000
+        seedCapital :     1000,
+        visibleWords :    500
       });
 
       // Create running poem.
@@ -99,7 +100,8 @@ describe('Poem Controller', function() {
         minSubmissions :  5,
         submissionVal :   100,
         decayLifetime :   50,
-        seedCapital :     1000
+        seedCapital :     1000,
+        visibleWords :    500
       });
 
       // Create complete poem.
@@ -114,7 +116,8 @@ describe('Poem Controller', function() {
         minSubmissions :  5,
         submissionVal :   100,
         decayLifetime :   50,
-        seedCapital :     1000
+        seedCapital :     1000,
+        visibleWords :    500
       });
 
       // Save worker.
@@ -144,27 +147,6 @@ describe('Poem Controller', function() {
         });
 
       });
-
-    });
-
-    describe('authorization', function() {
-
-      it('should block anonymous sessions', function(done) {
-
-        // Logout.
-        browser.visit(r+'admin/logout', function() {
-
-          // Hit the route, check for redirect.
-          browser.visit(r+'admin/poems', function() {
-            browser.location.pathname.should.eql('/admin/login');
-            done();
-          });
-
-        });
-
-      });
-
-      it('should block non-admin users');
 
     });
 
@@ -249,27 +231,6 @@ describe('Poem Controller', function() {
 
       });
 
-      describe('authorization', function() {
-
-        it('should block anonymous sessions', function(done) {
-
-          // Logout.
-          browser.visit(r+'admin/logout', function() {
-
-            // Hit the route, check for redirect.
-            browser.visit(r+'admin/poems', function() {
-              browser.location.pathname.should.eql('/admin/login');
-              done();
-            });
-
-          });
-
-        });
-
-        it('should block non-admin users');
-
-      });
-
       it('should render the form', function(done) {
 
         browser.visit(r+'admin/poems/new', function() {
@@ -282,6 +243,8 @@ describe('Poem Controller', function() {
           browser.query('form input[name="minSubmissions"]').should.be.ok;
           browser.query('form input[name="submissionVal"]').should.be.ok;
           browser.query('form input[name="decayLifetime"]').should.be.ok;
+          browser.query('form input[name="seedCapital"]').should.be.ok;
+          browser.query('form input[name="visibleWords"]').should.be.ok;
           browser.query('form button[type="submit"]').should.be.ok;
           done();
 
@@ -311,12 +274,6 @@ describe('Poem Controller', function() {
 
     });
 
-    describe('authorization', function() {
-
-      it('should block anonymous sessions');
-
-    });
-
     describe('slug', function() {
 
       var poem;
@@ -335,7 +292,8 @@ describe('Poem Controller', function() {
           minSubmissions :  5,
           submissionVal :   100,
           decayLifetime :   50,
-          seedCapital :     1000
+          seedCapital :     1000,
+          visibleWords :    500
         });
 
         poem.save(function(err) { done(); });
@@ -661,17 +619,48 @@ describe('Poem Controller', function() {
 
     });
 
+    it('should create a new poem and redirect on success', function(done) {
+
+      // GET admin/poems.
+      browser.visit(r+'admin/poems/new', function() {
+
+        // Fill in form.
+        browser.fill('slug', 'valid');
+        browser.fill('roundLength', 10000);
+        browser.fill('sliceInterval', 1000);
+        browser.fill('minSubmissions', 10);
+        browser.fill('submissionVal', 100);
+        browser.fill('decayLifetime', 50);
+        browser.fill('seedCapital', 1000);
+        browser.fill('visibleWords', 500);
+        browser.pressButton('Create', function() {
+
+          // Check for redirect.
+          browser.location.pathname.should.eql('/admin/poems');
+
+          // Get poem.
+          Poem.findOne({ slug: 'valid' }, function(err, poem) {
+            poem.should.be.ok;
+            poem.slug.should.eql('valid');
+            poem.roundLength.should.eql(10000);
+            poem.sliceInterval.should.eql(1000);
+            poem.minSubmissions.should.eql(10);
+            poem.submissionVal.should.eql(100);
+            poem.decayLifetime.should.eql(50);
+            poem.seedCapital.should.eql(1000);
+            poem.visibleWords.should.eql(500);
+            done();
+          });
+
+        });
+
+      });
+
+    });
+
   });
 
   describe('GET /admin/poems/edit/:slug', function() {
-
-    describe('authorization', function() {
-
-      it('should block anonymous sessions');
-
-      it('should block non-admins');
-
-    });
 
     it('should block if the poem has been started');
 
@@ -685,49 +674,23 @@ describe('Poem Controller', function() {
 
   describe('GET /admin/poems/delete/:slug', function() {
 
-    describe('authorization', function() {
-
-      it('should block anonymous sessions');
-
-      it('should block non-admins');
-
-    });
-
     it('should show the confirmation form');
 
   });
 
   describe('POST /admin/poems/delete/:slug', function() {
 
-    describe('authorization', function() {
-
-      it('should block anonymous sessions');
-
-    });
-
     it('should delete the poem and redirect');
 
   });
 
-  describe('POST /admin/poems/start/:slug', function() {
-
-    describe('authorization', function() {
-
-      it('should block anonymous sessions');
-
-    });
+  describe('GET /admin/poems/start/:slug', function() {
 
     it('should start the poem');
 
   });
 
-  describe('POST /admin/poems/stop/:slug', function() {
-
-    describe('authorization', function() {
-
-      it('should block anonymous sessions');
-
-    });
+  describe('GET /admin/poems/stop/:slug', function() {
 
     it('should stop the poem');
 

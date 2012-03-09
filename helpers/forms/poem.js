@@ -16,9 +16,9 @@ var _slugs = require('./_slugs');
 
 
 /*
- * ----------
- * Poem form.
- * ----------
+ * -----------
+ * Poem forms.
+ * -----------
  */
 
 
@@ -93,6 +93,16 @@ exports.form = function() {
       name: 'seedCapital',
       label: 'Seed Capital:',
       required: 'Enter a seed capital amount.',
+      validators: [
+        customValidators.positiveInteger('Must be a positive integer.')
+      ]
+    }),
+
+    // Visible words.
+    visibleWords: fields.string({
+      name: 'visibleWords',
+      label: 'Visible Words:',
+      required: 'Enter a number of visible words.',
       validators: [
         customValidators.positiveInteger('Must be a positive integer.')
       ]

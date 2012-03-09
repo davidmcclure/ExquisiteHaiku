@@ -86,7 +86,7 @@ describe('Poem Form', function() {
 
     });
 
-    it('should be unique relative to user\'s poems when user is passed', function(done) {
+    it('should be unique', function(done) {
 
       // Create user.
       var user = new User({
@@ -111,7 +111,8 @@ describe('Poem Form', function() {
           minSubmissions : 5,
           submissionVal : 100,
           decayLifetime : 50,
-          seedCapital : 1000
+          seedCapital : 1000,
+          visibleWords : 500
         });
 
         // Save poem.
@@ -133,54 +134,7 @@ describe('Poem Form', function() {
 
     });
 
-    it('should be unique relative to all admin users\' poems when user is not passed', function(done) {
-
-      // Create user.
-      var user = new User({
-        username:   'david',
-        email:      'david@test.com',
-        password:   'password',
-        admin:      false,
-        superUser:  false,
-        active:     true
-      });
-
-      // Save user.
-      user.save(function(err) {
-
-        // Create poem.
-        var poem = new Poem({
-          slug: 'taken-slug',
-          user: user.id,
-          admin: true,
-          roundLength : 10000,
-          sliceInterval : 3,
-          minSubmissions : 5,
-          submissionVal : 100,
-          decayLifetime : 50,
-          seedCapital : 1000
-        });
-
-        // Save poem.
-        poem.save(function(err) {
-
-          // Rebuild the form.
-          form = poemForm.form();
-
-          form.bind({
-            slug: 'taken-slug'
-          }).validate(function(err, form) {
-            form.fields.slug.error.should.be.ok;
-            done();
-          });
-
-        });
-
-      });
-
-    });
-
-    it('should not be a reserved root-level slug when user is not passed', function(done) {
+    it('should not be a reserved root-level slug', function(done) {
 
       form.bind({
         slug: _slugs.blacklist[0]
@@ -443,6 +397,47 @@ describe('Poem Form', function() {
         seedCapital: 5
       }).validate(function(err, form) {
         assert(!form.fields.seedCapital.error);
+        done();
+      });
+
+    });
+
+  });
+
+  describe('visibleWords', function() {
+
+    it('should have a name attribute', function() {
+      form.fields.visibleWords.name.should.be.ok;
+    });
+
+    it('should exist', function(done) {
+
+      form.bind({
+        visibleWords: ''
+      }).validate(function(err, form) {
+        form.fields.visibleWords.error.should.be.ok;
+        done();
+      });
+
+    });
+
+    it('should be a positive integer', function(done) {
+
+      form.bind({
+        visibleWords: -5
+      }).validate(function(err, form) {
+        form.fields.visibleWords.error.should.be.ok;
+        done();
+      });
+
+    });
+
+    it('should validate when valid', function(done) {
+
+      form.bind({
+        visibleWords: 5
+      }).validate(function(err, form) {
+        assert(!form.fields.visibleWords.error);
         done();
       });
 

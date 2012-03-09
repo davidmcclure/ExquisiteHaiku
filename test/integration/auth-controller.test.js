@@ -37,8 +37,7 @@ describe('Auth Controller', function() {
       username:   'david',
       password:   'password',
       email:      'david@test.com',
-      superUser:  true,
-      active:     true
+      admin:      true
     });
 
     // Save.
@@ -134,35 +133,6 @@ describe('Auth Controller', function() {
             browser.location.pathname.should.eql('/admin/login');
             browser.query('span.help-inline.username').should.be.ok;
             done();
-
-          });
-
-        });
-
-      });
-
-      it('should flash error for inactive username', function(done) {
-
-        // Set user inactive.
-        user.active = false;
-
-        // Save.
-        user.save(function(err) {
-
-          // GET admin/login.
-          browser.visit(r+'admin/login', function() {
-
-            // Fill in form, submit.
-            browser.fill('username', 'david');
-            browser.fill('password', 'password');
-            browser.pressButton('Submit', function() {
-
-              // Check for error.
-              browser.location.pathname.should.eql('/admin/login');
-              browser.query('span.help-inline.username').should.be.ok;
-              done();
-
-            });
 
           });
 

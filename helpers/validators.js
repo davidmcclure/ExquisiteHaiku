@@ -35,23 +35,6 @@ exports.usernameExists = function (msg) {
 
 
 /*
- * Pass if user with username is active.
- *
- * @param {String} msg: The failure message.
- *
- * @return void.
- */
-exports.usernameActive = function (msg) {
-  return function(form, field, callback) {
-    User.findOne({ username: field.data }, function(err, user) {
-      if (!_.isNull(user) && user.active) callback();
-      else callback(msg);
-    });
-  };
-};
-
-
-/*
  * Pass if field is not in blacklist.
  *
  * @param {Array} blacklist: The list of prohibited usernames.

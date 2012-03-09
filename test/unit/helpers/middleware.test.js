@@ -185,68 +185,6 @@ describe('Route Middleware', function() {
 
   });
 
-  describe('isSuper', function() {
-
-    it('should redirect when the user is not a super', function(done) {
-
-      // Spy on res.
-      res.redirect = sinon.spy();
-
-      // Create non-super user.
-      var user = new User({
-        username:   'david',
-        email:      'david@spyder.com',
-        password:   'password',
-        active:     true,
-        superUser:  false
-      });
-
-      // Save.
-      user.save(function(err) {
-
-        // Set user id.
-        req.user = user;
-
-        // Call isSuper, check for redirect.
-        auth.isSuper(req, res, next);
-        sinon.assert.calledWith(res.redirect, '/admin/poems');
-        done();
-
-      });
-
-    });
-
-    it('should call next() when the user is a super', function(done) {
-
-      // Spy on next.
-      next = sinon.spy();
-
-      // Create super user.
-      var user = new User({
-        username:   'david',
-        email:      'david@spyder.com',
-        password:   'password',
-        active:     true,
-        superUser:  true
-      });
-
-      // Save.
-      user.save(function(err) {
-
-        // Set user id.
-        req.user = user;
-
-        // Call isSuper, check for next().
-        auth.isSuper(req, res, next);
-        sinon.assert.called(next);
-        done();
-
-      });
-
-    });
-
-  });
-
   describe('isAdmin', function() {
 
     it('should redirect when the user is not an admin', function(done) {
@@ -391,8 +329,7 @@ describe('Route Middleware', function() {
         username:   'david',
         email:      'david@spyder.com',
         password:   'password',
-        active:     true,
-        superUser:  true
+        admin:      true,
       });
 
       // Save.
@@ -419,92 +356,6 @@ describe('Route Middleware', function() {
 
   });
 
-  describe('nonSelf', function() {
-
-    var user1, user2;
-
-    beforeEach(function(done) {
-
-      // Create user1.
-      user1 = new User({
-        username:   'david',
-        password:   'password',
-        email:      'david@test.com',
-        superUser:  true,
-        active:     true
-      });
-
-      // Create user2.
-      user2 = new User({
-        username:   'kara',
-        password:   'password',
-        email:      'kara@test.com',
-        superUser:  true,
-        active:     false
-      });
-
-      // Save worker.
-      var save = function(user, callback) {
-        user.save(function(err) {
-          callback(null, user);
-        });
-      };
-
-      // Save.
-      async.map([user1, user2], save, function(err, users) {
-        done();
-      });
-
-    });
-
-    it('should redirect when the current user matches the topic user', function(done) {
-
-      // Spy on res.
-      res.redirect = sinon.spy(function() {
-        sinon.assert.calledWith(res.redirect, '/admin/poems');
-        done();
-      });
-
-      // Spy on next.
-      next = sinon.spy(function() {
-        sinon.assert.calledWith(res.redirect, '/admin/poems');
-        done();
-      });
-
-      // Mock request object.
-      req.params = { username: 'david' };
-      req.user = user1;
-
-      // Call nonSelf, check for res.redirect().
-      auth.nonSelf(req, res, next);
-
-    });
-
-    it('should call next() when the current user does not match the topic user', function(done) {
-
-      // Spy on res.
-      res.redirect = sinon.spy(function() {
-        sinon.assert.called(next);
-        done();
-      });
-
-      // Spy on next.
-      next = sinon.spy(function() {
-        sinon.assert.called(next);
-        done();
-      });
-
-      // Mock request object.
-      req.params = { username: 'kara' };
-      req.user = user1;
-
-      // Call nonSelf, check for res.redirect().
-      auth.nonSelf(req, res, next);
-
-    });
-
-  });
-
   describe('getPoem', function() {
 
     var user, poem;
@@ -516,16 +367,13 @@ describe('Route Middleware', function() {
         username:   'david',
         password:   'password',
         email:      'david@test.com',
-        admin:      true,
-        superUser:  true,
-        active:     true
+        admin:      true
       });
 
       // Create poem.
       poem = new Poem({
         slug:             'poem',
         user:             user.id,
-        admin:            true,
         roundLength :     10000,
         sliceInterval :   3,
         minSubmissions :  5,
@@ -562,28 +410,6 @@ describe('Route Middleware', function() {
 
       // Call getPoem, check for next() and poem.
       auth.getPoem(req, res, next);
-
-    });
-
-  });
-
-  describe('ownsPoem', function() {
-
-    describe('admin user', function() {
-
-      it('should redirect when the poem is not an admin poem');
-
-      it('should call next() when the poem is an admin poem');
-
-    });
-
-    describe('public user', function() {
-
-      it('should redirect when the poem is an admin poem');
-
-      it('should redirect when the poem is owned by another public user');
-
-      it('should call next() when the poem is owned by the user');
 
     });
 

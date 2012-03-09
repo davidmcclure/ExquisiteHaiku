@@ -140,30 +140,6 @@ describe('User', function() {
 
     });
 
-    it('should set superUser false by default', function(done) {
-
-      // Check for superUser false.
-      user.save(function(err) {
-        user.superUser.should.be.false;
-        done();
-      });
-
-    });
-
-    it('should set active false by default', function(done) {
-
-      // Check for active false.
-      user.save(function(err) {
-        user.active.should.be.false;
-        done();
-      });
-
-    });
-
-    it('should set "created" to the current date by default', function() {
-      user.created.should.be.ok;
-    });
-
   });
 
   describe('virtual field "id"', function() {

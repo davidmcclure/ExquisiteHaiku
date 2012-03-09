@@ -80,7 +80,6 @@ describe('Poem', function() {
         // Check for errors.
         err.errors.slug.type.should.eql('required');
         err.errors.user.type.should.eql('required');
-        err.errors.admin.type.should.eql('required');
         err.errors.created.type.should.eql('required');
         err.errors.roundLength.type.should.eql('required');
         err.errors.sliceInterval.type.should.eql('required');
@@ -111,7 +110,6 @@ describe('Poem', function() {
       poem = new Poem({
         slug: 'test-poem',
         user: user.id,
-        admin: true,
         roundLength : 10000,
         sliceInterval : 3,
         minSubmissions : 5,
@@ -152,7 +150,6 @@ describe('Poem', function() {
       poem = new Poem({
         slug: 'test-poem',
         user: user.id,
-        admin: true,
         roundLength : 10000,
         sliceInterval : 3,
         minSubmissions : 5,
@@ -293,7 +290,6 @@ describe('Poem', function() {
       poem = new Poem({
         slug: 'test-poem',
         user: user.id,
-        admin: true,
         roundLength : 10000,
         sliceInterval : 3,
         minSubmissions : 5,
@@ -330,7 +326,6 @@ describe('Poem', function() {
       poem = new Poem({
         slug: 'test-poem',
         user: user.id,
-        admin: true,
         running: false,
         complete: false,
         roundLength : 10000,

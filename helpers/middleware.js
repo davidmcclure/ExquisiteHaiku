@@ -46,22 +46,6 @@ exports.isUser = function (req, res, next) {
 
 
 /*
- * Only allow super users. Called after isUser, which passes user
- * document.
- *
- * @param {Object} req: The request, with a user attribute.
- * @param {Object} res: The response.
- * @param {Callback} next: The next middleware.
- *
- * @return void.
- */
-exports.isSuper = function (req, res, next) {
-  if (req.user.superUser) next();
-  else res.redirect('/admin/poems');
-};
-
-
-/*
  * Only allow admininstrators. Called after isUser, which passes user
  * document.
  *
@@ -110,30 +94,6 @@ exports.noUsers = function (req, res, next) {
 
 
 /*
- * Only allow non-self users. Called after isUser, which passed user
- * document.
- *
- * @param {Object} req: The request.
- * @param {Object} res: The response.
- * @param {Callback} next: The next middleware.
- *
- * @return void.
- */
-exports.nonSelf = function (req, res, next) {
-
-  // Get the user record, push into request.
-  User.findOne({ username: req.params.username }, function(err, user) {
-    if (user.id !== req.user.id) {
-      req.user = user;
-      next();
-    }
-    else res.redirect('/admin/poems');
-  });
-
-};
-
-
-/*
  * Load poem by way of :slug parameter on request.
  *
  * @param {Object} req: The request.
@@ -149,21 +109,5 @@ exports.getPoem = function (req, res, next) {
     req.poem = poem;
     next();
   });
-
-};
-
-
-/*
- * Only allow users that have access to the poem with the :slug passed
- * in from the route. Called after isUser and getPoem, which pass user
- * document and poem documents on {req}.
- *
- * @param {Object} req: The request.
- * @param {Object} res: The response.
- * @param {Callback} next: The next middleware.
- *
- * @return void.
- */
-exports.ownsPoem = function (req, res, next) {
 
 };

@@ -27,7 +27,6 @@ exports.form = function() {
       required: 'Enter a username.',
       validators: [
         customValidators.usernameExists('Does not exist.'),
-        customValidators.usernameActive('Inactive account.')
       ]
     }),
 

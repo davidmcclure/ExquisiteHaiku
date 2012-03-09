@@ -40,9 +40,7 @@ describe('Login Form', function() {
     user = new User({
       username:   'david',
       email:      'david@spyder.com',
-      password:   'password',
-      active:     true,
-      superUser:  true
+      password:   'password'
     });
 
     user.save(function(err) { done(); });
@@ -78,25 +76,6 @@ describe('Login Form', function() {
       }).validate(function(err, form) {
         form.fields.username.error.should.be.ok;
         done();
-      });
-
-    });
-
-    it('should match an active user in the database', function(done) {
-
-      // Set user inactive.
-      user.active = false;
-
-      // Save.
-      user.save(function(err) {
-
-        form.bind({
-          username: 'david'
-        }).validate(function(err, form) {
-          form.fields.username.error.should.be.ok;
-          done();
-        });
-
       });
 
     });

@@ -9,7 +9,6 @@ var slicer = require('../../lib/slicer');
 var Poem = new Schema({
   slug :            { type: String, required: true },
   user :            { type: Schema.ObjectId, ref: 'User', required: true },
-  admin :           { type: Boolean, required: true },
   created :         { type: Date, required: true, default: Date.now() },
   started :         { type: Boolean, required: true, default: false },
   running :         { type: Boolean, required: true, default: false },

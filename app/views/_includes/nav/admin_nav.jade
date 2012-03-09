@@ -2,10 +2,6 @@ div.navbar.navbar-fixed-top
   div.navbar-inner
     div.container
       a.brand(href='/admin/poems') Oversoul
-      ul.nav
-        if user.admin && user.superUser
-          li(class=activeLi(nav.main, 'users'))
-            a(href="/admin/users") Users
       ul.nav.pull-right
         li
           a(href="/admin/logout") Logout <strong>#{user.username}</strong>

@@ -2,24 +2,36 @@ table.table.list.table-condensed
   thead
     tr
       th slug
+      th status
       th round len
       th slice int
       th min sub
       th sub val
       th decay
       th capital
-      th
+      th # users
+      th # subs
+      th # allocs
+      th # syll
+      th # words
+      th admin
   tbody
     each poem in poems
       tr
         td.title
           a(href='/admin/poems/show/#{poem.slug}')= poem.slug
-        td= poem.roundLength
-        td= poem.sliceInterval
-        td= poem.minSubmissions
-        td= poem.submissionVal
-        td= poem.decayLifetime
-        td= poem.seedCapital
+        td
+        td.gray= poem.roundLength
+        td.gray= poem.sliceInterval
+        td.gray= poem.minSubmissions
+        td.gray= poem.submissionVal
+        td.gray= poem.decayLifetime
+        td.gray= poem.seedCapital
+        td
+        td
+        td
+        td
+        td
         td
           a(href='/admin/poems/edit/#{poem.slug}') edit
           a.danger(href='/admin/poems/delete/#{poem.slug}') delete

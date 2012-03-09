@@ -1,5 +1,4 @@
 body{padding-top:50px}
-div.container{width:640px}
 form.login,form.install,form.register{margin:6em auto 0 20em;}
 form.login legend,form.install legend,form.register legend{font-size:3em;padding-bottom:.5em;border:none}
 form.login div.clearfix.error,form.install div.clearfix.error,form.register div.clearfix.error{padding-top:0;padding-bottom:0}
@@ -10,6 +9,7 @@ div.subnav a,div.subnav input{margin:0 1em 0 0}
 div.subnav input{position:relative}
 div.subnav a.new{float:left}
 table.list td.title{font-weight:bold}
+table.list td.gray{color:#c6c6c6}
 table.list th{font-weight:normal;color:#808080}
 table.list a{font-weight:bold;margin-right:.6em;}
 table.list a.danger{color:#bd362f}

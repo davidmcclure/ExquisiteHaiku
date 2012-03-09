@@ -121,33 +121,6 @@ exports.validSlug = function (msg) {
 };
 
 /*
- * If a user document passed, check if there is another poem owned
- * by the user with the slug in the field. If a user is not passed,
- * check if there is another poem by any admin user with the slug in
- * the field.
- *
- * @param {Document} user: A user document.
- * @param {String} msg: The failure message.
- *
- * @return void.
- */
-exports.uniqueSlug = function (user, msg) {
-  return function(form, field, callback) {
-    if (_.isUndefined(user)) {
-      Poem.findOne({ admin: true, slug: field.data }, function(err, poem) {
-        if (poem) callback(msg);
-        else callback();
-      });
-    } else {
-      Poem.findOne({ user: user.id, slug: field.data }, function(err, poem) {
-        if (poem) callback(msg);
-        else callback();
-      });
-    }
-  };
-};
-
-/*
  * Check to see a value is a positive integer.
  *
  * @param string msg: The failure error message.

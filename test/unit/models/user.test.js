@@ -33,8 +33,10 @@ describe('User', function() {
 
     it('should require username and email', function(done) {
 
-      // Create user with no username or email.
+      // Create user with no username or email, set admin to
+      // null to override default and check for error.
       var user = new User();
+      user.admin = null;
 
       // Save.
       user.save(function(err) {
@@ -42,6 +44,7 @@ describe('User', function() {
         // Check for errors.
         err.errors.username.type.should.eql('required');
         err.errors.email.type.should.eql('required');
+        err.errors.admin.type.should.eql('required');
 
         // Check for 0 documents.
         User.count({}, function(err, count) {

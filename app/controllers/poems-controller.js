@@ -55,53 +55,21 @@ module.exports = function(app) {
       var subnav = _.isUndefined(req.query.filter) ?
         'all' : req.query.filter;
 
-      // Admin user.
-      if (req.user.admin) {
+      // Get admin poems, sorting by date created.
+      Poem.find(
+        filter
+      ).sort('created', 1).execFind(function(err, poems) {
 
-        // Add admin clause to filter.
-        filter.admin = true;
-
-        // Get admin poems, sorting by date created.
-        Poem.find(
-          filter
-        ).sort('created', 1).execFind(function(err, poems) {
-
-          // Render the list.
-          res.render('admin/poems/index', {
-            title:  'Oversoul',
-            layout: '_layouts/poems',
-            user:   req.user,
-            nav:    { main: 'poems', sub: subnav },
-            poems:  poems
-          });
-
+        // Render the list.
+        res.render('admin/poems/index', {
+          title:  'Oversoul',
+          layout: '_layouts/poems',
+          user:   req.user,
+          nav:    { main: 'poems', sub: subnav },
+          poems:  poems
         });
 
-      }
-
-      // Public user.
-      else {
-
-        // Add user clause to filter.
-        filter.user = req.user.id;
-
-        // Get user's poems, sorting by date created.
-        Poem.find(
-          filter
-        ).sort('created', 1).execFind(function(err, poems) {
-
-          // Render the list.
-          res.render('admin/poems/index', {
-            title:  'Oversoul',
-            layout: '_layouts/poems',
-            user:   req.user,
-            nav:    { main: 'poems', sub: subnav },
-            poems:  poems
-          });
-
-        });
-
-      }
+      });
 
   });
 
@@ -134,99 +102,47 @@ module.exports = function(app) {
     auth.isUser,
     function(req, res) {
 
-      // Admin user.
-      if (req.user.admin) {
+      // Pass control to the form.
+      poemForm.form().handle(req, {
 
-        // Pass control to the form.
-        poemForm.form().handle(req, {
+        // If field validations pass.
+        success: function(form) {
 
-          // If field validations pass.
-          success: function(form) {
+          // Create the poem.
+          var poem = new Poem({
+            slug:           form.data.slug,
+            user:           req.user.id,
+            admin:          true,
+            roundLength:    form.data.roundLength,
+            sliceInterval:  form.data.sliceInterval,
+            minSubmissions: form.data.minSubmissions,
+            submissionVal:  form.data.submissionVal,
+            decayLifetime:  form.data.decayLifetime,
+            seedCapital:    form.data.seedCapital
+          });
 
-            // Create the poem.
-            var poem = new Poem({
-              slug:           form.data.slug,
-              user:           req.user.id,
-              admin:          true,
-              roundLength:    form.data.roundLength,
-              sliceInterval:  form.data.sliceInterval,
-              minSubmissions: form.data.minSubmissions,
-              submissionVal:  form.data.submissionVal,
-              decayLifetime:  form.data.decayLifetime,
-              seedCapital:    form.data.seedCapital
-            });
+          // Save and redirect.
+          poem.save(function(err) {
+            res.redirect('/admin/poems');
+          });
 
-            // Save and redirect.
-            poem.save(function(err) {
-              res.redirect('/admin/poems');
-            });
+        },
 
-          },
+        // If field validations fail.
+        other: function(form) {
 
-          // If field validations fail.
-          other: function(form) {
+          // Re-render the form.
+          res.render('admin/poems/new', {
+            title:  'New Poem',
+            layout: '_layouts/poems',
+            user:   req.user,
+            nav:    { main: 'poems', sub: 'new' },
+            form:   form
+          });
 
-            // Re-render the form.
-            res.render('admin/poems/new', {
-              title:  'New Poem',
-              layout: '_layouts/poems',
-              user:   req.user,
-              nav:    { main: 'poems', sub: 'new' },
-              form:   form
-            });
+        }
 
-          }
-
-        });
-
-      }
-
-      // Public user.
-      else {
-
-        // Pass control to the form.
-        poemForm.form(req.user).handle(req, {
-
-          // If field validations pass.
-          success: function(form) {
-
-            // Create the poem.
-            var poem = new Poem({
-              slug:           form.data.slug,
-              user:           req.user.id,
-              admin:          false,
-              roundLength:    form.data.roundLength,
-              sliceInterval:  form.data.sliceInterval,
-              minSubmissions: form.data.minSubmissions,
-              submissionVal:  form.data.submissionVal,
-              decayLifetime:  form.data.decayLifetime,
-              seedCapital:    form.data.seedCapital
-            });
-
-            // Save and redirect.
-            poem.save(function(err) {
-              res.redirect('/admin/poems');
-            });
-
-          },
-
-          // If field validations fail.
-          other: function(form) {
-
-            // Re-render the form.
-            res.render('admin/poems/new', {
-              title:  'New Poem',
-              layout: '_layouts/poems',
-              user:   req.user,
-              nav:    { main: 'poems', sub: 'new' },
-              form:   form
-            });
-
-          }
-
-        });
-
-      }
+      });
 
   });
 

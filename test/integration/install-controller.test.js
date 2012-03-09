@@ -62,8 +62,7 @@ describe('Install Controller', function() {
         username:   'david',
         password:   'password',
         email:      'david@test.com',
-        superUser:  true,
-        active:     true
+        admin:      true
       });
 
       // Save.

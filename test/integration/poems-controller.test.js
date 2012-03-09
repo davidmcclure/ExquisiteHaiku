@@ -29,8 +29,7 @@ var User = mongoose.model('User'),
 describe('Poem Controller', function() {
 
   var r = 'http://localhost:3000/';
-  var browser, user1, user2, user3, user4,  poem1, poem2,
-  poem3, poem4, poem5, poem6, poem7, poem8, poem9, poem10;
+  var browser, user;
 
   // Create documents.
   beforeEach(function(done) {
@@ -38,232 +37,15 @@ describe('Poem Controller', function() {
     // Create browser.
     browser = new Browser();
 
-    // Create user1 -- admin super.
-    user1 = new User({
+    // Create admin user.
+    user = new User({
       username:   'david',
       password:   'password',
       email:      'david@test.com',
-      admin:      true,
-      superUser:  true,
-      active:     true
+      admin:      true
     });
 
-    // Create user2 -- admin non-super.
-    user2 = new User({
-      username:   'kara',
-      password:   'password',
-      email:      'kara@test.com',
-      admin:      true,
-      superUser:  false,
-      active:     true
-    });
-
-    // Create user3 -- public.
-    user3 = new User({
-      username:   'rosie',
-      password:   'password',
-      email:      'rosie@test.com',
-      admin:      false,
-      superUser:  false,
-      active:     true
-    });
-
-    // Create user4 -- public.
-    user4 = new User({
-      username:   'wayne',
-      password:   'password',
-      email:      'wayne@test.com',
-      admin:      false,
-      superUser:  false,
-      active:     true
-    });
-
-    // Create poem1 -- user1, admin, idle.
-    poem1 = new Poem({
-      slug:             'poem1',
-      user:             user1.id,
-      admin:            true,
-      started:          false,
-      running:          false,
-      complete:         false,
-      roundLength :     10000,
-      sliceInterval :   3,
-      minSubmissions :  5,
-      submissionVal :   100,
-      decayLifetime :   50,
-      seedCapital :     1000
-    });
-
-    // Create poem2 -- user1, admin, running.
-    poem2 = new Poem({
-      slug:             'poem2',
-      user:             user1.id,
-      admin:            true,
-      started:          true,
-      running:          true,
-      complete:         false,
-      roundLength :     10000,
-      sliceInterval :   3,
-      minSubmissions :  5,
-      submissionVal :   100,
-      decayLifetime :   50,
-      seedCapital :     1000
-    });
-
-    // Create poem3 -- user1, admin, complete.
-    poem3 = new Poem({
-      slug:             'poem3',
-      user:             user1.id,
-      admin:            true,
-      started:          true,
-      running:          false,
-      complete:         true,
-      roundLength :     10000,
-      sliceInterval :   3,
-      minSubmissions :  5,
-      submissionVal :   100,
-      decayLifetime :   50,
-      seedCapital :     1000
-    });
-
-    // Create poem4 -- user2, admin, idle.
-    poem4 = new Poem({
-      slug:             'poem4',
-      user:             user2.id,
-      admin:            true,
-      started:          false,
-      running:          false,
-      complete:         false,
-      roundLength :     10000,
-      sliceInterval :   3,
-      minSubmissions :  5,
-      submissionVal :   100,
-      decayLifetime :   50,
-      seedCapital :     1000
-    });
-
-    // Create poem5 -- user3, public, idle.
-    poem5 = new Poem({
-      slug:             'poem5',
-      user:             user3.id,
-      admin:            false,
-      started:          false,
-      running:          false,
-      complete:         false,
-      roundLength :     10000,
-      sliceInterval :   3,
-      minSubmissions :  5,
-      submissionVal :   100,
-      decayLifetime :   50,
-      seedCapital :     1000
-    });
-
-    // Create poem6 -- user3, public, running.
-    poem6 = new Poem({
-      slug:             'poem6',
-      user:             user3.id,
-      admin:            false,
-      started:          true,
-      running:          true,
-      complete:         false,
-      roundLength :     10000,
-      sliceInterval :   3,
-      minSubmissions :  5,
-      submissionVal :   100,
-      decayLifetime :   50,
-      seedCapital :     1000
-    });
-
-    // Create poem7 -- user3, public, complete.
-    poem7 = new Poem({
-      slug:             'poem7',
-      user:             user3.id,
-      admin:            false,
-      started:          true,
-      running:          false,
-      complete:         true,
-      roundLength :     10000,
-      sliceInterval :   3,
-      minSubmissions :  5,
-      submissionVal :   100,
-      decayLifetime :   50,
-      seedCapital :     1000
-    });
-
-    // Create poem8 -- user4, public, idle.
-    poem8 = new Poem({
-      slug:             'poem8',
-      user:             user4.id,
-      admin:            false,
-      started:          false,
-      running:          false,
-      complete:         false,
-      roundLength :     10000,
-      sliceInterval :   3,
-      minSubmissions :  5,
-      submissionVal :   100,
-      decayLifetime :   50,
-      seedCapital :     1000
-    });
-
-    // Create poem9 -- user4, public, running.
-    poem9 = new Poem({
-      slug:             'poem9',
-      user:             user4.id,
-      admin:            false,
-      started:          true,
-      running:          true,
-      complete:         false,
-      roundLength :     10000,
-      sliceInterval :   3,
-      minSubmissions :  5,
-      submissionVal :   100,
-      decayLifetime :   50,
-      seedCapital :     1000
-    });
-
-    // Create poem10 -- user 4, public, complete.
-    poem10 = new Poem({
-      slug:             'poem10',
-      user:             user4.id,
-      admin:            false,
-      started:          true,
-      running:          false,
-      complete:         true,
-      roundLength :     10000,
-      sliceInterval :   3,
-      minSubmissions :  5,
-      submissionVal :   100,
-      decayLifetime :   50,
-      seedCapital :     1000
-    });
-
-    // Save worker.
-    var save = function(document, callback) {
-      document.save(function(err) {
-        callback(null, document);
-      });
-    };
-
-    // Save.
-    async.map([
-      user1,
-      user2,
-      user3,
-      user4,
-      poem1,
-      poem2,
-      poem3,
-      poem4,
-      poem5,
-      poem6,
-      poem7,
-      poem8,
-      poem9,
-      poem10,
-    ], save, function(err, documents) {
-      done();
-    });
+    user.save(function(err) { done(); });
 
   });
 
@@ -286,23 +68,68 @@ describe('Poem Controller', function() {
 
   describe('GET /admin/poems', function() {
 
-    it('should block anonymous sessions', function(done) {
+    var idle, running, complete;
 
-      // Hit the route, check for redirect.
-      browser.visit(r+'admin/poems', function() {
-        browser.location.pathname.should.eql('/admin/login');
-        done();
+    beforeEach(function(done) {
+
+      // Create idle poem.
+      idle = new Poem({
+        slug:             'idle',
+        user:             user.id,
+        started:          false,
+        running:          false,
+        complete:         false,
+        roundLength :     10000,
+        sliceInterval :   3,
+        minSubmissions :  5,
+        submissionVal :   100,
+        decayLifetime :   50,
+        seedCapital :     1000
       });
 
-    });
+      // Create running poem.
+      running = new Poem({
+        slug:             'running',
+        user:             user.id,
+        started:          true,
+        running:          true,
+        complete:         false,
+        roundLength :     10000,
+        sliceInterval :   3,
+        minSubmissions :  5,
+        submissionVal :   100,
+        decayLifetime :   50,
+        seedCapital :     1000
+      });
 
-    it('should show edit links for poems that have not been started');
+      // Create complete poem.
+      complete = new Poem({
+        slug:             'complete',
+        user:             user.id,
+        started:          true,
+        running:          false,
+        complete:         true,
+        roundLength :     10000,
+        sliceInterval :   3,
+        minSubmissions :  5,
+        submissionVal :   100,
+        decayLifetime :   50,
+        seedCapital :     1000
+      });
 
-    it('should show delete links');
+      // Save worker.
+      var save = function(document, callback) {
+        document.save(function(err) {
+          callback(null, document);
+        });
+      };
 
-    describe('admin user', function() {
-
-      beforeEach(function(done) {
+      // Save.
+      async.map([
+        idle,
+        running,
+        complete
+      ], save, function(err, documents) {
 
         // Login as an admin user.
         browser.visit(r+'admin/login', function() {
@@ -318,100 +145,16 @@ describe('Poem Controller', function() {
 
       });
 
-      it('should show all admin-owned poems for admin users by default', function(done) {
+    });
 
-        // Should show all self-owned poems (#1-3) and all poems owned by other
-        // admin users (#4).
-        browser.location.pathname.should.eql('/admin/poems');
-        browser.text('td.title').should.include('poem1');
-        browser.text('td.title').should.include('poem2');
-        browser.text('td.title').should.include('poem3');
-        browser.text('td.title').should.include('poem4');
-        browser.text('td.title').should.not.include('poem5');
-        browser.text('td.title').should.not.include('poem6');
-        browser.text('td.title').should.not.include('poem7');
-        browser.text('td.title').should.not.include('poem8');
-        browser.text('td.title').should.not.include('poem9');
-        browser.text('td.title').should.not.include('poem10');
-        done();
+    it('should block anonymous sessions', function(done) {
 
-      });
+      // Logout.
+      browser.visit(r+'admin/logout', function() {
 
-      it('should show admin-owned poems when the "all" filter is active', function(done) {
-
-        // Should show all self-owned poems (#1-3) and all poems owned by other
-        // admin users (#4).
-        browser.visit(r+'admin/poems?filter=all', function() {
-          browser.text('td.title').should.include('poem1');
-          browser.text('td.title').should.include('poem2');
-          browser.text('td.title').should.include('poem3');
-          browser.text('td.title').should.include('poem4');
-          browser.text('td.title').should.not.include('poem5');
-          browser.text('td.title').should.not.include('poem6');
-          browser.text('td.title').should.not.include('poem7');
-          browser.text('td.title').should.not.include('poem8');
-          browser.text('td.title').should.not.include('poem9');
-          browser.text('td.title').should.not.include('poem10');
-          done();
-        });
-
-      });
-
-      it('should show admin-owned idle poems when the "idle" filter is active', function(done) {
-
-        // Should show all self-owned poems (#1-3) and all poems owned by other
-        // admin users (#4) that are idle (#1,3).
-        browser.visit(r+'admin/poems?filter=idle', function() {
-          browser.text('td.title').should.include('poem1');
-          browser.text('td.title').should.not.include('poem2');
-          browser.text('td.title').should.not.include('poem3');
-          browser.text('td.title').should.include('poem4');
-          browser.text('td.title').should.not.include('poem5');
-          browser.text('td.title').should.not.include('poem6');
-          browser.text('td.title').should.not.include('poem7');
-          browser.text('td.title').should.not.include('poem8');
-          browser.text('td.title').should.not.include('poem9');
-          browser.text('td.title').should.not.include('poem10');
-          done();
-        });
-
-      });
-
-      it('should show admin-owned running poems when the "running" filter is active', function(done) {
-
-        // Should show all self-owned poems (#1-3) and all poems owned by other
-        // admin users (#4) that are running (#2).
-        browser.visit(r+'admin/poems?filter=running', function() {
-          browser.text('td.title').should.not.include('poem1');
-          browser.text('td.title').should.include('poem2');
-          browser.text('td.title').should.not.include('poem3');
-          browser.text('td.title').should.not.include('poem4');
-          browser.text('td.title').should.not.include('poem5');
-          browser.text('td.title').should.not.include('poem6');
-          browser.text('td.title').should.not.include('poem7');
-          browser.text('td.title').should.not.include('poem8');
-          browser.text('td.title').should.not.include('poem9');
-          browser.text('td.title').should.not.include('poem10');
-          done();
-        });
-
-      });
-
-      it('should show admin-owned complete poems when the "done" filter is active', function(done) {
-
-        // Should show all self-owned poems (#1-3) and all poems owned by other
-        // admin users (#4) that are done (#3).
-        browser.visit(r+'admin/poems?filter=done', function() {
-          browser.text('td.title').should.not.include('poem1');
-          browser.text('td.title').should.not.include('poem2');
-          browser.text('td.title').should.include('poem3');
-          browser.text('td.title').should.not.include('poem4');
-          browser.text('td.title').should.not.include('poem5');
-          browser.text('td.title').should.not.include('poem6');
-          browser.text('td.title').should.not.include('poem7');
-          browser.text('td.title').should.not.include('poem8');
-          browser.text('td.title').should.not.include('poem9');
-          browser.text('td.title').should.not.include('poem10');
+        // Hit the route, check for redirect.
+        browser.visit(r+'admin/poems', function() {
+          browser.location.pathname.should.eql('/admin/login');
           done();
         });
 
@@ -419,121 +162,61 @@ describe('Poem Controller', function() {
 
     });
 
-    describe('public user', function() {
+    it('should show edit links for poems that have not been started');
 
-      beforeEach(function(done) {
+    it('should show delete links');
 
-        // Login as a public user.
-        browser.visit(r+'admin/login', function() {
+    it('should show all poems by default', function(done) {
 
-          // Fill in form, submit.
-          browser.fill('username', 'rosie');
-          browser.fill('password', 'password');
-          browser.pressButton('Submit', function() {
-            done();
-          });
-
-        });
-
-      });
-
-      it('should show user-owned poems for non-admin users by default', function(done) {
-
-        // Should show all self-owned poems (#5-7) and not any poems by non-self
-        // users or admin users.
-        browser.location.pathname.should.eql('/admin/poems');
-        browser.text('td.title').should.not.include('poem1');
-        browser.text('td.title').should.not.include('poem2');
-        browser.text('td.title').should.not.include('poem3');
-        browser.text('td.title').should.not.include('poem4');
-        browser.text('td.title').should.include('poem5');
-        browser.text('td.title').should.include('poem6');
-        browser.text('td.title').should.include('poem7');
-        browser.text('td.title').should.not.include('poem8');
-        browser.text('td.title').should.not.include('poem9');
-        browser.text('td.title').should.not.include('poem10');
+      browser.visit(r+'admin/poems', function() {
+        browser.text('td.title').should.include('idle');
+        browser.text('td.title').should.include('running');
+        browser.text('td.title').should.include('complete');
         done();
-
       });
 
-      it('should show user-owned poems when the "all" filter is active', function(done) {
+    });
 
-        // Should show all self-owned poems (#5-7) and not any poems by non-self
-        // users or admin users.
-        browser.visit(r+'admin/poems?filter=all', function() {
-          browser.text('td.title').should.not.include('poem1');
-          browser.text('td.title').should.not.include('poem2');
-          browser.text('td.title').should.not.include('poem3');
-          browser.text('td.title').should.not.include('poem4');
-          browser.text('td.title').should.include('poem5');
-          browser.text('td.title').should.include('poem6');
-          browser.text('td.title').should.include('poem7');
-          browser.text('td.title').should.not.include('poem8');
-          browser.text('td.title').should.not.include('poem9');
-          browser.text('td.title').should.not.include('poem10');
-          done();
-        });
+    it('should show all poems when "all" filter is active', function(done) {
 
+      browser.visit(r+'admin/poems?filter=all', function() {
+        browser.text('td.title').should.include('idle');
+        browser.text('td.title').should.include('running');
+        browser.text('td.title').should.include('complete');
+        done();
       });
 
-      it('should show user-owned idle poems when the "idle" filter is active', function(done) {
+    });
 
-        // Should show all self-owned poems (#5-7) that are idle (#5) and not any
-        // poems by non-self users or admin users.
-        browser.visit(r+'admin/poems?filter=idle', function() {
-          browser.text('td.title').should.not.include('poem1');
-          browser.text('td.title').should.not.include('poem2');
-          browser.text('td.title').should.not.include('poem3');
-          browser.text('td.title').should.not.include('poem4');
-          browser.text('td.title').should.include('poem5');
-          browser.text('td.title').should.not.include('poem6');
-          browser.text('td.title').should.not.include('poem7');
-          browser.text('td.title').should.not.include('poem8');
-          browser.text('td.title').should.not.include('poem9');
-          browser.text('td.title').should.not.include('poem10');
-          done();
-        });
+    it('should show idle poems when "idle" filter is active', function(done) {
 
+      browser.visit(r+'admin/poems?filter=idle', function() {
+        browser.text('td.title').should.include('idle');
+        browser.text('td.title').should.not.include('running');
+        browser.text('td.title').should.not.include('complete');
+        done();
       });
 
-      it('should show user-owned running poems when the "running" filter is active', function(done) {
+    });
 
-        // Should show all self-owned poems (#5-7) that are idle (#6) and not any
-        // poems by non-self users or admin users.
-        browser.visit(r+'admin/poems?filter=running', function() {
-          browser.text('td.title').should.not.include('poem1');
-          browser.text('td.title').should.not.include('poem2');
-          browser.text('td.title').should.not.include('poem3');
-          browser.text('td.title').should.not.include('poem4');
-          browser.text('td.title').should.not.include('poem5');
-          browser.text('td.title').should.include('poem6');
-          browser.text('td.title').should.not.include('poem7');
-          browser.text('td.title').should.not.include('poem8');
-          browser.text('td.title').should.not.include('poem9');
-          browser.text('td.title').should.not.include('poem10');
-          done();
-        });
+    it('should show running poems when "running" filter is active', function(done) {
 
+      browser.visit(r+'admin/poems?filter=running', function() {
+        browser.text('td.title').should.not.include('idle');
+        browser.text('td.title').should.include('running');
+        browser.text('td.title').should.not.include('complete');
+        done();
       });
 
-      it('should show user-owned complete poems when the "done" filter is active', function(done) {
+    });
 
-        // Should show all self-owned poems (#5-7) that are complete (#7) and not any
-        // poems by non-self users or admin users.
-        browser.visit(r+'admin/poems?filter=done', function() {
-          browser.text('td.title').should.not.include('poem1');
-          browser.text('td.title').should.not.include('poem2');
-          browser.text('td.title').should.not.include('poem3');
-          browser.text('td.title').should.not.include('poem4');
-          browser.text('td.title').should.not.include('poem5');
-          browser.text('td.title').should.not.include('poem6');
-          browser.text('td.title').should.include('poem7');
-          browser.text('td.title').should.not.include('poem8');
-          browser.text('td.title').should.not.include('poem9');
-          browser.text('td.title').should.not.include('poem10');
-          done();
-        });
+    it('should show complete poems when "done" filter is active', function(done) {
 
+      browser.visit(r+'admin/poems?filter=done', function() {
+        browser.text('td.title').should.not.include('idle');
+        browser.text('td.title').should.not.include('running');
+        browser.text('td.title').should.include('complete');
+        done();
       });
 
     });
@@ -618,6 +301,29 @@ describe('Poem Controller', function() {
 
     describe('slug', function() {
 
+      var poem;
+
+      beforeEach(function(done) {
+
+        // Create poem.
+        poem = new Poem({
+          slug:             'slug',
+          user:             user.id,
+          started:          false,
+          running:          false,
+          complete:         false,
+          roundLength :     10000,
+          sliceInterval :   3,
+          minSubmissions :  5,
+          submissionVal :   100,
+          decayLifetime :   50,
+          seedCapital :     1000
+        });
+
+        poem.save(function(err) { done(); });
+
+      });
+
       it('should flash error for no slug', function(done) {
 
         // GET admin/new.
@@ -637,53 +343,19 @@ describe('Poem Controller', function() {
 
       });
 
-      it('should flash error for dup admin slug', function(done) {
+      it('should flash error for dup slug', function(done) {
 
         // GET admin/new.
         browser.visit(r+'admin/poems/new', function() {
 
           // Fill in form.
-          browser.fill('slug', 'poem1');
+          browser.fill('slug', 'slug');
           browser.pressButton('Create', function() {
 
             // Check for error.
             browser.location.pathname.should.eql('/admin/poems/new');
             browser.query('span.help-inline.slug').should.be.ok;
             done();
-
-          });
-
-        });
-
-      });
-
-      it('should flash error for dup user slug', function(done) {
-
-        browser = new Browser();
-
-        // Login as a public user.
-        browser.visit(r+'admin/login', function() {
-
-          // Fill in form, submit.
-          browser.fill('username', 'rosie');
-          browser.fill('password', 'password');
-          browser.pressButton('Submit', function() {
-
-            // GET admin/new.
-            browser.visit(r+'admin/poems/new', function() {
-
-              // Fill in form.
-              browser.fill('slug', 'poem5');
-              browser.pressButton('Create', function() {
-
-                // Check for error.
-                browser.location.pathname.should.eql('/admin/poems/new');
-                browser.query('span.help-inline.slug').should.be.ok;
-                done();
-
-              });
-
-            });
 
           });
 

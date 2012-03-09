@@ -22,7 +22,7 @@ var _slugs = require('./_slugs');
  */
 
 
-exports.form = function(user) {
+exports.form = function() {
 
   return forms.create({
 
@@ -33,7 +33,7 @@ exports.form = function(user) {
       required: 'Enter a slug.',
       validators: [
         customValidators.validSlug('Lowercase letters, numbers, hyphens.'),
-        customValidators.uniqueSlug(user, 'Slug taken.'),
+        customValidators.uniqueField(Poem, 'slug', 'Slug taken.'),
         customValidators.fieldAllowed(_slugs.blacklist, 'Reserved.')
       ]
     }),

@@ -184,7 +184,29 @@ module.exports = function(app) {
   app.get('/admin/poems/edit/:slug',
     auth.isUser,
     auth.isAdmin,
+    auth.getPoem,
     function(req, res) {
+
+      var form = poemForm.form(req.poem).bind({
+        slug:           req.poem.slug,
+        roundLength:    req.poem.roundLength,
+        sliceInterval:  req.poem.sliceInterval,
+        minSubmissions: req.poem.minSubmissions,
+        submissionVal:  req.poem.submissionVal,
+        decayLifetime:  req.poem.decayLifetime,
+        seedCapital:    req.poem.seedCapital,
+        visibleWords:   req.poem.visibleWords
+      });
+
+      // Render the form.
+      res.render('admin/poems/edit', {
+        title:  'Edit Poem',
+        layout: '_layouts/poems',
+        user:   req.user,
+        nav:    { main: 'poems', sub: 'edit' },
+        poem:   req.poem,
+        form:   form
+      });
 
   });
 

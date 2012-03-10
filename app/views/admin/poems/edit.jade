@@ -1,0 +1,6 @@
+form.poems.form-horizontal(method='post')
+  fieldset
+    legend Edit #{poem.slug}
+    != partial('../../_includes/form/form', { form: form })
+  div.form-actions
+    button.btn.btn-primary(type='submit') Save

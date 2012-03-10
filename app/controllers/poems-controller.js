@@ -115,7 +115,6 @@ module.exports = function(app) {
           var poem = new Poem({
             slug:           form.data.slug,
             user:           req.user.id,
-            admin:          true,
             roundLength:    form.data.roundLength,
             sliceInterval:  form.data.sliceInterval,
             minSubmissions: form.data.minSubmissions,

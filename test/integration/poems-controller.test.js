@@ -642,13 +642,13 @@ describe('Poem Controller', function() {
           Poem.findOne({ slug: 'valid' }, function(err, poem) {
             poem.should.be.ok;
             poem.slug.should.eql('valid');
-            poem.roundLength.should.eql(10000);
-            poem.sliceInterval.should.eql(1000);
-            poem.minSubmissions.should.eql(10);
-            poem.submissionVal.should.eql(100);
-            poem.decayLifetime.should.eql(50);
-            poem.seedCapital.should.eql(1000);
-            poem.visibleWords.should.eql(500);
+            poem.roundLength.valueOf().should.eql(10000);
+            poem.sliceInterval.valueOf().should.eql(1000);
+            poem.minSubmissions.valueOf().should.eql(10);
+            poem.submissionVal.valueOf().should.eql(100);
+            poem.decayLifetime.valueOf().should.eql(50);
+            poem.seedCapital.valueOf().should.eql(1000);
+            poem.visibleWords.valueOf().should.eql(500);
             done();
           });
 

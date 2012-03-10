@@ -149,34 +149,6 @@ module.exports = function(app) {
   });
 
   /*
-   * View a poem.
-   *
-   * @middleware auth.isUser: Block if there is no user session.
-   */
-  app.get('/admin/poems/show/:slug',
-    auth.isUser,
-    auth.isAdmin,
-    function(req, res) {
-
-      // Get the poem.
-      Poem.findOne({
-        slug: req.params.slug
-      }, function(err, poem) {
-
-        // Show the info.
-        res.render('admin/poems/show', {
-          title:  poem.slug,
-          layout: '_layouts/poems',
-          user:   req.user,
-          nav:    { main: 'poems', sub: 'show' },
-          poem:   poem
-        });
-
-      });
-
-  });
-
-  /*
    * Edit a poem.
    *
    * @middleware auth.isUser: Block if there is no user session.
@@ -218,7 +190,48 @@ module.exports = function(app) {
   app.post('/admin/poems/edit/:slug',
     auth.isUser,
     auth.isAdmin,
+    auth.getPoem,
     function(req, res) {
+
+      // Pass control to the form.
+      poemForm.form(req.poem).handle(req, {
+
+        // If field validations pass.
+        success: function(form) {
+
+          // Update the poem.
+          req.poem.slug =             form.data.slug;
+          req.poem.roundLength =      form.data.roundLength;
+          req.poem.sliceInterval =    form.data.sliceInterval;
+          req.poem.minSubmissions =   form.data.minSubmissions;
+          req.poem.submissionVal =    form.data.submissionVal;
+          req.poem.decayLifetime =    form.data.decayLifetime;
+          req.poem.seedCapital =      form.data.seedCapital;
+          req.poem.visibleWords =     form.data.visibleWords;
+
+          // Save and redirect.
+          req.poem.save(function(err) {
+            res.redirect('/admin/poems');
+          });
+
+        },
+
+        // If field validations fail.
+        other: function(form) {
+
+          // Re-render the form.
+          res.render('admin/poems/edit', {
+            title:  'Edit Poem',
+            layout: '_layouts/poems',
+            user:   req.user,
+            nav:    { main: 'poems', sub: 'new' },
+            poem:   req.poem,
+            form:   form
+          });
+
+        }
+
+      });
 
   });
 

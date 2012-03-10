@@ -29,7 +29,7 @@ var User = mongoose.model('User'),
 describe('Poem Controller', function() {
 
   var r = 'http://localhost:3000/';
-  var browser, user;
+  var browser, user, idle, running, complete;
 
   // Create documents.
   beforeEach(function(done) {
@@ -45,7 +45,82 @@ describe('Poem Controller', function() {
       admin:      true
     });
 
-    user.save(function(err) { done(); });
+    // Create idle poem.
+    idle = new Poem({
+      slug:             'idle',
+      user:             user.id,
+      started:          false,
+      running:          false,
+      complete:         false,
+      roundLength :     10000,
+      sliceInterval :   1000,
+      minSubmissions :  5,
+      submissionVal :   100,
+      decayLifetime :   50,
+      seedCapital :     1000,
+      visibleWords :    500
+    });
+
+    // Create running poem.
+    running = new Poem({
+      slug:             'running',
+      user:             user.id,
+      started:          true,
+      running:          true,
+      complete:         false,
+      roundLength :     10000,
+      sliceInterval :   1000,
+      minSubmissions :  5,
+      submissionVal :   100,
+      decayLifetime :   50,
+      seedCapital :     1000,
+      visibleWords :    500
+    });
+
+    // Create complete poem.
+    complete = new Poem({
+      slug:             'complete',
+      user:             user.id,
+      started:          true,
+      running:          false,
+      complete:         true,
+      roundLength :     10000,
+      sliceInterval :   1000,
+      minSubmissions :  5,
+      submissionVal :   100,
+      decayLifetime :   50,
+      seedCapital :     1000,
+      visibleWords :    500
+    });
+
+    // Save worker.
+    var save = function(document, callback) {
+      document.save(function(err) {
+        callback(null, document);
+      });
+    };
+
+    // Save.
+    async.map([
+      user,
+      idle,
+      running,
+      complete
+    ], save, function(err, documents) {
+
+      // Login as an admin user.
+      browser.visit(r+'admin/login', function() {
+
+        // Fill in form, submit.
+        browser.fill('username', 'david');
+        browser.fill('password', 'password');
+        browser.pressButton('Submit', function() {
+          done();
+        });
+
+      });
+
+    });
 
   });
 
@@ -67,88 +142,6 @@ describe('Poem Controller', function() {
   });
 
   describe('GET /admin/poems', function() {
-
-    var idle, running, complete;
-
-    beforeEach(function(done) {
-
-      // Create idle poem.
-      idle = new Poem({
-        slug:             'idle',
-        user:             user.id,
-        started:          false,
-        running:          false,
-        complete:         false,
-        roundLength :     10000,
-        sliceInterval :   3,
-        minSubmissions :  5,
-        submissionVal :   100,
-        decayLifetime :   50,
-        seedCapital :     1000,
-        visibleWords :    500
-      });
-
-      // Create running poem.
-      running = new Poem({
-        slug:             'running',
-        user:             user.id,
-        started:          true,
-        running:          true,
-        complete:         false,
-        roundLength :     10000,
-        sliceInterval :   3,
-        minSubmissions :  5,
-        submissionVal :   100,
-        decayLifetime :   50,
-        seedCapital :     1000,
-        visibleWords :    500
-      });
-
-      // Create complete poem.
-      complete = new Poem({
-        slug:             'complete',
-        user:             user.id,
-        started:          true,
-        running:          false,
-        complete:         true,
-        roundLength :     10000,
-        sliceInterval :   3,
-        minSubmissions :  5,
-        submissionVal :   100,
-        decayLifetime :   50,
-        seedCapital :     1000,
-        visibleWords :    500
-      });
-
-      // Save worker.
-      var save = function(document, callback) {
-        document.save(function(err) {
-          callback(null, document);
-        });
-      };
-
-      // Save.
-      async.map([
-        idle,
-        running,
-        complete
-      ], save, function(err, documents) {
-
-        // Login as an admin user.
-        browser.visit(r+'admin/login', function() {
-
-          // Fill in form, submit.
-          browser.fill('username', 'david');
-          browser.fill('password', 'password');
-          browser.pressButton('Submit', function() {
-            done();
-          });
-
-        });
-
-      });
-
-    });
 
     it('should show edit links for idle poems');
 
@@ -215,22 +208,6 @@ describe('Poem Controller', function() {
 
     describe('admin user', function() {
 
-      beforeEach(function(done) {
-
-        // Log in as an admin user.
-        browser.visit(r+'admin/login', function() {
-
-          // Fill in form, submit.
-          browser.fill('username', 'david');
-          browser.fill('password', 'password');
-          browser.pressButton('Submit', function() {
-            done();
-          });
-
-        });
-
-      });
-
       it('should render the form', function(done) {
 
         browser.visit(r+'admin/poems/new', function() {
@@ -257,22 +234,6 @@ describe('Poem Controller', function() {
   });
 
   describe('POST /admin/poems/new', function() {
-
-    beforeEach(function(done) {
-
-      // Log in as an admin user.
-      browser.visit(r+'admin/login', function() {
-
-        // Fill in form, submit.
-        browser.fill('username', 'david');
-        browser.fill('password', 'password');
-        browser.pressButton('Submit', function() {
-          done();
-        });
-
-      });
-
-    });
 
     describe('slug', function() {
 
@@ -662,9 +623,59 @@ describe('Poem Controller', function() {
 
   describe('GET /admin/poems/edit/:slug', function() {
 
-    it('should block if the poem has been started');
+    it('should render the form', function(done) {
 
-    it('should render the form');
+      // Go to poem edit page.
+      browser.visit(r+'admin/poems/edit/idle', function() {
+
+        // Check for form.
+        browser.query('form').should.be.ok;
+
+        // Slug input and value.
+        browser.query(
+          'form input[name="slug"][value="idle"]'
+        ).should.be.ok;
+
+        // Round length input and value.
+        browser.query(
+          'form input[name="roundLength"][value="10000"]'
+        ).should.be.ok;
+
+        // Slice interval input and value.
+        browser.query(
+          'form input[name="sliceInterval"][value="1000"]'
+        ).should.be.ok;
+
+        // Min submission input and value.
+        browser.query(
+          'form input[name="minSubmissions"][value="5"]'
+        ).should.be.ok;
+
+        // Submission val input and value.
+        browser.query(
+          'form input[name="submissionVal"][value="100"]'
+        ).should.be.ok;
+
+        // Decay lifetime input and value.
+        browser.query(
+          'form input[name="decayLifetime"][value="50"]'
+        ).should.be.ok;
+
+        // Seed capital input and value.
+        browser.query(
+          'form input[name="seedCapital"][value="1000"]'
+        ).should.be.ok;
+
+        // Visible words input and value.
+        browser.query(
+          'form input[name="visibleWords"][value="500"]'
+        ).should.be.ok;
+
+        done();
+
+      });
+
+    });
 
   });
 

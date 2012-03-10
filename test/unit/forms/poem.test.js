@@ -86,26 +86,26 @@ describe('Poem Form', function() {
 
     });
 
-    it('should be unique', function(done) {
+    describe('uniqueness', function() {
 
-      // Create user.
-      var user = new User({
-        username:   'david',
-        email:      'david@test.com',
-        password:   'password',
-        admin:      false,
-        superUser:  false,
-        active:     true
-      });
+      var user, poem1, poem2;
 
-      // Save user.
-      user.save(function(err) {
+      beforeEach(function(done) {
+
+        // Create user.
+        user = new User({
+          username:   'david',
+          email:      'david@test.com',
+          password:   'password',
+          admin:      false,
+          superUser:  false,
+          active:     true
+        });
 
         // Create poem.
-        var poem = new Poem({
-          slug: 'taken-slug',
+        poem1 = new Poem({
+          slug: 'poem1',
           user: user.id,
-          admin: false,
           roundLength : 10000,
           sliceInterval : 3,
           minSubmissions : 5,
@@ -115,16 +115,86 @@ describe('Poem Form', function() {
           visibleWords : 500
         });
 
-        // Save poem.
-        poem.save(function(err) {
+        // Create poem.
+        poem2 = new Poem({
+          slug: 'poem2',
+          user: user.id,
+          roundLength : 10000,
+          sliceInterval : 3,
+          minSubmissions : 5,
+          submissionVal : 100,
+          decayLifetime : 50,
+          seedCapital : 1000,
+          visibleWords : 500
+        });
 
-          // Rebuild the form with the user.
-          form = poemForm.form(user);
+        // Save worker.
+        var save = function(document, callback) {
+          document.save(function(err) {
+            callback(null, document);
+          });
+        };
+
+        // Save.
+        async.map([
+          poem1, poem2
+        ], save, function(err, documents) {
+          done();
+        });
+
+      });
+
+      describe('when a poem document is not passed', function() {
+
+        it('should be unique relative to all poems', function(done) {
 
           form.bind({
-            slug: 'taken-slug'
+            slug: 'poem1'
           }).validate(function(err, form) {
             form.fields.slug.error.should.be.ok;
+            done();
+          });
+
+        });
+
+        it('should validate when unique', function(done) {
+
+          form.bind({
+            slug: 'poem3'
+          }).validate(function(err, form) {
+            assert(!form.fields.slug.error);
+            done();
+          });
+
+        });
+
+      });
+
+      describe('when poem document is passed', function() {
+
+        it('should be unique relative to other poems', function(done) {
+
+          // Rebuild the form with the poem.
+          form = poemForm.form(poem1);
+
+          form.bind({
+            slug: 'poem2'
+          }).validate(function(err, form) {
+            form.fields.slug.error.should.be.ok;
+            done();
+          });
+
+        });
+
+        it('should validate when unchanged', function(done) {
+
+          // Rebuild the form with the poem.
+          form = poemForm.form(poem1);
+
+          form.bind({
+            slug: 'poem1'
+          }).validate(function(err, form) {
+            assert(!form.fields.slug.error);
             done();
           });
 

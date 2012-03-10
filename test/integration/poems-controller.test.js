@@ -345,37 +345,32 @@ describe('Poem Controller', function() {
 
     it('should create a new poem and redirect on success', function(done) {
 
-      // GET admin/poems.
-      browser.visit(r+'admin/poems/new', function() {
+      // Fill in form.
+      browser.fill('slug', 'valid');
+      browser.fill('roundLength', 10000);
+      browser.fill('sliceInterval', 1000);
+      browser.fill('minSubmissions', 10);
+      browser.fill('submissionVal', 100);
+      browser.fill('decayLifetime', 50);
+      browser.fill('seedCapital', 1000);
+      browser.fill('visibleWords', 500);
+      browser.pressButton('Create', function() {
 
-        // Fill in form.
-        browser.fill('slug', 'valid');
-        browser.fill('roundLength', 10000);
-        browser.fill('sliceInterval', 1000);
-        browser.fill('minSubmissions', 10);
-        browser.fill('submissionVal', 100);
-        browser.fill('decayLifetime', 50);
-        browser.fill('seedCapital', 1000);
-        browser.fill('visibleWords', 500);
-        browser.pressButton('Create', function() {
+        // Check for redirect.
+        browser.location.pathname.should.eql('/admin/poems');
 
-          // Check for redirect.
-          browser.location.pathname.should.eql('/admin/poems');
-
-          // Get poem.
-          Poem.findOne({ slug: 'valid' }, function(err, poem) {
-            poem.should.be.ok;
-            poem.slug.should.eql('valid');
-            poem.roundLength.valueOf().should.eql(10000);
-            poem.sliceInterval.valueOf().should.eql(1000);
-            poem.minSubmissions.valueOf().should.eql(10);
-            poem.submissionVal.valueOf().should.eql(100);
-            poem.decayLifetime.valueOf().should.eql(50);
-            poem.seedCapital.valueOf().should.eql(1000);
-            poem.visibleWords.valueOf().should.eql(500);
-            done();
-          });
-
+        // Get poem.
+        Poem.findOne({ slug: 'valid' }, function(err, poem) {
+          poem.should.be.ok;
+          poem.slug.should.eql('valid');
+          poem.roundLength.valueOf().should.eql(10000);
+          poem.sliceInterval.valueOf().should.eql(1000);
+          poem.minSubmissions.valueOf().should.eql(10);
+          poem.submissionVal.valueOf().should.eql(100);
+          poem.decayLifetime.valueOf().should.eql(50);
+          poem.seedCapital.valueOf().should.eql(1000);
+          poem.visibleWords.valueOf().should.eql(500);
+          done();
         });
 
       });
@@ -554,6 +549,40 @@ describe('Poem Controller', function() {
           browser.query('span.help-inline.visibleWords').should.be.ok;
           done();
 
+        });
+
+      });
+
+    });
+
+    it('should edit the poem and redirect on success', function(done) {
+
+      // Fill in form.
+      browser.fill('slug', 'new');
+      browser.fill('roundLength', 20000);
+      browser.fill('sliceInterval', 2000);
+      browser.fill('minSubmissions', 20);
+      browser.fill('submissionVal', 200);
+      browser.fill('decayLifetime', 100);
+      browser.fill('seedCapital', 2000);
+      browser.fill('visibleWords', 1000);
+      browser.pressButton('Save', function() {
+
+        // Check for redirect.
+        browser.location.pathname.should.eql('/admin/poems');
+
+        // Get poem.
+        Poem.findOne({ slug: 'new' }, function(err, poem) {
+          poem.should.be.ok;
+          poem.slug.should.eql('new');
+          poem.roundLength.valueOf().should.eql(20000);
+          poem.sliceInterval.valueOf().should.eql(2000);
+          poem.minSubmissions.valueOf().should.eql(20);
+          poem.submissionVal.valueOf().should.eql(200);
+          poem.decayLifetime.valueOf().should.eql(100);
+          poem.seedCapital.valueOf().should.eql(2000);
+          poem.visibleWords.valueOf().should.eql(1000);
+          done();
         });
 
       });

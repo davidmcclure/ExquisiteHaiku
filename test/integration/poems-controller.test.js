@@ -235,46 +235,26 @@ describe('Poem Controller', function() {
 
   describe('POST /admin/poems/new', function() {
 
-    describe('slug', function() {
+    beforeEach(function(done) {
 
-      var poem;
-
-      beforeEach(function(done) {
-
-        // Create poem.
-        poem = new Poem({
-          slug:             'slug',
-          user:             user.id,
-          started:          false,
-          running:          false,
-          complete:         false,
-          roundLength :     10000,
-          sliceInterval :   3,
-          minSubmissions :  5,
-          submissionVal :   100,
-          decayLifetime :   50,
-          seedCapital :     1000,
-          visibleWords :    500
-        });
-
-        poem.save(function(err) { done(); });
-
+      // GET admin/poems/new.
+      browser.visit(r+'admin/poems/new', function() {
+        done();
       });
+
+    });
+
+    describe('slug', function() {
 
       it('should flash error for no slug', function(done) {
 
-        // GET admin/new.
-        browser.visit(r+'admin/poems/new', function() {
+        // Fill in form.
+        browser.pressButton('Create', function() {
 
-          // Fill in form.
-          browser.pressButton('Create', function() {
-
-            // Check for error.
-            browser.location.pathname.should.eql('/admin/poems/new');
-            browser.query('span.help-inline.slug').should.be.ok;
-            done();
-
-          });
+          // Check for error.
+          browser.location.pathname.should.eql('/admin/poems/new');
+          browser.query('span.help-inline.slug').should.be.ok;
+          done();
 
         });
 
@@ -282,19 +262,14 @@ describe('Poem Controller', function() {
 
       it('should flash error for dup slug', function(done) {
 
-        // GET admin/new.
-        browser.visit(r+'admin/poems/new', function() {
+        // Fill in form.
+        browser.fill('slug', 'idle');
+        browser.pressButton('Create', function() {
 
-          // Fill in form.
-          browser.fill('slug', 'slug');
-          browser.pressButton('Create', function() {
-
-            // Check for error.
-            browser.location.pathname.should.eql('/admin/poems/new');
-            browser.query('span.help-inline.slug').should.be.ok;
-            done();
-
-          });
+          // Check for error.
+          browser.location.pathname.should.eql('/admin/poems/new');
+          browser.query('span.help-inline.slug').should.be.ok;
+          done();
 
         });
 
@@ -302,19 +277,14 @@ describe('Poem Controller', function() {
 
       it('should flash error for reserved slug', function(done) {
 
-        // GET admin/new.
-        browser.visit(r+'admin/poems/new', function() {
+        // Fill in form.
+        browser.fill('slug', _slugs.blacklist[0]);
+        browser.pressButton('Create', function() {
 
-          // Fill in form.
-          browser.fill('slug', _slugs.blacklist[0]);
-          browser.pressButton('Create', function() {
-
-            // Check for error.
-            browser.location.pathname.should.eql('/admin/poems/new');
-            browser.query('span.help-inline.slug').should.be.ok;
-            done();
-
-          });
+          // Check for error.
+          browser.location.pathname.should.eql('/admin/poems/new');
+          browser.query('span.help-inline.slug').should.be.ok;
+          done();
 
         });
 
@@ -322,257 +292,50 @@ describe('Poem Controller', function() {
 
     });
 
-    describe('round length', function() {
+    describe('numeric fields', function() {
 
-      it('should flash error for no round length', function(done) {
+      it('should flash errors for empty fields', function(done) {
 
-        // GET admin/new.
-        browser.visit(r+'admin/poems/new', function() {
+        // Fill in form.
+        browser.pressButton('Create', function() {
 
-          // Fill in form.
-          browser.pressButton('Create', function() {
-
-            // Check for error.
-            browser.location.pathname.should.eql('/admin/poems/new');
-            browser.query('span.help-inline.roundLength').should.be.ok;
-            done();
-
-          });
-
-        });
-
-      });
-
-      it('should flash error for not positive integer', function(done) {
-
-        // GET admin/new.
-        browser.visit(r+'admin/poems/new', function() {
-
-          // Fill in form.
-          browser.fill('roundLength', '-5');
-          browser.pressButton('Create', function() {
-
-            // Check for error.
-            browser.location.pathname.should.eql('/admin/poems/new');
-            browser.query('span.help-inline.roundLength').should.be.ok;
-            done();
-
-          });
+          // Check for errors.
+          browser.location.pathname.should.eql('/admin/poems/new');
+          browser.query('span.help-inline.roundLength').should.be.ok;
+          browser.query('span.help-inline.sliceInterval').should.be.ok;
+          browser.query('span.help-inline.minSubmissions').should.be.ok;
+          browser.query('span.help-inline.submissionVal').should.be.ok;
+          browser.query('span.help-inline.decayLifetime').should.be.ok;
+          browser.query('span.help-inline.seedCapital').should.be.ok;
+          browser.query('span.help-inline.visibleWords').should.be.ok;
+          done();
 
         });
 
       });
 
-    });
-
-    describe('slicing interval', function() {
-
-      it('should flash error for no slicing interval', function(done) {
-
-        // GET admin/new.
-        browser.visit(r+'admin/poems/new', function() {
-
-          // Fill in form.
-          browser.pressButton('Create', function() {
-
-            // Check for error.
-            browser.location.pathname.should.eql('/admin/poems/new');
-            browser.query('span.help-inline.sliceInterval').should.be.ok;
-            done();
-
-          });
-
-        });
-
-      });
-
-      it('should flash error for not positive integer', function(done) {
-
-        // GET admin/new.
-        browser.visit(r+'admin/poems/new', function() {
-
-          // Fill in form.
-          browser.fill('sliceInterval', '-5');
-          browser.pressButton('Create', function() {
-
-            // Check for error.
-            browser.location.pathname.should.eql('/admin/poems/new');
-            browser.query('span.help-inline.sliceInterval').should.be.ok;
-            done();
-
-          });
-
-        });
-
-      });
-
-    });
-
-    describe('min submissions', function() {
-
-      it('should flash error for no min submissions', function(done) {
-
-        // GET admin/new.
-        browser.visit(r+'admin/poems/new', function() {
-
-          // Fill in form.
-          browser.pressButton('Create', function() {
-
-            // Check for error.
-            browser.location.pathname.should.eql('/admin/poems/new');
-            browser.query('span.help-inline.minSubmissions').should.be.ok;
-            done();
-
-          });
-
-        });
-
-      });
-
-      it('should flash error for not positive integer', function(done) {
-
-        // GET admin/new.
-        browser.visit(r+'admin/poems/new', function() {
-
-          // Fill in form.
-          browser.fill('minSubmissions', '-5');
-          browser.pressButton('Create', function() {
-
-            // Check for error.
-            browser.location.pathname.should.eql('/admin/poems/new');
-            browser.query('span.help-inline.minSubmissions').should.be.ok;
-            done();
-
-          });
-
-        });
-
-      });
-
-    });
-
-    describe('submission val', function() {
-
-      it('should flash error for no submission val', function(done) {
-
-        // GET admin/new.
-        browser.visit(r+'admin/poems/new', function() {
-
-          // Fill in form.
-          browser.pressButton('Create', function() {
-
-            // Check for error.
-            browser.location.pathname.should.eql('/admin/poems/new');
-            browser.query('span.help-inline.submissionVal').should.be.ok;
-            done();
-
-          });
-
-        });
-
-      });
-
-      it('should flash error for not positive integer', function(done) {
-
-        // GET admin/new.
-        browser.visit(r+'admin/poems/new', function() {
-
-          // Fill in form.
-          browser.fill('submissionVal', '-5');
-          browser.pressButton('Create', function() {
-
-            // Check for error.
-            browser.location.pathname.should.eql('/admin/poems/new');
-            browser.query('span.help-inline.submissionVal').should.be.ok;
-            done();
-
-          });
-
-        });
-
-      });
-
-    });
-
-    describe('decay lifetime', function() {
-
-      it('should flash error for no decay lifetime', function(done) {
-
-        // GET admin/new.
-        browser.visit(r+'admin/poems/new', function() {
-
-          // Fill in form.
-          browser.pressButton('Create', function() {
-
-            // Check for error.
-            browser.location.pathname.should.eql('/admin/poems/new');
-            browser.query('span.help-inline.decayLifetime').should.be.ok;
-            done();
-
-          });
-
-        });
-
-      });
-
-      it('should flash error for not positive integer', function(done) {
-
-        // GET admin/new.
-        browser.visit(r+'admin/poems/new', function() {
-
-          // Fill in form.
-          browser.fill('decayLifetime', '-5');
-          browser.pressButton('Create', function() {
-
-            // Check for error.
-            browser.location.pathname.should.eql('/admin/poems/new');
-            browser.query('span.help-inline.decayLifetime').should.be.ok;
-            done();
-
-          });
-
-        });
-
-      });
-
-    });
-
-    describe('seed capital', function() {
-
-      it('should flash error for no seed capital', function(done) {
-
-        // GET admin/new.
-        browser.visit(r+'admin/poems/new', function() {
-
-          // Fill in form.
-          browser.pressButton('Create', function() {
-
-            // Check for error.
-            browser.location.pathname.should.eql('/admin/poems/new');
-            browser.query('span.help-inline.seedCapital').should.be.ok;
-            done();
-
-          });
-
-        });
-
-      });
-
-      it('should flash error for not positive integer', function(done) {
-
-        // GET admin/new.
-        browser.visit(r+'admin/poems/new', function() {
-
-          // Fill in form.
-          browser.fill('seedCapital', '-5');
-          browser.pressButton('Create', function() {
-
-            // Check for error.
-            browser.location.pathname.should.eql('/admin/poems/new');
-            browser.query('span.help-inline.seedCapital').should.be.ok;
-            done();
-
-          });
+      it('should flash errors for not positive integers', function(done) {
+
+        // Fill in form.
+        browser.fill('roundLength', '-5');
+        browser.fill('sliceInterval', '-5');
+        browser.fill('minSubmissions', '-5');
+        browser.fill('submissionVal', '-5');
+        browser.fill('decayLifetime', '-5');
+        browser.fill('seedCapital', '-5');
+        browser.fill('visibleWords', '-5');
+        browser.pressButton('Create', function() {
+
+          // Check for errors.
+          browser.location.pathname.should.eql('/admin/poems/new');
+          browser.query('span.help-inline.roundLength').should.be.ok;
+          browser.query('span.help-inline.sliceInterval').should.be.ok;
+          browser.query('span.help-inline.minSubmissions').should.be.ok;
+          browser.query('span.help-inline.submissionVal').should.be.ok;
+          browser.query('span.help-inline.decayLifetime').should.be.ok;
+          browser.query('span.help-inline.seedCapital').should.be.ok;
+          browser.query('span.help-inline.visibleWords').should.be.ok;
+          done();
 
         });
 
@@ -680,6 +443,122 @@ describe('Poem Controller', function() {
   });
 
   describe('POST /admin/poems/edit/:slug', function() {
+
+    beforeEach(function(done) {
+
+      // GET admin/poems/edit/:slug.
+      browser.visit(r+'admin/poems/edit/idle', function() {
+        done();
+      });
+
+    });
+
+    describe('slug', function() {
+
+      it('should flash error for no slug', function(done) {
+
+        // Fill in form.
+        browser.fill('slug', '');
+        browser.pressButton('Save', function() {
+
+          // Check for error.
+          browser.location.pathname.should.eql('/admin/poems/edit/idle');
+          browser.query('span.help-inline.slug').should.be.ok;
+          done();
+
+        });
+
+      });
+
+      it('should flash error for dup slug', function(done) {
+
+        // Fill in form.
+        browser.fill('slug', 'running');
+        browser.pressButton('Save', function() {
+
+          // Check for error.
+          browser.location.pathname.should.eql('/admin/poems/edit/idle');
+          browser.query('span.help-inline.slug').should.be.ok;
+          done();
+
+        });
+
+      });
+
+      it('should flash error for reserved slug', function(done) {
+
+        // Fill in form.
+        browser.fill('slug', _slugs.blacklist[0]);
+        browser.pressButton('Save', function() {
+
+          // Check for error.
+          browser.location.pathname.should.eql('/admin/poems/edit/idle');
+          browser.query('span.help-inline.slug').should.be.ok;
+          done();
+
+        });
+
+      });
+
+    });
+
+    describe('numeric fields', function() {
+
+      it('should flash errors for empty fields', function(done) {
+
+        // Fill in form.
+        browser.fill('roundLength', '');
+        browser.fill('sliceInterval', '');
+        browser.fill('minSubmissions', '');
+        browser.fill('submissionVal', '');
+        browser.fill('decayLifetime', '');
+        browser.fill('seedCapital', '');
+        browser.fill('visibleWords', '');
+        browser.pressButton('Save', function() {
+
+          // Check for errors.
+          browser.location.pathname.should.eql('/admin/poems/edit/idle');
+          browser.query('span.help-inline.roundLength').should.be.ok;
+          browser.query('span.help-inline.sliceInterval').should.be.ok;
+          browser.query('span.help-inline.minSubmissions').should.be.ok;
+          browser.query('span.help-inline.submissionVal').should.be.ok;
+          browser.query('span.help-inline.decayLifetime').should.be.ok;
+          browser.query('span.help-inline.seedCapital').should.be.ok;
+          browser.query('span.help-inline.visibleWords').should.be.ok;
+          done();
+
+        });
+
+      });
+
+      it('should flash errors for not positive integers', function(done) {
+
+        // Fill in form.
+        browser.fill('roundLength', '-5');
+        browser.fill('sliceInterval', '-5');
+        browser.fill('minSubmissions', '-5');
+        browser.fill('submissionVal', '-5');
+        browser.fill('decayLifetime', '-5');
+        browser.fill('seedCapital', '-5');
+        browser.fill('visibleWords', '-5');
+        browser.pressButton('Save', function() {
+
+          // Check for errors.
+          browser.location.pathname.should.eql('/admin/poems/edit/idle');
+          browser.query('span.help-inline.roundLength').should.be.ok;
+          browser.query('span.help-inline.sliceInterval').should.be.ok;
+          browser.query('span.help-inline.minSubmissions').should.be.ok;
+          browser.query('span.help-inline.submissionVal').should.be.ok;
+          browser.query('span.help-inline.decayLifetime').should.be.ok;
+          browser.query('span.help-inline.seedCapital').should.be.ok;
+          browser.query('span.help-inline.visibleWords').should.be.ok;
+          done();
+
+        });
+
+      });
+
+    });
 
   });
 

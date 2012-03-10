@@ -393,7 +393,7 @@ describe('Custom Validators', function() {
 
     it('should pass when the self doc does not have the column/field', function(done) {
 
-      // Set existing username.
+      // Set non-existent username.
       field.data = 'rosie';
 
       // Get the validator.

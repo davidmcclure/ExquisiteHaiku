@@ -31,23 +31,22 @@ module.exports = function(app) {
     function(req, res) {
 
       // Build the filter object.
-      var filter = {};
+      var filter;
       switch (req.query.filter) {
 
         // Not-running, not-complete.
         case 'idle':
-          filter.running = false;
-          filter.complete = false;
+          filter = { running: false, complete: false };
         break;
 
         // In progress.
         case 'running':
-          filter.running = true;
+          filter = { running: true };
         break;
 
         // Finished.
         case 'done':
-          filter.complete = true;
+          filter = { complete: true };
         break;
 
       }

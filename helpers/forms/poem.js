@@ -22,7 +22,7 @@ var _slugs = require('./_slugs');
  */
 
 
-exports.form = function() {
+exports.form = function(poem) {
 
   return forms.create({
 

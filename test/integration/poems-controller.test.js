@@ -593,13 +593,49 @@ describe('Poem Controller', function() {
 
   describe('GET /admin/poems/delete/:slug', function() {
 
-    it('should show the confirmation form');
+    it('should show the confirmation form', function(done) {
+
+      // GET admin/poems/delete/:slug.
+      browser.visit(r+'admin/poems/delete/idle', function() {
+
+        // Check for form and fields.
+        browser.query('form').should.be.ok;
+        browser.query('form button[type="submit"]').should.be.ok;
+        done();
+
+      });
+
+    });
 
   });
 
   describe('POST /admin/poems/delete/:slug', function() {
 
-    it('should delete the poem and redirect');
+    it('should delete the poem and redirect', function(done) {
+
+      // Get starting poems count.
+      Poem.count({}, function(err, count1) {
+
+        // GET admin/poems/delete/:slug.
+        browser.visit(r+'admin/poems/delete/idle', function() {
+
+          // Click the delete button.
+          browser.pressButton('form button[type="submit"]', function() {
+
+            // Confirm count--, redirect.
+            Poem.count({}, function(err, count2) {
+              count2.should.eql(count1-1);
+              browser.location.pathname.should.eql('/admin/poems');
+              done();
+            });
+
+          });
+
+        });
+
+      });
+
+    });
 
   });
 

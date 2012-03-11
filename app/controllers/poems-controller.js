@@ -243,7 +243,17 @@ module.exports = function(app) {
   app.get('/admin/poems/delete/:slug',
     auth.isUser,
     auth.isAdmin,
+    auth.getPoem,
     function(req, res) {
+
+      // Render the form.
+      res.render('admin/poems/delete', {
+        title:  'Delete Poem',
+        layout: '_layouts/poems',
+        user:   req.user,
+        nav:    { main: 'poems', sub: 'delete' },
+        poem:   req.poem
+      });
 
   });
 
@@ -255,7 +265,13 @@ module.exports = function(app) {
   app.post('/admin/poems/delete/:slug',
     auth.isUser,
     auth.isAdmin,
+    auth.getPoem,
     function(req, res) {
+
+      // Remove and redirect.
+      req.poem.remove(function(err) {
+        res.redirect('/admin/poems');
+      });
 
   });
 

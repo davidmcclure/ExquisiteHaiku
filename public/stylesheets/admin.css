@@ -7,7 +7,7 @@ form div.form-actions{background:none;border:none;padding:0}
 div.subnav{margin:.5em 0 1em 0;}
 div.subnav a,div.subnav input{margin:0 1em 0 0}
 div.subnav input{position:relative}
-div.subnav a.new{float:left}
+div.subnav a.new{float:left;margin-top:3px}
 table.list td.title{font-weight:bold}
 table.list td.gray{color:#c6c6c6}
 table.list th{font-weight:normal;color:#808080}

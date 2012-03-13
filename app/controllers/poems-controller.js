@@ -21,51 +21,38 @@ var Poem = mongoose.model('Poem');
 module.exports = function(app) {
 
   /*
+   * Redirect to /admin/poems.
+   *
+   * @middleware auth.isUser: Block if there is no user session.
+   * @middleware auth.isAdmin: Block if the user is not an admin.
+   */
+  app.get('/admin',
+    auth.isUser,
+    auth.isAdmin,
+    function(req, res) {
+      res.redirect('/admin/poems');
+  });
+
+  /*
    * Show poems.
    *
    * @middleware auth.isUser: Block if there is no user session.
+   * @middleware auth.isAdmin: Block if the user is not an admin.
    */
   app.get('/admin/poems',
     auth.isUser,
     auth.isAdmin,
     function(req, res) {
 
-      // Build the filter object.
-      var filter;
-      switch (req.query.filter) {
-
-        // Not-running, not-complete.
-        case 'idle':
-          filter = { running: false, complete: false };
-        break;
-
-        // In progress.
-        case 'running':
-          filter = { running: true };
-        break;
-
-        // Finished.
-        case 'done':
-          filter = { complete: true };
-        break;
-
-      }
-
-      // Get subnav string.
-      var subnav = _.isUndefined(req.query.filter) ?
-        'all' : req.query.filter;
-
       // Get admin poems, sorting by date created.
-      Poem.find(
-        filter
-      ).sort('created', 1).execFind(function(err, poems) {
+      Poem.find().sort('created', 1).execFind(function(err, poems) {
 
         // Render the list.
         res.render('admin/poems/index', {
           title:  'Oversoul',
-          layout: '_layouts/poems',
+          layout: '_layouts/admin',
           user:   req.user,
-          nav:    { main: 'poems', sub: subnav },
+          nav:    { main: 'poems', sub: '' },
           poems:  poems
         });
 
@@ -77,6 +64,7 @@ module.exports = function(app) {
    * New poem form.
    *
    * @middleware auth.isUser: Block if there is no user session.
+   * @middleware auth.isAdmin: Block if the user is not an admin.
    */
   app.get('/admin/poems/new',
     auth.isUser,
@@ -86,7 +74,7 @@ module.exports = function(app) {
       // Render the form.
       res.render('admin/poems/new', {
         title:  'New Poem',
-        layout: '_layouts/poems',
+        layout: '_layouts/admin',
         user:   req.user,
         nav:    { main: 'poems', sub: 'new' },
         form:   poemForm.form()
@@ -98,6 +86,7 @@ module.exports = function(app) {
    * Handle poem form submission.
    *
    * @middleware auth.isUser: Block if there is no user session.
+   * @middleware auth.isAdmin: Block if the user is not an admin.
    */
   app.post('/admin/poems/new',
     auth.isUser,
@@ -136,7 +125,7 @@ module.exports = function(app) {
           // Re-render the form.
           res.render('admin/poems/new', {
             title:  'New Poem',
-            layout: '_layouts/poems',
+            layout: '_layouts/admin',
             user:   req.user,
             nav:    { main: 'poems', sub: 'new' },
             form:   form
@@ -152,6 +141,7 @@ module.exports = function(app) {
    * Edit a poem.
    *
    * @middleware auth.isUser: Block if there is no user session.
+   * @middleware auth.isAdmin: Block if the user is not an admin.
    */
   app.get('/admin/poems/edit/:slug',
     auth.isUser,
@@ -173,9 +163,9 @@ module.exports = function(app) {
       // Render the form.
       res.render('admin/poems/edit', {
         title:  'Edit Poem',
-        layout: '_layouts/poems',
+        layout: '_layouts/admin',
         user:   req.user,
-        nav:    { main: 'poems', sub: 'edit' },
+        nav:    { main: 'poems', sub: '' },
         poem:   req.poem,
         form:   form
       });
@@ -186,6 +176,8 @@ module.exports = function(app) {
    * Handle edit form.
    *
    * @middleware auth.isUser: Block if there is no user session.
+   * @middleware auth.isAdmin: Block if the user is not an admin.
+   * @middleware auth.getPoem: Pass in the poem defined by :slug.
    */
   app.post('/admin/poems/edit/:slug',
     auth.isUser,
@@ -222,9 +214,9 @@ module.exports = function(app) {
           // Re-render the form.
           res.render('admin/poems/edit', {
             title:  'Edit Poem',
-            layout: '_layouts/poems',
+            layout: '_layouts/admin',
             user:   req.user,
-            nav:    { main: 'poems', sub: 'new' },
+            nav:    { main: 'poems', sub: '' },
             poem:   req.poem,
             form:   form
           });
@@ -239,6 +231,8 @@ module.exports = function(app) {
    * Delete poem confirmation page.
    *
    * @middleware auth.isUser: Block if there is no user session.
+   * @middleware auth.isAdmin: Block if the user is not an admin.
+   * @middleware auth.getPoem: Pass in the poem defined by :slug.
    */
   app.get('/admin/poems/delete/:slug',
     auth.isUser,
@@ -249,9 +243,9 @@ module.exports = function(app) {
       // Render the form.
       res.render('admin/poems/delete', {
         title:  'Delete Poem',
-        layout: '_layouts/poems',
+        layout: '_layouts/admin',
         user:   req.user,
-        nav:    { main: 'poems', sub: 'delete' },
+        nav:    { main: 'poems', sub: '' },
         poem:   req.poem
       });
 
@@ -261,6 +255,8 @@ module.exports = function(app) {
    * Delete poem.
    *
    * @middleware auth.isUser: Block if there is no user session.
+   * @middleware auth.isAdmin: Block if the user is not an admin.
+   * @middleware auth.getPoem: Pass in the poem defined by :slug.
    */
   app.post('/admin/poems/delete/:slug',
     auth.isUser,
@@ -279,6 +275,7 @@ module.exports = function(app) {
    * Start poem.
    *
    * @middleware auth.isUser: Block if there is no user session.
+   * @middleware auth.isAdmin: Block if the user is not an admin.
    */
   app.get('/admin/poems/start/:slug',
     auth.isUser,

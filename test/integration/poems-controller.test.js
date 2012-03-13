@@ -141,61 +141,30 @@ describe('Poem Controller', function() {
 
   });
 
+  describe('GET /admin', function() {
+
+    it('should redirect to /admin/poems', function(done) {
+
+      browser.visit(r+'admin', function() {
+        browser.location.pathname.should.eql('/admin/poems');
+        done();
+      });
+
+    });
+
+  });
+
   describe('GET /admin/poems', function() {
 
     it('should show edit links for idle poems');
 
     it('should show delete links for all poems');
 
-    it('should show all poems by default', function(done) {
+    it('should show poems', function(done) {
 
       browser.visit(r+'admin/poems', function() {
         browser.text('td.title').should.include('idle');
         browser.text('td.title').should.include('running');
-        browser.text('td.title').should.include('complete');
-        done();
-      });
-
-    });
-
-    it('should show all poems when "all" filter is active', function(done) {
-
-      browser.visit(r+'admin/poems?filter=all', function() {
-        browser.text('td.title').should.include('idle');
-        browser.text('td.title').should.include('running');
-        browser.text('td.title').should.include('complete');
-        done();
-      });
-
-    });
-
-    it('should show idle poems when "idle" filter is active', function(done) {
-
-      browser.visit(r+'admin/poems?filter=idle', function() {
-        browser.text('td.title').should.include('idle');
-        browser.text('td.title').should.not.include('running');
-        browser.text('td.title').should.not.include('complete');
-        done();
-      });
-
-    });
-
-    it('should show running poems when "running" filter is active', function(done) {
-
-      browser.visit(r+'admin/poems?filter=running', function() {
-        browser.text('td.title').should.not.include('idle');
-        browser.text('td.title').should.include('running');
-        browser.text('td.title').should.not.include('complete');
-        done();
-      });
-
-    });
-
-    it('should show complete poems when "done" filter is active', function(done) {
-
-      browser.visit(r+'admin/poems?filter=done', function() {
-        browser.text('td.title').should.not.include('idle');
-        browser.text('td.title').should.not.include('running');
         browser.text('td.title').should.include('complete');
         done();
       });

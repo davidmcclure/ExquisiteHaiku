@@ -2,6 +2,9 @@ div.navbar.navbar-fixed-top
   div.navbar-inner
     div.container
       a.brand(href='/admin/poems') Oversoul
+      ul.nav
+        li(class=activeLi(nav.sub, 'new'))
+          a(href="/admin/poems/new") New Poem
       ul.nav.pull-right
         li
           a(href="/admin/logout") Logout <strong>#{user.username}</strong>

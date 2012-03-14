@@ -45,7 +45,7 @@ module.exports = function(app) {
     function(req, res) {
 
       // Get admin poems, sorting by date created.
-      Poem.find().sort('created', 1).execFind(function(err, poems) {
+      Poem.find().sort('created', -1).execFind(function(err, poems) {
 
         // Render the list.
         res.render('admin/poems/index', {
@@ -286,7 +286,11 @@ module.exports = function(app) {
       Poem.findOne({
         slug: req.params.slug
       }, function(err, poem) {
+
+        // Start and redirect.
         poem.start();
+        res.redirect('/admin/poems');
+
       });
 
   });
@@ -305,7 +309,11 @@ module.exports = function(app) {
       Poem.findOne({
         slug: req.params.slug
       }, function(err, poem) {
+
+        // Start and redirect.
         poem.stop();
+        res.redirect('/admin/poems');
+
       });
 
   });

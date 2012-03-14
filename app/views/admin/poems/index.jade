@@ -11,11 +11,6 @@ if poems.length > 0
         th decay
         th capital
         th vis words
-        th # users
-        th # subs
-        th # allocs
-        th # syll
-        th # words
         th admin
     tbody
       each poem in poems
@@ -30,11 +25,6 @@ if poems.length > 0
           td.gray= poem.decayLifetime
           td.gray= poem.seedCapital
           td.gray= poem.visibleWords
-          td
-          td
-          td
-          td
-          td
           td
             a.action(href='/admin/poems/start/#{poem.slug}') start
             a(href='/admin/poems/edit/#{poem.slug}') edit

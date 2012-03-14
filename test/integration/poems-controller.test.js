@@ -158,6 +158,12 @@ describe('Poem Controller', function() {
 
     it('should show edit links for idle poems');
 
+    it('should show start links for idle poems');
+
+    it('should show stop links for running poems');
+
+    it('should not show a start or stop link for finished poems');
+
     it('should show delete links for all poems');
 
     it('should show poems', function(done) {
@@ -612,11 +618,15 @@ describe('Poem Controller', function() {
 
     it('should start the poem');
 
+    it('should redirect to the index view');
+
   });
 
   describe('GET /admin/poems/stop/:slug', function() {
 
     it('should stop the poem');
+
+    it('should redirect to the index view');
 
   });
 

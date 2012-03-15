@@ -342,16 +342,19 @@ describe('Poem', function() {
 
       // Save and start.
       poem.save(function(err) {
-        poem.start();
-        done();
+        poem.start(function() {
+          done();
+        });
       });
 
     });
 
     // Stop and clear timers global.
-    afterEach(function() {
-      poem.stop();
-      global.Oversoul.timers = {};
+    afterEach(function(done) {
+      poem.stop(function() {
+        global.Oversoul.timers = {};
+        done();
+      });
     });
 
     describe('start', function() {
@@ -368,8 +371,8 @@ describe('Poem', function() {
 
     describe('stop', function() {
 
-      beforeEach(function() {
-        poem.stop();
+      beforeEach(function(done) {
+        poem.stop(function() { done(); });
       });
 
       it('should remove the slicer from the tracker object', function() {

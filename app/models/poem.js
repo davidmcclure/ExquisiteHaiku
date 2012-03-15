@@ -80,9 +80,11 @@ Poem.virtual('id').get(function() {
 /*
  * Start slicer.
  *
+ * @param {Function} cb: Callback.
+ *
  * @return void.
  */
-Poem.methods.start = function() {
+Poem.methods.start = function(cb) {
 
   // Create and store timer.
   global.Oversoul.timers[this.id] = setInterval(
@@ -91,22 +93,29 @@ Poem.methods.start = function() {
     this
   );
 
+  this.started = true;
   this.running = true;
+
+  cb();
 
 };
 
 /*
  * Stop slicer.
  *
+ * @param {Function} cb: Callback.
+ *
  * @return void.
  */
-Poem.methods.stop = function() {
+Poem.methods.stop = function(cb) {
 
   // Clear the timer, delete the tracker.
   clearInterval(global.Oversoul.timers[this.id]);
   delete global.Oversoul.timers[this.id];
 
   this.running = false;
+
+  cb();
 
 };
 

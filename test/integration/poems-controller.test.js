@@ -156,24 +156,85 @@ describe('Poem Controller', function() {
 
   describe('GET /admin/poems', function() {
 
-    it('should show edit links for idle poems');
+    beforeEach(function(done) {
 
-    it('should show start links for idle poems');
-
-    it('should show stop links for running poems');
-
-    it('should not show a start or stop link for finished poems');
-
-    it('should show delete links for all poems');
-
-    it('should show poems', function(done) {
-
+      // GET /admin/poems.
       browser.visit(r+'admin/poems', function() {
-        browser.text('td.title').should.include('idle');
-        browser.text('td.title').should.include('running');
-        browser.text('td.title').should.include('complete');
         done();
       });
+
+    });
+
+    it('should show poems', function() {
+
+      browser.text('td.title').should.include('idle');
+      browser.text('td.title').should.include('running');
+      browser.text('td.title').should.include('complete');
+
+    });
+
+    it('should show edit links for idle poems', function() {
+
+      // Edit link for idle poem.
+      browser.query(
+        'tr[slug="idle"] a.edit[href="/admin/poems/edit/idle"]'
+      ).should.be.ok;
+
+      // No edit links for running and complete poems.
+      assert(!browser.query('tr[slug="running"] a.edit'));
+      assert(!browser.query('tr[slug="complete"] a.edit'));
+
+    });
+
+    it('should show start links for idle poems', function() {
+
+      // Start link for idle poem.
+      browser.query(
+        'tr[slug="idle"] a.start[href="/admin/poems/start/idle"]'
+      ).should.be.ok;
+
+      // No start links for running and complete poems.
+      assert(!browser.query('tr[slug="running"] a.start'));
+      assert(!browser.query('tr[slug="complete"] a.start'));
+
+    });
+
+    it('should show stop links for running poems', function() {
+
+      // Stop link for running poem.
+      browser.query(
+        'tr[slug="running"] a.stop[href="/admin/poems/stop/running"]'
+      ).should.be.ok;
+
+      // No stop links for idle and complete poems.
+      assert(!browser.query('tr[slug="idle"] a.stop'));
+      assert(!browser.query('tr[slug="complete"] a.stop'));
+
+    });
+
+    it('should not show a start or stop link for finished poems', function() {
+
+      assert(!browser.query('tr[slug="complete"] a.start'));
+      assert(!browser.query('tr[slug="complete"] a.stop'));
+
+    });
+
+    it('should show delete links for all poems', function() {
+
+      // Delete link for idle poem.
+      browser.query(
+        'tr[slug="idle"] a.delete[href="/admin/poems/delete/idle"]'
+      ).should.be.ok;
+
+      // Delete link for running poem.
+      browser.query(
+        'tr[slug="running"] a.delete[href="/admin/poems/delete/running"]'
+      ).should.be.ok;
+
+      // Complete link for running poem.
+      browser.query(
+        'tr[slug="complete"] a.delete[href="/admin/poems/delete/complete"]'
+      ).should.be.ok;
 
     });
 
@@ -612,19 +673,52 @@ describe('Poem Controller', function() {
 
     });
 
+    it('should stop and remove the timer for the poem');
+
   });
 
   describe('GET /admin/poems/start/:slug', function() {
 
-    it('should start the poem');
+    it('should start the timer for the poem', function() {
 
-    it('should redirect to the index view');
+      browser.visit(r+'/admin/poems/start/idle', function(done) {
+        global.Oversoul.timers.should.have.keys(idle.id);
+        done();
+      });
+
+    });
+
+    it('should set running=true and started=true', function(done) {
+
+      browser.visit(r+'/admin/poems/start/idle', function() {
+
+        // Re-get the poem.
+        Poem.findOne({ slug: 'idle' }, function(err, poem) {
+          poem.started.should.be.true;
+          poem.running.should.be.true;
+          done();
+        });
+
+      });
+
+    });
+
+    it('should redirect to the index view', function() {
+
+      browser.visit(r+'/admin/poems/start/idle', function() {
+        browser.location.pathname.should.eql('/admin/poems');
+        done();
+      });
+
+    });
 
   });
 
   describe('GET /admin/poems/stop/:slug', function() {
 
-    it('should stop the poem');
+    it('should stop the timer for the poem');
+
+    it('should set running=false');
 
     it('should redirect to the index view');
 

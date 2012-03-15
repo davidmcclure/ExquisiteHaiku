@@ -280,17 +280,14 @@ module.exports = function(app) {
   app.get('/admin/poems/start/:slug',
     auth.isUser,
     auth.isAdmin,
+    auth.getPoem,
     function(req, res) {
 
-      // Get the poem.
-      Poem.findOne({
-        slug: req.params.slug
-      }, function(err, poem) {
-
-        // Start and redirect.
-        poem.start();
-        res.redirect('/admin/poems');
-
+      // Start, save, and redirect.
+      req.poem.start(function() {
+        req.poem.save(function(err) {
+          res.redirect('/admin/poems');
+        });
       });
 
   });
@@ -303,17 +300,14 @@ module.exports = function(app) {
   app.get('/admin/poems/stop/:slug',
     auth.isUser,
     auth.isAdmin,
+    auth.getPoem,
     function(req, res) {
 
-      // Get the poem.
-      Poem.findOne({
-        slug: req.params.slug
-      }, function(err, poem) {
-
-        // Start and redirect.
-        poem.stop();
-        res.redirect('/admin/poems');
-
+      // Stop, save, and redirect.
+      req.poem.stop(function() {
+        req.poem.save(function(err) {
+          res.redirect('/admin/poems');
+        });
       });
 
   });

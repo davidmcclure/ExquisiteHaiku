@@ -14,7 +14,7 @@ if poems.length > 0
         th admin
     tbody
       each poem in poems
-        tr
+        tr(slug=poem.slug)
           td.title
             a(href='/#{poem.slug}')= poem.slug
           td
@@ -26,6 +26,9 @@ if poems.length > 0
           td.gray= poem.seedCapital
           td.gray= poem.visibleWords
           td
-            a.action(href='/admin/poems/start/#{poem.slug}') start
-            a(href='/admin/poems/edit/#{poem.slug}') edit
-            a.danger(href='/admin/poems/delete/#{poem.slug}') delete
+            if !poem.running && !poem.complete
+              a.start.action(href='/admin/poems/start/#{poem.slug}') start
+              a.edit(href='/admin/poems/edit/#{poem.slug}') edit
+            else if poem.running && !poem.complete
+              a.stop.action(href='/admin/poems/stop/#{poem.slug}') stop
+            a.delete.danger(href='/admin/poems/delete/#{poem.slug}') delete

@@ -264,9 +264,11 @@ module.exports = function(app) {
     auth.getPoem,
     function(req, res) {
 
-      // Remove and redirect.
-      req.poem.remove(function(err) {
-        res.redirect('/admin/poems');
+      // Stop, remove and redirect.
+      req.poem.stop(function() {
+        req.poem.remove(function(err) {
+          res.redirect('/admin/poems');
+        });
       });
 
   });

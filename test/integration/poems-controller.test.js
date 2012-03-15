@@ -678,7 +678,29 @@ describe('Poem Controller', function() {
 
     describe('when the poem is running', function() {
 
-      it('should stop and remove the timer for the poem');
+      beforeEach(function(done) {
+
+        // Start the poem.
+        browser.visit(r+'admin/poems/start/idle', function() {
+          done();
+        });
+
+      });
+
+      it('should stop and remove the timer for the poem', function(done) {
+
+        // GET admin/poems/delete/:slug.
+        browser.visit(r+'admin/poems/delete/idle', function() {
+
+          // Click the delete button.
+          browser.pressButton('form button[type="submit"]', function() {
+            global.Oversoul.timers.should.not.have.keys(idle.id);
+            done();
+          });
+
+        });
+
+      });
 
     });
 

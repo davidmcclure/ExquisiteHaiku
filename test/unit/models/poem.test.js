@@ -367,6 +367,8 @@ describe('Poem', function() {
         poem.running.should.be.true;
       });
 
+      it('should not set a new interval one is already registered');
+
     });
 
     describe('stop', function() {

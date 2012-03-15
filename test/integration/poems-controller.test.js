@@ -741,6 +741,8 @@ describe('Poem Controller', function() {
 
     });
 
+    it('should not set a new timer if the poem is already running');
+
   });
 
   describe('GET /admin/poems/stop/:slug', function() {

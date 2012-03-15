@@ -127,6 +127,9 @@ describe('Poem Controller', function() {
   // Clear users and poems.
   afterEach(function(done) {
 
+    // Clear out the timers hash.
+    global.Oversoul.timers = {};
+
     // Truncate worker.
     var remove = function(model, callback) {
       model.collection.remove(function(err) {
@@ -673,15 +676,19 @@ describe('Poem Controller', function() {
 
     });
 
-    it('should stop and remove the timer for the poem');
+    describe('when the poem is running', function() {
+
+      it('should stop and remove the timer for the poem');
+
+    });
 
   });
 
   describe('GET /admin/poems/start/:slug', function() {
 
-    it('should start the timer for the poem', function() {
+    it('should start the timer for the poem', function(done) {
 
-      browser.visit(r+'/admin/poems/start/idle', function(done) {
+      browser.visit(r+'admin/poems/start/idle', function() {
         global.Oversoul.timers.should.have.keys(idle.id);
         done();
       });
@@ -690,7 +697,7 @@ describe('Poem Controller', function() {
 
     it('should set running=true and started=true', function(done) {
 
-      browser.visit(r+'/admin/poems/start/idle', function() {
+      browser.visit(r+'admin/poems/start/idle', function() {
 
         // Re-get the poem.
         Poem.findOne({ slug: 'idle' }, function(err, poem) {
@@ -703,9 +710,9 @@ describe('Poem Controller', function() {
 
     });
 
-    it('should redirect to the index view', function() {
+    it('should redirect to the index view', function(done) {
 
-      browser.visit(r+'/admin/poems/start/idle', function() {
+      browser.visit(r+'admin/poems/start/idle', function() {
         browser.location.pathname.should.eql('/admin/poems');
         done();
       });
@@ -716,11 +723,49 @@ describe('Poem Controller', function() {
 
   describe('GET /admin/poems/stop/:slug', function() {
 
-    it('should stop the timer for the poem');
+    beforeEach(function(done) {
 
-    it('should set running=false');
+      // Start the poem.
+      browser.visit(r+'admin/poems/start/idle', function() {
+        done();
+      });
 
-    it('should redirect to the index view');
+    });
+
+    it('should stop the timer for the poem', function(done) {
+
+      // Confirm timer present at start.
+      global.Oversoul.timers.should.have.keys(idle.id);
+
+      browser.visit(r+'admin/poems/stop/idle', function() {
+        global.Oversoul.timers.should.not.have.keys(idle.id);
+        done();
+      });
+
+    });
+
+    it('should set running=false', function(done) {
+
+      browser.visit(r+'admin/poems/stop/idle', function() {
+
+        // Re-get the poem.
+        Poem.findOne({ slug: 'idle' }, function(err, poem) {
+          poem.running.should.be.false;
+          done();
+        });
+
+      });
+
+    });
+
+    it('should redirect to the index view', function() {
+
+      browser.visit(r+'admin/poems/stop/idle', function() {
+        browser.location.pathname.should.eql('/admin/poems');
+        done();
+      });
+
+    });
 
   });
 

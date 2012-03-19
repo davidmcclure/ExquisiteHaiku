@@ -290,24 +290,29 @@ describe('Poem', function() {
         visibleWords : 500
       });
 
-      // Save and start.
+      // Save.
       poem.save(function(err) {
+        done();
+      });
+
+    });
+
+    describe('start', function() {
+
+      // Start.
+      beforeEach(function(done) {
         poem.start(function(err) {
           done();
         });
       });
 
-    });
-
-    // Stop and clear timers global.
-    afterEach(function(done) {
-      poem.stop(function() {
-        global.Oversoul.timers = {};
-        done();
+      // Stop and clear timers global.
+      afterEach(function(done) {
+        poem.stop(function() {
+          global.Oversoul.timers = {};
+          done();
+        });
       });
-    });
-
-    describe('start', function() {
 
       it('should register the slicer in the tracker object', function() {
         global.Oversoul.timers.should.have.keys(poem.id);
@@ -335,6 +340,21 @@ describe('Poem', function() {
 
     describe('stop', function() {
 
+      // Start.
+      beforeEach(function(done) {
+        poem.start(function(err) {
+          done();
+        });
+      });
+
+      // Stop and clear timers global.
+      afterEach(function(done) {
+        poem.stop(function() {
+          global.Oversoul.timers = {};
+          done();
+        });
+      });
+
       beforeEach(function(done) {
         poem.stop(function() { done(); });
       });
@@ -345,6 +365,96 @@ describe('Poem', function() {
 
       it('should set "running" to false', function() {
         poem.running.should.be.false;
+      });
+
+    });
+
+  });
+
+  describe('statics', function() {
+
+    describe('reset', function() {
+
+      var poem1, poem2, poem3;
+
+      beforeEach(function(done) {
+
+        // Create poem1.
+        poem1 = new Poem({
+          slug: 'poem1',
+          user: user.id,
+          running: true,
+          complete: false,
+          roundLength : 10000,
+          sliceInterval : 3,
+          minSubmissions : 5,
+          submissionVal : 100,
+          decayLifetime : 50,
+          seedCapital : 1000,
+          visibleWords : 500
+        });
+
+        // Create poem2.
+        poem2 = new Poem({
+          slug: 'poem2',
+          user: user.id,
+          running: true,
+          complete: false,
+          roundLength : 10000,
+          sliceInterval : 3,
+          minSubmissions : 5,
+          submissionVal : 100,
+          decayLifetime : 50,
+          seedCapital : 1000,
+          visibleWords : 500
+        });
+
+        // Create poem3.
+        poem3 = new Poem({
+          slug: 'poem3',
+          user: user.id,
+          running: false,
+          complete: false,
+          roundLength : 10000,
+          sliceInterval : 3,
+          minSubmissions : 5,
+          submissionVal : 100,
+          decayLifetime : 50,
+          seedCapital : 1000,
+          visibleWords : 500
+        });
+
+        // Save worker.
+        var save = function(document, callback) {
+          document.save(function(err) {
+            callback(null, document);
+          });
+        };
+
+        // Save.
+        async.map([
+          poem1,
+          poem2,
+          poem3
+        ], save, function(err, documents) {
+          done();
+        });
+
+      });
+
+      it('should set "running" to false for all poems', function(done) {
+
+        Poem.reset(function(err, numAffected) {
+
+          // 2 documents changed.
+          numAffected.should.eql(2);
+
+          // Check trackers on running poems.
+          poem1.running.should.be.false;
+          poem2.running.should.be.false;
+
+        });
+
       });
 
     });

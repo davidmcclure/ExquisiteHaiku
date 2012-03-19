@@ -131,7 +131,10 @@ Poem.methods.stop = function(cb) {
  * @return void.
  */
 Poem.statics.reset = function(cb) {
-  this.update({}, { running: false }, {}, cb);
+  Poem.collection.findAndModify({
+    query: { running: true },
+    update: { $set: { running: false } }
+  });
 };
 
 

@@ -116,6 +116,25 @@ Poem.methods.stop = function(cb) {
 };
 
 
+/*
+ * -------------------
+ * Collection methods.
+ * -------------------
+ */
+
+
+/*
+ * Set all poems running = false.
+ *
+ * @param {Function} cb: Callback.
+ *
+ * @return void.
+ */
+Poem.statics.reset = function(cb) {
+  this.update({}, { running: false }, {}, cb);
+};
+
+
 // Register model.
 mongoose.model('Poem', Poem);
 var Poem = mongoose.model('Poem');

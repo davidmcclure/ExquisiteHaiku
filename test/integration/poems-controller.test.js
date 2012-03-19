@@ -717,13 +717,12 @@ describe('Poem Controller', function() {
 
     });
 
-    it('should set running=true and started=true', function(done) {
+    it('should set running=true', function(done) {
 
       browser.visit(r+'admin/poems/start/idle', function() {
 
         // Re-get the poem.
         Poem.findOne({ slug: 'idle' }, function(err, poem) {
-          poem.started.should.be.true;
           poem.running.should.be.true;
           done();
         });
@@ -741,7 +740,7 @@ describe('Poem Controller', function() {
 
     });
 
-    it('should not set a new timer if the poem is already running');
+    it('should not set a new timer if the poem is running');
 
   });
 

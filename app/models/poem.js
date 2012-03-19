@@ -10,7 +10,6 @@ var Poem = new Schema({
   slug :            { type: String, required: true },
   user :            { type: Schema.ObjectId, ref: 'User', required: true },
   created :         { type: Date, required: true, default: Date.now() },
-  started :         { type: Boolean, required: true, default: false },
   running :         { type: Boolean, required: true, default: false },
   complete :        { type: Boolean, required: true, default: false },
   roundLength :     { type: Number, required: true },
@@ -31,33 +30,21 @@ var Poem = new Schema({
 
 
 /*
- * If the poem has not been started, then running and complete
- * must be false.
- *
- * @return {Boolean}: True if the statuses are valid.
- */
-Poem.path('started').validate(function(v) {
-  return v || (!this.running && !this.complete);
-});
-
-/*
- * If the poem is running, started must be true and complete
- * must be false.
+ * If the poem is running, complete must be false.
  *
  * @return {Boolean}: True if the statuses are valid.
  */
 Poem.path('running').validate(function(v) {
-  return !v || (this.started && !this.complete);
+  return !v || !this.complete;
 });
 
 /*
- * If the poem is complete, started must be true and running
- * must be false.
+ * If the poem is complete, running must be false.
  *
  * @return {Boolean}: True if the statuses are valid.
  */
 Poem.path('complete').validate(function(v) {
-  return !v || (this.started && !this.running);
+  return !v || !this.running;
 });
 
 
@@ -93,7 +80,6 @@ Poem.methods.start = function(cb) {
     this
   );
 
-  this.started = true;
   this.running = true;
 
   cb();

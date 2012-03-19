@@ -127,10 +127,6 @@ describe('Poem', function() {
       poem.created.should.be.ok;
     });
 
-    it('should set "started" to false by default', function() {
-      poem.started.should.be.false;
-    });
-
     it('should set "running" to false by default', function() {
       poem.running.should.be.false;
     });
@@ -162,34 +158,6 @@ describe('Poem', function() {
 
     });
 
-    describe('started', function() {
-
-      describe('is false', function() {
-
-        beforeEach(function() {
-          poem.started = false;
-        });
-
-        it('should block when running is true', function(done) {
-          poem.running = true;
-          poem.save(function(err) {
-            err.errors.started.should.be.ok;
-            done();
-          });
-        });
-
-        it('should block when complete is true', function(done) {
-          poem.complete = true;
-          poem.save(function(err) {
-            err.errors.started.should.be.ok;
-            done();
-          });
-        });
-
-      });
-
-    });
-
     describe('running', function() {
 
       describe('is true', function() {
@@ -198,16 +166,8 @@ describe('Poem', function() {
           poem.running = true;
         });
 
-        it('should block when started is false', function(done) {
-          poem.started = false;
-          poem.save(function(err) {
-            err.errors.running.should.be.ok;
-            done();
-          });
-        });
-
         it('should block when complete is true', function(done) {
-          poem.complete = false;
+          poem.complete = true;
           poem.save(function(err) {
             err.errors.running.should.be.ok;
             done();
@@ -226,14 +186,6 @@ describe('Poem', function() {
           poem.complete = true;
         });
 
-        it('should block when started is false', function(done) {
-          poem.started = false;
-          poem.save(function(err) {
-            err.errors.complete.should.be.ok;
-            done();
-          });
-        });
-
         it('should block when running is true', function(done) {
           poem.running = true;
           poem.save(function(err) {
@@ -248,8 +200,7 @@ describe('Poem', function() {
 
     describe('valid permutations', function() {
 
-      it('should pass with !started, !running, !complete', function(done) {
-        poem.started = false;
+      it('should pass with !running, !complete', function(done) {
         poem.running = false;
         poem.complete = false;
         poem.save(function(err) {
@@ -258,8 +209,7 @@ describe('Poem', function() {
         });
       });
 
-      it('should pass with started, running, !complete', function(done) {
-        poem.started = true;
+      it('should pass with running, !complete', function(done) {
         poem.running = true;
         poem.complete = false;
         poem.save(function(err) {
@@ -268,8 +218,7 @@ describe('Poem', function() {
         });
       });
 
-      it('should pass with started, !running, complete', function(done) {
-        poem.started = true;
+      it('should pass with !running, complete', function(done) {
         poem.running = false;
         poem.complete = true;
         poem.save(function(err) {

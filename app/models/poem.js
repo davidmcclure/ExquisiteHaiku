@@ -3,7 +3,8 @@
  */
 
 // Module dependencies.
-var slicer = require('../../lib/slicer');
+var slicer = require('../../lib/slicer'),
+  _ = require('underscore');
 
 // Schema definition.
 var Poem = new Schema({
@@ -65,7 +66,7 @@ Poem.virtual('id').get(function() {
 });
 
 /*
- * Start slicer.
+ * Start timer.
  *
  * @param {Function} cb: Callback.
  *
@@ -73,16 +74,25 @@ Poem.virtual('id').get(function() {
  */
 Poem.methods.start = function(cb) {
 
-  // Create and store timer.
-  global.Oversoul.timers[this.id] = setInterval(
-    slicer.integrator,
-    this.sliceInterval,
-    this
-  );
+  // Block if timer already exists.
+  if (_.has(global.Oversoul.timers, this.id)) {
+    cb(Error('Timer for ' + this.id + ' is already running'));
+  }
 
-  this.running = true;
+  else {
 
-  cb();
+    // Create and store timer.
+    global.Oversoul.timers[this.id] = setInterval(
+      slicer.integrator,
+      this.sliceInterval,
+      this
+    );
+
+    // Set tracker.
+    this.running = true;
+    cb();
+
+  }
 
 };
 
@@ -99,8 +109,8 @@ Poem.methods.stop = function(cb) {
   clearInterval(global.Oversoul.timers[this.id]);
   delete global.Oversoul.timers[this.id];
 
+  // Set tracker.
   this.running = false;
-
   cb();
 
 };

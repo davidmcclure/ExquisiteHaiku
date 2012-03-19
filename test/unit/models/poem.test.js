@@ -6,7 +6,8 @@
 var vows = require('mocha'),
   should = require('should'),
   async = require('async'),
-  assert = require('assert');
+  assert = require('assert'),
+  sinon = require('sinon');
 
 // Boostrap the application.
 process.env.NODE_ENV = 'testing';
@@ -291,7 +292,7 @@ describe('Poem', function() {
 
       // Save and start.
       poem.save(function(err) {
-        poem.start(function() {
+        poem.start(function(err) {
           done();
         });
       });
@@ -316,7 +317,19 @@ describe('Poem', function() {
         poem.running.should.be.true;
       });
 
-      it('should not set a new interval one is already registered');
+      it('should not double-start a poem', function(done) {
+
+        // Spy on callback.
+        var cb = sinon.spy(function(err) {
+          sinon.assert.calledWith(cb,
+            Error('Timer for ' + poem.id + ' is already running.'));
+          done();
+        });
+
+        // Attempt to double-start, listen for error.
+        poem.start(cb);
+
+      });
 
     });
 

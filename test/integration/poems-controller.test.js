@@ -740,8 +740,6 @@ describe('Poem Controller', function() {
 
     });
 
-    it('should not set a new timer if the poem is running');
-
   });
 
   describe('GET /admin/poems/stop/:slug', function() {

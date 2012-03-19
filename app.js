@@ -14,7 +14,7 @@ config = configFile.readConfig('config/config.yaml');
 // Connect to database.
 require('./db-connect');
 
-// Bootstrap models
+// Bootstrap models.
 var modelsPath = __dirname + '/app/models';
 var modelFiles = fs.readdirSync(modelsPath);
 modelFiles.forEach(function(file) {
@@ -25,7 +25,7 @@ modelFiles.forEach(function(file) {
 var app = module.exports = express.createServer();
 require('./settings').boot(app);
 
-// Bootstrap controllers
+// Bootstrap controllers.
 var controllersPath = __dirname + '/app/controllers';
 var controllerFiles = fs.readdirSync(controllersPath);
 controllerFiles.forEach(function(file) {

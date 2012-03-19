@@ -33,7 +33,7 @@ controllerFiles.forEach(function(file) {
 });
 
 // Initialize timers.
-require('./init-timers');
+require('./init-timers').boot(app);
 
 // Run.
 app.listen(3000);

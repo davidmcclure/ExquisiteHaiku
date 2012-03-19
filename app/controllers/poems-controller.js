@@ -1,5 +1,5 @@
 /*
- * Poems controller
+ * Admin controller
  */
 
 // Module dependencies.
@@ -12,9 +12,9 @@ var Poem = mongoose.model('Poem');
 
 
 /*
- * ------------
- * Poem routes.
- * ------------
+ * -------------
+ * Admin routes.
+ * -------------
  */
 
 // Controller actions.

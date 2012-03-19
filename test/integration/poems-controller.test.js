@@ -1,5 +1,5 @@
 /*
- * Integration tests for poems controller.
+ * Integration tests for admin controller.
  */
 
 // Module dependencies.
@@ -19,14 +19,15 @@ var User = mongoose.model('User'),
   Poem = mongoose.model('Poem'),
   _slugs = require('../../helpers/forms/_slugs');
 
+
 /*
  * ----------------------------------
- * Poem controller integration tests.
+ * Admin controller integration tests.
  * ----------------------------------
  */
 
 
-describe('Poem Controller', function() {
+describe('Admin Controller', function() {
 
   var r = 'http://localhost:3000/';
   var browser, user, idle, running, complete;

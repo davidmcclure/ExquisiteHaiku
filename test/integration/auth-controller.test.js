@@ -15,6 +15,7 @@ require('../../app');
 // Models.
 var User = mongoose.model('User');
 
+
 /*
  * ----------------------------------
  * Auth controller integration tests.

@@ -8,21 +8,32 @@ var async = require('async');
 // Models.
 var Poem = mongoose.model('Poem');
 
-// Declare the global timer tracker object.
-global.Oversoul = { timers: {} };
+// Boot hook.
+exports.boot = function(app) {
+  startTimers(app);
+};
 
-// Boot running timers.
-Poem.find({ running: true }, function(err, poems) {
+function startTimers(app) {
 
-  // Start worker.
-  var start = function(document, callback) {
-    document.start(function(err) {
-      callback(null, document);
-    });
-  };
+  // Declare the global timer tracker object.
+  global.Oversoul = { timers: {} };
 
-  // Start.
-  async.map(poems, start, function(err, documents) {});
-  console.log('Starting %d poems', poems.length);
+  // Boot running timers.
+  Poem.find({ running: true }, function(err, poems) {
 
-});
+    // Start worker.
+    var start = function(document, callback) {
+      document.start(function(err) {
+        callback(null, document);
+      });
+    };
+
+    // Start.
+    async.map(poems, start, function(err, documents) {});
+    if (app.settings.env !== 'testing') {
+      console.log('Starting %d poems', poems.length);
+    }
+
+  });
+
+}

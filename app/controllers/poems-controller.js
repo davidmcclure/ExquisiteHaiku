@@ -21,18 +21,18 @@ module.exports = function(app) {
 
   /*
    * The poem.
+   *
+   * @middleware auth.getPoem: Pass in the poem defined by :slug.
    */
   app.get('/:slug',
+    auth.getPoem,
     function(req, res) {
 
       // Render the layout.
-      res.render('admin/poems/edit', {
-        title:  'Edit Poem',
-        layout: '_layouts/admin',
-        user:   req.user,
-        nav:    { main: 'poems', sub: '' },
-        poem:   req.poem,
-        form:   form
+      res.render('poem/index', {
+        title:  req.params.slug,
+        layout: '_layouts/poem',
+        poem:   req.poem
       });
 
   });

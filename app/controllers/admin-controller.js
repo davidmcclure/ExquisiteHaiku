@@ -278,6 +278,7 @@ module.exports = function(app) {
    *
    * @middleware auth.isUser: Block if there is no user session.
    * @middleware auth.isAdmin: Block if the user is not an admin.
+   * @middleware auth.getPoem: Pass in the poem defined by :slug.
    */
   app.get('/admin/poems/start/:slug',
     auth.isUser,
@@ -298,6 +299,8 @@ module.exports = function(app) {
    * Stop poem.
    *
    * @middleware auth.isUser: Block if there is no user session.
+   * @middleware auth.isAdmin: Block if the user is not an admin.
+   * @middleware auth.getPoem: Pass in the poem defined by :slug.
    */
   app.get('/admin/poems/stop/:slug',
     auth.isUser,

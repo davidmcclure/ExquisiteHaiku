@@ -24,7 +24,17 @@ module.exports = function(app) {
    */
   app.get('/:slug',
     function(req, res) {
-      res.send(req.params.slug);
+
+      // Render the layout.
+      res.render('admin/poems/edit', {
+        title:  'Edit Poem',
+        layout: '_layouts/admin',
+        user:   req.user,
+        nav:    { main: 'poems', sub: '' },
+        poem:   req.poem,
+        form:   form
+      });
+
   });
 
 };

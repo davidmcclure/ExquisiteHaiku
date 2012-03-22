@@ -48,7 +48,7 @@ module.exports = function(app) {
       Poem.find().sort('created', -1).execFind(function(err, poems) {
 
         // Render the list.
-        res.render('admin/poems/index', {
+        res.render('admin/index', {
           title:  'Oversoul',
           layout: '_layouts/admin',
           user:   req.user,
@@ -72,7 +72,7 @@ module.exports = function(app) {
     function(req, res) {
 
       // Render the form.
-      res.render('admin/poems/new', {
+      res.render('admin/new', {
         title:  'New Poem',
         layout: '_layouts/admin',
         user:   req.user,
@@ -123,7 +123,7 @@ module.exports = function(app) {
         other: function(form) {
 
           // Re-render the form.
-          res.render('admin/poems/new', {
+          res.render('admin/new', {
             title:  'New Poem',
             layout: '_layouts/admin',
             user:   req.user,
@@ -161,7 +161,7 @@ module.exports = function(app) {
       });
 
       // Render the form.
-      res.render('admin/poems/edit', {
+      res.render('admin/edit', {
         title:  'Edit Poem',
         layout: '_layouts/admin',
         user:   req.user,
@@ -212,7 +212,7 @@ module.exports = function(app) {
         other: function(form) {
 
           // Re-render the form.
-          res.render('admin/poems/edit', {
+          res.render('admin/edit', {
             title:  'Edit Poem',
             layout: '_layouts/admin',
             user:   req.user,
@@ -241,7 +241,7 @@ module.exports = function(app) {
     function(req, res) {
 
       // Render the form.
-      res.render('admin/poems/delete', {
+      res.render('admin/delete', {
         title:  'Delete Poem',
         layout: '_layouts/admin',
         user:   req.user,

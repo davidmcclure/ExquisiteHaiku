@@ -12,7 +12,7 @@ var vows = require('mocha'),
 
 // Bootstrap the application.
 process.env.NODE_ENV = 'testing';
-require('../../app');
+var app = require('../../app');
 
 // Models and reserved slugs.
 var User = mongoose.model('User'),
@@ -50,7 +50,6 @@ describe('Admin Controller', function() {
     idle = new Poem({
       slug:             'idle',
       user:             user.id,
-      started:          false,
       running:          false,
       complete:         false,
       roundLength :     10000,
@@ -66,7 +65,6 @@ describe('Admin Controller', function() {
     running = new Poem({
       slug:             'running',
       user:             user.id,
-      started:          true,
       running:          true,
       complete:         false,
       roundLength :     10000,
@@ -82,7 +80,6 @@ describe('Admin Controller', function() {
     complete = new Poem({
       slug:             'complete',
       user:             user.id,
-      started:          true,
       running:          false,
       complete:         true,
       roundLength :     10000,
@@ -780,7 +777,7 @@ describe('Admin Controller', function() {
 
     });
 
-    it('should redirect to the index view', function() {
+    it('should redirect to the index view', function(done) {
 
       browser.visit(r+'admin/poems/stop/idle', function() {
         browser.location.pathname.should.eql('/admin/poems');

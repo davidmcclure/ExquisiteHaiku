@@ -10,7 +10,7 @@ var vows = require('mocha'),
 
 // Bootstrap the application.
 process.env.NODE_ENV = 'testing';
-require('../../app');
+var app = require('../../app');
 
 // Models.
 var User = mongoose.model('User'),

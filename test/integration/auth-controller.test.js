@@ -10,7 +10,7 @@ var vows = require('mocha'),
 
 // Bootstrap the application.
 process.env.NODE_ENV = 'testing';
-require('../../app');
+var app = require('../../app');
 
 // Models.
 var User = mongoose.model('User');
@@ -46,7 +46,7 @@ describe('Auth Controller', function() {
 
   });
 
-  // Clear users and logout.
+  // Clear documents.
   afterEach(function(done) {
     User.collection.remove(function(err) {
       done();
@@ -98,7 +98,7 @@ describe('Auth Controller', function() {
 
   });
 
-  describe('POST /admin/install', function() {
+  describe('POST /admin/login', function() {
 
     describe('username', function() {
 
@@ -144,7 +144,7 @@ describe('Auth Controller', function() {
       it('should not flash an error when the username is valid', function(done) {
 
         // GET admin/login.
-        browser.visit(r+'admin/install', function() {
+        browser.visit(r+'admin/login', function() {
 
           // Fill in form, submit.
           browser.fill('username', 'david');
@@ -263,4 +263,3 @@ describe('Auth Controller', function() {
   });
 
 });
-

@@ -3,12 +3,12 @@
  */
 
 // Module dependencies.
-var vows = require('mocha'),
-  should = require('should'),
-  assert = require('assert'),
-  Browser = require('zombie'),
-  request = require('request'),
-  async = require('async');
+var vows = require('mocha');
+var should = require('should');
+var assert = require('assert');
+var Browser = require('zombie');
+var request = require('request');
+var async = require('async');
 
 // Bootstrap the application.
 process.env.NODE_ENV = 'testing';

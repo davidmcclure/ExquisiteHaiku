@@ -3,8 +3,8 @@
  */
 
 // Module dependencies.
-var auth = require('../../helpers/middleware'),
-  _ = require('underscore');
+var auth = require('../../helpers/middleware');
+var _ = require('underscore');
 
 // Models.
 var Poem = mongoose.model('Poem');

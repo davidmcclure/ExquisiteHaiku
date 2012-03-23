@@ -3,10 +3,10 @@
  */
 
  // Module dependencies.
-var express = require('express'),
-  connect = require('connect'),
-  configFile = require('yaml-config'),
-  fs = require('fs');
+var express = require('express');
+var connect = require('connect');
+var configFile = require('yaml-config');
+var fs = require('fs');
 
 // Load configuration.
 config = configFile.readConfig('config/config.yaml');

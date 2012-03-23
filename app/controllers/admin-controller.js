@@ -3,11 +3,11 @@
  */
 
 // Module dependencies.
-var poemForm = require('../../helpers/forms/poem'),
-  slicer = require('../../lib/slicer'),
-  auth = require('../../helpers/middleware'),
-  _ = require('underscore'),
-  async = require('async');
+var poemForm = require('../../helpers/forms/poem');
+var slicer = require('../../lib/slicer');
+var auth = require('../../helpers/middleware');
+var async = require('async');
+var _ = require('underscore');
 
 // Models.
 var Poem = mongoose.model('Poem');

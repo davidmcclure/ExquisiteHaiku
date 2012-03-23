@@ -3,11 +3,11 @@
  */
 
 // Module dependencies.
-var vows = require('mocha'),
-  should = require('should'),
-  async = require('async'),
-  assert = require('assert'),
-  sinon = require('sinon');
+var vows = require('mocha');
+var should = require('should');
+var async = require('async');
+var assert = require('assert');
+var sinon = require('sinon');
 
 // Boostrap the application.
 process.env.NODE_ENV = 'testing';

@@ -3,10 +3,10 @@
  */
 
  // Module dependencies.
-var forms = require('forms'),
-  fields = forms.fields,
-  validators = forms.validators,
-  customValidators = require('../validators');
+var forms = require('forms');
+var fields = forms.fields;
+var validators = forms.validators;
+var customValidators = require('../validators');
 
 
 /*

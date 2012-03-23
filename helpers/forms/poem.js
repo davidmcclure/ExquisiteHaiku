@@ -3,11 +3,11 @@
  */
 
  // Module dependencies.
-var forms = require('forms'),
-  fields = forms.fields,
-  validators = forms.validators,
-  customValidators = require('../validators'),
-  _ = require('underscore');
+var forms = require('forms');
+var fields = forms.fields;
+var validators = forms.validators;
+var customValidators = require('../validators');
+var _ = require('underscore');
 
 // Models.
 var Poem = mongoose.model('Poem');

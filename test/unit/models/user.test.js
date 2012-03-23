@@ -3,8 +3,8 @@
  */
 
 // Module dependencies.
-var vows = require('mocha'),
-  should = require('should');
+var vows = require('mocha');
+var should = require('should');
 
 // Boostrap the application.
 process.env.NODE_ENV = 'testing';

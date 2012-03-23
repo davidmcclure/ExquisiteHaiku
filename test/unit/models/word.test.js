@@ -1,5 +1,5 @@
 /*
- * Unit tests for round model.
+ * Unit tests for word model.
  */
 
 // Module dependencies.
@@ -25,17 +25,21 @@ var Poem = mongoose.model('Poem');
 require('../../../app/models/round');
 var Round = mongoose.model('Round');
 
+// Word model.
+require('../../../app/models/word');
+var Word = mongoose.model('Word');
+
 
 /*
- * -----------------------
- * Round model unit tests.
- * -----------------------
+ * ----------------------
+ * Word model unit tests.
+ * ----------------------
  */
 
 
-describe('Round', function() {
+describe('Word', function() {
 
-  var user, poem, round;
+  var user, poem, round, word;
 
   beforeEach(function(done) {
 
@@ -65,6 +69,12 @@ describe('Round', function() {
       poem: poem.id
     });
 
+    // Create word.
+    word = new Word({
+      round: round.id,
+      word: 'word'
+    });
+
     // Save worker.
     var save = function(document, callback) {
       document.save(function(err) {
@@ -76,7 +86,8 @@ describe('Round', function() {
     async.map([
       user,
       poem,
-      round
+      round,
+      word
     ], save, function(err, documents) {
       done();
     });
@@ -97,7 +108,8 @@ describe('Round', function() {
     async.map([
       User,
       Poem,
-      Round
+      Round,
+      Word
     ], remove, function(err, models) {
       done();
     });
@@ -108,16 +120,16 @@ describe('Round', function() {
 
     it('should require all fields', function(done) {
 
-      // Create round, override defaults.
-      var round = new Round();
-      round.started = null;
+      // Create word, override defaults.
+      var word = new Word();
+      word.word = null;
 
       // Save.
-      round.save(function(err) {
+      word.save(function(err) {
 
         // Check for errors.
-        err.errors.poem.type.should.eql('required');
-        err.errors.started.type.should.eql('required');
+        err.errors.round.type.should.eql('required');
+        err.errors.word.type.should.eql('required');
 
         // Check for 1 documents.
         Round.count({}, function(err, count) {
@@ -131,24 +143,16 @@ describe('Round', function() {
 
   });
 
-  describe('field defaults', function() {
-
-    it('should set "started" to the current date by default', function() {
-      round.started.should.be.ok;
-    });
-
-  });
-
   describe('virtual fields', function() {
 
     describe('id', function() {
 
       it('should have a virtual field for "id"', function() {
-        round.id.should.be.ok;
+        word.id.should.be.ok;
       });
 
       it('should be a string', function() {
-        round.id.should.be.a('string');
+        word.id.should.be.a('string');
       });
 
     });

@@ -133,6 +133,7 @@ describe('Vote', function() {
 
       // Create vote, override defaults.
       var vote = new Vote();
+      vote.applied = null
 
       // Save.
       vote.save(function(err) {
@@ -140,6 +141,7 @@ describe('Vote', function() {
         // Check for errors.
         err.errors.word.type.should.eql('required');
         err.errors.quantity.type.should.eql('required');
+        err.errors.applied.type.should.eql('required');
 
         // Check for 1 documents.
         Vote.count({}, function(err, count) {
@@ -149,6 +151,14 @@ describe('Vote', function() {
 
       });
 
+    });
+
+  });
+
+  describe('field defaults', function() {
+
+    it('should set "applied" to the current date by default', function() {
+      vote.applied.should.be.ok;
     });
 
   });

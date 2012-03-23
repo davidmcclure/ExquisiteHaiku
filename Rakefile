@@ -8,12 +8,3 @@ namespace :test do
   end
 
 end
-
-namespace :benchmark do
-
-  desc 'Run the slicer benchmarks'
-  task :slicer do
-    sh %{mocha test/**/**/*.benchmark.js}
-  end
-
-end

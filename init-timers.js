@@ -4,6 +4,7 @@
 
 // Module dependencies.
 var async = require('async');
+var slicer = require('./lib/slicer');
 
 // Models.
 var Poem = mongoose.model('Poem');
@@ -23,7 +24,7 @@ function startTimers(app) {
 
     // Start worker.
     var start = function(document, callback) {
-      document.start(function(err) {
+      document.start(slicer.integrator, function(err) {
         callback(null, document);
       });
     };

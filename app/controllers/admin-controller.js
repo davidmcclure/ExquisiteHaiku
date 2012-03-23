@@ -267,16 +267,11 @@ module.exports = function(app) {
     auth.getPoem,
     function(req, res) {
 
-      // Clear the timer, delete the tracker.
-      clearInterval(global.Oversoul.timers[req.poem.id]);
-      delete global.Oversoul.timers[req.poem.id];
-
-      // Set poem tracker.
-      req.poem.running = false;
-
-      // Save the redirect.
-      req.poem.remove(function(err) {
-        res.redirect('/admin/poems');
+      // Stop, remove and redirect.
+      req.poem.stop(function() {
+        req.poem.remove(function(err) {
+          res.redirect('/admin/poems');
+        });
       });
 
   });
@@ -294,35 +289,18 @@ module.exports = function(app) {
     auth.getPoem,
     function(req, res) {
 
-      // Block if timer already exists.
-      if (!_.has(global.Oversoul.timers, req.poem.id)) {
+      // Start, save, and redirect.
+      req.poem.start(slicer.integrator, function() {
+        req.poem.save(function(err) {
 
-        // Create and store timer.
-        global.Oversoul.timers[req.poem.id] = setInterval(
-          slicer.integrator,
-          req.poem.sliceInterval,
-          req.poem
-        );
-
-        // Create starting round, set poem tracker.
-        var round = new Round({ poem: req.poem.id });
-        req.poem.running = true;
-
-        // Save worker.
-        var save = function(document, callback) {
-          document.save(function(err) {
-            callback(null, document);
+          // Create starting round.
+          var round = new Round({ poem: req.poem.id });
+          round.save(function(err) {
+            res.redirect('/admin/poems');
           });
-        };
 
-        // Save.
-        async.map([
-          req.poem,
-          round
-        ], save, function(err, documents) {
-          res.redirect('/admin/poems');
         });
-      }
+      });
 
   });
 
@@ -339,16 +317,11 @@ module.exports = function(app) {
     auth.getPoem,
     function(req, res) {
 
-      // Clear the timer, delete the tracker.
-      clearInterval(global.Oversoul.timers[req.poem.id]);
-      delete global.Oversoul.timers[req.poem.id];
-
-      // Set poem tracker.
-      req.poem.running = false;
-
-      // Save the redirect.
-      req.poem.save(function(err) {
-        res.redirect('/admin/poems');
+      // Stop, save, and redirect.
+      req.poem.stop(function() {
+        req.poem.save(function(err) {
+          res.redirect('/admin/poems');
+        });
       });
 
   });

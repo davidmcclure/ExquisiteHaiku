@@ -1,5 +1,5 @@
 /*
- * Unit tests for vote model.
+ * Unit tests for word model.
  */
 
 // Module dependencies.
@@ -29,20 +29,17 @@ var Round = mongoose.model('Round');
 require('../../../app/models/word');
 var Word = mongoose.model('Word');
 
-// Vote model.
-require('../../../app/models/vote');
-var Vote = mongoose.model('Vote');
 
 /*
  * ----------------------
- * Vote model unit tests.
+ * Word model unit tests.
  * ----------------------
  */
 
 
-describe('Vote', function() {
+describe('Word', function() {
 
-  var user, poem, round, word, vote;
+  var user, poem, round, word;
 
   beforeEach(function(done) {
 
@@ -78,12 +75,6 @@ describe('Vote', function() {
       word: 'word'
     });
 
-    // Create vote.
-    vote = new Vote({
-      word: word.id,
-      quantity: 100
-    });
-
     // Save worker.
     var save = function(document, callback) {
       document.save(function(err) {
@@ -96,8 +87,7 @@ describe('Vote', function() {
       user,
       poem,
       round,
-      word,
-      vote
+      word
     ], save, function(err, documents) {
       done();
     });
@@ -119,8 +109,7 @@ describe('Vote', function() {
       User,
       Poem,
       Round,
-      Word,
-      Vote
+      Word
     ], remove, function(err, models) {
       done();
     });
@@ -131,20 +120,19 @@ describe('Vote', function() {
 
     it('should require all fields', function(done) {
 
-      // Create vote, override defaults.
-      var vote = new Vote();
-      vote.applied = null
+      // Create word, override defaults.
+      var word = new Word();
+      word.word = null;
 
       // Save.
-      vote.save(function(err) {
+      word.save(function(err) {
 
         // Check for errors.
+        err.errors.round.type.should.eql('required');
         err.errors.word.type.should.eql('required');
-        err.errors.quantity.type.should.eql('required');
-        err.errors.applied.type.should.eql('required');
 
         // Check for 1 documents.
-        Vote.count({}, function(err, count) {
+        Round.count({}, function(err, count) {
           count.should.eql(1);
           done();
         });
@@ -155,24 +143,16 @@ describe('Vote', function() {
 
   });
 
-  describe('field defaults', function() {
-
-    it('should set "applied" to the current date by default', function() {
-      vote.applied.should.be.ok;
-    });
-
-  });
-
   describe('virtual fields', function() {
 
     describe('id', function() {
 
       it('should have a virtual field for "id"', function() {
-        vote.id.should.be.ok;
+        word.id.should.be.ok;
       });
 
       it('should be a string', function() {
-        vote.id.should.be.a('string');
+        word.id.should.be.a('string');
       });
 
     });

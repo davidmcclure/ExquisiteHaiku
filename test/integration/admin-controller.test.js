@@ -732,6 +732,32 @@ describe('Admin Controller', function() {
 
     });
 
+    it('should create a starting round for the poem', function(done) {
+
+      // Get starting rounds count.
+      Round.count({}, function(err, count1) {
+
+        // GET admin/poems/delete/:slug.
+        browser.visit(r+'admin/poems/start/idle', function() {
+
+          // Recount.
+          Round.count({}, function(err, count2) {
+
+            // Check count++, get the round.
+            count2.should.eql(count1+1);
+            Round.findOne({ poem: idle.id }, function(err, round) {
+              round.should.be.ok;
+              done();
+            });
+
+          });
+
+        });
+
+      });
+
+    });
+
     it('should set running=true', function(done) {
 
       browser.visit(r+'admin/poems/start/idle', function() {

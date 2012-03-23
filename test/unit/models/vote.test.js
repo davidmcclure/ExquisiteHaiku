@@ -25,10 +25,6 @@ var Poem = mongoose.model('Poem');
 require('../../../app/models/round');
 var Round = mongoose.model('Round');
 
-// Word model.
-require('../../../app/models/word');
-var Word = mongoose.model('Word');
-
 // Vote model.
 require('../../../app/models/vote');
 var Vote = mongoose.model('Vote');
@@ -42,7 +38,7 @@ var Vote = mongoose.model('Vote');
 
 describe('Vote', function() {
 
-  var user, poem, round, word, vote;
+  var user, poem, round, vote;
 
   beforeEach(function(done) {
 
@@ -72,12 +68,6 @@ describe('Vote', function() {
       poem: poem.id
     });
 
-    // Create word.
-    word = new Word({
-      round: round.id,
-      word: 'word'
-    });
-
     // Create vote.
     vote = new Vote({
       word: word.id,
@@ -96,7 +86,6 @@ describe('Vote', function() {
       user,
       poem,
       round,
-      word,
       vote
     ], save, function(err, documents) {
       done();
@@ -119,7 +108,6 @@ describe('Vote', function() {
       User,
       Poem,
       Round,
-      Word,
       Vote
     ], remove, function(err, models) {
       done();

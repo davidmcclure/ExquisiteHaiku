@@ -19,7 +19,8 @@ var Poem = new Schema({
   submissionVal :   { type: Number, required: true },
   decayLifetime :   { type: Number, required: true },
   seedCapital :     { type: Number, required: true },
-  visibleWords :    { type: Number, required: true }
+  visibleWords :    { type: Number, required: true },
+  poem:             { type: Array }
 });
 
 
@@ -113,6 +114,17 @@ Poem.methods.stop = function(cb) {
   this.running = false;
   cb();
 
+};
+
+/*
+ * Add a word to the poem array.
+ *
+ * @param {Function} cb: Callback.
+ *
+ * @return void.
+ */
+Poem.methods.addWord = function(word) {
+  this.poem.push(word);
 };
 
 

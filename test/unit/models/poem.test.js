@@ -341,7 +341,7 @@ describe('Poem', function() {
       // Start.
       beforeEach(function(done) {
         poem.start(function(err) {
-          done();
+          poem.stop(function() { done(); });
         });
       });
 
@@ -353,16 +353,29 @@ describe('Poem', function() {
         });
       });
 
-      beforeEach(function(done) {
-        poem.stop(function() { done(); });
-      });
-
       it('should remove the slicer from the tracker object', function() {
         global.Oversoul.timers.should.not.have.keys(poem.id);
       });
 
       it('should set "running" to false', function() {
         poem.running.should.be.false;
+      });
+
+    });
+
+    describe('addWord', function() {
+
+      it('should append the new word to the poem array', function() {
+
+        // Add first word.
+        poem.addWord('electrical');
+        poem.poem[0].should.eql('electrical');
+
+        // Add second word.
+        poem.addWord('days');
+        poem.poem[0].should.eql('electrical');
+        poem.poem[1].should.eql('days');
+
       });
 
     });

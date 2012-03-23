@@ -10,7 +10,16 @@ define([
 
     var AppView = Backbone.View.extend({
 
+      /*
+       * .
+       *
+       * @return void.
+       */
+      initialize: function() {
 
+
+
+      }
 
     });
 

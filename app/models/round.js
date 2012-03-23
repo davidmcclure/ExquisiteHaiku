@@ -9,7 +9,7 @@ var slicer = require('../../lib/slicer'),
 // Schema definition.
 var Round = new Schema({
   poem :            { type: Schema.ObjectId, ref: 'Poem', required: true },
-  created :         { type: Date, default: Date.now(), required: true }
+  started :         { type: Date, default: Date.now(), required: true }
 });
 
 

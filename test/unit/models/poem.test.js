@@ -40,7 +40,6 @@ describe('Poem', function() {
       username:   'david',
       password:   'password',
       email:      'david@test.com',
-      superUser:  true,
       active:     true
     });
 
@@ -70,8 +69,7 @@ describe('Poem', function() {
 
     it('should require all fields', function(done) {
 
-      // Create poem empty fields, manually set created field
-      // to override the default.
+      // Create poem, override defaults.
       var poem = new Poem();
       poem.created = null;
 

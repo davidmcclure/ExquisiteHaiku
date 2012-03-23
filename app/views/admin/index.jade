@@ -17,14 +17,19 @@ if poems.length > 0
         tr(slug=poem.slug)
           td.title
             a(href='/#{poem.slug}')= poem.slug
-          td
-          td.gray= poem.roundLength
-          td.gray= poem.sliceInterval
-          td.gray= poem.minSubmissions
-          td.gray= poem.submissionVal
-          td.gray= poem.decayLifetime
-          td.gray= poem.seedCapital
-          td.gray= poem.visibleWords
+          if poem.running
+            td.status running
+          else if !poem.complete
+            td.status idle
+          else
+            td.status complete
+          td.roundLength.gray= poem.roundLength
+          td.sliceInterval.gray= poem.sliceInterval
+          td.minSubmissions.gray= poem.minSubmissions
+          td.submissionVal.gray= poem.submissionVal
+          td.decayLifetime.gray= poem.decayLifetime
+          td.seedCapital.gray= poem.seedCapital
+          td.visibleWords.gray= poem.visibleWords
           td
             if !poem.running && !poem.complete
               a.start.action(href='/admin/poems/start/#{poem.slug}') start

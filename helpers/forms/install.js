@@ -29,7 +29,7 @@ exports.form = function() {
     // Username.
     username: fields.string({
       name: 'username',
-      label: 'Username: *',
+      label: 'Username',
       required: 'Enter a username.',
       validators: [
         validators.rangeLength(4, 20, '4-20 characters.'),
@@ -40,7 +40,7 @@ exports.form = function() {
     // Password.
     password: fields.password({
       name: 'password',
-      label: 'Password: *',
+      label: 'Password',
       required: 'Enter a password.',
       validators: [
         validators.minLength(6, 'At least 6 characters.')
@@ -50,7 +50,7 @@ exports.form = function() {
     // Password confirmation.
     confirm: fields.password({
       name: 'confirm',
-      label: 'Retype Password: *',
+      label: 'Retype Password',
       required: 'Confirm your password.',
       validators: [
         validators.matchField('password', 'Does not match.')
@@ -60,7 +60,7 @@ exports.form = function() {
     // Email.
     email: fields.email({
       name: 'email',
-      label: 'Email: *',
+      label: 'Email',
       required: 'Enter an email address.'
     })
 

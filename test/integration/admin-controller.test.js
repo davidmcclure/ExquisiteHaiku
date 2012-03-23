@@ -168,9 +168,9 @@ describe('Admin Controller', function() {
 
     it('should show poems', function() {
 
-      browser.text('td.title').should.include('idle');
-      browser.text('td.title').should.include('running');
-      browser.text('td.title').should.include('complete');
+      browser.text('tr[slug="idle"] td.title').should.eql('idle');
+      browser.text('tr[slug="running"] td.title').should.eql('running');
+      browser.text('tr[slug="complete"] td.title').should.eql('complete');
 
     });
 
@@ -237,6 +237,18 @@ describe('Admin Controller', function() {
         'tr[slug="complete"] a.delete[href="/admin/poems/delete/complete"]'
       ).should.be.ok;
 
+    });
+
+    it('should show "idle" status for idle poems', function() {
+      browser.text('tr[slug="idle"] td.status').should.eql('idle');
+    });
+
+    it('should show "running" status for running poems', function() {
+      browser.text('tr[slug="running"] td.status').should.eql('running');
+    });
+
+    it('should show "complete" status for complete poems', function() {
+      browser.text('tr[slug="complete"] td.status').should.eql('complete');
     });
 
   });

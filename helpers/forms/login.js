@@ -23,7 +23,7 @@ exports.form = function() {
     // Username.
     username: fields.string({
       name: 'username',
-      label: 'Username: *',
+      label: 'Username',
       required: 'Enter a username.',
       validators: [
         customValidators.usernameExists('Does not exist.'),
@@ -34,7 +34,7 @@ exports.form = function() {
     // Password.
     password: fields.password({
       name: 'password',
-      label: 'Password: *',
+      label: 'Password',
       required: 'Enter a password.',
       validators: [
         customValidators.passwordCorrect('Incorrect.')

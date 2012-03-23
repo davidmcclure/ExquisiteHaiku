@@ -30,7 +30,7 @@ exports.form = function(poem) {
     // Slug.
     slug: fields.string({
       name: 'slug',
-      label: 'URL Slug:',
+      label: 'URL Slug',
       required: 'Enter a slug.',
       validators: (function() {
 
@@ -62,7 +62,7 @@ exports.form = function(poem) {
     // Word round length.
     roundLength: fields.string({
       name: 'roundLength',
-      label: 'Round Length:',
+      label: 'Round Length',
       required: 'Enter a round length.',
       validators: [
         customValidators.positiveInteger('Must be a positive integer.')
@@ -72,7 +72,7 @@ exports.form = function(poem) {
     // Slice interval.
     sliceInterval: fields.string({
       name: 'sliceInterval',
-      label: 'Slicing Interval:',
+      label: 'Slicing Interval',
       required: 'Enter a slice interval.',
       validators: [
         customValidators.positiveInteger('Must be a positive integer.')
@@ -82,7 +82,7 @@ exports.form = function(poem) {
     // Minimum submssions.
     minSubmissions: fields.string({
       name: 'minSubmissions',
-      label: 'Minimum Submissions:',
+      label: 'Minimum Submissions',
       required: 'Enter a minimum number of submissions.',
       validators: [
         customValidators.positiveInteger('Must be a positive integer.')
@@ -92,7 +92,7 @@ exports.form = function(poem) {
     // Submission value.
     submissionVal: fields.string({
       name: 'submissionVal',
-      label: 'Submission Value:',
+      label: 'Submission Value',
       required: 'Enter a point value for blind submissions.',
       validators: [
         customValidators.positiveInteger('Must be a positive integer.')
@@ -102,7 +102,7 @@ exports.form = function(poem) {
     // Decay lifetime.
     decayLifetime: fields.string({
       name: 'decayLifetime',
-      label: 'Decay Lifetime:',
+      label: 'Decay Lifetime',
       required: 'Enter a decay lifetime.',
       validators: [
         customValidators.positiveInteger('Must be a positive integer.')
@@ -112,7 +112,7 @@ exports.form = function(poem) {
     // Seed capital.
     seedCapital: fields.string({
       name: 'seedCapital',
-      label: 'Seed Capital:',
+      label: 'Seed Capital',
       required: 'Enter a seed capital amount.',
       validators: [
         customValidators.positiveInteger('Must be a positive integer.')
@@ -122,7 +122,7 @@ exports.form = function(poem) {
     // Visible words.
     visibleWords: fields.string({
       name: 'visibleWords',
-      label: 'Visible Words:',
+      label: 'Visible Words',
       required: 'Enter a number of visible words.',
       validators: [
         customValidators.positiveInteger('Must be a positive integer.')

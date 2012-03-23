@@ -67,6 +67,57 @@ Poem.virtual('id').get(function() {
 });
 
 /*
+ * Start timer.
+ *
+ * @param {Function} slicer: The slicer.
+ * @param {Function} cb: Callback.
+ *
+ * @return void.
+ */
+Poem.methods.start = function(slicer, cb) {
+
+  // Block if timer already exists.
+  if (_.has(global.Oversoul.timers, this.id)) {
+    cb(Error('Timer for ' + this.id + ' is already running'));
+  }
+
+  else {
+
+    // Create and store timer.
+    global.Oversoul.timers[this.id] = setInterval(
+      slicer,
+      this.sliceInterval,
+      this
+    );
+
+    // Set tracker.
+    this.running = true;
+    cb();
+
+  }
+
+};
+
+/*
+ * Stop slicer.
+ *
+ * @param {Function} cb: Callback.
+ *
+ * @return void.
+ */
+Poem.methods.stop = function(cb) {
+
+  // Clear the timer, delete the tracker.
+  clearInterval(global.Oversoul.timers[this.id]);
+  delete global.Oversoul.timers[this.id];
+
+  // Set tracker.
+  this.running = false;
+  cb();
+
+};
+
+/*
  * Add a word to the poem array.
  *
  * @param {Function} cb: Callback.

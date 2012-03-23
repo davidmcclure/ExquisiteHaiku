@@ -17,6 +17,7 @@ var app = require('../../app');
 // Models and reserved slugs.
 var User = mongoose.model('User'),
   Poem = mongoose.model('Poem'),
+  Round = mongoose.model('Round'),
   _slugs = require('../../helpers/forms/_slugs');
 
 
@@ -136,7 +137,11 @@ describe('Admin Controller', function() {
     };
 
     // Truncate.
-    async.map([User, Poem], remove, function(err, models) {
+    async.map([
+      User,
+      Poem,
+      Round
+    ], remove, function(err, models) {
       done();
     });
 

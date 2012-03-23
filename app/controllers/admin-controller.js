@@ -5,10 +5,12 @@
 // Module dependencies.
 var poemForm = require('../../helpers/forms/poem'),
   auth = require('../../helpers/middleware'),
-  _ = require('underscore');
+  _ = require('underscore'),
+  async = require('async');
 
 // Models.
 var Poem = mongoose.model('Poem');
+var Round = mongoose.model('Round');
 
 
 /*
@@ -286,11 +288,27 @@ module.exports = function(app) {
     auth.getPoem,
     function(req, res) {
 
-      // Start, save, and redirect.
+      // Start poem.
       req.poem.start(function() {
-        req.poem.save(function(err) {
+
+        // Create starting round.
+        var round = new Round({ poem: req.poem.id });
+
+        // Save worker.
+        var save = function(document, callback) {
+          document.save(function(err) {
+            callback(null, document);
+          });
+        };
+
+        // Save.
+        async.map([
+          req.poem,
+          round
+        ], save, function(err, documents) {
           res.redirect('/admin/poems');
         });
+
       });
 
   });

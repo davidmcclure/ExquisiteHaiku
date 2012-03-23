@@ -83,7 +83,7 @@ describe('Round', function() {
 
   });
 
-  // Clear users and poems.
+  // Clear users, poems, and rounds.
   afterEach(function(done) {
 
     // Truncate worker.

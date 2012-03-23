@@ -3,8 +3,7 @@
  */
 
 // Module dependencies.
-var slicer = require('../../lib/slicer'),
-  _ = require('underscore');
+var _ = require('underscore');
 
 // Schema definition.
 var Round = new Schema({

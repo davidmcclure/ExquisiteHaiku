@@ -1,14 +1,14 @@
 /*
- * Word model.
+ * Vote model.
  */
 
 // Module dependencies.
 var _ = require('underscore');
 
 // Schema definition.
-var Word = new Schema({
-  round :     { type: Schema.ObjectId, ref: 'Round', required: true },
-  word :      { type: String, required: true }
+var Vote = new Schema({
+  word :      { type: Schema.ObjectId, ref: 'Word', required: true },
+  quantity :  { type: Number, required: true }
 });
 
 
@@ -24,11 +24,11 @@ var Word = new Schema({
  *
  * @return {String}: The id.
  */
-Word.virtual('id').get(function() {
+Vote.virtual('id').get(function() {
   return this._id.toHexString();
 });
 
 
 // Register model.
-mongoose.model('Word', Word);
-var Word = mongoose.model('Word');
+mongoose.model('Vote', Vote);
+var Vote = mongoose.model('Vote');

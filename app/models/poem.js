@@ -9,6 +9,7 @@ var _ = require('underscore');
 var Poem = new Schema({
   slug :            { type: String, required: true },
   user :            { type: Schema.ObjectId, ref: 'User', required: true },
+  round :           { type: Schema.ObjectId, ref: 'Round' },
   created :         { type: Date, required: true, default: Date.now() },
   running :         { type: Boolean, required: true, default: false },
   complete :        { type: Boolean, required: true, default: false },
@@ -19,7 +20,7 @@ var Poem = new Schema({
   decayLifetime :   { type: Number, required: true },
   seedCapital :     { type: Number, required: true },
   visibleWords :    { type: Number, required: true },
-  poem:             { type: Array }
+  words:            { type: Array }
 });
 
 
@@ -73,7 +74,7 @@ Poem.virtual('id').get(function() {
  * @return void.
  */
 Poem.methods.addWord = function(word) {
-  this.poem.push(word);
+  this.words.push(word);
 };
 
 

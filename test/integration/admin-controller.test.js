@@ -9,16 +9,17 @@ var assert = require('assert');
 var Browser = require('zombie');
 var request = require('request');
 var async = require('async');
+var _ = require('underscore');
 
 // Bootstrap the application.
 process.env.NODE_ENV = 'testing';
 var app = require('../../app');
 
 // Models and reserved slugs.
-var User = mongoose.model('User'),
-  Poem = mongoose.model('Poem'),
-  Round = mongoose.model('Round'),
-  _slugs = require('../../helpers/forms/_slugs');
+var User = mongoose.model('User');
+var Poem = mongoose.model('Poem');
+var Round = mongoose.model('Round');
+var _slugs = require('../../helpers/forms/_slugs');
 
 
 /*
@@ -127,6 +128,9 @@ describe('Admin Controller', function() {
   afterEach(function(done) {
 
     // Clear out the timers hash.
+    _.each(global.Oversoul.timers, function(int, id) {
+      clearInterval(int);
+    });
     global.Oversoul.timers = {};
 
     // Truncate worker.
@@ -743,8 +747,10 @@ describe('Admin Controller', function() {
           // Recount.
           Round.count({}, function(err, count2) {
 
-            // Check count++, get the round.
+            // Check count++.
             count2.should.eql(count1+1);
+
+            // Get the round.
             Round.findOne({ poem: idle.id }, function(err, round) {
               round.should.be.ok;
               done();

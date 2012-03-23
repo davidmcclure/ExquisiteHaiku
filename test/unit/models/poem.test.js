@@ -301,12 +301,12 @@ describe('Poem', function() {
 
         // Add first word.
         poem.addWord('electrical');
-        poem.poem[0].should.eql('electrical');
+        poem.words[0].should.eql('electrical');
 
         // Add second word.
         poem.addWord('days');
-        poem.poem[0].should.eql('electrical');
-        poem.poem[1].should.eql('days');
+        poem.words[0].should.eql('electrical');
+        poem.words[1].should.eql('days');
 
       });
 

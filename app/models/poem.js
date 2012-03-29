@@ -78,7 +78,7 @@ Poem.virtual('id').get(function() {
  *
  * @return void.
  */
-Poem.methods.start = function(cb) {
+Poem.methods.start = function(slicer, cb) {
 
   // Block if timer already exists.
   if (_.has(global.Oversoul.timers, this.id)) {
@@ -89,7 +89,7 @@ Poem.methods.start = function(cb) {
 
     // Create and store timer.
     global.Oversoul.timers[this.id] = setInterval(
-      this.slice,
+      slicer,
       this.sliceInterval,
       this
     );
@@ -119,16 +119,6 @@ Poem.methods.stop = function(cb) {
   this.running = false;
   cb();
 
-};
-
-/*
- * Slice.
- *
- * @return void.
- */
-Poem.methods.slice = function() {
-  console.log('wtf');
-  console.log(this.id);
 };
 
 /*

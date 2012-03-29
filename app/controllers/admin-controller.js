@@ -4,6 +4,7 @@
 
 // Module dependencies.
 var poemForm = require('../../helpers/forms/poem');
+var slicer = require('../../lib/slicer');
 var auth = require('../../helpers/middleware');
 var async = require('async');
 var _ = require('underscore');
@@ -289,7 +290,7 @@ module.exports = function(app) {
     function(req, res) {
 
       // Start, save, and redirect.
-      req.poem.start(function() {
+      req.poem.start(slicer.integrator, function() {
         req.poem.save(function(err) {
 
           // Create starting round.

@@ -299,7 +299,7 @@ describe('Poem', function() {
 
       // Start.
       beforeEach(function(done) {
-        poem.start(function(err) {
+        poem.start(function() {}, function(err) {
           done();
         });
       });
@@ -330,7 +330,7 @@ describe('Poem', function() {
         });
 
         // Attempt to double-start, listen for error.
-        poem.start(cb);
+        poem.start(function() {}, cb);
 
       });
 
@@ -340,7 +340,7 @@ describe('Poem', function() {
 
       // Start.
       beforeEach(function(done) {
-        poem.start(function(err) {
+        poem.start(function() {}, function(err) {
           poem.stop(function() { done(); });
         });
       });

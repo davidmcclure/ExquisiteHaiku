@@ -179,4 +179,14 @@ describe('Vote', function() {
 
   });
 
+  describe('methods', function() {
+
+    describe('score', function() {
+
+
+
+    });
+
+  });
+
 });

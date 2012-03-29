@@ -416,4 +416,93 @@ describe('Route Middleware', function() {
 
   });
 
+  describe('unstartedPoem', function() {
+
+    var user, poem;
+
+    beforeEach(function(done) {
+
+      // Create user.
+      user = new User({
+        username:   'david',
+        password:   'password',
+        email:      'david@test.com',
+        admin:      true
+      });
+
+      // Create poem.
+      poem = new Poem({
+        slug:             'poem',
+        user:             user.id,
+        roundLength :     10000,
+        sliceInterval :   3,
+        minSubmissions :  5,
+        submissionVal :   100,
+        decayLifetime :   50,
+        seedCapital :     1000,
+        visibleWords :    500
+      });
+
+      // Save worker.
+      var save = function(document, callback) {
+        document.save(function(err) {
+          callback(null, document);
+        });
+      };
+
+      // Save.
+      async.map([user, poem], save, function(err, documents) {
+        done();
+      });
+
+    });
+
+    it('should redirect when the poem has been started', function(done) {
+
+      // Spy on res.
+      res.redirect = sinon.spy();
+
+      // Set poem started.
+      poem.started = true;
+
+      // Save.
+      poem.save(function(err) {
+
+        // Set poem.
+        req.poem = poem;
+
+        // Call unstartedPoem, check for redirect.
+        auth.unstartedPoem(req, res, next);
+        sinon.assert.calledWith(res.redirect, '/admin/poems');
+        done();
+
+      });
+
+    });
+
+    it('should call next() when the poem is unstarted', function(done) {
+
+      // Spy on next.
+      next = sinon.spy();
+
+      // Set poem unstarted.
+      poem.started = false;
+
+      // Save.
+      poem.save(function(err) {
+
+        // Set poem.
+        req.poem = poem;
+
+        // Call unstartedPoem, check for redirect.
+        auth.unstartedPoem(req, res, next);
+        sinon.assert.called(next);
+        done();
+
+      });
+
+    });
+
+  });
+
 });

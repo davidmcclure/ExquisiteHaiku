@@ -111,3 +111,19 @@ exports.getPoem = function (req, res, next) {
   });
 
 };
+
+
+/*
+ * Only allow when req.poem has not been started. Called after getPoem,
+ * which passes the poem document.
+ *
+ * @param {Object} req: The request.
+ * @param {Object} res: The response.
+ * @param {Callback} next: The next middleware.
+ *
+ * @return void.
+ */
+exports.unstartedPoem = function (req, res, next) {
+  if (!req.poem.started) next();
+  else res.redirect('/admin/poems');
+};

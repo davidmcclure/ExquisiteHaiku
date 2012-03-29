@@ -150,6 +150,7 @@ module.exports = function(app) {
     auth.isUser,
     auth.isAdmin,
     auth.getPoem,
+    auth.unstartedPoem,
     function(req, res) {
 
       var form = poemForm.form(req.poem).bind({
@@ -186,6 +187,7 @@ module.exports = function(app) {
     auth.isUser,
     auth.isAdmin,
     auth.getPoem,
+    auth.unstartedPoem,
     function(req, res) {
 
       // Pass control to the form.

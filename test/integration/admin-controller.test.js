@@ -527,6 +527,19 @@ describe('Admin Controller', function() {
 
     });
 
+    it('should redirect when the poem has been started', function(done) {
+
+      // Go to poem edit page.
+      browser.visit(r+'admin/poems/edit/paused', function() {
+
+        // Check for redirect.
+        browser.location.pathname.should.eql('/admin/poems');
+        done();
+
+      });
+
+    });
+
   });
 
   describe('POST /admin/poems/edit/:slug', function() {

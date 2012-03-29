@@ -59,10 +59,10 @@ describe('Vote', function() {
       slug: 'test-poem',
       user: user.id,
       roundLength : 10000,
-      sliceInterval : 3,
+      sliceInterval : 1000,
       minSubmissions : 5,
       submissionVal : 100,
-      decayLifetime : 50,
+      decayLifetime : 50000,
       seedCapital : 1000,
       visibleWords : 500
     });
@@ -81,6 +81,7 @@ describe('Vote', function() {
     // Create vote.
     vote = new Vote({
       word: word.id,
+      decayLifetime: 50000,
       quantity: 100
     });
 
@@ -141,6 +142,7 @@ describe('Vote', function() {
         // Check for errors.
         err.errors.word.type.should.eql('required');
         err.errors.quantity.type.should.eql('required');
+        err.errors.decayLifetime.type.should.eql('required');
         err.errors.applied.type.should.eql('required');
 
         // Check for 1 documents.

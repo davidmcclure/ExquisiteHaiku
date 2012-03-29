@@ -19,10 +19,13 @@ if poems.length > 0
             a(href='/#{poem.slug}')= poem.slug
           if poem.running
             td.status running
-          else if !poem.complete
-            td.status idle
           else
-            td.status complete
+            if !poem.complete && !poem.started
+              td.status unstarted
+            else if !poem.complete && poem.started
+              td.status paused
+            else
+              td.status complete
           td.roundLength.gray= poem.roundLength
           td.sliceInterval.gray= poem.sliceInterval
           td.minSubmissions.gray= poem.minSubmissions
@@ -33,7 +36,8 @@ if poems.length > 0
           td
             if !poem.running && !poem.complete
               a.start.action(href='/admin/poems/start/#{poem.slug}') start
-              a.edit(href='/admin/poems/edit/#{poem.slug}') edit
+              if !poem.started
+                a.edit(href='/admin/poems/edit/#{poem.slug}') edit
             else if poem.running && !poem.complete
               a.stop.action(href='/admin/poems/stop/#{poem.slug}') stop
             a.delete.danger(href='/admin/poems/delete/#{poem.slug}') delete

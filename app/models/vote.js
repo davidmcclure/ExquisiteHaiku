@@ -34,29 +34,29 @@ Vote.virtual('id').get(function() {
  *
  * @return {Array}: [rank, churn].
  */
-Vote.methods.score = function(cb) {
+// Vote.methods.score = function(cb) {
 
-  // Get time delta.
-  var delta = this.applied - Date.now();
+//   // Get time delta.
+//   var delta = this.applied - Date.now();
 
-  // Compute churn.
-  var churn = this.quantity * Math.pow(
-    Math.E, (-delta / this.decayLifetime)
-  );
+//   // Compute churn.
+//   var churn = this.quantity * Math.pow(
+//     Math.E, (-delta / this.decayLifetime)
+//   );
 
-  // Starting boundary.
-  var bound1 = this.quantity * -this.decayLifetime * Math.pow(
-    Math.E, 0
-  );
+//   // Starting boundary.
+//   var bound1 = this.quantity * -this.decayLifetime * Math.pow(
+//     Math.E, 0
+//   );
 
-  // Current boundary.
-  var bound2 = this.quantity * -this.decayLifetime * Math.pow(
-    Math.E, (-delta / this.decayLifetime)
-  );
+//   // Current boundary.
+//   var bound2 = this.quantity * -this.decayLifetime * Math.pow(
+//     Math.E, (-delta / this.decayLifetime)
+//   );
 
-  return [bound2-bound1, churn];
+//   return [bound2-bound1, churn];
 
-};
+// };
 
 
 // Register model.

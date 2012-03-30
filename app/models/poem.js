@@ -5,15 +5,11 @@
 // Module dependencies.
 var _ = require('underscore');
 
-// Round model.
-require('./round');
-var Round = mongoose.model('Round');
-
 // Schema definition.
 var Poem = new Schema({
   slug :            { type: String, required: true },
   user :            { type: Schema.ObjectId, ref: 'User', required: true },
-  round :           { type: Schema.ObjectId, ref: 'Round' },
+  round :           { type: Number },
   created :         { type: Date, required: true, default: Date.now() },
   started :         { type: Boolean, required: true, default: false },
   running :         { type: Boolean, required: true, default: false },

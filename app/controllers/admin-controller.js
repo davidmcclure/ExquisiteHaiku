@@ -11,7 +11,6 @@ var _ = require('underscore');
 
 // Models.
 var Poem = mongoose.model('Poem');
-var Round = mongoose.model('Round');
 
 
 /*
@@ -297,13 +296,7 @@ module.exports = function(app) {
       // Start, save, and redirect.
       req.poem.start(slicer.integrator, scb, function() {
         req.poem.save(function(err) {
-
-          // Create starting round.
-          var round = new Round({ poem: req.poem.id });
-          round.save(function(err) {
-            res.redirect('/admin/poems');
-          });
-
+          res.redirect('/admin/poems');
         });
       });
 

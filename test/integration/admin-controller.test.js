@@ -18,7 +18,6 @@ var app = require('../../app');
 // Models and reserved slugs.
 var User = mongoose.model('User');
 var Poem = mongoose.model('Poem');
-var Round = mongoose.model('Round');
 var _slugs = require('../../helpers/forms/_slugs');
 
 
@@ -166,7 +165,6 @@ describe('Admin Controller', function() {
     async.map([
       User,
       Poem,
-      Round
     ], remove, function(err, models) {
       done();
     });
@@ -781,34 +779,6 @@ describe('Admin Controller', function() {
       browser.visit(r+'admin/poems/start/unstarted', function() {
         global.Oversoul.timers.should.have.keys(unstarted.id);
         done();
-      });
-
-    });
-
-    it('should create a starting round for the poem', function(done) {
-
-      // Get starting rounds count.
-      Round.count({}, function(err, count1) {
-
-        // GET admin/poems/delete/:slug.
-        browser.visit(r+'admin/poems/start/unstarted', function() {
-
-          // Recount.
-          Round.count({}, function(err, count2) {
-
-            // Check count++.
-            count2.should.eql(count1+1);
-
-            // Get the round.
-            Round.findOne({ poem: unstarted.id }, function(err, round) {
-              round.should.be.ok;
-              done();
-            });
-
-          });
-
-        });
-
       });
 
     });

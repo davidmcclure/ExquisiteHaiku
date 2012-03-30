@@ -21,14 +21,6 @@ var User = mongoose.model('User');
 require('../../../app/models/poem');
 var Poem = mongoose.model('Poem');
 
-// Round model.
-require('../../../app/models/round');
-var Round = mongoose.model('Round');
-
-// Word model.
-require('../../../app/models/word');
-var Word = mongoose.model('Word');
-
 // Vote model.
 require('../../../app/models/vote');
 var Vote = mongoose.model('Vote');
@@ -67,20 +59,8 @@ describe('Vote', function() {
       visibleWords : 500
     });
 
-    // Create round.
-    round = new Round({
-      poem: poem.id
-    });
-
-    // Create word.
-    word = new Word({
-      round: round.id,
-      word: 'word'
-    });
-
     // Create vote.
     vote = new Vote({
-      word: word.id,
       quantity: 100
     });
 
@@ -95,8 +75,6 @@ describe('Vote', function() {
     async.map([
       user,
       poem,
-      round,
-      word,
       vote
     ], save, function(err, documents) {
       done();
@@ -118,8 +96,6 @@ describe('Vote', function() {
     async.map([
       User,
       Poem,
-      Round,
-      Word,
       Vote
     ], remove, function(err, models) {
       done();

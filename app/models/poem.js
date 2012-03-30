@@ -9,7 +9,7 @@ var _ = require('underscore');
 var Poem = new Schema({
   slug :            { type: String, required: true },
   user :            { type: Schema.ObjectId, ref: 'User', required: true },
-  round :           { type: Number },
+  round :           { type: Number, default: 0 },
   created :         { type: Date, required: true, default: Date.now() },
   started :         { type: Boolean, required: true, default: false },
   running :         { type: Boolean, required: true, default: false },
@@ -142,6 +142,15 @@ Poem.methods.stop = function(cb) {
  */
 Poem.methods.addWord = function(word) {
   this.words.push(word);
+};
+
+/*
+ * Increment the round counter.
+ *
+ * @return void.
+ */
+Poem.methods.newRound = function() {
+  this.round++;
 };
 
 

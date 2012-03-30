@@ -9,7 +9,6 @@ var _ = require('underscore');
 var Vote = new Schema({
   word :            { type: String, required: true },
   quantity :        { type: Number, required: true },
-  decayLifetime :   { type: Number, required: true },
   applied :         { type: Date, default: Date.now(), required: true }
 });
 

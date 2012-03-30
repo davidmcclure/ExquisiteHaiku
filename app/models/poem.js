@@ -105,7 +105,8 @@ Poem.methods.start = function(slicer, scb, cb) {
     global.Oversoul.timers[this.id] = setInterval(
       slicer,
       this.sliceInterval,
-      this
+      this,
+      scb
     );
 
     // Set trackers.

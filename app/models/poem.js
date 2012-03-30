@@ -105,6 +105,9 @@ Poem.methods.start = function(slicer, scb, cb) {
       scb
     );
 
+    // Increment round if poem is unstarted.
+    if (!this.started) this.newRound();
+
     // Set trackers.
     this.running = true;
     this.started = true;

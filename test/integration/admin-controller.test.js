@@ -67,6 +67,7 @@ describe('Admin Controller', function() {
     running = new Poem({
       slug:             'running',
       user:             user.id,
+      round:            1,
       started:          true,
       running:          true,
       complete:         false,
@@ -83,6 +84,7 @@ describe('Admin Controller', function() {
     paused = new Poem({
       slug:             'paused',
       user:             user.id,
+      round:            1,
       started:          true,
       running:          false,
       complete:         false,
@@ -99,6 +101,7 @@ describe('Admin Controller', function() {
     complete = new Poem({
       slug:             'complete',
       user:             user.id,
+      round:            8,
       started:          true,
       running:          false,
       complete:         true,
@@ -790,6 +793,34 @@ describe('Admin Controller', function() {
         // Re-get the poem.
         Poem.findOne({ slug: 'unstarted' }, function(err, poem) {
           poem.running.should.be.true;
+          done();
+        });
+
+      });
+
+    });
+
+    it('should increment the round counter for unstarted poem', function() {
+
+      browser.visit(r+'admin/poems/start/unstarted', function() {
+
+        // Re-get the poem.
+        Poem.findOne({ slug: 'unstarted' }, function(err, poem) {
+          poem.round.valueOf().should.eql(1);
+          done();
+        });
+
+      });
+
+    });
+
+    it('should not increment the round counter for started poem', function() {
+
+      browser.visit(r+'admin/poems/start/paused', function() {
+
+        // Re-get the poem.
+        Poem.findOne({ slug: 'paused' }, function(err, poem) {
+          poem.round.valueOf().should.eql(1);
           done();
         });
 

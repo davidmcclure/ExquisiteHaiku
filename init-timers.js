@@ -22,9 +22,12 @@ function startTimers(app) {
   // Boot running timers.
   Poem.find({ running: true }, function(err, poems) {
 
+    // Slicer callback.
+    var scb = function() {};
+
     // Start worker.
     var start = function(document, callback) {
-      document.start(slicer.integrator, function(err) {
+      document.start(slicer.integrator, scb, function(err) {
         callback(null, document);
       });
     };

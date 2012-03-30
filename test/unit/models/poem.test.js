@@ -328,8 +328,6 @@ describe('Poem', function() {
       poem = new Poem({
         slug: 'test-poem',
         user: user.id,
-        running: false,
-        complete: false,
         roundLength : 10000,
         sliceInterval : 3,
         minSubmissions : 5,
@@ -365,6 +363,26 @@ describe('Poem', function() {
 
       it('should register the slicer in the tracker object', function() {
         global.Oversoul.timers.should.have.keys(poem.id);
+      });
+
+      it('should increment the round for unstarted poem', function() {
+        poem.round.valueOf().should.eql(1);
+      });
+
+      it('should not increment the round for started poem', function() {
+
+        // Set poem paused.
+        poem.started = true;
+        poem.running = false;
+        poem.round = 1;
+
+        // Save.
+        poem.save(function(err) {
+          poem.start(function() {}, function() {}, function(err) {
+            poem.round.valueOf().should.eql(1);
+          });
+        });
+
       });
 
       it('should set "running" to true', function() {

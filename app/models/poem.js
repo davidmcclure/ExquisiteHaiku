@@ -87,11 +87,12 @@ Poem.virtual('id').get(function() {
  * Start timer.
  *
  * @param {Function} slicer: The slicer.
+ * @param {Function} scb: Slicer callback.
  * @param {Function} cb: Callback.
  *
  * @return void.
  */
-Poem.methods.start = function(slicer, cb) {
+Poem.methods.start = function(slicer, scb, cb) {
 
   // Block if timer already exists.
   if (_.has(global.Oversoul.timers, this.id)) {

@@ -291,8 +291,11 @@ module.exports = function(app) {
     auth.getPoem,
     function(req, res) {
 
+      // Slicer callback.
+      var scb = function() {};
+
       // Start, save, and redirect.
-      req.poem.start(slicer.integrator, function() {
+      req.poem.start(slicer.integrator, scb, function() {
         req.poem.save(function(err) {
 
           // Create starting round.

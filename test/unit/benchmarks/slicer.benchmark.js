@@ -44,7 +44,7 @@ var votesPerWord = process.argv[3];
 var randWord = function(obj) {
   var result; var count = 0;
   _.each(words.syllables, function(syll, word) {
-    if (Math.random() < i/++count) result = word;
+    if (Math.random() < 1/++count) result = word;
   });
   return result;
 };
@@ -85,7 +85,8 @@ var poem = new Poem({
 
 // Create round.
 round = new Round({
-  poem: poem.id
+  poem: poem.id,
+  started: Date.now() - 100000001
 });
 
 // Save worker.
@@ -139,9 +140,12 @@ async.map([
   // Save words and votes.
   async.map(docs, save, function(err, documents) {
 
+    // Capture starting timestamp.
     var t1 = Date.now();
+
     var stacks = slicer.integrator(poem, function(stacks) {
 
+      // Capture ending timestamp.
       var t2 = Date.now();
       console.log('Duration: %d', t2-t1);
       console.log(stacks);
@@ -161,7 +165,7 @@ async.map([
         Word,
         Vote
       ], remove, function(err, models) {
-        done();
+        process.exit();
       });
 
     });

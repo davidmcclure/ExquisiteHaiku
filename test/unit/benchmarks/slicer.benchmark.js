@@ -141,9 +141,29 @@ async.map([
 
     var t1 = Date.now();
     var stacks = slicer.integrator(poem, function(stacks) {
+
       var t2 = Date.now();
       console.log('Duration: %d', t2-t1);
       console.log(stacks);
+
+      // Truncate worker.
+      var remove = function(model, callback) {
+        model.collection.remove(function(err) {
+          callback(err, model);
+        });
+      };
+
+      // Truncate.
+      async.map([
+        User,
+        Poem,
+        Round,
+        Word,
+        Vote
+      ], remove, function(err, models) {
+        done();
+      });
+
     });
 
   });

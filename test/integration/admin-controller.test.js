@@ -147,10 +147,12 @@ describe('Admin Controller', function() {
   // Clear users and poems.
   afterEach(function(done) {
 
-    // Clear out the timers hash.
+    // Clear the intervals.
     _.each(global.Oversoul.timers, function(int, id) {
       clearInterval(int);
     });
+
+    // Clear the timer hash.
     global.Oversoul.timers = {};
 
     // Truncate worker.

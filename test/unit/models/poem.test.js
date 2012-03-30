@@ -369,7 +369,7 @@ describe('Poem', function() {
         poem.round.valueOf().should.eql(1);
       });
 
-      it('should not increment the round for started poem', function() {
+      it('should not increment the round for started poem', function(done) {
 
         // Set poem paused.
         poem.started = true;
@@ -380,6 +380,7 @@ describe('Poem', function() {
         poem.save(function(err) {
           poem.start(function() {}, function() {}, function(err) {
             poem.round.valueOf().should.eql(1);
+            done();
           });
         });
 

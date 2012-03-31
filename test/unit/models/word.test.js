@@ -29,6 +29,10 @@ var Round = mongoose.model('Round');
 require('../../../app/models/word');
 var Word = mongoose.model('Word');
 
+// Vote model.
+require('../../../app/models/vote');
+var Vote = mongoose.model('Vote');
+
 
 /*
  * ----------------------
@@ -41,7 +45,7 @@ describe('Word', function() {
 
   var user, poem, round, word;
 
-  beforeEach(function() {
+  beforeEach(function(done) {
 
     // Create user.
     user = new User({
@@ -75,6 +79,23 @@ describe('Word', function() {
       word: 'word'
     });
 
+    // Save worker.
+    var save = function(document, callback) {
+      document.save(function(err) {
+        callback(null, document);
+      });
+    };
+
+    // Save.
+    async.map([
+      user,
+      poem,
+      round,
+      word
+    ], save, function(err, documents) {
+      done();
+    });
+
   });
 
   // Clear users and poems.
@@ -92,7 +113,8 @@ describe('Word', function() {
       User,
       Poem,
       Round,
-      Word
+      Word,
+      Vote
     ], remove, function(err, models) {
       done();
     });
@@ -116,7 +138,7 @@ describe('Word', function() {
 
         // Check for 1 documents.
         Round.count({}, function(err, count) {
-          count.should.eql(0);
+          count.should.eql(1);
           done();
         });
 
@@ -136,6 +158,47 @@ describe('Word', function() {
 
       it('should be a string', function() {
         word.id.should.be.a('string');
+      });
+
+    });
+
+  });
+
+  describe('methods', function() {
+
+    describe('score', function() {
+
+      beforeEach(function(done) {
+
+        // Create vote1.
+        var vote1 = new Vote({
+          word: word.id,
+          quantity: 100
+        });
+
+        // Create vote2.
+        var vote2 = new Vote({
+          word: word.id,
+          quantity: 100
+        });
+
+        // Save.
+        vote1.save(function(err) {
+          vote2.save(function(err) {
+            done();
+          });
+        });
+
+      });
+
+      it('should return an array of [rank, churn]', function(done) {
+
+        // Call at now+60s with 60s mean decay lifetime.
+        word.score(Date.now() + 600000, 60000, function(score) {
+          score.should.eql([12000, 0]);
+          done();
+        });
+
       });
 
     });

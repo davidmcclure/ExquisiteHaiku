@@ -169,7 +169,7 @@ describe('Vote', function() {
 
         // Call at now+60s with 60s mean decay lifetime.
         vote.score(vote.applied.valueOf() + 60000, 60000).
-          should.eql([3793,37]);
+          should.eql([3793, 37]);
 
       });
 

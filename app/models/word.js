@@ -6,7 +6,7 @@
 var _ = require('underscore');
 
 // Models.
-require('./round');
+require('./vote');
 var Vote = mongoose.model('Vote');
 
 // Schema definition.
@@ -43,7 +43,7 @@ Word.virtual('id').get(function() {
  */
 Word.methods.score = function(now, decay, cb) {
 
-  var rank; var churn;
+  var rank = 0; var churn = 0;
 
   // Get votes.
   Vote.find({ word: this.id }, function(err, votes) {

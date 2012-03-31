@@ -32,19 +32,11 @@ while (i--) {
   }));
 }
 
-// Save votes.
-word.save(function(err) {
+var t1 = Date.now();
+var score = word.score(Date.now() + 60000, 60000);
+var t2 = Date.now();
 
-  var t1 = Date.now();
-  var score = word.score(Date.now() + 60000, 60000);
-  var t2 = Date.now();
+console.log(score);
+console.log('Total Duration: %d', t2-t1);
 
-  console.log(score);
-  console.log('Total Duration: %d', t2-t1);
-
-  // Clear votes.
-  Vote.collection.remove(function(err) {
-    process.exit();
-  });
-
-});
+process.exit();

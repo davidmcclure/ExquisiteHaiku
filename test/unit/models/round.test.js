@@ -44,23 +44,6 @@ describe('Round', function() {
 
   });
 
-  // Clear users, poems, and rounds.
-  after(function(done) {
-
-    // Truncate worker.
-    var remove = function(model, callback) {
-      model.collection.remove(function(err) {
-        callback(err, model);
-      });
-    };
-
-    // Truncate.
-    Word.collection.remove(function(err) {
-      done();
-    });
-
-  });
-
   describe('required field validations', function() {
 
     it('should require all fields', function(done) {
@@ -116,7 +99,7 @@ describe('Round', function() {
 
     describe('score', function() {
 
-      beforeEach(function(done) {
+      beforeEach(function() {
 
         // Create word1.
         var word1 = new Word({
@@ -166,29 +149,26 @@ describe('Round', function() {
           quantity: 300
         }));
 
-        // Save.
-        word1.save(function(err) {
-          word2.save(function(err) {
-            word3.save(function(err) {
-              done();
-            });
-          });
-        });
+        // Push words.
+        round.words.push(word1);
+        round.words.push(word2);
+        round.words.push(word3);
 
       });
 
-      it('should return an array of [[rank], [churn]]', function(done) {
+      it('should return an array of [[rank], [churn]]', function() {
 
         // Call at now+60s with 60s mean decay lifetime.
-        round.score(Date.now() + 60000, 60000, 2, function(stacks) {
-          stacks[0][0][0].should.eql('word3');
-          stacks[0][1][0].should.eql('word2');
-          should.not.exist(stacks[0][2]);
-          stacks[1][0][0].should.eql('word3');
-          stacks[1][1][0].should.eql('word2');
-          should.not.exist(stacks[1][2]);
-          done();
-        });
+        var stacks = round.score(
+          Date.now() + 60000, 60000, 2
+        );
+
+        stacks[0][0][0].should.eql('word3');
+        stacks[0][1][0].should.eql('word2');
+        should.not.exist(stacks[0][2]);
+        stacks[1][0][0].should.eql('word3');
+        stacks[1][1][0].should.eql('word2');
+        should.not.exist(stacks[1][2]);
 
       });
 

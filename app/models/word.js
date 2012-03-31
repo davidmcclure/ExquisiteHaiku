@@ -59,3 +59,8 @@ WordSchema.methods.score = function(now, decay) {
 // Register model.
 mongoose.model('Word', WordSchema);
 var Word = mongoose.model('Word');
+
+// Expose the schema.
+module.exports = {
+  WordSchema: WordSchema
+};

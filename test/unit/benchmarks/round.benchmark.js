@@ -44,35 +44,17 @@ while (numWords--) {
   }
 
   // Push word.
-  words.push(word);
+  round.words.push(word);
 
   // Reset counter.
   votesPerWord = process.argv[3];
 
 }
 
+var t1 = Date.now();
+var stacks = round.score(Date.now() + 60000, 60000, 10);
+var t2 = Date.now();
 
-// Save worker.
-var save = function(document, callback) {
-  document.save(function(err) {
-    callback(null, document);
-  });
-};
+console.log('Total Duration: %d', t2-t1);
 
-// Save words.
-async.map(words, save, function(err, words) {
-
-  var t1 = Date.now();
-  round.score(Date.now() + 60000, 60000, 10, function(stacks) {
-
-    var t2 = Date.now();
-    console.log('Total Duration: %d', t2-t1);
-
-    // Clear votes.
-    Vote.collection.remove(function(err) {
-      process.exit();
-    });
-
-  });
-
-});
+process.exit();

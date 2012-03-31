@@ -5,14 +5,14 @@
 // Module dependencies.
 var _ = require('underscore');
 
-// Word model.
-require('./word');
-var Word = mongoose.model('Word');
+// Models.
+var word = require('./word');
 
 // Schema definition.
 var RoundSchema = new Schema({
   poem :      { type: Schema.ObjectId, ref: 'Poem', required: true },
-  started :   { type: Date, default: Date.now(), required: true }
+  started :   { type: Date, default: Date.now(), required: true },
+  words :     [ word.wordSchema ]
 });
 
 
@@ -42,33 +42,29 @@ RoundSchema.virtual('id').get(function() {
  *
  * @return {Array}: [[rank], [churn]].
  */
-RoundSchema.methods.score = function(now, decay, len, cb) {
+RoundSchema.methods.score = function(now, decay, len) {
 
   var rank = []; var churn = [];
 
-  Word.find({ round: this.id }, function(err, words) {
+  _.each(this.words, function(word) {
 
-    _.each(words, function(word) {
+    // Score word.
+    var score = word.score(now, decay);
 
-      // Score word.
-      var score = word.score(now, decay);
-
-      // Push scores onto stacks.
-      rank.push([word.word, score[0]]);
-      churn.push([word.word, score[1]]);
-
-    });
-
-    // Sort comparer.
-    var comp = function(a,b) { return b[1]-a[1]; };
-
-    // Sort and slice.
-    rank = rank.sort(comp).slice(0, len);
-    churn = churn.sort(comp).slice(0, len);
-
-    cb([rank, churn]);
+    // Push scores onto stacks.
+    rank.push([word.word, score[0]]);
+    churn.push([word.word, score[1]]);
 
   });
+
+  // Sort comparer.
+  var comp = function(a,b) { return b[1]-a[1]; };
+
+  // Sort and slice.
+  rank = rank.sort(comp).slice(0, len);
+  churn = churn.sort(comp).slice(0, len);
+
+  return [rank, churn];
 
 };
 

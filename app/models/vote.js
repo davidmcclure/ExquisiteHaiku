@@ -6,8 +6,7 @@
 var _ = require('underscore');
 
 // Schema definition.
-var Vote = new Schema({
-  word :            { type: String, required: true },
+var VoteSchema = new Schema({
   quantity :        { type: Number, required: true },
   applied :         { type: Date, default: Date.now(), required: true }
 });
@@ -25,40 +24,47 @@ var Vote = new Schema({
  *
  * @return {String}: The id.
  */
-Vote.virtual('id').get(function() {
+VoteSchema.virtual('id').get(function() {
   return this._id.toHexString();
 });
 
 /*
  * Score the vote.
  *
+ * @param {Date} now: The current Date.
+ * @param {Number} decay: The mean decay lifetime.
+ *
  * @return {Array}: [rank, churn].
  */
-// Vote.methods.score = function(cb) {
+VoteSchema.methods.score = function(now, decay) {
 
-//   // Get time delta.
-//   var delta = this.applied - Date.now();
+  // Get time delta.
+  var delta = now - this.applied;
 
-//   // Compute churn.
-//   var churn = this.quantity * Math.pow(
-//     Math.E, (-delta / this.decayLifetime)
-//   );
+  // Compute churn.
+  var churn = Math.round(this.quantity *
+    Math.pow(Math.E, (-delta / decay)));
 
-//   // Starting boundary.
-//   var bound1 = this.quantity * -this.decayLifetime * Math.pow(
-//     Math.E, 0
-//   );
+  // Starting boundary.
+  var bound1 = this.quantity * -decay;
 
-//   // Current boundary.
-//   var bound2 = this.quantity * -this.decayLifetime * Math.pow(
-//     Math.E, (-delta / this.decayLifetime)
-//   );
+  // Current boundary.
+  var bound2 = this.quantity * -decay *
+    Math.pow(Math.E, (-delta / decay));
 
-//   return [bound2-bound1, churn];
+  // Get the integral, scale and round.
+  var rank = Math.round(((bound2-bound1)/1000));
 
-// };
+  return [rank, churn];
+
+};
 
 
 // Register model.
-mongoose.model('Vote', Vote);
+mongoose.model('Vote', VoteSchema);
 var Vote = mongoose.model('Vote');
+
+// Expose the schema.
+module.exports = {
+  VoteSchema: VoteSchema
+};

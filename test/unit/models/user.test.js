@@ -156,7 +156,7 @@ describe('User', function() {
     });
 
     it('should have a virtual field for "id"', function() {
-      user.id.should.be.ok;
+      should.exist(user.id);
     });
 
     it('should be a string', function() {

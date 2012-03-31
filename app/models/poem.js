@@ -6,7 +6,7 @@
 var _ = require('underscore');
 
 // Schema definition.
-var Poem = new Schema({
+var PoemSchema = new Schema({
   slug :            { type: String, required: true },
   user :            { type: Schema.ObjectId, ref: 'User', required: true },
   round :           { type: Number, default: 0 },
@@ -38,7 +38,7 @@ var Poem = new Schema({
  *
  * @return {Boolean}: True if the statuses are valid.
  */
-Poem.path('started').validate(function(v) {
+PoemSchema.path('started').validate(function(v) {
   return v || (!this.running && !this.complete);
 });
 
@@ -48,7 +48,7 @@ Poem.path('started').validate(function(v) {
  *
  * @return {Boolean}: True if the statuses are valid.
  */
-Poem.path('running').validate(function(v) {
+PoemSchema.path('running').validate(function(v) {
   return !v || (this.started && !this.complete);
 });
 
@@ -58,7 +58,7 @@ Poem.path('running').validate(function(v) {
  *
  * @return {Boolean}: True if the statuses are valid.
  */
-Poem.path('complete').validate(function(v) {
+PoemSchema.path('complete').validate(function(v) {
   return !v || (this.started && !this.running);
 });
 
@@ -75,8 +75,41 @@ Poem.path('complete').validate(function(v) {
  *
  * @return {String}: The id.
  */
-Poem.virtual('id').get(function() {
+PoemSchema.virtual('id').get(function() {
   return this._id.toHexString();
+});
+
+
+/*
+ * Get unstarted status.
+ *
+ * @return {Boolean}: True if unstarted.
+ */
+PoemSchema.virtual('unstarted').get(function() {
+  return !this.started;
+});
+
+
+/*
+ * Get paused status.
+ *
+ * @return {Boolean}: True if paused.
+ */
+PoemSchema.virtual('paused').get(function() {
+  return this.started && !this.running && !this.complete;
+});
+
+
+/*
+ * Get status.
+ *
+ * @return {String}: The status.
+ */
+PoemSchema.virtual('status').get(function() {
+  if (this.unstarted) return 'unstarted';
+  else if (this.running) return 'running';
+  else if (this.paused) return 'paused';
+  else if (this.complete) return 'complete';
 });
 
 /*
@@ -88,7 +121,7 @@ Poem.virtual('id').get(function() {
  *
  * @return void.
  */
-Poem.methods.start = function(slicer, scb, cb) {
+PoemSchema.methods.start = function(slicer, scb, cb) {
 
   // Block if timer already exists.
   if (_.has(global.Oversoul.timers, this.id)) {
@@ -124,7 +157,7 @@ Poem.methods.start = function(slicer, scb, cb) {
  *
  * @return void.
  */
-Poem.methods.stop = function(cb) {
+PoemSchema.methods.stop = function(cb) {
 
   // Clear the timer, delete the tracker.
   clearInterval(global.Oversoul.timers[this.id]);
@@ -143,7 +176,7 @@ Poem.methods.stop = function(cb) {
  *
  * @return void.
  */
-Poem.methods.addWord = function(word) {
+PoemSchema.methods.addWord = function(word) {
   this.words.push(word);
 };
 
@@ -158,5 +191,5 @@ Poem.methods.newRound = function() {
 
 
 // Register model.
-mongoose.model('Poem', Poem);
+mongoose.model('Poem', PoemSchema);
 var Poem = mongoose.model('Poem');

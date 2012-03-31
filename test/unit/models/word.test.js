@@ -1,5 +1,5 @@
 /*
- * Unit tests for vote model.
+ * Unit tests for word model.
  */
 
 // Module dependencies.
@@ -13,26 +13,31 @@ var sinon = require('sinon');
 process.env.NODE_ENV = 'testing';
 require('../db-connect');
 
+// Word model.
+require('../../../app/models/word');
+var Word = mongoose.model('Word');
+
 // Vote model.
 require('../../../app/models/vote');
 var Vote = mongoose.model('Vote');
 
+
 /*
  * ----------------------
- * Vote model unit tests.
+ * Word model unit tests.
  * ----------------------
  */
 
 
-describe('Vote', function() {
+describe('Word', function() {
 
-  var user, poem, round, word, vote;
+  var user, poem, round, word;
 
   beforeEach(function() {
 
-    // Create vote.
-    vote = new Vote({
-      quantity: 100
+    // Create word.
+    word = new Word({
+      word: 'word'
     });
 
   });
@@ -41,19 +46,18 @@ describe('Vote', function() {
 
     it('should require all fields', function(done) {
 
-      // Create vote, override defaults.
-      var vote = new Vote();
-      vote.applied = null
+      // Create word, override defaults.
+      var word = new Word();
+      word.word = null;
 
       // Save.
-      vote.save(function(err) {
+      word.save(function(err) {
 
         // Check for errors.
-        err.errors.quantity.type.should.eql('required');
-        err.errors.applied.type.should.eql('required');
+        err.errors.word.type.should.eql('required');
 
-        // Check for 0 documents.
-        Vote.count({}, function(err, count) {
+        // Check for 1 documents.
+        Word.count({}, function(err, count) {
           count.should.eql(0);
           done();
         });
@@ -64,24 +68,16 @@ describe('Vote', function() {
 
   });
 
-  describe('field defaults', function() {
-
-    it('should set "applied" to the current date by default', function() {
-      vote.applied.should.be.ok;
-    });
-
-  });
-
   describe('virtual fields', function() {
 
     describe('id', function() {
 
       it('should have a virtual field for "id"', function() {
-        should.exist(vote.id);
+        should.exist(word.id);
       });
 
       it('should be a string', function() {
-        vote.id.should.be.a('string');
+        word.id.should.be.a('string');
       });
 
     });
@@ -92,11 +88,26 @@ describe('Vote', function() {
 
     describe('score', function() {
 
+      beforeEach(function() {
+
+        // Create vote1.
+        word.votes.push(new Vote({
+          quantity: 100
+        }));
+
+        // Create vote2.
+        word.votes.push(new Vote({
+          quantity: 100
+        }));
+
+      });
+
       it('should return an array of [rank, churn]', function() {
 
         // Call at now+60s with 60s mean decay lifetime.
-        vote.score(vote.applied.valueOf() + 60000, 60000).
-          should.eql([3793, 37]);
+        word.score(
+          Date.now() + 600000, 60000
+        ).should.eql([12000, 0]);
 
       });
 

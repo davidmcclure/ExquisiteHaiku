@@ -13,17 +13,17 @@ var sinon = require('sinon');
 process.env.NODE_ENV = 'testing';
 require('../db-connect');
 
-// User model.
-require('../../../app/models/user');
-var User = mongoose.model('User');
-
-// Poem model.
-require('../../../app/models/poem');
-var Poem = mongoose.model('Poem');
-
 // Round model.
 require('../../../app/models/round');
 var Round = mongoose.model('Round');
+
+// Word model.
+require('../../../app/models/word');
+var Word = mongoose.model('Word');
+
+// Vote model.
+require('../../../app/models/vote');
+var Vote = mongoose.model('Vote');
 
 
 /*
@@ -39,31 +39,8 @@ describe('Round', function() {
 
   beforeEach(function() {
 
-    // Create user.
-    user = new User({
-      username:   'david',
-      password:   'password',
-      email:      'david@test.com',
-      active:     true
-    });
-
-    // Create poem.
-    poem = new Poem({
-      slug: 'test-poem',
-      user: user.id,
-      roundLength : 10000,
-      sliceInterval : 3,
-      minSubmissions : 5,
-      submissionVal : 100,
-      decayLifetime : 50,
-      seedCapital : 1000,
-      visibleWords : 500
-    });
-
     // Create round.
-    round = new Round({
-      poem: poem.id
-    });
+    round = new Round();
 
   });
 
@@ -78,11 +55,7 @@ describe('Round', function() {
     };
 
     // Truncate.
-    async.map([
-      User,
-      Poem,
-      Round
-    ], remove, function(err, models) {
+    Word.collection.remove(function(err) {
       done();
     });
 
@@ -133,6 +106,90 @@ describe('Round', function() {
 
       it('should be a string', function() {
         round.id.should.be.a('string');
+      });
+
+    });
+
+  });
+
+  describe('methods', function() {
+
+    describe('score', function() {
+
+      beforeEach(function(done) {
+
+        // Create word1.
+        var word1 = new Word({
+          round: round.id,
+          word: 'word1'
+        });
+
+        // Create word2.
+        var word2 = new Word({
+          round: round.id,
+          word: 'word2'
+        });
+
+        // Create word3.
+        var word3 = new Word({
+          round: round.id,
+          word: 'word3'
+        });
+
+        // 100 vote on word1.
+        word1.votes.push(new Vote({
+          quantity: 100
+        }));
+
+        // 100 vote on word1.
+        word1.votes.push(new Vote({
+          quantity: 100
+        }));
+
+        // 200 vote on word2.
+        word2.votes.push(new Vote({
+          quantity: 200
+        }));
+
+        // 200 vote on word2.
+        word2.votes.push(new Vote({
+          quantity: 200
+        }));
+
+        // 300 vote on word3.
+        word3.votes.push(new Vote({
+          quantity: 300
+        }));
+
+        // 300 vote on word3.
+        word3.votes.push(new Vote({
+          quantity: 300
+        }));
+
+        // Save.
+        word1.save(function(err) {
+          word2.save(function(err) {
+            word3.save(function(err) {
+              done();
+            });
+          });
+        });
+
+      });
+
+      it('should return an array of [[rank], [churn]]', function(done) {
+
+        // Call at now+60s with 60s mean decay lifetime.
+        round.score(Date.now() + 60000, 60000, 2, function(stacks) {
+          stacks[0][0][0].should.eql('word3');
+          stacks[0][1][0].should.eql('word2');
+          should.not.exist(stacks[0][2]);
+          stacks[1][0][0].should.eql('word3');
+          stacks[1][1][0].should.eql('word2');
+          should.not.exist(stacks[1][2]);
+          done();
+        });
+
       });
 
     });

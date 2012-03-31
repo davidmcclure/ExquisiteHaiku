@@ -31,8 +31,8 @@ VoteSchema.virtual('id').get(function() {
 /*
  * Score the vote.
  *
- * @param {Date}: The current Date.
- * @param {Number}: The mean decay lifetime.
+ * @param {Date} now: The current Date.
+ * @param {Number} decay: The mean decay lifetime.
  *
  * @return {Array}: [rank, churn].
  */

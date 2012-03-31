@@ -35,13 +35,12 @@ WordSchema.virtual('id').get(function() {
 /*
  * Score the word.
  *
- * @param {Date}: The current Date.
- * @param {Number}: The mean decay lifetime.
- * @param {Function}: The callback;
+ * @param {Date} now: The current Date.
+ * @param {Number} decay: The mean decay lifetime.
  *
  * @return {Array}: [rank, churn].
  */
-WordSchema.methods.score = function(now, decay, cb) {
+WordSchema.methods.score = function(now, decay) {
 
   var rank = 0; var churn = 0;
 
@@ -53,7 +52,7 @@ WordSchema.methods.score = function(now, decay, cb) {
 
   });
 
-  cb([rank, churn]);
+  return [rank, churn];
 
 };
 

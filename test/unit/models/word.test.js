@@ -103,13 +103,12 @@ describe('Word', function() {
 
       });
 
-      it('should return an array of [rank, churn]', function(done) {
+      it('should return an array of [rank, churn]', function() {
 
         // Call at now+60s with 60s mean decay lifetime.
-        word.score(Date.now() + 600000, 60000, function(score) {
-          score.should.eql([12000, 0]);
-          done();
-        });
+        word.score(
+          Date.now() + 600000, 60000
+        ).should.eql([12000, 0]);
 
       });
 

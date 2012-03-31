@@ -43,8 +43,8 @@ Vote.methods.score = function(now, decay) {
   var delta = now - this.applied;
 
   // Compute churn.
-  var churn = this.quantity *
-    Math.pow(Math.E, (-delta / decay));
+  var churn = Math.round(this.quantity *
+    Math.pow(Math.E, (-delta / decay)));
 
   // Starting boundary.
   var bound1 = this.quantity * -decay*
@@ -54,7 +54,10 @@ Vote.methods.score = function(now, decay) {
   var bound2 = this.quantity * -decay*
     Math.pow(Math.E, (-delta / decay));
 
-  return [bound2-bound1, churn];
+  // Get the integral, scale and round.
+  var rank = Math.round(((bound2-bound1)/1000));
+
+  return [rank, churn];
 
 };
 

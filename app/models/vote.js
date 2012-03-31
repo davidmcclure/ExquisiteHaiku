@@ -6,7 +6,7 @@
 var _ = require('underscore');
 
 // Schema definition.
-var Vote = new Schema({
+var VoteSchema = new Schema({
   word :            { type: Schema.ObjectId, ref: 'Word', required: true, index: true },
   quantity :        { type: Number, required: true },
   applied :         { type: Date, default: Date.now(), required: true }
@@ -25,7 +25,7 @@ var Vote = new Schema({
  *
  * @return {String}: The id.
  */
-Vote.virtual('id').get(function() {
+VoteSchema.virtual('id').get(function() {
   return this._id.toHexString();
 });
 
@@ -37,7 +37,7 @@ Vote.virtual('id').get(function() {
  *
  * @return {Array}: [rank, churn].
  */
-Vote.methods.score = function(now, decay) {
+VoteSchema.methods.score = function(now, decay) {
 
   // Get time delta.
   var delta = now - this.applied;
@@ -62,5 +62,5 @@ Vote.methods.score = function(now, decay) {
 
 
 // Register model.
-mongoose.model('Vote', Vote);
+mongoose.model('Vote', VoteSchema);
 var Vote = mongoose.model('Vote');

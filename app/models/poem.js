@@ -5,12 +5,8 @@
 // Module dependencies.
 var _ = require('underscore');
 
-// Round model.
-require('./round');
-var Round = mongoose.model('Round');
-
 // Schema definition.
-var Poem = new Schema({
+var PoemSchema = new Schema({
   slug :            { type: String, required: true },
   user :            { type: Schema.ObjectId, ref: 'User', required: true },
   round :           { type: Schema.ObjectId, ref: 'Round' },
@@ -42,7 +38,7 @@ var Poem = new Schema({
  *
  * @return {Boolean}: True if the statuses are valid.
  */
-Poem.path('started').validate(function(v) {
+PoemSchema.path('started').validate(function(v) {
   return v || (!this.running && !this.complete);
 });
 
@@ -52,7 +48,7 @@ Poem.path('started').validate(function(v) {
  *
  * @return {Boolean}: True if the statuses are valid.
  */
-Poem.path('running').validate(function(v) {
+PoemSchema.path('running').validate(function(v) {
   return !v || (this.started && !this.complete);
 });
 
@@ -62,7 +58,7 @@ Poem.path('running').validate(function(v) {
  *
  * @return {Boolean}: True if the statuses are valid.
  */
-Poem.path('complete').validate(function(v) {
+PoemSchema.path('complete').validate(function(v) {
   return !v || (this.started && !this.running);
 });
 
@@ -79,7 +75,7 @@ Poem.path('complete').validate(function(v) {
  *
  * @return {String}: The id.
  */
-Poem.virtual('id').get(function() {
+PoemSchema.virtual('id').get(function() {
   return this._id.toHexString();
 });
 
@@ -89,7 +85,7 @@ Poem.virtual('id').get(function() {
  *
  * @return {Boolean}: True if unstarted.
  */
-Poem.virtual('unstarted').get(function() {
+PoemSchema.virtual('unstarted').get(function() {
   return !this.started;
 });
 
@@ -99,7 +95,7 @@ Poem.virtual('unstarted').get(function() {
  *
  * @return {Boolean}: True if paused.
  */
-Poem.virtual('paused').get(function() {
+PoemSchema.virtual('paused').get(function() {
   return this.started && !this.running && !this.complete;
 });
 
@@ -109,7 +105,7 @@ Poem.virtual('paused').get(function() {
  *
  * @return {String}: The status.
  */
-Poem.virtual('status').get(function() {
+PoemSchema.virtual('status').get(function() {
   if (this.unstarted) return 'unstarted';
   else if (this.running) return 'running';
   else if (this.paused) return 'paused';
@@ -125,7 +121,7 @@ Poem.virtual('status').get(function() {
  *
  * @return void.
  */
-Poem.methods.start = function(slicer, scb, cb) {
+PoemSchema.methods.start = function(slicer, scb, cb) {
 
   // Block if timer already exists.
   if (_.has(global.Oversoul.timers, this.id)) {
@@ -158,7 +154,7 @@ Poem.methods.start = function(slicer, scb, cb) {
  *
  * @return void.
  */
-Poem.methods.stop = function(cb) {
+PoemSchema.methods.stop = function(cb) {
 
   // Clear the timer, delete the tracker.
   clearInterval(global.Oversoul.timers[this.id]);
@@ -177,11 +173,11 @@ Poem.methods.stop = function(cb) {
  *
  * @return void.
  */
-Poem.methods.addWord = function(word) {
+PoemSchema.methods.addWord = function(word) {
   this.words.push(word);
 };
 
 
 // Register model.
-mongoose.model('Poem', Poem);
+mongoose.model('Poem', PoemSchema);
 var Poem = mongoose.model('Poem');

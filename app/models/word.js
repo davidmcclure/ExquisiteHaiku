@@ -10,7 +10,7 @@ require('./vote');
 var Vote = mongoose.model('Vote');
 
 // Schema definition.
-var Word = new Schema({
+var WordSchema = new Schema({
   round :     { type: Schema.ObjectId, ref: 'Round', required: true },
   word :      { type: String, required: true }
 });
@@ -28,7 +28,7 @@ var Word = new Schema({
  *
  * @return {String}: The id.
  */
-Word.virtual('id').get(function() {
+WordSchema.virtual('id').get(function() {
   return this._id.toHexString();
 });
 
@@ -41,20 +41,20 @@ Word.virtual('id').get(function() {
  *
  * @return {Array}: [rank, churn].
  */
-Word.methods.score = function(now, decay, cb) {
+WordSchema.methods.score = function(now, decay, cb) {
 
   var rank = 0; var churn = 0;
 
   // Get votes.
   Vote.find({ word: this.id }, function(err, votes) {
 
-    // _.each(votes, function(vote) {
+    _.each(votes, function(vote) {
 
-    //   // Score vote, increment trackers.
-    //   var score = vote.score(now, decay);
-    //   rank += score[0]; churn += score[1];
+      // Score vote, increment trackers.
+      var score = vote.score(now, decay);
+      rank += score[0]; churn += score[1];
 
-    // });
+    });
 
     cb([rank, churn]);
 
@@ -64,5 +64,5 @@ Word.methods.score = function(now, decay, cb) {
 
 
 // Register model.
-mongoose.model('Word', Word);
+mongoose.model('Word', WordSchema);
 var Word = mongoose.model('Word');

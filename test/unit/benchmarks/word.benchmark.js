@@ -13,7 +13,6 @@ require('../db-connect');
 
 // Models.
 require('../../../app/models/word');
-require('../../../app/models/vote');
 var Word = mongoose.model('Word');
 var Vote = mongoose.model('Vote');
 
@@ -25,26 +24,16 @@ var word = new Word({
 // Get iterations.
 var i = process.argv[2];
 
-// Save queue for votes.
-var votes = [];
-
 // Create votes.
 while (i--) {
-  votes.push(new Vote({
+  word.votes.push(new Vote({
     word: word.id,
     quantity: 100
   }));
 }
 
-// Save worker.
-var save = function(document, callback) {
-  document.save(function(err) {
-    callback(null, document);
-  });
-};
-
 // Save votes.
-async.map(votes, save, function(err, documents) {
+word.save(function(err) {
 
   var t1 = Date.now();
   word.score(Date.now() + 60000, 60000, function(score) {

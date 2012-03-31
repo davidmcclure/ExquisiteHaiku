@@ -7,7 +7,6 @@ var _ = require('underscore');
 
 // Schema definition.
 var VoteSchema = new Schema({
-  word :            { type: Schema.ObjectId, ref: 'Word', required: true, index: true },
   quantity :        { type: Number, required: true },
   applied :         { type: Date, default: Date.now(), required: true }
 });
@@ -64,3 +63,8 @@ VoteSchema.methods.score = function(now, decay) {
 // Register model.
 mongoose.model('Vote', VoteSchema);
 var Vote = mongoose.model('Vote');
+
+// Expose the schema.
+module.exports = {
+  VoteSchema: VoteSchema
+};

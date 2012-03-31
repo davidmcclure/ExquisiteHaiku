@@ -6,13 +6,13 @@
 var _ = require('underscore');
 
 // Models.
-require('./vote');
-var Vote = mongoose.model('Vote');
+var vote = require('./vote');
 
 // Schema definition.
 var WordSchema = new Schema({
   round :     { type: Schema.ObjectId, ref: 'Round', required: true },
-  word :      { type: String, required: true }
+  word :      { type: String, required: true },
+  votes :     [ vote.VoteSchema ]
 });
 
 
@@ -45,20 +45,15 @@ WordSchema.methods.score = function(now, decay, cb) {
 
   var rank = 0; var churn = 0;
 
-  // Get votes.
-  Vote.find({ word: this.id }, function(err, votes) {
+  _.each(this.votes, function(vote) {
 
-    _.each(votes, function(vote) {
-
-      // Score vote, increment trackers.
-      var score = vote.score(now, decay);
-      rank += score[0]; churn += score[1];
-
-    });
-
-    cb([rank, churn]);
+    // Score vote, increment trackers.
+    var score = vote.score(now, decay);
+    rank += score[0]; churn += score[1];
 
   });
+
+  cb([rank, churn]);
 
 };
 

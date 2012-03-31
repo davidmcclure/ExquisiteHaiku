@@ -13,22 +13,6 @@ var sinon = require('sinon');
 process.env.NODE_ENV = 'testing';
 require('../db-connect');
 
-// User model.
-require('../../../app/models/user');
-var User = mongoose.model('User');
-
-// Poem model.
-require('../../../app/models/poem');
-var Poem = mongoose.model('Poem');
-
-// Round model.
-require('../../../app/models/round');
-var Round = mongoose.model('Round');
-
-// Word model.
-require('../../../app/models/word');
-var Word = mongoose.model('Word');
-
 // Vote model.
 require('../../../app/models/vote');
 var Vote = mongoose.model('Vote');
@@ -46,65 +30,9 @@ describe('Vote', function() {
 
   beforeEach(function() {
 
-    // Create user.
-    user = new User({
-      username:   'david',
-      password:   'password',
-      email:      'david@test.com',
-      active:     true
-    });
-
-    // Create poem.
-    poem = new Poem({
-      slug: 'test-poem',
-      user: user.id,
-      roundLength : 10000,
-      sliceInterval : 1000,
-      minSubmissions : 5,
-      submissionVal : 100,
-      decayLifetime : 50000,
-      seedCapital : 1000,
-      visibleWords : 500
-    });
-
-    // Create round.
-    round = new Round({
-      poem: poem.id
-    });
-
-    // Create word.
-    word = new Word({
-      round: round.id,
-      word: 'word'
-    });
-
     // Create vote.
     vote = new Vote({
-      word: word.id,
       quantity: 100
-    });
-
-  });
-
-  // Clear users and poems.
-  after(function(done) {
-
-    // Truncate worker.
-    var remove = function(model, callback) {
-      model.collection.remove(function(err) {
-        callback(err, model);
-      });
-    };
-
-    // Truncate.
-    async.map([
-      User,
-      Poem,
-      Round,
-      Word,
-      Vote
-    ], remove, function(err, models) {
-      done();
     });
 
   });
@@ -121,7 +49,6 @@ describe('Vote', function() {
       vote.save(function(err) {
 
         // Check for errors.
-        err.errors.word.type.should.eql('required');
         err.errors.quantity.type.should.eql('required');
         err.errors.applied.type.should.eql('required');
 

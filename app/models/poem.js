@@ -103,6 +103,19 @@ Poem.virtual('paused').get(function() {
   return this.started && !this.running && !this.complete;
 });
 
+
+/*
+ * Get status.
+ *
+ * @return {String}: The status.
+ */
+Poem.virtual('status').get(function() {
+  if (this.unstarted) return 'unstarted';
+  else if (this.running) return 'running';
+  else if (this.paused) return 'paused';
+  else if (this.complete) return 'complete';
+});
+
 /*
  * Start timer.
  *

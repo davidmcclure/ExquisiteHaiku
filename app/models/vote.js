@@ -50,7 +50,7 @@ Vote.methods.score = function(now, decay) {
   var bound1 = this.quantity * -decay;
 
   // Current boundary.
-  var bound2 = this.quantity * -decay*
+  var bound2 = this.quantity * -decay *
     Math.pow(Math.E, (-delta / decay));
 
   // Get the integral, scale and round.

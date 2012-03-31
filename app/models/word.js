@@ -48,13 +48,13 @@ Word.methods.score = function(now, decay, cb) {
   // Get votes.
   Vote.find({ word: this.id }, function(err, votes) {
 
-    _.each(votes, function(vote) {
+    // _.each(votes, function(vote) {
 
-      // Score vote, increment trackers.
-      var score = vote.score(now, decay);
-      rank += score[0]; churn += score[1];
+    //   // Score vote, increment trackers.
+    //   var score = vote.score(now, decay);
+    //   rank += score[0]; churn += score[1];
 
-    });
+    // });
 
     cb([rank, churn]);
 

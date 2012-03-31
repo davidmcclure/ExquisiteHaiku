@@ -48,10 +48,16 @@ async.map(votes, save, function(err, documents) {
 
   var t1 = Date.now();
   word.score(Date.now() + 60000, 60000, function(score) {
+
     var t2 = Date.now();
     console.log(score);
     console.log('Total Duration: %d', t2-t1);
-    process.exit();
+
+    // Clear votes.
+    Vote.collection.remove(function(err) {
+      process.exit();
+    });
+
   });
 
 });

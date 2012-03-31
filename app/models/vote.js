@@ -7,7 +7,7 @@ var _ = require('underscore');
 
 // Schema definition.
 var Vote = new Schema({
-  word :            { type: Schema.ObjectId, ref: 'Word', required: true },
+  word :            { type: Schema.ObjectId, ref: 'Word', required: true, index: true },
   quantity :        { type: Number, required: true },
   applied :         { type: Date, default: Date.now(), required: true }
 });

@@ -10,7 +10,6 @@ var vote = require('./vote');
 
 // Schema definition.
 var WordSchema = new Schema({
-  round :     { type: Schema.ObjectId, ref: 'Round', required: true },
   word :      { type: String, required: true },
   votes :     [ vote.VoteSchema ]
 });

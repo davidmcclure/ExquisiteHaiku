@@ -1,5 +1,5 @@
 /*
- * Performance benchmark for the vote score() method.
+ * Performance benchmark for the word score() method.
  *
  * To run: >> node word.benchmark.js {#votes}
  */

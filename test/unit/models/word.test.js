@@ -54,7 +54,6 @@ describe('Word', function() {
       word.save(function(err) {
 
         // Check for errors.
-        err.errors.round.type.should.eql('required');
         err.errors.word.type.should.eql('required');
 
         // Check for 1 documents.

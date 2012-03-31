@@ -41,7 +41,7 @@ describe('Word', function() {
 
   var user, poem, round, word;
 
-  beforeEach(function(done) {
+  beforeEach(function() {
 
     // Create user.
     user = new User({
@@ -75,27 +75,10 @@ describe('Word', function() {
       word: 'word'
     });
 
-    // Save worker.
-    var save = function(document, callback) {
-      document.save(function(err) {
-        callback(null, document);
-      });
-    };
-
-    // Save.
-    async.map([
-      user,
-      poem,
-      round,
-      word
-    ], save, function(err, documents) {
-      done();
-    });
-
   });
 
   // Clear users and poems.
-  afterEach(function(done) {
+  after(function(done) {
 
     // Truncate worker.
     var remove = function(model, callback) {
@@ -133,7 +116,7 @@ describe('Word', function() {
 
         // Check for 1 documents.
         Round.count({}, function(err, count) {
-          count.should.eql(1);
+          count.should.eql(0);
           done();
         });
 
@@ -148,7 +131,7 @@ describe('Word', function() {
     describe('id', function() {
 
       it('should have a virtual field for "id"', function() {
-        word.id.should.be.ok;
+        should.exist(word.id);
       });
 
       it('should be a string', function() {

@@ -44,7 +44,7 @@ describe('Vote', function() {
 
   var user, poem, round, word, vote;
 
-  beforeEach(function(done) {
+  beforeEach(function() {
 
     // Create user.
     user = new User({
@@ -84,28 +84,10 @@ describe('Vote', function() {
       quantity: 100
     });
 
-    // Save worker.
-    var save = function(document, callback) {
-      document.save(function(err) {
-        callback(null, document);
-      });
-    };
-
-    // Save.
-    async.map([
-      user,
-      poem,
-      round,
-      word,
-      vote
-    ], save, function(err, documents) {
-      done();
-    });
-
   });
 
   // Clear users and poems.
-  afterEach(function(done) {
+  after(function(done) {
 
     // Truncate worker.
     var remove = function(model, callback) {
@@ -143,9 +125,9 @@ describe('Vote', function() {
         err.errors.quantity.type.should.eql('required');
         err.errors.applied.type.should.eql('required');
 
-        // Check for 1 documents.
+        // Check for 0 documents.
         Vote.count({}, function(err, count) {
-          count.should.eql(1);
+          count.should.eql(0);
           done();
         });
 
@@ -168,7 +150,7 @@ describe('Vote', function() {
     describe('id', function() {
 
       it('should have a virtual field for "id"', function() {
-        vote.id.should.be.ok;
+        should.exist(vote.id);
       });
 
       it('should be a string', function() {

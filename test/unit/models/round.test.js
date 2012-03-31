@@ -37,7 +37,7 @@ describe('Round', function() {
 
   var user, poem, round;
 
-  beforeEach(function(done) {
+  beforeEach(function() {
 
     // Create user.
     user = new User({
@@ -65,26 +65,10 @@ describe('Round', function() {
       poem: poem.id
     });
 
-    // Save worker.
-    var save = function(document, callback) {
-      document.save(function(err) {
-        callback(null, document);
-      });
-    };
-
-    // Save.
-    async.map([
-      user,
-      poem,
-      round
-    ], save, function(err, documents) {
-      done();
-    });
-
   });
 
   // Clear users, poems, and rounds.
-  afterEach(function(done) {
+  after(function(done) {
 
     // Truncate worker.
     var remove = function(model, callback) {
@@ -119,9 +103,9 @@ describe('Round', function() {
         err.errors.poem.type.should.eql('required');
         err.errors.started.type.should.eql('required');
 
-        // Check for 1 documents.
+        // Check for 0 documents.
         Round.count({}, function(err, count) {
-          count.should.eql(1);
+          count.should.eql(0);
           done();
         });
 
@@ -144,7 +128,7 @@ describe('Round', function() {
     describe('id', function() {
 
       it('should have a virtual field for "id"', function() {
-        round.id.should.be.ok;
+        should.exist(round.id);
       });
 
       it('should be a string', function() {

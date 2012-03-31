@@ -83,6 +83,26 @@ Poem.virtual('id').get(function() {
   return this._id.toHexString();
 });
 
+
+/*
+ * Get unstarted status.
+ *
+ * @return {Boolean}: True if unstarted.
+ */
+Poem.virtual('unstarted').get(function() {
+  return !this.started;
+});
+
+
+/*
+ * Get paused status.
+ *
+ * @return {Boolean}: True if paused.
+ */
+Poem.virtual('paused').get(function() {
+  return this.started && !this.running && !this.complete;
+});
+
 /*
  * Start timer.
  *

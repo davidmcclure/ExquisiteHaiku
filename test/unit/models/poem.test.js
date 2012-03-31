@@ -33,7 +33,7 @@ describe('Poem', function() {
 
   var user;
 
-  beforeEach(function(done) {
+  beforeEach(function() {
 
     // Create user.
     user = new User({
@@ -43,13 +43,10 @@ describe('Poem', function() {
       active:     true
     });
 
-    // Save.
-    user.save(function(err) { done(); });
-
   });
 
   // Clear users and poems.
-  afterEach(function(done) {
+  after(function(done) {
 
     // Truncate worker.
     var remove = function(model, callback) {
@@ -103,7 +100,7 @@ describe('Poem', function() {
 
     var poem;
 
-    beforeEach(function(done) {
+    beforeEach(function() {
 
       // Create poem.
       poem = new Poem({
@@ -117,8 +114,6 @@ describe('Poem', function() {
         seedCapital : 1000,
         visibleWords : 500
       });
-
-      poem.save(function(err) { done(); });
 
     });
 
@@ -281,7 +276,7 @@ describe('Poem', function() {
 
     var poem;
 
-    beforeEach(function(done) {
+    beforeEach(function() {
 
       // Create poem.
       poem = new Poem({
@@ -296,18 +291,59 @@ describe('Poem', function() {
         visibleWords : 500
       });
 
-      poem.save(function(err) { done(); });
-
     });
 
     describe('id', function() {
 
       it('should have a virtual field for "id"', function() {
-        poem.id.should.be.ok;
+        should.exist(poem.id);
       });
 
       it('should be a string', function() {
         poem.id.should.be.a('string');
+      });
+
+    });
+
+    describe('unstarted', function() {
+
+      it('should have a virtual field for "unstarted"', function() {
+        should.exist(poem.unstarted);
+      });
+
+      it('should be true when started=false', function() {
+        poem.started = false;
+        poem.unstarted.should.be.true;
+      });
+
+      it('should be false when started=true', function() {
+        poem.started = true;
+        poem.unstarted.should.be.false;
+      });
+
+    });
+
+    describe('paused', function() {
+
+      it('should have a virtual field for "paused"', function() {
+        should.exist(poem.paused);
+      });
+
+      it('should be false when the poem is running', function() {
+        poem.running = true;
+        poem.paused.should.be.false;
+      });
+
+      it('should be false when the poem is complete', function() {
+        poem.complete = true;
+        poem.paused.should.be.false;
+      });
+
+      it('should be true when the poem is started, not running, and not complete', function() {
+        poem.started = true;
+        poem.running = false;
+        poem.complete = false;
+        poem.paused.should.be.true;
       });
 
     });

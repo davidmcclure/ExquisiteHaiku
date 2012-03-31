@@ -47,8 +47,7 @@ Vote.methods.score = function(now, decay) {
     Math.pow(Math.E, (-delta / decay)));
 
   // Starting boundary.
-  var bound1 = this.quantity * -decay*
-    Math.pow(Math.E, 0);
+  var bound1 = this.quantity * -decay;
 
   // Current boundary.
   var bound2 = this.quantity * -decay*

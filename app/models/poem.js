@@ -5,11 +5,14 @@
 // Module dependencies.
 var _ = require('underscore');
 
+// Models.
+var round = require('./round');
+
 // Schema definition.
 var PoemSchema = new Schema({
   slug :            { type: String, required: true },
   user :            { type: Schema.ObjectId, ref: 'User', required: true },
-  round :           { type: Number, default: 0 },
+  round :           [ round.RoundSchema ],
   created :         { type: Date, required: true, default: Date.now() },
   started :         { type: Boolean, required: true, default: false },
   running :         { type: Boolean, required: true, default: false },
@@ -138,9 +141,6 @@ PoemSchema.methods.start = function(slicer, scb, cb) {
       scb
     );
 
-    // Increment round if poem is unstarted.
-    if (!this.started) this.newRound();
-
     // Set trackers.
     this.running = true;
     this.started = true;
@@ -178,15 +178,6 @@ PoemSchema.methods.stop = function(cb) {
  */
 PoemSchema.methods.addWord = function(word) {
   this.words.push(word);
-};
-
-/*
- * Increment the round counter.
- *
- * @return void.
- */
-Poem.methods.newRound = function() {
-  this.round++;
 };
 
 

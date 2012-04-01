@@ -56,7 +56,6 @@ describe('Round', function() {
       round.save(function(err) {
 
         // Check for errors.
-        err.errors.poem.type.should.eql('required');
         err.errors.started.type.should.eql('required');
 
         // Check for 0 documents.

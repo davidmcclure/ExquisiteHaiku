@@ -18,6 +18,7 @@ var app = require('../../app');
 // Models and reserved slugs.
 var User = mongoose.model('User');
 var Poem = mongoose.model('Poem');
+var Round = mongoose.model('Round');
 var _slugs = require('../../helpers/forms/_slugs');
 
 
@@ -67,7 +68,7 @@ describe('Admin Controller', function() {
     running = new Poem({
       slug:             'running',
       user:             user.id,
-      round:            1,
+      round:            [new Round()],
       started:          true,
       running:          true,
       complete:         false,
@@ -84,7 +85,7 @@ describe('Admin Controller', function() {
     paused = new Poem({
       slug:             'paused',
       user:             user.id,
-      round:            1,
+      round:            [new Round()],
       started:          true,
       running:          false,
       complete:         false,
@@ -101,7 +102,7 @@ describe('Admin Controller', function() {
     complete = new Poem({
       slug:             'complete',
       user:             user.id,
-      round:            8,
+      round:            [new Round()],
       started:          true,
       running:          false,
       complete:         true,
@@ -786,6 +787,30 @@ describe('Admin Controller', function() {
 
     });
 
+    it('should create a starting round when the poem is unstarted', function(done) {
+
+      // Empty round array at start.
+      unstarted.round.should.be.empty;
+
+      browser.visit(r+'admin/poems/start/unstarted', function() {
+        unstarted.round.length.should.eql(1);
+        done();
+      });
+
+    });
+
+    it('should not create a new round when the poem is paused', function(done) {
+
+      // Capture round id.
+      var roundId = paused.round[0].id;
+
+      browser.visit(r+'admin/poems/start/unstarted', function() {
+        paused.round[0].id.should.eql(roundId);
+        done();
+      });
+
+    });
+
     it('should set running=true', function(done) {
 
       browser.visit(r+'admin/poems/start/unstarted', function() {
@@ -793,34 +818,6 @@ describe('Admin Controller', function() {
         // Re-get the poem.
         Poem.findOne({ slug: 'unstarted' }, function(err, poem) {
           poem.running.should.be.true;
-          done();
-        });
-
-      });
-
-    });
-
-    it('should increment the round counter for unstarted poem', function() {
-
-      browser.visit(r+'admin/poems/start/unstarted', function() {
-
-        // Re-get the poem.
-        Poem.findOne({ slug: 'unstarted' }, function(err, poem) {
-          poem.round.valueOf().should.eql(1);
-          done();
-        });
-
-      });
-
-    });
-
-    it('should not increment the round counter for started poem', function() {
-
-      browser.visit(r+'admin/poems/start/paused', function() {
-
-        // Re-get the poem.
-        Poem.findOne({ slug: 'paused' }, function(err, poem) {
-          poem.round.valueOf().should.eql(1);
           done();
         });
 

@@ -10,7 +10,6 @@ var word = require('./word');
 
 // Schema definition.
 var RoundSchema = new Schema({
-  poem :      { type: Schema.ObjectId, ref: 'Poem', required: true },
   started :   { type: Date, default: Date.now(), required: true },
   words :     [ word.wordSchema ]
 });
@@ -72,3 +71,8 @@ RoundSchema.methods.score = function(now, decay, len) {
 // Register model.
 mongoose.model('Round', RoundSchema);
 var Round = mongoose.model('Round');
+
+// Expose the schema.
+module.exports = {
+  RoundSchema: RoundSchema
+};

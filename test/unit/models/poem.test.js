@@ -117,10 +117,6 @@ describe('Poem', function() {
 
     });
 
-    it('should set "round" to 0 by default', function() {
-      poem.round.valueOf().should.eql(0);
-    });
-
     it('should set "created" to the current date by default', function() {
       poem.created.should.be.ok;
     });
@@ -435,27 +431,6 @@ describe('Poem', function() {
         global.Oversoul.timers.should.have.keys(poem.id);
       });
 
-      it('should increment the round for unstarted poem', function() {
-        poem.round.valueOf().should.eql(1);
-      });
-
-      it('should not increment the round for started poem', function(done) {
-
-        // Set poem paused.
-        poem.started = true;
-        poem.running = false;
-        poem.round = 1;
-
-        // Save.
-        poem.save(function(err) {
-          poem.start(function() {}, function() {}, function(err) {
-            poem.round.valueOf().should.eql(1);
-            done();
-          });
-        });
-
-      });
-
       it('should set "running" to true', function() {
         poem.running.should.be.true;
       });
@@ -519,19 +494,6 @@ describe('Poem', function() {
         poem.addWord('days');
         poem.words[0].should.eql('electrical');
         poem.words[1].should.eql('days');
-
-      });
-
-    });
-
-    describe('newRound', function() {
-
-      it('should increment the round counter', function() {
-
-        poem.newRound();
-        poem.round.valueOf().should.eql(1);
-        poem.newRound();
-        poem.round.valueOf().should.eql(2);
 
       });
 

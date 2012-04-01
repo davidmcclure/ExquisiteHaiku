@@ -789,12 +789,14 @@ describe('Admin Controller', function() {
 
     it('should create a starting round when the poem is unstarted', function(done) {
 
-      // Empty round array at start.
-      unstarted.round.should.be.empty;
-
       browser.visit(r+'admin/poems/start/unstarted', function() {
-        unstarted.round.length.should.eql(1);
-        done();
+
+        // Re-get unstarted.
+        Poem.findOne({ slug: 'unstarted'}, function(err, unstarted) {
+          unstarted.round.length.should.eql(1);
+          done();
+        });
+
       });
 
     });
@@ -804,9 +806,14 @@ describe('Admin Controller', function() {
       // Capture round id.
       var roundId = paused.round[0].id;
 
-      browser.visit(r+'admin/poems/start/unstarted', function() {
-        paused.round[0].id.should.eql(roundId);
-        done();
+      browser.visit(r+'admin/poems/start/paused', function() {
+
+        // Re-get paused.
+        Poem.findOne({ slug: 'paused'}, function(err, paused) {
+          paused.round.length.should.eql(1);
+          done();
+        });
+
       });
 
     });

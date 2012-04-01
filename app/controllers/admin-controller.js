@@ -294,6 +294,12 @@ module.exports = function(app) {
       // Slicer callback.
       var scb = function() {};
 
+      // If poem unstarted, create starting round.
+      if (req.poem.unstarted) {
+        req.poem.round.push(new Round());
+        req.poem.markModified('round');
+      }
+
       // Start, save, and redirect.
       req.poem.start(slicer.integrator, scb, function() {
         req.poem.save(function(err) {

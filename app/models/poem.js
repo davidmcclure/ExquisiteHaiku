@@ -68,9 +68,9 @@ PoemSchema.path('complete').validate(function(v) {
 
 
 /*
- * -----------------
- * Document methods.
- * -----------------
+ * -------------------
+ * Virtual attributes.
+ * -------------------
  */
 
 
@@ -115,6 +115,24 @@ PoemSchema.virtual('status').get(function() {
   else if (this.paused) return 'paused';
   else if (this.complete) return 'complete';
 });
+
+
+/*
+ * Get round expiration.
+ *
+ * @return {Date}: The expiration stamp.
+ */
+PoemSchema.virtual('roundExpiration').get(function() {
+  return this.round[0].started.valueOf() + this.roundLength;
+});
+
+
+/*
+ * -----------------
+ * Document methods.
+ * -----------------
+ */
+
 
 /*
  * Start timer.
@@ -189,6 +207,53 @@ PoemSchema.methods.newRound = function() {
  */
 PoemSchema.methods.addWord = function(word) {
   this.words.push(word);
+};
+
+
+/*
+ * -------------------
+ * Collection methods.
+ * -------------------
+ */
+
+/*
+ * Find poem by id, score, return stacks and poem.
+ *
+ * @param {Number} id: The poem id.
+ * @param {Function} cb: Callback.
+ *
+ * @return void.
+ */
+PoemSchema.statics.score = function(cb) {
+
+  // Get the poem.
+  this.findById(id, function(err, poem) {
+
+    // Get stacks.
+    var stacks = poem.round.score();
+
+    // Check for round expiration.
+    if (Date.now() > poem.roundExpiration) {
+
+      // Push new word, create new round.
+      poem.words.addWord(stacks.rank[0][0]);
+      poem.newRound();
+
+    }
+
+    // Save.
+    poem.save(function(err) {
+
+      cb({
+        stacks: stacks,
+        poem: poem.words,
+        round: poem.round.id
+      });
+
+    });
+
+  });
+
 };
 
 

@@ -16,9 +16,9 @@ var RoundSchema = new Schema({
 
 
 /*
- * -----------------
- * Document methods.
- * -----------------
+ * -------------------
+ * Virtual attributes.
+ * -------------------
  */
 
 
@@ -30,6 +30,14 @@ var RoundSchema = new Schema({
 RoundSchema.virtual('id').get(function() {
   return this._id.toHexString();
 });
+
+
+/*
+ * -----------------
+ * Document methods.
+ * -----------------
+ */
+
 
 /*
  * Score the round.
@@ -63,7 +71,7 @@ RoundSchema.methods.score = function(now, decay, len) {
   rank = rank.sort(comp).slice(0, len);
   churn = churn.sort(comp).slice(0, len);
 
-  return [rank, churn];
+  return { rank: rank, churn: churn };
 
 };
 

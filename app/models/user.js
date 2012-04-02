@@ -16,9 +16,9 @@ var User = new Schema({
 
 
 /*
- * -----------------
- * Document methods.
- * -----------------
+ * -------------------
+ * Virtual attributes.
+ * -------------------
  */
 
 
@@ -50,6 +50,14 @@ User.virtual('password').set(function(password) {
 User.virtual('password').get(function() {
   return this._password;
 });
+
+
+/*
+ * -----------------
+ * Document methods.
+ * -----------------
+ */
+
 
 /*
  * Generate salt.

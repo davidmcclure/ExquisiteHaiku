@@ -13,9 +13,9 @@ var VoteSchema = new Schema({
 
 
 /*
- * -----------------
- * Document methods.
- * -----------------
+ * -------------------
+ * Virtual attributes.
+ * -------------------
  */
 
 
@@ -27,6 +27,14 @@ var VoteSchema = new Schema({
 VoteSchema.virtual('id').get(function() {
   return this._id.toHexString();
 });
+
+
+/*
+ * -----------------
+ * Document methods.
+ * -----------------
+ */
+
 
 /*
  * Score the vote.

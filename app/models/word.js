@@ -16,9 +16,9 @@ var WordSchema = new Schema({
 
 
 /*
- * -----------------
- * Document methods.
- * -----------------
+ * -------------------
+ * Virtual attributes.
+ * -------------------
  */
 
 
@@ -30,6 +30,14 @@ var WordSchema = new Schema({
 WordSchema.virtual('id').get(function() {
   return this._id.toHexString();
 });
+
+
+/*
+ * -----------------
+ * Document methods.
+ * -----------------
+ */
+
 
 /*
  * Score the word.

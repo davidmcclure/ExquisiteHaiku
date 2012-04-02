@@ -382,6 +382,22 @@ describe('Poem', function() {
 
     });
 
+    describe('roundExpiration', function() {
+
+      it('should return the correct expiration when a round exists', function() {
+
+        // Create a round.
+        poem.newRound();
+
+        // Expiration = round started + round length.
+        poem.roundExpiration.should.eql(
+          poem.round[0].started.valueOf() + poem.roundLength
+        );
+
+      });
+
+    });
+
   });
 
   describe('methods', function() {

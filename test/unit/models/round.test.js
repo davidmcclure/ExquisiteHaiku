@@ -162,12 +162,12 @@ describe('Round', function() {
           Date.now() + 60000, 60000, 2
         );
 
-        stacks[0][0][0].should.eql('word3');
-        stacks[0][1][0].should.eql('word2');
-        should.not.exist(stacks[0][2]);
-        stacks[1][0][0].should.eql('word3');
-        stacks[1][1][0].should.eql('word2');
-        should.not.exist(stacks[1][2]);
+        stacks.rank[0][0].should.eql('word3');
+        stacks.rank[1][0].should.eql('word2');
+        should.not.exist(stacks.rank[2]);
+        stacks.churn[0][0].should.eql('word3');
+        stacks.churn[1][0].should.eql('word2');
+        should.not.exist(stacks.churn[2]);
 
       });
 

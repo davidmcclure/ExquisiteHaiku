@@ -21,6 +21,18 @@ var User = mongoose.model('User');
 require('../../../app/models/poem');
 var Poem = mongoose.model('Poem');
 
+// Round model.
+require('../../../app/models/round');
+var Round = mongoose.model('Round');
+
+// Word model.
+require('../../../app/models/word');
+var Word = mongoose.model('Word');
+
+// Vote model.
+require('../../../app/models/vote');
+var Vote = mongoose.model('Vote');
+
 
 /*
  * ----------------------
@@ -382,6 +394,19 @@ describe('Poem', function() {
 
     });
 
+    describe('currentRound', function() {
+
+      it('should return the round when a round exists', function() {
+        poem.newRound();
+        poem.currentRound.id.should.eql(poem.round[0].id);
+      });
+
+      it('should return null when a round does not exist', function() {
+        should.not.exist(poem.currentRound);
+      });
+
+    });
+
     describe('roundExpiration', function() {
 
       it('should return the correct expiration when a round exists', function() {
@@ -391,9 +416,13 @@ describe('Poem', function() {
 
         // Expiration = round started + round length.
         poem.roundExpiration.should.eql(
-          poem.round[0].started.valueOf() + poem.roundLength
+          poem.currentRound.started.valueOf() + poem.roundLength
         );
 
+      });
+
+      it('should return null when a round does not exist', function() {
+        should.not.exist(poem.roundExpiration);
       });
 
     });
@@ -527,8 +556,9 @@ describe('Poem', function() {
 
         // Check for well-formed round.
         poem.round.length.should.eql(1);
-        should.exist(poem.round[0].started);
-        should.exist(poem.round[0].words);
+        should.exist(poem.currentRound.id);
+        should.exist(poem.currentRound.started);
+        should.exist(poem.currentRound.words);
 
       });
 
@@ -536,18 +566,135 @@ describe('Poem', function() {
 
         // Add starting new round, capture id.
         poem.newRound();
-        var roundId = poem.round[0].id;
+        var roundId = poem.currentRound.id;
 
         // Add new round.
         poem.newRound();
 
-        // Check for well-formed, new round.
+        // Check for well-formed round.
         poem.round.length.should.eql(1);
-        should.exist(poem.round[0].started);
-        should.exist(poem.round[0].words);
-        poem.round[0].id.should.not.eql(roundId);
+        should.exist(poem.currentRound.id);
+        should.exist(poem.currentRound.started);
+        should.exist(poem.currentRound.words);
+
+        // Should be different from old round.
+        poem.currentRound.id.should.not.eql(roundId);
 
       });
+
+      it('should return the new round', function() {
+
+        // Add new round.
+        var round = poem.newRound();
+
+        // Check for well-formed round.
+        should.exist(round.id);
+        should.exist(round.started);
+        should.exist(round.words);
+
+      });
+
+    });
+
+  });
+
+  describe('statics', function() {
+
+    describe('score', function() {
+
+      var poem;
+
+      beforeEach(function() {
+
+        // // Create user.
+        // var user = new User({
+        //   username:   'david',
+        //   password:   'password',
+        //   email:      'david@test.com',
+        //   admin:      true
+        // });
+
+        // // Create poem.
+        // poem = new Poem({
+        //   slug:             'slug',
+        //   user:             user.id,
+        //   started:          true,
+        //   running:          true,
+        //   complete:         false,
+        //   roundLength :     10000,
+        //   sliceInterval :   1000,
+        //   minSubmissions :  5,
+        //   submissionVal :   100,
+        //   decayLifetime :   60000,
+        //   seedCapital :     1000,
+        //   visibleWords :    2
+        // });
+
+        // // Create round.
+        // poem.newRound();
+
+        // // Create word1.
+        // var word1 = new Word({
+        //   word: 'word1'
+        // });
+
+        // // Create word2.
+        // var word2 = new Word({
+        //   word: 'word2'
+        // });
+
+        // // Create word3.
+        // var word3 = new Word({
+        //   word: 'word3'
+        // });
+
+        // // 100 vote on word1.
+        // word1.votes.push(new Vote({
+        //   quantity: 100
+        // }));
+
+        // // 100 vote on word1.
+        // word1.votes.push(new Vote({
+        //   quantity: 100
+        // }));
+
+        // // 200 vote on word2.
+        // word2.votes.push(new Vote({
+        //   quantity: 200
+        // }));
+
+        // // 200 vote on word2.
+        // word2.votes.push(new Vote({
+        //   quantity: 200
+        // }));
+
+        // // 300 vote on word3.
+        // word3.votes.push(new Vote({
+        //   quantity: 300
+        // }));
+
+        // // 300 vote on word3.
+        // word3.votes.push(new Vote({
+        //   quantity: 300
+        // }));
+
+        // // Push words.
+        // poem.currentRound.words.push(word1);
+        // poem.currentRound.words.push(word2);
+        // poem.currentRound.words.push(word3);
+
+        // // Save.
+        // poem.save(function(err) {
+        //   done();
+        // });
+
+      });
+
+      it('should return stacks, poem words, and round id');
+
+      it('should not increment to a new round when the current round is not expired');
+
+      it('should increment to a new round when the current round is expired');
 
     });
 

@@ -102,19 +102,16 @@ describe('Round', function() {
 
         // Create word1.
         var word1 = new Word({
-          round: round.id,
           word: 'word1'
         });
 
         // Create word2.
         var word2 = new Word({
-          round: round.id,
           word: 'word2'
         });
 
         // Create word3.
         var word3 = new Word({
-          round: round.id,
           word: 'word3'
         });
 

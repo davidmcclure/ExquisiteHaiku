@@ -804,7 +804,7 @@ describe('Admin Controller', function() {
     it('should not create a new round when the poem is paused', function(done) {
 
       // Capture round id.
-      var roundId = paused.round[0].id;
+      var roundId = paused.currentRound.id;
 
       browser.visit(r+'admin/poems/start/paused', function() {
 

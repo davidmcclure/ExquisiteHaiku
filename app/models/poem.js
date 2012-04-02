@@ -118,12 +118,24 @@ PoemSchema.virtual('status').get(function() {
 
 
 /*
+ * Get current round.
+ *
+ * @return {Object}: The current round.
+ */
+PoemSchema.virtual('currentRound').get(function() {
+  return this.round.length === 1 ? this.round[0] : null;
+});
+
+
+/*
  * Get round expiration.
  *
  * @return {Date}: The expiration stamp.
  */
 PoemSchema.virtual('roundExpiration').get(function() {
-  return this.round[0].started.valueOf() + this.roundLength;
+  return this.round.length === 1 ?
+    this.currentRound.started.valueOf() + this.roundLength :
+    null;
 });
 
 
@@ -194,8 +206,16 @@ PoemSchema.methods.stop = function(cb) {
  * @return void.
  */
 PoemSchema.methods.newRound = function() {
-  this.round = [ new Round() ];
-  this.markModified('round');
+
+  // Create new round.
+  var round = new Round();
+
+  // Remove existing round, add new round.
+  if (!_.isUndefined(this.round[0])) this.round[0].remove();
+  this.round.push(new Round());
+
+  return round;
+
 };
 
 /*
@@ -224,16 +244,23 @@ PoemSchema.methods.addWord = function(word) {
  *
  * @return void.
  */
-PoemSchema.statics.score = function(cb) {
+PoemSchema.statics.score = function(id, cb) {
 
   // Get the poem.
   this.findById(id, function(err, poem) {
 
+    // Get current timestamp.
+    var now = Date.now();
+
     // Get stacks.
-    var stacks = poem.round.score();
+    var stacks = poem.currentRound.score(
+      now,
+      poem.decayLifetime,
+      poem.visibleWords
+    );
 
     // Check for round expiration.
-    if (Date.now() > poem.roundExpiration) {
+    if (now > poem.roundExpiration) {
 
       // Push new word, create new round.
       poem.words.addWord(stacks.rank[0][0]);

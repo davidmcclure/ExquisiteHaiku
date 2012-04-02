@@ -295,10 +295,7 @@ module.exports = function(app) {
       var scb = function() {};
 
       // If poem unstarted, create starting round.
-      if (req.poem.unstarted) {
-        req.poem.round.push(new Round());
-        req.poem.markModified('round');
-      }
+      if (req.poem.unstarted) req.poem.newRound();
 
       // Start, save, and redirect.
       req.poem.start(slicer.integrator, scb, function() {

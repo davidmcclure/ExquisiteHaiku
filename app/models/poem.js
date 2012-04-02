@@ -7,6 +7,7 @@ var _ = require('underscore');
 
 // Models.
 var round = require('./round');
+var Round = mongoose.model('Round');
 
 // Schema definition.
 var PoemSchema = new Schema({
@@ -167,6 +168,16 @@ PoemSchema.methods.stop = function(cb) {
   this.running = false;
   cb();
 
+};
+
+/*
+ * Create a new round.
+ *
+ * @return void.
+ */
+PoemSchema.methods.newRound = function() {
+  this.round = [ new Round() ];
+  this.markModified('round');
 };
 
 /*

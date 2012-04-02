@@ -499,6 +499,25 @@ describe('Poem', function() {
 
     });
 
+    describe('newRound', function() {
+
+      it('should add a round when one is not already present', function() {
+
+        // By default, round = [];
+        poem.round.should.be.empty;
+
+        // Add new round.
+        poem.newRound();
+
+        // Check for well-formed round.
+        poem.round.length.should.eql(1);
+        should.exist(poem.round[0].started);
+        should.exist(poem.round[0].words);
+
+      });
+
+    });
+
   });
 
 });

@@ -94,58 +94,73 @@ describe('Round', function() {
 
     describe('score', function() {
 
-      beforeEach(function() {
+      beforeEach(function(done) {
 
-        // // Create word1.
-        // var word1 = new Word({
-        //   word: 'word1'
-        // });
+        var vote1, vote2, vote3, vote4, vote5, vote6;
 
-        // // Create word2.
-        // var word2 = new Word({
-        //   word: 'word2'
-        // });
+        // 100 vote on word1.
+        vote1 = new Vote({
+          round: round.id,
+          word: 'word1',
+          quantity: 100
+        });
 
-        // // Create word3.
-        // var word3 = new Word({
-        //   word: 'word3'
-        // });
+        // 100 vote on word1.
+        vote2 = new Vote({
+          round: round.id,
+          word: 'word1',
+          quantity: 100
+        });
 
-        // // 100 vote on word1.
-        // word1.votes.push(new Vote({
-        //   quantity: 100
-        // }));
+        // 200 vote on word2.
+        vote3 = new Vote({
+          round: round.id,
+          word: 'word2',
+          quantity: 200
+        })
 
-        // // 100 vote on word1.
-        // word1.votes.push(new Vote({
-        //   quantity: 100
-        // }));
+        // 200 vote on word2.
+        vote4 = new Vote({
+          round: round.id,
+          word: 'word2',
+          quantity: 200
+        });;
 
-        // // 200 vote on word2.
-        // word2.votes.push(new Vote({
-        //   quantity: 200
-        // }));
+        // 300 vote on word3.
+        vote5 = new Vote({
+          round: round.id,
+          word: 'word3',
+          quantity: 300
+        });
 
-        // // 200 vote on word2.
-        // word2.votes.push(new Vote({
-        //   quantity: 200
-        // }));
+        // 300 vote on word3.
+        vote6 = new Vote({
+          round: round.id,
+          word: 'word3',
+          quantity: 300
+        });
 
-        // // 300 vote on word3.
-        // word3.votes.push(new Vote({
-        //   quantity: 300
-        // }));
+        // Save worker.
+        var save = function(document, callback) {
+          document.save(function(err) {
+            callback(null, document);
+          });
+        };
 
-        // // 300 vote on word3.
-        // word3.votes.push(new Vote({
-        //   quantity: 300
-        // }));
+        // Save.
+        async.map([
+          vote1, vote2, vote3, vote4, vote5, vote6
+        ], save, function(err, documents) {
+          done();
+        });
 
-        // // Push words.
-        // round.words.push(word1);
-        // round.words.push(word2);
-        // round.words.push(word3);
+      });
 
+      // Clear votes.
+      afterEach(function(done) {
+        Vote.collection.remove(function(err) {
+          done();
+        });
       });
 
       it('should return an array of [[rank], [churn]]', function() {
@@ -155,9 +170,12 @@ describe('Round', function() {
           Date.now() + 60000, 60000, 2
         );
 
+        // Check rank.
         stacks.rank[0][0].should.eql('word3');
         stacks.rank[1][0].should.eql('word2');
         should.not.exist(stacks.rank[2]);
+
+        // Check churn.
         stacks.churn[0][0].should.eql('word3');
         stacks.churn[1][0].should.eql('word2');
         should.not.exist(stacks.churn[2]);

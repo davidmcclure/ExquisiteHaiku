@@ -5,6 +5,10 @@
 // Module dependencies.
 var _ = require('underscore');
 
+// Models.
+require('./vote');
+var Vote = mongoose.model('Vote');
+
 // Schema definition.
 var RoundSchema = new Schema({
   started :   { type: Date, default: Date.now(), required: true }
@@ -49,25 +53,33 @@ RoundSchema.methods.score = function(now, decay, len) {
 
   var rank = []; var churn = [];
 
-  _.each(this.words, function(word) {
-
-    // Score word.
-    var score = word.score(now, decay);
-
-    // Push scores onto stacks.
-    rank.push([word.word, score[0]]);
-    churn.push([word.word, score[1]]);
-
+  // Get votes.
+  Vote.find({round: this.id }, function(err, votes) {
+    console.log(votes);
   });
 
-  // Sort comparer.
-  var comp = function(a,b) { return b[1]-a[1]; };
 
-  // Sort and slice.
-  rank = rank.sort(comp).slice(0, len);
-  churn = churn.sort(comp).slice(0, len);
 
-  return { rank: rank, churn: churn };
+
+  // _.each(this.words, function(word) {
+
+  //   // Score word.
+  //   var score = word.score(now, decay);
+
+  //   // Push scores onto stacks.
+  //   rank.push([word.word, score[0]]);
+  //   churn.push([word.word, score[1]]);
+
+  // });
+
+  // // Sort comparer.
+  // var comp = function(a,b) { return b[1]-a[1]; };
+
+  // // Sort and slice.
+  // rank = rank.sort(comp).slice(0, len);
+  // churn = churn.sort(comp).slice(0, len);
+
+  // return { rank: rank, churn: churn };
 
 };
 

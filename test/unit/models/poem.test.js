@@ -26,10 +26,6 @@ var Poem = mongoose.model('Poem');
 require('../../../app/models/round');
 var Round = mongoose.model('Round');
 
-// Word model.
-require('../../../app/models/word');
-var Word = mongoose.model('Word');
-
 // Vote model.
 require('../../../app/models/vote');
 var Vote = mongoose.model('Vote');
@@ -574,7 +570,6 @@ describe('Poem', function() {
         poem.rounds.length.should.eql(1);
         should.exist(poem.rounds[0].id);
         should.exist(poem.rounds[0].started);
-        should.exist(poem.rounds[0].words);
 
         // Add a second round.
         poem.newRound();
@@ -583,7 +578,6 @@ describe('Poem', function() {
         poem.rounds.length.should.eql(2);
         should.exist(poem.rounds[1].id);
         should.exist(poem.rounds[1].started);
-        should.exist(poem.rounds[1].words);
 
       });
 
@@ -595,7 +589,6 @@ describe('Poem', function() {
         // Check for well-formed round.
         should.exist(round.id);
         should.exist(round.started);
-        should.exist(round.words);
 
       });
 

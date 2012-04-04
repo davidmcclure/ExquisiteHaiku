@@ -5,13 +5,9 @@
 // Module dependencies.
 var _ = require('underscore');
 
-// Models.
-var word = require('./word');
-
 // Schema definition.
 var RoundSchema = new Schema({
-  started :   { type: Date, default: Date.now(), required: true },
-  words :     [ word.wordSchema ]
+  started :   { type: Date, default: Date.now(), required: true }
 });
 
 

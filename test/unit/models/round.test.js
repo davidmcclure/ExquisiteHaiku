@@ -17,10 +17,6 @@ require('../db-connect');
 require('../../../app/models/round');
 var Round = mongoose.model('Round');
 
-// Word model.
-require('../../../app/models/word');
-var Word = mongoose.model('Word');
-
 // Vote model.
 require('../../../app/models/vote');
 var Vote = mongoose.model('Vote');
@@ -100,55 +96,55 @@ describe('Round', function() {
 
       beforeEach(function() {
 
-        // Create word1.
-        var word1 = new Word({
-          word: 'word1'
-        });
+        // // Create word1.
+        // var word1 = new Word({
+        //   word: 'word1'
+        // });
 
-        // Create word2.
-        var word2 = new Word({
-          word: 'word2'
-        });
+        // // Create word2.
+        // var word2 = new Word({
+        //   word: 'word2'
+        // });
 
-        // Create word3.
-        var word3 = new Word({
-          word: 'word3'
-        });
+        // // Create word3.
+        // var word3 = new Word({
+        //   word: 'word3'
+        // });
 
-        // 100 vote on word1.
-        word1.votes.push(new Vote({
-          quantity: 100
-        }));
+        // // 100 vote on word1.
+        // word1.votes.push(new Vote({
+        //   quantity: 100
+        // }));
 
-        // 100 vote on word1.
-        word1.votes.push(new Vote({
-          quantity: 100
-        }));
+        // // 100 vote on word1.
+        // word1.votes.push(new Vote({
+        //   quantity: 100
+        // }));
 
-        // 200 vote on word2.
-        word2.votes.push(new Vote({
-          quantity: 200
-        }));
+        // // 200 vote on word2.
+        // word2.votes.push(new Vote({
+        //   quantity: 200
+        // }));
 
-        // 200 vote on word2.
-        word2.votes.push(new Vote({
-          quantity: 200
-        }));
+        // // 200 vote on word2.
+        // word2.votes.push(new Vote({
+        //   quantity: 200
+        // }));
 
-        // 300 vote on word3.
-        word3.votes.push(new Vote({
-          quantity: 300
-        }));
+        // // 300 vote on word3.
+        // word3.votes.push(new Vote({
+        //   quantity: 300
+        // }));
 
-        // 300 vote on word3.
-        word3.votes.push(new Vote({
-          quantity: 300
-        }));
+        // // 300 vote on word3.
+        // word3.votes.push(new Vote({
+        //   quantity: 300
+        // }));
 
-        // Push words.
-        round.words.push(word1);
-        round.words.push(word2);
-        round.words.push(word3);
+        // // Push words.
+        // round.words.push(word1);
+        // round.words.push(word2);
+        // round.words.push(word3);
 
       });
 

@@ -68,7 +68,7 @@ describe('Admin Controller', function() {
     running = new Poem({
       slug:             'running',
       user:             user.id,
-      round:            [new Round()],
+      rounds:            [new Round()],
       started:          true,
       running:          true,
       complete:         false,
@@ -85,7 +85,7 @@ describe('Admin Controller', function() {
     paused = new Poem({
       slug:             'paused',
       user:             user.id,
-      round:            [new Round()],
+      rounds:            [new Round()],
       started:          true,
       running:          false,
       complete:         false,
@@ -102,7 +102,7 @@ describe('Admin Controller', function() {
     complete = new Poem({
       slug:             'complete',
       user:             user.id,
-      round:            [new Round()],
+      rounds:            [new Round()],
       started:          true,
       running:          false,
       complete:         true,
@@ -793,8 +793,12 @@ describe('Admin Controller', function() {
 
         // Re-get unstarted.
         Poem.findOne({ slug: 'unstarted'}, function(err, unstarted) {
-          unstarted.round.length.should.eql(1);
+
+          // Check for new round.
+          unstarted.rounds.length.should.eql(1);
+          should.exist(unstarted.round);
           done();
+
         });
 
       });
@@ -804,14 +808,18 @@ describe('Admin Controller', function() {
     it('should not create a new round when the poem is paused', function(done) {
 
       // Capture round id.
-      var roundId = paused.currentRound.id;
+      var roundId = paused.round.id;
 
       browser.visit(r+'admin/poems/start/paused', function() {
 
         // Re-get paused.
         Poem.findOne({ slug: 'paused'}, function(err, paused) {
-          paused.round.length.should.eql(1);
+
+          // Check for no new round.
+          paused.rounds.length.should.eql(1);
+          paused.round.id.should.eql(roundId);
           done();
+
         });
 
       });

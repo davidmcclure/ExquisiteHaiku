@@ -13,7 +13,7 @@ var Round = mongoose.model('Round');
 var PoemSchema = new Schema({
   slug :            { type: String, required: true },
   user :            { type: Schema.ObjectId, ref: 'User', required: true },
-  round :           [ round.RoundSchema ],
+  rounds :          [ round.RoundSchema ],
   created :         { type: Date, required: true, default: Date.now() },
   started :         { type: Boolean, required: true, default: false },
   running :         { type: Boolean, required: true, default: false },
@@ -122,8 +122,8 @@ PoemSchema.virtual('status').get(function() {
  *
  * @return {Object}: The current round.
  */
-PoemSchema.virtual('currentRound').get(function() {
-  return this.round.length === 1 ? this.round[0] : null;
+PoemSchema.virtual('round').get(function() {
+  return _.last(this.rounds);
 });
 
 
@@ -133,9 +133,13 @@ PoemSchema.virtual('currentRound').get(function() {
  * @return {Date}: The expiration stamp.
  */
 PoemSchema.virtual('roundExpiration').get(function() {
-  return this.round.length === 1 ?
-    this.currentRound.started.valueOf() + this.roundLength :
-    null;
+
+  if (!_.isUndefined(this.round)) {
+    return this.round.started.valueOf() + this.roundLength;
+  }
+
+  else return undefined;
+
 });
 
 
@@ -209,10 +213,7 @@ PoemSchema.methods.newRound = function() {
 
   // Create new round.
   var round = new Round();
-
-  // Remove existing round, add new round.
-  if (!_.isUndefined(this.round[0])) this.round[0].remove();
-  this.round.push(new Round());
+  this.rounds.push(round);
 
   return round;
 
@@ -253,7 +254,7 @@ PoemSchema.statics.score = function(id, cb) {
     var now = Date.now();
 
     // Get stacks.
-    var stacks = poem.currentRound.score(
+    var stacks = poem.round.score(
       now,
       poem.decayLifetime,
       poem.visibleWords

@@ -65,7 +65,7 @@ VoteSchema.methods.score = function(now, decay) {
   // Get the integral, scale and round.
   var rank = Math.round(((bound2-bound1)/1000));
 
-  return [rank, churn];
+  return { rank:rank, churn: churn };
 
 };
 

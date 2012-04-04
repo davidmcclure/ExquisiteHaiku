@@ -163,22 +163,23 @@ describe('Round', function() {
         });
       });
 
-      it('should return an array of [[rank], [churn]]', function() {
+      it('should return an array of [[rank], [churn]]', function(done) {
 
         // Call at now+60s with 60s mean decay lifetime.
-        var stacks = round.score(
-          Date.now() + 60000, 60000, 2
-        );
+        round.score(Date.now() + 60000, 60000, 2, function(stacks) {
 
-        // Check rank.
-        stacks.rank[0][0].should.eql('word3');
-        stacks.rank[1][0].should.eql('word2');
-        should.not.exist(stacks.rank[2]);
+          // Check rank.
+          stacks.rank[0][0].should.eql('word3');
+          stacks.rank[1][0].should.eql('word2');
+          should.not.exist(stacks.rank[2]);
 
-        // Check churn.
-        stacks.churn[0][0].should.eql('word3');
-        stacks.churn[1][0].should.eql('word2');
-        should.not.exist(stacks.churn[2]);
+          // Check churn.
+          stacks.churn[0][0].should.eql('word3');
+          stacks.churn[1][0].should.eql('word2');
+          should.not.exist(stacks.churn[2]);
+          done();
+
+        });
 
       });
 

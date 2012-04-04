@@ -247,41 +247,6 @@ PoemSchema.methods.addWord = function(word) {
  */
 PoemSchema.statics.score = function(id, cb) {
 
-  // Get the poem.
-  this.findById(id, function(err, poem) {
-
-    // Get current timestamp.
-    var now = Date.now();
-
-    // Get stacks.
-    var stacks = poem.round.score(
-      now,
-      poem.decayLifetime,
-      poem.visibleWords
-    );
-
-    // Check for round expiration.
-    if (now > poem.roundExpiration) {
-
-      // Push new word, create new round.
-      poem.words.addWord(stacks.rank[0][0]);
-      poem.newRound();
-
-    }
-
-    // Save.
-    poem.save(function(err) {
-
-      cb({
-        stacks: stacks,
-        poem: poem.words,
-        round: poem.round.id
-      });
-
-    });
-
-  });
-
 };
 
 

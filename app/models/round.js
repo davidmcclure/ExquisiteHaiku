@@ -49,37 +49,51 @@ RoundSchema.virtual('id').get(function() {
  *
  * @return {Array}: [[rank], [churn]].
  */
-RoundSchema.methods.score = function(now, decay, len) {
+RoundSchema.methods.score = function(now, decay, len, cb) {
 
-  var rank = []; var churn = [];
+  var r = {}; var c = {};
 
   // Get votes.
   Vote.find({round: this.id }, function(err, votes) {
-    console.log(votes);
+
+    _.each(votes, function(vote) {
+
+      // Score vote.
+      var score = vote.score(now, decay);
+
+      // Push to tracker objects.
+      if (!_.has(r, vote.word)) {
+        r[vote.word] = score.rank;
+        c[vote.word] = score.churn;
+      } else {
+        r[vote.word] += score.rank;
+        c[vote.word] += score.churn;
+      }
+
+    });
+
+    // Cast rank to array.
+    var rank = [];
+    _.each(r, function(val, key) {
+      rank.push([key, val]);
+    });
+
+    // Cast churn to array.
+    var churn = [];
+    _.each(c, function(val, key) {
+      churn.push([key, val]);
+    });
+
+    // Sort comparer.
+    var comp = function(a,b) { return b[1]-a[1]; };
+
+    // Sort and slice.
+    rank = rank.sort(comp).slice(0, len);
+    churn = churn.sort(comp).slice(0, len);
+
+    cb({ rank: rank, churn: churn });
+
   });
-
-
-
-
-  // _.each(this.words, function(word) {
-
-  //   // Score word.
-  //   var score = word.score(now, decay);
-
-  //   // Push scores onto stacks.
-  //   rank.push([word.word, score[0]]);
-  //   churn.push([word.word, score[1]]);
-
-  // });
-
-  // // Sort comparer.
-  // var comp = function(a,b) { return b[1]-a[1]; };
-
-  // // Sort and slice.
-  // rank = rank.sort(comp).slice(0, len);
-  // churn = churn.sort(comp).slice(0, len);
-
-  // return { rank: rank, churn: churn };
 
 };
 

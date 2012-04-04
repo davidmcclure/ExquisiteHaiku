@@ -15,7 +15,6 @@ require('../db-connect');
 // Models.
 require('../../../app/models/round');
 var Round = mongoose.model('Round');
-var Word = mongoose.model('Word');
 var Vote = mongoose.model('Vote');
 
 // Create round.
@@ -25,36 +24,50 @@ var round = new Round();
 var numWords = process.argv[2];
 var votesPerWord = process.argv[3];
 
-// Words save queue.
-var words = [];
+// Votes save queue.
+var votes = [];
 
-// Create words.
-while (numWords--) {
+// Iterate over numWords.
+_.each(_.range(numWords), function(i) {
 
-  var word = new Word({
-    round: round.id,
-    word: 'word' + numWords
+  // Iterate over votesPerWord.
+  _.each(_.range(votesPerWord), function(j) {
+
+    // Create vote.
+    var vote = new Vote({
+      round: round.id,
+      word: 'word' + i,
+      quantity: 100
+    });
+
+    // Push to queue.
+    votes.push(vote);
+
   });
 
-  while (votesPerWord--) {
-    word.votes.push(new Vote({
-      word: word.id,
-      quantity: 100
-    }));
-  }
+});
 
-  // Push word.
-  round.words.push(word);
+// Save worker.
+var save = function(document, callback) {
+  document.save(function(err) {
+    callback(null, document);
+  });
+};
 
-  // Reset counter.
-  votesPerWord = process.argv[3];
+// Save.
+async.map(votes, save, function(err, documents) {
 
-}
+  var t1 = Date.now();
+  round.score(Date.now() + 60000, 60000, 50, function(stacks) {
 
-var t1 = Date.now();
-var stacks = round.score(Date.now() + 60000, 60000, 10);
-var t2 = Date.now();
+    var t2 = Date.now();
+    console.log('Duration: %d', t2-t1);
 
-console.log('Total Duration: %d', t2-t1);
+    // Truncate votes.
+    Vote.collection.remove(function(err) {
+      process.exit();
+    });
 
-process.exit();
+  });
+
+});

@@ -49,8 +49,10 @@ describe('Vote', function() {
       vote.save(function(err) {
 
         // Check for errors.
+        err.errors.round.type.should.eql('required');
         err.errors.quantity.type.should.eql('required');
         err.errors.applied.type.should.eql('required');
+        err.errors.word.type.should.eql('required');
 
         // Check for 0 documents.
         Vote.count({}, function(err, count) {

@@ -16,10 +16,11 @@ exports.boot = function(app) {
 
 function startTimers(app) {
 
-  // Declare the global timer tracker object.
+  // Declare the global trackers.
   global.Oversoul = {
     timers: {},
-    votes: {}
+    votes: {},
+    words: {}
   };
 
   // Boot running timers.

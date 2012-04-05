@@ -57,6 +57,7 @@ describe('Poem', function() {
   // Clear votes object.
   afterEach(function() {
     global.Oversoul.votes = {};
+    global.Oversoul.words = {};
   });
 
   after(function(done) {
@@ -627,8 +628,9 @@ describe('Poem', function() {
         visibleWords : 2
       });
 
-      // Initialize votes global.
+      // Initialize votes and words trackers.
       global.Oversoul.votes = {};
+      global.Oversoul.words = {};
 
       // Create round.
       round = poem.newRound();
@@ -647,6 +649,13 @@ describe('Poem', function() {
     describe('score', function() {
 
       beforeEach(function() {
+
+        // Populate words tracker.
+        global.Oversoul.words[round.id] = {
+          'word1': 0,
+          'word2': 0,
+          'word3': 0
+        };
 
         // 100 vote on word1.
         global.Oversoul.votes[round.id].push(

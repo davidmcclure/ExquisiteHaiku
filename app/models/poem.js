@@ -315,25 +315,21 @@ PoemSchema.statics.score = function(id, broadcast, cb) {
   // Get poem.
   this.findById(id, function(err, poem) {
 
-    var roundId = poem.round.id;
-    var r = {}; var c = {};
+    // Get round id.
+    var rId = poem.round.id;
 
-    _.each(global.Oversoul.votes[roundId], function(vote) {
+    // Make copies of word tracker.
+    var r = global.Oversoul.words[rId];
+    var c = global.Oversoul.words[rId];
+
+    _.each(global.Oversoul.votes[rId], function(vote) {
 
       // Score the vote.
       var score = vote.score(Date.now(), poem.decayLifetime);
 
-      // Increment if the key exists.
-      if (_.has(r, vote.word)) {
-        r[vote.word] += score.rank;
-        c[vote.word] += score.churn;
-      }
-
-      // Or, create and set.
-      else {
-        r[vote.word] = score.rank;
-        c[vote.word] = score.churn;
-      }
+      // Increment trackers.
+      r[vote.word] += score.rank;
+      c[vote.word] += score.churn;
 
     });
 
@@ -360,7 +356,7 @@ PoemSchema.statics.score = function(id, broadcast, cb) {
     broadcast({
       stacks: { rank: rank, churn: churn },
       poem: poem.words,
-      round: roundId
+      round: rId
     });
 
     // Check for round expiration.

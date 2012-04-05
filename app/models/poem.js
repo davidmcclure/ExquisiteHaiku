@@ -308,6 +308,54 @@ PoemSchema.methods.addWord = function(word) {
  */
 PoemSchema.statics.score = function(id, cb) {
 
+  // Get poem.
+  this.findById(id, function(err, poem) {
+
+    var roundId = poem.round.id;
+    var r = {}; var c = {};
+
+    _.each(global.Oversoul.votes[roundId], function(vote) {
+
+      // Score the vote.
+      var score = vote.score(Date.now(), poem.decayLifetime);
+
+      // Increment if the key exists.
+      if (_.has(r, vote.word)) {
+        r[vote.word] += score.rank;
+        c[vote.word] += score.churn;
+      }
+
+      // Or, create and set.
+      else {
+        r[vote.word] = score.rank;
+        c[vote.word] = score.churn;
+      }
+
+    });
+
+    // Cast rank to array.
+    var rank = [];
+    _.each(r, function(val, key) {
+      rank.push([key, val]);
+    });
+
+    // Cast churn to array.
+    var churn = [];
+    _.each(c, function(val, key) {
+      churn.push([key, val]);
+    });
+
+    // Sort comparer.
+    var comp = function(a,b) { return b[1]-a[1]; };
+
+    // Sort and slice.
+    rank = rank.sort(comp).slice(0, len);
+    churn = churn.sort(comp).slice(0, len);
+
+    cb({ rank: rank, churn: churn });
+
+  });
+
 };
 
 

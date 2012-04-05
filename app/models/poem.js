@@ -334,15 +334,13 @@ PoemSchema.statics.score = function(id, broadcast, cb) {
     });
 
     // Cast rank to array.
-    var rank = [];
-    _.each(r, function(val, key) {
-      rank.push([key, val]);
+    var rank = _.map(r, function(val, key) {
+      return [key, val];
     });
 
     // Cast churn to array.
-    var churn = [];
-    _.each(c, function(val, key) {
-      churn.push([key, val]);
+    var churn = _.map(c, function(val, key) {
+      return [key, val];
     });
 
     // Sort comparer.

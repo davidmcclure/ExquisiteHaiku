@@ -11,7 +11,11 @@ var Vote = mongoose.model('Vote');
 
 // Schema definition.
 var RoundSchema = new Schema({
-  started :   { type: Date, default: Date.now(), required: true }
+  started : {
+    type: Date,
+    default: Date.now(),
+    required: true
+  }
 });
 
 

@@ -11,21 +11,69 @@ var Round = mongoose.model('Round');
 
 // Schema definition.
 var PoemSchema = new Schema({
-  slug :            { type: String, required: true },
-  user :            { type: Schema.ObjectId, ref: 'User', required: true },
-  rounds :          [ round.RoundSchema ],
-  created :         { type: Date, required: true, default: Date.now() },
-  started :         { type: Boolean, required: true, default: false },
-  running :         { type: Boolean, required: true, default: false },
-  complete :        { type: Boolean, required: true, default: false },
-  roundLength :     { type: Number, required: true },
-  sliceInterval :   { type: Number, required: true },
-  minSubmissions :  { type: Number, required: true },
-  submissionVal :   { type: Number, required: true },
-  decayLifetime :   { type: Number, required: true },
-  seedCapital :     { type: Number, required: true },
-  visibleWords :    { type: Number, required: true },
-  words:            { type: Array }
+  slug : {
+    type: String,
+    required: true
+  },
+  user : {
+    type: Schema.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  created : {
+    type: Date,
+    required: true,
+    default: Date.now()
+  },
+  started : {
+    type: Boolean,
+    required: true,
+    default: false
+  },
+  running : {
+    type: Boolean,
+    required: true,
+    default: false
+  },
+  complete : {
+    type: Boolean,
+    required: true,
+    default: false
+  },
+  roundLength : {
+    type: Number,
+    required: true
+  },
+  sliceInterval : {
+    type: Number,
+    required: true
+  },
+  minSubmissions : {
+    type: Number,
+    required: true
+  },
+  submissionVal : {
+    type: Number,
+    required: true
+  },
+  decayLifetime : {
+    type: Number,
+    required: true
+  },
+  seedCapital : {
+    type: Number,
+    required: true
+  },
+  visibleWords : {
+    type: Number,
+    required: true
+  },
+  words: {
+    type: Array
+  },
+  rounds : [
+    round.RoundSchema
+  ]
 });
 
 
@@ -110,10 +158,23 @@ PoemSchema.virtual('paused').get(function() {
  * @return {String}: The status.
  */
 PoemSchema.virtual('status').get(function() {
-  if (this.unstarted) return 'unstarted';
-  else if (this.running) return 'running';
-  else if (this.paused) return 'paused';
-  else if (this.complete) return 'complete';
+
+  if (this.unstarted) {
+    return 'unstarted';
+  }
+
+  else if (this.running) {
+    return 'running';
+  }
+
+  else if (this.paused) {
+    return 'paused';
+  }
+
+  else if (this.complete) {
+    return 'complete';
+  }
+
 });
 
 

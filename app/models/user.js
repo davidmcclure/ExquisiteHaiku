@@ -7,11 +7,27 @@ var crypto = require('crypto');
 
 // Schema definition.
 var User = new Schema({
-  username :      { type: String, required: true, unique: true },
-  email :         { type: String, required: true, unique: true },
-  admin :         { type: Boolean, required: true, default: false },
-  hash :          String,
-  salt :          String
+  username : {
+    type: String,
+    required: true,
+    unique: true
+  },
+  email : {
+    type: String,
+    required: true,
+    unique: true
+  },
+  admin : {
+    type: Boolean,
+    required: true,
+    default: false
+  },
+  hash : {
+    type: String
+  },
+  salt : {
+    type: String
+  }
 });
 
 

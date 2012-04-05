@@ -17,7 +17,10 @@ exports.boot = function(app) {
 function startTimers(app) {
 
   // Declare the global timer tracker object.
-  global.Oversoul = { timers: {} };
+  global.Oversoul = {
+    timers: {},
+    votes: {}
+  };
 
   // Boot running timers.
   Poem.find({ running: true }, function(err, poems) {

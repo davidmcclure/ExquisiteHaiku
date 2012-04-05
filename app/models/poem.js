@@ -276,6 +276,9 @@ PoemSchema.methods.newRound = function() {
   var round = new Round();
   this.rounds.push(round);
 
+  // Create votes array on global.
+  global.Oversoul.votes[round.id] = [];
+
   return round;
 
 };
@@ -352,7 +355,10 @@ PoemSchema.statics.score = function(id, cb) {
     rank = rank.sort(comp).slice(0, len);
     churn = churn.sort(comp).slice(0, len);
 
-    cb({ rank: rank, churn: churn });
+    cb({
+      stacks: { rank: rank, churn: churn },
+      poem: poem.words
+    });
 
   });
 

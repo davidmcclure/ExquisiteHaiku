@@ -54,7 +54,13 @@ describe('Poem', function() {
 
   });
 
-  // Clear users and poems.
+  afterEach(function() {
+
+    // Clear votes object.
+    global.Oversoul.votes = {};
+
+  });
+
   after(function(done) {
 
     // Truncate worker.
@@ -64,7 +70,7 @@ describe('Poem', function() {
       });
     };
 
-    // Truncate.
+    // Clear users and poems.
     async.map([User, Poem], remove, function(err, models) {
       done();
     });
@@ -592,6 +598,14 @@ describe('Poem', function() {
 
       });
 
+      it('should create a new votes array on globals', function() {
+
+        // Add round.
+        var round = poem.newRound();
+        global.Oversoul.votes.should.have.keys(round.id);
+
+      });
+
     });
 
   });
@@ -599,6 +613,57 @@ describe('Poem', function() {
   describe('statics', function() {
 
     describe('score', function() {
+
+      var round;
+
+      beforeEach(function() {
+
+        // // Create round.
+        // round = poem.newRound();
+
+        // // 100 vote on word1.
+        // vote1 = new Vote({
+        //   round: round.id,
+        //   word: 'word1',
+        //   quantity: 100
+        // });
+
+        // // 100 vote on word1.
+        // vote2 = new Vote({
+        //   round: round.id,
+        //   word: 'word1',
+        //   quantity: 100
+        // });
+
+        // // 200 vote on word2.
+        // vote3 = new Vote({
+        //   round: round.id,
+        //   word: 'word2',
+        //   quantity: 200
+        // });
+
+        // // 200 vote on word2.
+        // vote4 = new Vote({
+        //   round: round.id,
+        //   word: 'word2',
+        //   quantity: 200
+        // });
+
+        // // 300 vote on word3.
+        // vote5 = new Vote({
+        //   round: round.id,
+        //   word: 'word3',
+        //   quantity: 300
+        // });
+
+        // // 300 vote on word3.
+        // vote6 = new Vote({
+        //   round: round.id,
+        //   word: 'word3',
+        //   quantity: 300
+        // });
+
+      });
 
       it('should return stacks, poem words, and round id');
 

@@ -40,7 +40,7 @@ var poem = new Poem({
   submissionVal : 100,
   decayLifetime : 60000,
   seedCapital : 1000,
-  visibleWords : 2
+  visibleWords : 20
 });
 
 // Initialize votes global.
@@ -76,7 +76,7 @@ poem.save(function(err) {
   });
 
   var t1 = Date.now();
-  Poem.score(poem.id, function(stacks) {
+  Poem.score(poem.id, function(result) {
 
     var t2 = Date.now();
     console.log('Duration: %d', t2-t1);

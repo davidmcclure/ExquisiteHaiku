@@ -54,11 +54,9 @@ describe('Poem', function() {
 
   });
 
+  // Clear votes object.
   afterEach(function() {
-
-    // Clear votes object.
     global.Oversoul.votes = {};
-
   });
 
   after(function(done) {
@@ -612,64 +610,205 @@ describe('Poem', function() {
 
   describe('statics', function() {
 
-    describe('score', function() {
+    var poem, round;
 
-      var round;
+    beforeEach(function(done) {
+
+      // Create poem.
+      poem = new Poem({
+        slug: 'test-poem',
+        user: user.id,
+        roundLength : 10000,
+        sliceInterval : 3,
+        minSubmissions : 5,
+        submissionVal : 100,
+        decayLifetime : 60000,
+        seedCapital : 1000,
+        visibleWords : 2
+      });
+
+      // Initialize votes global.
+      global.Oversoul.votes = {};
+
+      // Create round.
+      round = poem.newRound();
+
+      // Add words.
+      poem.addWord('it');
+      poem.addWord('is');
+
+      // Save.
+      poem.save(function(err) {
+        done();
+      });
+
+    });
+
+    describe('score', function() {
 
       beforeEach(function() {
 
-        // // Create round.
-        // round = poem.newRound();
+        // 100 vote on word1.
+        global.Oversoul.votes[round.id].push(
+          new Vote({
+            word: 'word1',
+            quantity: 100
+          })
+        );
 
-        // // 100 vote on word1.
-        // vote1 = new Vote({
-        //   round: round.id,
-        //   word: 'word1',
-        //   quantity: 100
-        // });
+        // 100 vote on word1.
+        global.Oversoul.votes[round.id].push(
+          new Vote({
+            word: 'word1',
+            quantity: 100
+          })
+        );
 
-        // // 100 vote on word1.
-        // vote2 = new Vote({
-        //   round: round.id,
-        //   word: 'word1',
-        //   quantity: 100
-        // });
+        // 200 vote on word2.
+        global.Oversoul.votes[round.id].push(
+          new Vote({
+            word: 'word2',
+            quantity: 200
+          })
+        );
 
-        // // 200 vote on word2.
-        // vote3 = new Vote({
-        //   round: round.id,
-        //   word: 'word2',
-        //   quantity: 200
-        // });
+        // 200 vote on word2.
+        global.Oversoul.votes[round.id].push(
+          new Vote({
+            word: 'word2',
+            quantity: 200
+          })
+        );
 
-        // // 200 vote on word2.
-        // vote4 = new Vote({
-        //   round: round.id,
-        //   word: 'word2',
-        //   quantity: 200
-        // });
+        // 300 vote on word3.
+        global.Oversoul.votes[round.id].push(
+          new Vote({
+            word: 'word3',
+            quantity: 300
+          })
+        );
 
-        // // 300 vote on word3.
-        // vote5 = new Vote({
-        //   round: round.id,
-        //   word: 'word3',
-        //   quantity: 300
-        // });
-
-        // // 300 vote on word3.
-        // vote6 = new Vote({
-        //   round: round.id,
-        //   word: 'word3',
-        //   quantity: 300
-        // });
+        // 300 vote on word3.
+        global.Oversoul.votes[round.id].push(
+          new Vote({
+            word: 'word3',
+            quantity: 300
+          })
+        );
 
       });
 
-      it('should return stacks, poem words, and round id');
+      it('should return stacks', function(done) {
 
-      it('should not increment to a new round when the current round is not expired');
+        // Score the poem.
+        Poem.score(poem.id, function(result) {
 
-      it('should increment to a new round when the current round is expired');
+          // Check rank.
+          result.stacks.rank[0][0].should.eql('word3');
+          result.stacks.rank[1][0].should.eql('word2');
+          should.not.exist(result.stacks.rank[2]);
+
+          // Check churn.
+          result.stacks.churn[0][0].should.eql('word3');
+          result.stacks.churn[1][0].should.eql('word2');
+          should.not.exist(result.stacks.churn[2]);
+          done();
+
+        }, function() {});
+
+      });
+
+      it('should return poem', function(done) {
+
+        // Score the poem.
+        Poem.score(poem.id, function(result) {
+
+          // Check for poem.
+          result.poem[0].valueOf().should.eql('it');
+          result.poem[1].valueOf().should.eql('is');
+          done();
+
+        }, function() {});
+
+      });
+
+      it('should return the round id', function(done) {
+
+        // Score the poem.
+        Poem.score(poem.id, function(result) {
+
+          // Check for round id.
+          result.round.should.eql(round.id);
+          done();
+
+        }, function() {});
+
+      });
+
+      it('should not start new round when the current round is not expired', function(done) {
+
+        // Set poem round unexpired.
+        poem.round.started = Date.now();
+
+        // Capture round and poem ids.
+        var poemId = poem.id;
+        var roundId = poem.round.id;
+
+        // Save.
+        poem.save(function(err) {
+
+          // Score the poem.
+          Poem.score(poem.id, function() {}, function() {
+
+            // Get the poem.
+            var poem = Poem.findById(poemId, function(err, poem) {
+
+              // Check for unchanged round.
+              poem.round.id.should.eql(roundId);
+              poem.rounds.length.should.eql(1);
+              done();
+
+            });
+
+          });
+
+        });
+
+      });
+
+      it('should start new round and lock the winner when the current round is expired', function(done) {
+
+        // Set poem round expired.
+        poem.round.started = Date.now() - 20000;
+
+        // Capture round and poem ids.
+        var poemId = poem.id;
+        var roundId = poem.round.id;
+
+        // Save.
+        poem.save(function(err) {
+
+          // Score the poem.
+          Poem.score(poem.id, function() {}, function() {
+
+            // Get the poem.
+            var poem = Poem.findById(poemId, function(err, poem) {
+
+              // Check for new round.
+              poem.round.id.should.not.eql(roundId);
+              poem.rounds.length.should.eql(2);
+
+              // Check for new word.
+              poem.words[2].valueOf().should.eql('word3');
+              done();
+
+            });
+
+          });
+
+        });
+
+      });
 
     });
 

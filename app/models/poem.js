@@ -320,7 +320,7 @@ PoemSchema.statics.score = function(id, broadcast, cb) {
 
     // Make copies of word tracker.
     var r = global.Oversoul.words[rId];
-    var c = global.Oversoul.words[rId];
+    var c = r;
 
     _.each(global.Oversoul.votes[rId], function(vote) {
 

@@ -51,17 +51,18 @@ VoteSchema.virtual('id').get(function() {
  * Score the vote.
  *
  * @param {Date} now: The current Date.
- * @param {Number} decayLifetime: The mean decay lifetime.
+ * @param {Number} decayL: The mean decay lifetime.
+ * @param {Number} decayI: The mean decay lifetime inverse.
  *
  * @return {Array}: [rank, churn].
  */
-VoteSchema.methods.score = function(now, decayL, invDecayL) {
+VoteSchema.methods.score = function(now, decayL, decayI) {
 
   // Get time delta.
   var delta = now - this.applied;
 
   // Compute unscaled decay coefficient.
-  var decay = Math.exp(-delta * invDecayL);
+  var decay = Math.exp(-delta * decayI);
 
   // Compute churn.
   var churn = Math.round(this.quantity * decay);

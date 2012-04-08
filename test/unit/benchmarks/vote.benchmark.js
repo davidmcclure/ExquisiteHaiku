@@ -19,12 +19,14 @@ var vote = new Vote({
 
 // Get iterations and constants.
 var i = process.argv[2];
-var now = vote.applied.valueOf() + 60000;
-var decayLifetime = 60000;
-var invDecayLifetime = 1/60000;
+
+// Get calling constants.
+var t = vote.applied.valueOf() + 60000;
+var d = 60000;
+var id = 1/d;
 
 var t1 = Date.now();
-while (i--) { vote.score(now, decayLifetime, invDecayLifetime); }
+while (i--) { vote.score(t, d, id); }
 var t2 = Date.now();
 
 console.log('Total Duration: %d', t2-t1);

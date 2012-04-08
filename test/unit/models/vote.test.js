@@ -96,7 +96,7 @@ describe('Vote', function() {
       it('should return an array of [rank, churn]', function() {
 
         // Call at now+60s with 60s mean decay lifetime.
-        vote.score(vote.applied.valueOf() + 60000, 60000).
+        vote.score(vote.applied.valueOf() + 60000, 60000, 1/60000).
           should.eql({ rank: 3793, churn: 37 });
 
       });

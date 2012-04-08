@@ -55,19 +55,19 @@ VoteSchema.virtual('id').get(function() {
  *
  * @return {Array}: [rank, churn].
  */
-VoteSchema.methods.score = function(now, decayLifetime) {
+VoteSchema.methods.score = function(now, decayL, invDecayL) {
 
   // Get time delta.
   var delta = now - this.applied;
 
   // Compute unscaled decay coefficient.
-  var decay = Math.pow(Math.E, (-delta / decayLifetime));
+  var decay = Math.exp(-delta * invDecayL);
 
   // Compute churn.
   var churn = Math.round(this.quantity * decay);
 
   // Starting boundaries.
-  var bound1 = this.quantity * -decayLifetime;
+  var bound1 = this.quantity * -decayL;
   var bound2 = bound1 * decay;
 
   // Get the integral, scale and round.

@@ -322,10 +322,18 @@ PoemSchema.statics.score = function(id, broadcast, cb) {
     var r = global.Oversoul.words[rId];
     var c = r;
 
+    // Get decay lifetime inverse and current time.
+    var decayInverse = 1 / poem.decayLifetime;
+    var currentTime = Date.now();
+
     _.each(global.Oversoul.votes[rId], function(vote) {
 
       // Score the vote.
-      var score = vote.score(Date.now(), poem.decayLifetime);
+      var score = vote.score(
+        currentTime,
+        poem.decayLifetime,
+        decayInverse
+      );
 
       // Increment trackers.
       r[vote.word] += score.rank;

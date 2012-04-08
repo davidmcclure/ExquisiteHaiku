@@ -323,7 +323,7 @@ PoemSchema.statics.score = function(id, broadcast, cb) {
     var c = r;
 
     // Get decay lifetime inverse and current time.
-    var decayInverse = 1 / poem.decayLifetime;
+    var decayInverse = 1/poem.decayLifetime;
     var currentTime = Date.now();
 
     _.each(global.Oversoul.votes[rId], function(vote) {

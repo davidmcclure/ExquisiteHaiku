@@ -61,17 +61,17 @@ VoteSchema.methods.score = function(now, decayLifetime) {
   var delta = now - this.applied;
 
   // Compute unscaled decay coefficient.
-  var decay = Math.exp(-delta / decayLifetime);
+  var decay = Math.pow(Math.E, (-delta / decayLifetime));
 
   // Compute churn.
-  var churn = this.quantity * decay;
+  var churn = Math.round(this.quantity * decay);
 
   // Starting boundaries.
   var bound1 = this.quantity * -decayLifetime;
   var bound2 = bound1 * decay;
 
   // Get the integral, scale and round.
-  var rank = ((bound2-bound1)*0.001);
+  var rank = Math.round(((bound2-bound1)*0.001));
 
   return { rank:rank, churn: churn };
 

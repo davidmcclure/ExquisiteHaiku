@@ -358,13 +358,6 @@ PoemSchema.statics.score = function(id, broadcast, cb) {
     rank = rank.sort(comp).slice(0, poem.visibleWords);
     churn = churn.sort(comp).slice(0, poem.visibleWords);
 
-    // Push data.
-    broadcast({
-      stacks: { rank: rank, churn: churn },
-      poem: poem.words,
-      round: rId
-    });
-
     // Check for round expiration.
     if (Date.now() > poem.roundExpiration) {
 
@@ -373,6 +366,13 @@ PoemSchema.statics.score = function(id, broadcast, cb) {
       poem.newRound();
 
     }
+
+    // Push data.
+    broadcast({
+      stacks: { rank: rank, churn: churn },
+      poem: poem.words,
+      round: poem.round.id
+    });
 
     // Save.
     poem.save(function(err) {

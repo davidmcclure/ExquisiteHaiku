@@ -741,20 +741,50 @@ describe('Poem', function() {
 
       });
 
-      it('should return the round id', function(done) {
+      it('should return the original round id and poem when the round is not expired', function(done) {
 
         // Score the poem.
         Poem.score(poem.id, function(result) {
 
-          // Check for round id.
+          // Check for original round id.
           result.round.should.eql(round.id);
+
+          // Check for original poem.
+          result.poem.length.should.eql(2);
           done();
 
         }, function() {});
 
       });
 
-      it('should not start new round when the current round is not expired', function(done) {
+      it('should return an updated round id and poem when the round changes', function(done) {
+
+        // Set poem round expired.
+        poem.round.started = Date.now() - 20000;
+
+        // Capture round id.
+        var roundId = poem.round.id;
+
+        // Save.
+        poem.save(function(err) {
+
+          // Score the poem.
+          Poem.score(poem.id, function(result) {
+
+            // Check for new round.
+            result.round.should.not.eql(roundId);
+
+            // Check for new word.
+            result.poem[2].valueOf().should.eql('word3');
+            done();
+
+          }, function() {});
+
+        });
+
+      });
+
+      it('should not save new round or poem when the round is not expired', function(done) {
 
         // Set poem round unexpired.
         poem.round.started = Date.now();
@@ -775,6 +805,10 @@ describe('Poem', function() {
               // Check for unchanged round.
               poem.round.id.should.eql(roundId);
               poem.rounds.length.should.eql(1);
+
+              // Check for unchanged poem.
+              poem.words[0].valueOf().should.eql('it');
+              poem.words[1].valueOf().should.eql('is');
               done();
 
             });
@@ -785,7 +819,7 @@ describe('Poem', function() {
 
       });
 
-      it('should start new round and lock the winner when the current round is expired', function(done) {
+      it('should save new round and lock the winner when the round is expired', function(done) {
 
         // Set poem round expired.
         poem.round.started = Date.now() - 20000;

@@ -19,5 +19,6 @@
     , "async": ">= 0.1.16"
     , "request": ">= 2.9"
     , "forms": "https://github.com/davidmcclure/forms/tarball/master"
+    , "express-mock-request": "https://github.com/davidmcclure/express-mock-request/tarball/master"
   }
 }

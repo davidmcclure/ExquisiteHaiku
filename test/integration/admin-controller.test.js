@@ -44,7 +44,6 @@ describe('Admin Controller', function() {
     user = new User({
       username:   'david',
       password:   'password',
-      email:      'david@test.com',
       admin:      true
     });
 

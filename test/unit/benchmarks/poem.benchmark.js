@@ -26,7 +26,6 @@ var Vote = mongoose.model('Vote');
 var user = new User({
   username: 'david',
   password: 'password',
-  email: 'david@test.com',
   active: true
 });
 

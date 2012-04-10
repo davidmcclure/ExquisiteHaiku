@@ -47,7 +47,10 @@ describe('Custom Validators', function() {
     };
 
     // Truncate.
-    async.map([User, Poem], remove, function(err, models) {
+    async.map([
+      User,
+      Poem
+    ], remove, function(err, models) {
       done();
     });
 
@@ -89,10 +92,7 @@ describe('Custom Validators', function() {
       // Create a user.
       var user = new User({
         username:   'david',
-        email:      'david@test.com',
-        password:   'password',
-        superUser:  true,
-        active:     true
+        password:   'password'
       });
 
       // Save.
@@ -116,7 +116,6 @@ describe('Custom Validators', function() {
       // Create user.
       user = new User({
         username:   'david',
-        email:      'david@test.com',
         password:   'password'
       });
 
@@ -184,10 +183,7 @@ describe('Custom Validators', function() {
       // Create user.
       user = new User({
         username:   'david',
-        email:      'david@test.com',
-        password:   'password',
-        superUser:  true,
-        active:     true
+        password:   'password'
       });
 
       // Set field value.
@@ -269,10 +265,7 @@ describe('Custom Validators', function() {
       // Create user.
       user = new User({
         username:   'david',
-        email:      'david@test.com',
-        password:   'password',
-        superUser:  true,
-        active:     true
+        password:   'password'
       });
 
       // Save.
@@ -329,26 +322,28 @@ describe('Custom Validators', function() {
       // Create user1.
       user1 = new User({
         username:   'david',
-        email:      'david@test.com',
-        password:   'password',
-        superUser:  true,
-        active:     true
+        password:   'password'
       });
 
       // Create user2.
       user2 = new User({
         username:   'kara',
-        email:      'kara@test.com',
-        password:   'password',
-        superUser:  true,
-        active:     true
+        password:   'password'
       });
 
-      // Save.
-      user1.save(function(err) {
-        user2.save(function(err) {
-          done();
+      // Save worker.
+      var save = function(document, callback) {
+        document.save(function(err) {
+          callback(null, document);
         });
+      };
+
+      // Save.
+      async.map([
+        user1,
+        user2
+      ], save, function(err, documents) {
+        done();
       });
 
     });
@@ -359,7 +354,9 @@ describe('Custom Validators', function() {
       field.data = 'kara';
 
       // Get the validator.
-      var validator = validators.uniqueNonSelfField(User, 'username', user1, 'err');
+      var validator = validators.uniqueNonSelfField(
+        User, 'username', user1, 'err'
+      );
 
       // Spy on callback.
       callback = sinon.spy(function() {
@@ -378,7 +375,9 @@ describe('Custom Validators', function() {
       field.data = 'david';
 
       // Get the validator.
-      var validator = validators.uniqueNonSelfField(User, 'username', user1, 'err');
+      var validator = validators.uniqueNonSelfField(
+        User, 'username', user1, 'err'
+      );
 
       // Spy on callback.
       callback = sinon.spy(function() {
@@ -397,7 +396,9 @@ describe('Custom Validators', function() {
       field.data = 'rosie';
 
       // Get the validator.
-      var validator = validators.uniqueNonSelfField(User, 'username', user1, 'err');
+      var validator = validators.uniqueNonSelfField(
+        User, 'username', user1, 'err'
+      );
 
       // Spy on callback.
       callback = sinon.spy(function() {

@@ -55,13 +55,6 @@ exports.form = function() {
       validators: [
         validators.matchField('password', 'Does not match.')
       ]
-    }),
-
-    // Email.
-    email: fields.email({
-      name: 'email',
-      label: 'Email',
-      required: 'Enter an email address.'
     })
 
   });

@@ -16,9 +16,7 @@ define([
        * @return void.
        */
       initialize: function() {
-
-
-
+        console.log('init');
       }
 
     });

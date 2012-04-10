@@ -194,45 +194,4 @@ describe('Install Form', function() {
 
   });
 
-  describe('email', function() {
-
-    it('should have a name attribute', function() {
-      form.fields.email.name.should.be.ok;
-    });
-
-    it('should exist', function(done) {
-
-      form.bind({
-        email: ''
-      }).validate(function(err, form) {
-        form.fields.email.error.should.be.ok;
-        done();
-      });
-
-    });
-
-    it('should be valid', function(done) {
-
-      form.bind({
-        email: 'invalid'
-      }).validate(function(err, form) {
-        form.fields.email.error.should.be.ok;
-        done();
-      });
-
-    });
-
-    it('should vaidate when valid', function(done) {
-
-      form.bind({
-        email: 'david@spyder.com'
-      }).validate(function(err, form) {
-        assert(!form.fields.email.error);
-        done();
-      });
-
-    });
-
-  });
-
 });

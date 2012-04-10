@@ -18,9 +18,9 @@ var _ = require('underscore');
 module.exports = function(app) {
 
   /*
-   * The poem.
+   * Run the poem.
    *
-   * @middleware auth.getPoem: Pass in the poem defined by :slug.
+   * @middleware auth.getPoem: Pass the poem identified by :slug.
    */
   app.get('/:slug',
     auth.getPoem,
@@ -33,6 +33,14 @@ module.exports = function(app) {
         poem:   req.poem
       });
 
+  });
+
+  /*
+   * Register user.
+   */
+  app.post('/:slug/register',
+    function(req, res) {
+      res.send('POST /:slug/login');
   });
 
   /*

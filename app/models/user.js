@@ -6,13 +6,8 @@
 var crypto = require('crypto');
 
 // Schema definition.
-var User = new Schema({
+var UserSchema = new Schema({
   username : {
-    type: String,
-    required: true,
-    unique: true
-  },
-  email : {
     type: String,
     required: true,
     unique: true
@@ -43,7 +38,7 @@ var User = new Schema({
  *
  * @return {String}: The id.
  */
-User.virtual('id').get(function() {
+UserSchema.virtual('id').get(function() {
   return this._id.toHexString();
 });
 
@@ -52,7 +47,7 @@ User.virtual('id').get(function() {
  *
  * @return void.
  */
-User.virtual('password').set(function(password) {
+UserSchema.virtual('password').set(function(password) {
   this._password = password;
   this.salt = this.generateSalt();
   this.hash = this.encryptPassword(password);
@@ -63,7 +58,7 @@ User.virtual('password').set(function(password) {
  *
  * @return {String}: The password.
  */
-User.virtual('password').get(function() {
+UserSchema.virtual('password').get(function() {
   return this._password;
 });
 
@@ -80,7 +75,7 @@ User.virtual('password').get(function() {
  *
  * @return {String}: The salt.
  */
-User.methods.generateSalt = function() {
+UserSchema.methods.generateSalt = function() {
   return Math.round((new Date().valueOf() + Math.random())) + '';
 };
 
@@ -91,7 +86,7 @@ User.methods.generateSalt = function() {
  *
  * @param {String}: The encrypted password.
  */
-User.methods.encryptPassword = function(password) {
+UserSchema.methods.encryptPassword = function(password) {
   return crypto.createHmac('sha1', this.salt).
     update(password).
     digest('hex');
@@ -104,11 +99,11 @@ User.methods.encryptPassword = function(password) {
  *
  * @return {Boolean}: True the plaintext is the password.
  */
-User.methods.authenticate = function(plainText) {
+UserSchema.methods.authenticate = function(plainText) {
   return this.encryptPassword(plainText) === this.hash;
 };
 
 
 // Register model.
-mongoose.model('User', User);
+mongoose.model('User', UserSchema);
 var User = mongoose.model('User');

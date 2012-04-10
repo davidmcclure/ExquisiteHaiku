@@ -47,7 +47,6 @@ describe('Install Controller', function() {
         browser.query('form.install input[name="username"]').should.be.ok;
         browser.query('form.install input[name="password"]').should.be.ok;
         browser.query('form.install input[name="confirm"]').should.be.ok;
-        browser.query('form.install input[name="email"]').should.be.ok;
         browser.query('form.install button[type="submit"]').should.be.ok;
         done();
 
@@ -61,7 +60,6 @@ describe('Install Controller', function() {
       var user = new User({
         username:   'david',
         password:   'password',
-        email:      'david@test.com',
         admin:      true
       });
 
@@ -316,69 +314,6 @@ describe('Install Controller', function() {
 
     });
 
-    describe('email', function() {
-
-      it('should flash error for no email', function(done) {
-
-        // GET admin/install.
-        browser.visit(r+'admin/install', function() {
-
-          // Fill in form.
-          browser.pressButton('Submit', function() {
-
-            // Check for error.
-            browser.location.pathname.should.eql('/admin/install');
-            browser.query('span.help-inline.email').should.be.ok;
-            done();
-
-          });
-
-        });
-
-      });
-
-      it('should flash error for invalid email', function(done) {
-
-        // GET admin/install.
-        browser.visit(r+'admin/install', function() {
-
-          // Fill in form, submit.
-          browser.fill('email', 'invalid');
-          browser.pressButton('Submit', function() {
-
-            // Check for error.
-            browser.location.pathname.should.eql('/admin/install');
-            browser.query('span.help-inline.email').should.be.ok;
-            done();
-
-          });
-
-        });
-
-      });
-
-      it('should not flash an error when the email is valid', function(done) {
-
-        // GET admin/install.
-        browser.visit(r+'admin/install', function() {
-
-          // Fill in form, submit.
-          browser.fill('email', 'david@test.com');
-          browser.pressButton('Submit', function() {
-
-            // Check for error.
-            browser.location.pathname.should.eql('/admin/install');
-            assert(!browser.query('span.help-inline.email'));
-            done();
-
-          });
-
-        });
-
-      });
-
-    });
-
     describe('success', function() {
 
       it('should create a new user and redirect for valid form', function(done) {
@@ -390,7 +325,6 @@ describe('Install Controller', function() {
           browser.fill('username', 'david');
           browser.fill('password', 'password');
           browser.fill('confirm', 'password');
-          browser.fill('email', 'david@test.com');
           browser.pressButton('Submit', function() {
 
             // Check for redirect.
@@ -400,7 +334,6 @@ describe('Install Controller', function() {
             User.findOne({ username: 'david' }, function(err, user) {
               user.should.be.ok;
               user.username.should.eql('david');
-              user.email.should.eql('david@test.com');
               user.admin.should.be.true;
               done();
             });

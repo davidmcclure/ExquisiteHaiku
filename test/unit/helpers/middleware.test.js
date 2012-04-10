@@ -85,12 +85,10 @@ describe('Route Middleware', function() {
         done();
       });
 
-      // Create inactive user.
+      // Create user.
       var user = new User({
         username: 'david',
-        email:    'david@spyder.com',
-        password: 'password',
-        active:   false
+        password: 'password'
       });
 
       // Save.
@@ -111,7 +109,7 @@ describe('Route Middleware', function() {
 
     });
 
-    it('should call next() for an active user', function(done) {
+    it('should call next() for user', function(done) {
 
       // Spy on res.
       res.redirect = sinon.spy(function() {
@@ -125,12 +123,10 @@ describe('Route Middleware', function() {
         done();
       });
 
-      // Create active user.
+      // Create user.
       var user = new User({
         username: 'david',
-        email:    'david@spyder.com',
-        password: 'password',
-        active:   true
+        password: 'password'
       });
 
       // Save.
@@ -148,12 +144,10 @@ describe('Route Middleware', function() {
 
     it('should pass user document into controller action', function(done) {
 
-      // Create inactive user.
+      // Create user.
       var user = new User({
         username: 'david',
-        email:    'david@spyder.com',
-        password: 'password',
-        active:   true
+        password: 'password'
       });
 
       // Save.
@@ -195,11 +189,8 @@ describe('Route Middleware', function() {
       // Create non-admin user.
       var user = new User({
         username:   'david',
-        email:      'david@spyder.com',
         password:   'password',
-        admin:      false,
-        active:     true,
-        superUser:  true
+        admin:      false
       });
 
       // Save.
@@ -225,11 +216,8 @@ describe('Route Middleware', function() {
       // Create admin user.
       var user = new User({
         username:   'david',
-        email:      'david@spyder.com',
         password:   'password',
-        admin:      true,
-        active:     true,
-        superUser:  true
+        admin:      true
       });
 
       // Save.
@@ -259,10 +247,7 @@ describe('Route Middleware', function() {
       // Create user.
       var user = new User({
         username:   'david',
-        email:      'david@spyder.com',
-        password:   'password',
-        active:     true,
-        superUser:  true
+        password:   'password'
       });
 
       // Save.
@@ -288,10 +273,7 @@ describe('Route Middleware', function() {
       // Create user.
       var user = new User({
         username:   'david',
-        email:      'david@spyder.com',
-        password:   'password',
-        active:     true,
-        superUser:  true
+        password:   'password'
       });
 
       // Save.
@@ -327,7 +309,6 @@ describe('Route Middleware', function() {
       // Create user.
       var user = new User({
         username:   'david',
-        email:      'david@spyder.com',
         password:   'password',
         admin:      true,
       });
@@ -366,7 +347,6 @@ describe('Route Middleware', function() {
       user = new User({
         username:   'david',
         password:   'password',
-        email:      'david@test.com',
         admin:      true
       });
 
@@ -426,7 +406,6 @@ describe('Route Middleware', function() {
       user = new User({
         username:   'david',
         password:   'password',
-        email:      'david@test.com',
         admin:      true
       });
 

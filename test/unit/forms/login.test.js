@@ -40,7 +40,6 @@ describe('Login Form', function() {
     // Create admin user.
     user1 = new User({
       username:   'david',
-      email:      'david@test.com',
       password:   'password',
       admin:      true
     });
@@ -48,7 +47,6 @@ describe('Login Form', function() {
     // Create nont-admin user.
     user2 = new User({
       username:   'kara',
-      email:      'kara@test.com',
       password:   'password',
       admin:      false
     });

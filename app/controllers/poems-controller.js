@@ -35,4 +35,44 @@ module.exports = function(app) {
 
   });
 
+  /*
+   * Log user in.
+   */
+  // app.post('/:slug/login',
+  //   function(req, res) {
+  //     res.send('POST /:slug/login');
+  // });
+
+  /*
+   * Log user out.
+   */
+  // app.post('/:slug/logout',
+  //   function(req, res) {
+  //     res.send('POST /:slug/logout');
+  // });
+
+  /*
+   * Validate a word.
+   */
+  // app.get('/:slug/validate',
+  //   function(req, res) {
+  //     res.send('GET /:slug/validate');
+  // });
+
+  /*
+   * Process blind submissions.
+   */
+  // app.post('/:slug/submit',
+  //   function(req, res) {
+  //     res.send('POST /:slug/submit');
+  // });
+
+  /*
+   * Process vote.
+   */
+  // app.post('/:slug/vote',
+  //   function(req, res) {
+  //     res.send('POST /:slug/vote');
+  // });
+
 };

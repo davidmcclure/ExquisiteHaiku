@@ -707,108 +707,81 @@ describe('Poem', function() {
 
       });
 
-      it('should return stacks', function(done) {
+      describe('when the round is not expired', function() {
 
-        // Score the poem.
-        Poem.score(poem.id, function(result) {
-
-          // Check rank.
-          result.stacks.rank[0][0].should.eql('word3');
-          result.stacks.rank[1][0].should.eql('word2');
-          should.not.exist(result.stacks.rank[2]);
-
-          // Check churn.
-          result.stacks.churn[0][0].should.eql('word3');
-          result.stacks.churn[1][0].should.eql('word2');
-          should.not.exist(result.stacks.churn[2]);
-          done();
-
-        }, function() {});
-
-      });
-
-      it('should return poem', function(done) {
-
-        // Score the poem.
-        Poem.score(poem.id, function(result) {
-
-          // Check for poem.
-          result.poem[0].valueOf().should.eql('it');
-          result.poem[1].valueOf().should.eql('is');
-          done();
-
-        }, function() {});
-
-      });
-
-      it('should return the original round id and poem when the round is not expired', function(done) {
-
-        // Score the poem.
-        Poem.score(poem.id, function(result) {
-
-          // Check for original round id.
-          result.round.should.eql(round.id);
-
-          // Check for original poem.
-          result.poem.length.should.eql(2);
-          done();
-
-        }, function() {});
-
-      });
-
-      it('should return an updated round id and poem when the round changes', function(done) {
-
-        // Set poem round expired.
-        poem.round.started = Date.now() - 20000;
-
-        // Capture round id.
-        var roundId = poem.round.id;
-
-        // Save.
-        poem.save(function(err) {
+        it('should return stacks', function(done) {
 
           // Score the poem.
           Poem.score(poem.id, function(result) {
 
-            // Check for new round.
-            result.round.should.not.eql(roundId);
+            // Check rank.
+            result.stacks.rank[0][0].should.eql('word3');
+            result.stacks.rank[1][0].should.eql('word2');
+            should.not.exist(result.stacks.rank[2]);
 
-            // Check for new word.
-            result.poem[2].valueOf().should.eql('word3');
+            // Check churn.
+            result.stacks.churn[0][0].should.eql('word3');
+            result.stacks.churn[1][0].should.eql('word2');
+            should.not.exist(result.stacks.churn[2]);
             done();
 
           }, function() {});
 
         });
 
-      });
-
-      it('should not save new round or poem when the round is not expired', function(done) {
-
-        // Set poem round unexpired.
-        poem.round.started = Date.now();
-
-        // Capture round and poem ids.
-        var poemId = poem.id;
-        var roundId = poem.round.id;
-
-        // Save.
-        poem.save(function(err) {
+        it('should return poem', function(done) {
 
           // Score the poem.
+          Poem.score(poem.id, function(result) {
+
+            // Check for poem.
+            result.poem[0].valueOf().should.eql('it');
+            result.poem[1].valueOf().should.eql('is');
+            done();
+
+          }, function() {});
+
+        });
+
+        it('should return round id', function(done) {
+
+          // Score the poem.
+          Poem.score(poem.id, function(result) {
+
+            // Check for original round id.
+            result.round.should.eql(round.id);
+            done();
+
+          }, function() {});
+
+        });
+
+        it('should not save new poem', function(done) {
+
           Poem.score(poem.id, function() {}, function() {
 
             // Get the poem.
-            var poem = Poem.findById(poemId, function(err, poem) {
+            Poem.findById(poem.id, function(err, poem) {
 
-              // Check for unchanged round.
-              poem.round.id.should.eql(roundId);
-              poem.rounds.length.should.eql(1);
+              // Check for no new word.
+              should.not.exist(poem.words[2]);
+              done();
 
-              // Check for unchanged poem.
-              poem.words[0].valueOf().should.eql('it');
-              poem.words[1].valueOf().should.eql('is');
+            });
+
+          });
+
+        });
+
+        it('should not save new round', function(done) {
+
+          Poem.score(poem.id, function() {}, function() {
+
+            // Get the poem.
+            Poem.findById(poem.id, function(err, poem) {
+
+              // Check for new word.
+              poem.round.id.should.eql(round.id);
               done();
 
             });
@@ -819,30 +792,70 @@ describe('Poem', function() {
 
       });
 
-      it('should save new round and lock the winner when the round is expired', function(done) {
+      describe('when the round is expired', function() {
 
-        // Set poem round expired.
-        poem.round.started = Date.now() - 20000;
+        beforeEach(function(done) {
 
-        // Capture round and poem ids.
-        var poemId = poem.id;
-        var roundId = poem.round.id;
+          // Set poem round expired.
+          poem.round.started = Date.now() - 20000;
+          poem.save(function(err) { done(); });
 
-        // Save.
-        poem.save(function(err) {
+        });
+
+        it('should return updated poem', function(done) {
 
           // Score the poem.
+          Poem.score(poem.id, function(result) {
+
+            // Check for poem.
+            result.poem[0].valueOf().should.eql('it');
+            result.poem[1].valueOf().should.eql('is');
+            result.poem[2].valueOf().should.eql('word3');
+            done();
+
+          }, function() {});
+
+        });
+
+        it('should return updated round id', function(done) {
+
+          // Score the poem.
+          Poem.score(poem.id, function(result) {
+
+            // Check for original round id.
+            result.round.should.not.eql(round.id);
+            done();
+
+          }, function() {});
+
+        });
+
+        it('should save new poem', function(done) {
+
           Poem.score(poem.id, function() {}, function() {
 
             // Get the poem.
-            var poem = Poem.findById(poemId, function(err, poem) {
-
-              // Check for new round.
-              poem.round.id.should.not.eql(roundId);
-              poem.rounds.length.should.eql(2);
+            Poem.findById(poem.id, function(err, poem) {
 
               // Check for new word.
               poem.words[2].valueOf().should.eql('word3');
+              done();
+
+            });
+
+          });
+
+        });
+
+        it('should save new round', function(done) {
+
+          Poem.score(poem.id, function() {}, function() {
+
+            // Get the poem.
+            Poem.findById(poem.id, function(err, poem) {
+
+              // Check for new word.
+              poem.round.id.should.not.eql(round.id);
               done();
 
             });

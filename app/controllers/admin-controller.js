@@ -145,6 +145,8 @@ module.exports = function(app) {
    *
    * @middleware auth.isUser: Block if there is no user session.
    * @middleware auth.isAdmin: Block if the user is not an admin.
+   * @middleware auth.getPoem: Pass the poem identified by :slug.
+   * @middleware auth.unstartedPoem: Block if the poem is started.
    */
   app.get('/admin/poems/edit/:slug',
     auth.isUser,
@@ -181,7 +183,8 @@ module.exports = function(app) {
    *
    * @middleware auth.isUser: Block if there is no user session.
    * @middleware auth.isAdmin: Block if the user is not an admin.
-   * @middleware auth.getPoem: Pass in the poem defined by :slug.
+   * @middleware auth.getPoem: Pass the poem identified by :slug.
+   * @middleware auth.unstartedPoem: Block if the poem is started.
    */
   app.post('/admin/poems/edit/:slug',
     auth.isUser,
@@ -237,7 +240,7 @@ module.exports = function(app) {
    *
    * @middleware auth.isUser: Block if there is no user session.
    * @middleware auth.isAdmin: Block if the user is not an admin.
-   * @middleware auth.getPoem: Pass in the poem defined by :slug.
+   * @middleware auth.getPoem: Pass the poem identified by :slug.
    */
   app.get('/admin/poems/delete/:slug',
     auth.isUser,
@@ -261,7 +264,7 @@ module.exports = function(app) {
    *
    * @middleware auth.isUser: Block if there is no user session.
    * @middleware auth.isAdmin: Block if the user is not an admin.
-   * @middleware auth.getPoem: Pass in the poem defined by :slug.
+   * @middleware auth.getPoem: Pass the poem identified by :slug.
    */
   app.post('/admin/poems/delete/:slug',
     auth.isUser,
@@ -283,7 +286,7 @@ module.exports = function(app) {
    *
    * @middleware auth.isUser: Block if there is no user session.
    * @middleware auth.isAdmin: Block if the user is not an admin.
-   * @middleware auth.getPoem: Pass in the poem defined by :slug.
+   * @middleware auth.getPoem: Pass the poem identified by :slug.
    */
   app.get('/admin/poems/start/:slug',
     auth.isUser,
@@ -311,7 +314,7 @@ module.exports = function(app) {
    *
    * @middleware auth.isUser: Block if there is no user session.
    * @middleware auth.isAdmin: Block if the user is not an admin.
-   * @middleware auth.getPoem: Pass in the poem defined by :slug.
+   * @middleware auth.getPoem: Pass the poem identified by :slug.
    */
   app.get('/admin/poems/stop/:slug',
     auth.isUser,

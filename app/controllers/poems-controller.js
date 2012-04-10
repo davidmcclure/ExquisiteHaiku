@@ -6,15 +6,13 @@
 var auth = require('../../helpers/middleware');
 var _ = require('underscore');
 
-// Models.
-var Poem = mongoose.model('Poem');
-
 
 /*
  * ------------
  * Poem routes.
  * ------------
  */
+
 
 // Controller actions.
 module.exports = function(app) {
@@ -35,6 +33,46 @@ module.exports = function(app) {
         poem:   req.poem
       });
 
+  });
+
+  /*
+   * Process login form.
+   */
+  app.post('/:slug/login',
+    function(req, res) {
+      res.send('POST /:slug/login');
+  });
+
+  /*
+   * Log user out.
+   */
+  app.post('/:slug/logout',
+    function(req, res) {
+      res.send('POST /:slug/logout');
+  });
+
+  /*
+   * Validate a word.
+   */
+  app.get('/:slug/word',
+    function(req, res) {
+      res.send('GET /:slug/word');
+  });
+
+  /*
+   * Process blind submissions.
+   */
+  app.post('/:slug/submit',
+    function(req, res) {
+      res.send('POST /:slug/submit');
+  });
+
+  /*
+   * Process vote.
+   */
+  app.post('/:slug/vote',
+    function(req, res) {
+      res.send('POST /:slug/vote');
   });
 
 };

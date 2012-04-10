@@ -36,7 +36,7 @@ module.exports = function(app) {
   });
 
   /*
-   * Process login form.
+   * Log user in.
    */
   app.post('/:slug/login',
     function(req, res) {

@@ -54,9 +54,9 @@ module.exports = function(app) {
   /*
    * Validate a word.
    */
-  app.get('/:slug/word',
+  app.get('/:slug/validate',
     function(req, res) {
-      res.send('GET /:slug/word');
+      res.send('GET /:slug/validate');
   });
 
   /*

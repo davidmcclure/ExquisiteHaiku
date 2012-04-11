@@ -362,7 +362,7 @@ PoemSchema.statics.score = function(id, broadcast, cb) {
     if (Date.now() > poem.roundExpiration) {
 
       // Push new word, create new round.
-      poem.addWord(rank[0][0]);
+      if (!_.isEmpty(rank)) poem.addWord(rank[0][0]);
       poem.newRound();
 
     }

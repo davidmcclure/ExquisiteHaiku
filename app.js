@@ -25,15 +25,15 @@ modelFiles.forEach(function(file) {
 var app = module.exports = express.createServer();
 require('./settings').boot(app);
 
+// Initialize timers.
+require('./init').boot(app);
+
 // Bootstrap controllers.
 var controllersPath = __dirname + '/app/controllers';
 var controllerFiles = fs.readdirSync(controllersPath);
 controllerFiles.forEach(function(file) {
   require(controllersPath + '/' + file)(app);
 });
-
-// Initialize timers.
-require('./init-timers').boot(app);
 
 // Run.
 app.listen(3000);

@@ -862,6 +862,33 @@ describe('Poem', function() {
 
         });
 
+        describe('when no words exist', function() {
+
+          beforeEach(function() {
+
+            // Empty trackers.
+            global.Oversoul.votes = {};
+            global.Oversoul.words = {};
+
+          });
+
+          it('should return unchanged poem', function(done) {
+
+            // Score the poem.
+            Poem.score(poem.id, function(result) {
+
+              // Check for poem.
+              result.poem[0].valueOf().should.eql('it');
+              result.poem[1].valueOf().should.eql('is');
+              should.not.exist(result.poem[2]);
+              done();
+
+            }, function() {});
+
+          });
+
+        });
+
       });
 
     });

@@ -295,7 +295,10 @@ module.exports = function(app) {
     function(req, res) {
 
       // Slicer callback.
-      var scb = function() {};
+      var scb = function(result) {
+        // ** dev: emit result.
+        console.log(result);
+      };
 
       // If poem unstarted, create starting round.
       if (req.poem.unstarted) req.poem.newRound();

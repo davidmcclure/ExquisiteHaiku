@@ -54,11 +54,11 @@ describe('Admin Controller', function() {
       started:          false,
       running:          false,
       complete:         false,
-      roundLength :     10000,
+      roundLength :     10000000,
       sliceInterval :   1000,
       minSubmissions :  5,
       submissionVal :   100,
-      decayLifetime :   50,
+      decayLifetime :   50000,
       seedCapital :     1000,
       visibleWords :    500
     });
@@ -71,11 +71,11 @@ describe('Admin Controller', function() {
       started:          true,
       running:          true,
       complete:         false,
-      roundLength :     10000,
+      roundLength :     10000000,
       sliceInterval :   1000,
       minSubmissions :  5,
       submissionVal :   100,
-      decayLifetime :   50,
+      decayLifetime :   50000,
       seedCapital :     1000,
       visibleWords :    500
     });
@@ -88,11 +88,11 @@ describe('Admin Controller', function() {
       started:          true,
       running:          false,
       complete:         false,
-      roundLength :     10000,
+      roundLength :     10000000,
       sliceInterval :   1000,
       minSubmissions :  5,
       submissionVal :   100,
-      decayLifetime :   50,
+      decayLifetime :   50000,
       seedCapital :     1000,
       visibleWords :    500
     });
@@ -105,11 +105,11 @@ describe('Admin Controller', function() {
       started:          true,
       running:          false,
       complete:         true,
-      roundLength :     10000,
+      roundLength :     10000000,
       sliceInterval :   1000,
       minSubmissions :  5,
       submissionVal :   100,
-      decayLifetime :   50,
+      decayLifetime :   50000,
       seedCapital :     1000,
       visibleWords :    500
     });
@@ -442,11 +442,11 @@ describe('Admin Controller', function() {
 
       // Fill in form.
       browser.fill('slug', 'valid');
-      browser.fill('roundLength', 10000);
+      browser.fill('roundLength', 10000000);
       browser.fill('sliceInterval', 1000);
       browser.fill('minSubmissions', 10);
       browser.fill('submissionVal', 100);
-      browser.fill('decayLifetime', 50);
+      browser.fill('decayLifetime', 50000);
       browser.fill('seedCapital', 1000);
       browser.fill('visibleWords', 500);
       browser.pressButton('Create', function() {
@@ -458,11 +458,11 @@ describe('Admin Controller', function() {
         Poem.findOne({ slug: 'valid' }, function(err, poem) {
           poem.should.be.ok;
           poem.slug.should.eql('valid');
-          poem.roundLength.valueOf().should.eql(10000);
+          poem.roundLength.valueOf().should.eql(10000000);
           poem.sliceInterval.valueOf().should.eql(1000);
           poem.minSubmissions.valueOf().should.eql(10);
           poem.submissionVal.valueOf().should.eql(100);
-          poem.decayLifetime.valueOf().should.eql(50);
+          poem.decayLifetime.valueOf().should.eql(50000);
           poem.seedCapital.valueOf().should.eql(1000);
           poem.visibleWords.valueOf().should.eql(500);
           done();
@@ -491,7 +491,7 @@ describe('Admin Controller', function() {
 
         // Round length input and value.
         browser.query(
-          'form input[name="roundLength"][value="10000"]'
+          'form input[name="roundLength"][value="10000000"]'
         ).should.be.ok;
 
         // Slice interval input and value.
@@ -511,7 +511,7 @@ describe('Admin Controller', function() {
 
         // Decay lifetime input and value.
         browser.query(
-          'form input[name="decayLifetime"][value="50"]'
+          'form input[name="decayLifetime"][value="50000"]'
         ).should.be.ok;
 
         // Seed capital input and value.

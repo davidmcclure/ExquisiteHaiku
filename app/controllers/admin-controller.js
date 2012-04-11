@@ -297,7 +297,6 @@ module.exports = function(app) {
       // Slicer callback.
       var scb = function(result) {
         // ** dev: emit result.
-        console.log(result);
       };
 
       // If poem unstarted, create starting round.

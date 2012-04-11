@@ -376,6 +376,7 @@ PoemSchema.statics.score = function(id, broadcast, cb) {
 
     // Save.
     poem.save(function(err) {
+      console.log(poem.rounds.length);
       cb();
     });
 

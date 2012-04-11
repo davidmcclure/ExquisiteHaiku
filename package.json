@@ -5,6 +5,7 @@
   , "author": "David McClure"
   , "dependencies": {
       "express": ">= 2.5.5"
+    , "socket.io": ">= 0.9.5"
     , "connect": ">= 1.8.4"
     , "jade": ">= 0.0.1"
     , "stylus": ">= 0.22.4"
@@ -19,6 +20,5 @@
     , "async": ">= 0.1.16"
     , "request": ">= 2.9"
     , "forms": "https://github.com/davidmcclure/forms/tarball/master"
-    , "express-mock-request": "https://github.com/davidmcclure/express-mock-request/tarball/master"
   }
 }

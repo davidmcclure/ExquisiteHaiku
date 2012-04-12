@@ -46,5 +46,10 @@ console.log(
 // Run sockets.
 var io = require('socket.io').listen(app);
 io.sockets.on('connection', function (socket) {
-  socket.emit('test', { just: 'work' });
+
+  // ** dev
+  setInterval(function() {
+    socket.emit('test', { just: 'work' });
+  }, 500);
+
 });

@@ -20,7 +20,14 @@ define([
 
         // ** dev
         var socket = io.connect('http://localhost:3000');
-        socket.on('test', function(data) {
+
+        // Connect to room.
+        socket.on('connect', function() {
+          socket.emit('join poem', 'testslug');
+        });
+
+        // Ingest slice.
+        socket.on('slice', function(data) {
           console.log(data);
         });
 

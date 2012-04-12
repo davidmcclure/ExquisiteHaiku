@@ -2,17 +2,12 @@
  * Define application settings and middleware.
  */
 
- // Module dependencies and import hook.
+// Module dependencies and import hook.
 var express = require('express');
 var MongoStore = require('connect-mongodb');
 
-// Boot hook.
-exports.boot = function(app) {
-  bootApplication(app);
-};
-
 // Start-up routine.
-function bootApplication(app) {
+module.exports = function(app) {
 
   // Configure express.
   app.configure(function() {

@@ -2,15 +2,8 @@
  * Startup.
  */
 
-// Module dependencies.
-var async = require('async');
-var slicer = require('./lib/slicer');
-
-// Models.
-var Poem = mongoose.model('Poem');
-
 // Boot hook.
-exports.boot = function(app) {
+module.exports = function(app) {
 
   // Declare the global trackers.
   global.Oversoul = {

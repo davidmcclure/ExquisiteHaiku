@@ -35,10 +35,16 @@ controllerFiles.forEach(function(file) {
   require(controllersPath + '/' + file)(app);
 });
 
-// Run.
+// Run server.
 app.listen(3000);
 console.log(
   "Listening on port %d in %s mode",
   app.address().port,
   app.settings.env
 );
+
+// Run sockets.
+var io = require('socket.io').listen(app);
+io.sockets.on('connection', function (socket) {
+  socket.emit('test', { just: 'work' });
+});

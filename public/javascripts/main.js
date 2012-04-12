@@ -7,6 +7,7 @@ require.config({
     jquery: '/javascripts/lib/jquery/jquery',
     underscore: '/javascripts/lib/underscore/underscore',
     backbone: '/javascripts/lib/backbone/backbone',
+    socket: '/socket.io/socket.io',
     text: '/javascripts/lib/require/text'
   }
 });

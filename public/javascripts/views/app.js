@@ -5,7 +5,8 @@
 define([
   'jquery',
   'underscore',
-  'backbone'
+  'backbone',
+  'socket'
   ], function($, _, Backbone) {
 
     var AppView = Backbone.View.extend({
@@ -16,7 +17,13 @@ define([
        * @return void.
        */
       initialize: function() {
-        console.log('init');
+
+        // ** dev
+        var socket = io.connect('http://localhost:3000');
+        socket.on('test', function(data) {
+          console.log(data);
+        });
+
       }
 
     });

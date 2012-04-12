@@ -68,7 +68,7 @@ describe('Round', function() {
 
   describe('field defaults', function() {
 
-    it('should set "started" to the current date by default', function() {
+    it('should set "started" by default', function() {
       round.started.should.be.ok;
     });
 

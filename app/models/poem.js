@@ -272,8 +272,8 @@ PoemSchema.methods.stop = function(cb) {
  */
 PoemSchema.methods.newRound = function() {
 
-  // Create new round.
-  var round = new Round();
+  // Create and push new round.
+  var round = new Round({ started: Date.now() });
   this.rounds.push(round);
 
   // Create votes array on global.
@@ -376,7 +376,6 @@ PoemSchema.statics.score = function(id, broadcast, cb) {
 
     // Save.
     poem.save(function(err) {
-      console.log(poem.rounds.length);
       cb();
     });
 

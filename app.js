@@ -24,13 +24,12 @@ require('./init')(app);
 // Run server.
 app.listen(3000);
 console.log(
-  "Listening on port %d in %s mode",
-  app.address().port,
+  "Listening on port 3000 in %s mode",
   app.settings.env
 );
 
 // Run sockets.
-var io = module.exports = require('socket.io').listen(app);
+var io = require('socket.io').listen(app);
 require('./sockets')(io);
 
 // Bootstrap models.

@@ -16,21 +16,25 @@ module.exports = function(app) {
     app.set('views', __dirname + '/app/views');
     app.set('view engine', 'jade');
 
+    // Configure sessions.
     app.use(express.bodyParser());
-    app.use(express.cookieParser());
+    app.use(express.cookieParser('dev'));
     app.use(express.session({
-        store: new MongoStore({ db:mongoose.connections[0].db }),
-        secret: 'dev'
+      store: new MongoStore({ db:mongoose.connections[0].db }),
+      secret: 'dev'
     }));
 
     app.use(express.methodOverride());
     app.use(app.router);
 
-    // Set stylus source and public directory.
+    // Set stylus source.
     app.use(require("stylus").middleware({
-        src: __dirname + "/stylus",
-        dest: __dirname + "/public",
-        compress: true }));
+      src: __dirname + "/stylus",
+      dest: __dirname + "/public",
+      compress: true
+    }));
+
+    // Set public directory.
     app.use(express.static(__dirname + '/public'));
 
   });
@@ -49,6 +53,6 @@ module.exports = function(app) {
   });
 
   // Register view helpers.
-  require('./helpers/views').boot(app);
+  require('./helpers/views')(app);
 
-}
+};

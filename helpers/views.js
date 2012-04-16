@@ -2,26 +2,14 @@
  * View helpers.
  */
 
-// Boot hook.
-exports.boot = function(app) {
-  registerHelpers(app);
-}
-
-/*
- * -------------
- * View helpers.
- * -------------
- */
-
-// Define methods.
-function registerHelpers(app) {
+module.exports = function(app) {
 
   app.helpers({
 
     /*
-     * Convert Boolean value to 'yes' or 'no' string representation.
+     * Convert {Boolean} to 'yes' or 'no'.
      *
-     * @param boolean boolean: The boolean value.
+     * @param {Boolean} boolean: The boolean value.
      *
      * @return string: 'yes' for true, 'no' for false.
      */
@@ -30,8 +18,8 @@ function registerHelpers(app) {
     },
 
     /*
-     * Check whether the current active menu item in the application
-     * matches the passed local value for a given <li>.
+     * Check whether the current active menu item matches
+     * the passed local value for a given <li>.
      *
      * @param string current: The current active item.
      * @param string local: The item being evaluated.
@@ -44,4 +32,4 @@ function registerHelpers(app) {
 
   });
 
-}
+};

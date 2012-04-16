@@ -4,7 +4,7 @@
   , "private": true
   , "author": "David McClure"
   , "dependencies": {
-      "express": ">= 2.5.5"
+      "express": "= 2.5.9"
     , "socket.io": ">= 0.9.5"
     , "connect": ">= 1.8.4"
     , "jade": ">= 0.0.1"

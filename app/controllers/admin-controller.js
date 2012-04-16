@@ -21,7 +21,7 @@ var Round = mongoose.model('Round');
  */
 
 // Controller actions.
-module.exports = function(app) {
+module.exports = function(app, io) {
 
   /*
    * Redirect to /admin/poems.

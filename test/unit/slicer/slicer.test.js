@@ -55,13 +55,13 @@ describe('Slicer', function() {
     poem = new Poem({
       slug: 'slug',
       user: user.id,
-      roundLength : 20,
+      roundLength : 50,
       sliceInterval : 10,
       minSubmissions : 5,
       submissionVal : 100,
       decayLifetime : 100,
       seedCapital : 1000,
-      visibleWords : 3
+      visibleWords : 2
     });
 
     // Create round.
@@ -130,10 +130,7 @@ describe('Slicer', function() {
         result.stacks.rank.should.be.empty;
         result.stacks.churn.should.be.empty;
 
-        // Add word1 initialization.
-        global.Oversoul.words[poem.round.id]['word1'] = 0;
-
-        // Add word1 vote.
+        // word1/100.
         global.Oversoul.votes[poem.round.id].push(
           new Vote({
             word: 'word1',
@@ -142,23 +139,98 @@ describe('Slicer', function() {
           })
         );
 
-        // Sleep 30ms.
+        // Sleep 20ms.
         setTimeout(function() {
 
           // Slice.
           slicer.integrator(poem.id, function(result) {
 
-            // Check for new round.
-            var round2 = result.round;
-            round2.should.not.eql(round1);
+            // Check length.
+            result.stacks.rank.length.should.eql(1);
+            result.stacks.churn.length.should.eql(1);
 
-            console.log(result.stacks.rank[0]);
-            console.log(result.stacks.churn[0]);
-            done();
+            // Check word order.
+            result.stacks.rank[0][0].should.eql('word1');
+            result.stacks.churn[0][0].should.eql('word1');
+
+            // Check value ranges.
+            result.stacks.rank[0][1].should.within(0,4);
+            result.stacks.churn[0][1].should.within(75,85);
+
+            // word1/100.
+            global.Oversoul.votes[poem.round.id].push(
+              new Vote({
+                word: 'word1',
+                quantity: 100,
+                applied: Date.now()
+              })
+            );
+
+            // word2/100.
+            global.Oversoul.votes[poem.round.id].push(
+              new Vote({
+                word: 'word2',
+                quantity: 100,
+                applied: Date.now()
+              })
+            );
+
+            // word3/100.
+            global.Oversoul.votes[poem.round.id].push(
+              new Vote({
+                word: 'word3',
+                quantity: 1,
+                applied: Date.now()
+              })
+            );
+
+            // Sleep 20ms.
+            setTimeout(function() {
+
+              // Slice.
+              slicer.integrator(poem.id, function(result) {
+
+                // Check length.
+                result.stacks.rank.length.should.eql(2);
+                result.stacks.churn.length.should.eql(2);
+
+                // Check word order.
+                result.stacks.rank[0][0].should.eql('word1');
+                result.stacks.rank[1][0].should.eql('word2');
+                result.stacks.churn[0][0].should.eql('word1');
+                result.stacks.churn[1][0].should.eql('word2');
+
+                // Check value ranges.
+                result.stacks.rank[0][1].should.within(5,7);
+                result.stacks.rank[1][1].should.within(0,4);
+                result.stacks.churn[0][1].should.within(140,150);
+                result.stacks.churn[1][1].should.within(75,85);
+
+                // Sleep 20ms.
+                setTimeout(function() {
+
+                  // Slice.
+                  slicer.integrator(poem.id, function(result) {
+
+                    // Check for new round.
+                    result.round.should.not.eql(round1);
+
+                    // Check for empty stacks.
+                    result.stacks.rank.should.eql({});
+                    result.stacks.churn.should.eql({});
+                    done();
+
+                  });
+
+                }, 20);
+
+              });
+
+            }, 20);
 
           });
 
-        }, 900);
+        }, 20);
 
       }, function() {});
 

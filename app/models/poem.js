@@ -369,9 +369,14 @@ PoemSchema.statics.score = function(id, broadcast, cb) {
     // Check for round expiration.
     if (currentTime > poem.roundExpiration) {
 
-      // Push new word, create new round.
+      // Push new word.
       if (!_.isEmpty(rank)) poem.addWord(rank[0][0]);
+
+      // Create new word.
       poem.newRound();
+
+      // Empty stacks.
+      rank = {}; churn = {};
 
     }
 

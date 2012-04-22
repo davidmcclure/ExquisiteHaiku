@@ -813,8 +813,22 @@ describe('Poem', function() {
           // Score the poem.
           Poem.score(poem.id, function(result) {
 
-            // Check for original round id.
+            // Check for new round id.
             result.round.should.not.eql(round.id);
+            done();
+
+          }, function() {});
+
+        });
+
+        it('should return empty stacks', function(done) {
+
+          // Score the poem.
+          Poem.score(poem.id, function(result) {
+
+            // Check for empty stacks.
+            result.stacks.rank.should.eql({});
+            result.stacks.churn.should.eql({});
             done();
 
           }, function() {});

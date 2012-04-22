@@ -220,15 +220,15 @@ describe('Slicer', function() {
                     result.stacks.churn.should.eql({});
                     done();
 
-                  });
+                  }, function() {});
 
                 }, 20);
 
-              });
+              }, function() {});
 
             }, 20);
 
-          });
+          }, function() {});
 
         }, 20);
 

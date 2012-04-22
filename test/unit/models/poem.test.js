@@ -603,14 +603,6 @@ describe('Poem', function() {
 
       });
 
-      it('should create a new words array on globals', function() {
-
-        // Add round.
-        var round = poem.newRound();
-        global.Oversoul.words.should.have.keys(round.id);
-
-      });
-
     });
 
   });
@@ -655,13 +647,6 @@ describe('Poem', function() {
     describe('score', function() {
 
       beforeEach(function() {
-
-        // Populate words tracker.
-        global.Oversoul.words[round.id] = {
-          'word1': 0,
-          'word2': 0,
-          'word3': 0
-        };
 
         // 100 vote on word1.
         global.Oversoul.votes[round.id].push(

@@ -8,8 +8,7 @@ module.exports = function(app) {
   // Declare the global trackers.
   global.Oversoul = {
     timers: {},
-    votes: {},
-    words: {}
+    votes: {}
   };
 
 };

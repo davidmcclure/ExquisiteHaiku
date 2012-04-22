@@ -276,9 +276,6 @@ PoemSchema.methods.newRound = function() {
   var round = new Round({ started: Date.now() });
   this.rounds.push(round);
 
-  // Create words object on global.
-  global.Oversoul.words[round.id] = {};
-
   // Create votes array on global.
   global.Oversoul.votes[round.id] = [];
 
@@ -321,9 +318,8 @@ PoemSchema.statics.score = function(id, broadcast, cb) {
     // Get round id.
     var rId = poem.round.id;
 
-    // Make copies of word tracker.
-    var r = global.Oversoul.words[rId];
-    var c = r;
+    // Shell out rank and churn objects.
+    var r = {}; var c = {};
 
     // Get decay lifetime inverse and current time.
     var decayInverse = 1/poem.decayLifetime;
@@ -338,15 +334,18 @@ PoemSchema.statics.score = function(id, broadcast, cb) {
         decayInverse
       );
 
-      console.log(r[vote.word]);
-      console.log(c[vote.word]);
-
       // Increment trackers.
-      r[vote.word] += score.rank;
-      c[vote.word] += score.churn;
+      if (_.has(r, vote.word)) {
+        r[vote.word] += score.rank;
+        c[vote.word] += score.churn;
+      }
 
-      console.log(r[vote.word]);
-      console.log(c[vote.word]);
+      // Create tracker.
+      else {
+        r[vote.word] = score.rank;
+        c[vote.word] = score.churn;
+      }
+
 
     });
 

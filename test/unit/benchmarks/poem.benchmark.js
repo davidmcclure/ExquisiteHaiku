@@ -44,13 +44,11 @@ var poem = new Poem({
 
 // Initialize votes and words global.
 global.Oversoul = {
-  votes: {},
-  words: {}
+  votes: {}
 };
 
 // Create round.
 var round = poem.newRound();
-global.Oversoul.words[round.id] = {};
 
 // Save.
 poem.save(function(err) {
@@ -61,9 +59,6 @@ poem.save(function(err) {
 
   // Iterate over numWords.
   _.each(_.range(numWords), function(i) {
-
-    // Register word in the tracker.
-    global.Oversoul.words[round.id]['word' + i] = 0;
 
     // Iterate over votesPerWord.
     _.each(_.range(votesPerWord), function(j) {

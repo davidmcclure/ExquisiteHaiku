@@ -55,7 +55,6 @@ module.exports = function(app) {
           // Create the user.
           var user = new User({
               username:   form.data.username,
-              email:      form.data.email,
               password:   form.data.password,
               admin:      true
           });

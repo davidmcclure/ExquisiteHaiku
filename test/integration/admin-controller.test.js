@@ -167,7 +167,7 @@ describe('Admin Controller', function() {
     // Truncate.
     async.map([
       User,
-      Poem,
+      Poem
     ], remove, function(err, models) {
       done();
     });

@@ -603,6 +603,14 @@ describe('Poem', function() {
 
       });
 
+      it('should create a new words array on globals', function() {
+
+        // Add round.
+        var round = poem.newRound();
+        global.Oversoul.words.should.have.keys(round.id);
+
+      });
+
     });
 
   });

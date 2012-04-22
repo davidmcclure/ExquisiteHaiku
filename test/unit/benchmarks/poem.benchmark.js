@@ -63,7 +63,7 @@ poem.save(function(err) {
   _.each(_.range(numWords), function(i) {
 
     // Register word in the tracker.
-    global.Oversoul.words['word' + i] = 0;
+    global.Oversoul.words[round.id]['word' + i] = 0;
 
     // Iterate over votesPerWord.
     _.each(_.range(votesPerWord), function(j) {

@@ -276,6 +276,9 @@ PoemSchema.methods.newRound = function() {
   var round = new Round({ started: Date.now() });
   this.rounds.push(round);
 
+  // Create words object on global.
+  global.Oversoul.words[round.id] = {};
+
   // Create votes array on global.
   global.Oversoul.votes[round.id] = [];
 
@@ -335,9 +338,15 @@ PoemSchema.statics.score = function(id, broadcast, cb) {
         decayInverse
       );
 
+      console.log(r[vote.word]);
+      console.log(c[vote.word]);
+
       // Increment trackers.
       r[vote.word] += score.rank;
       c[vote.word] += score.churn;
+
+      console.log(r[vote.word]);
+      console.log(c[vote.word]);
 
     });
 
@@ -359,7 +368,7 @@ PoemSchema.statics.score = function(id, broadcast, cb) {
     churn = churn.sort(comp).slice(0, poem.visibleWords);
 
     // Check for round expiration.
-    if (Date.now() > poem.roundExpiration) {
+    if (currentTime > poem.roundExpiration) {
 
       // Push new word, create new round.
       if (!_.isEmpty(rank)) poem.addWord(rank[0][0]);

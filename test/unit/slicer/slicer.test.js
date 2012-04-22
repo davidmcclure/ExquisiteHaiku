@@ -59,7 +59,7 @@ describe('Slicer', function() {
       sliceInterval : 10,
       minSubmissions : 5,
       submissionVal : 100,
-      decayLifetime : 50,
+      decayLifetime : 100,
       seedCapital : 1000,
       visibleWords : 3
     });
@@ -120,24 +120,45 @@ describe('Slicer', function() {
       poem.rounds.length.should.eql(1);
       poem.words.should.be.empty;
 
+      // Capture round1 id.
+      var round1 = poem.round.id;
+
+      // Slice.
       slicer.integrator(poem.id, function(result) {
 
         // Empty stacks.
-        poem.stacks.rank.should.be.empty;
-        poem.stacks.churn.should.be.empty;
+        result.stacks.rank.should.be.empty;
+        result.stacks.churn.should.be.empty;
+
+        // Add word1 initialization.
+        global.Oversoul.words[poem.round.id]['word1'] = 0;
+
+        // Add word1 vote.
+        global.Oversoul.votes[poem.round.id].push(
+          new Vote({
+            word: 'word1',
+            quantity: 100,
+            applied: Date.now()
+          })
+        );
 
         // Sleep 30ms.
         setTimeout(function() {
 
-          // Add word1.
-          global.Oversoul.votes[poem.round.id].push(
-            new Vote({
-              word: 'word1',
-              quantity: 100
-            })
-          );
+          // Slice.
+          slicer.integrator(poem.id, function(result) {
 
-        }, 30);
+            // Check for new round.
+            var round2 = result.round;
+            round2.should.not.eql(round1);
+
+            console.log(result.stacks.rank[0]);
+            console.log(result.stacks.churn[0]);
+            done();
+
+          });
+
+        }, 900);
 
       }, function() {});
 

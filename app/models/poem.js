@@ -305,12 +305,13 @@ PoemSchema.methods.addWord = function(word) {
  * Find poem by id, score, return stacks and poem.
  *
  * @param {Number} id: The poem id.
+ * @param {Date} now: The current timestamp.
  * @param {Function} broadcast: Data broadcast callback.
  * @param {Function} cb: Post-save callback.
  *
  * @return void.
  */
-PoemSchema.statics.score = function(id, broadcast, cb) {
+PoemSchema.statics.score = function(id, now, broadcast, cb) {
 
   // Get poem.
   this.findById(id, function(err, poem) {
@@ -323,13 +324,12 @@ PoemSchema.statics.score = function(id, broadcast, cb) {
 
     // Get decay lifetime inverse and current time.
     var decayInverse = 1/poem.decayLifetime;
-    var currentTime = Date.now();
 
     _.each(global.Oversoul.votes[rId], function(vote) {
 
       // Score the vote.
       var score = vote.score(
-        currentTime,
+        now,
         poem.decayLifetime,
         decayInverse
       );
@@ -367,7 +367,7 @@ PoemSchema.statics.score = function(id, broadcast, cb) {
     churn = churn.sort(comp).slice(0, poem.visibleWords);
 
     // Check for round expiration.
-    if (currentTime > poem.roundExpiration) {
+    if (now > poem.roundExpiration) {
 
       // Push new word.
       if (!_.isEmpty(rank)) poem.addWord(rank[0][0]);

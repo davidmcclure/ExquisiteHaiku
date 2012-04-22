@@ -621,7 +621,7 @@ describe('Poem', function() {
         sliceInterval : 3,
         minSubmissions : 5,
         submissionVal : 100,
-        decayLifetime : 60000,
+        decayLifetime : 500,
         seedCapital : 1000,
         visibleWords : 2
       });
@@ -702,28 +702,41 @@ describe('Poem', function() {
 
         it('should return stacks', function(done) {
 
-          // Score the poem.
-          Poem.score(poem.id, function(result) {
+          // Sleep 20ms.
+          setTimeout(function() {
 
-            // Check rank.
-            result.stacks.rank[0][0].should.eql('word3');
-            result.stacks.rank[1][0].should.eql('word2');
-            should.not.exist(result.stacks.rank[2]);
+            // Score the poem.
+            Poem.score(poem.id, Date.now(), function(result) {
 
-            // Check churn.
-            result.stacks.churn[0][0].should.eql('word3');
-            result.stacks.churn[1][0].should.eql('word2');
-            should.not.exist(result.stacks.churn[2]);
-            done();
+              // Check rank order.
+              result.stacks.rank[0][0].should.eql('word3');
+              result.stacks.rank[1][0].should.eql('word2');
+              should.not.exist(result.stacks.rank[2]);
 
-          }, function() {});
+              // Check rank value ranges.
+              result.stacks.rank[0][1].should.within(250,270);
+              result.stacks.rank[1][1].should.within(160,180);
+
+              // Check churn order.
+              result.stacks.churn[0][0].should.eql('word3');
+              result.stacks.churn[1][0].should.eql('word2');
+              should.not.exist(result.stacks.churn[2]);
+
+              // Check churn value ranges.
+              result.stacks.churn[0][1].should.within(80,90);
+              result.stacks.churn[1][1].should.within(50,60);
+              done();
+
+            }, function() {});
+
+          }, 20);
 
         });
 
         it('should return poem', function(done) {
 
           // Score the poem.
-          Poem.score(poem.id, function(result) {
+          Poem.score(poem.id, Date.now(), function(result) {
 
             // Check for poem.
             result.poem[0].valueOf().should.eql('it');
@@ -737,7 +750,7 @@ describe('Poem', function() {
         it('should return round id', function(done) {
 
           // Score the poem.
-          Poem.score(poem.id, function(result) {
+          Poem.score(poem.id, Date.now(), function(result) {
 
             // Check for original round id.
             result.round.should.eql(round.id);
@@ -749,7 +762,7 @@ describe('Poem', function() {
 
         it('should not save new poem', function(done) {
 
-          Poem.score(poem.id, function() {}, function() {
+          Poem.score(poem.id, Date.now(), function() {}, function() {
 
             // Get the poem.
             Poem.findById(poem.id, function(err, poem) {
@@ -766,7 +779,7 @@ describe('Poem', function() {
 
         it('should not save new round', function(done) {
 
-          Poem.score(poem.id, function() {}, function() {
+          Poem.score(poem.id, Date.now(), function() {}, function() {
 
             // Get the poem.
             Poem.findById(poem.id, function(err, poem) {
@@ -796,7 +809,7 @@ describe('Poem', function() {
         it('should return updated poem', function(done) {
 
           // Score the poem.
-          Poem.score(poem.id, function(result) {
+          Poem.score(poem.id, Date.now(), function(result) {
 
             // Check for poem.
             result.poem[0].valueOf().should.eql('it');
@@ -811,7 +824,7 @@ describe('Poem', function() {
         it('should return updated round id', function(done) {
 
           // Score the poem.
-          Poem.score(poem.id, function(result) {
+          Poem.score(poem.id, Date.now(), function(result) {
 
             // Check for new round id.
             result.round.should.not.eql(round.id);
@@ -824,7 +837,7 @@ describe('Poem', function() {
         it('should return empty stacks', function(done) {
 
           // Score the poem.
-          Poem.score(poem.id, function(result) {
+          Poem.score(poem.id, Date.now(), function(result) {
 
             // Check for empty stacks.
             result.stacks.rank.should.eql({});
@@ -837,7 +850,7 @@ describe('Poem', function() {
 
         it('should save new poem', function(done) {
 
-          Poem.score(poem.id, function() {}, function() {
+          Poem.score(poem.id, Date.now(), function() {}, function() {
 
             // Get the poem.
             Poem.findById(poem.id, function(err, poem) {
@@ -854,7 +867,7 @@ describe('Poem', function() {
 
         it('should save new round', function(done) {
 
-          Poem.score(poem.id, function() {}, function() {
+          Poem.score(poem.id, Date.now(), function() {}, function() {
 
             // Get the poem.
             Poem.findById(poem.id, function(err, poem) {
@@ -882,7 +895,7 @@ describe('Poem', function() {
           it('should return unchanged poem', function(done) {
 
             // Score the poem.
-            Poem.score(poem.id, function(result) {
+            Poem.score(poem.id, Date.now(), function(result) {
 
               // Check for poem.
               result.poem[0].valueOf().should.eql('it');

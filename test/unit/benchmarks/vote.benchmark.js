@@ -30,6 +30,7 @@ var t1 = Date.now();
 while (i--) { vote.score(t, d, id); }
 var t2 = Date.now();
 
+console.log('%d votes:', process.argv[2]);
 console.log('Duration: %d', t2-t1);
 
 process.exit();

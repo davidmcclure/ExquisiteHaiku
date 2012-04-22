@@ -14,6 +14,7 @@ var Vote = mongoose.model('Vote');
 
 // Create vote.
 var vote = new Vote({
+  word: 'word',
   quantity: 100
 });
 

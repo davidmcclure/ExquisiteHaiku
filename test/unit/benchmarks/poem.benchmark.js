@@ -70,7 +70,7 @@ poem.save(function(err) {
 
       // Create vote.
       global.Oversoul.votes[round.id].push(
-          new Vote({
+        new Vote({
           round: round.id,
           word: 'word' + i,
           quantity: 100

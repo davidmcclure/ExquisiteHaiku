@@ -116,7 +116,30 @@ describe('Slicer', function() {
 
     it('should compute stacks and update words/round', function(done) {
 
-      done();
+      // At the start, 1 round, no words.
+      poem.rounds.length.should.eql(1);
+      poem.words.should.be.empty;
+
+      slicer.integrator(poem.id, function(result) {
+
+        // Empty stacks.
+        poem.stacks.rank.should.be.empty;
+        poem.stacks.churn.should.be.empty;
+
+        // Sleep 30ms.
+        setTimeout(function() {
+
+          // Add word1.
+          global.Oversoul.votes[poem.round.id].push(
+            new Vote({
+              word: 'word1',
+              quantity: 100
+            })
+          );
+
+        }, 30);
+
+      }, function() {});
 
     });
 

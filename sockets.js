@@ -4,6 +4,7 @@
 
 // Module dependencies.
 var parseCookie = require('connect').utils.parseCookie;
+var MongoStore = require('connect-mongodb');
 
 // Start-up routine.
 module.exports = function(io) {
@@ -11,18 +12,37 @@ module.exports = function(io) {
   // ** dev
   io.set('authorization', function(data, accept) {
 
+    // If a cookie exists.
     if (data.headers.cookie) {
 
       // Read cookie and set session id.
       data.cookie = parseCookie(data.headers.cookie);
       data.sessionId = data.cookie['connect.sid'];
+
+      // Save session store.
+      data.sessionStore = MongoStore;
+
+      // Try to get session.
+      MongoStore.get(data.sessionId, function(err, session) {
+
+        // If no session, throw.
+        if (err || !session) {
+          accept('Error', false);
+        }
+
+        // Create new session.
+        else {
+          data.session = new Session(data, session);
+          accept(null, true);
+        }
+
+      });
+
     }
 
     else {
       return accept('No cookie transmitted.', false);
     }
-
-    accept(null, true);
 
   });
 

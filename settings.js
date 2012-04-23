@@ -20,7 +20,7 @@ module.exports = function(app) {
     app.use(express.bodyParser());
     app.use(express.cookieParser('dev'));
     app.use(express.session({
-      store: new MongoStore({ db:mongoose.connections[0].db }),
+      store: new MongoStore({ db: mongoose.connections[0].db }),
       secret: 'dev'
     }));
 

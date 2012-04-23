@@ -9,7 +9,7 @@ var MongoStore = require('connect-mongodb');
 // Start-up routine.
 module.exports = function(io) {
 
-  // ** dev
+  // Session authorization.
   io.set('authorization', function(data, accept) {
 
     // If a cookie exists.
@@ -20,10 +20,12 @@ module.exports = function(io) {
       data.sessionId = data.cookie['connect.sid'];
 
       // Save session store.
-      data.sessionStore = MongoStore;
+      data.sessionStore = new MongoStore({
+        db: mongoose.connections[0].db
+      });
 
       // Try to get session.
-      MongoStore.get(data.sessionId, function(err, session) {
+      data.sessionStore.get(data.sessionId, function(err, session) {
 
         // If no session, throw.
         if (err || !session) {

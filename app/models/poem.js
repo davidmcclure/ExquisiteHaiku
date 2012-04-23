@@ -206,6 +206,57 @@ PoemSchema.virtual('roundExpiration').get(function() {
 
 
 /*
+ * Get the constructed haiku.
+ *
+ * @return {Array}: An array consisting of 1-3 arrays of words,
+ * each corresponding to one line of the haiku.
+ */
+PoemSchema.virtual('haiku').get(function() {
+
+  // Poem array.
+  var poem = [];
+
+  // Total syllables.
+  var totalCount = 0;
+
+  // Walk words.
+  _.each(this.words, function(word) {
+
+    if (totalCount < 5) {
+      if (poem.length > 0) {
+        poem[0].push(word);
+      } else {
+        poem.push([word]);
+      }
+    }
+
+    else if (totalCount < 12) {
+      if (poem.length > 1) {
+        poem[1].push(word);
+      } else {
+        poem.push([word]);
+      }
+    }
+
+    else {
+      if (poem.length > 2) {
+        poem[2].push(word);
+      } else {
+        poem.push([word]);
+      }
+    }
+
+    // Increment tracker.
+    totalCount += syllables[word];
+
+  });
+
+  return poem;
+
+});
+
+
+/*
  * -----------------
  * Document methods.
  * -----------------
@@ -289,10 +340,11 @@ PoemSchema.methods.newRound = function() {
  *
  * @param {Function} cb: Callback.
  *
- * @return void.
+ * @return {Boolean}: True if the word fits in the syllable
+ * pattern and was added to the poem, False, if not.
  */
 PoemSchema.methods.addWord = function(word) {
-  this.words.push(word);
+  this.words.push(word.toLowerCase());
 };
 
 

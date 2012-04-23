@@ -557,6 +557,14 @@ describe('Poem', function() {
 
       });
 
+      it('should should lowercase the word', function() {
+
+        // Add word with capital letters.
+        poem.addWord('WoRd');
+        poem.words[0].should.eql('word');
+
+      });
+
     });
 
     describe('newRound', function() {

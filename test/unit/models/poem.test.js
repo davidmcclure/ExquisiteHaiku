@@ -672,6 +672,8 @@ describe('Poem', function() {
           })
         );
 
+        test
+
       });
 
       describe('when the round is not expired', function() {

@@ -18,6 +18,11 @@ define([
        */
       initialize: function(socket) {
 
+        // Construct poem.
+        // Construct stacks.
+        // Construct search.
+        // Construct tickers.
+
         // Connect to socket.io.
         this.initializeSockets(socket);
 
@@ -38,10 +43,21 @@ define([
         });
 
         // Ingest slice.
-        socket.on('slice', function(data) {
-          console.log(data);
-        });
+        socket.on('slice', _.bind(function(data) {
+          this.ingestSlice(data);
+        }, this));
 
+      },
+
+      /*
+       * Process an incoming data slice.
+       *
+       * @param {Object} data: The slice data.
+       *
+       * @return void.
+       */
+      ingestSlice: function(data) {
+        console.log(data);
       }
 
     });

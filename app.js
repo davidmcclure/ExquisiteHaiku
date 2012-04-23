@@ -28,7 +28,7 @@ var app = module.exports = express.createServer(
 // Boot settings.
 require('./settings')(app, sessionStore);
 
-// Initialize timers.
+// Initialize globals.
 require('./init')(app);
 
 // Run server.

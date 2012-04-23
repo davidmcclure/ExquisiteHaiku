@@ -20,8 +20,12 @@ var sessionStore = new MongoStore({
   db: mongoose.connections[0].db
 });
 
-// Create server and do settings.
-var app = module.exports = express.createServer();
+// Create server.
+var app = module.exports = express.createServer(
+  express.favicon()
+);
+
+// Boot settings.
 require('./settings')(app, sessionStore);
 
 // Initialize timers.

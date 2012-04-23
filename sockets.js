@@ -50,9 +50,8 @@ module.exports = function(io, store) {
   // On socket connection.
   io.sockets.on('connection', function (socket) {
 
-    // ** dev
-    // On 'join poem' event, set poem.
-    socket.on('join poem', function(slug) {
+    // On 'join' event,, set poem.
+    socket.on('join', function(slug) {
       socket.set('poem', slug, function() {});
       socket.join(slug);
     });

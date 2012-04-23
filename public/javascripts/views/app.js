@@ -34,7 +34,7 @@ define([
 
         // Connect to room.
         socket.on('connect', function() {
-          socket.emit('join poem', Poem.slug);
+          socket.emit('join', Poem.slug);
         });
 
         // Ingest slice.

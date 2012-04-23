@@ -6,13 +6,14 @@ define([
   'jquery',
   'underscore',
   'backbone',
+  'models/StackWord',
   'socket'
-  ], function($, _, Backbone) {
+  ], function($, _, Backbone, StackWord) {
 
     var AppView = Backbone.View.extend({
 
       /*
-       * .
+       * Application startup.
        *
        * @return void.
        */

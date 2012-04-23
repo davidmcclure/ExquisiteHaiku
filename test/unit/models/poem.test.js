@@ -621,7 +621,7 @@ describe('Poem', function() {
         sliceInterval : 3,
         minSubmissions : 5,
         submissionVal : 100,
-        decayLifetime : 500,
+        decayLifetime : 50000,
         seedCapital : 1000,
         visibleWords : 2
       });
@@ -656,35 +656,11 @@ describe('Poem', function() {
           })
         );
 
-        // 100 vote on word1.
-        global.Oversoul.votes[round.id].push(
-          new Vote({
-            word: 'word1',
-            quantity: 100
-          })
-        );
-
         // 200 vote on word2.
         global.Oversoul.votes[round.id].push(
           new Vote({
             word: 'word2',
             quantity: 200
-          })
-        );
-
-        // 200 vote on word2.
-        global.Oversoul.votes[round.id].push(
-          new Vote({
-            word: 'word2',
-            quantity: 200
-          })
-        );
-
-        // 300 vote on word3.
-        global.Oversoul.votes[round.id].push(
-          new Vote({
-            word: 'word3',
-            quantity: 300
           })
         );
 
@@ -702,34 +678,21 @@ describe('Poem', function() {
 
         it('should return stacks', function(done) {
 
-          // Sleep 20ms.
-          setTimeout(function() {
+          // Score the poem.
+          Poem.score(poem.id, Date.now(), function(result) {
 
-            // Score the poem.
-            Poem.score(poem.id, Date.now(), function(result) {
+            // Check rank order.
+            result.stacks.rank[0][0].should.eql('word3');
+            result.stacks.rank[1][0].should.eql('word2');
+            should.not.exist(result.stacks.rank[2]);
 
-              // Check rank order.
-              result.stacks.rank[0][0].should.eql('word3');
-              result.stacks.rank[1][0].should.eql('word2');
-              should.not.exist(result.stacks.rank[2]);
+            // Check churn order.
+            result.stacks.churn[0][0].should.eql('word3');
+            result.stacks.churn[1][0].should.eql('word2');
+            should.not.exist(result.stacks.churn[2]);
+            done();
 
-              // Check rank value ranges.
-              result.stacks.rank[0][1].should.within(250,270);
-              result.stacks.rank[1][1].should.within(160,180);
-
-              // Check churn order.
-              result.stacks.churn[0][0].should.eql('word3');
-              result.stacks.churn[1][0].should.eql('word2');
-              should.not.exist(result.stacks.churn[2]);
-
-              // Check churn value ranges.
-              result.stacks.churn[0][1].should.within(80,90);
-              result.stacks.churn[1][1].should.within(50,60);
-              done();
-
-            }, function() {});
-
-          }, 20);
+          }, function() {});
 
         });
 

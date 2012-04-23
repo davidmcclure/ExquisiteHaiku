@@ -7,4 +7,10 @@ define([
   'backbone'
   ], function(_, Backbone) {
 
+    var StackWord = Backbone.Model.extend({
+
+    });
+
+    return StackWord;
+
 });

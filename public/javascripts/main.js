@@ -13,5 +13,21 @@ require.config({
 });
 
 require(['/javascripts/views/app.js'], function(AppView) {
-  var appView = new AppView;
+
+  // Connect socket.io.
+  var socket = io.connect();
+
+  // Run application view.
+  var appView = new AppView(socket);
+
+  // // Connect to room.
+  // socket.on('connect', function() {
+  //   socket.emit('join poem', 'testslug');
+  // });
+
+  // // Ingest slice.
+  // socket.on('slice', function(data) {
+  //   console.log(data);
+  // });
+
 });

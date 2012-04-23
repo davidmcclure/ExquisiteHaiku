@@ -803,8 +803,8 @@ describe('Poem', function() {
           Poem.score(poem.id, Date.now(), function(result) {
 
             // Check for empty stacks.
-            result.stacks.rank.should.eql({});
-            result.stacks.churn.should.eql({});
+            result.stacks.rank.should.eql([]);
+            result.stacks.churn.should.eql([]);
             done();
 
           }, function() {});

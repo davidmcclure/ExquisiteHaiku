@@ -30,7 +30,7 @@ module.exports = function(app) {
       res.render('poem/index', {
         title:  req.params.slug,
         layout: '_layouts/poem',
-        poem:   req.poem
+        poem:   JSON.stringify({ slug: req.poem.slug })
       });
 
   });

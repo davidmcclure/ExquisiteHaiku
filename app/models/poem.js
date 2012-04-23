@@ -376,7 +376,7 @@ PoemSchema.statics.score = function(id, now, broadcast, cb) {
       poem.newRound();
 
       // Empty stacks.
-      rank = {}; churn = {};
+      rank = []; churn = [];
 
     }
 

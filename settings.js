@@ -7,7 +7,7 @@ var express = require('express');
 var MongoStore = require('connect-mongodb');
 
 // Start-up routine.
-module.exports = function(app) {
+module.exports = function(app, store) {
 
   // Configure express.
   app.configure(function() {
@@ -20,7 +20,7 @@ module.exports = function(app) {
     app.use(express.bodyParser());
     app.use(express.cookieParser('dev'));
     app.use(express.session({
-      store: new MongoStore({ db: mongoose.connections[0].db }),
+      store: store,
       secret: 'dev'
     }));
 

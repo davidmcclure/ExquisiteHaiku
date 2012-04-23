@@ -5,6 +5,7 @@
  // Module dependencies.
 var express = require('express');
 var connect = require('connect');
+var MongoStore = require('connect-mongodb');
 var configFile = require('yaml-config');
 var fs = require('fs');
 
@@ -14,9 +15,14 @@ config = configFile.readConfig('config/config.yaml');
 // Connect to database.
 require('./db-connect');
 
+// Initialize session store.
+var sessionStore = new MongoStore({
+  db: mongoose.connections[0].db
+});
+
 // Create server and do settings.
 var app = module.exports = express.createServer();
-require('./settings')(app);
+require('./settings')(app, sessionStore);
 
 // Initialize timers.
 require('./init')(app);
@@ -30,7 +36,7 @@ console.log(
 
 // Run sockets.
 var io = require('socket.io').listen(app);
-require('./sockets')(io);
+require('./sockets')(io, sessionStore);
 
 // Bootstrap models.
 var modelsPath = __dirname + '/app/models';

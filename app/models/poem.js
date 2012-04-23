@@ -4,6 +4,7 @@
 
 // Module dependencies.
 var _ = require('underscore');
+var syllables = require('../../lib/syllables');
 
 // Models.
 var round = require('./round');
@@ -371,6 +372,8 @@ PoemSchema.statics.score = function(id, now, broadcast, cb) {
 
       // Push new word.
       if (!_.isEmpty(rank)) poem.addWord(rank[0][0]);
+
+      // ** dev: check for complete poem.
 
       // Create new word.
       poem.newRound();

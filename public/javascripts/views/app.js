@@ -17,7 +17,31 @@ define([
        * @return void.
        */
       initialize: function(socket) {
-        console.log(socket);
+
+        // Connect to socket.io.
+        this.initializeSockets(socket);
+
+      },
+
+      /*
+       * Subscribe to poem room, handle incoming slices.
+       *
+       * @param {Object} socket: Connected socket instance.
+       *
+       * @return void.
+       */
+      initializeSockets: function(socket) {
+
+        // Connect to room.
+        socket.on('connect', function() {
+          socket.emit('join poem', Poem.slug);
+        });
+
+        // Ingest slice.
+        socket.on('slice', function(data) {
+          console.log(data);
+        });
+
       }
 
     });

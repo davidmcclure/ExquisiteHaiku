@@ -29,9 +29,11 @@ define([
       /*
        * Render poem.
        *
+       * @param {Array} poem: The poem.
+       *
        * @return void.
        */
-      render: function() {
+      render: function(poem) {
 
       }
 

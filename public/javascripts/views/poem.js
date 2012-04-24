@@ -4,8 +4,10 @@
 
 define([
   'underscore',
-  'backbone'
-  ], function(_, Backbone) {
+  'backbone',
+  'text!templates/poem-line.html',
+  'text!templates/poem-word.html'
+  ], function(_, Backbone, lineTemplate, wordTemplate) {
 
     var PoemView = Backbone.View.extend({
 
@@ -20,6 +22,12 @@ define([
       className: 'poem',
 
       /*
+       * Build the templates.
+       */
+      lineTemplate: _.template(lineTemplate),
+      wordTemplate: _.template(wordTemplate),
+
+      /*
        * Bind events.
        */
       events: {
@@ -27,13 +35,22 @@ define([
       },
 
       /*
-       * Render poem.
+       * Render the container element.
+       *
+       * @return void.
+       */
+      render: function() {
+
+      },
+
+      /*
+       * Render poem words.
        *
        * @param {Array} poem: The poem.
        *
        * @return void.
        */
-      render: function(poem) {
+      update: function(poem) {
 
       }
 

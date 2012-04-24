@@ -6,8 +6,9 @@ define([
   'jquery',
   'underscore',
   'backbone',
+  'views/poem',
   'socket'
-  ], function($, _, Backbone) {
+  ], function($, _, Backbone, PoemView) {
 
     var AppView = Backbone.View.extend({
 
@@ -19,6 +20,9 @@ define([
       initialize: function(socket) {
 
         // Construct poem.
+        this.poem = new PoemView();
+        this.poem.render(['test']);
+
         // Construct stacks.
         // Construct search.
         // Construct tickers.

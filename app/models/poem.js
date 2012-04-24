@@ -206,57 +206,6 @@ PoemSchema.virtual('roundExpiration').get(function() {
 
 
 /*
- * Get the constructed haiku.
- *
- * @return {Array}: An array consisting of 1-3 arrays of words,
- * each corresponding to one line of the haiku.
- */
-PoemSchema.virtual('haiku').get(function() {
-
-  // Poem array.
-  var poem = [];
-
-  // Total syllables.
-  var totalCount = 0;
-
-  // Walk words.
-  _.each(this.words, function(word) {
-
-    if (totalCount < 5) {
-      if (poem.length > 0) {
-        poem[0].push(word);
-      } else {
-        poem.push([word]);
-      }
-    }
-
-    else if (totalCount < 12) {
-      if (poem.length > 1) {
-        poem[1].push(word);
-      } else {
-        poem.push([word]);
-      }
-    }
-
-    else {
-      if (poem.length > 2) {
-        poem[2].push(word);
-      } else {
-        poem.push([word]);
-      }
-    }
-
-    // Increment tracker.
-    totalCount += syllables[word];
-
-  });
-
-  return poem;
-
-});
-
-
-/*
  * -----------------
  * Document methods.
  * -----------------
@@ -344,7 +293,89 @@ PoemSchema.methods.newRound = function() {
  * pattern and was added to the poem, False, if not.
  */
 PoemSchema.methods.addWord = function(word) {
-  this.words.push(word.toLowerCase());
+
+  // Lowercase word.
+  word = word.toLowerCase();
+
+  // Word syllable count.
+  var syll = syllables[word];
+
+  // Non-word.
+  if (!_.has(syllables, word)) {
+    return false;
+  }
+
+  // No words.
+  else if (_.isEmpty(this.words)) {
+    this.words.push([word]);
+    return true;
+  }
+
+  // 1 line.
+  else if (this.words.length == 1) {
+
+    // Sum syllables.
+    var count = 0;
+    _.each(this.words[0], function(w) {
+      count += syllables[w];
+    });
+
+    // If space, push.
+    if (count + syll <= 5) {
+      this.words[0].push(word);
+      return true;
+    }
+
+    // If line 1 full, create line 2.
+    else if (count == 5) {
+      this.words.push([word]);
+      return true;
+    }
+
+  }
+
+  // 2 lines.
+  else if (this.words.length == 2) {
+
+    // Sum syllables.
+    var count = 0;
+    _.each(this.words[1], function(w) {
+      count += syllables[w];
+    });
+
+    // If space, push.
+    if (count + syll <= 7) {
+      this.words[1].push(word);
+      return true;
+    }
+
+    // If line 2 full, create line 3.
+    else if (count == 7) {
+      this.words.push([word]);
+      return true;
+    }
+
+  }
+
+  // 3 lines.
+  else if (this.words.length == 3) {
+
+    // Sum syllables.
+    var count = 0;
+    _.each(this.words[2], function(w) {
+      count += syllables[w];
+    });
+
+    // If space, push.
+    if (count + syll < 5) {
+      this.words[2].push(word);
+      return true;
+    }
+
+  }
+
+  return false;
+
 };
 
 
@@ -393,7 +424,7 @@ PoemSchema.statics.score = function(id, now, broadcast, cb) {
         c[vote.word] += score.churn;
       }
 
-      // Create tracker.
+      // Create trackers
       else {
         r[vote.word] = score.rank;
         c[vote.word] = score.churn;
@@ -423,7 +454,10 @@ PoemSchema.statics.score = function(id, now, broadcast, cb) {
     if (now > poem.roundExpiration) {
 
       // Push new word.
-      if (!_.isEmpty(rank)) poem.addWord(rank[0][0]);
+      if (!_.isEmpty(rank)) {
+        poem.addWord(rank[0][0]);
+        poem.markModified('words');
+      }
 
       // ** dev: check for complete poem.
 

@@ -1,5 +1,10 @@
 task :default => 'test:mocha'
 
+begin
+  require 'jasmine'
+  load 'jasmine/tasks/jasmine.rake'
+end
+
 namespace :test do
 
   desc 'Run the Mocha test suite'
@@ -23,13 +28,4 @@ namespace :bench do
     sh %{node test/unit/benchmarks/poem.benchmark.js 100 100}
   end
 
-end
-
-begin
-  require 'jasmine'
-  load 'jasmine/tasks/jasmine.rake'
-rescue LoadError
-  task :jasmine do
-    abort "Jasmine is not available. In order to run jasmine, you must: (sudo) gem install jasmine"
-  end
 end

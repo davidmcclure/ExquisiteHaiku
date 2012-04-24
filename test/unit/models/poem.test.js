@@ -442,6 +442,84 @@ describe('Poem', function() {
 
     });
 
+    describe('haiku', function() {
+
+      it('should return one array when the total syllables < 5', function() {
+
+        // Populate words.
+        poem.words = [
+          'it',
+          'little',
+          'profits'
+        ];
+
+        // Check structure.
+        poem.haiku.should.eql([['it', 'little', 'profits']]);
+
+        // Check length.
+        poem.haiku.length.should.eql(1);
+
+      });
+
+      it('should return two arrays when the total syllables > 5 and < 12', function() {
+
+        // Populate words.
+        poem.words = [
+          'it',
+          'little',
+          'profits',
+          'that',
+          'an',
+          'idle',
+          'king',
+          'by',
+          'this'
+        ];
+
+        // Check structure.
+        poem.haiku.should.eql([
+          ['it', 'little', 'profits'],
+          ['that', 'an', 'idle', 'king', 'by', 'this']
+        ]);
+
+        // Check length.
+        poem.haiku.length.should.eql(2);
+
+      });
+
+      it('should return three arrays when the total syllables > 12', function() {
+
+        // Populate words.
+        poem.words = [
+          'it',
+          'little',
+          'profits',
+          'that',
+          'an',
+          'idle',
+          'king',
+          'by',
+          'this',
+          'still',
+          'hearth',
+          'among',
+          'these'
+        ];
+
+        // Check structure.
+        poem.haiku.should.eql([
+          ['it', 'little', 'profits'],
+          ['that', 'an', 'idle', 'king', 'by', 'this'],
+          ['still', 'hearth', 'among', 'these']
+        ]);
+
+        // Check length.
+        poem.haiku.length.should.eql(3);
+
+      });
+
+    });
+
   });
 
   describe('methods', function() {

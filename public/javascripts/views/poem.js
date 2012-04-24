@@ -22,7 +22,7 @@ define([
       className: 'poem',
 
       /*
-       * Build the templates.
+       * Line and word templates.
        */
       lineTemplate: _.template(lineTemplate),
       wordTemplate: _.template(wordTemplate),
@@ -35,12 +35,21 @@ define([
       },
 
       /*
+       * Append container.
+       *
+       * @return void.
+       */
+      initialize: function() {
+        this.render();
+      },
+
+      /*
        * Render the container element.
        *
        * @return void.
        */
       render: function() {
-
+        $('.left').append(this.$el);
       },
 
       /*

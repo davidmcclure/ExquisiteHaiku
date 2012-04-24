@@ -7,10 +7,16 @@ define([
   'underscore',
   'backbone',
   'views/poem',
+  'text!templates/app.html',
   'socket'
-  ], function($, _, Backbone, PoemView) {
+  ], function($, _, Backbone, PoemView, appTemplate) {
 
     var AppView = Backbone.View.extend({
+
+      /*
+       * Application template.
+       */
+      appTemplate: _.template(appTemplate),
 
       /*
        * Application startup.
@@ -19,10 +25,13 @@ define([
        */
       initialize: function(socket) {
 
+        // Render application template.
+        this.renderAppTemplate();
+
         // Construct poem.
         this.poem = new PoemView();
-        this.poem.render(['test']);
 
+        // ** dev.
         // Construct stacks.
         // Construct search.
         // Construct tickers.
@@ -30,6 +39,15 @@ define([
         // Connect to socket.io.
         this.initializeSockets(socket);
 
+      },
+
+      /*
+       * Render the application shell.
+       *
+       * @return void.
+       */
+      renderAppTemplate: function() {
+        $('body').prepend(this.appTemplate());
       },
 
       /*
@@ -41,7 +59,7 @@ define([
        */
       initializeSockets: function(socket) {
 
-        // Connect to room.
+        // Connect to poem.
         socket.on('connect', function() {
           socket.emit('join', Poem.slug);
         });

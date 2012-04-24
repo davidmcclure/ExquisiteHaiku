@@ -1,5 +1,5 @@
 /*
- * View for individual word in stack.
+ * View for poem.
  */
 
 define([
@@ -7,17 +7,17 @@ define([
   'backbone'
   ], function(_, Backbone) {
 
-    var StackWordView = Backbone.View.extend({
+    var PoemView = Backbone.View.extend({
 
       /*
        * The container markup.
        */
-      tagName: 'tr',
+      tagName: 'div',
 
       /*
        * The container class.
        */
-      className: 'stack-word',
+      className: 'poem',
 
       /*
        * Bind events.
@@ -27,7 +27,7 @@ define([
       },
 
       /*
-       * Render model.
+       * Render poem.
        *
        * @return void.
        */
@@ -37,6 +37,6 @@ define([
 
     });
 
-    return StackWordView;
+    return PoemView;
 
 });

@@ -368,7 +368,7 @@ PoemSchema.methods.addWord = function(word) {
     });
 
     // If space, push.
-    if (count + syll < 5) {
+    if (count + syll <= 5) {
       this.words[2].push(word);
       return 12 + count + syll;
     }
@@ -431,7 +431,6 @@ PoemSchema.statics.score = function(id, now, broadcast, cb) {
         c[vote.word] = score.churn;
       }
 
-
     });
 
     // Cast rank to array.
@@ -456,17 +455,22 @@ PoemSchema.statics.score = function(id, now, broadcast, cb) {
 
       // Push new word.
       if (!_.isEmpty(rank)) {
-        poem.addWord(rank[0][0]);
+
+        var syllables = poem.addWord(rank[0][0]);
         poem.markModified('words');
+
+        // If poem complete, stop.
+        if (syllables == 17) {
+          poem.stop(function() {});
+        }
+
+        // If not, create new round.
+        else {
+          poem.newRound();
+          rank = []; churn = [];
+        }
+
       }
-
-      // ** dev: check for complete poem.
-
-      // Create new word.
-      poem.newRound();
-
-      // Empty stacks.
-      rank = []; churn = [];
 
     }
 
@@ -474,7 +478,8 @@ PoemSchema.statics.score = function(id, now, broadcast, cb) {
     broadcast({
       stacks: { rank: rank, churn: churn },
       poem: poem.words,
-      round: poem.round.id
+      round: poem.round.id,
+      running: poem.running
     });
 
     // Save.

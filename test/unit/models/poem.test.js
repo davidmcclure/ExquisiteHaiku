@@ -568,7 +568,19 @@ describe('Poem', function() {
 
       });
 
-      it('should add to line 1 array when word fits', function() {
+      it('should add to line 1 when word fits', function() {
+
+        // Set line 1 array.
+        poem.words = [['it']];
+
+        // Add word.
+        poem.addWord('little').should.eql(3);
+        poem.words[0].should.eql(['it', 'little']);
+        poem.words.length.should.eql(1);
+
+      });
+
+      it('should complete to line 1 when word fits', function() {
 
         // Set line 1 array.
         poem.words = [['it', 'little']];
@@ -621,6 +633,22 @@ describe('Poem', function() {
 
       });
 
+      it('should complete line 2 when word fits', function() {
+
+        // Set line 1 and 2 arrays.
+        poem.words = [
+          ['it', 'little', 'profits'],
+          ['that', 'an', 'idle', 'king', 'by']
+        ];
+
+        // Add word.
+        poem.addWord('this').should.eql(12);
+        poem.words[0].should.eql(['it', 'little', 'profits']);
+        poem.words[1].should.eql(['that', 'an', 'idle', 'king', 'by', 'this']);
+        poem.words.length.should.eql(2);
+
+      });
+
       it('should reject when word does not fit on line 2', function() {
 
         // Set line 1 and 2 arrays.
@@ -668,6 +696,24 @@ describe('Poem', function() {
         poem.words[0].should.eql(['it', 'little', 'profits']);
         poem.words[1].should.eql(['that', 'an', 'idle', 'king', 'by', 'this']);
         poem.words[2].should.eql(['still', 'hearth']);
+        poem.words.length.should.eql(3);
+
+      });
+
+      it('should complete line 3 when word fits', function() {
+
+        // Set line 1, 2, and 3 arrays.
+        poem.words = [
+          ['it', 'little', 'profits'],
+          ['that', 'an', 'idle', 'king', 'by', 'this'],
+          ['still', 'hearth', 'among']
+        ];
+
+        // Add word.
+        poem.addWord('these').should.eql(17);
+        poem.words[0].should.eql(['it', 'little', 'profits']);
+        poem.words[1].should.eql(['that', 'an', 'idle', 'king', 'by', 'this']);
+        poem.words[2].should.eql(['still', 'hearth', 'among', 'these']);
         poem.words.length.should.eql(3);
 
       });
@@ -750,6 +796,8 @@ describe('Poem', function() {
       poem = new Poem({
         slug: 'test-poem',
         user: user.id,
+        started: true,
+        running: true,
         roundLength : 10000,
         sliceInterval : 3,
         minSubmissions : 5,
@@ -850,6 +898,19 @@ describe('Poem', function() {
 
             // Check for original round id.
             result.round.should.eql(round.id);
+            done();
+
+          }, function() {});
+
+        });
+
+        it('should return running status == true', function(done) {
+
+          // Score the poem.
+          Poem.score(poem.id, Date.now(), function(result) {
+
+            // Check for status.
+            result.running.should.eql(true);
             done();
 
           }, function() {});
@@ -997,6 +1058,65 @@ describe('Poem', function() {
               result.poem[0][0].valueOf().should.eql('it');
               result.poem[0][1].valueOf().should.eql('is');
               should.not.exist(result.poem[2]);
+              done();
+
+            }, function() {});
+
+          });
+
+        });
+
+        describe('when the poem is complete', function() {
+
+          beforeEach(function(done) {
+
+            // Set poem 1 syllable from completion.
+            poem.words = [
+              ['it', 'little', 'profits'],
+              ['that', 'an', 'idle', 'king', 'by', 'this'],
+              ['still', 'hearth', 'among' ]
+            ];
+
+            // Save.
+            poem.markModified('words');
+            poem.save(function(err) {
+              done();
+            });
+
+          });
+
+          it('should return updated poem', function(done) {
+
+            // Score the poem.
+            Poem.score(poem.id, Date.now(), function(result) {
+
+              // Check for poem.
+              result.poem[0][0].valueOf().should.eql('it');
+              result.poem[0][1].valueOf().should.eql('little');
+              result.poem[0][2].valueOf().should.eql('profits');
+              result.poem[1][0].valueOf().should.eql('that');
+              result.poem[1][1].valueOf().should.eql('an');
+              result.poem[1][2].valueOf().should.eql('idle');
+              result.poem[1][3].valueOf().should.eql('king');
+              result.poem[1][4].valueOf().should.eql('by');
+              result.poem[1][5].valueOf().should.eql('this');
+              result.poem[2][0].valueOf().should.eql('still');
+              result.poem[2][1].valueOf().should.eql('hearth');
+              result.poem[2][2].valueOf().should.eql('among');
+              result.poem[2][3].valueOf().should.eql('third');
+              done();
+
+            }, function() {});
+
+          });
+
+          it('should return running status == false', function(done) {
+
+            // Score the poem.
+            Poem.score(poem.id, Date.now(), function(result) {
+
+              // Check for status.
+              result.running.should.eql(false);
               done();
 
             }, function() {});

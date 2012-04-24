@@ -289,8 +289,9 @@ PoemSchema.methods.newRound = function() {
  *
  * @param {Function} cb: Callback.
  *
- * @return {Boolean}: True if the word fits in the syllable
- * pattern and was added to the poem, False, if not.
+ * @return {Number}: The total number of syllables in the poem
+ * after the new word is inserted. If the word does not fit the
+ * syllable pattern of the poem, return {Boolean} false.
  */
 PoemSchema.methods.addWord = function(word) {
 
@@ -308,7 +309,7 @@ PoemSchema.methods.addWord = function(word) {
   // No words.
   else if (_.isEmpty(this.words)) {
     this.words.push([word]);
-    return true;
+    return syll;
   }
 
   // 1 line.
@@ -323,13 +324,13 @@ PoemSchema.methods.addWord = function(word) {
     // If space, push.
     if (count + syll <= 5) {
       this.words[0].push(word);
-      return true;
+      return count + syll;
     }
 
     // If line 1 full, create line 2.
     else if (count == 5) {
       this.words.push([word]);
-      return true;
+      return count + syll;
     }
 
   }
@@ -346,13 +347,13 @@ PoemSchema.methods.addWord = function(word) {
     // If space, push.
     if (count + syll <= 7) {
       this.words[1].push(word);
-      return true;
+      return 5 + count + syll;
     }
 
     // If line 2 full, create line 3.
     else if (count == 7) {
       this.words.push([word]);
-      return true;
+      return 12 + syll
     }
 
   }
@@ -369,7 +370,7 @@ PoemSchema.methods.addWord = function(word) {
     // If space, push.
     if (count + syll < 5) {
       this.words[2].push(word);
-      return true;
+      return 12 + count + syll;
     }
 
   }

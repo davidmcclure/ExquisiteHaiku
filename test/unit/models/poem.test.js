@@ -562,7 +562,7 @@ describe('Poem', function() {
       it('should create line 1 array when no words', function() {
 
         // Add first word.
-        poem.addWord('it').should.be.true;
+        poem.addWord('it').should.eql(1);
         poem.words[0].should.eql(['it']);
         poem.words.length.should.eql(1);
 
@@ -574,7 +574,7 @@ describe('Poem', function() {
         poem.words = [['it', 'little']];
 
         // Add word.
-        poem.addWord('profits').should.be.true;
+        poem.addWord('profits').should.eql(5);
         poem.words[0].should.eql(['it', 'little', 'profits']);
         poem.words.length.should.eql(1);
 
@@ -598,7 +598,7 @@ describe('Poem', function() {
         poem.words = [['it', 'little', 'profits']];
 
         // Add word.
-        poem.addWord('that').should.be.true;
+        poem.addWord('that').should.eql(6);
         poem.words[0].should.eql(['it', 'little', 'profits']);
         poem.words[1].should.eql(['that']);
         poem.words.length.should.eql(2);
@@ -614,7 +614,7 @@ describe('Poem', function() {
         ];
 
         // Add word.
-        poem.addWord('an').should.be.true;
+        poem.addWord('an').should.eql(7);
         poem.words[0].should.eql(['it', 'little', 'profits']);
         poem.words[1].should.eql(['that', 'an']);
         poem.words.length.should.eql(2);
@@ -646,7 +646,7 @@ describe('Poem', function() {
         ];
 
         // Add word.
-        poem.addWord('still').should.be.true;
+        poem.addWord('still').should.eql(13);
         poem.words[0].should.eql(['it', 'little', 'profits']);
         poem.words[1].should.eql(['that', 'an', 'idle', 'king', 'by', 'this']);
         poem.words[2].should.eql(['still']);
@@ -664,7 +664,7 @@ describe('Poem', function() {
         ];
 
         // Add word.
-        poem.addWord('hearth').should.be.true;
+        poem.addWord('hearth').should.eql(14);
         poem.words[0].should.eql(['it', 'little', 'profits']);
         poem.words[1].should.eql(['that', 'an', 'idle', 'king', 'by', 'this']);
         poem.words[2].should.eql(['still', 'hearth']);

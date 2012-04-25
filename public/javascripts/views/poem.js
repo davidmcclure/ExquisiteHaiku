@@ -2,58 +2,69 @@
  * View for poem.
  */
 
-var PoemView = Backbone.View.extend({
+define([
+  'underscore',
+  'backbone',
+  'text!templates/poem-line.html',
+  'text!templates/poem-word.html'
+], function(_, Backbone, lineTemplate, wordTemplate) {
 
-  /*
-   * The container markup.
-   */
-  tagName: 'div',
+  var PoemView = Backbone.View.extend({
 
-  /*
-   * The container class.
-   */
-  className: 'poem',
+    /*
+     * The container markup.
+     */
+    tagName: 'div',
 
-  /*
-   * Line and word templates.
-   */
-  lineTemplate: _.template(lineTemplate),
-  wordTemplate: _.template(wordTemplate),
+    /*
+     * The container class.
+     */
+    className: 'poem',
 
-  /*
-   * Bind events.
-   */
-  events: {
+    /*
+     * Line and word templates.
+     */
+    lineTemplate: _.template(lineTemplate),
+    wordTemplate: _.template(wordTemplate),
 
-  },
+    /*
+     * Bind events.
+     */
+    events: {
 
-  /*
-   * Append container.
-   *
-   * @return void.
-   */
-  initialize: function() {
-    this.render();
-  },
+    },
 
-  /*
-   * Render the container element.
-   *
-   * @return void.
-   */
-  render: function(container) {
-    $('.left').append(this.$el);
-  },
+    /*
+     * Append container.
+     *
+     * @return void.
+     */
+    initialize: function() {
+      this.render();
+    },
 
-  /*
-   * Render poem words.
-   *
-   * @param {Array} poem: The poem.
-   *
-   * @return void.
-   */
-  update: function(poem) {
+    /*
+     * Render the container element.
+     *
+     * @return void.
+     */
+    render: function(container) {
+      $('.left').append(this.$el);
+    },
 
-  }
+    /*
+     * Render poem words.
+     *
+     * @param {Array} poem: The poem.
+     *
+     * @return void.
+     */
+    update: function(poem) {
+
+    }
+
+  });
+
+  return PoemView;
 
 });

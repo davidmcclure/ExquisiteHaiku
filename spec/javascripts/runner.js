@@ -1,8 +1,9 @@
 /*
- * Include libraries and run application.
+ * Require and globalize application assets.
  */
 
 require.config({
+  baseUrl: '/public/',
   paths: {
     jquery: '/javascripts/lib/jquery/jquery',
     underscore: '/javascripts/lib/underscore/underscore',
@@ -15,11 +16,5 @@ require.config({
 require([
   '/javascripts/views/app.js'
 ], function(AppView) {
-
-  // Connect socket.io.
-  var socket = io.connect();
-
-  // Run application view.
-  var appView = new AppView(socket);
 
 });

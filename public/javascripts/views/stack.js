@@ -2,32 +2,41 @@
  * View for stack.
  */
 
-var StackView = Backbone.View.extend({
+define([
+  'underscore',
+  'backbone'
+], function(_, Backbone) {
 
-  /*
-   * The container markup.
-   */
-  tagName: 'table',
+  var StackView = Backbone.View.extend({
 
-  /*
-   * The container class.
-   */
-  className: 'stack',
+    /*
+     * The container markup.
+     */
+    tagName: 'table',
 
-  /*
-   * Bind events.
-   */
-  events: {
+    /*
+     * The container class.
+     */
+    className: 'stack',
 
-  },
+    /*
+     * Bind events.
+     */
+    events: {
 
-  /*
-   * Render model.
-   *
-   * @return void.
-   */
-  render: function() {
+    },
 
-  }
+    /*
+     * Render model.
+     *
+     * @return void.
+     */
+    render: function() {
+
+    }
+
+  });
+
+  return StackView;
 
 });

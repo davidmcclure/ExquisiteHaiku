@@ -5,12 +5,12 @@
 define([
   'underscore',
   'backbone'
-  ], function(_, Backbone) {
+], function(_, Backbone) {
 
-    var StackWord = Backbone.Model.extend({
+  var StackWord = Backbone.Model.extend({
 
-    });
+  });
 
-    return StackWord;
+  return StackWord;
 
 });

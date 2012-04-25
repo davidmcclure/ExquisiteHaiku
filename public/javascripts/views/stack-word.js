@@ -5,38 +5,38 @@
 define([
   'underscore',
   'backbone'
-  ], function(_, Backbone) {
+], function(_, Backbone) {
 
-    var StackWordView = Backbone.View.extend({
+  var StackWordView = Backbone.View.extend({
 
-      /*
-       * The container markup.
-       */
-      tagName: 'tr',
+    /*
+     * The container markup.
+     */
+    tagName: 'tr',
 
-      /*
-       * The container class.
-       */
-      className: 'stack-word',
+    /*
+     * The container class.
+     */
+    className: 'stack-word',
 
-      /*
-       * Bind events.
-       */
-      events: {
+    /*
+     * Bind events.
+     */
+    events: {
 
-      },
+    },
 
-      /*
-       * Render model.
-       *
-       * @return void.
-       */
-      render: function() {
+    /*
+     * Render model.
+     *
+     * @return void.
+     */
+    render: function() {
 
-      }
+    }
 
-    });
+  });
 
-    return StackWordView;
+  return StackWordView;
 
 });

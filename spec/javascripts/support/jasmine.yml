@@ -12,7 +12,6 @@
 #
 src_files:
     - spec/lib/*.js
-    - public/javascripts/lib/**/*.js
 
 # stylesheets
 #

@@ -5,38 +5,38 @@
 define([
   'underscore',
   'backbone'
-  ], function(_, Backbone) {
+], function(_, Backbone) {
 
-    var StackView = Backbone.View.extend({
+  var StackView = Backbone.View.extend({
 
-      /*
-       * The container markup.
-       */
-      tagName: 'table',
+    /*
+     * The container markup.
+     */
+    tagName: 'table',
 
-      /*
-       * The container class.
-       */
-      className: 'stack',
+    /*
+     * The container class.
+     */
+    className: 'stack',
 
-      /*
-       * Bind events.
-       */
-      events: {
+    /*
+     * Bind events.
+     */
+    events: {
 
-      },
+    },
 
-      /*
-       * Render model.
-       *
-       * @return void.
-       */
-      render: function() {
+    /*
+     * Render model.
+     *
+     * @return void.
+     */
+    render: function() {
 
-      }
+    }
 
-    });
+  });
 
-    return StackView;
+  return StackView;
 
 });

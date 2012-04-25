@@ -48,7 +48,7 @@ define([
        *
        * @return void.
        */
-      render: function() {
+      render: function(container) {
         $('.left').append(this.$el);
       },
 

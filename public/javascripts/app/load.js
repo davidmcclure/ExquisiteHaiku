@@ -18,6 +18,11 @@ load(
 
 ).then(
 
+  // Views.
+  a+'views/blank.js'
+
+).then(
+
   // Models.
   a+'models/stack-word.js',
 

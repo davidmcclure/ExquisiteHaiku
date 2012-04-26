@@ -43,7 +43,13 @@ var PoemView = Backbone.View.extend({
    * @return void.
    */
   initialize: function(container) {
+
+    // Insert container.
     this.render(container);
+
+    // Construct blank.
+    this.blank = new BlankView();
+
   },
 
   /*
@@ -63,6 +69,34 @@ var PoemView = Backbone.View.extend({
    * @return void.
    */
   update: function(poem) {
+
+    // Detach blank.
+    this.blank.el.detach();
+
+    // Empty container.
+    this.el.empty();
+
+    // Walk lines.
+    _.each(poem, _.bind(function(line) {
+
+      // Insert line.
+      var lineTemplate = this.lineTemplate();
+      this.el.append(lineTemplate());
+
+      // Walk words.
+      _.each(line, function(word) {
+
+        // Insert word.
+        var wordTemplate = this.wordTemplate();
+        lineTemplate.append(wordTemplate({
+          word: word
+        }));
+
+      });
+
+    }), this);
+
+    // Reposition blank.
 
   }
 

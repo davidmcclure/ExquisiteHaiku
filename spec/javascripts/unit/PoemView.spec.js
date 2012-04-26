@@ -39,6 +39,16 @@ describe('Poem View', function() {
 
     });
 
+    it('should construct blank', function() {
+
+      // Construct view.
+      poemView.initialize();
+
+      // Check for blank
+      expect(poemView.blank.el).toBe('div.blank');
+
+    });
+
   });
 
   describe('render', function() {

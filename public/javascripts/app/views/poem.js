@@ -15,10 +15,18 @@ var PoemView = Backbone.View.extend({
   className: 'poem',
 
   /*
-   * Line and word templates.
+   * Line template.
    */
-  lineTemplate: _.template($('#poem-line').html()),
-  wordTemplate: _.template($('#poem-word').html()),
+  lineTemplate: function() {
+    _.template($('#poem-line').html());
+  },
+
+  /*
+   * Word template.
+   */
+  wordTemplate: function() {
+    _.template($('#poem-word').html());
+  },
 
   /*
    * Bind events.
@@ -30,10 +38,12 @@ var PoemView = Backbone.View.extend({
   /*
    * Append container.
    *
+   * @param {Element} container: The container.
+   *
    * @return void.
    */
-  initialize: function() {
-    this.render();
+  initialize: function(container) {
+    this.render(container);
   },
 
   /*

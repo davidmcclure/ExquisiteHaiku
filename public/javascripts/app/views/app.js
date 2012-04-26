@@ -7,7 +7,9 @@ var AppView = Backbone.View.extend({
   /*
    * Application template.
    */
-  appTemplate: _.template($('#app-view').html()),
+  appTemplate: function() {
+    return _.template($('#app-view').html());
+  },
 
   /*
    * Application startup.

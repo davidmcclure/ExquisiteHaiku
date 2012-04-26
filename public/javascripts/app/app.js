@@ -1,5 +1,5 @@
 /*
- * Include libraries and run application.
+ * Connect sockets and run application.
  */
 
 // Connect socket.io.

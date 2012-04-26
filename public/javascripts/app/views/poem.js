@@ -17,8 +17,8 @@ var PoemView = Backbone.View.extend({
   /*
    * Line and word templates.
    */
-  lineTemplate: _.template(lineTemplate),
-  wordTemplate: _.template(wordTemplate),
+  lineTemplate: _.template($('#poem-line').html()),
+  wordTemplate: _.template($('#poem-word').html()),
 
   /*
    * Bind events.

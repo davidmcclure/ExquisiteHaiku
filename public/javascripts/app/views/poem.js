@@ -5,31 +5,13 @@
 var PoemView = Backbone.View.extend({
 
   /*
-   * The container markup.
+   * Markup attributes.
    */
   tagName: 'div',
-
-  /*
-   * The container class.
-   */
   className: 'poem',
 
   /*
-   * Line template.
-   */
-  lineTemplate: function() {
-    _.template($('#poem-line').html());
-  },
-
-  /*
-   * Word template.
-   */
-  wordTemplate: function() {
-    _.template($('#poem-word').html());
-  },
-
-  /*
-   * Bind events.
+   * Event bindings.
    */
   events: {
 
@@ -44,11 +26,33 @@ var PoemView = Backbone.View.extend({
    */
   initialize: function(container) {
 
-    // Insert container.
-    this.render(container);
+    // Build templates.
+    this.buildTemplates();
 
     // Construct blank.
     this.blank = new BlankView();
+
+    // Insert container.
+    this.render(container);
+
+  },
+
+  /*
+   * Build templates.
+   *
+   * @return void.
+   */
+  buildTemplates: function() {
+
+    // Line.
+    this.lineTemplate = _.template(
+      $('#poem-line').html()
+    );
+
+    // Word.
+    this.wordTemplate = _.template(
+      $('#poem-word').html()
+    );
 
   },
 
@@ -58,7 +62,7 @@ var PoemView = Backbone.View.extend({
    * @return void.
    */
   render: function(container) {
-    $('.left').append(this.$el);
+    container.append(this.$el);
   },
 
   /*
@@ -71,32 +75,35 @@ var PoemView = Backbone.View.extend({
   update: function(poem) {
 
     // Detach blank.
-    this.blank.el.detach();
+    this.blank.detach();
 
     // Empty container.
-    this.el.empty();
+    this.$el.empty();
 
     // Walk lines.
     _.each(poem, _.bind(function(line) {
 
       // Insert line.
-      var lineTemplate = this.lineTemplate();
-      this.el.append(lineTemplate());
+      var lineMarkup = $(this.lineTemplate());
+      this.$el.append(lineMarkup);
 
       // Walk words.
-      _.each(line, function(word) {
+      _.each(line, _.bind(function(word) {
 
-        // Insert word.
-        var wordTemplate = this.wordTemplate();
-        lineTemplate.append(wordTemplate({
+        // Construct word.
+        var wordMarkup = $(this.wordTemplate({
           word: word
         }));
 
-      });
+        // Insert word.
+        lineMarkup.append(wordMarkup);
 
-    }), this);
+      }, this));
+
+    }, this));
 
     // Reposition blank.
+    this.blank.insert();
 
   }
 

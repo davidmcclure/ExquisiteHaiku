@@ -5,28 +5,40 @@
 var BlankView = Backbone.View.extend({
 
   /*
-   * The container markup.
+   * Markup attributes.
    */
-  tagName: 'div',
-
-  /*
-   * The container class.
-   */
+  tagName: 'input',
   className: 'blank',
 
   /*
-   * Bind events.
+   * The element attributes.
+   */
+  attributes: {
+    type: 'text'
+  },
+
+  /*
+   * Event bindings.
    */
   events: {
 
   },
 
   /*
-   * Render model.
+   * Detach the markup.
    *
    * @return void.
    */
-  render: function() {
+  detach: function() {
+
+  },
+
+  /*
+   * Insert the markup into the poem.
+   *
+   * @return void.
+   */
+  insert: function() {
 
   }
 

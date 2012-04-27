@@ -39,6 +39,7 @@ stylesheets:
 #
 helpers:
     - helpers/*.js
+    - mocks/*.js
 
 # spec_files
 #

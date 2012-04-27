@@ -5,24 +5,20 @@
 var AppView = Backbone.View.extend({
 
   /*
-   * Application template.
-   */
-  appTemplate: function() {
-    return _.template($('#app-view').html());
-  },
-
-  /*
    * Application startup.
    *
    * @return void.
    */
-  initialize: function(socket) {
+  initialize: function() {
+
+    // Build templates.
+    this.buildTemplates();
 
     // Render application template.
     this.renderAppTemplate();
 
     // Construct poem.
-    this.poem = new PoemView();
+    this.poem = new PoemView($('#left'));
 
     // ** dev.
     // Construct stacks.
@@ -30,7 +26,21 @@ var AppView = Backbone.View.extend({
     // Construct tickers.
 
     // Connect to socket.io.
-    this.initializeSockets(socket);
+    this.initializeSockets();
+
+  },
+
+  /*
+   * Build templates.
+   *
+   * @return void.
+   */
+  buildTemplates: function() {
+
+    // Application.
+    this.appTemplate = _.template(
+      $('#app-view').html()
+    );
 
   },
 
@@ -50,15 +60,18 @@ var AppView = Backbone.View.extend({
    *
    * @return void.
    */
-  initializeSockets: function(socket) {
+  initializeSockets: function() {
+
+    // Connect socket.io.
+    this.socket = io.connect();
 
     // Connect to poem.
-    socket.on('connect', function() {
+    this.socket.on('connect', _.bind(function() {
       socket.emit('join', Poem.slug);
-    });
+    }, this));
 
     // Ingest slice.
-    socket.on('slice', _.bind(function(data) {
+    this.socket.on('slice', _.bind(function(data) {
       this.ingestSlice(data);
     }, this));
 

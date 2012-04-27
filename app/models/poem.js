@@ -210,9 +210,11 @@ PoemSchema.virtual('roundExpiration').get(function() {
  *
  * @return {Number}: The syllable count.
  */
-PoemSchema.virtual('syllables').get(function() {
+PoemSchema.virtual('syllableCount').get(function() {
 
   var count = 0;
+
+  // Walk words.
   _.each(this.words, function(line) {
     _.each(line, function(word) {
       count += syllables[word];
@@ -231,16 +233,19 @@ PoemSchema.virtual('syllables').get(function() {
  */
 PoemSchema.virtual('lineNumber').get(function() {
 
-  var s = this.syllables;
+  var s = this.syllableCount;
 
+  // Line 1.
   if (s < 5) {
     return 1;
   }
 
+  // Line 2.
   else if (s >= 5 && s < 12) {
     return 2;
   }
 
+  // Line 3.
   else {
     return 3;
   }
@@ -428,17 +433,17 @@ PoemSchema.methods.addWord = function(word) {
  * -------------------
  */
 
+
 /*
- * Find poem by id, score, return stacks and poem.
+ * Find poem by id, score, return stacks.
  *
  * @param {Number} id: The poem id.
  * @param {Date} now: The current timestamp.
- * @param {Function} broadcast: Data broadcast callback.
- * @param {Function} cb: Post-save callback.
+ * @param {Function} cb: The callback.
  *
  * @return void.
  */
-PoemSchema.statics.score = function(id, now, broadcast, cb) {
+PoemSchema.statics.score = function(id, now, cb) {
 
   // Get poem.
   this.findById(id, function(err, poem) {
@@ -476,61 +481,144 @@ PoemSchema.statics.score = function(id, now, broadcast, cb) {
     });
 
     // Cast rank to array.
-    var rank = _.map(r, function(val, key) {
+    r = _.map(r, function(val, key) {
       return [key, val];
     });
 
     // Cast churn to array.
-    var churn = _.map(c, function(val, key) {
+    c = _.map(c, function(val, key) {
       return [key, val];
     });
 
     // Sort comparer.
-    var comp = function(a,b) { return b[1]-a[1]; };
+    var comp = function(a,b) {
+      return b[1]-a[1];
+    };
 
-    // Sort and slice.
-    rank = rank.sort(comp).slice(0, poem.visibleWords);
-    churn = churn.sort(comp).slice(0, poem.visibleWords);
+    // Sort stacks.
+    r = r.sort(comp).slice(0, poem.visibleWords);
+    c = c.sort(comp).slice(0, poem.visibleWords);
 
-    // Check for round expiration.
-    if (now > poem.roundExpiration) {
-
-      // Push new word.
-      if (!_.isEmpty(rank)) {
-
-        var syllables = poem.addWord(rank[0][0]);
-        poem.markModified('words');
-
-        // If poem complete, stop.
-        if (syllables == 17) {
-          poem.stop(function() {});
-        }
-
-        // If not, create new round.
-        else {
-          poem.newRound();
-          rank = []; churn = [];
-        }
-
-      }
-
-    }
-
-    // Push data.
-    broadcast({
-      stacks: { rank: rank, churn: churn },
-      poem: poem.words,
-      round: poem.round.id
-    });
-
-    // Save.
-    poem.save(function(err) {
-      cb();
-    });
+    cb({ rank: r, churn: c });
 
   });
 
 };
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+ * Find poem by id, score, return stacks and poem.
+ *
+ * @param {Number} id: The poem id.
+ * @param {Date} now: The current timestamp.
+ * @param {Function} broadcast: Data broadcast callback.
+ * @param {Function} cb: Post-save callback.
+ *
+ * @return void.
+ */
+// PoemSchema.statics.score = function(id, now, broadcast, cb) {
+
+//   // Get poem.
+//   this.findById(id, function(err, poem) {
+
+//     // Get round id.
+//     var rId = poem.round.id;
+
+//     // Shell out rank and churn objects.
+//     var r = {}; var c = {};
+
+//     // Get decay lifetime inverse and current time.
+//     var decayInverse = 1/poem.decayLifetime;
+
+//     _.each(global.Oversoul.votes[rId], function(vote) {
+
+//       // Score the vote.
+//       var score = vote.score(
+//         now,
+//         poem.decayLifetime,
+//         decayInverse
+//       );
+
+//       // Increment trackers.
+//       if (_.has(r, vote.word)) {
+//         r[vote.word] += score.rank;
+//         c[vote.word] += score.churn;
+//       }
+
+//       // Create trackers
+//       else {
+//         r[vote.word] = score.rank;
+//         c[vote.word] = score.churn;
+//       }
+
+//     });
+
+//     // Cast rank to array.
+//     var rank = _.map(r, function(val, key) {
+//       return [key, val];
+//     });
+
+//     // Cast churn to array.
+//     var churn = _.map(c, function(val, key) {
+//       return [key, val];
+//     });
+
+//     // Sort comparer.
+//     var comp = function(a,b) { return b[1]-a[1]; };
+
+//     // Sort and slice.
+//     rank = rank.sort(comp).slice(0, poem.visibleWords);
+//     churn = churn.sort(comp).slice(0, poem.visibleWords);
+
+//     // Check for round expiration.
+//     if (now > poem.roundExpiration) {
+
+//       // Push new word.
+//       if (!_.isEmpty(rank)) {
+
+//         poem.addWord(rank[0][0]);
+//         poem.markModified('words');
+
+//         // If poem complete, stop.
+//         if (poem.syllableCount == 17) {
+//           poem.stop(function() {});
+//         }
+
+//         // If not, create new round.
+//         else {
+//           poem.newRound();
+//           rank = []; churn = [];
+//         }
+
+//       }
+
+//     }
+
+//     // Push data.
+//     broadcast({
+//       stacks: { rank: rank, churn: churn },
+//       poem: poem.words,
+//       round: poem.round.id
+//     });
+
+//     // Save.
+//     poem.save(function(err) {
+//       cb();
+//     });
+
+//   });
+
+// };
 
 
 // Register model.

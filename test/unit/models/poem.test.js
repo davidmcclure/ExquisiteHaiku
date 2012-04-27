@@ -442,6 +442,145 @@ describe('Poem', function() {
 
     });
 
+    describe('syllableCount', function() {
+
+      it('should return count for < 1 full line', function() {
+
+        // < 1 line.
+        poem.words = [
+          ['it', 'little']
+        ];
+
+        poem.syllableCount.should.eql(3);
+
+      });
+
+      it('should return count for 1 full line', function() {
+
+        // 1 line.
+        poem.words = [
+          ['it', 'little', 'profits']
+        ];
+
+        poem.syllableCount.should.eql(5);
+
+      });
+
+      it('should return count for < 2 full lines', function() {
+
+        // < 2 lines.
+        poem.words = [
+          ['it', 'little', 'profits'],
+          ['that', 'an', 'idle']
+        ];
+
+        poem.syllableCount.should.eql(9);
+
+      });
+
+      it('should return count for 2 full lines', function() {
+
+        // 2 lines.
+        poem.words = [
+          ['it', 'little', 'profits'],
+          ['that', 'an', 'idle', 'king', 'by', 'this']
+        ];
+
+        poem.syllableCount.should.eql(12);
+
+      });
+
+      it('should return count for < 3 full lines', function() {
+
+        // < 3 lines.
+        poem.words = [
+          ['it', 'little', 'profits'],
+          ['that', 'an', 'idle', 'king', 'by', 'this'],
+          ['still', 'hearth']
+        ];
+
+        poem.syllableCount.should.eql(14);
+
+      });
+
+      it('should return count for 3 full lines', function() {
+
+        // 3 lines.
+        poem.words = [
+          ['it', 'little', 'profits'],
+          ['that', 'an', 'idle', 'king', 'by', 'this'],
+          ['still', 'hearth', 'among', 'these']
+        ];
+
+        poem.syllableCount.should.eql(17);
+
+      });
+
+    });
+
+    describe('lineNumber', function() {
+
+      it('should return 1 when line 1 is incomplete', function() {
+
+        // < 1 line.
+        poem.words = [
+          ['it', 'little']
+        ];
+
+        poem.lineNumber.should.eql(1);
+
+      });
+
+      it('should return 2 when line 1 is complete', function() {
+
+        // 1 line.
+        poem.words = [
+          ['it', 'little', 'profits']
+        ];
+
+        poem.lineNumber.should.eql(2);
+
+      });
+
+      it('should return 2 when line 2 is incomplete', function() {
+
+        // < 2 lines.
+        poem.words = [
+          ['it', 'little', 'profits'],
+          ['that', 'an', 'idle']
+        ];
+
+        poem.lineNumber.should.eql(2);
+
+      });
+
+      it('should return 3 when line 2 is complete', function() {
+
+        // 2 lines.
+        poem.words = [
+          ['it', 'little', 'profits'],
+          ['that', 'an', 'idle', 'king', 'by', 'this']
+        ];
+
+        poem.lineNumber.should.eql(3);
+
+      });
+
+      it('should return 3 when line 3 is incomplete', function() {
+
+        // < 3 lines.
+        poem.words = [
+          ['it', 'little', 'profits'],
+          ['that', 'an', 'idle', 'king', 'by', 'this'],
+          ['still', 'hearth']
+        ];
+
+        poem.lineNumber.should.eql(3);
+
+      });
+
+    });
+
   });
 
   describe('methods', function() {
@@ -855,237 +994,21 @@ describe('Poem', function() {
 
       });
 
-      describe('when the round is not expired', function() {
-
-        it('should return stacks', function(done) {
-
-          // Score the poem.
-          Poem.score(poem.id, Date.now(), function(result) {
-
-            // Check rank order.
-            result.stacks.rank[0][0].should.eql('third');
-            result.stacks.rank[1][0].should.eql('second');
-            should.not.exist(result.stacks.rank[2]);
-
-            // Check churn order.
-            result.stacks.churn[0][0].should.eql('third');
-            result.stacks.churn[1][0].should.eql('second');
-            should.not.exist(result.stacks.churn[2]);
-            done();
-
-          }, function() {});
-
-        });
-
-        it('should return poem', function(done) {
-
-          // Score the poem.
-          Poem.score(poem.id, Date.now(), function(result) {
-
-            // Check for poem.
-            result.poem[0][0].valueOf().should.eql('it');
-            result.poem[0][1].valueOf().should.eql('is');
-            done();
-
-          }, function() {});
-
-        });
-
-        it('should return round id', function(done) {
-
-          // Score the poem.
-          Poem.score(poem.id, Date.now(), function(result) {
-
-            // Check for original round id.
-            result.round.should.eql(round.id);
-            done();
-
-          }, function() {});
-
-        });
-
-        it('should not save new poem', function(done) {
-
-          Poem.score(poem.id, Date.now(), function() {}, function() {
-
-            // Get the poem.
-            Poem.findById(poem.id, function(err, poem) {
-
-              // Check for no new word.
-              should.not.exist(poem.words[2]);
-              done();
-
-            });
-
-          });
-
-        });
-
-        it('should not save new round', function(done) {
-
-          Poem.score(poem.id, Date.now(), function() {}, function() {
-
-            // Get the poem.
-            Poem.findById(poem.id, function(err, poem) {
-
-              // Check for new word.
-              poem.round.id.should.eql(round.id);
-              done();
-
-            });
-
-          });
-
-        });
-
-      });
-
-      describe('when the round is expired', function() {
-
-        beforeEach(function(done) {
-
-          // Set poem round expired.
-          poem.round.started = Date.now() - 20000;
-          poem.save(function(err) { done(); });
-
-        });
-
-        it('should return updated poem', function(done) {
-
-          // Score the poem.
-          Poem.score(poem.id, Date.now(), function(result) {
-
-            // Check for poem.
-            result.poem[0][0].valueOf().should.eql('it');
-            result.poem[0][1].valueOf().should.eql('is');
-            result.poem[0][2].valueOf().should.eql('third');
-            done();
-
-          }, function() {});
-
-        });
-
-        it('should return updated round id', function(done) {
-
-          // Score the poem.
-          Poem.score(poem.id, Date.now(), function(result) {
-
-            // Check for new round id.
-            result.round.should.not.eql(round.id);
-            done();
-
-          }, function() {});
-
-        });
-
-        it('should return empty stacks', function(done) {
-
-          // Score the poem.
-          Poem.score(poem.id, Date.now(), function(result) {
-
-            // Check for empty stacks.
-            result.stacks.rank.should.eql([]);
-            result.stacks.churn.should.eql([]);
-            done();
-
-          }, function() {});
-
-        });
-
-        it('should save new poem', function(done) {
-
-          Poem.score(poem.id, Date.now(), function() {}, function() {
-
-            // Get the poem.
-            Poem.findById(poem.id, function(err, poem) {
-
-              // Check for new word.
-              poem.words[0][2].valueOf().should.eql('third');
-              done();
-
-            });
-
-          });
-
-        });
-
-        it('should save new round', function(done) {
-
-          Poem.score(poem.id, Date.now(), function() {}, function() {
-
-            // Get the poem.
-            Poem.findById(poem.id, function(err, poem) {
-
-              // Check for new word.
-              poem.round.id.should.not.eql(round.id);
-              done();
-
-            });
-
-          });
-
-        });
-
-        describe('when no words exist', function() {
-
-          beforeEach(function() {
-
-            // Empty trackers.
-            global.Oversoul.votes = {};
-            global.Oversoul.words = {};
-
-          });
-
-          it('should return unchanged poem', function(done) {
-
-            // Score the poem.
-            Poem.score(poem.id, Date.now(), function(result) {
-
-              // Check for poem.
-              result.poem[0][0].valueOf().should.eql('it');
-              result.poem[0][1].valueOf().should.eql('is');
-              should.not.exist(result.poem[2]);
-              done();
-
-            }, function() {});
-
-          });
-
-        });
-
-        describe('when the poem is complete', function() {
-
-          beforeEach(function(done) {
-
-            // Set poem 1 syllable from completion.
-            poem.words = [
-              ['it', 'little', 'profits'],
-              ['that', 'an', 'idle', 'king', 'by', 'this'],
-              ['still', 'hearth', 'among', 'these']
-            ];
-
-            // Save.
-            poem.markModified('words');
-            poem.save(function(err) {
-              done();
-            });
-
-          });
-
-          it('should stop the poem', function(done) {
-
-            // Spy on stop().
-            var stop = sinon.spy(poem.stop);
-
-            // Score the poem.
-            Poem.score(poem.id, Date.now(), function(result) {
-
-              // Check for stop().
-              sinon.assert.called(stop);
-
-            }, function() {});
-
-          });
+      it('should return stacks', function(done) {
+
+        // Score the poem.
+        Poem.score(poem.id, Date.now(), function(stacks) {
+
+          // Check rank order.
+          stacks.rank[0][0].should.eql('third');
+          stacks.rank[1][0].should.eql('second');
+          should.not.exist(stacks.rank[2]);
+
+          // Check churn order.
+          stacks.churn[0][0].should.eql('third');
+          stacks.churn[1][0].should.eql('second');
+          should.not.exist(stacks.churn[2]);
+          done();
 
         });
 

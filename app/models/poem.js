@@ -433,11 +433,12 @@ PoemSchema.methods.addWord = function(word) {
  *
  * @param {Number} id: The poem id.
  * @param {Date} now: The current timestamp.
- * @param {Function} cb: The callback.
+ * @param {Function} send: Broadcaster callback.
+ * @param {Function} cb: Post-save callback.
  *
  * @return void.
  */
-PoemSchema.statics.score = function(id, now, cb) {
+PoemSchema.statics.score = function(id, now, send, cb) {
 
   // Get poem.
   this.findById(id, function(err, poem) {
@@ -493,26 +494,8 @@ PoemSchema.statics.score = function(id, now, cb) {
     r = r.sort(comp).slice(0, poem.visibleWords);
     c = c.sort(comp).slice(0, poem.visibleWords);
 
-    cb({ rank: r, churn: c });
-
-  });
-
-};
-
-
-/*
- * Compute stacks, updated poem, emit result.
- *
- * @param {Number} id: The poem id.
- * @param {Date} now: The current timestamp.
- * @param {Function} send: Broadcast callback.
- *
- * @return void.
- */
-PoemSchema.statics.send = function(id, now, send, cb) {
-
-  // Score poem.
-  this.score(id, now, function(stacks) {
+    // Stacks object.
+    var stacks = { rank: r, churn: c };
 
     // Check for round expiration.
     if (now > poem.roundExpiration) {
@@ -534,18 +517,18 @@ PoemSchema.statics.send = function(id, now, send, cb) {
         stacks = { rank: [], churn: [] };
       }
 
-      // Emit stacks.
-      send({
-        stacks: stacks,
-        poem: poem.words
-      });
-
-      // Save poem.
-      poem.save(function(err) {
-        cb();
-      });
-
     }
+
+    // Emit stacks.
+    send({
+      stacks: stacks,
+      poem: poem.words
+    });
+
+    // Save poem.
+    poem.save(function(err) {
+      cb();
+    });
 
   });
 

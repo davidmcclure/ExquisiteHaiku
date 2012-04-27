@@ -62,7 +62,7 @@ var AppView = Backbone.View.extend({
 
     // Connect to poem.
     this.socket.on('connect', _.bind(function() {
-      socket.emit('join', Poem.slug);
+      this.socket.emit('join', Poem.slug);
     }, this));
 
     // Ingest slice.

@@ -1006,21 +1006,183 @@ describe('Poem', function() {
 
       });
 
-      it('should return stacks', function(done) {
+      describe('when the round is not expired', function() {
 
-        // Score the poem.
-        Poem.score(poem.id, Date.now(), function(stacks) {
+        it('should broadcast stacks', function(done) {
 
-          // Check rank order.
-          stacks.rank[0][0].should.eql('third');
-          stacks.rank[1][0].should.eql('second');
-          should.not.exist(stacks.rank[2]);
+          // Score the poem.
+          Poem.score(poem.id, Date.now(), function(result) {
 
-          // Check churn order.
-          stacks.churn[0][0].should.eql('third');
-          stacks.churn[1][0].should.eql('second');
-          should.not.exist(stacks.churn[2]);
-          done();
+            // Check rank order.
+            result.stacks.rank[0][0].should.eql('third');
+            result.stacks.rank[1][0].should.eql('second');
+            should.not.exist(result.stacks.rank[2]);
+
+            // Check churn order.
+            result.stacks.churn[0][0].should.eql('third');
+            result.stacks.churn[1][0].should.eql('second');
+            should.not.exist(result.stacks.churn[2]);
+            done();
+
+          }, function() {});
+
+        });
+
+        it('should broadcast poem', function(done) {
+
+          // Score the poem.
+          Poem.score(poem.id, Date.now(), function(result) {
+
+            // Check poem.
+            result.poem[0][0].valueOf().should.eql('it');
+            result.poem[0][1].valueOf().should.eql('is');
+            done();
+
+          }, function() {});
+
+        });
+
+      });
+
+      describe('when the round is expired', function() {
+
+        beforeEach(function(done) {
+
+          // Set poem round expired.
+          poem.round.started = Date.now() - 20000;
+          poem.save(function(err) { done(); });
+
+        });
+
+        it('should broadcast updated poem', function(done) {
+
+          // Score the poem.
+          Poem.score(poem.id, Date.now(), function(result) {
+
+            // Check poem.
+            result.poem[0][0].valueOf().should.eql('it');
+            result.poem[0][1].valueOf().should.eql('is');
+            result.poem[0][2].valueOf().should.eql('third');
+            done();
+
+          }, function() {});
+
+        });
+
+        it('should broadcast empty stacks', function(done) {
+
+          // Score the poem.
+          Poem.score(poem.id, Date.now(), function(result) {
+
+            // Check poem.
+            result.stacks.rank.should.eql([]);
+            result.stacks.churn.should.eql([]);
+            done();
+
+          }, function() {});
+
+        });
+
+        it('should save updated poem', function(done) {
+
+          // Score the poem.
+          Poem.score(poem.id, Date.now(), function() {}, function(result) {
+
+            // Get the poem.
+            Poem.findById(poem.id, function(err, poem) {
+
+              // Check for new word.
+              poem.words[0][2].valueOf().should.eql('third');
+              done();
+
+            });
+
+          });
+
+        });
+
+        it('should save updated round', function(done) {
+
+          // Score the poem.
+          Poem.score(poem.id, Date.now(), function() {}, function(result) {
+
+            // Get the poem.
+            Poem.findById(poem.id, function(err, poem) {
+
+              // Check for new round.
+              poem.round.id.should.not.eql(round.id);
+              done();
+
+            });
+
+          });
+
+        });
+
+        describe('when no words exist', function() {
+
+          beforeEach(function() {
+
+            // Empty trackers.
+            global.Oversoul.votes = {};
+            global.Oversoul.words = {};
+
+          });
+
+          it('should return unchanged poem', function(done) {
+
+            // Score the poem.
+            Poem.score(poem.id, Date.now(), function(result) {
+
+              // Check for poem.
+              result.poem[0][0].valueOf().should.eql('it');
+              result.poem[0][1].valueOf().should.eql('is');
+              should.not.exist(result.poem[2]);
+              done();
+
+            }, function() {});
+
+          });
+
+        });
+
+        describe('when the poem is complete', function() {
+
+          beforeEach(function(done) {
+
+            // Set poem 1 syllable from completion.
+            poem.words = [
+              ['it', 'little', 'profits'],
+              ['that', 'an', 'idle', 'king', 'by', 'this'],
+              ['still', 'hearth', 'among' ]
+            ];
+
+            // Save.
+            poem.markModified('words');
+            poem.save(function(err) {
+              done();
+            });
+
+          });
+
+          it('should stop the poem', function(done) {
+
+            // Score the poem.
+            Poem.score(poem.id, Date.now(), function() {}, function(result) {
+
+              // Get the poem.
+              Poem.findById(poem.id, function(err, poem) {
+
+                // Check for stopped poem.
+                poem.running.should.be.false;
+                global.Oversoul.timers.should.not.have.keys(poem.id);
+                done();
+
+              });
+
+            });
+
+          });
 
         });
 

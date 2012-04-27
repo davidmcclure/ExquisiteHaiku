@@ -206,6 +206,26 @@ PoemSchema.virtual('roundExpiration').get(function() {
 
 
 /*
+ * Get total syllables.
+ *
+ * @return {Number}: The syllable count.
+ */
+PoemSchema.virtual('syllables').get(function() {
+
+});
+
+
+/*
+ * Get current line number.
+ *
+ * @return {Number}: The line number.
+ */
+PoemSchema.virtual('lineNumber').get(function() {
+
+});
+
+
+/*
  * -----------------
  * Document methods.
  * -----------------

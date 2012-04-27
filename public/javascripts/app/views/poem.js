@@ -69,10 +69,11 @@ var PoemView = Backbone.View.extend({
    * Render poem words.
    *
    * @param {Array} poem: The poem.
+   * @param {Number} lineNumber: The current line number.
    *
    * @return void.
    */
-  update: function(poem) {
+  update: function(poem, lineNumber) {
 
     // Detach blank.
     this.blank.detach();

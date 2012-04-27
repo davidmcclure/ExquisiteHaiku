@@ -212,6 +212,15 @@ PoemSchema.virtual('roundExpiration').get(function() {
  */
 PoemSchema.virtual('syllables').get(function() {
 
+  var count = 0;
+  _.each(this.words, function(line) {
+    _.each(line, function(word) {
+      count += syllables[word];
+    });
+  });
+
+  return count;
+
 });
 
 
@@ -221,6 +230,20 @@ PoemSchema.virtual('syllables').get(function() {
  * @return {Number}: The line number.
  */
 PoemSchema.virtual('lineNumber').get(function() {
+
+  var s = this.syllables;
+
+  if (s < 5) {
+    return 1;
+  }
+
+  else if (s >= 5 && s < 12) {
+    return 2;
+  }
+
+  else {
+    return 3;
+  }
 
 });
 

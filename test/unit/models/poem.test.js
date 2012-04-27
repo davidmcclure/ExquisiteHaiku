@@ -611,44 +611,49 @@ describe('Poem', function() {
 
     describe('start', function() {
 
-      // Start.
-      beforeEach(function(done) {
-        poem.start(function() {}, function() {}, function(err) {
-          done();
-        });
-      });
-
       // Stop and clear timers global.
-      afterEach(function(done) {
-        poem.stop(function() {
-          global.Oversoul.timers = {};
-          done();
-        });
+      afterEach(function() {
+        poem.stop();
+        global.Oversoul.timers = {};
       });
 
-      it('should register the slicer in the tracker object', function() {
+      it('should register the timer on the tracker', function() {
+
+        // Start.
+        poem.start(function() {}, function() {}).should.be.true;
+
+        // Check for key on timers hash.
         global.Oversoul.timers.should.have.keys(poem.id);
+
       });
 
       it('should set "running" to true', function() {
+
+        // Start.
+        poem.start(function() {}, function() {}).should.be.true;
+
+        // Check running.
         poem.running.should.be.true;
+
       });
 
       it('should set "started" to true', function() {
+
+        // Start.
+        poem.start(function() {}, function() {}).should.be.true;
+
+        // Check started.
         poem.started.should.be.true;
+
       });
 
-      it('should not double-start a poem', function(done) {
+      it('should not double-start a poem', function() {
 
-        // Spy on callback.
-        var cb = sinon.spy(function(err) {
-          sinon.assert.calledWith(cb,
-            Error('Timer for ' + poem.id + ' is already running.'));
-          done();
-        });
+        // Start.
+        poem.start(function() {}, function() {}).should.be.true;
 
-        // Attempt to double-start, listen for error.
-        poem.start(function() {}, function() {}, cb);
+        // Attempt to double-start.
+        poem.start(function() {}, function() {}).should.be.false;
 
       });
 
@@ -657,26 +662,33 @@ describe('Poem', function() {
     describe('stop', function() {
 
       // Start.
-      beforeEach(function(done) {
-        poem.start(function() {}, function() {}, function(err) {
-          poem.stop(function() { done(); });
-        });
+      beforeEach(function() {
+        poem.start(function() {}, function() {});
       });
 
-      // Stop and clear timers global.
-      afterEach(function(done) {
-        poem.stop(function() {
-          global.Oversoul.timers = {};
-          done();
-        });
+      // Clear timers global.
+      afterEach(function() {
+        global.Oversoul.timers = {};
       });
 
       it('should remove the slicer from the tracker object', function() {
+
+        // Stop.
+        poem.stop();
+
+        // Check for no key in timers hash.
         global.Oversoul.timers.should.not.have.keys(poem.id);
+
       });
 
       it('should set "running" to false', function() {
+
+        // Stop.
+        poem.stop();
+
+        // Check running.
         poem.running.should.be.false;
+
       });
 
     });

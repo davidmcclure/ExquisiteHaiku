@@ -272,11 +272,12 @@ module.exports = function(app, io) {
     auth.getPoem,
     function(req, res) {
 
-      // Stop, remove and redirect.
-      req.poem.stop(function() {
-        req.poem.remove(function(err) {
-          res.redirect('/admin/poems');
-        });
+      // Stop poem..
+      req.poem.stop();
+
+      // Remove and redirect.
+      req.poem.remove(function(err) {
+        res.redirect('/admin/poems');
       });
 
   });
@@ -295,18 +296,19 @@ module.exports = function(app, io) {
     function(req, res) {
 
       // Broadcast callback.
-      var broadcast = function(result) {
+      var scb = function(result) {
         io.sockets.in(req.poem.slug).emit('slice', result);
       };
 
       // If poem unstarted, create starting round.
       if (req.poem.unstarted) req.poem.newRound();
 
-      // Start, save, and redirect.
-      req.poem.start(slicer.integrator, scb, function() {
-        req.poem.save(function(err) {
-          res.redirect('/admin/poems');
-        });
+      // Start poem.
+      req.poem.start(slicer.integrator, scb);
+
+      // Save and redirect.
+      req.poem.save(function(err) {
+        res.redirect('/admin/poems');
       });
 
   });
@@ -324,11 +326,12 @@ module.exports = function(app, io) {
     auth.getPoem,
     function(req, res) {
 
-      // Stop, save, and redirect.
-      req.poem.stop(function() {
-        req.poem.save(function(err) {
-          res.redirect('/admin/poems');
-        });
+      // Stop poem.
+      req.poem.stop();
+
+      // Save and redirect.
+      req.poem.save(function(err) {
+        res.redirect('/admin/poems');
       });
 
   });

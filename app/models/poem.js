@@ -265,44 +265,39 @@ PoemSchema.virtual('lineNumber').get(function() {
  *
  * @param {Function} slicer: The slicer.
  * @param {Function} scb: Slicer callback.
- * @param {Function} cb: Callback.
  *
- * @return void.
+ * @return {Boolean}: True if a new timer is set, false if
+ * one already exists.
  */
-PoemSchema.methods.start = function(slicer, scb, cb) {
+PoemSchema.methods.start = function(slicer, scb) {
 
   // Block if timer already exists.
   if (_.has(global.Oversoul.timers, this.id)) {
-    cb(Error('Timer for ' + this.id + ' is already running'));
+    return false;
   }
 
-  else {
+  // Create and store timer.
+  global.Oversoul.timers[this.id] = setInterval(
+    slicer,
+    this.sliceInterval,
+    this.id,
+    scb
+  );
 
-    // Create and store timer.
-    global.Oversoul.timers[this.id] = setInterval(
-      slicer,
-      this.sliceInterval,
-      this.id,
-      scb
-    );
+  // Set trackers.
+  this.running = true;
+  this.started = true;
 
-    // Set trackers.
-    this.running = true;
-    this.started = true;
-    cb();
-
-  }
+  return true;
 
 };
 
 /*
  * Stop slicer.
  *
- * @param {Function} cb: Callback.
- *
  * @return void.
  */
-PoemSchema.methods.stop = function(cb) {
+PoemSchema.methods.stop = function() {
 
   // Clear the timer, delete the tracker.
   clearInterval(global.Oversoul.timers[this.id]);
@@ -310,7 +305,6 @@ PoemSchema.methods.stop = function(cb) {
 
   // Set tracker.
   this.running = false;
-  cb();
 
 };
 

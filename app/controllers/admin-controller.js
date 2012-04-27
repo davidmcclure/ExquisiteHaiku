@@ -294,8 +294,8 @@ module.exports = function(app, io) {
     auth.getPoem,
     function(req, res) {
 
-      // Slicer callback.
-      var scb = function(result) {
+      // Broadcast callback.
+      var broadcast = function(result) {
         io.sockets.in(req.poem.slug).emit('slice', result);
       };
 

@@ -515,7 +515,7 @@ PoemSchema.statics.score = function(id, now, cb) {
  *
  * @return void.
  */
-PoemSchema.statics.broadcast = function(id, now, send) {
+PoemSchema.statics.send = function(id, now, send, cb) {
 
   // Score poem.
   this.score(id, now, function(stacks) {
@@ -548,7 +548,7 @@ PoemSchema.statics.broadcast = function(id, now, send) {
 
       // Save poem.
       poem.save(function(err) {
-        save();
+        cb();
       });
 
     }

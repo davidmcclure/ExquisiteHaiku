@@ -14,16 +14,11 @@ var AppView = Backbone.View.extend({
     // Build templates.
     this.buildTemplates();
 
-    // Render application template.
-    this.renderAppTemplate();
+    // Insert application shell.
+    this.render();
 
     // Construct poem.
     this.poem = new PoemView($('#left'));
-
-    // ** dev.
-    // Construct stacks.
-    // Construct search.
-    // Construct tickers.
 
     // Connect to socket.io.
     this.initializeSockets();
@@ -45,11 +40,11 @@ var AppView = Backbone.View.extend({
   },
 
   /*
-   * Render the application shell.
+   * Insert application shell.
    *
    * @return void.
    */
-  renderAppTemplate: function() {
+  render: function() {
     $('body').prepend(this.appTemplate());
   },
 

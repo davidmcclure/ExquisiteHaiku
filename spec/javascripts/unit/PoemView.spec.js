@@ -21,7 +21,7 @@ describe('Poem View', function() {
   });
 
   afterEach(function() {
-    $('div.left').remove();
+    container.remove();
   });
 
   describe('initialize', function() {

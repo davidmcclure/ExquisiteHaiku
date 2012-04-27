@@ -1042,6 +1042,19 @@ describe('Poem', function() {
 
         });
 
+        it('should broadcast line number', function(done) {
+
+          // Score the poem.
+          Poem.score(poem.id, Date.now(), function(result) {
+
+            // Check poem.
+            result.line.should.eql(1);
+            done();
+
+          }, function() {});
+
+        });
+
       });
 
       describe('when the round is expired', function() {

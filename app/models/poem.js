@@ -522,7 +522,8 @@ PoemSchema.statics.score = function(id, now, send, cb) {
     // Emit stacks.
     send({
       stacks: stacks,
-      poem: poem.words
+      poem: poem.words,
+      line: poem.lineNumber
     });
 
     // Save poem.

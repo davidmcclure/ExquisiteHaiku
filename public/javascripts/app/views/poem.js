@@ -103,7 +103,7 @@ var PoemView = Backbone.View.extend({
     }, this));
 
     // Reposition blank.
-    this.blank.insert();
+    // this.blank.insert(line);
 
   }
 

@@ -34,11 +34,22 @@ var BlankView = Backbone.View.extend({
   },
 
   /*
-   * Insert the markup into the poem.
+   * Insert the blank at the end of the passed line.
+   *
+   * @param {Element} line: The line container.
    *
    * @return void.
    */
   insert: function() {
+
+  },
+
+  /*
+   * Position the stack container.
+   *
+   * @return void.
+   */
+  position: function() {
 
   }
 

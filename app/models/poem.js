@@ -227,33 +227,6 @@ PoemSchema.virtual('syllableCount').get(function() {
 
 
 /*
- * Get current line number.
- *
- * @return {Number}: The line number.
- */
-PoemSchema.virtual('lineNumber').get(function() {
-
-  var s = this.syllableCount;
-
-  // Line 1.
-  if (s < 5) {
-    return 1;
-  }
-
-  // Line 2.
-  else if (s >= 5 && s < 12) {
-    return 2;
-  }
-
-  // Line 3.
-  else {
-    return 3;
-  }
-
-});
-
-
-/*
  * -----------------
  * Document methods.
  * -----------------
@@ -522,8 +495,8 @@ PoemSchema.statics.score = function(id, now, send, cb) {
     // Emit stacks.
     send({
       stacks: stacks,
-      poem: poem.words,
-      line: poem.lineNumber
+      syllables: poem.syllableCount,
+      poem: poem.words
     });
 
     // Save poem.

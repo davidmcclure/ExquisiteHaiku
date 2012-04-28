@@ -444,6 +444,14 @@ describe('Poem', function() {
 
     describe('syllableCount', function() {
 
+      it('should return 0 for no words', function() {
+
+        // 0 words.
+        poem.words = [];
+        poem.syllableCount.should.eql(0);
+
+      });
+
       it('should return count for < 1 full line', function() {
 
         // < 1 line.
@@ -513,69 +521,6 @@ describe('Poem', function() {
         ];
 
         poem.syllableCount.should.eql(17);
-
-      });
-
-    });
-
-    describe('lineNumber', function() {
-
-      it('should return 1 when line 1 is incomplete', function() {
-
-        // < 1 line.
-        poem.words = [
-          ['it', 'little']
-        ];
-
-        poem.lineNumber.should.eql(1);
-
-      });
-
-      it('should return 2 when line 1 is complete', function() {
-
-        // 1 line.
-        poem.words = [
-          ['it', 'little', 'profits']
-        ];
-
-        poem.lineNumber.should.eql(2);
-
-      });
-
-      it('should return 2 when line 2 is incomplete', function() {
-
-        // < 2 lines.
-        poem.words = [
-          ['it', 'little', 'profits'],
-          ['that', 'an', 'idle']
-        ];
-
-        poem.lineNumber.should.eql(2);
-
-      });
-
-      it('should return 3 when line 2 is complete', function() {
-
-        // 2 lines.
-        poem.words = [
-          ['it', 'little', 'profits'],
-          ['that', 'an', 'idle', 'king', 'by', 'this']
-        ];
-
-        poem.lineNumber.should.eql(3);
-
-      });
-
-      it('should return 3 when line 3 is incomplete', function() {
-
-        // < 3 lines.
-        poem.words = [
-          ['it', 'little', 'profits'],
-          ['that', 'an', 'idle', 'king', 'by', 'this'],
-          ['still', 'hearth']
-        ];
-
-        poem.lineNumber.should.eql(3);
 
       });
 
@@ -1042,13 +987,13 @@ describe('Poem', function() {
 
         });
 
-        it('should broadcast line number', function(done) {
+        it('should broadcast syllable count', function(done) {
 
           // Score the poem.
           Poem.score(poem.id, Date.now(), function(result) {
 
             // Check poem.
-            result.line.should.eql(1);
+            result.syllables.should.eql(2);
             done();
 
           }, function() {});

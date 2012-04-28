@@ -69,11 +69,11 @@ var PoemView = Backbone.View.extend({
    * Render poem words.
    *
    * @param {Array} poem: The poem.
-   * @param {Number} lineNumber: The current line number.
+   * @param {Number} syllables: The current syllable count.
    *
    * @return void.
    */
-  update: function(poem, lineNumber) {
+  update: function(poem, syllables) {
 
     // Detach blank.
     this.blank.detach();
@@ -81,12 +81,16 @@ var PoemView = Backbone.View.extend({
     // Empty container.
     this.$el.empty();
 
+    // Line array.
+    var lines = [];
+
     // Walk lines.
     _.each(poem, _.bind(function(line) {
 
       // Insert line.
       var lineMarkup = $(this.lineTemplate());
       this.$el.append(lineMarkup);
+      lines.push(lineMarkup);
 
       // Walk words.
       _.each(line, _.bind(function(word) {
@@ -103,8 +107,50 @@ var PoemView = Backbone.View.extend({
 
     }, this));
 
-    // Reposition blank.
-    // this.blank.insert(line);
+    // If poem is on first line.
+    if (syllables < 5) {
+
+      // If no lines were created.
+      if (lines.length === 0) {
+        var lineMarkup = $(this.lineTemplate());
+        this.$el.append(lineMarkup);
+        lines.push(lineMarkup);
+      }
+
+      // Append blank.
+      this.blank.insert(lines[0]);
+
+    }
+
+    // If poem is on second line.
+    else if (syllables >= 5 && syllables < 12) {
+
+      // If only 1 line was created.
+      if (lines.length === 1) {
+        var lineMarkup = $(this.lineTemplate());
+        this.$el.append(lineMarkup);
+        lines.push(lineMarkup);
+      }
+
+      // Append blank.
+      this.blank.insert(lines[1]);
+
+    }
+
+    // If poem is on third line.
+    else if (syllables >= 12 && syllables < 17) {
+
+      // If only 2 lines were created.
+      if (lines.length === 2) {
+        var lineMarkup = $(this.lineTemplate());
+        this.$el.append(lineMarkup);
+        lines.push(lineMarkup);
+      }
+
+      // Append blank.
+      this.blank.insert(lines[2]);
+
+    }
 
   }
 

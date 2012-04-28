@@ -51,6 +51,33 @@ var BlankView = Backbone.View.extend({
    */
   position: function() {
 
+  },
+
+  /*
+   * Build submission functionality.
+   *
+   * @return void.
+   */
+  activateSubmit: function() {
+
+    // Event listeners.
+    this.el.bind({
+
+      'keypress': function() {
+
+      }
+
+    });
+
+  },
+
+  /*
+   * Build voting functionality.
+   *
+   * @return void.
+   */
+  activateVote: function() {
+
   }
 
 });

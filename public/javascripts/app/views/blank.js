@@ -40,8 +40,8 @@ var BlankView = Backbone.View.extend({
    *
    * @return void.
    */
-  insert: function() {
-
+  insert: function(line) {
+    line.append(this.el);
   },
 
   /*

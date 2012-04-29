@@ -1,3 +1,4 @@
-.topbar{width:100%}
-.left{float:left;width:50%}
-.right{float:right;width:50%}
+#left{float:left;width:50%}
+#right{float:right;width:50%}
+#submissions{position:absolute}
+.submission-word{cursor:pointer}

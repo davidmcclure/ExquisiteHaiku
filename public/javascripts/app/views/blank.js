@@ -31,6 +31,9 @@ var BlankView = Backbone.View.extend({
    */
   initialize: function() {
 
+    // Initialize trackers.
+    this.words = [];
+
     // Build templates.
     this.buildTemplates();
 
@@ -117,7 +120,7 @@ var BlankView = Backbone.View.extend({
    */
   activateSubmit: function() {
 
-    // Event listeners.
+    // Bind events.
     this.$el.bind({
 
       'keypress': _.bind(function(e) {
@@ -149,13 +152,50 @@ var BlankView = Backbone.View.extend({
    */
   addWord: function() {
 
+    // ** dev: validate word.
+
     // Build word.
+    var word = this.$el.val();
     var wordMarkup = $(this.wordTemplate({
-      word: this.$el.val()
+      word: word
     }));
 
-    // Prepend to stack
+    // Prepend markup, tack value.
     this.stack.prepend(wordMarkup);
+    this.words.push(word);
+    wordMarkup.data('word', word);
+
+    // Bind events.
+    wordMarkup.bind({
+      'mousedown': _.bind(function() {
+        this.removeWord(wordMarkup);
+      }, this)
+    });
+
+    // Clear input.
+    this.$el.val('');
+
+  },
+
+  /*
+   * Remove word from submission stack.
+   *
+   * @param {Element} wordMarkup: The stack word.
+   *
+   * @return void.
+   */
+  removeWord: function(wordMarkup) {
+
+    // Get word.
+    var word = wordMarkup.data('word');
+
+    // Remove markup.
+    wordMarkup.remove();
+
+    // Update tracker.
+    this.words = _.filter(this.words, function(w) {
+      return w === word ? false : true;
+    });
 
   }
 

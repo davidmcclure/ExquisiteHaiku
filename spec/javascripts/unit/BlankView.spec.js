@@ -20,12 +20,42 @@ describe('Blank View', function() {
 
   });
 
+  describe('buildStack', function() {
+
+    it('should insert the stack container', function() {
+
+      // Remove the stack.
+      $('div.submissions').remove();
+
+      // Call buildStack();
+      blank.buildStack();
+
+      // Check for stack in body.
+      expect($('body')).toContain('div.submissions');
+
+    });
+
+  });
+
   describe('insert', function() {
 
     var line;
 
     beforeEach(function() {
       line = $('<div class="poem-line" />');
+    });
+
+    it('should call position()', function() {
+
+      // Spy on render.
+      spyOn(blank, 'position');
+
+      // Construct view.
+      blank.insert(line);
+
+      // Check for position().
+      expect(blank.position).toHaveBeenCalled();
+
     });
 
     it('should insert blank when line is empty', function() {

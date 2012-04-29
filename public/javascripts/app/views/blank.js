@@ -25,6 +25,31 @@ var BlankView = Backbone.View.extend({
   },
 
   /*
+   * Construct submission stack container.
+   *
+   * @return void.
+   */
+  initialize: function() {
+
+    // Build stack.
+    this.buildStack();
+
+  },
+
+  /*
+   * Detach the markup.
+   *
+   * @return void.
+   */
+  buildStack: function() {
+
+    // Construct the div.
+    this.stack = $('<div class="submissions" />');
+    $('body').append(this.stack);
+
+  },
+
+  /*
    * Detach the markup.
    *
    * @return void.
@@ -42,6 +67,7 @@ var BlankView = Backbone.View.extend({
    */
   insert: function(line) {
     line.append(this.$el);
+    this.position();
   },
 
   /*
@@ -50,6 +76,16 @@ var BlankView = Backbone.View.extend({
    * @return void.
    */
   position: function() {
+
+    // Get input offset and height.
+    var offset = this.$el.offset();
+    var height = this.$el.outerHeight();
+
+    // Position stack.
+    this.stack.css({
+      'top': offset.top + height,
+      'left': offset.left
+    });
 
   },
 
@@ -61,11 +97,16 @@ var BlankView = Backbone.View.extend({
   activateSubmit: function() {
 
     // Event listeners.
-    this.el.bind({
+    this.$el.bind({
 
-      'keypress': function() {
+      'keypress': _.bind(function(e) {
 
-      }
+        // Enter.
+        if (e.keyCode === 13) {
+          this.addWord();
+        }
+
+      }, this)
 
     });
 
@@ -78,6 +119,15 @@ var BlankView = Backbone.View.extend({
    */
   activateVote: function() {
 
+  },
+
+  /*
+   * Add new word to submission stack.
+   *
+   * @return void.
+   */
+  addWord: function() {
+    console.log('add %s', this.$el.val());
   }
 
 });

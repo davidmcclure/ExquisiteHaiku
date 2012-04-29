@@ -42,6 +42,7 @@ UserSchema.virtual('id').get(function() {
   return this._id.toHexString();
 });
 
+
 /*
  * Generate salt and store encrypted password.
  *
@@ -52,6 +53,7 @@ UserSchema.virtual('password').set(function(password) {
   this.salt = this.generateSalt();
   this.hash = this.encryptPassword(password);
 });
+
 
 /*
  * Get encrypted password.
@@ -79,6 +81,7 @@ UserSchema.methods.generateSalt = function() {
   return Math.round((new Date().valueOf() + Math.random())) + '';
 };
 
+
 /*
  * Encrypt plaintext password.
  *
@@ -91,6 +94,7 @@ UserSchema.methods.encryptPassword = function(password) {
     update(password).
     digest('hex');
 };
+
 
 /*
  * Check plaintext string against encrypted password.

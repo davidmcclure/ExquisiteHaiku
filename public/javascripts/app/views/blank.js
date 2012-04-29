@@ -204,7 +204,7 @@ var BlankView = Backbone.View.extend({
 
     // Check for duplicate.
     if (_.include(this.words, word)) {
-      this.flashError('Duplicate');
+      this.flashError('Duplicate.');
       return false;
     }
 

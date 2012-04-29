@@ -95,6 +95,7 @@ PoemSchema.path('started').validate(function(v) {
   return v || (!this.running && !this.complete);
 });
 
+
 /*
  * If the poem is running, started must be true and complete
  * must be false.
@@ -104,6 +105,7 @@ PoemSchema.path('started').validate(function(v) {
 PoemSchema.path('running').validate(function(v) {
   return !v || (this.started && !this.complete);
 });
+
 
 /*
  * If the poem is complete, started must be true and running
@@ -265,6 +267,7 @@ PoemSchema.methods.start = function(slicer, scb) {
 
 };
 
+
 /*
  * Stop slicer.
  *
@@ -298,6 +301,7 @@ PoemSchema.methods.newRound = function() {
   return round;
 
 };
+
 
 /*
  * Add a word to the poem array.
@@ -399,6 +403,43 @@ PoemSchema.methods.addWord = function(word) {
  * Collection methods.
  * -------------------
  */
+
+
+/*
+ * Check to see if a word fits in a poem.
+ *
+ * @param {Number} id: The poem id.
+ * @param {String} word: The word.
+ * @param {Function} cb: Callback.
+ *
+ * @return void.
+ */
+PoemSchema.statics.validateWord = function(id, word, cb) {
+
+  // Get poem.
+  this.findById(id, function(err, poem) {
+
+    // Is the word valid?
+    if (!_.has(syllables, word)) {
+      cb({
+        valid: false,
+        error: 'invalid'
+      });
+    }
+
+    // Does it fit?
+    else if (!poem.addWord(word)) {
+      cb({
+        valid: false,
+        error: 'length'
+      });
+    }
+
+    cb(true);
+
+  });
+
+};
 
 
 /*

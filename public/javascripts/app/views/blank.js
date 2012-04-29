@@ -31,22 +31,40 @@ var BlankView = Backbone.View.extend({
    */
   initialize: function() {
 
+    // Build templates.
+    this.buildTemplates();
+
     // Build stack.
     this.buildStack();
 
   },
 
   /*
-   * Detach the markup.
+   * Build templates.
+   *
+   * @return void.
+   */
+  buildTemplates: function() {
+
+    // Stack.
+    this.stackTemplate = _.template(
+      $('#submission-stack').html()
+    );
+
+    // Word.
+    this.wordTemplate = _.template(
+      $('#submission-word').html()
+    );
+
+  },
+
+  /*
+   * Build the stack markup.
    *
    * @return void.
    */
   buildStack: function() {
-
-    // Construct the div.
-    this.stack = $('<div class="submissions" />');
-    $('body').append(this.stack);
-
+    this.stack = $(this.stackTemplate());
   },
 
   /*
@@ -67,7 +85,7 @@ var BlankView = Backbone.View.extend({
    */
   insert: function(line) {
     line.append(this.$el);
-    this.position();
+    this.position(line);
   },
 
   /*
@@ -75,13 +93,16 @@ var BlankView = Backbone.View.extend({
    *
    * @return void.
    */
-  position: function() {
+  position: function(line) {
 
     // Get input offset and height.
     var offset = this.$el.offset();
     var height = this.$el.outerHeight();
 
-    // Position stack.
+    // Insert markup.
+    line.append(this.stack);
+
+    // Position.
     this.stack.css({
       'top': offset.top + height,
       'left': offset.left
@@ -127,7 +148,15 @@ var BlankView = Backbone.View.extend({
    * @return void.
    */
   addWord: function() {
-    console.log('add %s', this.$el.val());
+
+    // Build word.
+    var wordMarkup = $(this.wordTemplate({
+      word: this.$el.val()
+    }));
+
+    // Prepend to stack
+    this.stack.prepend(wordMarkup);
+
   }
 
 });

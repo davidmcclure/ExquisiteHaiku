@@ -152,10 +152,15 @@ var BlankView = Backbone.View.extend({
    */
   addWord: function() {
 
-    // ** dev: validate word.
+    // Get word.
+    var word = this.scrubWord(this.$el.val());
+
+    // Validate word.
+    if (!this.validateWord(word)) {
+      return;
+    }
 
     // Build word.
-    var word = this.$el.val();
     var wordMarkup = $(this.wordTemplate({
       word: word
     }));
@@ -174,6 +179,52 @@ var BlankView = Backbone.View.extend({
 
     // Clear input.
     this.$el.val('');
+
+  },
+
+  /*
+   * Trim and lowercase word.
+   *
+   * @param {String} word: The word.
+   *
+   * @return {String}: The scrubbed value.
+   */
+  scrubWord: function(word) {
+    return $.trim(word).toLowerCase();
+  },
+
+  /*
+   * Validate word, flash error if invalid.
+   *
+   * @param {String} word: The word.
+   *
+   * @return {Boolean}: True if valid, false if not.
+   */
+  validateWord: function(word) {
+
+    // Check for duplicate.
+    if (_.include(this.words, word)) {
+      this.flashError('Duplicate');
+      return false;
+    }
+
+    // Do server validation.
+    else {
+
+    }
+
+    return true;
+
+  },
+
+  /*
+   * Flash validation error.
+   *
+   * @param {String} error: The error text.
+   *
+   * @return void.
+   */
+  flashError: function(error) {
 
   },
 

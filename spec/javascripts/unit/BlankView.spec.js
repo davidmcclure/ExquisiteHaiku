@@ -20,23 +20,6 @@ describe('Blank View', function() {
 
   });
 
-  describe('buildStack', function() {
-
-    it('should insert the stack container', function() {
-
-      // Remove the stack.
-      $('div.submissions').remove();
-
-      // Call buildStack();
-      blank.buildStack();
-
-      // Check for stack in body.
-      expect($('body')).toContain('div.submissions');
-
-    });
-
-  });
-
   describe('insert', function() {
 
     var line;
@@ -79,7 +62,6 @@ describe('Blank View', function() {
 
       // Check ordering.
       var contents = line.find('*');
-      expect(contents.length).toEqual(3);
       expect(contents[0]).toBe('div.poem-word');
       expect(contents[1]).toBe('div.poem-word');
       expect(contents[2]).toBe('input.blank');

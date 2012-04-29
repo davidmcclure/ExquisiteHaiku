@@ -32,4 +32,9 @@ load(
   a+'views/poem.js',
   a+'views/app.js'
 
-);
+).thenRun(function() {
+
+  // Mock socket.
+  Poem = { socket: io.connect() };
+
+});

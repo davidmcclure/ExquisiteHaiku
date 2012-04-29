@@ -7,7 +7,6 @@ var parseCookie = require('connect').utils.parseCookie;
 var MongoStore = require('connect-mongodb');
 var Session = require('connect').session.Session;
 
-// Start-up routine.
 module.exports = function(io, store) {
 
   // Session authorization.
@@ -47,13 +46,25 @@ module.exports = function(io, store) {
 
   });
 
-  // On socket connection.
+
+  /*
+   * --------
+   * Actions.
+   * --------
+   */
+
+
   io.sockets.on('connection', function (socket) {
 
-    // On 'join' event,, set poem.
+    // Connect to poem.
     socket.on('join', function(slug) {
       socket.set('poem', slug, function() {});
       socket.join(slug);
+    });
+
+    // Validate word.
+    socket.on('validate', function(word) {
+
     });
 
   });

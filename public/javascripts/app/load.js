@@ -14,7 +14,8 @@ load(
 ).then (
 
   // Backbone.
-  l+'backbone/backbone.js'
+  l+'backbone/backbone.js',
+  l+'marionette/marionette.js'
 
 ).then(
 

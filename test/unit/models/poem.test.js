@@ -903,17 +903,6 @@ describe('Poem', function() {
         visibleWords : 2
       });
 
-      // Initialize votes and words trackers.
-      global.Oversoul.votes = {};
-      global.Oversoul.words = {};
-
-      // Create round.
-      round = poem.newRound();
-
-      // Add words.
-      poem.addWord('it');
-      poem.addWord('is');
-
       // Save.
       poem.save(function(err) {
         done();
@@ -923,7 +912,18 @@ describe('Poem', function() {
 
     describe('score', function() {
 
-      beforeEach(function() {
+      beforeEach(function(done) {
+
+        // Initialize trackers.
+        global.Oversoul.votes = {};
+        global.Oversoul.words = {};
+
+        // Create round.
+        round = poem.newRound();
+
+        // Add words.
+        poem.addWord('it');
+        poem.addWord('is');
 
         // 100 vote on first.
         global.Oversoul.votes[round.id].push(
@@ -948,6 +948,11 @@ describe('Poem', function() {
             quantity: 300
           })
         );
+
+        // Save.
+        poem.save(function(err) {
+          done();
+        });
 
       });
 

@@ -421,18 +421,12 @@ PoemSchema.statics.validateWord = function(id, word, cb) {
 
     // Is the word valid?
     if (!_.has(syllables, word)) {
-      cb({
-        valid: false,
-        error: 'invalid'
-      });
+      cb(false);
     }
 
     // Does it fit?
     else if (!poem.addWord(word)) {
-      cb({
-        valid: false,
-        error: 'length'
-      });
+      cb(false);
     }
 
     cb(true);

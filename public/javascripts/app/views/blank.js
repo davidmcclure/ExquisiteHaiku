@@ -204,7 +204,6 @@ var BlankView = Backbone.View.extend({
 
     // Check for duplicate.
     if (_.include(this.words, word)) {
-      this.flashError('Duplicate.');
       return false;
     }
 
@@ -214,17 +213,6 @@ var BlankView = Backbone.View.extend({
     }
 
     return true;
-
-  },
-
-  /*
-   * Flash validation error.
-   *
-   * @param {String} error: The error text.
-   *
-   * @return void.
-   */
-  flashError: function(error) {
 
   },
 

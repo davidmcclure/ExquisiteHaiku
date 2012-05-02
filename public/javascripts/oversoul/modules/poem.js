@@ -5,6 +5,7 @@
 Oversoul.Poem = (function(Oversoul, Backbone, $) {
 
   var Poem = {};
+  var PoemEvents = new Backbone.Marionette.EventAggregator();
 
 
   // ----------
@@ -283,6 +284,56 @@ Oversoul.Poem = (function(Oversoul, Backbone, $) {
     }
 
   });
+
+
+  // -------------
+  // Local events.
+  // -------------
+
+  /*
+   * Before the poem is re-rendered.
+   *
+   * @return void.
+   */
+  PoemEvents.on('poem:render:before', function() {
+
+  });
+
+  /*
+   * After the poem is re-rendered.
+   *
+   * @param {Element} line: The current active line.
+   *
+   * @return void.
+   */
+  PoemEvents.on('poem:render:after', function(line) {
+
+  });
+
+
+  // --------------
+  // Global events.
+  // --------------
+
+  /*
+   * After the poem is re-rendered.
+   *
+   * @param {Objcet} data: The incoming slice data.
+   *
+   * @return void.
+   */
+  Oversoul.vent.on('socket:slice', function(data) {
+
+  });
+
+
+  // ---------------
+  // Initialization.
+  // ---------------
+  Oversoul.addInitializer(function() {
+
+  });
+
 
   return Poem;
 

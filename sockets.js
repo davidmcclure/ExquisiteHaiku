@@ -58,12 +58,10 @@ module.exports = function(io, store) {
 
     // Connect to poem.
     socket.on('join', function(slug) {
+
+      // Set poem.
       socket.set('poem', slug, function() {});
       socket.join(slug);
-    });
-
-    // Validate word.
-    socket.on('validate', function(word) {
 
     });
 

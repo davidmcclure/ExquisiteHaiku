@@ -38,10 +38,6 @@ console.log(
   app.settings.env
 );
 
-// Run sockets.
-var io = require('socket.io').listen(app);
-require('./sockets')(io, sessionStore);
-
 // Bootstrap models.
 var modelsPath = __dirname + '/app/models';
 var modelFiles = fs.readdirSync(modelsPath);
@@ -55,3 +51,7 @@ var controllerFiles = fs.readdirSync(controllersPath);
 controllerFiles.forEach(function(file) {
   require(controllersPath + '/' + file)(app, io);
 });
+
+// Run Socket.io.
+var io = require('socket.io').listen(app);
+require('./sockets')(io);

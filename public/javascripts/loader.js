@@ -32,7 +32,7 @@ load(
 
   // Run.
   $(function() {
-    Oversoul.start();
+    Ov.start();
   });
 
 });

@@ -30,7 +30,8 @@ load(
   a+'views/blank-view.js',
 
   // Controllers
-  a+'controllers/poem-controller.js'
+  a+'controllers/poem-controller.js',
+  a+'controllers/socket-controller.js'
 
 ).thenRun(function() {
 

@@ -34,14 +34,15 @@ Oversoul.Poem = (function(Oversoul, Backbone, $) {
       // Empty container.
       this.$el.empty();
 
-      // Cache line markup.
-      var lineMarkup = $(this.lineTemplate());
+      // Lines tracker.
       var lines = [];
 
       // Walk lines.
       _.each(poem, _.bind(function(line) {
+        console.log(line);
 
         // Insert line.
+        var lineMarkup = $(this.lineTemplate());
         this.$el.append(lineMarkup);
         lines.push(lineMarkup);
 
@@ -65,6 +66,7 @@ Oversoul.Poem = (function(Oversoul, Backbone, $) {
 
         // If no lines were created.
         if (lines.length === 0) {
+          var lineMarkup = $(this.lineTemplate());
           this.$el.append(lineMarkup);
           lines.push(lineMarkup);
         }
@@ -79,6 +81,7 @@ Oversoul.Poem = (function(Oversoul, Backbone, $) {
 
         // If only 1 line was created.
         if (lines.length === 1) {
+          var lineMarkup = $(this.lineTemplate());
           this.$el.append(lineMarkup);
           lines.push(lineMarkup);
         }
@@ -256,7 +259,7 @@ Oversoul.Poem = (function(Oversoul, Backbone, $) {
      *
      * @param {String} word: The word.
      *
-     * @return {Boolean}: True if valid, false if not.
+     * @return void.
      */
     validateWord: function(word) {
 

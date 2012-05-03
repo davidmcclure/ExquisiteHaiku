@@ -910,6 +910,50 @@ describe('Poem', function() {
 
     });
 
+    describe('validateWord', function() {
+
+      beforeEach(function(done) {
+
+        // Set < 1 line.
+        poem.words = [['it', 'little']];
+        poem.markModified('words');
+
+        // Save
+        poem.save(function(err) {
+          done();
+        });
+
+      });
+
+      it('should call with false for invalid word', function(done) {
+
+        Poem.validateWord(poem.id, 'notaword', function(result) {
+          result.should.be.false;
+          done();
+        });
+
+      });
+
+      it('should call with false for too-long word', function(done) {
+
+        Poem.validateWord(poem.id, 'signifies', function(result) {
+          result.should.be.false;
+          done();
+        });
+
+      });
+
+      it('should call with true when word fits', function(done) {
+
+        Poem.validateWord(poem.id, 'profits', function(result) {
+          result.should.be.true;
+          done();
+        });
+
+      });
+
+    });
+
     describe('score', function() {
 
       beforeEach(function(done) {

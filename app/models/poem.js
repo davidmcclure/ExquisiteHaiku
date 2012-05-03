@@ -406,6 +406,29 @@ PoemSchema.methods.addWord = function(word) {
 
 
 /*
+ * Check to see if a word is valid and fits in the poem.
+ *
+ * @param {Number} id: The poem id.
+ * @param {String} word: The word.
+ * @param {Function} cb: The callback.
+ *
+ * @return void.
+ */
+PoemSchema.statics.validateWord = function(id, word, cb) {
+
+  // Get poem.
+  this.findById(id, function(err, poem) {
+
+    if (!_.has(syllables, word)) cb(false);
+    else if (!poem.addWord(word)) cb(false);
+    else cb(true);
+
+  });
+
+};
+
+
+/*
  * Find poem by id, score, return stacks.
  *
  * @param {Number} id: The poem id.

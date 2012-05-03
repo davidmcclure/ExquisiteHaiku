@@ -1,4 +1,5 @@
 #left{float:left;width:50%}
 #right{float:right;width:50%}
+.poem-word{margin-right:4px}
 .submission-stack{position:absolute}
 .submission-word{cursor:pointer}

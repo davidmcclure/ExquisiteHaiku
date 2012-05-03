@@ -16,8 +16,14 @@ Ov.Views.Blank = Backbone.View.extend({
    * @return void.
    */
   initialize: function() {
+
+    // Trackers.
     this.words = [];
+    this.cache = { valid: [], invalid: [] };
+
+    // Submissions stack.
     this.stack = $(this.__stack());
+
   },
 
   /*
@@ -69,6 +75,30 @@ Ov.Views.Blank = Backbone.View.extend({
    * @return void.
    */
   activateSubmit: function() {
+
+    // Bind events.
+    this.$el.keypress(_.bind(function(e) {
+
+      this.$el.addClass('unvalidated');
+
+      // Get word.
+      var word = this.$el.val();
+
+      // Regular keystroke.
+      if (e.keyCode !== 13) {
+        this.validateWord(word, _.bind(function(valid) {
+          this.cacheValidation(word, valid);
+        }, this));
+      }
+
+      // When enter is pressed.
+      else {
+        this.validateWord(word, _.bind(function(valid) {
+          if (valid) this.addWord(word);
+        }, this));
+      }
+
+    }, this));
 
   },
 
@@ -136,10 +166,37 @@ Ov.Views.Blank = Backbone.View.extend({
       cb(false);
     }
 
-    // Do server validation.
-    else {
+    // If the word is cached as invalid.
+    else if (_.include(this.cache.invalid, word)) {
+      cb(false);
+    }
+
+    // If the word is cached as valid.
+    else if (_.include(this.cache.valid, word)) {
       cb(true);
     }
+
+    // Do server validation.
+    else {
+      var vcb = function(valid) { cb(valid); };
+      Ov.vent.trigger('socket:validate', word, vcb);
+    }
+
+  },
+
+  /*
+   * Store word validation status and manifest
+   * color change on input.
+   *
+   * @param {String} word: The word.
+   * @param {Boolean} valid: True if valid.
+   *
+   * @return void.
+   */
+  cacheValidation: function(word, valid) {
+
+    if (valid) this.cache.valid.push(word);
+    else this.cache.invalid.push(word);
 
   },
 

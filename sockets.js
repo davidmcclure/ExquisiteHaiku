@@ -20,6 +20,11 @@ module.exports = function(io) {
       socket.join(slug);
     });
 
+    // Validate word.
+    socket.on('validate', function(id, word, cb) {
+      Poem.validateWord(id, word, cb);
+    });
+
   });
 
 };

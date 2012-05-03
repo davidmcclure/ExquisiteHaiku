@@ -1,3 +1,22 @@
 div#left
+  div#poem
 div#right
-script(type="text/javascript") var Poem = !{poem}
+  div#rank
+  div#churn
+script(type="text/javascript")
+  var Poem = !{poem}
+
+
+// Templates
+
+script(id="poem-line", type="text/template")
+  div.poem-line
+
+script(id="poem-word", type="text/template")
+  span.poem-word <%= word %>
+
+script(id="submission-stack", type="text/template")
+  div.submission-stack
+
+script(id="submission-word", type="text/template")
+  div.submission-word <%= word %>

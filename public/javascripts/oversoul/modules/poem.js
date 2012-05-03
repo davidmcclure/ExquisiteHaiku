@@ -15,6 +15,9 @@ Oversoul.Poem = (function(Oversoul, Backbone, $) {
 
     el: '#poem',
 
+    lineTemplate: _.template($('#poem-line').html()),
+    wordTemplate: _.template($('#poem-word').html()),
+
     /*
      * Render poem words.
      *
@@ -25,20 +28,20 @@ Oversoul.Poem = (function(Oversoul, Backbone, $) {
      */
     update: function(poem, syllables) {
 
-      // Detach blank.
-      this.blank.detach();
+      // Before render hook.
+      PoemEvents.trigger('render:before');
 
       // Empty container.
       this.$el.empty();
 
-      // Line array.
+      // Cache line markup.
+      var lineMarkup = $(this.lineTemplate());
       var lines = [];
 
       // Walk lines.
       _.each(poem, _.bind(function(line) {
 
         // Insert line.
-        var lineMarkup = $(this.lineTemplate());
         this.$el.append(lineMarkup);
         lines.push(lineMarkup);
 
@@ -62,13 +65,12 @@ Oversoul.Poem = (function(Oversoul, Backbone, $) {
 
         // If no lines were created.
         if (lines.length === 0) {
-          var lineMarkup = $(this.lineTemplate());
           this.$el.append(lineMarkup);
           lines.push(lineMarkup);
         }
 
         // Append blank.
-        this.blank.insert(lines[0]);
+        PoemEvents.trigger('render:after', lines[0]);
 
       }
 
@@ -77,13 +79,12 @@ Oversoul.Poem = (function(Oversoul, Backbone, $) {
 
         // If only 1 line was created.
         if (lines.length === 1) {
-          var lineMarkup = $(this.lineTemplate());
           this.$el.append(lineMarkup);
           lines.push(lineMarkup);
         }
 
         // Append blank.
-        this.blank.insert(lines[1]);
+        PoemEvents.trigger('render:after', lines[1]);
 
       }
 
@@ -92,13 +93,12 @@ Oversoul.Poem = (function(Oversoul, Backbone, $) {
 
         // If only 2 lines were created.
         if (lines.length === 2) {
-          var lineMarkup = $(this.lineTemplate());
           this.$el.append(lineMarkup);
           lines.push(lineMarkup);
         }
 
         // Append blank.
-        this.blank.insert(lines[2]);
+        PoemEvents.trigger('render:after', lines[2]);
 
       }
 
@@ -114,6 +114,19 @@ Oversoul.Poem = (function(Oversoul, Backbone, $) {
 
     tagName: 'input',
     className: 'blank',
+
+    stackTemplate: _.template($('#submission-stack').html()),
+    wordTemplate: _.template($('#submission-word').html()),
+
+    /*
+     * Prepare trackers and stack.
+     *
+     * @return void.
+     */
+    initialize: function() {
+      this.words = [];
+      this.stack = $(this.stackTemplate());
+    },
 
     /*
      * Detach the markup.
@@ -295,7 +308,10 @@ Oversoul.Poem = (function(Oversoul, Backbone, $) {
    *
    * @return void.
    */
-  PoemEvents.on('poem:render:before', function() {
+  PoemEvents.on('render:before', function() {
+
+    // Detach blank.
+    Oversoul.Singletons.Blank.detach();
 
   });
 
@@ -306,7 +322,10 @@ Oversoul.Poem = (function(Oversoul, Backbone, $) {
    *
    * @return void.
    */
-  PoemEvents.on('poem:render:after', function(line) {
+  PoemEvents.on('render:after', function(line) {
+
+    // Insert blank.
+    Oversoul.Singletons.Blank.insert(line);
 
   });
 
@@ -318,7 +337,7 @@ Oversoul.Poem = (function(Oversoul, Backbone, $) {
   /*
    * After the poem is re-rendered.
    *
-   * @param {Objcet} data: The incoming slice data.
+   * @param {Object} data: The incoming slice data.
    *
    * @return void.
    */
@@ -331,6 +350,10 @@ Oversoul.Poem = (function(Oversoul, Backbone, $) {
   // Initialization.
   // ---------------
   Oversoul.addInitializer(function() {
+
+    // Instantiate poem and blank.
+    Oversoul.Singletons.Poem = new Poem.PoemView();
+    Oversoul.Singletons.Blank = new Poem.BlankView();
 
   });
 

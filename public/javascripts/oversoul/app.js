@@ -3,6 +3,7 @@
  */
 
 Oversoul = new Backbone.Marionette.Application();
+Oversoul.Singletons = {};
 
 // Socket.io adapter.
 Oversoul.addInitializer(function() {

@@ -23,9 +23,16 @@ load(
   // Application.
   a+'app.js'
 
+).then(
+
+  // Modules.
+  a+'modules/poem.js'
+
 ).thenRun(function() {
 
   // Run.
-  Oversoul.run();
+  $(function() {
+    Oversoul.start();
+  });
 
 });

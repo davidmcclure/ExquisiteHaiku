@@ -3,4 +3,8 @@
  */
 
 Ov = new Backbone.Marionette.Application();
-Ov.Singletons = {};
+
+Ov.Models = {};
+Ov.Collections = {};
+Ov.Views = {};
+Ov.Controllers = {};

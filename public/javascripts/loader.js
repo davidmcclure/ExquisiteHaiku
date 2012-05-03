@@ -25,8 +25,12 @@ load(
 
 ).then(
 
-  // Modules.
-  a+'modules/poem.js'
+  // Views.
+  a+'views/poem-view.js',
+  a+'views/blank-view.js',
+
+  // Controllers
+  a+'controllers/poem-controller.js'
 
 ).thenRun(function() {
 

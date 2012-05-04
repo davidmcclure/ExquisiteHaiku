@@ -7,21 +7,6 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
   var Socket = {};
 
 
-  // -------
-  // Events.
-  // -------
-
-  /*
-   * Validate a word.
-   *
-   * @return void.
-   */
-  Ov.vent.on('socket:validate', function(word, cb) {
-    var vcb = function(valid) { cb(valid); };
-    Socket.s.emit('validate', Poem._id, word, vcb);
-  });
-
-
   // ---------------
   // Initialization.
   // ---------------
@@ -42,6 +27,21 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
       Ov.vent.trigger('socket:slice', data);
     });
 
+  });
+
+
+  // -------
+  // Events.
+  // -------
+
+  /*
+   * Validate a word.
+   *
+   * @return void.
+   */
+  Ov.vent.on('socket:validate', function(word, cb) {
+    var vcb = function(valid) { cb(valid); };
+    Socket.s.emit('validate', Poem._id, word, vcb);
   });
 
   return Socket;

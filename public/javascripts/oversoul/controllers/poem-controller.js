@@ -7,6 +7,19 @@ Ov.Controllers.Poem = (function(Backbone, Ov) {
   var Poem = {};
 
 
+  // ---------------
+  // Initialization.
+  // ---------------
+
+  Ov.addInitializer(function() {
+
+    // Instantiate poem and blank.
+    Poem.PoemView = new Ov.Views.Poem();
+    Poem.BlankView = new Ov.Views.Blank();
+
+  });
+
+
   // -------
   // Events.
   // -------
@@ -41,19 +54,6 @@ Ov.Controllers.Poem = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('socket:slice', function(data) {
-
-  });
-
-
-  // ---------------
-  // Initialization.
-  // ---------------
-
-  Ov.addInitializer(function() {
-
-    // Instantiate poem and blank.
-    Poem.PoemView = new Ov.Views.Poem();
-    Poem.BlankView = new Ov.Views.Blank();
 
   });
 

@@ -46,6 +46,18 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
 
   });
 
+  /*
+   * Submit words.
+   *
+   * @return void.
+   */
+  Ov.vent.on('socket:submit', function(words, cb) {
+
+    // Save submissions.
+    Socket.s.emit('submit', Poem._id, words);
+
+  });
+
   return Socket;
 
 })(Backbone, Ov);

@@ -25,6 +25,11 @@ module.exports = function(io) {
       Poem.validateWord(id, word, cb);
     });
 
+    // Submit words.
+    socket.on('submit', function(id, words) {
+      Poem.submitWords(id, words);
+    });
+
   });
 
 };

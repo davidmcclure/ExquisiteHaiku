@@ -6,9 +6,13 @@
 var _ = require('underscore');
 var syllables = require('../../lib/syllables');
 
-// Models.
+// Round model.
 var round = require('./round');
 var Round = mongoose.model('Round');
+
+// Vote model.
+var vote = require('./vote');
+var Vote = mongoose.model('Vote');
 
 // Schema definition.
 var PoemSchema = new Schema({
@@ -399,6 +403,36 @@ PoemSchema.methods.addWord = function(word) {
 
 
 /*
+ * Commit a point allocation on a word.
+ *
+ * @param {String} word: The word.
+ * @param {Number} quantity: The point quantity.
+ *
+ * @return void.
+ */
+PoemSchema.methods.vote = function(word, quantity) {
+
+  // Construct the vote.
+  var vote = new Vote({
+    word: word,
+    quantity: quantity,
+    applied: Date.now()
+  });
+
+  // Push to votes tracker.
+  if (_.has(global.Oversoul.votes, this.round.id)) {
+    global.Oversoul.votes[this.round.id].push(vote);
+  }
+
+  // Set votes tracker.
+  else {
+    global.Oversoul.votes[this.round.id] = [vote];
+  }
+
+};
+
+
+/*
  * -------------------
  * Collection methods.
  * -------------------
@@ -419,9 +453,37 @@ PoemSchema.statics.validateWord = function(id, word, cb) {
   // Get poem.
   this.findById(id, function(err, poem) {
 
+    // If the word is invalid.
     if (!_.has(syllables, word)) cb(false);
+
+    // If the word is too long.
     else if (!poem.addWord(word)) cb(false);
+
+    // If the word is valid.
     else cb(true);
+
+  });
+
+};
+
+
+/*
+ * Ingest blind word submissions.
+ *
+ * @param {Number} id: The poem id.
+ * @param {Array} words: The words.
+ *
+ * @return void.
+ */
+PoemSchema.statics.submitWords = function(id, words) {
+
+  // Get poem.
+  this.findById(id, function(err, poem) {
+
+    // Walk words.
+    _.each(words, function(word) {
+      poem.vote(word, poem.submissionVal);
+    });
 
   });
 
@@ -467,7 +529,7 @@ PoemSchema.statics.score = function(id, now, send, cb) {
         c[vote.word] += score.churn;
       }
 
-      // Create trackers
+      // Create trackers.
       else {
         r[vote.word] = score.rank;
         c[vote.word] = score.churn;

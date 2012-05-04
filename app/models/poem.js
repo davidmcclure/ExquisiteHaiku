@@ -523,6 +523,7 @@ PoemSchema.statics.score = function(id, now, send, cb) {
     send({
       stacks: stacks,
       syllables: poem.syllableCount,
+      round: poem.round.id,
       poem: poem.words
     });
 

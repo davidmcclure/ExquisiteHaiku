@@ -27,8 +27,6 @@ var app = module.exports = express.createServer(
 
 // Boot settings.
 require('./settings')(app, sessionStore);
-
-// Initialize globals.
 require('./init')(app);
 
 // Run server.
@@ -45,13 +43,13 @@ modelFiles.forEach(function(file) {
   require(modelsPath + '/' + file);
 });
 
+// Run Socket.io.
+var io = require('socket.io').listen(app);
+require('./sockets')(io);
+
 // Bootstrap controllers.
 var controllersPath = __dirname + '/app/controllers';
 var controllerFiles = fs.readdirSync(controllersPath);
 controllerFiles.forEach(function(file) {
   require(controllersPath + '/' + file)(app, io);
 });
-
-// Run Socket.io.
-var io = require('socket.io').listen(app);
-require('./sockets')(io);

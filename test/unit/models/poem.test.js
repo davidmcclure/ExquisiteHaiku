@@ -1049,6 +1049,19 @@ describe('Poem', function() {
 
         });
 
+        it('should broadcast round id', function(done) {
+
+          // Score the poem.
+          Poem.score(poem.id, Date.now(), function(result) {
+
+            // Check poem.
+            result.round.should.eql(poem.round.id);
+            done();
+
+          }, function() {});
+
+        });
+
       });
 
       describe('when the round is expired', function() {

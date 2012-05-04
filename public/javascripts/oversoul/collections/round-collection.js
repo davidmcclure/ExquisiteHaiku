@@ -2,9 +2,7 @@
  * Round collection.
  */
 
-Ov.Collections.Round = Backbone.Collection.extend({
-
-  model: Ov.Models.Round,
+Ov.Collections.Round = Backbone.QueryCollection.extend({
 
   localStorage: new Store('oversoul:rounds')
 

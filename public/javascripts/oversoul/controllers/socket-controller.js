@@ -23,7 +23,6 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
 
     // Ingest data slices.
     Socket.s.on('slice', function(data) {
-      console.log(data);
       Ov.vent.trigger('socket:slice', data);
     });
 
@@ -40,8 +39,11 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('socket:validate', function(word, cb) {
+
+    // Hit Poem.validateWord() on the server.
     var vcb = function(valid) { cb(valid); };
     Socket.s.emit('validate', Poem._id, word, vcb);
+
   });
 
   return Socket;

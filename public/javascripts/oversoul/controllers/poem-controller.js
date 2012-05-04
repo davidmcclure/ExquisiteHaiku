@@ -30,8 +30,10 @@ Ov.Controllers.Poem = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('poem:render:before', function() {
+
     // Detach blank.
     Poem.BlankView.detach();
+
   });
 
   /*
@@ -42,8 +44,10 @@ Ov.Controllers.Poem = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('poem:render:after', function(line) {
+
     // Insert blank.
     Poem.BlankView.insert(line);
+
   });
 
   /*

@@ -15,8 +15,14 @@ load(
 
   // Backbone and Socket.io.
   v+'backbone/backbone.js',
-  v+'marionette/marionette.js',
+  v+'backbone/marionette.js',
   'socket.io/socket.io.js'
+
+).then(
+
+  // Backbone modules.
+  v+'backbone/backbone-query.js',
+  v+'backbone/backbone-localstorage.js'
 
 ).then(
 
@@ -25,13 +31,17 @@ load(
 
 ).then(
 
+  // Collections.
+  a+'collections/round-collection.js',
+
   // Views.
   a+'views/poem-view.js',
   a+'views/blank-view.js',
 
   // Controllers
   a+'controllers/poem-controller.js',
-  a+'controllers/socket-controller.js'
+  a+'controllers/socket-controller.js',
+  a+'controllers/round-controller.js'
 
 ).thenRun(function() {
 

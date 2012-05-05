@@ -12,7 +12,6 @@
 #
 src_files:
     - public/javascripts/lib/load/load.js
-    - spec/javascripts/load.js
 
 # stylesheets
 #

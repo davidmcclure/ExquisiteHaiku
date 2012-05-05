@@ -27,6 +27,7 @@ Ov.Views.Poem = Backbone.View.extend({
 
     // Trackers.
     this.lines = [];
+    this.syllables = null;
 
   },
 
@@ -36,9 +37,14 @@ Ov.Views.Poem = Backbone.View.extend({
    * @param {Array} poem: The poem.
    * @param {Number} syllables: The current syllable count.
    *
-   * @return void.
+   * @return {Boolean}: True if the incoming poem is rendered.
    */
   update: function(poem, syllables) {
+
+    // Only render new poem.
+    if (syllables === this.syllables) {
+      return false;
+    }
 
     // Before render hook.
     Ov.vent.trigger('poem:render:before');
@@ -82,6 +88,11 @@ Ov.Views.Poem = Backbone.View.extend({
 
     // Append blank.
     Ov.vent.trigger('poem:render:after', lastLine);
+
+    // Set tracker.
+    this.syllables = syllables;
+
+    return true;
 
   },
 

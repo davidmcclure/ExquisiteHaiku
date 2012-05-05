@@ -31,6 +31,32 @@ describe('Poem View', function() {
 
     var poem, lines;
 
+    describe('duplicate checking', function() {
+
+      it('should return false for unchanged poem', function() {
+
+        // Set poem.
+        poemView.syllables = 3;
+        var newPoem = [['it', 'little']];
+
+        // Call with unchanged poem.
+        expect(poemView.update(newPoem, 3)).toBeFalsy();
+
+      });
+
+      it('should return true for changed poem', function() {
+
+        // Set poem.
+        poemView.syllables = 3;
+        var newPoem = [['it', 'little', 'profits']];
+
+        // Call with changed poem.
+        expect(poemView.update(newPoem, 5)).toBeTruthy();
+
+      });
+
+    });
+
     describe('when there are no words', function() {
 
       beforeEach(function() {

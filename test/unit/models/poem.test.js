@@ -834,6 +834,53 @@ describe('Poem', function() {
 
     });
 
+    describe('vote', function() {
+
+      describe('when the round id key exists', function() {
+
+        // Create round.
+        beforeEach(function() {
+          poem.newRound();
+        });
+
+        it('should push the new vote', function() {
+
+          // Call vote().
+          poem.vote('word', 100);
+
+          // Check for vote.
+          var vote = global.Oversoul.votes[poem.round.id][0];
+          vote.word.should.eql('word');
+          vote.quantity.should.eql(100);
+
+        });
+
+      });
+
+      describe('when the round id key does not exist', function() {
+
+        // Create round, scrub round key.
+        beforeEach(function() {
+          poem.newRound();
+          delete global.Oversoul.votes[poem.round.id];
+        });
+
+        it('should create the id key and push new vote', function() {
+
+          // Call vote().
+          poem.vote('word', 100);
+
+          // Check for vote.
+          var vote = global.Oversoul.votes[poem.round.id][0];
+          vote.word.should.eql('word');
+          vote.quantity.should.eql(100);
+
+        });
+
+      });
+
+    });
+
     describe('newRound', function() {
 
       it('should add a new round', function() {

@@ -6,8 +6,13 @@ Ov.Views.Poem = Backbone.View.extend({
 
   el: '#poem',
 
-  __line: _.template($('#poem-line').html()),
-  __word: _.template($('#poem-word').html()),
+  lineTemplate: function() {
+    return _.template($('#poem-line').html());
+  },
+
+  wordTemplate: function() {
+    return _.template($('#poem-word').html());
+  },
 
   /*
    * Prepare trackers.
@@ -15,7 +20,14 @@ Ov.Views.Poem = Backbone.View.extend({
    * @return void.
    */
   initialize: function() {
+
+    // Templates.
+    this.__line = this.lineTemplate();
+    this.__word = this.wordTemplate();
+
+    // Trackers.
     this.lines = [];
+
   },
 
   /*
@@ -63,7 +75,7 @@ Ov.Views.Poem = Backbone.View.extend({
     }
 
     // If poem is on third line.
-    else if (syllables >= 12 && syllables < 17) {
+    else if (syllables >= 12 && syllables <= 17) {
       if (this.lines.length === 2) this.addLine();
       lastLine = this.lines[2];
     }

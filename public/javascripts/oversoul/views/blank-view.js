@@ -7,8 +7,13 @@ Ov.Views.Blank = Backbone.View.extend({
   tagName: 'input',
   className: 'blank',
 
-  __stack: _.template($('#submission-stack').html()),
-  __word: _.template($('#submission-word').html()),
+  stackTemplate: function() {
+    return _.template($('#submission-stack').html());
+  },
+
+  wordTemplate: function() {
+    return _.template($('#submission-word').html());
+  },
 
   /*
    * Prepare trackers and stack.
@@ -17,6 +22,10 @@ Ov.Views.Blank = Backbone.View.extend({
    */
   initialize: function() {
 
+    // Templates.
+    this.__stack = this.stackTemplate();
+    this.__word = this.wordTemplate();
+
     // Trackers.
     this.words = [];
     this.cache = { valid: [], invalid: [] };
@@ -24,15 +33,6 @@ Ov.Views.Blank = Backbone.View.extend({
     // Submissions stack.
     this.stack = $(this.__stack());
 
-  },
-
-  /*
-   * Detach the markup.
-   *
-   * @return void.
-   */
-  detach: function() {
-    this.$el.detach();
   },
 
   /*
@@ -45,6 +45,15 @@ Ov.Views.Blank = Backbone.View.extend({
   insert: function(line) {
     line.append(this.$el);
     this.position(line);
+  },
+
+  /*
+   * Detach the markup.
+   *
+   * @return void.
+   */
+  detach: function() {
+    this.$el.detach();
   },
 
   /*
@@ -78,8 +87,6 @@ Ov.Views.Blank = Backbone.View.extend({
 
     // Bind events.
     this.$el.keypress(_.bind(function(e) {
-
-      this.$el.addClass('unvalidated');
 
       // Get word.
       var word = this.$el.val();

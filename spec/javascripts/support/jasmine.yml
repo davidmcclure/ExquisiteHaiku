@@ -11,7 +11,8 @@
 #   - dist/**/*.js
 #
 src_files:
-    - public/javascripts/lib/load/load.js
+    - public/javascripts/vendor/load/load.js
+    - spec/javascripts/loader.js
 
 # stylesheets
 #

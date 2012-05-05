@@ -472,10 +472,11 @@ PoemSchema.statics.validateWord = function(id, word, cb) {
  *
  * @param {Number} id: The poem id.
  * @param {Array} words: The words.
+ * @param {Function} cb: Callback.
  *
  * @return void.
  */
-PoemSchema.statics.submitWords = function(id, words) {
+PoemSchema.statics.submitWords = function(id, words, cb) {
 
   // Get poem.
   this.findById(id, function(err, poem) {
@@ -484,6 +485,8 @@ PoemSchema.statics.submitWords = function(id, words) {
     _.each(words, function(word) {
       poem.vote(word, poem.submissionVal);
     });
+
+    cb();
 
   });
 

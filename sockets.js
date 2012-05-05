@@ -27,7 +27,7 @@ module.exports = function(io) {
 
     // Submit words.
     socket.on('submit', function(id, words) {
-      Poem.submitWords(id, words);
+      Poem.submitWords(id, words, function() {});
     });
 
   });

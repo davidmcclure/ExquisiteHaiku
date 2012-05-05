@@ -1001,6 +1001,43 @@ describe('Poem', function() {
 
     });
 
+    describe('submitWords', function() {
+
+      // Create round.
+      beforeEach(function(done) {
+        poem.newRound();
+        poem.save(function(err) {
+          done();
+        });
+      });
+
+      it('should create starting votes for the words', function(done) {
+
+        // Words array.
+        var words = ['word1', 'word2', 'word3'];
+
+        // Submit.
+        Poem.submitWords(poem.id, words, function() {
+
+          // Get votes.
+          var votes = global.Oversoul.votes[poem.round.id];
+          votes.length.should.eql(3);
+
+          // Check values.
+          votes[0].word.should.eql('word1');
+          votes[0].quantity.should.eql(100);
+          votes[1].word.should.eql('word2');
+          votes[1].quantity.should.eql(100);
+          votes[2].word.should.eql('word3');
+          votes[2].quantity.should.eql(100);
+          done();
+
+        });
+
+      });
+
+    });
+
     describe('score', function() {
 
       beforeEach(function(done) {

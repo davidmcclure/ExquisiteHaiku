@@ -53,6 +53,7 @@ helpers:
 #
 spec_files:
     - unit/*.spec.js
+    - integration/*.spec.js
 
 # src_dir
 #

@@ -86,7 +86,7 @@ Ov.Views.Blank = Backbone.View.extend({
   activateSubmit: function() {
 
     // Bind events.
-    this.$el.keypress(_.bind(function(e) {
+    this.$el.keydown(_.bind(function(e) {
 
       // Get word.
       var word = this.$el.val();
@@ -202,8 +202,15 @@ Ov.Views.Blank = Backbone.View.extend({
    */
   cacheValidation: function(word, valid) {
 
-    if (valid) this.cache.valid.push(word);
-    else this.cache.invalid.push(word);
+    // Valid cache.
+    if (valid && !_.include(this.cache.valid, word)) {
+      this.cache.valid.push(word);
+    }
+
+    // Invalid cache.
+    else if (!_.include(this.cache.invalid, word)) {
+      this.cache.invalid.push(word);
+    }
 
   },
 

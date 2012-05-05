@@ -42,4 +42,11 @@ load(
   a+'controllers/socket-controller.js',
   a+'controllers/round-controller.js'
 
-);
+).thenRun(function() {
+
+  // Mock poem.
+  Poem = {
+    _id: 1
+  };
+
+});

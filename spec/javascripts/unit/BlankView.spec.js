@@ -110,7 +110,12 @@ describe('Blank View', function() {
 
   describe('activateSubmit', function() {
 
+    var e;
+
     beforeEach(function() {
+
+      // Call activateSubmit().
+      blankView.activateSubmit();
 
       // Mock server word validation.
       Ov.vent.on('socket:validate', function(word, cb) {
@@ -118,11 +123,26 @@ describe('Blank View', function() {
         else if (word == 'invalid') cb(false);
       });
 
+      // Prepare the mock keypress event.
+      e = $.Event('keypress');
+
     });
 
     describe('regular keystroke', function() {
 
-      it('should cache valid word as valid');
+      it('should cache valid word as valid', function() {
+
+        // // Set input value, prepare 'd' keypress.
+        // blankView.$el.val('vali');
+        // e.keyCode = 'd'.charCodeAt();
+
+        // // Trigger event on input.
+        // blankView.$el.trigger(e);
+
+        // // Check for cached word.
+        // expect(blankView.cache.valid).toContain('valid');
+
+      });
 
       it('should cache invalid word as invalid');
 
@@ -144,7 +164,7 @@ describe('Blank View', function() {
 
       // Add a word, get words.
       blankView.addWord('word1');
-      var words = blankView.stack.find('div.submission-word');
+      var words = blankView.stack.find('div');
 
       expect(words.length).toEqual(1);
       expect($(words[0]).text()).toEqual('word1');
@@ -156,7 +176,7 @@ describe('Blank View', function() {
       // Add 2 words, get words.
       blankView.addWord('word1');
       blankView.addWord('word2');
-      var words = blankView.stack.find('div.submission-word');
+      var words = blankView.stack.find('div');
 
       expect(words.length).toEqual(2);
       expect($(words[0]).text()).toEqual('word2');
@@ -176,7 +196,7 @@ describe('Blank View', function() {
 
       // Add a word, get words.
       blankView.addWord('word1');
-      var words = blankView.stack.find('div.submission-word');
+      var words = blankView.stack.find('div');
 
       expect($(words[0]).data('word')).toEqual('word1');
 
@@ -197,10 +217,155 @@ describe('Blank View', function() {
 
     describe('mousedown event', function() {
 
+      var word;
+
+      // Add a word.
+      beforeEach(function() {
+        blankView.addWord('word');
+        word = blankView.stack.find('div');
+      });
+
       it('should remove the word', function() {
+
+        // Trigger mousedown on word.
+        word.mousedown();
+        expect(blankView.stack).toBeEmpty();
 
       });
 
+    });
+
+  });
+
+  describe('scrubWord', function() {
+
+    it('should trim the word', function() {
+      expect(blankView.scrubWord('  word ')).toEqual('word');
+    });
+
+    it('should lowercase the word', function() {
+      expect(blankView.scrubWord('WoRd')).toEqual('word');
+    });
+
+  });
+
+  describe('validateWord', function() {
+
+    var cb;
+
+    beforeEach(function() {
+
+      // Mock server word validation.
+      Ov.vent.on('socket:validate', function(word, cb) {
+        cb('server');
+      });
+
+      // Create spy.
+      cb = jasmine.createSpy();
+
+    });
+
+    it('should call with false for duplicate', function() {
+
+      // Set words.
+      blankView.words = ['word'];
+      blankView.validateWord('word', cb);
+      expect(cb).toHaveBeenCalledWith(false);
+
+    });
+
+    it('should call with false if word is cached as invalid', function() {
+
+      // Cache word as invalid.
+      blankView.cache.invalid.push('word');
+      blankView.validateWord('word', cb);
+      expect(cb).toHaveBeenCalledWith(false);
+
+    });
+
+    it('should call with true if word is cached as valid', function() {
+
+      // Cache word as invalid.
+      blankView.cache.valid.push('word');
+      blankView.validateWord('word', cb);
+      expect(cb).toHaveBeenCalledWith(true);
+
+    });
+
+    it('should do server validation if word cannot be validated locally', function() {
+
+      // Set stack and caches.
+      blankView.words = ['word1'];
+      blankView.cache.valid.push('word2');
+      blankView.cache.invalid.push('word3');
+
+      // Validate with word that is not a duplicate or cached.
+      blankView.validateWord('word4', cb);
+      expect(cb).toHaveBeenCalledWith('server');
+
+    });
+
+  });
+
+  describe('cacheValidation', function() {
+
+    describe('when the word is valid', function() {
+
+      it('should add to cache if not already present', function() {
+        blankView.cacheValidation('word', true);
+        expect(blankView.cache.valid).toEqual(['word']);
+      });
+
+      it('should not add to cache if already present', function() {
+        blankView.cache.valid.push('word');
+        blankView.cacheValidation('word', true);
+        expect(blankView.cache.valid).toEqual(['word']);
+      });
+
+    });
+
+    describe('when the word is invalid', function() {
+
+      it('should add to cache if not already present', function() {
+        blankView.cacheValidation('word', false);
+        expect(blankView.cache.invalid).toEqual(['word']);
+      });
+
+      it('should not add to cache if already present', function() {
+        blankView.cache.invalid.push('word');
+        blankView.cacheValidation('word', false);
+        expect(blankView.cache.invalid).toEqual(['word']);
+      });
+
+    });
+
+  });
+
+  describe('removeWord', function() {
+
+    var words;
+
+    beforeEach(function() {
+
+      // Add words.
+      blankView.addWord('word1');
+      blankView.addWord('word2');
+
+      // Get markup.
+      words = blankView.stack.find('div');
+
+    });
+
+    it('should remove the word markup', function() {
+      blankView.removeWord($(words[0]));
+      expect(blankView.stack).not.toContain(words[0]);
+      expect(blankView.stack).toContain(words[1]);
+    });
+
+    it('should remove the word from the tracker', function() {
+      blankView.removeWord($(words[0]));
+      expect(blankView.words).not.toContain('word2');
+      expect(blankView.words).toContain('word1');
     });
 
   });

@@ -23,6 +23,17 @@ var io = {
        */
       on: function(event, cb) {
 
+      },
+
+      /*
+       * Emit event.
+       *
+       * @param {String} event: The event name.
+       *
+       * @return void.
+       */
+      emit: function(event) {
+
       }
 
     };

@@ -24,6 +24,15 @@ Ov.Collections.Round = Backbone.QueryCollection.extend({
       return _.last(Poem.rounds)._id;
     }
 
+  },
+
+  /*
+   * Store the current round as submitted.
+   *
+   * @return void.
+   */
+  recordSubmission: function() {
+    this.add({ round: this.getCurrentRound() });
   }
 
 });

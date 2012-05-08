@@ -62,9 +62,7 @@ Ov.Controllers.Round = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('socket:submit', function(data) {
-
-    // Get current round.
-
+    Round.RoundCollection.recordSubmission();
   });
 
   return Round;

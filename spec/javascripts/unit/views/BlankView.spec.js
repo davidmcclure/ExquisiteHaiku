@@ -12,11 +12,9 @@ describe('Blank View', function() {
     Ov.start();
   });
 
+  // Construct view.
   beforeEach(function() {
-
-    // Construct view.
     blankView = new Ov.Views.Blank();
-
   });
 
   describe('insert', function() {

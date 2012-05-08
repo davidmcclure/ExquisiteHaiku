@@ -79,33 +79,44 @@ Ov.Views.Blank = Backbone.View.extend({
   },
 
   /*
-   * Build submission functionality.
+   * Bind submission functionality.
    *
    * @return void.
    */
   activateSubmit: function() {
 
     // Bind events.
-    this.$el.keydown(_.bind(function(e) {
-
-      // Get word.
-      var word = this.$el.val();
-
-      // Regular keystroke.
-      if (e.keyCode !== 13) {
-        this.validateWord(word, _.bind(function(valid) {
-          this.cacheValidation(word, valid);
-        }, this));
-      }
-
-      // When enter is pressed.
-      else {
-        this.validateWord(word, _.bind(function(valid) {
-          if (valid) this.addWord(word);
-        }, this));
-      }
-
+    this.$el.keypress(_.bind(function(e) {
+      this.processKeystroke(e);
     }, this));
+
+  },
+
+  /*
+   * Handle keystroke on input.
+   *
+   * @param {Object} event: The keypress event.
+   *
+   * @return void.
+   */
+  processKeystroke: function(event) {
+
+    // Get word.
+    var word = this.$el.val();
+
+    // Regular keystroke.
+    if (event.keyCode !== 13) {
+      this.validateWord(word, _.bind(function(valid) {
+        this.cacheValidation(word, valid);
+      }, this));
+    }
+
+    // When enter is pressed.
+    else {
+      this.validateWord(word, _.bind(function(valid) {
+        if (valid) this.addWord(word);
+      }, this));
+    }
 
   },
 

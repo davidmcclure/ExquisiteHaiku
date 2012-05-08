@@ -110,12 +110,49 @@ describe('Blank View', function() {
 
   describe('activateSubmit', function() {
 
+    describe('when activateSubmit has not been called', function() {
+
+      it('should not bind keypress event on the input', function() {
+
+        // Spy on addWord();
+        spyOn(blankView, 'processKeystroke');
+
+        // Trigger keypress.
+        blankView.$el.keypress();
+        expect(blankView.processKeystroke).not.toHaveBeenCalled();
+
+      });
+
+    });
+
+    describe('when activateSubmit has been called', function() {
+
+      it('should not bind keypress event on the input', function() {
+
+        // Spy on addWord();
+        spyOn(blankView, 'processKeystroke');
+
+        // Mock keypress event.
+        var e = $.Event('keypress');
+
+        // Activate submission.
+        blankView.activateSubmit();
+
+        // Trigger keypress.
+        blankView.$el.trigger(e);
+        expect(blankView.processKeystroke).toHaveBeenCalledWith(e);
+
+      });
+
+    });
+
+  });
+
+  describe('processKeystroke', function() {
+
     var e;
 
     beforeEach(function() {
-
-      // Call activateSubmit().
-      blankView.activateSubmit();
 
       // Mock server word validation.
       Ov.vent.on('socket:validate', function(word, cb) {
@@ -132,27 +169,59 @@ describe('Blank View', function() {
 
       it('should cache valid word as valid', function() {
 
-        // // Set input value, prepare 'd' keypress.
-        // blankView.$el.val('vali');
-        // e.keyCode = 'd'.charCodeAt();
+        // Set valid input value.
+        blankView.$el.val('valid');
+        blankView.processKeystroke(e);
 
-        // // Trigger event on input.
-        // blankView.$el.trigger(e);
-
-        // // Check for cached word.
-        // expect(blankView.cache.valid).toContain('valid');
+        // Check for cached word.
+        expect(blankView.cache.valid).toContain('valid');
 
       });
 
-      it('should cache invalid word as invalid');
+      it('should cache invalid word as invalid', function() {
+
+        // Set valid input value.
+        blankView.$el.val('invalid');
+        blankView.processKeystroke(e);
+
+        // Check for cached word.
+        expect(blankView.cache.invalid).toContain('invalid');
+
+      });
 
     });
 
     describe('enter keystroke', function() {
 
-      it('should add valid word');
+      it('should add valid word', function() {
 
-      it('should not add invalid word');
+        // Spy on addWord();
+        spyOn(blankView, 'addWord');
+
+        // Set keycode and value.
+        e.keyCode = 13;
+        blankView.$el.val('valid');
+        blankView.processKeystroke(e);
+
+        // Check for cached word.
+        expect(blankView.addWord).toHaveBeenCalledWith('valid');
+
+      });
+
+      it('should not add invalid word', function() {
+
+        // Spy on addWord();
+        spyOn(blankView, 'addWord');
+
+        // Set keycode and value.
+        e.keyCode = 13;
+        blankView.$el.val('invalid');
+        blankView.processKeystroke(e);
+
+        // Check for cached word.
+        expect(blankView.addWord).not.toHaveBeenCalledWith();
+
+      });
 
     });
 

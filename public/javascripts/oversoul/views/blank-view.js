@@ -86,7 +86,7 @@ Ov.Views.Blank = Backbone.View.extend({
   activateSubmit: function() {
 
     // Bind events.
-    this.$el.keypress(_.bind(function(e) {
+    this.$el.keyup(_.bind(function(e) {
       this.processKeystroke(e);
     }, this));
 
@@ -203,8 +203,7 @@ Ov.Views.Blank = Backbone.View.extend({
   },
 
   /*
-   * Store word validation status and manifest
-   * color change on input.
+   * Store word validation status.
    *
    * @param {String} word: The word.
    * @param {Boolean} valid: True if valid.
@@ -219,7 +218,7 @@ Ov.Views.Blank = Backbone.View.extend({
     }
 
     // Invalid cache.
-    else if (!_.include(this.cache.invalid, word)) {
+    else if (!valid && !_.include(this.cache.invalid, word)) {
       this.cache.invalid.push(word);
     }
 

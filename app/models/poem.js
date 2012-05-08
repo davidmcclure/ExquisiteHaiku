@@ -454,10 +454,14 @@ PoemSchema.statics.validateWord = function(id, word, cb) {
   this.findById(id, function(err, poem) {
 
     // If the word is invalid.
-    if (!_.has(syllables, word)) cb(false);
+    if (!_.has(syllables, word)) {
+      cb(false);
+    }
 
     // If the word is too long.
-    else if (!poem.addWord(word)) cb(false);
+    else if (!poem.addWord(word)) {
+      cb(false);
+    }
 
     // If the word is valid.
     else cb(true);

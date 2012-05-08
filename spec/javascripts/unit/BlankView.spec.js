@@ -160,7 +160,7 @@ describe('Blank View', function() {
         else if (word == 'invalid') cb(false);
       });
 
-      // Prepare the mock keypress event.
+      // Mock keypress event.
       e = $.Event('keypress');
 
     });

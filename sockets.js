@@ -22,7 +22,6 @@ module.exports = function(io) {
 
     // Validate word.
     socket.on('validate', function(id, word, cb) {
-      console.log(word);
       Poem.validateWord(id, word, cb);
     });
 

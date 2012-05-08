@@ -47,4 +47,20 @@ describe('Round Collection', function() {
 
   });
 
+  describe('recordSubmission', function() {
+
+    it('should add a record with the current round id', function() {
+
+      // Set current round.
+      roundCollection.currentRound = 1;
+      roundCollection.recordSubmission();
+
+      // Check for record.
+      var record = roundCollection.query({round:1});
+      expect(record.length).toEqual(1);
+
+    });
+
+  });
+
 });

@@ -391,6 +391,12 @@ describe('Blank View', function() {
         expect(blankView.cache.valid).toEqual(['word']);
       });
 
+      it('should not add to invalid cache if word is cached valid', function() {
+        blankView.cache.valid.push('word');
+        blankView.cacheValidation('word', true);
+        expect(blankView.cache.invalid).not.toContain('word');
+      });
+
     });
 
     describe('when the word is invalid', function() {
@@ -404,6 +410,12 @@ describe('Blank View', function() {
         blankView.cache.invalid.push('word');
         blankView.cacheValidation('word', false);
         expect(blankView.cache.invalid).toEqual(['word']);
+      });
+
+      it('should not add to valid cache if word is cached invalid', function() {
+        blankView.cache.invalid.push('word');
+        blankView.cacheValidation('word', false);
+        expect(blankView.cache.valid).not.toContain('word');
       });
 
     });

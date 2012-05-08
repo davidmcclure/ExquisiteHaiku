@@ -49,6 +49,22 @@ Ov.Controllers.Round = (function(Backbone, Ov) {
       Ov.vent.trigger('state:vote');
     }
 
+    // Store the current round id as a top-level
+    // attribute on the round collection.
+    Round.RoundCollection.currentRound = data.round;
+
+  });
+
+  /*
+   * When words are submitted, store the round id in the local
+   * list of rounds for which words have been submitted.
+   *
+   * @return void.
+   */
+  Ov.vent.on('socket:submit', function(data) {
+
+    // Get current round.
+
   });
 
   return Round;

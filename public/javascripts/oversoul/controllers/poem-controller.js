@@ -59,6 +59,9 @@ Ov.Controllers.Poem = (function(Backbone, Ov) {
    */
   Ov.vent.on('socket:slice', function(data) {
 
+    // Update poem.
+    Poem.PoemView.update(data.poem, data.syllables);
+
   });
 
   return Poem;

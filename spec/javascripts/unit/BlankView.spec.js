@@ -127,13 +127,13 @@ describe('Blank View', function() {
 
     describe('when activateSubmit has been called', function() {
 
-      it('should not bind keypress event on the input', function() {
+      it('should bind keypress event on the input', function() {
 
         // Spy on addWord();
         spyOn(blankView, 'processKeystroke');
 
         // Mock keypress event.
-        var e = $.Event('keypress');
+        var e = $.Event('keyup');
 
         // Activate submission.
         blankView.activateSubmit();

@@ -4,6 +4,8 @@ body{-webkit-user-select:none;-moz-user-select:none}
 .submission-word{cursor:pointer}
 #rank,#churn{float:left;}
 #rank .stack-word,#churn .stack-word{text-align:left;cursor:n-resize;}
-#rank .stack-word.highlight,#churn .stack-word.highlight{color:#2260ff}
+#rank .stack-word.hover,#churn .stack-word.hover{color:#2260ff}
+#rank .stack-word.select,#churn .stack-word.select{color:#f00}
 #rank .stack-value,#churn .stack-value{text-align:right}
+#rank.frozen,#churn.frozen{color:#808080}
 #rank .stack-row:first-child .stack-word{font-weight:bold}

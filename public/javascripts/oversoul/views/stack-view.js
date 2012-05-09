@@ -10,9 +10,16 @@ Ov.Views.Stack = Backbone.View.extend({
    * @return void.
    */
   initialize: function() {
+
+    // Trackers.
     this.wordRows = [];
     this.wordsToRows = {};
+
+    // Statuses.
     this.hoverWord = null;
+    this.selectWord = null;
+    this.frozen = false;
+
   },
 
   /*
@@ -24,9 +31,12 @@ Ov.Views.Stack = Backbone.View.extend({
    */
   update: function(stack) {
 
-    // Unhighlight highlighted word.
+    // If frozen, break.
+    if (this.frozen) return;
+
+    // Unhover hovered word.
     if (!_.isNull(this.hoverWord)) {
-      this.wordsToRows[this.hoverWord].unHighlight();
+      this.wordsToRows[this.hoverWord].unHover();
     }
 
     _.times(stack.length, _.bind(function(i) {
@@ -45,9 +55,9 @@ Ov.Views.Stack = Backbone.View.extend({
 
     }, this));
 
-    // Re-highlight highlighted word.
+    // Re-hover hovered word.
     if (!_.isNull(this.hoverWord)) {
-      this.wordsToRows[this.hoverWord].highlight();
+      this.wordsToRows[this.hoverWord].hover();
     }
 
   },
@@ -71,27 +81,78 @@ Ov.Views.Stack = Backbone.View.extend({
   },
 
   /*
-   * Render a word highlight.
+   * Freeze stack rendering.
+   *
+   * @return void.
+   */
+  freeze: function() {
+    this.frozen = true;
+    this.$el.addClass('frozen');
+  },
+
+  /*
+   * Unfreeze stack rendering.
+   *
+   * @return void.
+   */
+  unFreeze: function() {
+    this.frozen = false;
+    this.$el.removeClass('frozen');
+  },
+
+  /*
+   * Render a word hover.
    *
    * @param {String} word: The word text.
    *
    * @return void.
    */
-  highlight: function(word) {
-    this.wordsToRows[word].highlight();
+  hover: function(word) {
+    this.wordsToRows[word].hover();
     this.hoverWord = word;
   },
 
   /*
-   * Render a word highlight.
+   * Remove a word hover.
    *
    * @param {String} word: The word text.
    *
    * @return void.
    */
-  unHighlight: function(word) {
-    this.wordsToRows[word].unHighlight();
+  unHover: function(word) {
+    this.wordsToRows[word].unHover();
     this.hoverWord = null;
+  },
+
+  /*
+   * Select a word.
+   *
+   * @param {String} word: The word text.
+   *
+   * @return void.
+   */
+  select: function(word) {
+
+    // Unselect selected word.
+    if (!_.isNull(this.selectWord)) {
+      this.unSelect(this.selectWord);
+    }
+
+    this.wordsToRows[word].select();
+    this.selectWord = word;
+
+  },
+
+  /*
+   * Unselect a word.
+   *
+   * @param {String} word: The word text.
+   *
+   * @return void.
+   */
+  unSelect: function(word) {
+    this.wordsToRows[word].unSelect();
+    this.selectWord = null;
   }
 
 });

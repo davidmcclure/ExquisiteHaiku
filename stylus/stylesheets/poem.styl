@@ -1,4 +1,6 @@
-highlight = #2260ff
+hover = #2260ff
+select = #ff0000
+frozen = #bbbbbb
 
 body
   -webkit-user-select none
@@ -20,11 +22,16 @@ body
   .stack-word
     text-align left
     cursor n-resize
-    &.highlight
-      color highlight
+    &.hover
+      color hover
+    &.select
+      color select
 
   .stack-value
     text-align right
+
+  &.frozen
+    color gray
 
 #rank
   .stack-row

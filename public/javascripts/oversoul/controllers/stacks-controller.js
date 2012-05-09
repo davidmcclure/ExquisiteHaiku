@@ -40,32 +40,51 @@ Ov.Controllers.Stacks = (function(Backbone, Ov) {
   });
 
   /*
-   * Add highlight to stack word.
+   * Add hover to stack word.
    *
-   * @param {String} word: The highlighted word.
+   * @param {String} word: The hovered word.
    *
    * @return void.
    */
-  Ov.vent.on('stacks:highlight', function(word) {
+  Ov.vent.on('stacks:hover', function(word) {
 
     // Manifest the highlight on all stacks.
-    Stacks.RankStack.highlight(word);
-    Stacks.ChurnStack.highlight(word);
+    Stacks.RankStack.hover(word);
+    Stacks.ChurnStack.hover(word);
 
   });
 
   /*
-   * Remove highlight from stack word.
+   * Remove hover from stack word.
    *
-   * @param {String} word: The highlighted word.
+   * @param {String} word: The hovered word.
    *
    * @return void.
    */
-  Ov.vent.on('stacks:unhighlight', function(word) {
+  Ov.vent.on('stacks:unhover', function(word) {
 
     // Manifest the highlight on all stacks.
-    Stacks.RankStack.unHighlight(word);
-    Stacks.ChurnStack.unHighlight(word);
+    Stacks.RankStack.unHover(word);
+    Stacks.ChurnStack.unHover(word);
+
+  });
+
+  /*
+   * Select a word.
+   *
+   * @param {String} word: The hovered word.
+   *
+   * @return void.
+   */
+  Ov.vent.on('stacks:select', function(word) {
+
+    // Freeze stacks.
+    Stacks.RankStack.freeze();
+    Stacks.ChurnStack.freeze();
+
+    // Manifest the highlight on all stacks.
+    Stacks.RankStack.select(word);
+    Stacks.ChurnStack.select(word);
 
   });
 

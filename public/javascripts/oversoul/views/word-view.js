@@ -12,8 +12,8 @@ Ov.Views.Word = Backbone.View.extend({
   },
 
   events: {
-    'mouseenter .stack-word':   'onHighlight',
-    'mouseleave .stack-word':   'onUnHighlight',
+    'mouseenter .stack-word':   'onHover',
+    'mouseleave .stack-word':   'onUnHover',
     'mousedown .stack-word':    'onSelect'
   },
 
@@ -54,17 +54,17 @@ Ov.Views.Word = Backbone.View.extend({
    *
    * @return void.
    */
-  onHighlight: function() {
-    Ov.vent.trigger('stacks:highlight', this.word);
+  onHover: function() {
+    Ov.vent.trigger('stacks:hover', this.word);
   },
 
   /*
-   * On hover on the word text.
+   * On unhover on the word text.
    *
    * @return void.
    */
-  onUnHighlight: function() {
-    Ov.vent.trigger('stacks:unhighlight', this.word);
+  onUnHover: function() {
+    Ov.vent.trigger('stacks:unhover', this.word);
   },
 
   /*
@@ -77,21 +77,39 @@ Ov.Views.Word = Backbone.View.extend({
   },
 
   /*
-   * Render highlight.
+   * Render hover.
    *
    * @return void.
    */
-  highlight: function() {
-    this.wordMarkup.addClass('highlight');
+  hover: function() {
+    this.wordMarkup.addClass('hover');
   },
 
   /*
-   * Render highlight.
+   * Remove hover.
    *
    * @return void.
    */
-  unHighlight: function() {
-    this.wordMarkup.removeClass('highlight');
+  unHover: function() {
+    this.wordMarkup.removeClass('hover');
+  },
+
+  /*
+   * Render selection.
+   *
+   * @return void.
+   */
+  select: function() {
+    this.wordMarkup.addClass('select');
+  },
+
+  /*
+   * Remove selection.
+   *
+   * @return void.
+   */
+  unSelect: function() {
+    this.wordMarkup.removeClass('select');
   }
 
 });

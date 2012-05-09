@@ -5,13 +5,14 @@
 Ov.Views.Stack = Backbone.View.extend({
 
   /*
-   * Initialize trackers.
+   * Prepare trackers.
    *
    * @return void.
    */
   initialize: function() {
-    this.rows = [];
-    this.words = {};
+    this.wordRows = [];
+    this.wordsToRows = {};
+    this.hoverWord = null;
   },
 
   /*
@@ -23,20 +24,31 @@ Ov.Views.Stack = Backbone.View.extend({
    */
   update: function(stack) {
 
+    // Unhighlight highlighted word.
+    if (!_.isNull(this.hoverWord)) {
+      this.wordsToRows[this.hoverWord].unHighlight();
+    }
+
     _.times(stack.length, _.bind(function(i) {
 
       // Get word text.
       var word = stack[i][0];
 
       // If necessary, add row.
-      if (i > this.rows.length-1) {
+      if (i > this.wordRows.length-1) {
         this.addRow(word);
       }
 
       // Render values.
-      this.rows[i].update(stack[i]);
+      this.wordRows[i].update(stack[i]);
+      this.wordsToRows[word] = this.wordRows[i];
 
     }, this));
+
+    // Re-highlight highlighted word.
+    if (!_.isNull(this.hoverWord)) {
+      this.wordsToRows[this.hoverWord].highlight();
+    }
 
   },
 
@@ -54,8 +66,32 @@ Ov.Views.Stack = Backbone.View.extend({
 
     // Append and track.
     this.$el.append(row.$el);
-    this.rows.push(row);
+    this.wordRows.push(row);
 
+  },
+
+  /*
+   * Render a word highlight.
+   *
+   * @param {String} word: The word text.
+   *
+   * @return void.
+   */
+  highlight: function(word) {
+    this.wordsToRows[word].highlight();
+    this.hoverWord = word;
+  },
+
+  /*
+   * Render a word highlight.
+   *
+   * @param {String} word: The word text.
+   *
+   * @return void.
+   */
+  unHighlight: function(word) {
+    this.wordsToRows[word].unHighlight();
+    this.hoverWord = null;
   }
 
 });

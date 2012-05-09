@@ -39,6 +39,36 @@ Ov.Controllers.Stacks = (function(Backbone, Ov) {
 
   });
 
+  /*
+   * Add highlight to stack word.
+   *
+   * @param {String} word: The highlighted word.
+   *
+   * @return void.
+   */
+  Ov.vent.on('stacks:highlight', function(word) {
+
+    // Manifest the highlight on all stacks.
+    Stacks.RankStack.highlight(word);
+    Stacks.ChurnStack.highlight(word);
+
+  });
+
+  /*
+   * Remove highlight from stack word.
+   *
+   * @param {String} word: The highlighted word.
+   *
+   * @return void.
+   */
+  Ov.vent.on('stacks:unhighlight', function(word) {
+
+    // Manifest the highlight on all stacks.
+    Stacks.RankStack.unHighlight(word);
+    Stacks.ChurnStack.unHighlight(word);
+
+  });
+
   return Stacks;
 
 })(Backbone, Ov);

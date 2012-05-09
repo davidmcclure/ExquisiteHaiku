@@ -18,8 +18,8 @@ Ov.Views.Word = Backbone.View.extend({
    */
   initialize: function() {
     this.$el.append(this.template()());
-    this.value = this.$el.find('stack-value');
-    this.word = this.$el.find('stack-word');
+    this.value = this.$el.find('.stack-value');
+    this.word = this.$el.find('.stack-word');
   },
 
   /*

@@ -37,6 +37,7 @@ load(
   a+'views/poem-view.js',
   a+'views/blank-view.js',
   a+'views/stack-view.js',
+  a+'views/word-view.js',
 
   // Controllers
   a+'controllers/poem-controller.js',

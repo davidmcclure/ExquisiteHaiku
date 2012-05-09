@@ -25,6 +25,7 @@ Ov.Views.Stack = Backbone.View.extend({
 
     _.times(stack.length, _.bind(function(i) {
 
+      // Get word text.
       var word = stack[i][0];
 
       // If necessary, add row.

@@ -27,7 +27,6 @@ Ov.Views.Stack = Backbone.View.extend({
 
     // Trackers.
     this.rows = [];
-    this.words = {};
 
     // Templates.
     this.__row = this.rowTemplate();
@@ -47,18 +46,14 @@ Ov.Views.Stack = Backbone.View.extend({
 
     _.times(stack.length, _.bind(function(i) {
 
-      // Get word and value.
-      var word = stack[i][0];
-      var value = stack[i][1];
-
       // If necessary, add row.
       if (i > this.rows.length-1) {
-        this.addRow(word);
+        this.addRow();
       }
 
       // Render values.
-      this.rows[i][0].text(value);
-      this.rows[i][1].text(word);
+      this.rows[i][0].text(stack[i][1]);
+      this.rows[i][1].text(stack[i][0]);
 
     }, this));
 
@@ -67,24 +62,19 @@ Ov.Views.Stack = Backbone.View.extend({
   /*
    * Construct and inject a word row.
    *
-   * @param {String} word: The word text.
-   *
    * @return void.
    */
-  addRow: function(word) {
+  addRow: function() {
 
     // Build components.
-    var rowMarkup = $(this.__row());
-    var valueMarkup = $(this.__value());
-    var wordMarkup = $(this.__word());
-    rowMarkup.append(valueMarkup).append(wordMarkup);
+    var row = $(this.__row());
+    var value = $(this.__value());
+    var word = $(this.__word());
+    row.append(value).append(word);
 
-    // Track row and word.
-    this.$el.append(rowMarkup);
-    this.words[word] = wordMarkup;
-
-    // Append and bind events.
-    this.rows.push([valueMarkup, wordMarkup]);
+    // Append and track.
+    this.$el.append(row);
+    this.rows.push([value, word]);
 
   }
 

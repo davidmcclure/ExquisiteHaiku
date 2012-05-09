@@ -3,6 +3,6 @@
 .poem-word{margin-right:4px}
 .submission-stack{position:absolute}
 .submission-word{cursor:pointer}
-#rank,#churn{-webkit-user-select:none;-moz-user-select:none;float:left;}
-#rank .stack-word,#churn .stack-word{text-align:left;cursor:n-resize}
+#rank,#churn{float:left;}
+#rank .stack-word,#churn .stack-word{text-align:left}
 #rank .stack-value,#churn .stack-value{text-align:right}

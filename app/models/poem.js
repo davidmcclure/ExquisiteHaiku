@@ -310,7 +310,7 @@ PoemSchema.methods.newRound = function() {
 /*
  * Add a word to the poem array.
  *
- * @param {string} word: The word.
+ * @param {Function} cb: Callback.
  *
  * @return {Boolean}: True if the word fits in the syllable
  * pattern of the poem, False if not.

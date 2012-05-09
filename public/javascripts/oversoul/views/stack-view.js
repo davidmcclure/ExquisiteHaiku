@@ -4,35 +4,23 @@
 
 Ov.Views.Stack = Backbone.View.extend({
 
-  rowTemplate: function() {
-    return _.template($('#stack-row').html());
-  },
-
-  valueTemplate: function() {
-    return _.template($('#stack-value').html());
-  },
-
   wordTemplate: function() {
-    return _.template($('#stack-word').html());
+    return _.template($(this.options.word).html());
   },
 
   /*
-   * Set container, build markup.
-   *
-   * @param {String} el: The container selector.
+   * Compile word template, initialize trackers.
    *
    * @return void.
    */
   initialize: function() {
 
+    // Word template.
+    this.__word = this.wordTemplate();
+
     // Trackers.
     this.rows = [];
     this.words = {};
-
-    // Templates.
-    this.__row = this.rowTemplate();
-    this.__value = this.valueTemplate();
-    this.__word = this.wordTemplate();
 
   },
 
@@ -45,20 +33,16 @@ Ov.Views.Stack = Backbone.View.extend({
    */
   update: function(stack) {
 
+    // Walk stack data elements.
     _.times(stack.length, _.bind(function(i) {
-
-      // Get word and value.
-      var word = stack[i][0];
-      var value = stack[i][1];
 
       // If necessary, add row.
       if (i > this.rows.length-1) {
-        this.addRow(word);
+        this.addRow(stack[i].word);
       }
 
       // Render values.
-      this.rows[i][0].text(value);
-      this.rows[i][1].text(word);
+      this.rows[i].update(stack[i]);
 
     }, this));
 
@@ -73,18 +57,10 @@ Ov.Views.Stack = Backbone.View.extend({
    */
   addRow: function(word) {
 
-    // Build components.
-    var rowMarkup = $(this.__row());
-    var valueMarkup = $(this.__value());
-    var wordMarkup = $(this.__word());
-    rowMarkup.append(valueMarkup).append(wordMarkup);
-
-    // Track row and word.
-    this.$el.append(rowMarkup);
-    this.words[word] = wordMarkup;
-
-    // Append and bind events.
-    this.rows.push([valueMarkup, wordMarkup]);
+    // Create new word view.
+    var row = new Ov.Views.Word({
+      template: this.__word
+    });
 
   }
 

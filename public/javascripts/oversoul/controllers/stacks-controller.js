@@ -13,9 +13,15 @@ Ov.Controllers.Stacks = (function(Backbone, Ov) {
 
   Ov.addInitializer(function() {
 
-    // Instantiate the stacks.
-    Stacks.RankStack = new Ov.Views.Stack({ el: '#rank' });
-    Stacks.ChurnStack = new Ov.Views.Stack({ el: '#churn' });
+    // Rank stack.
+    Stacks.RankStack = new Ov.Views.Stack({
+      el: '#rank', word: '#rank-word'
+    });
+
+    // Churn stack.
+    Stacks.ChurnStack = new Ov.Views.Stack({
+      el: '#churn', word: '#churn-word'
+    });
 
   });
 

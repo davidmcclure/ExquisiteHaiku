@@ -10,11 +10,13 @@ script(id="submission-stack", type="text/template")
 script(id="submission-word", type="text/template")
   div.submission-word <%= word %>
 
-script(id="stack-row", type="text/template")
+script(id="rank-word", type="text/template")
   tr.stack-row
+    td.stack-ratio
+    td.stack-score
+    td.stack-word
 
-script(id="stack-value", type="text/template")
-  td.stack-value
-
-script(id="stack-word", type="text/template")
-  td.stack-word
+script(id="churn-word", type="text/template")
+  tr.stack-row
+    td.stack-score
+    td.stack-word

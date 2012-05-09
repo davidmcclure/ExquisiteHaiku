@@ -25,9 +25,11 @@ Ov.Views.Stack = Backbone.View.extend({
 
     _.times(stack.length, _.bind(function(i) {
 
+      var word = stack[i][0];
+
       // If necessary, add row.
       if (i > this.rows.length-1) {
-        this.addRow();
+        this.addRow(word);
       }
 
       // Render values.
@@ -40,19 +42,18 @@ Ov.Views.Stack = Backbone.View.extend({
   /*
    * Construct and inject a word row.
    *
+   * @param {String} word: The word text.
+   *
    * @return void.
    */
-  addRow: function() {
+  addRow: function(word) {
 
-    // Build components.
-    var row = $(this.__row());
-    var value = $(this.__value());
-    var word = $(this.__word());
-    row.append(value).append(word);
+    // Build row view.
+    var row = new Ov.Views.Word();
 
     // Append and track.
-    this.$el.append(row);
-    this.rows.push([value, word]);
+    this.$el.append(row.$el);
+    this.rows.push(row);
 
   }
 

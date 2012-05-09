@@ -4,35 +4,14 @@
 
 Ov.Views.Stack = Backbone.View.extend({
 
-  rowTemplate: function() {
-    return _.template($('#stack-row').html());
-  },
-
-  valueTemplate: function() {
-    return _.template($('#stack-value').html());
-  },
-
-  wordTemplate: function() {
-    return _.template($('#stack-word').html());
-  },
-
   /*
-   * Set container, build markup.
-   *
-   * @param {String} el: The container selector.
+   * Initialize trackers.
    *
    * @return void.
    */
   initialize: function() {
-
-    // Trackers.
     this.rows = [];
-
-    // Templates.
-    this.__row = this.rowTemplate();
-    this.__value = this.valueTemplate();
-    this.__word = this.wordTemplate();
-
+    this.words = {};
   },
 
   /*
@@ -52,8 +31,7 @@ Ov.Views.Stack = Backbone.View.extend({
       }
 
       // Render values.
-      this.rows[i][0].text(stack[i][1]);
-      this.rows[i][1].text(stack[i][0]);
+      this.rows[i].update(stack[i]);
 
     }, this));
 

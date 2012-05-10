@@ -30,6 +30,11 @@ module.exports = function(io) {
       Poem.submitWords(id, words, function() {});
     });
 
+    // Apply word vote.
+    socket.on('vote', function(id, word, quantity) {
+      Poem.submitVote(id, word, quantity, function() {});
+    });
+
   });
 
 };

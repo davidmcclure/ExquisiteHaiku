@@ -110,12 +110,17 @@ Ov.Controllers.Stacks = (function(Backbone, Ov) {
   /*
    * Point drag.
    *
+   * @param {String} word: The word.
    * @param {Number} quantity: The drag quantity.
    *
    * @return void.
    */
-  Ov.vent.on('stacks:drag', function(quantity) {
-    console.log(quantity);
+  Ov.vent.on('stacks:drag', function(word, quantity) {
+
+    // Propagate the quantity.
+    Stacks.RankStack.propagateDrag(word, quantity);
+    Stacks.ChurnStack.propagateDrag(word, quantity);
+
   });
 
   return Stacks;

@@ -153,9 +153,21 @@ Ov.Views.Stack = Backbone.View.extend({
    * @return void.
    */
   unSelect: function(word) {
-    if (word === this.selectWord) return;
     this.wordsToRows[word].unSelect();
     this.selectWord = null;
+  },
+
+  /*
+   * Propagate a drag quantity to its word.
+   *
+   * @param {String} word: The word text.
+   * @param {Number} quantity: The quantity.
+   *
+   * @return void.
+   */
+  propagateDrag: function(word, quantity) {
+    // console.log(word, quantity);
+    this.wordsToRows[word].quantity = quantity;
   }
 
 });

@@ -59,18 +59,34 @@ Ov.Views.Word = Backbone.View.extend({
    */
   addDrag: function(event) {
 
+    // Reset listeners.
+    $(window).unbind('keydown');
+
+    // Capture starting quantity.
+    var quantity = this.quantity;
     var total = 0;
+
     $(window).bind({
 
+      // Drag.
       'mousemove': _.bind(function(e) {
         var deltaY = event.pageY - e.pageY;
-        total = this.quantity + deltaY;
-        Ov.vent.trigger('stacks:drag', total);
+        total = quantity + deltaY;
+        Ov.vent.trigger('stacks:drag', this.word, total);
       }, this),
 
+      // Release.
       'mouseup': _.bind(function() {
         $(window).unbind('mousemove');
-        this.quantity = total;
+      }, this),
+
+      // Enter.
+      'keydown': _.bind(function(e) {
+        $(window).unbind('mousemove');
+        if (e.keyCode == 13) {
+          Ov.vent.trigger('socket:vote', this.word, total);
+          Ov.vent.trigger('stacks:unselect', this.word);
+        }
       }, this)
 
     });
@@ -112,6 +128,7 @@ Ov.Views.Word = Backbone.View.extend({
    * @return void.
    */
   onSelect: function(event) {
+    Ov.vent.trigger('stacks:unhover', this.word);
     Ov.vent.trigger('stacks:select', this.word);
     this.addDrag(event);
   },
@@ -160,7 +177,6 @@ Ov.Views.Word = Backbone.View.extend({
    */
   unSelect: function() {
     this.wordMarkup.removeClass('select');
-    this.quantity = 0;
   }
 
 });

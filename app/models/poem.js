@@ -442,7 +442,7 @@ PoemSchema.methods.vote = function(word, quantity) {
 /*
  * Check to see if a word is valid and fits in the poem.
  *
- * @param {Number} id: The poem id.
+ * @param {String} id: The poem id.
  * @param {String} word: The word.
  * @param {Function} cb: The callback.
  *
@@ -474,7 +474,7 @@ PoemSchema.statics.validateWord = function(id, word, cb) {
 /*
  * Ingest blind word submissions.
  *
- * @param {Number} id: The poem id.
+ * @param {String} id: The poem id.
  * @param {Array} words: The words.
  * @param {Function} cb: Callback.
  *
@@ -492,6 +492,27 @@ PoemSchema.statics.submitWords = function(id, words, cb) {
 
     cb();
 
+  });
+
+};
+
+
+/*
+ * Apply a point allocation.
+ *
+ * @param {String} id: The poem id.
+ * @param {String} word: The word.
+ * @param {Number} quantity: The vote quantity.
+ * @param {Function} cb: Callback.
+ *
+ * @return void.
+ */
+PoemSchema.statics.submitVote = function(id, word, quantity, cb) {
+
+  // Get poem, apply vote.
+  this.findById(id, function(err, poem) {
+    poem.vote(word, quantity);
+    cb();
   });
 
 };

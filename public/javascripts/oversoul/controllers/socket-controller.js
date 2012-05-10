@@ -36,6 +36,9 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
   /*
    * Validate a word.
    *
+   * @param {String} word: The word.
+   * @param {Function} cb: Callback.
+   *
    * @return void.
    */
   Ov.vent.on('socket:validate', function(word, cb) {
@@ -49,12 +52,30 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
   /*
    * Submit words.
    *
+   * @param {Array} words: The words.
+   * @param {Function} cb: Callback.
+   *
    * @return void.
    */
   Ov.vent.on('socket:submit', function(words, cb) {
 
     // Save submissions.
     Socket.s.emit('submit', Poem._id, words);
+
+  });
+
+  /*
+   * Commit allocation.
+   *
+   * @param {String} word: The word.
+   * @param {Number} quantity: The vote quantity.
+   *
+   * @return void.
+   */
+  Ov.vent.on('socket:vote', function(word, quantity) {
+
+    // Save submissions.
+    Socket.s.emit('vote', Poem._id, word, quantity);
 
   });
 

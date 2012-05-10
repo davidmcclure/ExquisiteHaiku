@@ -502,16 +502,16 @@ PoemSchema.statics.submitWords = function(id, words, cb) {
  *
  * @param {String} id: The poem id.
  * @param {String} word: The word.
- * @param {Number} quantity: The vote quantity.
+ * @param {Number} qty: The vote quantity.
  * @param {Function} cb: Callback.
  *
  * @return void.
  */
-PoemSchema.statics.submitVote = function(id, word, quantity, cb) {
+PoemSchema.statics.submitVote = function(id, word, qty, cb) {
 
   // Get poem, apply vote.
   this.findById(id, function(err, poem) {
-    poem.vote(word, quantity);
+    poem.vote(word, qty);
     cb();
   });
 

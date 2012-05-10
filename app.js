@@ -45,7 +45,6 @@ modelFiles.forEach(function(file) {
 
 // Run Socket.io.
 var io = require('socket.io').listen(app);
-require('./sockets')(io);
 
 // Bootstrap controllers.
 var controllersPath = __dirname + '/app/controllers';

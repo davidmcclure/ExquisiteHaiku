@@ -11,6 +11,11 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
   // Initialization.
   // ---------------
 
+  /*
+   * Instantiate Socket.io and connect to the room.
+   *
+   * @return void.
+   */
   Ov.addInitializer(function() {
 
     Socket.s = io.connect();
@@ -42,15 +47,12 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('socket:validate', function(word, cb) {
-
-    // Hit Poem.validateWord() on the server.
     var vcb = function(valid) { cb(valid); };
     Socket.s.emit('validate', Poem._id, word, vcb);
-
   });
 
   /*
-   * Submit words.
+   * Save blind submissions.
    *
    * @param {Array} words: The words.
    * @param {Function} cb: Callback.
@@ -58,14 +60,11 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('socket:submit', function(words, cb) {
-
-    // Save submissions.
     Socket.s.emit('submit', Poem._id, words);
-
   });
 
   /*
-   * Commit allocation.
+   * Save vote.
    *
    * @param {String} word: The word.
    * @param {Number} quantity: The vote quantity.
@@ -73,10 +72,7 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('socket:vote', function(word, quantity) {
-
-    // Save submissions.
     Socket.s.emit('vote', Poem._id, word, quantity);
-
   });
 
   return Socket;

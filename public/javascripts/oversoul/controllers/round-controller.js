@@ -11,11 +11,13 @@ Ov.Controllers.Round = (function(Backbone, Ov) {
   // Initialization.
   // ---------------
 
+  /*
+   * Instantiate round collection.
+   *
+   * @return void.
+   */
   Ov.addInitializer(function() {
-
-    // Instantiate round collection.
     Round.RoundCollection = new Ov.Collections.Round();
-
   });
 
 
@@ -24,7 +26,8 @@ Ov.Controllers.Round = (function(Backbone, Ov) {
   // -------
 
   /*
-   * On incoming data slice.
+   * Process the incoming round id and emit the current
+   * application state.
    *
    * @param {Object} data: The incoming slice data.
    *
@@ -56,8 +59,8 @@ Ov.Controllers.Round = (function(Backbone, Ov) {
   });
 
   /*
-   * When words are submitted, store the round id in the local
-   * list of rounds for which words have been submitted.
+   * When words are submitted, store the current round id
+   * in the list of rounds that have been submitted.
    *
    * @return void.
    */

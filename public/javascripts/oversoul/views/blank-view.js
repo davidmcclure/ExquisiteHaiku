@@ -30,9 +30,15 @@ Ov.Views.Blank = Backbone.View.extend({
     this.words = [];
     this.cache = { valid: [], invalid: [] };
     this.frozen = false;
+    this.voting = false;
 
     // Submissions stack.
     this.stack = $(this.__stack());
+
+    // Bind events.
+    this.$el.keyup(_.bind(function(e) {
+      if (!this.voting) this.processKeystroke(e);
+    }, this));
 
   },
 
@@ -76,20 +82,6 @@ Ov.Views.Blank = Backbone.View.extend({
       'top': offset.top + height,
       'left': offset.left
     });
-
-  },
-
-  /*
-   * Bind submission functionality.
-   *
-   * @return void.
-   */
-  activateSubmit: function() {
-
-    // Bind events.
-    this.$el.keyup(_.bind(function(e) {
-      this.processKeystroke(e);
-    }, this));
 
   },
 

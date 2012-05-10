@@ -11,12 +11,14 @@ Ov.Controllers.Stacks = (function(Backbone, Ov) {
   // Initialization.
   // ---------------
 
+  /*
+   * Instantiate the stacks.
+   *
+   * @return void.
+   */
   Ov.addInitializer(function() {
-
-    // Instantiate the stacks.
     Stacks.RankStack = new Ov.Views.Stack({ el: '#rank' });
     Stacks.ChurnStack = new Ov.Views.Stack({ el: '#churn' });
-
   });
 
 
@@ -25,48 +27,39 @@ Ov.Controllers.Stacks = (function(Backbone, Ov) {
   // -------
 
   /*
-   * On incoming data slice.
+   * Propagate incoming stack data.
    *
    * @param {Object} data: The incoming slice data.
    *
    * @return void.
    */
   Ov.vent.on('socket:slice', function(data) {
-
-    // Render the new stack data.
     Stacks.RankStack.update(data.stacks.rank);
     Stacks.ChurnStack.update(data.stacks.churn);
-
   });
 
   /*
-   * Add hover to stack word.
+   * Apply a word hover.
    *
    * @param {String} word: The hovered word.
    *
    * @return void.
    */
   Ov.vent.on('stacks:hover', function(word) {
-
-    // Manifest the highlight.
     Stacks.RankStack.hover(word);
     Stacks.ChurnStack.hover(word);
-
   });
 
   /*
-   * Remove hover from stack word.
+   * Remove a word hover.
    *
    * @param {String} word: The hovered word.
    *
    * @return void.
    */
   Ov.vent.on('stacks:unhover', function(word) {
-
-    // Manifest the highlight.
     Stacks.RankStack.unHover(word);
     Stacks.ChurnStack.unHover(word);
-
   });
 
   /*
@@ -89,7 +82,7 @@ Ov.Controllers.Stacks = (function(Backbone, Ov) {
   });
 
   /*
-   * Deselect.
+   * Deselect a word.
    *
    * @param {String} word: The hovered word.
    *
@@ -108,7 +101,7 @@ Ov.Controllers.Stacks = (function(Backbone, Ov) {
   });
 
   /*
-   * Point drag.
+   * Propagate a word drag value.
    *
    * @param {String} word: The word.
    * @param {Number} quantity: The drag quantity.
@@ -116,11 +109,8 @@ Ov.Controllers.Stacks = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('stacks:drag', function(word, quantity) {
-
-    // Propagate the quantity.
     Stacks.RankStack.propagateDrag(word, quantity);
     Stacks.ChurnStack.propagateDrag(word, quantity);
-
   });
 
   return Stacks;

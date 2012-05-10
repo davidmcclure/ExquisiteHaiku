@@ -64,6 +64,34 @@ Ov.Controllers.Poem = (function(Backbone, Ov) {
 
   });
 
+  /*
+   * When a word is hovered in the stacks.
+   *
+   * @param {String} word: The word.
+   *
+   * @return void.
+   */
+  Ov.vent.on('stacks:hover', function(word) {
+
+    // Render preview.
+    Poem.BlankView.showPreview(word);
+
+  });
+
+  /*
+   * When a word is unhovered in the stacks.
+   *
+   * @param {String} word: The word.
+   *
+   * @return void.
+   */
+  Ov.vent.on('stacks:unhover', function(word) {
+
+    // Render preview.
+    Poem.BlankView.hidePreview();
+
+  });
+
   return Poem;
 
 })(Backbone, Ov);

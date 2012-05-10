@@ -121,15 +121,6 @@ Ov.Views.Blank = Backbone.View.extend({
   },
 
   /*
-   * Build voting functionality.
-   *
-   * @return void.
-   */
-  activateVote: function() {
-
-  },
-
-  /*
    * Add new word to submission stack.
    *
    * @param {String} word: The word.
@@ -244,6 +235,28 @@ Ov.Views.Blank = Backbone.View.extend({
       return w === word ? false : true;
     });
 
+  },
+
+  /*
+   * Preview a hovered word in the blank.
+   *
+   * @param {String} word: The word.
+   *
+   * @return void.
+   */
+  showPreview: function(word) {
+    this.$el.addClass('preview');
+    this.$el.val(word);
+  },
+
+  /*
+   * Remove preview.
+   *
+   * @return void.
+   */
+  hidePreview: function() {
+    this.$el.removeClass('preview');
+    this.$el.val('');
   }
 
 });

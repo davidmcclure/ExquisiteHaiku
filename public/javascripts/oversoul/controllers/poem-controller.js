@@ -65,6 +65,18 @@ Ov.Controllers.Poem = (function(Backbone, Ov) {
   });
 
   /*
+   * When a word is selected.
+   *
+   * @return void.
+   */
+  Ov.vent.on('stacks:select', function() {
+
+    // Freeze the blank.
+    Poem.BlankView.freeze();
+
+  });
+
+  /*
    * When a word is hovered in the stacks.
    *
    * @param {String} word: The word.

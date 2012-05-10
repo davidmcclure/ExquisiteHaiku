@@ -29,6 +29,7 @@ Ov.Views.Blank = Backbone.View.extend({
     // Trackers.
     this.words = [];
     this.cache = { valid: [], invalid: [] };
+    this.frozen = false;
 
     // Submissions stack.
     this.stack = $(this.__stack());
@@ -245,6 +246,7 @@ Ov.Views.Blank = Backbone.View.extend({
    * @return void.
    */
   showPreview: function(word) {
+    if (this.frozen) return;
     this.$el.addClass('preview');
     this.$el.val(word);
   },
@@ -255,8 +257,27 @@ Ov.Views.Blank = Backbone.View.extend({
    * @return void.
    */
   hidePreview: function() {
+    if (this.frozen) return;
     this.$el.removeClass('preview');
     this.$el.val('');
+  },
+
+  /*
+   * Freeze preview rendering.
+   *
+   * @return void.
+   */
+  freeze: function() {
+    this.frozen = true;
+  },
+
+  /*
+   * Unfreeze preview rendering.
+   *
+   * @return void.
+   */
+  unFreeze: function() {
+    this.frozen = false;
   }
 
 });

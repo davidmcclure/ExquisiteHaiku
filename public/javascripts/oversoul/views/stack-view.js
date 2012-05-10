@@ -108,6 +108,7 @@ Ov.Views.Stack = Backbone.View.extend({
    * @return void.
    */
   hover: function(word) {
+    if (this.frozen) return;
     this.wordsToRows[word].hover();
     this.hoverWord = word;
   },
@@ -120,6 +121,7 @@ Ov.Views.Stack = Backbone.View.extend({
    * @return void.
    */
   unHover: function(word) {
+    if (this.frozen) return;
     this.wordsToRows[word].unHover();
     this.hoverWord = null;
   },
@@ -151,6 +153,7 @@ Ov.Views.Stack = Backbone.View.extend({
    * @return void.
    */
   unSelect: function(word) {
+    if (word === this.selectWord) return;
     this.wordsToRows[word].unSelect();
     this.selectWord = null;
   }

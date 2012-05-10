@@ -33,6 +33,7 @@ Ov.Views.Word = Backbone.View.extend({
 
     // Trackers.
     this.word = null;
+    this.quantity = 0;
 
   },
 
@@ -47,6 +48,42 @@ Ov.Views.Word = Backbone.View.extend({
     this.wordMarkup.text(data[0]);
     this.valueMarkup.text(data[1]);
     this.word = data[0];
+  },
+
+  /*
+   * Bind drag listener.
+   *
+   * @param {Object} event: The mousedown event.
+   *
+   * @return void.
+   */
+  addDrag: function(event) {
+
+    var total = 0;
+    $(window).bind({
+
+      'mousemove': _.bind(function(e) {
+        var deltaY = event.pageY - e.pageY;
+        total = this.quantity + deltaY;
+        Ov.vent.trigger('stacks:drag', total);
+      }, this),
+
+      'mouseup': _.bind(function() {
+        $(window).unbind('mousemove');
+        this.quantity = total;
+      }, this)
+
+    });
+
+  },
+
+  /*
+   * Remove drag listener.
+   *
+   * @return void.
+   */
+  removeDrag: function() {
+
   },
 
   /*
@@ -70,10 +107,23 @@ Ov.Views.Word = Backbone.View.extend({
   /*
    * On click on the word text.
    *
+   * @param {Object} event: The mousedown event.
+   *
    * @return void.
    */
-  onSelect: function() {
+  onSelect: function(event) {
     Ov.vent.trigger('stacks:select', this.word);
+    this.addDrag(event);
+  },
+
+  /*
+   * On clickout from selection.
+   *
+   * @return void.
+   */
+  onUnSelect: function() {
+    Ov.vent.trigger('stacks:unselect', this.word);
+    this.removeDrag();
   },
 
   /*
@@ -110,7 +160,7 @@ Ov.Views.Word = Backbone.View.extend({
    */
   unSelect: function() {
     this.wordMarkup.removeClass('select');
+    this.quantity = 0;
   }
 
 });
-

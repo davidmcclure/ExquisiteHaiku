@@ -48,7 +48,7 @@ Ov.Controllers.Stacks = (function(Backbone, Ov) {
    */
   Ov.vent.on('stacks:hover', function(word) {
 
-    // Manifest the highlight on all stacks.
+    // Manifest the highlight.
     Stacks.RankStack.hover(word);
     Stacks.ChurnStack.hover(word);
 
@@ -63,7 +63,7 @@ Ov.Controllers.Stacks = (function(Backbone, Ov) {
    */
   Ov.vent.on('stacks:unhover', function(word) {
 
-    // Manifest the highlight on all stacks.
+    // Manifest the highlight.
     Stacks.RankStack.unHover(word);
     Stacks.ChurnStack.unHover(word);
 
@@ -82,10 +82,40 @@ Ov.Controllers.Stacks = (function(Backbone, Ov) {
     Stacks.RankStack.freeze();
     Stacks.ChurnStack.freeze();
 
-    // Manifest the highlight on all stacks.
+    // Manifest the selection.
     Stacks.RankStack.select(word);
     Stacks.ChurnStack.select(word);
 
+  });
+
+  /*
+   * Deselect.
+   *
+   * @param {String} word: The hovered word.
+   *
+   * @return void.
+   */
+  Ov.vent.on('stacks:unselect', function(word) {
+
+    // Unfreeze stacks.
+    Stacks.RankStack.unFreeze();
+    Stacks.ChurnStack.unFreeze();
+
+    // Remove the selection.
+    Stacks.RankStack.unSelect(word);
+    Stacks.ChurnStack.unSelect(word);
+
+  });
+
+  /*
+   * Point drag.
+   *
+   * @param {Number} quantity: The drag quantity.
+   *
+   * @return void.
+   */
+  Ov.vent.on('stacks:drag', function(quantity) {
+    console.log(quantity);
   });
 
   return Stacks;

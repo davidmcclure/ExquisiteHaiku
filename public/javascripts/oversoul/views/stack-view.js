@@ -13,7 +13,6 @@ Ov.Views.Stack = Backbone.View.extend({
 
     // Buckets.
     this.wordRows = [];
-    this.wordsToRows = {};
 
     // Trackers.
     this.hoverWord = null;
@@ -44,7 +43,6 @@ Ov.Views.Stack = Backbone.View.extend({
 
       // Render values.
       this.wordRows[i].update(stack[i]);
-      this.wordsToRows[word] = this.wordRows[i];
 
     }, this));
 
@@ -114,7 +112,6 @@ Ov.Views.Stack = Backbone.View.extend({
    */
   empty: function() {
     this.wordRows = [];
-    this.wordsToRows = {};
     this.$el.empty();
   }
 

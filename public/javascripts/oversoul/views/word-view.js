@@ -84,47 +84,6 @@ Ov.Views.Word = Backbone.View.extend({
   },
 
   /*
-   * Render hover.
-   *
-   * @return void.
-   */
-  hover: function() {
-    Ov.vent.trigger('stacks:hover', this.word);
-    this.wordMarkup.addClass('hover');
-  },
-
-  /*
-   * Remove hover.
-   *
-   * @return void.
-   */
-  unHover: function() {
-    Ov.vent.trigger('stacks:unhover', this.word);
-    this.wordMarkup.removeClass('hover');
-  },
-
-  /*
-   * Render selection.
-   *
-   * @return void.
-   */
-  select: function() {
-    Ov.vent.trigger('stacks:select');
-    this.wordMarkup.addClass('select');
-    this.addDrag(event);
-  },
-
-  /*
-   * Remove selection.
-   *
-   * @return void.
-   */
-  unSelect: function() {
-    Ov.vent.trigger('stacks:unselect');
-    this.wordMarkup.removeClass('select');
-  },
-
-  /*
    * Process drag mousemove.
    *
    * @param {Object} initEvent: The initiating click event.
@@ -168,17 +127,59 @@ Ov.Views.Word = Backbone.View.extend({
   onDragKeydown: function(event) {
 
     // If the spacebar was pressed.
-    if (e.keyCode == 32) {
+    if (event.keyCode == 32) {
 
       // Strip events, unselect.
       $(window).unbind('mouseup.drag keydown.drag');
       this.unSelect();
 
       // Broadcast the vote.
-      Ov.vent.trigger('socket:vote', this.word, total);
+      var currentTotal = this.dragDelta + this.dragTotal;
+      Ov.vent.trigger('socket:vote', this.word, currentTotal);
 
     }
 
+  },
+
+  /*
+   * Render hover.
+   *
+   * @return void.
+   */
+  hover: function() {
+    Ov.vent.trigger('stacks:hover', this.word);
+    this.wordMarkup.addClass('hover');
+  },
+
+  /*
+   * Remove hover.
+   *
+   * @return void.
+   */
+  unHover: function() {
+    Ov.vent.trigger('stacks:unhover', this.word);
+    this.wordMarkup.removeClass('hover');
+  },
+
+  /*
+   * Render selection.
+   *
+   * @return void.
+   */
+  select: function() {
+    Ov.vent.trigger('stacks:select');
+    this.wordMarkup.addClass('select');
+    this.addDrag(event);
+  },
+
+  /*
+   * Remove selection.
+   *
+   * @return void.
+   */
+  unSelect: function() {
+    Ov.vent.trigger('stacks:unselect');
+    this.wordMarkup.removeClass('select');
   }
 
 });

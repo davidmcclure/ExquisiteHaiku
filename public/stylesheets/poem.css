@@ -3,7 +3,7 @@ body{-webkit-user-select:none;-moz-user-select:none}
 .submission-stack{position:absolute}
 .submission-word{cursor:pointer}
 #rank,#churn{float:left;}
-#rank .stack-word,#churn .stack-word{text-align:left;cursor:n-resize;}
+#rank .stack-word,#churn .stack-word{text-align:left;cursor:ns-resize;}
 #rank .stack-word.hover,#churn .stack-word.hover{color:#2260ff}
 #rank .stack-word.select,#churn .stack-word.select{color:#f00}
 #rank .stack-value,#churn .stack-value{text-align:right}

@@ -32,20 +32,12 @@ Ov.Views.Stack = Backbone.View.extend({
   update: function(stack) {
 
     // If frozen, break.
-    if (this.frozen) return;
-
-    // Unhover hovered word.
-    if (!_.isNull(this.hoverWord)) {
-      console.log(this.hoverWord, this.wordsToRows);
-      this.wordsToRows[this.hoverWord].unHover();
-    }
+    if (this.frozen || !this.visible) return;
 
     _.times(stack.length, _.bind(function(i) {
 
-      // Get word text.
+      // Get word, add row.
       var word = stack[i][0];
-
-      // If necessary, add row.
       if (i > this.wordRows.length-1) {
         this.addRow(word);
       }
@@ -55,11 +47,6 @@ Ov.Views.Stack = Backbone.View.extend({
       this.wordsToRows[word] = this.wordRows[i];
 
     }, this));
-
-    // Re-hover hovered word.
-    if (!_.isNull(this.hoverWord)) {
-      this.wordsToRows[this.hoverWord].hover();
-    }
 
   },
 
@@ -102,72 +89,22 @@ Ov.Views.Stack = Backbone.View.extend({
   },
 
   /*
-   * Render a word hover.
-   *
-   * @param {String} word: The word text.
+   * Show stacks.
    *
    * @return void.
    */
-  hover: function(word) {
-    if (this.frozen) return;
-    this.wordsToRows[word].hover();
-    this.hoverWord = word;
+  show: function() {
+    this.visible = true;
   },
 
   /*
-   * Remove a word hover.
-   *
-   * @param {String} word: The word text.
+   * Hide stacks.
    *
    * @return void.
    */
-  unHover: function(word) {
-    if (this.frozen) return;
-    this.wordsToRows[word].unHover();
-    this.hoverWord = null;
-  },
-
-  /*
-   * Select a word.
-   *
-   * @param {String} word: The word text.
-   *
-   * @return void.
-   */
-  select: function(word) {
-
-    // Unselect selected word.
-    if (!_.isNull(this.selectWord)) {
-      this.unSelect(this.selectWord);
-    }
-
-    this.wordsToRows[word].select();
-    this.selectWord = word;
-
-  },
-
-  /*
-   * Unselect a word.
-   *
-   * @param {String} word: The word text.
-   *
-   * @return void.
-   */
-  unSelect: function(word) {
-    this.wordsToRows[word].unSelect();
-    this.selectWord = null;
-  },
-
-  /*
-   * Propagate a drag quantity to its word.
-   *
-   * @param {String} word: The word text.
-   * @param {Number} quantity: The quantity.
-   *
-   * @return void.
-   */
-  propagateDrag: function(word, quantity) {
-    this.wordsToRows[word].quantity = quantity;
+  hide: function() {
+    this.visible = false;
+    this.empty();
   },
 
   /*

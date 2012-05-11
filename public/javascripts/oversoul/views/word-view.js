@@ -12,9 +12,9 @@ Ov.Views.Word = Backbone.View.extend({
   },
 
   events: {
-    'mouseenter .stack-word':   'onHover',
-    'mouseleave .stack-word':   'onUnHover',
-    'mousedown .stack-word':    'onSelect'
+    'mouseenter .stack-word':   'hover',
+    'mouseleave .stack-word':   'unHover',
+    'mousedown .stack-word':    'select'
   },
 
   /*
@@ -33,7 +33,6 @@ Ov.Views.Word = Backbone.View.extend({
 
     // Trackers.
     this.word = null;
-    this.quantity = 0;
 
   },
 
@@ -61,76 +60,33 @@ Ov.Views.Word = Backbone.View.extend({
 
     // Reset listeners.
     $(window).unbind('keydown');
-
-    // Capture starting quantity.
-    var quantity = this.quantity;
-    var total = 0;
+    var total = 0; var delta = 0;
 
     $(window).bind({
 
       // Drag.
       'mousemove': _.bind(function(e) {
-        var deltaY = event.pageY - e.pageY;
-        total = quantity + deltaY;
-        Ov.vent.trigger('stacks:drag', this.word, total);
-        console.log(total);
+        delta = event.pageY - e.pageY;
+        Ov.vent.trigger('stacks:drag', this.word, total + delta);
       }, this),
 
       // Release.
       'mouseup': _.bind(function() {
         $(window).unbind('mousemove');
+        total += delta;
       }, this),
 
-      // Enter.
+      // Spacebar.
       'keydown': _.bind(function(e) {
-        if (e.keyCode == 13) {
+        if (e.keyCode == 32) {
           Ov.vent.trigger('socket:vote', this.word, total);
-          Ov.vent.trigger('stacks:unselect', this.word);
-          $(window).unbind('mousemove keydown');
+          $(window).unbind('mouseup keydown');
+          this.unSelect();
         }
       }, this)
 
     });
 
-  },
-
-  /*
-   * On hover on the word text.
-   *
-   * @return void.
-   */
-  onHover: function() {
-    Ov.vent.trigger('stacks:hover', this.word);
-  },
-
-  /*
-   * On unhover on the word text.
-   *
-   * @return void.
-   */
-  onUnHover: function() {
-    Ov.vent.trigger('stacks:unhover', this.word);
-  },
-
-  /*
-   * On click on the word text.
-   *
-   * @param {Object} event: The mousedown event.
-   *
-   * @return void.
-   */
-  onSelect: function(event) {
-    Ov.vent.trigger('stacks:select', this.word);
-    this.addDrag(event);
-  },
-
-  /*
-   * On clickout from selection.
-   *
-   * @return void.
-   */
-  onUnSelect: function() {
-    Ov.vent.trigger('stacks:unselect', this.word);
   },
 
   /*
@@ -157,7 +113,9 @@ Ov.Views.Word = Backbone.View.extend({
    * @return void.
    */
   select: function() {
+    Ov.vent.trigger('stacks:select');
     this.wordMarkup.addClass('select');
+    this.addDrag(event);
   },
 
   /*
@@ -166,6 +124,7 @@ Ov.Views.Word = Backbone.View.extend({
    * @return void.
    */
   unSelect: function() {
+    Ov.vent.trigger('stacks:unselect');
     this.wordMarkup.removeClass('select');
   }
 

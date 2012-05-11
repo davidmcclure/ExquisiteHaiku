@@ -33,6 +33,8 @@ Ov.Views.Word = Backbone.View.extend({
 
     // Trackers.
     this.word = null;
+    this.dragTotal = 0;
+    this.dragDelta = 0;
 
   },
 
@@ -58,31 +60,23 @@ Ov.Views.Word = Backbone.View.extend({
    */
   addDrag: function(event) {
 
-    // Reset listeners.
+    // Reset listeners and trackers.
     $(window).unbind('keydown');
-    var total = 0; var delta = 0;
+    this.dragTotal = 0;
+    this.dragDelta = 0;
 
     $(window).bind({
 
-      // Drag.
-      'mousemove': _.bind(function(e) {
-        delta = event.pageY - e.pageY;
-        Ov.vent.trigger('stacks:drag', this.word, total + delta);
+      'mousemove.drag': _.bind(function(e) {
+        this.onDragTick(event, e);
       }, this),
 
-      // Release.
-      'mouseup': _.bind(function() {
-        $(window).unbind('mousemove');
-        total += delta;
+      'mouseup.drag': _.bind(function() {
+        this.onDragComplete();
       }, this),
 
-      // Spacebar.
-      'keydown': _.bind(function(e) {
-        if (e.keyCode == 32) {
-          Ov.vent.trigger('socket:vote', this.word, total);
-          $(window).unbind('mouseup keydown');
-          this.unSelect();
-        }
+      'keydown.drag': _.bind(function(e) {
+        this.onDragKeydown(e);
       }, this)
 
     });
@@ -95,6 +89,7 @@ Ov.Views.Word = Backbone.View.extend({
    * @return void.
    */
   hover: function() {
+    Ov.vent.trigger('stacks:hover', this.word);
     this.wordMarkup.addClass('hover');
   },
 
@@ -104,6 +99,7 @@ Ov.Views.Word = Backbone.View.extend({
    * @return void.
    */
   unHover: function() {
+    Ov.vent.trigger('stacks:unhover', this.word);
     this.wordMarkup.removeClass('hover');
   },
 
@@ -126,6 +122,63 @@ Ov.Views.Word = Backbone.View.extend({
   unSelect: function() {
     Ov.vent.trigger('stacks:unselect');
     this.wordMarkup.removeClass('select');
+  },
+
+  /*
+   * Process drag mousemove.
+   *
+   * @param {Object} initEvent: The initiating click event.
+   * @param {Object} dragEvent: The current mousemove event.
+   *
+   * @return void.
+   */
+  onDragTick: function(initEvent, dragEvent) {
+
+    // Get drag delta and current drag total.
+    this.dragDelta = initEvent.pageY - dragEvent.pageY;
+    var currentTotal = this.dragDelta + this.dragTotal;
+
+    // Broadcast the drag tick.
+    Ov.vent.trigger('stacks:drag', this.word, currentTotal);
+
+  },
+
+  /*
+   * Process drag mouseup.
+   *
+   * @return void.
+   */
+  onDragComplete: function() {
+
+    // Unbind mousemove event.
+    $(window).unbind('mousemove.drag');
+
+    // Commit drag total.
+    this.dragTotal += this.dragDelta;
+
+  },
+
+  /*
+   * Process drag keydown.
+   *
+   * @param {Object} event: The keydown event.
+   *
+   * @return void.
+   */
+  onDragKeydown: function(event) {
+
+    // If the spacebar was pressed.
+    if (e.keyCode == 32) {
+
+      // Strip events, unselect.
+      $(window).unbind('mouseup.drag keydown.drag');
+      this.unSelect();
+
+      // Broadcast the vote.
+      Ov.vent.trigger('socket:vote', this.word, total);
+
+    }
+
   }
 
 });

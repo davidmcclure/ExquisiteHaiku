@@ -26,20 +26,53 @@ Ov.Views.Blank = Backbone.View.extend({
     this.__stack = this.stackTemplate();
     this.__word = this.wordTemplate();
 
-    // Trackers.
+    // Buckets.
     this.words = [];
     this.cache = { valid: [], invalid: [] };
+
+    // Trackers.
     this.frozen = false;
     this.voting = false;
 
     // Submissions stack.
     this.stack = $(this.__stack());
 
-    // Bind events.
+    // Listen for keystroke.
     this.$el.keyup(_.bind(function(e) {
       if (!this.voting) this.processKeystroke(e);
     }, this));
 
+  },
+
+  /*
+   * Activate submission mode.
+   *
+   * @return void.
+   */
+  activateSubmit: function() {
+
+    // Break if not voting.
+    if (!this.voting) return;
+
+    // Reset attributes.
+    this.voting = false;
+    this.words = [];
+    this.cache.valid = [];
+    this.cache.invalid = [];
+
+    // Clear the stack.
+    this.stack.empty();
+
+  },
+
+  /*
+   * Activate voting mode.
+   *
+   * @return void.
+   */
+  activateVote: function() {
+    this.stack.detach();
+    this.voting = true;
   },
 
   /*
@@ -97,17 +130,24 @@ Ov.Views.Blank = Backbone.View.extend({
     // Get word.
     var word = this.$el.val();
 
+    // Enter keystroke.
+    if (event.keyCode == 13) {
+      this.validateWord(word, _.bind(function(valid) {
+        if (valid) this.addWord(word);
+      }, this));
+    }
+
+    // ** dev: submit with control.
+    else if (event.keyCode == 17) {
+      if (this.words.length >= Poem.minSubmissions) {
+        Ov.vent.trigger('socket:submit', this.words);
+      }
+    }
+
     // Regular keystroke.
     if (event.keyCode !== 13) {
       this.validateWord(word, _.bind(function(valid) {
         this.cacheValidation(word, valid);
-      }, this));
-    }
-
-    // When enter is pressed.
-    else {
-      this.validateWord(word, _.bind(function(valid) {
-        if (valid) this.addWord(word);
       }, this));
     }
 

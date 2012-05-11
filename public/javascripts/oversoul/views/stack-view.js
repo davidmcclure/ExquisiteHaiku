@@ -11,11 +11,11 @@ Ov.Views.Stack = Backbone.View.extend({
    */
   initialize: function() {
 
-    // Trackers.
+    // Buckets.
     this.wordRows = [];
     this.wordsToRows = {};
 
-    // Statuses.
+    // Trackers.
     this.hoverWord = null;
     this.selectWord = null;
     this.frozen = false;
@@ -36,6 +36,7 @@ Ov.Views.Stack = Backbone.View.extend({
 
     // Unhover hovered word.
     if (!_.isNull(this.hoverWord)) {
+      console.log(this.hoverWord, this.wordsToRows);
       this.wordsToRows[this.hoverWord].unHover();
     }
 
@@ -166,8 +167,18 @@ Ov.Views.Stack = Backbone.View.extend({
    * @return void.
    */
   propagateDrag: function(word, quantity) {
-    // console.log(word, quantity);
     this.wordsToRows[word].quantity = quantity;
+  },
+
+  /*
+   * Empty words.
+   *
+   * @return void.
+   */
+  empty: function() {
+    this.wordRows = [];
+    this.wordsToRows = {};
+    this.$el.empty();
   }
 
 });

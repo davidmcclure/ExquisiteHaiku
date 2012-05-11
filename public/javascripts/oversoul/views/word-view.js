@@ -73,6 +73,7 @@ Ov.Views.Word = Backbone.View.extend({
         var deltaY = event.pageY - e.pageY;
         total = quantity + deltaY;
         Ov.vent.trigger('stacks:drag', this.word, total);
+        console.log(total);
       }, this),
 
       // Release.
@@ -82,23 +83,14 @@ Ov.Views.Word = Backbone.View.extend({
 
       // Enter.
       'keydown': _.bind(function(e) {
-        $(window).unbind('mousemove');
         if (e.keyCode == 13) {
           Ov.vent.trigger('socket:vote', this.word, total);
           Ov.vent.trigger('stacks:unselect', this.word);
+          $(window).unbind('mousemove keydown');
         }
       }, this)
 
     });
-
-  },
-
-  /*
-   * Remove drag listener.
-   *
-   * @return void.
-   */
-  removeDrag: function() {
 
   },
 
@@ -128,7 +120,6 @@ Ov.Views.Word = Backbone.View.extend({
    * @return void.
    */
   onSelect: function(event) {
-    Ov.vent.trigger('stacks:unhover', this.word);
     Ov.vent.trigger('stacks:select', this.word);
     this.addDrag(event);
   },
@@ -140,7 +131,6 @@ Ov.Views.Word = Backbone.View.extend({
    */
   onUnSelect: function() {
     Ov.vent.trigger('stacks:unselect', this.word);
-    this.removeDrag();
   },
 
   /*

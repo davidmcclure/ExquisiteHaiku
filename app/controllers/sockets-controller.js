@@ -6,6 +6,8 @@
 var parseCookie = require('connect').utils.parseCookie;
 var MongoStore = require('connect-mongodb');
 var Session = require('connect').session.Session;
+var syllables = require('../../lib/syllables');
+var _ = require('underscore');
 
 // Models.
 var Poem = mongoose.model('Poem');
@@ -36,7 +38,22 @@ module.exports = function(app, io) {
      * @return void.
      */
     socket.on('validate', function(id, word, cb) {
-      Poem.validateWord(id, word, cb);
+
+      // Is the word a valid word?
+      if (!_.has(syllables, word)) {
+        cb(false);
+      }
+
+      else {
+
+        // Does the word fit?
+        Poem.findById(id, function(err, poem) {
+          if (!poem.addWord(word)) cb(false);
+          else cb(true);
+        });
+
+      }
+
     });
 
     /*
@@ -48,7 +65,17 @@ module.exports = function(app, io) {
      * @return void.
      */
     socket.on('submit', function(id, words) {
-      Poem.submitWords(id, words, function() {});
+
+      // Get the poem.
+      Poem.findById(id, function(err, poem) {
+
+        // Apply the starting votes.
+        _.each(words, function(word) {
+          poem.vote(word, poem.submissionVal);
+        });
+
+      });
+
     });
 
     /*
@@ -61,7 +88,12 @@ module.exports = function(app, io) {
      * @return void.
      */
     socket.on('vote', function(id, word, quantity) {
-      Poem.submitVote(id, word, quantity, function() {});
+
+      // Get the poem.
+      Poem.findById(id, function(err, poem) {
+        poem.vote(word, quantity);
+      });
+
     });
 
   });

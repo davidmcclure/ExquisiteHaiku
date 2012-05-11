@@ -39,6 +39,28 @@ Ov.Controllers.Stacks = (function(Backbone, Ov) {
   });
 
   /*
+   * Freeze and empty the stacks.
+   *
+   * @return void.
+   */
+  Ov.vent.on('state:submit', function() {
+    Stacks.RankStack.empty();
+    Stacks.ChurnStack.empty();
+    Stacks.RankStack.freeze();
+    Stacks.ChurnStack.freeze();
+  });
+
+  /*
+   * Unfreeze the stacks.
+   *
+   * @return void.
+   */
+  Ov.vent.on('state:vote', function() {
+    Stacks.RankStack.unFreeze();
+    Stacks.ChurnStack.unFreeze();
+  });
+
+  /*
    * Apply a word hover.
    *
    * @param {String} word: The hovered word.
@@ -82,7 +104,7 @@ Ov.Controllers.Stacks = (function(Backbone, Ov) {
   });
 
   /*
-   * Deselect a word.
+   * Unhover and deselect a word.
    *
    * @param {String} word: The hovered word.
    *
@@ -94,7 +116,9 @@ Ov.Controllers.Stacks = (function(Backbone, Ov) {
     Stacks.RankStack.unFreeze();
     Stacks.ChurnStack.unFreeze();
 
-    // Remove the selection.
+    // Remove selection and hover.
+    Stacks.RankStack.unHover(word);
+    Stacks.ChurnStack.unHover(word);
     Stacks.RankStack.unSelect(word);
     Stacks.ChurnStack.unSelect(word);
 

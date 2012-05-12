@@ -18,6 +18,7 @@ Ov.Controllers.Round = (function(Backbone, Ov) {
    */
   Ov.addInitializer(function() {
     Round.RoundCollection = new Ov.Collections.Round();
+    Round.RoundCollection.fetch();
   });
 
 
@@ -36,7 +37,7 @@ Ov.Controllers.Round = (function(Backbone, Ov) {
   Ov.vent.on('socket:slice', function(data) {
 
     // Try to retrieve a stored round.
-    var round = Round.RoundCollection.query({
+    var round = Round.RoundCollection.where({
       round: data.round
     });
 
@@ -55,9 +56,6 @@ Ov.Controllers.Round = (function(Backbone, Ov) {
     // Store the current round id as a top-level
     // attribute on the round collection.
     Round.RoundCollection.currentRound = data.round;
-
-    console.log(Round.RoundCollection.currentRound);
-    console.log(round);
 
   });
 

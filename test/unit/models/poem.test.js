@@ -1014,6 +1014,10 @@ describe('Poem', function() {
             result.stack[0][0].should.eql('third');
             result.stack[1][0].should.eql('second');
             should.not.exist(result.stack[2]);
+
+            // Check ratios.
+            result.stack[0][3].should.eql('1.00');
+            result.stack[1][3].should.eql('0.67');
             done();
 
           }, function() {});

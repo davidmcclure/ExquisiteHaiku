@@ -44,7 +44,7 @@ load(
   a+'controllers/poem-controller.js',
   a+'controllers/socket-controller.js',
   a+'controllers/round-controller.js',
-  a+'controllers/stacks-controller.js'
+  a+'controllers/stack-controller.js'
 
 ).thenRun(function() {
 

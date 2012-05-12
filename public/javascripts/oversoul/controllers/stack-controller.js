@@ -17,8 +17,7 @@ Ov.Controllers.Stacks = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.addInitializer(function() {
-    Stacks.RankStack = new Ov.Views.Stack({ el: '#rank' });
-    Stacks.ChurnStack = new Ov.Views.Stack({ el: '#churn' });
+    Stacks.Stack = new Ov.Views.Stack({ el: '#stack' });
   });
 
 
@@ -34,8 +33,7 @@ Ov.Controllers.Stacks = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('socket:slice', function(data) {
-    Stacks.RankStack.update(data.stacks.rank);
-    Stacks.ChurnStack.update(data.stacks.churn);
+    Stacks.Stack.update(data.stack);
   });
 
   /*
@@ -44,8 +42,7 @@ Ov.Controllers.Stacks = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('state:submit', function() {
-    Stacks.RankStack.hide();
-    Stacks.ChurnStack.hide();
+    Stacks.Stack.hide();
   });
 
   /*
@@ -54,8 +51,7 @@ Ov.Controllers.Stacks = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('state:vote', function() {
-    Stacks.RankStack.show();
-    Stacks.ChurnStack.show();
+    Stacks.Stack.show();
   });
 
   /*
@@ -66,8 +62,7 @@ Ov.Controllers.Stacks = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('stacks:select', function(word) {
-    Stacks.RankStack.freeze();
-    Stacks.ChurnStack.freeze();
+    Stacks.Stack.freeze();
   });
 
   /*
@@ -78,8 +73,7 @@ Ov.Controllers.Stacks = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('stacks:unselect', function(word) {
-    Stacks.RankStack.unFreeze();
-    Stacks.ChurnStack.unFreeze();
+    Stacks.Stack.unFreeze();
   });
 
   return Stacks;

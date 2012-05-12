@@ -12,9 +12,9 @@ Ov.Views.Word = Backbone.View.extend({
   },
 
   events: {
-    'mouseenter .stack-word':   'hover',
-    'mouseleave .stack-word':   'unHover',
-    'mousedown .stack-word':    'select'
+    'mouseenter .word':   'hover',
+    'mouseleave .word':   'unHover',
+    'mousedown .word':    'select'
   },
 
   /*
@@ -28,8 +28,9 @@ Ov.Views.Word = Backbone.View.extend({
     this.$el.append(this.template()());
 
     // Get components
-    this.valueMarkup = this.$el.find('.stack-value');
-    this.wordMarkup = this.$el.find('.stack-word');
+    this.churnMarkup = this.$el.find('.churn');
+    this.ratioMarkup = this.$el.find('.ratio');
+    this.wordMarkup = this.$el.find('.word');
 
     // Trackers.
     this.word = null;
@@ -47,7 +48,8 @@ Ov.Views.Word = Backbone.View.extend({
    */
   update: function(data) {
     this.wordMarkup.text(data[0]);
-    this.valueMarkup.text(data[1]);
+    this.ratioMarkup.text(data[3]);
+    this.churnMarkup.text(data[2]);
     this.word = data[0];
   },
 

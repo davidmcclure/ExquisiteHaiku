@@ -20,9 +20,11 @@ Ov.Views.Word = Backbone.View.extend({
   /*
    * Build template, get components.
    *
+   * @param {Object} stack: The parent stack view.
+   *
    * @return void.
    */
-  initialize: function() {
+  initialize: function(stack) {
 
     // Inject template.
     this.$el.append(this.template()());
@@ -170,7 +172,6 @@ Ov.Views.Word = Backbone.View.extend({
    * @return void.
    */
   hover: function() {
-    Ov.vent.trigger('stacks:hover', this.word);
     this.wordMarkup.addClass('hover');
   },
 
@@ -180,7 +181,6 @@ Ov.Views.Word = Backbone.View.extend({
    * @return void.
    */
   unHover: function() {
-    Ov.vent.trigger('stacks:unhover', this.word);
     this.wordMarkup.removeClass('hover');
   },
 

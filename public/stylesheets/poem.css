@@ -1,11 +1,10 @@
-@import url("http://fonts.googleapis.com/css?family=Dosis");
 @import url("http://fonts.googleapis.com/css?family=DidactGothic");
-body{font-family:'Didact Gothic',Dosis;-webkit-user-select:none;-moz-user-select:none;font-size:13px}
+body{font-family:'Didact Gothic';-webkit-user-select:none;-moz-user-select:none;font-size:13px}
 .poem-word{margin-right:4px}
 .submission-stack{position:absolute}
 .submission-word{cursor:pointer}
 #poem{float:left;}
-#poem input.blank{width:60px;border:none;border-bottom:1px solid #808080;font-family:'Didact Gothic',Dosis;font-size:13px;}
+#poem input.blank{width:60px;border:none;border-bottom:1px solid #808080;font-family:'Didact Gothic';font-size:13px;}
 #poem input.blank:focus{outline:none}
 #stack{float:left;}
 #stack .word{text-align:left;cursor:ns-resize;}
@@ -14,5 +13,6 @@ body{font-family:'Didact Gothic',Dosis;-webkit-user-select:none;-moz-user-select
 #stack .ratio,#stack .churn{text-align:right;opacity:.7;}
 #stack .ratio.positive,#stack .churn.positive{color:#15b765}
 #stack .ratio.negative,#stack .churn.negative{color:#b71515}
-#stack.frozen{color:#808080}
+#stack.frozen{color:#808080;}
+#stack.frozen .word.hover{color:inherit}
 #stack .stack-row:first-child .word{font-weight:bold}

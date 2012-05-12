@@ -499,7 +499,10 @@ PoemSchema.statics.score = function(id, now, send, cb) {
     // Truncate to visible words.
     stack = stack.slice(0, poem.visibleWords);
 
-    // ** dev: do ratios here.
+    // Add rank ratios.
+    _.each(stack, function(s) {
+      s.push((s[1]/stack[0][1]).toFixed(2));
+    });
 
     // Check for round expiration.
     if (now > poem.roundExpiration) {

@@ -202,11 +202,15 @@ PoemSchema.virtual('round').get(function() {
  */
 PoemSchema.virtual('roundExpiration').get(function() {
 
+  var expiration = null;
+
+  // If there is a round, get expiration.
   if (!_.isUndefined(this.round)) {
-    return this.round.started.valueOf() + this.roundLength;
+    var started = this.round.started.valueOf();
+    expiration = started + this.roundLength;
   }
 
-  else return undefined;
+  return expiration;
 
 });
 
@@ -303,6 +307,27 @@ PoemSchema.methods.newRound = function() {
   global.Oversoul.votes[round.id] = [];
 
   return round;
+
+};
+
+
+/*
+ * Get time remaining in current round.
+ *
+ * @param {Date} now: The current time.
+ *
+ * @return {Number}: The remaining time in ms.
+ */
+PoemSchema.methods.timeLeftInRound = function(now) {
+
+  var remaining = null;
+
+  // If there is a round, get remaining time.
+  if (!_.isUndefined(this.round)) {
+    remaining = this.roundExpiration - now;
+  }
+
+  return remaining;
 
 };
 
@@ -531,7 +556,8 @@ PoemSchema.statics.score = function(id, now, send, cb) {
       stack: stack,
       syllables: poem.syllableCount,
       round: poem.round.id,
-      poem: poem.words
+      poem: poem.words,
+      clock: poem.timeLeftInRound(now)
     });
 
     // Save poem.

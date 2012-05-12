@@ -436,8 +436,8 @@ describe('Poem', function() {
 
       });
 
-      it('should return undefined when a round does not exist', function() {
-        should.strictEqual(undefined, poem.roundExpiration);
+      it('should return null when a round does not exist', function() {
+        assert(!poem.roundExpiration);
       });
 
     });

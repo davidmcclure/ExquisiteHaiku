@@ -458,7 +458,10 @@ PoemSchema.statics.score = function(id, now, send, cb) {
     var rId = poem.round.id;
 
     // Shell out rank and churn objects.
-    var r = {}; var c = {};
+    // var r = {}; var c = {};
+
+    // Shell out the stack.
+    var stack = {};
 
     // Get decay lifetime inverse and current time.
     var decayInverse = 1/poem.decayLifetime;
@@ -472,67 +475,57 @@ PoemSchema.statics.score = function(id, now, send, cb) {
         decayInverse
       );
 
+      // Prepare word key.
+      if (!_.has(stack, vote.word)) {
+        stack[vote.word] = [0, 0];
+      }
+
       // Increment trackers.
-      if (_.has(r, vote.word)) {
-        r[vote.word] += score.rank;
-        c[vote.word] += score.churn;
-      }
-
-      // Create trackers.
-      else {
-        r[vote.word] = score.rank;
-        c[vote.word] = score.churn;
-      }
+      stack[vote.word][0] += score.rank;
+      stack[vote.word][1] += score.churn;
 
     });
 
-    // Cast rank to array.
-    r = _.map(r, function(val, key) {
-      return [key, val];
+    // Cast stack to array.
+    stack = _.map(stack, function(val, key) {
+      return [key, val[0], val[1]];
     });
 
-    // Cast churn to array.
-    c = _.map(c, function(val, key) {
-      return [key, val];
-    });
-
-    // Sort comparer.
-    var comp = function(a,b) {
+    // Sort stack by rank.
+    stack = stack.sort(function(a,b) {
       return b[1]-a[1];
-    };
+    });
 
-    // Sort stacks.
-    r = r.sort(comp).slice(0, poem.visibleWords);
-    c = c.sort(comp).slice(0, poem.visibleWords);
+    // Truncate to visible words.
+    stack = stack.slice(0, poem.visibleWords);
 
-    // Stacks object.
-    var stacks = { rank: r, churn: c };
+    // ** dev: do ratios here.
 
     // Check for round expiration.
     if (now > poem.roundExpiration) {
 
       // Push new word.
-      if (!_.isEmpty(stacks.rank)) {
-        poem.addWord(stacks.rank[0][0]);
+      if (!_.isEmpty(stack)) {
+        poem.addWord(stack[0][0]);
         poem.markModified('words');
       }
 
-      // If complete, stop.
+      // If poem is complete, stop.
       if (poem.syllableCount == 17) {
         poem.stop();
       }
 
-      // Else, create new round.
+      // Otherwise, create new round.
       else {
         poem.newRound();
-        stacks = { rank: [], churn: [] };
+        stack = [];
       }
 
     }
 
     // Emit stacks.
     send({
-      stacks: stacks,
+      stack: stack,
       syllables: poem.syllableCount,
       round: poem.round.id,
       poem: poem.words

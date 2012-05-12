@@ -1010,15 +1010,10 @@ describe('Poem', function() {
           // Score the poem.
           Poem.score(poem.id, Date.now(), function(result) {
 
-            // Check rank order.
-            result.stacks.rank[0][0].should.eql('third');
-            result.stacks.rank[1][0].should.eql('second');
-            should.not.exist(result.stacks.rank[2]);
-
-            // Check churn order.
-            result.stacks.churn[0][0].should.eql('third');
-            result.stacks.churn[1][0].should.eql('second');
-            should.not.exist(result.stacks.churn[2]);
+            // Check order.
+            result.stack[0][0].should.eql('third');
+            result.stack[1][0].should.eql('second');
+            should.not.exist(result.stack[2]);
             done();
 
           }, function() {});
@@ -1097,9 +1092,8 @@ describe('Poem', function() {
           // Score the poem.
           Poem.score(poem.id, Date.now(), function(result) {
 
-            // Check poem.
-            result.stacks.rank.should.eql([]);
-            result.stacks.churn.should.eql([]);
+            // Check stack.
+            result.stack.should.eql([]);
             done();
 
           }, function() {});

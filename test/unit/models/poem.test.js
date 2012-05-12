@@ -927,6 +927,25 @@ describe('Poem', function() {
 
     });
 
+    describe('timeLeftInRound', function() {
+
+      it('should return the remaining time when a round exists', function() {
+
+        // Add round, pass expiration - 1000.
+        poem.newRound();
+
+        // Pass expiration - 10000.
+        var now = poem.roundExpiration-10000;
+        poem.timeLeftInRound(now).should.eql(10000);
+
+      });
+
+      it('should return null when no round exists', function() {
+        assert(!poem.timeLeftInRound(Date.now()));
+      });
+
+    });
+
   });
 
   describe('statics', function() {

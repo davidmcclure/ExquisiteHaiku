@@ -29,6 +29,7 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
     // Ingest data slices.
     Socket.s.on('slice', function(data) {
       Ov.vent.trigger('socket:slice', data);
+      console.log(data.clock);
     });
 
   });

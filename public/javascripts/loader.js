@@ -7,9 +7,10 @@ var v = 'javascripts/vendor/';
 
 load(
 
-  // jQuery and Underscore.
+  // jQuery, Underscore, Moment.
   v+'jquery/jquery.js',
-  v+'underscore/underscore.js'
+  v+'underscore/underscore.js',
+  v+'moment/moment.js'
 
 ).then(
 
@@ -21,7 +22,6 @@ load(
 ).then(
 
   // Backbone modules.
-  v+'backbone/backbone-query.js',
   v+'backbone/backbone-localstorage.js'
 
 ).then(

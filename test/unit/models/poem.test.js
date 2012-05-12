@@ -1036,7 +1036,7 @@ describe('Poem', function() {
 
             // Check ratios.
             result.stack[0][3].should.eql('1.00');
-            result.stack[1][3].should.eql('0.67');
+            Number(result.stack[1][3]).should.be.below(1);
             done();
 
           }, function() {});
@@ -1077,6 +1077,19 @@ describe('Poem', function() {
 
             // Check poem.
             result.round.should.eql(poem.round.id);
+            done();
+
+          }, function() {});
+
+        });
+
+        it('should broadcast clock', function(done) {
+
+          // Score the poem.
+          Poem.score(poem.id, Date.now(), function(result) {
+
+            // Check clock.
+            result.clock.should.be.above(0);
             done();
 
           }, function() {});

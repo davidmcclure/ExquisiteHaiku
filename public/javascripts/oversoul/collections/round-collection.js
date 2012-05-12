@@ -5,7 +5,7 @@
 Ov.Collections.Round = Backbone.QueryCollection.extend({
 
   currentRound: null,
-  localStorage: new Store('oversoul:rounds'),
+  localStorage: new Backbone.LocalStorage('Oversoul'),
 
   /*
    * Get the current round id.

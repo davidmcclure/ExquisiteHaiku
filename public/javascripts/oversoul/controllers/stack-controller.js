@@ -33,7 +33,6 @@ Ov.Controllers.Stacks = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('socket:slice', function(data) {
-    console.log(data.clock);
     Stacks.Stack.update(data.stack);
   });
 

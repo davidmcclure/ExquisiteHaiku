@@ -47,10 +47,28 @@ Ov.Views.Word = Backbone.View.extend({
    * @return void.
    */
   update: function(data) {
+
+    // Render values.
     this.wordMarkup.text(data[0]);
     this.ratioMarkup.text(data[3]);
     this.churnMarkup.text(data[2]);
     this.word = data[0];
+
+    // If churn 0.
+    if (data[2] === 0) {
+      this.setNeutral();
+    }
+
+    // If churn > 0.
+    else if (data[2] > 0) {
+      this.setPositive();
+    }
+
+    // If churn < 0.
+    else {
+      this.setNegative();
+    }
+
   },
 
   /*
@@ -131,6 +149,9 @@ Ov.Views.Word = Backbone.View.extend({
     // If the spacebar was pressed.
     if (event.keyCode == 32) {
 
+      // Suppress scrolling.
+      event.preventDefault();
+
       // Strip events, unselect.
       $(window).unbind('mouseup.drag keydown.drag');
       this.unSelect();
@@ -182,6 +203,36 @@ Ov.Views.Word = Backbone.View.extend({
   unSelect: function() {
     Ov.vent.trigger('stacks:unselect');
     this.wordMarkup.removeClass('select');
+  },
+
+  /*
+   * Set 0 churn.
+   *
+   * @return void.
+   */
+  setNeutral: function() {
+    this.churnMarkup.removeClass('positive');
+    this.churnMarkup.removeClass('negative');
+  },
+
+  /*
+   * Set positive churn.
+   *
+   * @return void.
+   */
+  setPositive: function() {
+    this.churnMarkup.addClass('positive');
+    this.churnMarkup.removeClass('negative');
+  },
+
+  /*
+   * Set negative churn.
+   *
+   * @return void.
+   */
+  setNegative: function() {
+    this.churnMarkup.addClass('negative');
+    this.churnMarkup.removeClass('positive');
   }
 
 });

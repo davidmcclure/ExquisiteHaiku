@@ -50,12 +50,14 @@ Ov.Controllers.Round = (function(Backbone, Ov) {
     // the state:vote event.
     else {
       Ov.vent.trigger('state:vote');
-      console.log('vote');
     }
 
     // Store the current round id as a top-level
     // attribute on the round collection.
     Round.RoundCollection.currentRound = data.round;
+
+    console.log(Round.RoundCollection.currentRound);
+    console.log(round);
 
   });
 

@@ -189,10 +189,11 @@ Ov.Views.Word = Backbone.View.extend({
    *
    * @return void.
    */
-  select: function() {
+  select: function(event) {
     Ov.vent.trigger('stacks:select');
     this.wordMarkup.addClass('select');
     this.addDrag(event);
+    this.unHover();
   },
 
   /*

@@ -14,5 +14,6 @@ body{font-family:'Didact Gothic';-webkit-user-select:none;-moz-user-select:none;
 #stack .ratio.positive,#stack .churn.positive{color:#15b765}
 #stack .ratio.negative,#stack .churn.negative{color:#b71515}
 #stack.frozen{color:#808080;}
-#stack.frozen .word.hover{color:inherit}
+#stack.frozen .word.hover{color:inherit;}
+#stack.frozen .word.hover.select{color:#f00}
 #stack .stack-row:first-child .word{font-weight:bold}

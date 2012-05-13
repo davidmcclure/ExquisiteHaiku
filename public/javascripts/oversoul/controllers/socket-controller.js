@@ -50,7 +50,7 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
      * @return void.
      */
     Socket.s.on('vote', function(word, quantity) {
-      console.log(word, quantity);
+      Ov.vent.trigger('socket:vote:in', word, quantity);
     });
 
   });
@@ -93,7 +93,7 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
    *
    * @return void.
    */
-  Ov.vent.on('socket:vote', function(word, quantity) {
+  Ov.vent.on('socket:vote:out', function(word, quantity) {
     Socket.s.emit('vote', Poem._id, word, quantity);
   });
 

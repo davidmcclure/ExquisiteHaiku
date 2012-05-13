@@ -20,16 +20,14 @@ Ov.Views.Word = Backbone.View.extend({
   /*
    * Build template, get components.
    *
-   * @param {Object} stack: The parent stack view.
-   *
    * @return void.
    */
-  initialize: function(stack) {
+  initialize: function() {
 
     // Inject template.
     this.$el.append(this.template()());
 
-    // Get components
+    // Get components.
     this.churnMarkup = this.$el.find('.churn');
     this.ratioMarkup = this.$el.find('.ratio');
     this.wordMarkup = this.$el.find('.word');
@@ -159,8 +157,8 @@ Ov.Views.Word = Backbone.View.extend({
       this.unSelect();
 
       // Broadcast the vote.
-      var currentTotal = this.dragDelta + this.dragTotal;
-      Ov.vent.trigger('socket:vote', this.word, currentTotal);
+      var total = this.dragDelta + this.dragTotal;
+      Ov.vent.trigger('socket:vote:out', this.word, total);
 
     }
 

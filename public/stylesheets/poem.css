@@ -1,4 +1,5 @@
 @import url("http://fonts.googleapis.com/css?family=DidactGothic");
+@import url("http://fonts.googleapis.com/css?family=Dosis");
 body{font-family:'Didact Gothic';-webkit-user-select:none;-moz-user-select:none;font-size:13px}
 .poem-word{margin-right:4px}
 .submission-stack{position:absolute}
@@ -17,3 +18,4 @@ body{font-family:'Didact Gothic';-webkit-user-select:none;-moz-user-select:none;
 #stack.frozen .word.hover{color:inherit;}
 #stack.frozen .word.hover.select{color:#f00}
 #stack .stack-row:first-child .word{font-weight:bold}
+#votes{float:left;font-family:Dosis}

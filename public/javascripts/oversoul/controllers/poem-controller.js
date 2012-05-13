@@ -33,7 +33,6 @@ Ov.Controllers.Poem = (function(Backbone, Ov) {
    */
   Ov.vent.on('state:submit', function() {
     Poem.BlankView.activateSubmit();
-    Poem.BlankView.voting = false;
   });
 
   /*
@@ -43,7 +42,6 @@ Ov.Controllers.Poem = (function(Backbone, Ov) {
    */
   Ov.vent.on('state:vote', function() {
     Poem.BlankView.activateVote();
-    Poem.BlankView.voting = true;
   });
 
   /*

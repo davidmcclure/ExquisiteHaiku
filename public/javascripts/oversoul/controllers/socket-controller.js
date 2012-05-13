@@ -20,16 +20,37 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
 
     Socket.s = io.connect();
 
-    // Connect to poem.
+    /*
+     * Connect to poem.
+     *
+     * @return void.
+     */
     Socket.s.on('connect', function() {
       Socket.s.emit('join', Poem.slug);
       Ov.vent.trigger('socket:connected');
     });
 
-    // Ingest data slices.
+    /*
+     * Ingest scoring data.
+     *
+     * @param {Object} data: The data slice.
+     *
+     * @return void.
+     */
     Socket.s.on('slice', function(data) {
       Ov.vent.trigger('socket:slice', data);
-      console.log(data.clock);
+    });
+
+    /*
+     * Propagate vote.
+     *
+     * @param {String} word: The word.
+     * @param {Number} quantity: The vote quantity.
+     *
+     * @return void.
+     */
+    Socket.s.on('vote', function(word, quantity) {
+      console.log(word, quantity);
     });
 
   });

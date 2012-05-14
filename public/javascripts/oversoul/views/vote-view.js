@@ -18,16 +18,57 @@ Ov.Views.Vote = Backbone.View.extend({
    */
   initialize: function() {
 
-    // Create and inject template.
-    this.$el.append(this.template()({
+    // Build template.
+    var row = $(this.template()({
       word: this.options.word,
       value: this.options.value
     }));
 
-    // ** dev: render size.
-    var size = Math.abs(this.options.value)*0.1;
+    // Append contents, get word.
+    this.$el.append(row);
     this.wordMarkup = this.$el.find('.word');
+
+    // Render styles.
+    this.renderSize();
+    this.renderColor();
+
+    // On click, reapply vote.
+    this.wordMarkup.mousedown(_.bind(function() {
+      Ov.vent.trigger(
+        'socket:vote:out',
+        this.options.word,
+        this.options.value
+      );
+    }, this));
+
+  },
+
+  /*
+   * Render size.
+   *
+   * @return void.
+   */
+  renderSize: function() {
+    var size = 10 + Math.abs(this.options.value*0.05);
     this.wordMarkup.css('font-size', size);
+  },
+
+  /*
+   * Render color.
+   *
+   * @return void.
+   */
+  renderColor: function() {
+
+    // Upvote.
+    if (this.options.value > 0) {
+      this.$el.addClass('positive');
+    }
+
+    // Downvote.
+    else {
+      this.$el.addClass('negative');
+    }
 
   }
 

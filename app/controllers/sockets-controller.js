@@ -94,6 +94,10 @@ module.exports = function(app, io) {
         poem.vote(word, quantity);
       });
 
+      socket.get('poem', function(err, slug) {
+        io.sockets.in(slug).emit('vote', word, quantity);
+      });
+
     });
 
   });

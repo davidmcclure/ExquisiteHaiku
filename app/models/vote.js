@@ -74,7 +74,7 @@ VoteSchema.methods.score = function(now, decayL, decayI) {
   // Get the integral, scale and round.
   var rank = Math.round(((bound2-bound1)*0.001));
 
-  return { rank:rank, churn: churn };
+  return { rank: rank, churn: churn };
 
 };
 

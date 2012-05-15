@@ -61,7 +61,7 @@ Ov.Controllers.Words = (function(Backbone, Ov) {
    *
    * @return void.
    */
-  Ov.vent.on('stacks:select', function(word) {
+  Ov.vent.on('words:select', function(word) {
     Words.Stack.freeze();
   });
 
@@ -72,7 +72,7 @@ Ov.Controllers.Words = (function(Backbone, Ov) {
    *
    * @return void.
    */
-  Ov.vent.on('stacks:unselect', function(word) {
+  Ov.vent.on('words:unselect', function(word) {
     Words.Stack.unFreeze();
   });
 

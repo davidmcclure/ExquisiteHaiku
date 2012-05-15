@@ -118,7 +118,7 @@ Ov.Views.Word = Backbone.View.extend({
     var currentTotal = this.dragDelta + this.dragTotal;
 
     // Broadcast the drag tick.
-    Ov.vent.trigger('stacks:drag', this.word, currentTotal);
+    Ov.vent.trigger('words:drag', this.word, currentTotal);
 
   },
 
@@ -170,6 +170,7 @@ Ov.Views.Word = Backbone.View.extend({
    * @return void.
    */
   hover: function() {
+    Ov.vent.trigger('words:hover', this.word);
     this.wordMarkup.addClass('hover');
   },
 
@@ -179,6 +180,7 @@ Ov.Views.Word = Backbone.View.extend({
    * @return void.
    */
   unHover: function() {
+    Ov.vent.trigger('words:unhover', this.word);
     this.wordMarkup.removeClass('hover');
   },
 
@@ -188,7 +190,7 @@ Ov.Views.Word = Backbone.View.extend({
    * @return void.
    */
   select: function(event) {
-    Ov.vent.trigger('stacks:select');
+    Ov.vent.trigger('words:select');
     this.wordMarkup.addClass('select');
     this.addDrag(event);
     this.unHover();
@@ -200,7 +202,7 @@ Ov.Views.Word = Backbone.View.extend({
    * @return void.
    */
   unSelect: function() {
-    Ov.vent.trigger('stacks:unselect');
+    Ov.vent.trigger('words:unselect');
     this.wordMarkup.removeClass('select');
   },
 

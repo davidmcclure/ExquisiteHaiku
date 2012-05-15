@@ -76,20 +76,20 @@ Ov.Controllers.Poem = (function(Backbone, Ov) {
   });
 
   /*
-   * When a word is selected, freeze the stacks.
+   * When a word is selected, freeze the words:.
    *
    * @return void.
    */
-  Ov.vent.on('stacks:select', function() {
+  Ov.vent.on('words:select', function() {
     Poem.BlankView.freeze();
   });
 
   /*
-   * When a word is deselected, unfreeze the stacks.
+   * When a word is deselected, unfreeze the words:.
    *
    * @return void.
    */
-  Ov.vent.on('stacks:unselect', function() {
+  Ov.vent.on('words:unselect', function() {
     Poem.BlankView.unFreeze();
   });
 
@@ -100,7 +100,7 @@ Ov.Controllers.Poem = (function(Backbone, Ov) {
    *
    * @return void.
    */
-  Ov.vent.on('stacks:hover', function(word) {
+  Ov.vent.on('words:hover', function(word) {
     Poem.BlankView.showPreview(word);
   });
 
@@ -111,7 +111,7 @@ Ov.Controllers.Poem = (function(Backbone, Ov) {
    *
    * @return void.
    */
-  Ov.vent.on('stacks:unhover', function(word) {
+  Ov.vent.on('words:unhover', function(word) {
     Poem.BlankView.hidePreview();
   });
 

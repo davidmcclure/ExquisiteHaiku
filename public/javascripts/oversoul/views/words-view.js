@@ -1,8 +1,8 @@
 /*
- * Stack view.
+ * Word stack view.
  */
 
-Ov.Views.Stack = Backbone.View.extend({
+Ov.Views.Words = Backbone.View.extend({
 
   /*
    * Prepare trackers.

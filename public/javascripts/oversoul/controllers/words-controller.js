@@ -1,10 +1,10 @@
 /*
- * Stacks controller.
+ * Word stack controller.
  */
 
-Ov.Controllers.Stacks = (function(Backbone, Ov) {
+Ov.Controllers.Words = (function(Backbone, Ov) {
 
-  var Stacks = {};
+  var Words = {};
 
 
   // ---------------
@@ -12,12 +12,12 @@ Ov.Controllers.Stacks = (function(Backbone, Ov) {
   // ---------------
 
   /*
-   * Instantiate the stacks.
+   * Instantiate the Words.
    *
    * @return void.
    */
   Ov.addInitializer(function() {
-    Stacks.Stack = new Ov.Views.Stack({ el: '#stack' });
+    Words.Stack = new Ov.Views.Words({ el: '#words' });
   });
 
 
@@ -33,49 +33,49 @@ Ov.Controllers.Stacks = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('socket:slice', function(data) {
-    Stacks.Stack.update(data.stack);
+    Words.Stack.update(data.stack);
   });
 
   /*
-   * Freeze and empty the stacks.
+   * Freeze and empty the Words.
    *
    * @return void.
    */
   Ov.vent.on('state:submit', function() {
-    Stacks.Stack.hide();
+    Words.Stack.hide();
   });
 
   /*
-   * Unfreeze the stacks.
+   * Unfreeze the Words.
    *
    * @return void.
    */
   Ov.vent.on('state:vote', function() {
-    Stacks.Stack.show();
+    Words.Stack.show();
   });
 
   /*
-   * Freeze the stacks when a word is selected.
+   * Freeze the Words when a word is selected.
    *
    * @param {String} word: The hovered word.
    *
    * @return void.
    */
   Ov.vent.on('stacks:select', function(word) {
-    Stacks.Stack.freeze();
+    Words.Stack.freeze();
   });
 
   /*
-   * Unfreeze the stacks when a word is unselected.
+   * Unfreeze the Words when a word is unselected.
    *
    * @param {String} word: The hovered word.
    *
    * @return void.
    */
   Ov.vent.on('stacks:unselect', function(word) {
-    Stacks.Stack.unFreeze();
+    Words.Stack.unFreeze();
   });
 
-  return Stacks;
+  return Words;
 
 })(Backbone, Ov);

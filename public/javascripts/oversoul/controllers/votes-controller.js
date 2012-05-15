@@ -1,5 +1,5 @@
 /*
- * Votes controller.
+ * Vote stack controller.
  */
 
 Ov.Controllers.Votes = (function(Backbone, Ov) {
@@ -17,7 +17,7 @@ Ov.Controllers.Votes = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.addInitializer(function() {
-    Votes.Votes = new Ov.Views.Votes({ el: '#votes' });
+    Votes.Stack = new Ov.Views.Votes({ el: '#votes' });
   });
 
 
@@ -34,25 +34,7 @@ Ov.Controllers.Votes = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('socket:vote:in', function(word, quantity) {
-    Votes.Votes.add(word, quantity);
-  });
-
-  /*
-   * Freeze and empty the stack.
-   *
-   * @return void.
-   */
-  Ov.vent.on('state:submit', function() {
-
-  });
-
-  /*
-   * Unfreeze the stack.
-   *
-   * @return void.
-   */
-  Ov.vent.on('state:vote', function() {
-
+    Votes.Stack.add(word, quantity);
   });
 
   return Votes;

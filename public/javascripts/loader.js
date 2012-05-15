@@ -37,7 +37,7 @@ load(
   // Views.
   a+'views/poem-view.js',
   a+'views/blank-view.js',
-  a+'views/stack-view.js',
+  a+'views/words-view.js',
   a+'views/word-view.js',
   a+'views/votes-view.js',
   a+'views/vote-view.js',
@@ -46,7 +46,7 @@ load(
   a+'controllers/poem-controller.js',
   a+'controllers/socket-controller.js',
   a+'controllers/round-controller.js',
-  a+'controllers/stack-controller.js',
+  a+'controllers/words-controller.js',
   a+'controllers/votes-controller.js'
 
 ).thenRun(function() {

@@ -74,18 +74,6 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
   });
 
   /*
-   * Save blind submissions.
-   *
-   * @param {Array} words: The words.
-   * @param {Function} cb: Callback.
-   *
-   * @return void.
-   */
-  Ov.vent.on('socket:submit', function(words, cb) {
-    Socket.s.emit('submit', Poem._id, words);
-  });
-
-  /*
    * Save vote.
    *
    * @param {String} word: The word.

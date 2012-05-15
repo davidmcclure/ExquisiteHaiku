@@ -49,7 +49,7 @@ Ov.Views.Vote = Backbone.View.extend({
    * @return void.
    */
   renderSize: function() {
-    var size = 10 + Math.abs(this.options.value*0.05);
+    var size = 9 + Math.abs(this.options.value*0.02);
     this.wordMarkup.css('font-size', size);
   },
 

@@ -57,28 +57,6 @@ module.exports = function(app, io) {
     });
 
     /*
-     * Process blind submissions.
-     *
-     * @param {String} id: The id of the poem.
-     * @param {Array} words: The words.
-     *
-     * @return void.
-     */
-    socket.on('submit', function(id, words) {
-
-      // Get the poem.
-      Poem.findById(id, function(err, poem) {
-
-        // Apply the starting votes.
-        _.each(words, function(word) {
-          poem.vote(word, poem.submissionVal);
-        });
-
-      });
-
-    });
-
-    /*
      * Process vote.
      *
      * @param {String} id: The id of the poem.

@@ -170,12 +170,10 @@ Ov.Views.Blank = Backbone.View.extend({
     this.words.push(word);
     wordMarkup.data('word', word);
 
-    // Bind events.
-    wordMarkup.bind({
-      'mousedown': _.bind(function() {
-        this.removeWord(wordMarkup);
-      }, this)
-    });
+    // Apply the vote.
+    Ov.vent.trigger(
+      'socket:vote:out', word, Poem.submissionVal
+    );
 
     // Clear input.
     this.$el.val('');
@@ -245,28 +243,6 @@ Ov.Views.Blank = Backbone.View.extend({
     else if (!valid && !_.include(this.cache.invalid, word)) {
       this.cache.invalid.push(word);
     }
-
-  },
-
-  /*
-   * Remove word from submission stack.
-   *
-   * @param {Element} wordMarkup: The stack word.
-   *
-   * @return void.
-   */
-  removeWord: function(wordMarkup) {
-
-    // Get word.
-    var word = wordMarkup.data('word');
-
-    // Remove markup.
-    wordMarkup.remove();
-
-    // Update tracker.
-    this.words = _.filter(this.words, function(w) {
-      return w === word ? false : true;
-    });
 
   },
 

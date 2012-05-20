@@ -11,6 +11,11 @@ Ov.Views.Vote = Backbone.View.extend({
     return _.template($('#vote-word').html());
   },
 
+  events: {
+    'mouseenter .word':   'hover',
+    'mouseleave .word':   'unHover'
+  },
+
   /*
    * Build template, get components.
    *
@@ -70,6 +75,24 @@ Ov.Views.Vote = Backbone.View.extend({
       this.$el.addClass('negative');
     }
 
+  },
+
+  /*
+   * Render hover.
+   *
+   * @return void.
+   */
+  hover: function() {
+    Ov.vent.trigger('words:hover', this.options.word);
+  },
+
+  /*
+   * Remove hover.
+   *
+   * @return void.
+   */
+  unHover: function() {
+    Ov.vent.trigger('words:unhover', this.options.word);
   }
 
 });

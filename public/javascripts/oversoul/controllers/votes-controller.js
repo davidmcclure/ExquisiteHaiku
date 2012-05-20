@@ -37,6 +37,24 @@ Ov.Controllers.Votes = (function(Backbone, Ov) {
     Votes.Stack.add(word, quantity);
   });
 
+  /*
+   * Hide the votes.
+   *
+   * @return void.
+   */
+  Ov.vent.on('state:submit', function() {
+    Votes.Stack.hide();
+  });
+
+  /*
+   * Show the votes.
+   *
+   * @return void.
+   */
+  Ov.vent.on('state:vote', function() {
+    Votes.Stack.show();
+  });
+
   return Votes;
 
 })(Backbone, Ov);

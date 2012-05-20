@@ -17,6 +17,7 @@ Ov.Views.Words = Backbone.View.extend({
     // Trackers.
     this.hoverWord = null;
     this.selectWord = null;
+    this.visible = false;
     this.frozen = false;
 
   },

@@ -132,23 +132,31 @@ Ov.Views.Blank = Backbone.View.extend({
 
     // Enter keystroke.
     if (event.keyCode == 13) {
-      this.validateWord(word, _.bind(function(valid) {
-        if (valid) this.addWord(word);
-      }, this));
-    }
 
-    // ** dev: submit with control.
-    else if (event.keyCode == 17) {
-      if (this.words.length >= Poem.minSubmissions) {
-        Ov.vent.trigger('socket:submit', this.words);
-      }
+      // Try to validate and add word.
+      this.validateWord(word, _.bind(function(valid) {
+
+        // Add word.
+        if (!valid) return;
+        this.addWord(word);
+
+        // Check for complete submission.
+        if (this.words.length >= Poem.minSubmissions) {
+          Ov.vent.trigger('socket:submit');
+        }
+
+      }, this));
+
     }
 
     // Regular keystroke.
     if (event.keyCode !== 13) {
+
+      // Check the validity.
       this.validateWord(word, _.bind(function(valid) {
         this.cacheValidation(word, valid);
       }, this));
+
     }
 
   },

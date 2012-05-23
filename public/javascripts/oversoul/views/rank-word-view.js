@@ -1,8 +1,8 @@
 /*
- * Word view.
+ * Rank word view.
  */
 
-Ov.Views.Word = Backbone.View.extend({
+Ov.Views.RankWord = Backbone.View.extend({
 
   tagName: 'tr',
   className: 'stack-row',

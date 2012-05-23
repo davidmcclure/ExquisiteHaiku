@@ -1,8 +1,8 @@
 /*
- * Stack view.
+ * Rank stack view.
  */
 
-Ov.Views.Stack = Backbone.View.extend({
+Ov.Views.Rank = Backbone.View.extend({
 
   /*
    * Prepare trackers.
@@ -59,7 +59,7 @@ Ov.Views.Stack = Backbone.View.extend({
   addRow: function(word) {
 
     // Build row view.
-    var row = new Ov.Views.Word();
+    var row = new Ov.Views.RankWord();
 
     // Append and track.
     this.$el.append(row.$el);

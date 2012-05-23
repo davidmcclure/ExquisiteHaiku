@@ -2,9 +2,9 @@
  * Word stack controller.
  */
 
-Ov.Controllers.Words = (function(Backbone, Ov) {
+Ov.Controllers.Stack = (function(Backbone, Ov) {
 
-  var Words = {};
+  var Stack = {};
 
 
   // ---------------
@@ -12,12 +12,12 @@ Ov.Controllers.Words = (function(Backbone, Ov) {
   // ---------------
 
   /*
-   * Instantiate the Words.
+   * Instantiate the stack view.
    *
    * @return void.
    */
   Ov.addInitializer(function() {
-    Words.Stack = new Ov.Views.Words({ el: '#words' });
+    Stack.Stack = new Ov.Views.Stack({ el: '#stack' });
   });
 
 
@@ -33,7 +33,7 @@ Ov.Controllers.Words = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('socket:slice', function(data) {
-    Words.Stack.update(data.stack);
+    Stack.Stack.update(data.stack);
   });
 
   /*
@@ -42,7 +42,7 @@ Ov.Controllers.Words = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('state:submit', function() {
-    Words.Stack.hide();
+    Stack.Stack.hide();
   });
 
   /*
@@ -51,7 +51,7 @@ Ov.Controllers.Words = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('state:vote', function() {
-    Words.Stack.show();
+    Stack.Stack.show();
   });
 
   /*
@@ -62,7 +62,7 @@ Ov.Controllers.Words = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('words:select', function(word) {
-    Words.Stack.freeze();
+    Stack.Stack.freeze();
   });
 
   /*
@@ -73,9 +73,9 @@ Ov.Controllers.Words = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('words:unselect', function(word) {
-    Words.Stack.unFreeze();
+    Stack.Stack.unFreeze();
   });
 
-  return Words;
+  return Stack;
 
 })(Backbone, Ov);

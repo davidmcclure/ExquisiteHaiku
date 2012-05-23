@@ -3,19 +3,19 @@ body{font-family:Lekton;-webkit-user-select:none;-moz-user-select:none;font-size
 .poem-word{margin-right:4px}
 .submission-stack{position:absolute}
 .submission-word{cursor:pointer}
-#poem,#words,#votes{float:left;margin-right:2em}
+#poem,#words{float:left;margin-right:2em}
 .positive{color:#2260ff}
 .negative{color:#b71515}
 #poem input.blank{width:60px;border:none;border-bottom:1px solid #808080;font-family:Lekton;font-size:13px;}
 #poem input.blank:focus{outline:none}
-#words .word{text-align:left;cursor:ns-resize;}
-#words .word.hover{color:#2260ff}
-#words .word.select{color:#f00}
-#words .ratio,#words .churn{text-align:right;opacity:.7}
-#words.frozen{color:#808080;}
-#words.frozen .word.hover{color:inherit;}
-#words.frozen .word.hover.select{color:#f00}
-#words .stack-row:first-child .word{font-weight:bold}
+#stack .word{text-align:left;cursor:ns-resize;}
+#stack .word.hover{color:#2260ff}
+#stack .word.select{color:#f00}
+#stack .ratio,#stack .churn{text-align:right;opacity:.7}
+#stack.frozen{color:#808080;}
+#stack.frozen .word.hover{color:inherit;}
+#stack.frozen .word.hover.select{color:#f00}
+#stack .stack-row:first-child .word{font-weight:bold}
 #votes{font-family:Lekton;}
 #votes .word{cursor:pointer;line-height:.9em}
 #votes .value{margin-left:5px;opacity:.7}

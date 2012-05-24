@@ -297,4 +297,3 @@ Ov.Views.Blank = Backbone.View.extend({
   }
 
 });
-

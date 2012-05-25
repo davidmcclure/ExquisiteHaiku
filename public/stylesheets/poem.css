@@ -1,21 +1,22 @@
 @import url("http://fonts.googleapis.com/css?family=Lekton:400,700,400italic");
 @import url("http://fonts.googleapis.com/css?family=Dosis:200,300,400,500,600,700,800");
-body{font:13px Lekton;-webkit-user-select:none;-moz-user-select:none}
+@import url("http://fonts.googleapis.com/css?family=Abel");
+body{font:13px Abel;font-weight:200;-webkit-user-select:none;-moz-user-select:none;}
+body::-webkit-scrollbar{width:10px}
 .positive{color:#2260ff}
 .negative{color:#b71515}
-#poem,#stack,#info{position:absolute}
-#poem{width:300px;top:120px;}
+#poem{position:fixed;width:200px;top:120px;}
 #poem div.poem-line{margin-bottom:.6em}
-#poem input.blank{padding:0;margin:0;width:60px;border:none;border-bottom:1px solid #808080;font:13px Lekton;}
+#poem input.blank{padding:2px;margin:0;width:60px;border:none;border-bottom:1px solid #808080;font:13px Abel;}
 #poem input.blank:focus{outline:none}
 #poem .poem-word{margin-right:4px}
 #poem .submission-stack{position:absolute}
 #poem .submission-word{cursor:pointer}
-#stack{width:200px;top:60px;}
+#stack{position:absolute;width:200px;top:60px;}
 #stack .word{padding-left:7px;text-align:left;cursor:ns-resize;}
 #stack .word.hover{color:#2260ff}
 #stack .word.select{color:#f00}
-#stack .ratio,#stack .churn{font:13px Lekton;width:30px;text-align:right;opacity:.7;font-size:11px}
+#stack .ratio,#stack .churn{font:13px Dosis;width:30px;text-align:right;opacity:.7;font-size:11px}
 #stack.frozen{color:#808080;}
 #stack.frozen .word.hover{color:inherit;}
 #stack.frozen .word.hover.select{color:#f00}

@@ -119,12 +119,12 @@ Ov.Views.Word = Backbone.View.extend({
     var xSquare = Math.pow(dragX, 2);
     var ySquare = Math.pow(dragY, 2);
 
-    // Get drag delta and current drag total.
+    // Compute drag delta.
     this.dragDelta = Math.round(Math.sqrt(xSquare + ySquare));
     if (dragX < 0) this.dragDelta = -this.dragDelta;
-    var currentTotal = this.dragDelta + this.dragTotal;
 
     // Broadcast the drag tick.
+    var currentTotal = this.dragDelta + this.dragTotal;
     Ov.vent.trigger('words:drag', this.word, currentTotal);
 
   },

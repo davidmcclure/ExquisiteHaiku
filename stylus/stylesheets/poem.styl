@@ -2,9 +2,13 @@
 @import 'fonts'
 
 body
-  font numbers
+  font letters
+  font-weight 200
   -webkit-user-select none
   -moz-user-select none
+
+  &::-webkit-scrollbar
+    width 10px
 
 .positive
   color positive
@@ -13,24 +17,20 @@ body
   color negative
 
 #poem
-#stack
-#info
-  position absolute
-
-#poem
-  width 300px
+  position fixed
+  width 200px
   top 120px
 
   div.poem-line
     margin-bottom 0.6em
 
   input.blank
-    padding 0
+    padding 2px
     margin 0
     width 60px
     border none
     border-bottom 1px solid gray
-    font numbers
+    font letters
     &:focus
       outline none
 
@@ -44,6 +44,7 @@ body
     cursor pointer
 
 #stack
+  position absolute
   width 200px
   top 60px
 

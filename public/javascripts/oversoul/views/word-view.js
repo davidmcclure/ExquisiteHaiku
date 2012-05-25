@@ -126,7 +126,6 @@ Ov.Views.Word = Backbone.View.extend({
 
     // Broadcast the drag tick.
     Ov.vent.trigger('words:drag', this.word, currentTotal);
-    console.log(currentTotal);
 
   },
 

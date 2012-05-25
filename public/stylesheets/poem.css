@@ -5,8 +5,8 @@ body{font:13px Lekton;-webkit-user-select:none;-moz-user-select:none}
 .negative{color:#b71515}
 #poem,#stack,#info{position:absolute}
 #poem{width:300px;top:120px;}
-#poem div.poem-line{margin-bottom:.3em}
-#poem input.blank{width:60px;border:none;border-bottom:1px solid #808080;font:13px Lekton;}
+#poem div.poem-line{margin-bottom:.6em}
+#poem input.blank{padding:0;margin:0;width:60px;border:none;border-bottom:1px solid #808080;font:13px Lekton;}
 #poem input.blank:focus{outline:none}
 #poem .poem-word{margin-right:4px}
 #poem .submission-stack{position:absolute}

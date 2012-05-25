@@ -104,7 +104,7 @@ Ov.Views.Blank = Backbone.View.extend({
   position: function(line) {
 
     // Get input offset and height.
-    var offset = this.$el.offset();
+    var offset = this.$el.position();
     var height = this.$el.outerHeight();
 
     // Insert markup.

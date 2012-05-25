@@ -1,9 +1,9 @@
 @import url("http://fonts.googleapis.com/css?family=Lekton:400,700,400italic");
-body{font-family:Lekton;-webkit-user-select:none;-moz-user-select:none;font-size:13px}
+body{font:13px Lekton;-webkit-user-select:none;-moz-user-select:none}
 .positive{color:#2260ff}
 .negative{color:#b71515}
 #poem div.poem-line{margin-bottom:.3em}
-#poem input.blank{width:60px;border:none;border-bottom:1px solid #808080;font-family:Lekton;font-size:13px;}
+#poem input.blank{width:60px;border:none;border-bottom:1px solid #808080;font:13px Lekton;}
 #poem input.blank:focus{outline:none}
 #poem .poem-word{margin-right:4px}
 #poem .submission-stack{position:absolute}

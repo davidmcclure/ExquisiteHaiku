@@ -17,7 +17,7 @@ Ov.Controllers.Stack = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.addInitializer(function() {
-    Stack.Rank = new Ov.Views.Rank({ el: '#stack' });
+    Stack.Rank = new Ov.Views.Stack({ el: '#stack' });
   });
 
 

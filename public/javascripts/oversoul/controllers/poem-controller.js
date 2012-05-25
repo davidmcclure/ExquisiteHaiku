@@ -65,6 +65,17 @@ Ov.Controllers.Poem = (function(Backbone, Ov) {
   });
 
   /*
+   * Position the poem relative to the stack.
+   *
+   * @param {Number} stackLeft: The stack left offset.
+   *
+   * @return void.
+   */
+  Ov.vent.on('stack:position', function(stackLeft) {
+    Poem.PoemView.position(stackLeft);
+  });
+
+  /*
    * Update the poem words.
    *
    * @param {Object} data: The incoming slice data.

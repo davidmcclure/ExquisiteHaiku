@@ -32,6 +32,17 @@ Ov.Views.Poem = Backbone.View.extend({
   },
 
   /*
+   * Position the poem.
+   *
+   * @param {Number} stackLeft: The left stack offset.
+   *
+   * @return void.
+   */
+  position: function(stackLeft) {
+    this.$el.css('left', stackLeft-this.$el.outerWidth());
+  },
+
+  /*
    * Render poem words.
    *
    * @param {Array} poem: The poem.

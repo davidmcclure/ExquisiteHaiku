@@ -60,7 +60,7 @@ Ov.Views.Blank = Backbone.View.extend({
     this.cache.valid = [];
     this.cache.invalid = [];
 
-    // Clear the stack.
+    // Clear the stack and blank.
     this.stack.empty();
 
   },
@@ -135,24 +135,22 @@ Ov.Views.Blank = Backbone.View.extend({
 
       // Try to validate and add word.
       this.validateWord(word, _.bind(function(valid) {
-
-        // Add word.
-        if (!valid) return;
-        this.addWord(word);
-
-        // Check for complete submission.
-        if (this.words.length >= Poem.minSubmissions) {
-          Ov.vent.trigger('socket:submit');
-        }
-
+        if (valid) this.addWord(word);
       }, this));
 
+    }
+
+    // ** dev: submit with CONTROL.
+    else if (event.keyCode == 17) {
+      if (this.words.length >= Poem.minSubmissions) {
+        Ov.vent.trigger('socket:submit', this.words);
+      }
     }
 
     // Regular keystroke.
     if (event.keyCode !== 13) {
 
-      // Check the validity.
+      // Validate word.
       this.validateWord(word, _.bind(function(valid) {
         this.cacheValidation(word, valid);
       }, this));

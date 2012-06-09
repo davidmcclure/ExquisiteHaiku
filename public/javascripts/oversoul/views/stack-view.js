@@ -20,33 +20,6 @@ Ov.Views.Stack = Backbone.View.extend({
     this.visible = false;
     this.frozen = false;
 
-    // Position.
-    this.position();
-    $(window).resize(_.bind(function() {
-      this.position();
-    }, this));
-
-  },
-
-  /*
-   * Center the stack.
-   *
-   * @return void.
-   */
-  position: function() {
-
-    // Measure widths.
-    var stackWidth = this.$el.outerWidth();
-    var docWidth = $(window).outerWidth();
-
-    // Calculate offset, render.
-    var left = (docWidth/2)-(stackWidth/2);
-    this.$el.css('left', left);
-
-    // Emit boundaries.
-    var right = left + stackWidth;
-    Ov.vent.trigger('stack:position', left, right);
-
   },
 
   /*

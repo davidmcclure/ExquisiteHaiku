@@ -22,8 +22,8 @@ require('../../../app/models/poem');
 var Poem = mongoose.model('Poem');
 
 // Form and reserved slugs.
-var poemForm = require('../../../helpers/forms/poem'),
-  _slugs = require('../../../helpers/forms/_slugs');
+var poemForm = require('../../../helpers/forms/poem');
+var _slugs = require('../../../helpers/forms/_slugs');
 
 
 /*

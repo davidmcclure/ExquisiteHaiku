@@ -310,7 +310,7 @@ describe('Route Middleware', function() {
       var user = new User({
         username:   'david',
         password:   'password',
-        admin:      true,
+        admin:      true
       });
 
       // Save.
@@ -391,6 +391,91 @@ describe('Route Middleware', function() {
 
       // Call getPoem, check for next() and poem.
       auth.getPoem(req, res, next);
+
+    });
+
+  });
+
+  describe('ownsPoem', function() {
+
+    var user1, user2, poem;
+
+    beforeEach(function(done) {
+
+      // Create user1.
+      user1 = new User({
+        username:   'david',
+        password:   'password',
+        admin:      true
+      });
+
+      // Create user2.
+      user2 = new User({
+        username:   'kara',
+        password:   'password',
+        admin:      true
+      });
+
+      // Create poem1.
+      poem = new Poem({
+        slug:             'poem',
+        user:             user1.id,
+        roundLength :     10000,
+        sliceInterval :   3,
+        minSubmissions :  5,
+        submissionVal :   100,
+        decayLifetime :   50,
+        seedCapital :     1000,
+        visibleWords :    500
+      });
+
+      // Save worker.
+      var save = function(document, callback) {
+        document.save(function(err) {
+          callback(null, document);
+        });
+      };
+
+      // Save.
+      async.map([
+        user1,
+        user2,
+        poem
+      ], save, function(err, documents) {
+        done();
+      });
+
+    });
+
+    it('should redirect when the user does not own the poem', function(done) {
+
+      // Spy on res.
+      res.redirect = sinon.spy();
+
+      // Set poem and user.
+      req.poem = poem;
+      req.user = user2;
+
+      // Call ownsPoem, check for redirect.
+      auth.ownsPoem(req, res, next);
+      sinon.assert.calledWith(res.redirect, '/admin/poems');
+      done();
+
+    });
+
+    it('should call next() when the poem is unstarted', function(done) {
+
+      // Spy on next.
+      next = sinon.spy();
+
+      // Set poem and user.
+      req.poem = poem;
+      req.user = user1;
+
+      // Call ownsPoem, check for redirect.
+      auth.ownsPoem(req, res, next);
+      sinon.assert.called(next);
+      done();
 
     });
 

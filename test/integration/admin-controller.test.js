@@ -32,7 +32,8 @@ var _slugs = require('../../helpers/forms/_slugs');
 describe('Admin Controller', function() {
 
   var r = 'http://localhost:3000/';
-  var browser, user, unstarted, running, paused, complete;
+  var browser, user1, user2, unstarted,
+      running, paused, complete, user2poem;
 
   // Create documents.
   beforeEach(function(done) {
@@ -40,9 +41,16 @@ describe('Admin Controller', function() {
     // Create browser.
     browser = new Browser();
 
-    // Create admin user.
-    user = new User({
-      username:   'david',
+    // User 1.
+    user1 = new User({
+      username:   'user1',
+      password:   'password',
+      admin:      true
+    });
+
+    // User 2.
+    user2 = new User({
+      username:   'user2',
       password:   'password',
       admin:      true
     });
@@ -50,7 +58,7 @@ describe('Admin Controller', function() {
     // Create unstarted poem.
     unstarted = new Poem({
       slug:             'unstarted',
-      user:             user.id,
+      user:             user1.id,
       started:          false,
       running:          false,
       complete:         false,
@@ -66,8 +74,8 @@ describe('Admin Controller', function() {
     // Create running poem.
     running = new Poem({
       slug:             'running',
-      user:             user.id,
-      rounds:            [new Round()],
+      user:             user1.id,
+      rounds:           [new Round()],
       started:          true,
       running:          true,
       complete:         false,
@@ -83,8 +91,8 @@ describe('Admin Controller', function() {
     // Create paused poem.
     paused = new Poem({
       slug:             'paused',
-      user:             user.id,
-      rounds:            [new Round()],
+      user:             user1.id,
+      rounds:           [new Round()],
       started:          true,
       running:          false,
       complete:         false,
@@ -100,11 +108,27 @@ describe('Admin Controller', function() {
     // Create complete poem.
     complete = new Poem({
       slug:             'complete',
-      user:             user.id,
-      rounds:            [new Round()],
+      user:             user1.id,
+      rounds:           [new Round()],
       started:          true,
       running:          false,
       complete:         true,
+      roundLength :     10000000,
+      sliceInterval :   1000,
+      minSubmissions :  5,
+      submissionVal :   100,
+      decayLifetime :   50000,
+      seedCapital :     1000,
+      visibleWords :    500
+    });
+
+    // Create user2 poem.
+    user2poem = new Poem({
+      slug:             'user2poem',
+      user:             user2.id,
+      started:          false,
+      running:          false,
+      complete:         false,
       roundLength :     10000000,
       sliceInterval :   1000,
       minSubmissions :  5,
@@ -123,18 +147,20 @@ describe('Admin Controller', function() {
 
     // Save.
     async.map([
-      user,
+      user1,
+      user2,
       unstarted,
       running,
       paused,
-      complete
+      complete,
+      user2poem
     ], save, function(err, documents) {
 
       // Login as an admin user.
       browser.visit(r+'admin/login', function() {
 
         // Fill in form, submit.
-        browser.fill('username', 'david');
+        browser.fill('username', 'user1');
         browser.fill('password', 'password');
         browser.pressButton('Submit', function() {
           done();
@@ -202,8 +228,13 @@ describe('Admin Controller', function() {
 
       browser.text('tr[slug="unstarted"] td.title').should.eql('unstarted');
       browser.text('tr[slug="running"] td.title').should.eql('running');
+      browser.text('tr[slug="paused"] td.title').should.eql('paused');
       browser.text('tr[slug="complete"] td.title').should.eql('complete');
 
+    });
+
+    it('should show poems owned by other users', function() {
+      assert(!browser.query('tr[slug="user2poem"]'));
     });
 
     it('should show edit links for unstarted poems', function() {

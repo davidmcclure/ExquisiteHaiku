@@ -482,9 +482,6 @@ PoemSchema.statics.score = function(id, now, send, cb) {
     // Get round id.
     var rId = poem.round.id;
 
-    // Shell out rank and churn objects.
-    // var r = {}; var c = {};
-
     // Shell out the stack.
     var stack = {};
 

@@ -1,5 +1,5 @@
 /*
- * Unit tests for install form.
+ * Unit tests for registration form.
  */
 
 // Module dependencies.
@@ -16,19 +16,15 @@ require('../db-connect');
 require('../../../app/models/user');
 var User = mongoose.model('User');
 
-// Poem model.
-require('../../../app/models/poem');
-var User = mongoose.model('Poem');
-
 // Form and reserved slugs.
-var installForm = require('../../../helpers/forms/install'),
+var registerForm = require('../../../helpers/forms/register'),
   _slugs = require('../../../helpers/forms/_slugs');
 
 
 /*
- * ------------------------
- * Install form unit tests.
- * ------------------------
+ * -------------------------
+ * Register form unit tests.
+ * -------------------------
  */
 
 
@@ -38,7 +34,7 @@ describe('Install Form', function() {
 
   // Construct form.
   beforeEach(function() {
-    form = installForm.form();
+    form = registerForm.form();
   });
 
   // Clear collections.
@@ -47,6 +43,12 @@ describe('Install Form', function() {
   });
 
   describe('username', function() {
+
+    // Create a user.
+    beforeEach(function(done) {
+      var user = new User({ username: 'kara' });
+      user.save(function(err) { done(); });
+    });
 
     it('should have a name attribute', function() {
       form.fields.username.name.should.be.ok;
@@ -78,6 +80,17 @@ describe('Install Form', function() {
 
       form.bind({
         username: 'supercalafragalisticexpialadocious'
+      }).validate(function(err, form) {
+        form.fields.username.error.should.be.ok;
+        done();
+      });
+
+    });
+
+    it('should be unique', function(done) {
+
+      form.bind({
+        username: 'kara'
       }).validate(function(err, form) {
         form.fields.username.error.should.be.ok;
         done();

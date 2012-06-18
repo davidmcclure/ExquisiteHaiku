@@ -15,7 +15,11 @@ require('../db-connect')
 
 // User model.
 require('../../../app/models/user');
-var User = mongoose.model('User');;
+var User = mongoose.model('User');
+
+// Poem model.
+require('../../../app/models/poem');
+var Poem = mongoose.model('Poem');
 
 // Form.
 var loginForm = require('../../../helpers/forms/login');

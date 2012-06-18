@@ -1,9 +1,9 @@
 /*
- * Installation controller.
+ * Registration controller.
  */
 
 // Module dependencies.
-var installForm = require('../../helpers/forms/install');
+var registerForm = require('../../helpers/forms/register');
 var auth = require('../../helpers/middleware');
 
 // Models.
@@ -21,33 +21,33 @@ var User = mongoose.model('User');
 module.exports = function(app) {
 
   /*
-   * Show installation form.
+   * Show registration form.
    *
-   * @middleware auth.noUsers: Block if there is an existing user.
+   * @middleware auth.noUser: Block if there is a user session.
    */
-  app.get('/admin/install',
-    auth.noUsers,
+  app.get('/admin/register',
+    auth.noUser,
     function(req, res) {
 
       // Render form.
-      res.render('auth/install', {
-        title:  'Installation',
-        form:   installForm.form(),
+      res.render('auth/register', {
+        title:  'Register',
+        form:   registerForm.form(),
         layout: '_layouts/auth'
       });
 
   });
 
   /*
-   * Process installation form.
+   * Process registration form.
    *
-   * @middleware auth.noUsers: Block if there is an existing user.
+   * @middleware auth.noUser: Block if there is a user session.
    */
-  app.post('/admin/install',
-    auth.noUsers,
+  app.post('/admin/register',
+    auth.noUser,
     function(req, res) {
 
-      installForm.form().handle(req, {
+      registerForm.form().handle(req, {
 
         // If validations pass.
         success: function(form) {
@@ -71,8 +71,8 @@ module.exports = function(app) {
         other: function(form) {
 
           // Re-render form.
-          res.render('auth/install', {
-            title:  'Installation',
+          res.render('auth/register', {
+            title:  'Register',
             form:   form,
             layout: '_layouts/auth'
           });

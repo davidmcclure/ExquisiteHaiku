@@ -33,6 +33,7 @@ exports.form = function() {
       required: 'Enter a username.',
       validators: [
         validators.rangeLength(4, 20, '4-20 characters.'),
+        customValidators.uniqueField(User, 'username', 'Username taken.'),
         customValidators.fieldAllowed(_slugs.blacklist, 'Reserved.')
       ]
     }),

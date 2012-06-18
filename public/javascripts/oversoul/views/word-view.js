@@ -114,7 +114,12 @@ Ov.Views.Word = Backbone.View.extend({
   onDragTick: function(initEvent, dragEvent) {
 
     // Compute drag delta.
-    this.dragDelta = initEvent.pageY - dragEvent.pageY;
+    var deltaX = initEvent.pageX - dragEvent.pageX;
+    var deltaY = initEvent.pageY - dragEvent.pageY;
+    var x2 = Math.pow(deltaX, 2);
+    var y2 = Math.pow(deltaY, 2);
+    this.dragDelta = Math.sqrt(x2 + y2);
+    if (deltaY < 0) { this.dragDelta *= -1; }
 
     // Broadcast the drag tick.
     var currentTotal = this.dragDelta + this.dragTotal;

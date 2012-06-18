@@ -148,12 +148,14 @@ module.exports = function(app, io) {
    * @middleware auth.isUser: Block if there is no user session.
    * @middleware auth.isAdmin: Block if the user is not an admin.
    * @middleware auth.getPoem: Pass the poem identified by :slug.
+   * @middleware auth.ownsPoem: Pass if the poem belongs to the user.
    * @middleware auth.unstartedPoem: Block if the poem is started.
    */
   app.get('/admin/poems/edit/:slug',
     auth.isUser,
     auth.isAdmin,
     auth.getPoem,
+    auth.ownsPoem,
     auth.unstartedPoem,
     function(req, res) {
 
@@ -186,12 +188,14 @@ module.exports = function(app, io) {
    * @middleware auth.isUser: Block if there is no user session.
    * @middleware auth.isAdmin: Block if the user is not an admin.
    * @middleware auth.getPoem: Pass the poem identified by :slug.
+   * @middleware auth.ownsPoem: Pass if the poem belongs to the user.
    * @middleware auth.unstartedPoem: Block if the poem is started.
    */
   app.post('/admin/poems/edit/:slug',
     auth.isUser,
     auth.isAdmin,
     auth.getPoem,
+    auth.ownsPoem,
     auth.unstartedPoem,
     function(req, res) {
 
@@ -243,11 +247,13 @@ module.exports = function(app, io) {
    * @middleware auth.isUser: Block if there is no user session.
    * @middleware auth.isAdmin: Block if the user is not an admin.
    * @middleware auth.getPoem: Pass the poem identified by :slug.
+   * @middleware auth.ownsPoem: Pass if the poem belongs to the user.
    */
   app.get('/admin/poems/delete/:slug',
     auth.isUser,
     auth.isAdmin,
     auth.getPoem,
+    auth.ownsPoem,
     function(req, res) {
 
       // Render the form.
@@ -267,11 +273,13 @@ module.exports = function(app, io) {
    * @middleware auth.isUser: Block if there is no user session.
    * @middleware auth.isAdmin: Block if the user is not an admin.
    * @middleware auth.getPoem: Pass the poem identified by :slug.
+   * @middleware auth.ownsPoem: Pass if the poem belongs to the user.
    */
   app.post('/admin/poems/delete/:slug',
     auth.isUser,
     auth.isAdmin,
     auth.getPoem,
+    auth.ownsPoem,
     function(req, res) {
 
       // Stop poem..
@@ -290,11 +298,13 @@ module.exports = function(app, io) {
    * @middleware auth.isUser: Block if there is no user session.
    * @middleware auth.isAdmin: Block if the user is not an admin.
    * @middleware auth.getPoem: Pass the poem identified by :slug.
+   * @middleware auth.ownsPoem: Pass if the poem belongs to the user.
    */
   app.get('/admin/poems/start/:slug',
     auth.isUser,
     auth.isAdmin,
     auth.getPoem,
+    auth.ownsPoem,
     function(req, res) {
 
       // Broadcast callback.
@@ -321,11 +331,13 @@ module.exports = function(app, io) {
    * @middleware auth.isUser: Block if there is no user session.
    * @middleware auth.isAdmin: Block if the user is not an admin.
    * @middleware auth.getPoem: Pass the poem identified by :slug.
+   * @middleware auth.ownsPoem: Pass if the poem belongs to the user.
    */
   app.get('/admin/poems/stop/:slug',
     auth.isUser,
     auth.isAdmin,
     auth.getPoem,
+    auth.ownsPoem,
     function(req, res) {
 
       // Stop poem.

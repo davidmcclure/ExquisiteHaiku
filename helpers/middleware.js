@@ -114,6 +114,23 @@ exports.getPoem = function (req, res, next) {
 
 
 /*
+ * Only allow the owner of the poem with the :slug passed in from
+ * the route. Called after isUser and getPoem, which pass the poem
+ * and user documents.
+ *
+ * @param {Object} req: The request.
+ * @param {Object} res: The response.
+ * @param {Callback} next: The next middleware.
+ *
+ * @return void.
+ */
+exports.ownsPoem = function (req, res, next) {
+  if (req.poem.user == req.user.id) next();
+  else res.redirect('/admin/poems');
+};
+
+
+/*
  * Only allow when req.poem has not been started. Called after getPoem,
  * which passes the poem document.
  *

@@ -42,10 +42,8 @@ var poem = new Poem({
   visibleWords : 20
 });
 
-// Initialize votes and words global.
-global.Oversoul = {
-  votes: {}
-};
+// Initialize votes tracker.
+global.Oversoul = { votes: {} };
 
 // Create round.
 var round = poem.newRound();
@@ -62,16 +60,7 @@ poem.save(function(err) {
 
     // Iterate over votesPerWord.
     _.each(_.range(votesPerWord), function(j) {
-
-      // Create vote.
-      global.Oversoul.votes[round.id].push(
-        new Vote({
-          round: round.id,
-          word: 'word' + i,
-          quantity: 100
-        })
-      );
-
+      poem.vote('word'+i, 100);
     });
 
   });

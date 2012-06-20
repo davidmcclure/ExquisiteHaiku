@@ -304,7 +304,7 @@ PoemSchema.methods.newRound = function() {
   this.rounds.push(round);
 
   // Create votes array on global.
-  global.Oversoul.votes[round.id] = [];
+  global.Oversoul.votes[round.id] = {};
 
   return round;
 
@@ -437,21 +437,16 @@ PoemSchema.methods.addWord = function(word) {
  */
 PoemSchema.methods.vote = function(word, quantity) {
 
-  // Construct the vote.
-  var vote = new Vote({
-    word: word,
-    quantity: quantity,
-    applied: Date.now()
-  });
+  var vote = [quantity, Date.now()];
 
-  // Push to votes tracker.
-  if (_.has(global.Oversoul.votes, this.round.id)) {
-    global.Oversoul.votes[this.round.id].push(vote);
+  // If a tracker for the word exists.
+  if (_.has(global.Oversoul.votes[this.round.id], word)) {
+    global.Oversoul.votes[this.round.id][word].push(vote);
   }
 
   // Set votes tracker.
   else {
-    global.Oversoul.votes[this.round.id] = [vote];
+    global.Oversoul.votes[this.round.id][word] = [vote];
   }
 
 };
@@ -479,38 +474,32 @@ PoemSchema.statics.score = function(id, now, send, cb) {
   // Get poem.
   this.findById(id, function(err, poem) {
 
-    // Get round id.
     var rId = poem.round.id;
+    var stack = [];
 
-    // Shell out the stack.
-    var stack = {};
+    // Get decay lifetime inverse.
+    var decayL = poem.decayLifetime;
+    var decayI = 1/decayL;
 
-    // Get decay lifetime inverse and current time.
-    var decayInverse = 1/poem.decayLifetime;
+    // Walk words.
+    _.each(global.Oversoul.votes[rId], function(votes, word) {
 
-    _.each(global.Oversoul.votes[rId], function(vote) {
+      stack.unshift([word, 0, 0]);
 
-      // Score the vote.
-      var score = vote.score(
-        now,
-        poem.decayLifetime,
-        decayInverse
-      );
+      // Score votes.
+      _.each(votes, function(vote) {
 
-      // Prepare word key.
-      if (!_.has(stack, vote.word)) {
-        stack[vote.word] = [0, 0];
-      }
+        // Compute churn.
+        var decay = Math.exp(-(now-vote[1]) * decayI);
+        stack[0][2] += Math.round(vote[0] * decay);
 
-      // Increment trackers.
-      stack[vote.word][0] += score.rank;
-      stack[vote.word][1] += score.churn;
+        // Compute rank.
+        var b1 = vote[0] * -decayL;
+        var b2 = b1 * decay;
+        stack[0][1] += Math.round(((b2-b1)*0.001));
 
-    });
+      });
 
-    // Cast stack to array.
-    stack = _.map(stack, function(val, key) {
-      return [key, val[0], val[1]];
     });
 
     // Sort stack by rank.

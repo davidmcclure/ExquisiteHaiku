@@ -836,11 +836,16 @@ describe('Poem', function() {
 
     describe('vote', function() {
 
-      describe('when the round id key exists', function() {
+      // Create round.
+      beforeEach(function() {
+        poem.newRound();
+      });
+
+      describe('when the word tracker exists', function() {
 
         // Create round.
         beforeEach(function() {
-          poem.newRound();
+          global.Oversoul.votes[poem.round.id]['word'] = [];
         });
 
         it('should push the new vote', function() {
@@ -849,21 +854,14 @@ describe('Poem', function() {
           poem.vote('word', 100);
 
           // Check for vote.
-          var vote = global.Oversoul.votes[poem.round.id][0];
-          vote.word.should.eql('word');
-          vote.quantity.should.eql(100);
+          var vote = global.Oversoul.votes[poem.round.id]['word'][0];
+          vote[0].should.eql(100);
 
         });
 
       });
 
-      describe('when the round id key does not exist', function() {
-
-        // Create round, scrub round key.
-        beforeEach(function() {
-          poem.newRound();
-          delete global.Oversoul.votes[poem.round.id];
-        });
+      describe('when the word tracker does not exist', function() {
 
         it('should create the id key and push new vote', function() {
 
@@ -871,9 +869,8 @@ describe('Poem', function() {
           poem.vote('word', 100);
 
           // Check for vote.
-          var vote = global.Oversoul.votes[poem.round.id][0];
-          vote.word.should.eql('word');
-          vote.quantity.should.eql(100);
+          var vote = global.Oversoul.votes[poem.round.id]['word'][0];
+          vote[0].should.eql(100);
 
         });
 
@@ -917,11 +914,11 @@ describe('Poem', function() {
 
       });
 
-      it('should create a new votes array on globals', function() {
+      it('should create a new votes object on globals', function() {
 
         // Add round.
         var round = poem.newRound();
-        global.Oversoul.votes.should.have.keys(round.id);
+        global.Oversoul.votes[round.id].should.eql({});
 
       });
 
@@ -982,7 +979,6 @@ describe('Poem', function() {
 
         // Initialize trackers.
         global.Oversoul.votes = {};
-        global.Oversoul.words = {};
 
         // Create round.
         round = poem.newRound();
@@ -991,29 +987,10 @@ describe('Poem', function() {
         poem.addWord('it');
         poem.addWord('is');
 
-        // 100 vote on first.
-        global.Oversoul.votes[round.id].push(
-          new Vote({
-            word: 'first',
-            quantity: 100
-          })
-        );
-
-        // 200 vote on second.
-        global.Oversoul.votes[round.id].push(
-          new Vote({
-            word: 'second',
-            quantity: 200
-          })
-        );
-
-        // 300 vote on third.
-        global.Oversoul.votes[round.id].push(
-          new Vote({
-            word: 'third',
-            quantity: 300
-          })
-        );
+        // Apply votes.
+        poem.vote('first', 100);
+        poem.vote('second', 200);
+        poem.vote('third', 300);
 
         // Save.
         poem.save(function(err) {
@@ -1027,7 +1004,7 @@ describe('Poem', function() {
         it('should broadcast stacks', function(done) {
 
           // Score the poem.
-          Poem.score(poem.id, Date.now(), function(result) {
+          Poem.score(poem.id, Date.now()+10, function(result) {
 
             // Check order.
             result.stack[0][0].should.eql('third');

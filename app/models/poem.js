@@ -10,10 +10,6 @@ var syllables = require('../../lib/syllables');
 var round = require('./round');
 var Round = mongoose.model('Round');
 
-// Vote model.
-var vote = require('./vote');
-var Vote = mongoose.model('Vote');
-
 // Schema definition.
 var PoemSchema = new Schema({
   slug : {

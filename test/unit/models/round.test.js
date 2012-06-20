@@ -17,10 +17,6 @@ require('../db-connect');
 require('../../../app/models/round');
 var Round = mongoose.model('Round');
 
-// Vote model.
-require('../../../app/models/vote');
-var Vote = mongoose.model('Vote');
-
 
 /*
  * -----------------------

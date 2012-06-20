@@ -5,10 +5,6 @@
 // Module dependencies.
 var _ = require('underscore');
 
-// Models.
-require('./vote');
-var Vote = mongoose.model('Vote');
-
 // Schema definition.
 var RoundSchema = new Schema({
   started : {

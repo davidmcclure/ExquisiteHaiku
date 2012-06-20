@@ -16,11 +16,9 @@ require('../db-connect');
 require('../../../app/models/user');
 require('../../../app/models/poem');
 require('../../../app/models/round');
-require('../../../app/models/vote');
 var User = mongoose.model('User');
 var Poem = mongoose.model('Poem');
 var Round = mongoose.model('Round');
-var Vote = mongoose.model('Vote');
 
 // Create user.
 var user = new User({

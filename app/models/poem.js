@@ -471,6 +471,7 @@ PoemSchema.statics.score = function(id, now, send, cb) {
   this.findById(id, function(err, poem) {
 
     var rId = poem.round.id;
+    var words = global.Oversoul.votes[rId];
     var stack = [];
 
     // Get decay lifetime inverse.
@@ -478,7 +479,7 @@ PoemSchema.statics.score = function(id, now, send, cb) {
     var decayI = 1/decayL;
 
     // Walk words.
-    _.each(global.Oversoul.votes[rId], function(votes, word) {
+    _.each(words, function(votes, word) {
 
       stack.unshift([word, 0, 0]);
 

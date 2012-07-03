@@ -487,13 +487,13 @@ PoemSchema.statics.score = function(id, now, send, cb) {
       _.each(votes, function(vote) {
 
         // Compute churn.
-        var decay = Math.exp(-(now-vote[1]) * decayI);
+        var decay = Math.exp(-(now - vote[1]) * decayI);
         stack[0][2] += Math.round(vote[0] * decay);
 
         // Compute rank.
         var b1 = vote[0] * -decayL;
         var b2 = b1 * decay;
-        stack[0][1] += Math.round(((b2-b1)*0.001));
+        stack[0][1] += Math.round(((b2 - b1) * 0.001));
 
       });
 
@@ -508,9 +508,12 @@ PoemSchema.statics.score = function(id, now, send, cb) {
     stack = stack.slice(0, poem.visibleWords);
 
     // Add rank ratios.
-    _.each(stack, function(s) {
-      s.push((s[1]/stack[0][1]).toFixed(2));
-    });
+    if (!_.isEmpty(stack)) {
+      var top = stack[0][1];
+      _.each(stack, function(s) {
+        s.push((s[1]/top).toFixed(2));
+      });
+    }
 
     // Check for round expiration.
     if (now > poem.roundExpiration) {

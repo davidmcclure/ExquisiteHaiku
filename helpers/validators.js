@@ -95,7 +95,7 @@ exports.passwordCorrect = function (msg) {
  */
 exports.uniqueField = function (coll, column, msg) {
   return function(form, field, callback) {
-    coll.findOne().where(column, field.data).run(function(err, doc) {
+    coll.findOne().where(column, field.data).exec(function(err, doc) {
       if (_.isNull(doc)) callback();
       else callback(msg);
     });
@@ -116,7 +116,7 @@ exports.uniqueField = function (coll, column, msg) {
  */
 exports.uniqueNonSelfField = function (coll, column, self, msg) {
   return function(form, field, callback) {
-    coll.findOne().where(column, field.data).run(function(err, doc) {
+    coll.findOne().where(column, field.data).exec(function(err, doc) {
       if (_.isNull(doc) || doc.id === self.id) callback();
       else callback(msg);
     });

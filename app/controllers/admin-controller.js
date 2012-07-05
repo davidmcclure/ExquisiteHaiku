@@ -4,7 +4,7 @@
 
 // Module dependencies.
 var poemForm = require('../../helpers/forms/poem');
-var slicer = require('../../lib/slicer');
+var score = require('../../score');
 var auth = require('../../helpers/middleware');
 var async = require('async');
 var _ = require('underscore');
@@ -308,15 +308,13 @@ module.exports = function(app, io) {
     function(req, res) {
 
       // Broadcast callback.
-      var scb = function(result) {
+      var emit = function(result) {
         io.sockets.in(req.poem.slug).emit('slice', result);
       };
 
-      // If poem unstarted, create starting round.
+      // Create starting round, start.
       if (req.poem.unstarted) req.poem.newRound();
-
-      // Start poem.
-      req.poem.start(slicer.integrator, scb);
+      req.poem.start(score.score, emit, function() {});
 
       // Save and redirect.
       req.poem.save(function(err) {

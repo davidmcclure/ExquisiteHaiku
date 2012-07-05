@@ -243,12 +243,13 @@ PoemSchema.virtual('syllableCount').get(function() {
  * Start timer.
  *
  * @param {Function} slicer: The slicer.
- * @param {Function} scb: Slicer callback.
+ * @param {Function} emit: Broadcast callback.
+ * @param {Function} cb: Save callback.
  *
  * @return {Boolean}: True if a new timer is set, false if
  * one already exists.
  */
-PoemSchema.methods.start = function(slicer, scb) {
+PoemSchema.methods.start = function(slicer, emit, cb) {
 
   // Block if timer already exists.
   if (_.has(global.Oversoul.timers, this.id)) {
@@ -257,10 +258,7 @@ PoemSchema.methods.start = function(slicer, scb) {
 
   // Create and store timer.
   global.Oversoul.timers[this.id] = setInterval(
-    slicer,
-    this.sliceInterval,
-    this.id,
-    scb
+    slicer, this.sliceInterval, this.id, emit, cb
   );
 
   // Set trackers.

@@ -74,6 +74,77 @@ describe('Scoring', function() {
 
   });
 
+  describe('compute', function() {
+
+    var result;
+
+    beforeEach(function() {
+      result = score.compute(100, 0, 500, 1/500, 1000);
+    });
+
+    it('should return the correct rank', function() {
+
+      // Check rank value.
+      result[0].should.eql(
+        Math.round(
+          (500*100*-(Math.exp(-1000 * 1/500)) -
+          500*100*-(Math.exp(0))) * 0.001
+        )
+      );
+
+    });
+
+    it('should return the correct churn', function() {
+
+      // Check churn value.
+      result[1].should.eql(
+        Math.round(100*Math.exp(-1000 * 1/500))
+      );
+
+    });
+
+  });
+
+  describe('sort', function() {
+
+    it('should sort on the second element', function() {
+
+      var stack = [
+        ['word1', 1],
+        ['word2', 2],
+        ['word3', 3]
+      ];
+
+      score.sort(stack).should.eql([
+        ['word3', 3],
+        ['word2', 2],
+        ['word1', 1]
+      ]);
+
+    });
+
+  });
+
+  describe('ratios', function() {
+
+    it('should add ratios to the stack', function() {
+
+      var stack = [
+        ['word3', 3],
+        ['word2', 2],
+        ['word1', 1]
+      ];
+
+      score.ratios(stack).should.eql([
+        ['word3', 3, '1.00'],
+        ['word2', 2, '0.67'],
+        ['word1', 1, '0.33']
+      ]);
+
+    });
+
+  });
+
   describe('score', function() {
 
     var poem, round;

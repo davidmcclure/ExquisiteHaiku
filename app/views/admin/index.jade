@@ -17,7 +17,15 @@ if poems.length > 0
         tr(slug=poem.slug)
           td.title
             a(href='/#{poem.slug}')= poem.slug
-          td.status= poem.status
+          td.status
+            if poem.unstarted
+              | unstarted
+            else if poem.running
+              | running
+            else if poem.paused
+              | paused
+            else if poem.complete
+              | complete
           td.roundLength.gray= poem.roundLength
           td.sliceInterval.gray= poem.sliceInterval
           td.minSubmissions.gray= poem.minSubmissions

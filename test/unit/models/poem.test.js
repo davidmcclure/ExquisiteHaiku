@@ -356,40 +356,6 @@ describe('Poem', function() {
 
     });
 
-    describe('status', function() {
-
-      it('should have a virtual field for "status"', function() {
-        should.exist(poem.status);
-      });
-
-      it('should return "unstarted" for unstarted poem', function() {
-        poem.started = false;
-        poem.status.should.eql('unstarted');
-      });
-
-      it('should return "paused" for paused poem', function() {
-        poem.started = true;
-        poem.running = false;
-        poem.complete = false;
-        poem.status.should.eql('paused');
-      });
-
-      it('should return "running" for running poem', function() {
-        poem.started = true;
-        poem.running = true;
-        poem.complete = false;
-        poem.status.should.eql('running');
-      });
-
-      it('should return "complete" for complete poem', function() {
-        poem.started = true;
-        poem.running = false;
-        poem.complete = true;
-        poem.status.should.eql('complete');
-      });
-
-    });
-
     describe('round', function() {
 
       it('should return the round when a round exists', function() {

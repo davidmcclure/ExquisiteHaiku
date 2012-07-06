@@ -156,32 +156,6 @@ PoemSchema.virtual('paused').get(function() {
 
 
 /*
- * Get status.
- *
- * @return {String}: The status.
- */
-PoemSchema.virtual('status').get(function() {
-
-  if (this.unstarted) {
-    return 'unstarted';
-  }
-
-  else if (this.running) {
-    return 'running';
-  }
-
-  else if (this.paused) {
-    return 'paused';
-  }
-
-  else if (this.complete) {
-    return 'complete';
-  }
-
-});
-
-
-/*
  * Get current round.
  *
  * @return {Object}: The current round.

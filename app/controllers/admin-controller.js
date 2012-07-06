@@ -314,7 +314,7 @@ module.exports = function(app, io) {
 
       // Create starting round, start.
       if (req.poem.unstarted) req.poem.newRound();
-      req.poem.start(score.score, emit, function() {});
+      req.poem.start(score.execute, emit, function() {});
 
       // Save and redirect.
       req.poem.save(function(err) {

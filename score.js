@@ -5,7 +5,7 @@
 // Module dependencies.
 var _ = require('underscore');
 
-// Models.
+// Poem model.
 var Poem = mongoose.model('Poem');
 
 
@@ -18,14 +18,13 @@ var Poem = mongoose.model('Poem');
  *
  * @return void.
  */
-exports.score = function(id, emit, cb) {
+var score = exports.score = function(id, now, emit, cb) {
 
   // Get poem.
   Poem.findById(id, function(err, poem) {
 
     var rId = poem.round.id;
     var words = global.Oversoul.votes[rId];
-    var now = Date.now();
     var stack = [];
 
     // Get decay lifetime inverse.
@@ -167,4 +166,18 @@ var ratios = exports.ratios = function(stack) {
 
   return stack;
 
+};
+
+
+/*
+ * Call score() with current Date.
+ *
+ * @param {Number} id: The id of the poem to score.
+ * @param {Function} emit: The emission callback.
+ * @param {Function} cb: The save callback.
+ *
+ * @return void.
+ */
+var execute = exports.execute = function(id, emit, cb) {
+  score(id, Date.now(), emit, cb);  
 };

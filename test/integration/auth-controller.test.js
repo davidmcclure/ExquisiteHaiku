@@ -36,8 +36,7 @@ describe('Auth Controller', function() {
     // Create a user.
     user = new User({
       username:   'david',
-      password:   'password',
-      admin:      true
+      password:   'password'
     });
 
     // Save.

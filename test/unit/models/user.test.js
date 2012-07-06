@@ -43,7 +43,6 @@ describe('User', function() {
 
         // Check for errors.
         err.errors.username.type.should.eql('required');
-        err.errors.admin.type.should.eql('required');
 
         // Check for 0 documents.
         User.count({}, function(err, count) {
@@ -87,27 +86,6 @@ describe('User', function() {
           done();
         });
 
-      });
-
-    });
-
-  });
-
-  describe('field defaults', function() {
-
-    var user;
-
-    // Stub user.
-    beforeEach(function() {
-      user = new User();
-    });
-
-    it('should set admin false by default', function(done) {
-
-      // Check for admin false.
-      user.save(function(err) {
-        user.admin.should.be.false;
-        done();
       });
 
     });

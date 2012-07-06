@@ -12,11 +12,6 @@ var UserSchema = new Schema({
     required: true,
     unique: true
   },
-  admin : {
-    type: Boolean,
-    required: true,
-    default: false
-  },
   hash : {
     type: String
   },

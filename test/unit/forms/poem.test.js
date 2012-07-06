@@ -95,8 +95,7 @@ describe('Poem Form', function() {
         // Create user.
         user = new User({
           username:   'david',
-          password:   'password',
-          admin:      false
+          password:   'password'
         });
 
         // Create poem.

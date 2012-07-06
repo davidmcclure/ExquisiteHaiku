@@ -36,8 +36,7 @@ describe('Register Controller', function() {
     // Create a user.
     user = new User({
       username:   'kara',
-      password:   'password',
-      admin:      true
+      password:   'password'
     });
 
     // Save.
@@ -371,7 +370,6 @@ describe('Register Controller', function() {
             User.findOne({ username: 'david' }, function(err, user) {
               user.should.be.ok;
               user.username.should.eql('david');
-              user.admin.should.be.true;
               done();
             });
 

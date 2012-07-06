@@ -26,8 +26,7 @@ exports.form = function() {
       label: 'Username',
       required: 'Enter a username.',
       validators: [
-        customValidators.usernameExists('Does not exist.'),
-        customValidators.usernameAdmin('Unauthorized.')
+        customValidators.usernameExists('Does not exist.')
       ]
     }),
 

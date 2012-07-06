@@ -44,15 +44,13 @@ describe('Login Form', function() {
     // Create admin user.
     user1 = new User({
       username:   'david',
-      password:   'password',
-      admin:      true
+      password:   'password'
     });
 
     // Create nont-admin user.
     user2 = new User({
       username:   'kara',
-      password:   'password',
-      admin:      false
+      password:   'password'
     });
 
     // Save worker.
@@ -98,17 +96,6 @@ describe('Login Form', function() {
 
       form.bind({
         username: 'rosie'
-      }).validate(function(err, form) {
-        form.fields.username.error.should.be.ok;
-        done();
-      });
-
-    });
-
-    it('should match an active user in the database', function(done) {
-
-      form.bind({
-        username: 'kara'
       }).validate(function(err, form) {
         form.fields.username.error.should.be.ok;
         done();

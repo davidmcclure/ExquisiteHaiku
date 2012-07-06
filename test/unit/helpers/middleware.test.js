@@ -179,64 +179,6 @@ describe('Route Middleware', function() {
 
   });
 
-  describe('isAdmin', function() {
-
-    it('should redirect when the user is not an admin', function(done) {
-
-      // Spy on res.
-      res.redirect = sinon.spy();
-
-      // Create non-admin user.
-      var user = new User({
-        username:   'david',
-        password:   'password',
-        admin:      false
-      });
-
-      // Save.
-      user.save(function(err) {
-
-        // Set user id.
-        req.user = user;
-
-        // Call isAdmin, check for redirect.
-        auth.isAdmin(req, res, next);
-        sinon.assert.calledWith(res.redirect, '/admin/poems');
-        done();
-
-      });
-
-    });
-
-    it('should call next() when the user is an admin', function(done) {
-
-      // Spy on next.
-      next = sinon.spy();
-
-      // Create admin user.
-      var user = new User({
-        username:   'david',
-        password:   'password',
-        admin:      true
-      });
-
-      // Save.
-      user.save(function(err) {
-
-        // Set user id.
-        req.user = user;
-
-        // Call isAdmin, check for next().
-        auth.isAdmin(req, res, next);
-        sinon.assert.called(next);
-        done();
-
-      });
-
-    });
-
-  });
-
   describe('noUser', function() {
 
     it('should redirect when there is a user session', function(done) {
@@ -309,8 +251,7 @@ describe('Route Middleware', function() {
       // Create user.
       var user = new User({
         username:   'david',
-        password:   'password',
-        admin:      true
+        password:   'password'
       });
 
       // Save.
@@ -346,8 +287,7 @@ describe('Route Middleware', function() {
       // Create user.
       user = new User({
         username:   'david',
-        password:   'password',
-        admin:      true
+        password:   'password'
       });
 
       // Create poem.
@@ -405,15 +345,13 @@ describe('Route Middleware', function() {
       // Create user1.
       user1 = new User({
         username:   'david',
-        password:   'password',
-        admin:      true
+        password:   'password'
       });
 
       // Create user2.
       user2 = new User({
         username:   'kara',
-        password:   'password',
-        admin:      true
+        password:   'password'
       });
 
       // Create poem1.
@@ -490,8 +428,7 @@ describe('Route Middleware', function() {
       // Create user.
       user = new User({
         username:   'david',
-        password:   'password',
-        admin:      true
+        password:   'password'
       });
 
       // Create poem.

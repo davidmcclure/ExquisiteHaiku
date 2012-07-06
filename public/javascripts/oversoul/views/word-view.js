@@ -81,8 +81,7 @@ Ov.Views.Word = Backbone.View.extend({
   addDrag: function(event) {
 
     // Reset listeners and trackers.
-    $(window).unbind('keydown');
-    this.dragTotal = 0;
+    $(window).unbind('keydown.drag');
     this.dragDelta = 0;
 
     $(window).bind({
@@ -124,6 +123,7 @@ Ov.Views.Word = Backbone.View.extend({
     // Broadcast the drag tick.
     var currentTotal = this.dragDelta + this.dragTotal;
     Ov.vent.trigger('words:drag', this.word, currentTotal);
+    console.log(currentTotal);
 
   },
 
@@ -136,9 +136,11 @@ Ov.Views.Word = Backbone.View.extend({
 
     // Unbind mousemove event.
     $(window).unbind('mousemove.drag');
+    $(window).unbind('mouseup.drag');
 
     // Commit drag total.
     this.dragTotal += this.dragDelta;
+    this.dragDelta = 0;
 
   },
 
@@ -158,12 +160,15 @@ Ov.Views.Word = Backbone.View.extend({
       event.preventDefault();
 
       // Strip events, unselect.
-      $(window).unbind('mouseup.drag keydown.drag');
       this.unSelect();
 
       // Broadcast the vote.
       var total = this.dragDelta + this.dragTotal;
       Ov.vent.trigger('socket:vote:out', this.word, total);
+      console.log(total);
+
+      // Reset total.
+      this.dragTotal = 0;
 
     }
 

@@ -7,15 +7,20 @@ var v = 'javascripts/vendor/';
 
 load(
 
-  // jQuery, Underscore, Moment.
+  // jQuery, Underscore, Moment, d3.
   v+'jquery/jquery.js',
   v+'underscore/underscore.js',
-  v+'moment/moment.js'
+  v+'moment/moment.js',
+  v+'d3/d3.js'
 
 ).then(
 
-  // Backbone and Socket.io.
-  v+'backbone/backbone.js',
+  // Backbone.
+  v+'backbone/backbone.js'
+
+).then(
+
+  // Marionette and Socket.io.
   v+'backbone/marionette.js',
   'socket.io/socket.io.js'
 

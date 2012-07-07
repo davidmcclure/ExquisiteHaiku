@@ -22,7 +22,7 @@ body::-webkit-scrollbar{width:10px}
 #votes{font-family:Lekton;}
 #votes .word{cursor:pointer;line-height:.9em}
 #votes .value{margin-left:5px;opacity:.7}
-.drag-line{position:absolute;}
+.drag-line{position:absolute;line-height:0;}
 .drag-line svg{stroke-width:2}
 .drag-line.positive svg{stroke:#2260ff}
 .drag-line.negative svg{stroke:#b71515}

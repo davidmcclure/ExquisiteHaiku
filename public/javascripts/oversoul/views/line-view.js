@@ -33,6 +33,7 @@ Ov.Views.Line = Backbone.View.extend({
    */
   hide: function() {
     this.$el.detach();
+    this.clear();
   },
 
   /*
@@ -48,10 +49,16 @@ Ov.Views.Line = Backbone.View.extend({
     // Compute dimensions.
     var width = dragEvent.pageX - initEvent.pageX;
     var height = dragEvent.pageY - initEvent.pageY;
+    var absWidth = Math.abs(width);
+    var absHeight = Math.abs(height);
 
-    // Size the container.
-    this.svg.attr('width', Math.abs(width));
-    this.svg.attr('height', Math.abs(height));
+    // Size the container and svg.
+    this.svg.attr('width', absWidth);
+    this.svg.attr('height', absHeight);
+    this.$el.css({
+      width: absWidth,
+      height: absHeight
+    });
 
     var top = null;
     var left = null;
@@ -94,13 +101,25 @@ Ov.Views.Line = Backbone.View.extend({
     this.$el.css({ top: top, left: left });
 
     // Draw line.
-    if (!_.isNull(this.line)) this.line.remove();
+    this.clear();
     this.line = this.svg.append('svg:line')
       .attr('x1', x1)
       .attr('y1', y1)
       .attr('x2', x2)
       .attr('y2', y2);
 
+    console.log(absHeight);
+    console.log(this.$el.height());
+
+  },
+
+  /*
+   * Clear the line.
+   *
+   * @return void.
+   */
+  clear: function() {
+    if (!_.isNull(this.line)) this.line.remove();
   },
 
   /*

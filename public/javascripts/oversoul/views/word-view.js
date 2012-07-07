@@ -105,6 +105,9 @@ Ov.Views.Word = Backbone.View.extend({
 
     });
 
+    // Broadcast.
+    Ov.vent.trigger('words:dragStart', this.word);
+
   },
 
   /*
@@ -125,9 +128,16 @@ Ov.Views.Word = Backbone.View.extend({
     this.dragDelta = Math.sqrt(x2 + y2);
     if (deltaY < 0) { this.dragDelta *= -1; }
 
-    // Broadcast the drag tick.
+    // Get current total.
     var currentTotal = this.dragDelta + this.dragTotal;
-    Ov.vent.trigger('words:drag', this.word, currentTotal);
+
+    // Broadcast the drag tick.
+    Ov.vent.trigger('words:dragTick',
+      this.word,
+      currentTotal,
+      initEvent,
+      dragEvent
+     );
 
   },
 
@@ -146,6 +156,9 @@ Ov.Views.Word = Backbone.View.extend({
     this.dragTotal += this.dragDelta;
     this.dragOrigin = null;
     this.dragDelta = 0;
+
+    // Broadcast.
+    Ov.vent.trigger('words:dragStop');
 
   },
 
@@ -170,10 +183,12 @@ Ov.Views.Word = Backbone.View.extend({
       // Broadcast the vote.
       var total = this.dragDelta + this.dragTotal;
       Ov.vent.trigger('socket:vote:out', this.word, total);
-      console.log(total);
 
       // Reset total.
       this.dragTotal = 0;
+
+      // Broadcast.
+      Ov.vent.trigger('words:dragEnd');
 
     }
 

@@ -34,6 +34,7 @@ Ov.Views.Word = Backbone.View.extend({
 
     // Trackers.
     this.word = null;
+    this.dragOrigin = null;
     this.dragTotal = 0;
     this.dragDelta = 0;
 
@@ -84,6 +85,10 @@ Ov.Views.Word = Backbone.View.extend({
     $(window).unbind('keydown.drag');
     this.dragDelta = 0;
 
+    // Capture starting click event.
+    this.addDragLine();
+    this.dragOrigin = event;
+
     $(window).bind({
 
       'mousemove.drag': _.bind(function(e) {
@@ -123,7 +128,6 @@ Ov.Views.Word = Backbone.View.extend({
     // Broadcast the drag tick.
     var currentTotal = this.dragDelta + this.dragTotal;
     Ov.vent.trigger('words:drag', this.word, currentTotal);
-    console.log(currentTotal);
 
   },
 
@@ -140,6 +144,7 @@ Ov.Views.Word = Backbone.View.extend({
 
     // Commit drag total.
     this.dragTotal += this.dragDelta;
+    this.dragOrigin = null;
     this.dragDelta = 0;
 
   },
@@ -171,6 +176,15 @@ Ov.Views.Word = Backbone.View.extend({
       this.dragTotal = 0;
 
     }
+
+  },
+
+  /*
+   * Inject drag line.
+   *
+   * @return void.
+   */
+  addDragLine: function() {
 
   },
 

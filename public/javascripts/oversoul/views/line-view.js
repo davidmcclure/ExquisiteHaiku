@@ -71,8 +71,8 @@ Ov.Views.Line = Backbone.View.extend({
     // Dragging up.
     else {
       this.setPositive();
-      top = initEvent.pageY - height;
-      y1 = height;
+      top = initEvent.pageY + height;
+      y1 = -height;
       y2 = 0;
     }
 
@@ -85,8 +85,8 @@ Ov.Views.Line = Backbone.View.extend({
 
     // Dragging left.
     else {
-      left = initEvent.pageX - width;
-      x1 = width;
+      left = initEvent.pageX + width;
+      x1 = -width;
       x2 = 0;
     }
 

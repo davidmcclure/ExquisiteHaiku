@@ -3,7 +3,6 @@
  */
 
 // Module dependencies.
-var score = require('../../../score');
 var vows = require('mocha');
 var should = require('should');
 var async = require('async');
@@ -27,6 +26,8 @@ var Poem = mongoose.model('Poem');
 require('../../../app/models/round');
 var Round = mongoose.model('Round');
 
+// Scoring module.
+var scoring = require('../../../app/scoring');
 
 /*
  * ---------------------------
@@ -79,7 +80,7 @@ describe('Scoring', function() {
     var result;
 
     beforeEach(function() {
-      result = score.compute(100, 0, 500, 1/500, 1000);
+      result = scoring.compute(100, 0, 500, 1/500, 1000);
     });
 
     it('should return the correct rank', function() {
@@ -115,7 +116,7 @@ describe('Scoring', function() {
         ['word3', 3]
       ];
 
-      score.sort(stack).should.eql([
+      scoring.sort(stack).should.eql([
         ['word3', 3],
         ['word2', 2],
         ['word1', 1]
@@ -135,7 +136,7 @@ describe('Scoring', function() {
         ['word1', 1]
       ];
 
-      score.ratios(stack).should.eql([
+      scoring.ratios(stack).should.eql([
         ['word3', 3, '1.00'],
         ['word2', 2, '0.67'],
         ['word1', 1, '0.33']
@@ -204,7 +205,7 @@ describe('Scoring', function() {
         it('should broadcast stacks', function(done) {
 
           // Score the poem.
-          score.score(poem.id, Date.now()+10, function(result) {
+          scoring.score(poem.id, Date.now()+10, function(result) {
 
             // Check order.
             result.stack[0][0].should.eql('third');
@@ -223,7 +224,7 @@ describe('Scoring', function() {
         it('should broadcast poem', function(done) {
 
           // Score the poem.
-          score.score(poem.id, Date.now(), function(result) {
+          scoring.score(poem.id, Date.now(), function(result) {
 
             // Check poem.
             result.poem[0][0].valueOf().should.eql('it');
@@ -237,7 +238,7 @@ describe('Scoring', function() {
         it('should broadcast syllable count', function(done) {
 
           // Score the poem.
-          score.score(poem.id, Date.now(), function(result) {
+          scoring.score(poem.id, Date.now(), function(result) {
 
             // Check poem.
             result.syllables.should.eql(2);
@@ -250,7 +251,7 @@ describe('Scoring', function() {
         it('should broadcast round id', function(done) {
 
           // Score the poem.
-          score.score(poem.id, Date.now(), function(result) {
+          scoring.score(poem.id, Date.now(), function(result) {
 
             // Check poem.
             result.round.should.eql(poem.round.id);
@@ -263,7 +264,7 @@ describe('Scoring', function() {
         it('should broadcast clock', function(done) {
 
           // Score the poem.
-          score.score(poem.id, Date.now(), function(result) {
+          scoring.score(poem.id, Date.now(), function(result) {
 
             // Check clock.
             result.clock.should.be.above(0);
@@ -288,7 +289,7 @@ describe('Scoring', function() {
         it('should broadcast updated poem', function(done) {
 
           // Score the poem.
-          score.score(poem.id, Date.now(), function(result) {
+          scoring.score(poem.id, Date.now(), function(result) {
 
             // Check poem.
             result.poem[0][0].valueOf().should.eql('it');
@@ -303,7 +304,7 @@ describe('Scoring', function() {
         it('should broadcast empty stacks', function(done) {
 
           // Score the poem.
-          score.score(poem.id, Date.now(), function(result) {
+          scoring.score(poem.id, Date.now(), function(result) {
 
             // Check stack.
             result.stack.should.eql([]);
@@ -316,7 +317,7 @@ describe('Scoring', function() {
         it('should save updated poem', function(done) {
 
           // Score the poem.
-          score.score(poem.id, Date.now(), function() {}, function(result) {
+          scoring.score(poem.id, Date.now(), function() {}, function(result) {
 
             // Get the poem.
             Poem.findById(poem.id, function(err, poem) {
@@ -334,7 +335,7 @@ describe('Scoring', function() {
         it('should save updated round', function(done) {
 
           // Score the poem.
-          score.score(poem.id, Date.now(), function() {}, function(result) {
+          scoring.score(poem.id, Date.now(), function() {}, function(result) {
 
             // Get the poem.
             Poem.findById(poem.id, function(err, poem) {
@@ -362,7 +363,7 @@ describe('Scoring', function() {
           it('should return unchanged poem', function(done) {
 
             // Score the poem.
-            score.score(poem.id, Date.now(), function(result) {
+            scoring.score(poem.id, Date.now(), function(result) {
 
               // Check for poem.
               result.poem[0][0].valueOf().should.eql('it');
@@ -398,7 +399,7 @@ describe('Scoring', function() {
           it('should stop the poem', function(done) {
 
             // Score the poem.
-            score.score(poem.id, Date.now(), function() {}, function(result) {
+            scoring.score(poem.id, Date.now(), function() {}, function(result) {
 
               // Get the poem.
               Poem.findById(poem.id, function(err, poem) {

@@ -20,14 +20,13 @@ var User = mongoose.model('User');
 var Poem = mongoose.model('Poem');
 var Round = mongoose.model('Round');
 
-// Score module.
-var score = require('../../../score');
+// Scoring module.
+var scoring = require('../../../app/scoring');
 
 // Create user.
 var user = new User({
   username: 'david',
-  password: 'password',
-  active: true
+  password: 'password'
 });
 
 // Create poem.
@@ -67,7 +66,7 @@ poem.save(function(err) {
   });
 
   var t1 = Date.now();
-  score.score(poem.id, Date.now(), function(result) {
+  scoring.score(poem.id, Date.now(), function(result) {
 
     var t2 = Date.now();
     console.log('%d words, %d votes/word', numWords, votesPerWord);

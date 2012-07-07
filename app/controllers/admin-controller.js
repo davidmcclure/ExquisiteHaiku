@@ -4,7 +4,7 @@
 
 // Module dependencies.
 var poemForm = require('../../helpers/forms/poem');
-var score = require('../../score');
+var scoring = require('../../app/scoring');
 var auth = require('../../helpers/middleware');
 var async = require('async');
 var _ = require('underscore');
@@ -296,7 +296,7 @@ module.exports = function(app, io) {
 
       // Create starting round, start.
       if (req.poem.unstarted) req.poem.newRound();
-      req.poem.start(score.execute, emit, function() {});
+      req.poem.start(scoring.execute, emit, function() {});
 
       // Save and redirect.
       req.poem.save(function(err) {

@@ -120,7 +120,7 @@ Ov.Controllers.Stack = (function(Backbone, Ov) {
     word, currentTotal, initEvent, dragEvent) {
 
       // Render line.
-      Stack.Line.render(initEvent, dragEvent);
+      Stack.Line.render(initEvent, dragEvent, currentTotal);
 
   });
 

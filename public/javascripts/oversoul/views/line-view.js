@@ -17,8 +17,12 @@ Ov.Views.Line = Backbone.View.extend({
     // Get window element.
     this.window = $(window);
 
-    // Create SVG element.
+    // Create SVG element and text element for total.
     this.svg = d3.select(this.el).append('svg:svg');
+    this.total = this.svg.append('svg:text');
+    this.total.append('svg:tspan').style('fill', 'blue').text('test');
+
+    // Trackers.
     this.current = null;
     this.lines = [];
 
@@ -49,10 +53,11 @@ Ov.Views.Line = Backbone.View.extend({
    *
    * @param {Object} initEvent: The initiating click event.
    * @param {Object} dragEvent: The current mousemove event.
+   * @param {Number} currentTotal: The current drag total.
    *
    * @return void.
    */
-  render: function(initEvent, dragEvent) {
+  render: function(initEvent, dragEvent, currentTotal) {
 
     // Get vertical offset.
     var height = dragEvent.pageY - initEvent.pageY;

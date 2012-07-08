@@ -126,6 +126,10 @@ Ov.Views.Word = Backbone.View.extend({
     // Get current total.
     var currentTotal = this.dragDelta + this.dragTotal;
 
+    // Set word color.
+    if (currentTotal >= 0) this.setDragPositive();
+    else this.setDragNegative();
+
     // Broadcast the drag tick.
     Ov.vent.trigger('words:dragTick',
       this.word,
@@ -177,12 +181,11 @@ Ov.Views.Word = Backbone.View.extend({
       // Broadcast the vote.
       var total = this.dragDelta + this.dragTotal;
       Ov.vent.trigger('socket:vote:out', this.word, total);
-
-      // Reset total.
-      this.dragTotal = 0;
-
-      // Broadcast.
       Ov.vent.trigger('words:dragEnd');
+
+      // Reset color and total.
+      this.setDragNeutral();
+      this.dragTotal = 0;
 
     }
 
@@ -215,7 +218,6 @@ Ov.Views.Word = Backbone.View.extend({
    */
   select: function(event) {
     Ov.vent.trigger('words:select');
-    this.wordMarkup.addClass('select');
     this.addDrag(event);
     this.unHover();
   },
@@ -258,6 +260,36 @@ Ov.Views.Word = Backbone.View.extend({
   setNegative: function() {
     this.churnMarkup.addClass('negative');
     this.churnMarkup.removeClass('positive');
+  },
+
+  /*
+   * Set word color to match positive drag.
+   *
+   * @return void.
+   */
+  setDragPositive: function() {
+    this.wordMarkup.addClass('positive');
+    this.wordMarkup.removeClass('negative');
+  },
+
+  /*
+   * Set word color to match negative drag.
+   *
+   * @return void.
+   */
+  setDragNegative: function() {
+    this.wordMarkup.addClass('negative');
+    this.wordMarkup.removeClass('positive');
+  },
+
+  /*
+   * Reset word color.
+   *
+   * @return void.
+   */
+  setDragNeutral: function() {
+    this.wordMarkup.removeClass('positive');
+    this.wordMarkup.removeClass('negative');
   }
 
 });

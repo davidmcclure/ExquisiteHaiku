@@ -24,5 +24,6 @@ body::-webkit-scrollbar{width:10px}
 #votes .value{margin-left:5px;opacity:.7}
 .drag-line{position:fixed;line-height:0;z-index:-1;top:0;left:0;}
 .drag-line svg{position:fixed;stroke-width:2;top:0;left:0;}
-.drag-line svg line.positive{stroke:#2260ff}
-.drag-line svg line.negative{stroke:#b71515}
+.drag-line svg line,.drag-line svg text{font-size:2em;}
+.drag-line svg line.positive,.drag-line svg text.positive{stroke:#2260ff;fill:#2260ff}
+.drag-line svg line.negative,.drag-line svg text.negative{stroke:#b71515;fill:#b71515}

@@ -20,7 +20,6 @@ Ov.Views.Line = Backbone.View.extend({
     // Create SVG element and text element for total.
     this.svg = d3.select(this.el).append('svg:svg');
     this.total = this.svg.append('svg:text');
-    this.total.append('svg:tspan').style('fill', 'blue').text('test');
 
     // Trackers.
     this.current = null;
@@ -70,9 +69,14 @@ Ov.Views.Line = Backbone.View.extend({
       .attr('x2', dragEvent.pageX)
       .attr('y2', dragEvent.pageY);
 
-    // Set line style.
+    // Positive drag.
     if (height >= 0) this.setNegative();
     else this.setPositive();
+
+    // Position counter.
+    this.total.text(Math.round(currentTotal));
+    this.total.attr('y', dragEvent.pageY - 10);
+    this.total.attr('x', dragEvent.pageX + 10);
 
   },
 
@@ -100,9 +104,15 @@ Ov.Views.Line = Backbone.View.extend({
    * @return void.
    */
   clear: function() {
+
+    // Remove lines.
     _.each(this.lines, function(line) {
       line.remove();
     });
+
+    // Clear counter.
+    this.total.text('');
+
   },
 
   /*
@@ -132,6 +142,7 @@ Ov.Views.Line = Backbone.View.extend({
    */
   setPositive: function() {
     this.current.attr('class', 'positive');
+    this.total.attr('class', 'positive');
   },
 
   /*
@@ -141,6 +152,7 @@ Ov.Views.Line = Backbone.View.extend({
    */
   setNegative: function() {
     this.current.attr('class', 'negative');
+    this.total.attr('class', 'negative');
   }
 
 });

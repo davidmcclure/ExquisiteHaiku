@@ -13,8 +13,14 @@ Ov.Views.Line = Backbone.View.extend({
    * @return void.
    */
   initialize: function() {
+
+    // Get window element.
+    this.window = $(window);
+
+    // Create SVG element.
     this.svg = d3.select(this.el).append('svg:svg');
     this.line = null;
+
   },
 
   /*
@@ -23,6 +29,7 @@ Ov.Views.Line = Backbone.View.extend({
    * @return void.
    */
   show: function() {
+    this.fitContainer();
     $('body').append(this.$el);
   },
 
@@ -46,71 +53,39 @@ Ov.Views.Line = Backbone.View.extend({
    */
   render: function(initEvent, dragEvent) {
 
-    // Compute dimensions.
-    var width = dragEvent.pageX - initEvent.pageX;
+    // Get vertical offset.
     var height = dragEvent.pageY - initEvent.pageY;
-    var absWidth = Math.abs(width);
-    var absHeight = Math.abs(height);
 
-    // Size the container and svg.
-    this.svg.attr('width', absWidth);
-    this.svg.attr('height', absHeight);
-    this.$el.css({
-      width: absWidth,
-      height: absHeight
-    });
-
-    var top = null;
-    var left = null;
-    var x1 = null;
-    var y1 = null;
-    var x2 = null;
-    var y2 = null;
-
-    // Dragging down.
-    if (height >= 0) {
-      this.setNegative();
-      top = initEvent.pageY;
-      y1 = 0;
-      y2 = height;
-    }
-
-    // Dragging up.
-    else {
-      this.setPositive();
-      top = initEvent.pageY + height;
-      y1 = -height;
-      y2 = 0;
-    }
-
-    // Dragging right.
-    if (width >= 0) {
-      left = initEvent.pageX;
-      x1 = 0;
-      x2 = width;
-    }
-
-    // Dragging left.
-    else {
-      left = initEvent.pageX + width;
-      x1 = -width;
-      x2 = 0;
-    }
-
-    // Render position.
-    this.$el.css({ top: top, left: left });
+    // Set line style.
+    if (height >= 0) this.setNegative();
+    else this.setPositive();
 
     // Draw line.
     this.clear();
     this.line = this.svg.append('svg:line')
-      .attr('x1', x1)
-      .attr('y1', y1)
-      .attr('x2', x2)
-      .attr('y2', y2);
+      .attr('x1', initEvent.pageX)
+      .attr('y1', initEvent.pageY)
+      .attr('x2', dragEvent.pageX)
+      .attr('y2', dragEvent.pageY);
 
-    console.log(absHeight);
-    console.log(this.$el.height());
+  },
 
+  /*
+   * Fit the container to fill the window.
+   *
+   * @return void.
+   */
+  fitContainer: function() {
+
+    var width = this.window.width();
+    var height = this.window.height();
+
+    // Fit the container.
+    this.$el.css({ width: width, height: height });
+
+    // Fit the SVG element.
+    this.svg.attr('width', width);
+    this.svg.attr('height', height);
   },
 
   /*

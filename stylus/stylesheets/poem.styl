@@ -86,20 +86,19 @@ body
 .drag-line
   position fixed
   line-height 0
+  z-index -1
   top 0
   left 0
 
   svg
     position fixed
     stroke-width 2
-    // background green
     top 0
     left 0
 
-  &.positive
-    svg
-      stroke positive
+    line
+      &.positive
+        stroke positive
 
-  &.negative
-    svg
-      stroke negative
+      &.negative
+        stroke negative

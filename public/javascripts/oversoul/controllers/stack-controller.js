@@ -89,7 +89,16 @@ Ov.Controllers.Stack = (function(Backbone, Ov) {
   });
 
   /*
-   * When a drag is ended.
+   * When an individual drag is completed.
+   *
+   * @return void.
+   */
+  Ov.vent.on('words:dragStop', function() {
+    Stack.Line.lockCurrent();
+  });
+
+  /*
+   * When a drag is committed or cancelled.
    *
    * @return void.
    */

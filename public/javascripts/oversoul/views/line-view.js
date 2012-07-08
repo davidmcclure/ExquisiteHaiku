@@ -19,7 +19,8 @@ Ov.Views.Line = Backbone.View.extend({
 
     // Create SVG element.
     this.svg = d3.select(this.el).append('svg:svg');
-    this.line = null;
+    this.current = null;
+    this.lines = [];
 
   },
 
@@ -56,17 +57,17 @@ Ov.Views.Line = Backbone.View.extend({
     // Get vertical offset.
     var height = dragEvent.pageY - initEvent.pageY;
 
-    // Set line style.
-    if (height >= 0) this.setNegative();
-    else this.setPositive();
-
     // Draw line.
-    this.clear();
-    this.line = this.svg.append('svg:line')
+    this.clearCurrent();
+    this.current = this.svg.append('svg:line')
       .attr('x1', initEvent.pageX)
       .attr('y1', initEvent.pageY)
       .attr('x2', dragEvent.pageX)
       .attr('y2', dragEvent.pageY);
+
+    // Set line style.
+    if (height >= 0) this.setNegative();
+    else this.setPositive();
 
   },
 
@@ -89,12 +90,34 @@ Ov.Views.Line = Backbone.View.extend({
   },
 
   /*
-   * Clear the line.
+   * Clear all lines.
    *
    * @return void.
    */
   clear: function() {
-    if (!_.isNull(this.line)) this.line.remove();
+    _.each(this.lines, function(line) {
+      line.remove();
+    });
+  },
+
+  /*
+   * Clear the current line.
+   *
+   * @return void.
+   */
+  clearCurrent: function() {
+    if (!_.isNull(this.current))
+      this.current.remove();
+  },
+
+  /*
+   * Freeze the current line.
+   *
+   * @return void.
+   */
+  lockCurrent: function() {
+    this.lines.push(this.current);
+    this.current = null;
   },
 
   /*
@@ -103,8 +126,7 @@ Ov.Views.Line = Backbone.View.extend({
    * @return void.
    */
   setPositive: function() {
-    this.$el.addClass('positive');
-    this.$el.removeClass('negative');
+    this.current.attr('class', 'positive');
   },
 
   /*
@@ -113,8 +135,7 @@ Ov.Views.Line = Backbone.View.extend({
    * @return void.
    */
   setNegative: function() {
-    this.$el.addClass('negative');
-    this.$el.removeClass('positive');
+    this.current.attr('class', 'negative');
   }
 
 });

@@ -28,3 +28,5 @@ body::-webkit-scrollbar{width:10px}
 .drag-line svg line,.drag-line svg text{font-size:2em;}
 .drag-line svg line.positive,.drag-line svg text.positive{stroke:#2260ff;fill:#2260ff}
 .drag-line svg line.negative,.drag-line svg text.negative{stroke:#b71515;fill:#b71515}
+#info{float:right;font-size:2.4em;font-weight:300;}
+#info span.info{margin-left:.4em}

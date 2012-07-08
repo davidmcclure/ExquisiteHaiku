@@ -38,10 +38,16 @@ Ov.Controllers.Info = (function(Backbone, Ov) {
    */
   Ov.vent.on('words:dragTick', function(
     word, currentTotal, initEvent, dragEvent) {
-
-      // Render preview.
       Info.Points.renderPreview(currentTotal);
+  });
 
+  /*
+   * Commit new point account value after a vote.
+   *
+   * @return void.
+   */
+  Ov.vent.on('words:dragEnd', function() {
+    Info.Points.commit();
   });
 
   return Info;

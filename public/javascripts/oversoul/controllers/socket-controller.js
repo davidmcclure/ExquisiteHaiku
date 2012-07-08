@@ -93,7 +93,7 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
    *
    * @return void.
    */
-  Ov.vent.on('socket:vote:out', function(word, quantity) {
+  Ov.vent.on('words:dragEnd', function(word, quantity) {
     Socket.s.emit('vote', Poem._id, word, quantity);
   });
 

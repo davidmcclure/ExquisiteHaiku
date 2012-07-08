@@ -181,7 +181,7 @@ Ov.Views.Word = Backbone.View.extend({
       // Broadcast the vote.
       var total = this.dragDelta + this.dragTotal;
       Ov.vent.trigger('socket:vote:out', this.word, total);
-      Ov.vent.trigger('words:dragEnd');
+      Ov.vent.trigger('words:dragEnd', this.word, total);
 
       // Reset color and total.
       this.setDragNeutral();

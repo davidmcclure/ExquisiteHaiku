@@ -13,6 +13,7 @@ Ov.Views.Points = Backbone.View.extend({
    */
   initialize: function() {
     this.value = null;
+    this.preview = null;
     this.renderValue(Poem.seedCapital);
   },
 
@@ -37,8 +38,20 @@ Ov.Views.Points = Backbone.View.extend({
    * @return void.
    */
   renderPreview: function(dragQuantity) {
+    this.preview = this.value - Math.abs(dragQuantity);
     this.$el.text(this.value - Math.abs(dragQuantity));
     this.$el.addClass('preview');
+  },
+
+  /*
+   * Commit current preview value.
+   *
+   * @param {Number} dragQuantity: The drag value.
+   *
+   * @return void.
+   */
+  commit: function(dragQuantity) {
+    this.renderValue(this.preview);
   }
 
 });

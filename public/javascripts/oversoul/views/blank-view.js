@@ -176,11 +176,6 @@ Ov.Views.Blank = Backbone.View.extend({
     this.words.push(word);
     wordMarkup.data('word', word);
 
-    // Apply the vote.
-    Ov.vent.trigger(
-      'socket:vote:out', word, Poem.submissionVal
-    );
-
     // Clear input.
     this.$el.val('');
 

@@ -14,7 +14,17 @@ Ov.Views.Points = Backbone.View.extend({
   initialize: function() {
     this.value = null;
     this.preview = null;
-    this.renderValue(Poem.seedCapital);
+  },
+
+  /*
+   * Set starting value.
+   *
+   * @param {Number} value: The value.
+   *
+   * @return void.
+   */
+  setStartingValue: function(value) {
+    if (_.isNull(this.value)) this.renderValue(value);
   },
 
   /*
@@ -38,20 +48,39 @@ Ov.Views.Points = Backbone.View.extend({
    * @return void.
    */
   renderPreview: function(dragQuantity) {
+
+    // Render the value.
     this.preview = this.value - Math.abs(dragQuantity);
-    this.$el.text(this.value - Math.abs(dragQuantity));
+    this.$el.text(this.preview);
     this.$el.addClass('preview');
+    this.$el.removeClass('negative');
+
+    // Insufficient funds.
+    if (this.preview < 0) {
+      this.$el.removeClass('preview');
+      this.$el.addClass('negative');
+      Ov.vent.trigger('points:invalid');
+    }
+
   },
 
   /*
    * Commit current preview value.
    *
-   * @param {Number} dragQuantity: The drag value.
+   * @param {String} word: The word.
+   * @param {Number} quantity: The vote quantity.
    *
    * @return void.
    */
-  commit: function(dragQuantity) {
-    this.renderValue(this.preview);
+  commitPreview: function(word, quantity) {
+
+    // If sufficient points, commit.
+    if (this.preview >= 0) {
+      this.renderValue(this.preview);
+      Ov.vent.trigger('points:commitVote', word, quantity);
+      Ov.vent.trigger('points:newValue', this.value);
+    }
+
   }
 
 });

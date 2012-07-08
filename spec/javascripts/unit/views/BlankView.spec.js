@@ -153,7 +153,7 @@ describe('Blank View', function() {
     beforeEach(function() {
 
       // Mock server word validation.
-      Ov.vent.on('socket:validate', function(word, cb) {
+      Ov.vent.on('blank:validate', function(word, cb) {
         if (word == 'valid') cb(true);
         else if (word == 'invalid') cb(false);
       });
@@ -323,7 +323,7 @@ describe('Blank View', function() {
     beforeEach(function() {
 
       // Mock server word validation.
-      Ov.vent.on('socket:validate', function(word, cb) {
+      Ov.vent.on('blank:validate', function(word, cb) {
         cb('server');
       });
 

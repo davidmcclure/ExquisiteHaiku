@@ -27,6 +27,17 @@ Ov.Controllers.Info = (function(Backbone, Ov) {
   // -------
 
   /*
+   * Initialize the point value.
+   *
+   * @param {Object} round: The round record.
+   *
+   * @return void.
+   */
+  Ov.vent.on('state:vote', function(round) {
+    Info.Points.setStartingValue(round.get('points'));
+  });
+
+  /*
    * Render preview point value.
    *
    * @param {String} word: The word being dragged on.
@@ -44,10 +55,13 @@ Ov.Controllers.Info = (function(Backbone, Ov) {
   /*
    * Commit new point account value after a vote.
    *
+   * @param {String} word: The word.
+   * @param {Number} quantity: The vote quantity.
+   *
    * @return void.
    */
-  Ov.vent.on('words:dragEnd', function() {
-    Info.Points.commit();
+  Ov.vent.on('words:dragCommit', function(word, quantity) {
+    Info.Points.commitPreview(word, quantity);
   });
 
   return Info;

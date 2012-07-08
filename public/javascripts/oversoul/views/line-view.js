@@ -157,6 +157,16 @@ Ov.Views.Line = Backbone.View.extend({
   setNegative: function() {
     this.current.attr('class', 'negative');
     this.total.attr('class', 'negative');
+  },
+
+  /*
+   * Set insufficient points for current quantity.
+   *
+   * @return void.
+   */
+  setInvalid: function() {
+    this.current.attr('class', 'invalid');
+    this.total.attr('class', 'invalid');
   }
 
 });

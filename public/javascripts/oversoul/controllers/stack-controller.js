@@ -102,7 +102,7 @@ Ov.Controllers.Stack = (function(Backbone, Ov) {
    *
    * @return void.
    */
-  Ov.vent.on('words:dragEnd', function() {
+  Ov.vent.on('words:dragCommit', function() {
     Stack.Line.hide();
   });
 
@@ -122,6 +122,15 @@ Ov.Controllers.Stack = (function(Backbone, Ov) {
       // Render line.
       Stack.Line.render(initEvent, dragEvent, currentTotal);
 
+  });
+
+  /*
+   * Insufficient points for current drag quantity.
+   *
+   * @return void.
+   */
+  Ov.vent.on('points:invalid', function() {
+    Stack.Line.setInvalid();
   });
 
   return Stack;

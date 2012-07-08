@@ -37,24 +37,13 @@ Ov.Controllers.Round = (function(Backbone, Ov) {
   Ov.vent.on('socket:slice', function(data) {
 
     // Try to retrieve a stored round.
-    var round = Round.RoundCollection.where({
-      round: data.round
-    });
+    var round = Round.RoundCollection.get(data.round);
 
-    // If the user has not voted on the current round,
-    // raise the state:submit event.
-    if (_.isEmpty(round)) {
-      Ov.vent.trigger('state:submit');
-    }
+    // Emit application state.
+    if (_.isEmpty(round)) Ov.vent.trigger('state:submit');
+    else Ov.vent.trigger('state:vote', round);
 
-    // If the user has voted on the current round, raise
-    // the state:vote event.
-    else {
-      Ov.vent.trigger('state:vote');
-    }
-
-    // Store the current round id as a top-level
-    // attribute on the round collection.
+    // Store the current round.
     Round.RoundCollection.currentRound = data.round;
 
   });
@@ -65,8 +54,28 @@ Ov.Controllers.Round = (function(Backbone, Ov) {
    *
    * @return void.
    */
-  Ov.vent.on('socket:submit', function() {
+  Ov.vent.on('blank:submit', function() {
     Round.RoundCollection.recordSubmission();
+  });
+
+  /*
+   * When a vote is committed, update the round record.
+   *
+   * @param {Number} value: The new value.
+   *
+   * @return void.
+   */
+  Ov.vent.on('points:newValue', function(value) {
+
+    // Retrieve the round record.
+    var round = Round.RoundCollection.get(
+      Round.RoundCollection.getCurrentRound()
+    );
+
+    // Set new point value, save.
+    round.set('points', value);
+    round.save();
+
   });
 
   return Round;

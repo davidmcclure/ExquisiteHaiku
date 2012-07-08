@@ -143,7 +143,7 @@ Ov.Views.Blank = Backbone.View.extend({
     // ** dev: submit with CONTROL.
     else if (event.keyCode == 17) {
       if (this.words.length >= Poem.minSubmissions) {
-        Ov.vent.trigger('socket:submit', this.words);
+        Ov.vent.trigger('blank:submit', this.words);
       }
     }
 
@@ -220,7 +220,7 @@ Ov.Views.Blank = Backbone.View.extend({
     // Do server validation.
     else {
       var vcb = function(valid) { cb(valid); };
-      Ov.vent.trigger('socket:validate', word, vcb);
+      Ov.vent.trigger('blank:validate', word, vcb);
     }
 
   },

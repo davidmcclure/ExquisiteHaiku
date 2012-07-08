@@ -68,7 +68,7 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
    *
    * @return void.
    */
-  Ov.vent.on('socket:validate', function(word, cb) {
+  Ov.vent.on('blank:validate', function(word, cb) {
     var vcb = function(valid) { cb(valid); };
     Socket.s.emit('validate', Poem._id, word, vcb);
   });
@@ -81,7 +81,7 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
    *
    * @return void.
    */
-  Ov.vent.on('socket:submit', function(words, cb) {
+  Ov.vent.on('blank:submit', function(words, cb) {
     Socket.s.emit('submit', Poem._id, words);
   });
 
@@ -93,7 +93,7 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
    *
    * @return void.
    */
-  Ov.vent.on('words:dragEnd', function(word, quantity) {
+  Ov.vent.on('points:commitVote', function(word, quantity) {
     Socket.s.emit('vote', Poem._id, word, quantity);
   });
 

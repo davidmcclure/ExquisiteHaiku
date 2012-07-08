@@ -40,7 +40,10 @@ Ov.Collections.Round = Backbone.Collection.extend({
    * @return void.
    */
   recordSubmission: function() {
-    this.create({ round: this.getCurrentRound() });
+    this.create({
+      id: this.getCurrentRound(),
+      points: Poem.seedCapital
+    });
   }
 
 });

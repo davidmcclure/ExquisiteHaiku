@@ -1,11 +1,12 @@
 @import url("http://fonts.googleapis.com/css?family=Lekton:400,700,400italic");
 @import url("http://fonts.googleapis.com/css?family=Dosis:200,300,400,500,600,700,800");
 @import url("http://fonts.googleapis.com/css?family=Abel");
-body{font:300 18px "Helvetica Neue";font-weight:200;-webkit-user-select:none;-moz-user-select:none;}
+body{font:300 18px "Helvetica Neue";font-weight:200;margin:2em;-webkit-user-select:none;-moz-user-select:none;}
 body::-webkit-scrollbar{width:10px}
 .positive{color:#2260ff}
 .negative{color:#b71515}
-#poem div.poem-line{margin-bottom:.6em}
+#poem{margin-bottom:1em;}
+#poem div.poem-line{margin-bottom:.3em}
 #poem input.blank{padding:2px;margin:0;width:60px;border:none;border-bottom:1px solid #808080;font:300 18px "Helvetica Neue";}
 #poem input.blank:focus{outline:none}
 #poem .poem-word{margin-right:4px}

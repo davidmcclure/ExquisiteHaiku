@@ -45,12 +45,15 @@ load(
   a+'views/stack-view.js',
   a+'views/word-view.js',
   a+'views/line-view.js',
+  a+'views/points-view.js',
+  a+'views/timer-view.js',
 
   // Controllers
   a+'controllers/poem-controller.js',
   a+'controllers/socket-controller.js',
   a+'controllers/round-controller.js',
-  a+'controllers/stack-controller.js'
+  a+'controllers/stack-controller.js',
+  a+'controllers/info-controller.js'
 
 ).thenRun(function() {
 

@@ -74,7 +74,7 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
   });
 
   /*
-   * Save blind submissions.
+   * Commit submissions.
    *
    * @param {Array} words: The words.
    * @param {Function} cb: Callback.

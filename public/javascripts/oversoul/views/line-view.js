@@ -43,6 +43,7 @@ Ov.Views.Line = Backbone.View.extend({
    * @return void.
    */
   hide: function() {
+    this.lockCurrent();
     this.$el.detach();
     this.clear();
   },
@@ -74,7 +75,7 @@ Ov.Views.Line = Backbone.View.extend({
     else this.setPositive();
 
     // Position counter.
-    this.total.text(Math.round(currentTotal));
+    this.total.text(currentTotal);
     this.total.attr('y', dragEvent.pageY - 10);
     this.total.attr('x', dragEvent.pageX + 10);
 
@@ -112,6 +113,7 @@ Ov.Views.Line = Backbone.View.extend({
 
     // Clear counter.
     this.total.text('');
+    this.lines = [];
 
   },
 
@@ -131,8 +133,10 @@ Ov.Views.Line = Backbone.View.extend({
    * @return void.
    */
   lockCurrent: function() {
-    this.lines.push(this.current);
-    this.current = null;
+    if (!_.isNull(this.current)) {
+      this.lines.push(this.current);
+      this.current = null;
+    }
   },
 
   /*

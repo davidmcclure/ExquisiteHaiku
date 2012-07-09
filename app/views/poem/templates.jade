@@ -18,3 +18,9 @@ script(id="stack-word", type="text/template")
 script(id="vote-word", type="text/template")
   span.word <%= word %>
   span.value <%= value %>
+
+script(id="clock", type="text/template")
+  <% if (hrs != 0) { %> span.hrs <%= hrs %>: <%}%>
+  span.min <%= min %>:
+  span.sec <%= sec %>:
+  span.mls <%= String(mls)[0] %>

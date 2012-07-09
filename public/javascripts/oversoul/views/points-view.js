@@ -77,7 +77,7 @@ Ov.Views.Points = Backbone.View.extend({
     // If sufficient points, commit.
     if (this.preview >= 0) {
       this.renderValue(this.preview);
-      Ov.vent.trigger('points:commitVote', word, quantity);
+      Ov.vent.trigger('points:releaseVote', word, quantity);
       Ov.vent.trigger('points:newValue', this.value);
     }
 

@@ -165,8 +165,8 @@ Ov.Views.Line = Backbone.View.extend({
    * @return void.
    */
   setInvalid: function() {
-    this.current.attr('class', 'invalid');
-    this.total.attr('class', 'invalid');
+    this.current.attr('class', 'blocked');
+    this.total.attr('class', 'blocked');
   }
 
 });

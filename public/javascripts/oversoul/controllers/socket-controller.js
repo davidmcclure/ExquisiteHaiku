@@ -93,7 +93,7 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
    *
    * @return void.
    */
-  Ov.vent.on('points:commitVote', function(word, quantity) {
+  Ov.vent.on('points:releaseVote', function(word, quantity) {
     Socket.s.emit('vote', Poem._id, word, quantity);
   });
 

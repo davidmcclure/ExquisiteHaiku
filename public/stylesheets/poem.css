@@ -32,4 +32,5 @@ body::-webkit-scrollbar{width:10px}
 #info{float:right;font-size:2.4em;}
 #info span.info{margin-left:.4em}
 #info #points.preview{color:#b3b3b3}
+#info #timer{display:inline-block;text-align:right;width:120px}
 #measure{position:absolute;top:-1000px;left:-1000px;white-space:pre}

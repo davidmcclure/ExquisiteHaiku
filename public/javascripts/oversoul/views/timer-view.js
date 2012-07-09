@@ -7,11 +7,7 @@ Ov.Views.Timer = Backbone.View.extend({
   el: '#timer',
 
   options: {
-    refresh: 100 // Ms between renders.
-  },
-
-  template: function() {
-    return _.template($('#clock').html());
+    refresh: 1000 // Ms between renders.
   },
 
   /*
@@ -20,6 +16,10 @@ Ov.Views.Timer = Backbone.View.extend({
    * @return void.
    */
   initialize: function() {
+
+    // Getters.
+    this.minutes = this.$el.find('span.min');
+    this.seconds = this.$el.find('span.sec');
 
     // Initialize update trackers.
     this.updateTime = null;
@@ -51,19 +51,13 @@ Ov.Views.Timer = Backbone.View.extend({
   render: function() {
 
     // Get time parts.
-    var current = this._msToDuration(
+    var now = this._msToDuration(
       this.updateQuantity - (Date.now() - this.updateTime)
     );
 
     // Render.
-    this.$el.html(
-      this.template()({
-        hrs: current[0],
-        min: current[1],
-        sec: current[2],
-        mls: current[3]
-      })
-    );
+    this.minutes.text(now[0]);
+    this.seconds.text(now[1]);
 
   },
 
@@ -76,11 +70,23 @@ Ov.Views.Timer = Backbone.View.extend({
    * @return {Array}: [hs, min, sec, mls].
    */
   _msToDuration: function(d) {
-    var mls = Math.floor(d % 1000); d /= 1000;
-    var sec = Math.floor(d % 60); d /= 60;
-    var min = Math.floor(d % 60); d /= 60;
-    var hrs = Math.floor(d % 24);
-    return [hrs, min, sec, mls];
+    var sec = this._pad(Math.floor((d/1000) % 60)); d /= 60000;
+    var min = this._pad(Math.floor(d % 60)); d /= 60;
+    return [min+':', sec];
+  },
+
+  /*
+   * If the passed value is a single digit, pad it with
+   * a single zero.
+   *
+   * @param {Number} val: The value.
+   *
+   * @return {Number} val: The padded value.
+   */
+  _pad: function(val) {
+    val = String(val);
+    if (val.length < 2) val = 0+val;
+    return val;
   }
 
 });

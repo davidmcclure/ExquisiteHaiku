@@ -101,8 +101,13 @@ Ov.Views.Points = Backbone.View.extend({
       this.renderValue(this.preview);
       Ov.vent.trigger('points:releaseVote', word.word, quantity);
       Ov.vent.trigger('points:newValue', this.value);
-      word.endDrag();
     }
+
+    // Otherwise, cancel the drag.
+    else Ov.vent.trigger('words:dragCancel');
+
+    // Reset the word.
+    word.endDrag();
 
   }
 

@@ -88,15 +88,6 @@ Ov.Controllers.Stack = (function(Backbone, Ov) {
   });
 
   /*
-   * When a drag is committed or cancelled.
-   *
-   * @return void.
-   */
-  Ov.vent.on('points:releaseVote', function() {
-    Stack.Line.hide();
-  });
-
-  /*
    * Render drag line and quantity preview.
    *
    * @param {String} word: The word being dragged on.
@@ -115,12 +106,13 @@ Ov.Controllers.Stack = (function(Backbone, Ov) {
   });
 
   /*
-   * Insufficient points for current drag quantity.
+   * When a drag is committed or cancelled.
    *
    * @return void.
    */
-  Ov.vent.on('points:invalid', function() {
-    Stack.Line.setInvalid();
+  Ov.vent.on('words:dragCancel', function() {
+    Stack.Rank.unFreeze();
+    Stack.Line.hide();
   });
 
   /*
@@ -130,6 +122,16 @@ Ov.Controllers.Stack = (function(Backbone, Ov) {
    */
   Ov.vent.on('points:releaseVote', function() {
     Stack.Rank.unFreeze();
+    Stack.Line.hide();
+  });
+
+  /*
+   * Insufficient points for current drag quantity.
+   *
+   * @return void.
+   */
+  Ov.vent.on('points:invalid', function() {
+    Stack.Line.setInvalid();
   });
 
   return Stack;

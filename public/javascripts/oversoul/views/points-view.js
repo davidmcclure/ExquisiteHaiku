@@ -17,6 +17,26 @@ Ov.Views.Points = Backbone.View.extend({
   },
 
   /*
+   * Activate submit state.
+   *
+   * @return void.
+   */
+  activateSubmit: function() {
+    this.value = null;
+  },
+
+  /*
+   * Activate vote state.
+   *
+   * @param {Object} round: The round record.
+   *
+   * @return void.
+   */
+  activateVote: function(round) {
+    this.setStartingValue(round.get('points'));
+  },
+
+  /*
    * Set starting value.
    *
    * @param {Number} value: The value.
@@ -84,15 +104,6 @@ Ov.Views.Points = Backbone.View.extend({
       word.endDrag();
     }
 
-  },
-
-  /*
-   * Reset value.
-   *
-   * @return void.
-   */
-  reset: function() {
-    this.renderValue(Poem.seedCapital);
   }
 
 });

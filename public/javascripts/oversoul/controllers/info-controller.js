@@ -32,7 +32,7 @@ Ov.Controllers.Info = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('state:submit', function(round) {
-    Info.Points.reset();
+    Info.Points.activateSubmit();
   });
 
   /*
@@ -43,7 +43,7 @@ Ov.Controllers.Info = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('state:vote', function(round) {
-    Info.Points.setStartingValue(round.get('points'));
+    Info.Points.activateVote(round);
   });
 
   /*

@@ -59,16 +59,17 @@ Ov.Views.Line = Backbone.View.extend({
    */
   render: function(initEvent, dragEvent, currentTotal) {
 
-    // Get vertical offset.
+    // Get vertical offset and scrolltop.
     var height = dragEvent.pageY - initEvent.pageY;
+    var scrollTop = $('body').scrollTop();
 
     // Draw line.
     this.clearCurrent();
     this.current = this.svg.append('svg:line')
       .attr('x1', initEvent.pageX)
-      .attr('y1', initEvent.pageY)
+      .attr('y1', initEvent.pageY - scrollTop)
       .attr('x2', dragEvent.pageX)
-      .attr('y2', dragEvent.pageY);
+      .attr('y2', dragEvent.pageY - scrollTop);
 
     // Positive drag.
     if (height >= 0) this.setNegative();
@@ -76,7 +77,7 @@ Ov.Views.Line = Backbone.View.extend({
 
     // Position counter.
     this.total.text(currentTotal);
-    this.total.attr('y', dragEvent.pageY - 10);
+    this.total.attr('y', dragEvent.pageY - scrollTop - 10);
     this.total.attr('x', dragEvent.pageX + 10);
 
   },

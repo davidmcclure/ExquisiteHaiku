@@ -31,6 +31,15 @@ Ov.Controllers.Info = (function(Backbone, Ov) {
    *
    * @return void.
    */
+  Ov.vent.on('socket:slice', function(data) {
+    Info.Timer.update(data.clock);
+  });
+
+  /*
+   * Reset the point value.
+   *
+   * @return void.
+   */
   Ov.vent.on('state:submit', function(round) {
     Info.Points.activateSubmit();
   });

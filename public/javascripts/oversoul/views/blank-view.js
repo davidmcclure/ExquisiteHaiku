@@ -62,6 +62,7 @@ Ov.Views.Blank = Backbone.View.extend({
 
     // Clear the stack and blank.
     this.stack.empty();
+    this.$el.removeAttr('disabled');
     this.$el.val('');
 
   },
@@ -74,6 +75,7 @@ Ov.Views.Blank = Backbone.View.extend({
   activateVote: function() {
     this.stack.detach();
     this.voting = true;
+    this.$el.attr('disabled', 'disabled');
   },
 
   /*

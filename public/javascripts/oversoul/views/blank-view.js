@@ -62,6 +62,7 @@ Ov.Views.Blank = Backbone.View.extend({
 
     // Clear the stack and blank.
     this.stack.empty();
+    this.$el.val('');
 
   },
 

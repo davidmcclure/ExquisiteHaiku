@@ -44,6 +44,7 @@ Ov.Controllers.Stack = (function(Backbone, Ov) {
    */
   Ov.vent.on('state:submit', function() {
     Stack.Rank.hide();
+    Stack.Line.clear();
   });
 
   /*
@@ -64,17 +65,6 @@ Ov.Controllers.Stack = (function(Backbone, Ov) {
    */
   Ov.vent.on('words:select', function(word) {
     Stack.Rank.freeze();
-  });
-
-  /*
-   * Unfreeze the words when a word is unselected.
-   *
-   * @param {String} word: The hovered word.
-   *
-   * @return void.
-   */
-  Ov.vent.on('words:unselect', function(word) {
-    Stack.Rank.unFreeze();
   });
 
   /*
@@ -102,7 +92,7 @@ Ov.Controllers.Stack = (function(Backbone, Ov) {
    *
    * @return void.
    */
-  Ov.vent.on('words:dragCommit', function() {
+  Ov.vent.on('points:releaseVote', function() {
     Stack.Line.hide();
   });
 
@@ -131,6 +121,15 @@ Ov.Controllers.Stack = (function(Backbone, Ov) {
    */
   Ov.vent.on('points:invalid', function() {
     Stack.Line.setInvalid();
+  });
+
+  /*
+   * Unfreeze the stacks after a vote.
+   *
+   * @return void.
+   */
+  Ov.vent.on('points:releaseVote', function() {
+    Stack.Rank.unFreeze();
   });
 
   return Stack;

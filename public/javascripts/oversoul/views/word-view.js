@@ -175,16 +175,9 @@ Ov.Views.Word = Backbone.View.extend({
       // Suppress scrolling.
       event.preventDefault();
 
-      // Strip events, unselect.
-      this.unSelect();
-
       // Broadcast the vote.
       var total = this.dragDelta + this.dragTotal;
-      Ov.vent.trigger('words:dragCommit', this.word, total);
-
-      // Reset color and total.
-      this.setDragNeutral();
-      this.dragTotal = 0;
+      Ov.vent.trigger('words:dragCommit', this, total);
 
     }
 
@@ -229,6 +222,17 @@ Ov.Views.Word = Backbone.View.extend({
   unSelect: function() {
     Ov.vent.trigger('words:unselect');
     this.wordMarkup.removeClass('select');
+  },
+
+  /*
+   * Reset word after drag.
+   *
+   * @return void.
+   */
+  endDrag: function() {
+    this.unSelect();
+    this.setDragNeutral();
+    this.dragTotal = 0;
   },
 
   /*

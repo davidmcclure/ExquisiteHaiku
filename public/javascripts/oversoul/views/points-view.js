@@ -65,22 +65,34 @@ Ov.Views.Points = Backbone.View.extend({
   },
 
   /*
-   * Commit current preview value.
+   * If there are sufficient points, release the vote to
+   * the socket controller and terminate the drag on the
+   * drag on the word view instance.
    *
-   * @param {String} word: The word.
+   * @param {Object} word: The stack word view instance.
    * @param {Number} quantity: The vote quantity.
    *
    * @return void.
    */
-  commitPreview: function(word, quantity) {
+  commit: function(word, quantity) {
 
     // If sufficient points, commit.
     if (this.preview >= 0) {
       this.renderValue(this.preview);
-      Ov.vent.trigger('points:releaseVote', word, quantity);
+      Ov.vent.trigger('points:releaseVote', word.word, quantity);
       Ov.vent.trigger('points:newValue', this.value);
+      word.endDrag();
     }
 
+  },
+
+  /*
+   * Reset value.
+   *
+   * @return void.
+   */
+  reset: function() {
+    this.renderValue(Poem.seedCapital);
   }
 
 });

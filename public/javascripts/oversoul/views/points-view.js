@@ -57,7 +57,7 @@ Ov.Views.Points = Backbone.View.extend({
   renderValue: function(value) {
     this.$el.text(value);
     this.value = value;
-    this.$el.removeClass('preview');
+    this.$el.removeClass('preview negative');
   },
 
   /*
@@ -104,7 +104,10 @@ Ov.Views.Points = Backbone.View.extend({
     }
 
     // Otherwise, cancel the drag.
-    else Ov.vent.trigger('words:dragCancel');
+    else {
+      this.renderValue(this.value);
+      Ov.vent.trigger('words:dragCancel');
+    }
 
     // Reset the word.
     word.endDrag();

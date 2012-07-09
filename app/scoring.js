@@ -40,11 +40,7 @@ var score = exports.score = function(id, now, emit, cb) {
 
         // Score.
         var score = compute(
-          vote[0],
-          vote[1],
-          decayL,
-          decayI,
-          now
+          vote[0], vote[1], decayL, decayI, now
         );
 
         // Add. 

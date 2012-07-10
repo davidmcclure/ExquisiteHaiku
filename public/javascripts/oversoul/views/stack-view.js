@@ -59,7 +59,7 @@ Ov.Views.Stack = Backbone.View.extend({
   addRow: function(word) {
 
     // Build row view.
-    var row = new Ov.Views.Word();
+    var row = new Ov.Views.StackWord();
 
     // Append and track.
     this.$el.append(row.$el);

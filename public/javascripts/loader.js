@@ -43,7 +43,7 @@ load(
   a+'views/poem-view.js',
   a+'views/blank-view.js',
   a+'views/stack-view.js',
-  a+'views/word-view.js',
+  a+'views/stack-word-view.js',
   a+'views/line-view.js',
   a+'views/points-view.js',
   a+'views/timer-view.js',

@@ -1,8 +1,8 @@
 /*
- * Word view.
+ * Stack word view.
  */
 
-Ov.Views.Word = Backbone.View.extend({
+Ov.Views.StackWord = Backbone.View.extend({
 
   tagName: 'tr',
   className: 'stack-row',

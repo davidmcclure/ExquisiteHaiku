@@ -55,6 +55,7 @@ load(
   a+'controllers/socket-controller.js',
   a+'controllers/round-controller.js',
   a+'controllers/stack-controller.js',
+  a+'controllers/log-controller.js',
   a+'controllers/info-controller.js'
 
 ).thenRun(function() {

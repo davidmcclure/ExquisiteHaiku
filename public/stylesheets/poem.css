@@ -33,4 +33,7 @@ body::-webkit-scrollbar{width:10px}
 #info span.info{margin-left:.4em}
 #info #points.preview{color:#b3b3b3}
 #info #timer{display:inline-block;text-align:right;width:80px}
+#log{position:fixed;left:340px;top:10px;}
+#log .log-row{cursor:pointer;}
+#log .log-row span.value{margin-left:5px;opacity:.7;font-size:11px}
 #measure{position:absolute;top:-1000px;left:-1000px;white-space:pre}

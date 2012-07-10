@@ -17,8 +17,8 @@ Ov.Controllers.Info = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.addInitializer(function() {
-    Info.Points = new Ov.Views.Points();
-    Info.Timer = new Ov.Views.Timer();
+    Info.Points = new Ov.Views.Points({ el: '#points' });
+    Info.Timer = new Ov.Views.Timer({ el: '#timer' });
   });
 
 
@@ -71,6 +71,15 @@ Ov.Controllers.Info = (function(Backbone, Ov) {
   });
 
   /*
+   * Cancel a point preview.
+   *
+   * @return void.
+   */
+  Ov.vent.on('words:dragCancel', function() {
+    Info.Points.reset();
+  });
+
+  /*
    * Commit new point account value after a vote.
    *
    * @param {Object} word: The stack word view instance.
@@ -79,7 +88,40 @@ Ov.Controllers.Info = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('words:dragCommit', function(word, quantity) {
-    Info.Points.commit(word, quantity);
+    Info.Points.gatekeepDrag(word, quantity);
+  });
+
+  /*
+   * Render preview point value.
+   *
+   * @param {String} word: The word.
+   * @param {Number} quantity: The vote quantity.
+   *
+   * @return void.
+   */
+  Ov.vent.on('log:preview', function(word, quantity) {
+    Info.Points.renderPreview(quantity);
+  });
+
+  /*
+   * Cancel point preview.
+   *
+   * @return void.
+   */
+  Ov.vent.on('log:cancel', function() {
+    Info.Points.reset();
+  });
+
+  /*
+   * Commit a vote echo action on the log stack.
+   *
+   * @param {String} word: The word.
+   * @param {Number} quantity: The vote quantity.
+   *
+   * @return void.
+   */
+  Ov.vent.on('log:echo', function(word, quantity) {
+    Info.Points.gatekeepEcho(word, quantity);
   });
 
   return Info;

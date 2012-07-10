@@ -1,13 +1,13 @@
 @import url("http://fonts.googleapis.com/css?family=Lekton:400,700,400italic");
 @import url("http://fonts.googleapis.com/css?family=Dosis:200,300,400,500,600,700,800");
 @import url("http://fonts.googleapis.com/css?family=Abel");
-body{font:300 18px Georgia,"Helvetica Neue";font-weight:200;margin:2em;-webkit-user-select:none;-moz-user-select:none;}
+body{font:300 18px "Helvetica Neue";font-weight:200;margin:2em;-webkit-user-select:none;-moz-user-select:none;}
 body::-webkit-scrollbar{width:10px}
 .positive{color:#2260ff}
 .negative{color:#b71515}
 #poem{margin-bottom:1em;}
 #poem div.poem-line{margin-bottom:.3em}
-#poem input.blank{padding:2px;margin:0;width:40px;border:none;border-bottom:1px solid #808080;font:300 18px Georgia,"Helvetica Neue";}
+#poem input.blank{padding:2px;margin:0;width:40px;border:none;border-bottom:1px solid #808080;font:300 18px "Helvetica Neue";}
 #poem input.blank:focus{outline:none}
 #poem .poem-word{margin-right:4px}
 #poem .submission-stack{position:absolute}
@@ -15,7 +15,7 @@ body::-webkit-scrollbar{width:10px}
 #stack .word{padding-left:7px;text-align:left;cursor:ns-resize;}
 #stack .word.hover{color:#2260ff}
 #stack .word.select{color:#f00}
-#stack .ratio,#stack .churn{font:300 11px Georgia,"Helvetica Neue";width:30px;text-align:right;opacity:.7;font-size:11px}
+#stack .ratio,#stack .churn{font:300 11px "Helvetica Neue";width:30px;text-align:right;opacity:.7;font-size:11px}
 #stack.frozen{color:#808080;}
 #stack.frozen .word.hover{color:inherit;}
 #stack.frozen .word.hover.select{color:#f00}

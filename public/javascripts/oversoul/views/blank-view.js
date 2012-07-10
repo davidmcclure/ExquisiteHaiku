@@ -193,9 +193,49 @@ Ov.Views.Blank = Backbone.View.extend({
     this.words.push(word);
     wordMarkup.data('word', word);
 
+    // Bind events.
+    wordMarkup.bind({
+
+      // Highlight word red.
+      'mouseenter': _.bind(function() {
+        wordMarkup.addClass('negative');
+      }, this),
+
+      // Unhighlight word.
+      'mouseleave': _.bind(function() {
+        wordMarkup.removeClass('negative');
+      }, this),
+
+      // Remove word from stack.
+      'mousedown': _.bind(function() {
+        this.removeWord(wordMarkup);
+      }, this)
+
+    });
+
     // Clear input.
     this.$el.val('');
     this.fitWidth('');
+
+  },
+
+  /*
+   * Remove word from submission stack.
+   *
+   * @param {Element} wordMarkup: The stack word.
+   *
+   * @return void.
+   */
+  removeWord: function(wordMarkup) {
+
+    // Get word, remove markup.
+    var word = wordMarkup.data('word');
+    wordMarkup.remove();
+
+    // Update tracker.
+    this.words = _.filter(this.words, function(w) {
+      return w === word ? false : true;
+    });
 
   },
 

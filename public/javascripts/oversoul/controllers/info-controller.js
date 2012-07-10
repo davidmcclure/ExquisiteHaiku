@@ -88,7 +88,7 @@ Ov.Controllers.Info = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('words:dragCommit', function(word, quantity) {
-    Info.Points.commitDrag(word, quantity);
+    Info.Points.releaseStackVote(word, quantity);
   });
 
   /*
@@ -121,7 +121,7 @@ Ov.Controllers.Info = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('log:echo', function(word, quantity) {
-    Info.Points.commit(word, quantity);
+    Info.Points.releaseLogEcho(word, quantity);
   });
 
   return Info;

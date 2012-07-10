@@ -17,8 +17,8 @@ Ov.Views.Log = Backbone.View.extend({
   initialize: function() {
 
     // Getters.
-    this.primary = this.$el.find('div.primary');
-    this.overflow = this.$el.find('div.overflow');
+    this.primary = this.$el.find('td.primary');
+    this.overflow = this.$el.find('td.overflow');
 
     // Trackers.
     this.frozen = false;
@@ -41,7 +41,8 @@ Ov.Views.Log = Backbone.View.extend({
     });
 
     // Prepend the row.
-    this.primary.prepend(vote.$el);
+    if (!this.frozen) this.primary.prepend(vote.$el);
+    else this.overflow.prepend(vote.$el);
 
   },
 
@@ -61,8 +62,15 @@ Ov.Views.Log = Backbone.View.extend({
    * @return void.
    */
   unFreeze: function() {
+
+    // Merge overflow -> primary.
+    var overflow = this.overflow.contents().detach();
+    overflow.prependTo(this.primary);
+
+    // Unfreeze and prune.
     this.frozen = false;
     this.$el.removeClass('frozen');
+
   }
 
 });

@@ -86,7 +86,7 @@ Ov.Views.Points = Backbone.View.extend({
    * If there are sufficient points, release the stack vote 
    * to the socket controller.
    *
-   * @param {Object} word: The stack-word-view instance.
+   * @param {String} word: The word.
    * @param {Number} quantity: The vote quantity.
    *
    * @return void.
@@ -96,7 +96,7 @@ Ov.Views.Points = Backbone.View.extend({
     // If sufficient points, commit.
     if (this.value - Math.abs(quantity) >= 0) {
       this.renderValue(this.preview);
-      Ov.vent.trigger('points:releaseVote', word.word, quantity);
+      Ov.vent.trigger('points:releaseVote', word, quantity);
       Ov.vent.trigger('points:newValue', this.value);
     }
 

@@ -21,8 +21,22 @@ Ov.Views.Log = Backbone.View.extend({
     this.overflow = this.$el.find('td.overflow');
 
     // Trackers.
+    this.empty = true;
     this.frozen = false;
 
+  },
+
+  /*
+   * Clear out the stacks.
+   *
+   * @return void.
+   */
+  activateSubmit: function() {
+    if (!this.empty) {
+      this.primary.empty();
+      this.overflow.empty();
+      this.empty = true;
+    }
   },
 
   /*
@@ -43,6 +57,7 @@ Ov.Views.Log = Backbone.View.extend({
     // Prepend the row.
     if (!this.frozen) this.primary.prepend(vote.$el);
     else this.overflow.prepend(vote.$el);
+    this.empty = false;
 
   },
 

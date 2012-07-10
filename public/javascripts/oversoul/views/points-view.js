@@ -94,7 +94,7 @@ Ov.Views.Points = Backbone.View.extend({
   releaseStackVote: function(word, quantity) {
 
     // If sufficient points, commit.
-    if (this.value - quantity >= 0) {
+    if (this.value - Math.abs(quantity) >= 0) {
       this.renderValue(this.preview);
       Ov.vent.trigger('points:releaseVote', word.word, quantity);
       Ov.vent.trigger('points:newValue', this.value);
@@ -104,9 +104,6 @@ Ov.Views.Points = Backbone.View.extend({
     else {
       Ov.vent.trigger('words:dragCancel');
     }
-
-    // Reset the word.
-    word.endDrag();
 
   },
 
@@ -122,7 +119,7 @@ Ov.Views.Points = Backbone.View.extend({
   releaseLogEcho: function(word, quantity) {
 
     // If sufficient points, commit.
-    if (this.value - quantity >= 0) {
+    if (this.value - Math.abs(quantity) >= 0) {
       this.renderValue(this.preview);
       Ov.vent.trigger('points:releaseVote', word, quantity);
       Ov.vent.trigger('points:newValue', this.value);

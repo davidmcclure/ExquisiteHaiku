@@ -15,7 +15,6 @@ Ov.Views.Stack = Backbone.View.extend({
     this.wordRows = [];
 
     // Trackers.
-    this.hoverWord = null;
     this.selectWord = null;
     this.visible = false;
     this.frozen = false;

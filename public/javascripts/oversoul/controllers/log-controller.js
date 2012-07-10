@@ -37,6 +37,15 @@ Ov.Controllers.Log = (function(Backbone, Ov) {
     Log.Stack.add(word, quantity);
   });
 
+  /*
+   * Clear the log stacks.
+   *
+   * @return void.
+   */
+  Ov.vent.on('state:submit', function(round) {
+    Log.Stack.activateSubmit();
+  });
+
   return Log;
 
 })(Backbone, Ov);

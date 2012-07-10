@@ -82,7 +82,7 @@ Ov.Controllers.Info = (function(Backbone, Ov) {
   /*
    * Commit new point account value after a vote.
    *
-   * @param {Object} word: The stack word view instance.
+   * @param {String} word: The word.
    * @param {Number} quantity: The vote quantity.
    *
    * @return void.

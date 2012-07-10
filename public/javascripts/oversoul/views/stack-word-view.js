@@ -177,14 +177,15 @@ Ov.Views.StackWord = Backbone.View.extend({
 
       // Broadcast the vote.
       var total = this.dragDelta + this.dragTotal;
-      Ov.vent.trigger('words:dragCommit', this, total);
+      Ov.vent.trigger('words:dragCommit', this.word, total);
+      this.endDrag();
 
     }
 
     // If the ESC key was pressed.
     else if (event.keyCode == 27) {
-      this.endDrag();
       Ov.vent.trigger('words:dragCancel');
+      this.endDrag();
     }
 
   },
@@ -239,6 +240,7 @@ Ov.Views.StackWord = Backbone.View.extend({
     this.unSelect();
     this.setDragNeutral();
     this.dragTotal = 0;
+    $(window).unbind('.drag');
   },
 
   /*

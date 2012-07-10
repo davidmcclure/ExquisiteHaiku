@@ -61,14 +61,14 @@ Ov.Views.Points = Backbone.View.extend({
   /*
    * Render a preview value.
    *
-   * @param {Number} dragQuantity: The drag value.
+   * @param {Number} quantity: The vote quantity.
    *
    * @return void.
    */
-  renderPreview: function(dragQuantity) {
+  renderPreview: function(quantity) {
 
     // Render the value.
-    this.preview = this.value - Math.abs(dragQuantity);
+    this.preview = this.value - Math.abs(quantity);
     this.$el.text(this.preview);
     this.$el.addClass('preview');
     this.$el.removeClass('negative');

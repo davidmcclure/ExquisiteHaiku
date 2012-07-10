@@ -68,7 +68,7 @@ Ov.Views.Log = Backbone.View.extend({
    */
   freeze: function() {
     this.frozen = true;
-    this.$el.addClass('frozen');
+    if (!Ov._global.isDragging) this.$el.addClass('frozen');
   },
 
   /*

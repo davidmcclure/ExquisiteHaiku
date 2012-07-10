@@ -64,6 +64,7 @@ Ov.Controllers.Stack = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('words:select', function(word) {
+    Stack.Rank.setSelected(word);
     Stack.Rank.freeze();
   });
 
@@ -99,10 +100,7 @@ Ov.Controllers.Stack = (function(Backbone, Ov) {
    */
   Ov.vent.on('words:dragTick', function(
     word, currentTotal, initEvent, dragEvent) {
-
-      // Render line.
       Stack.Line.render(initEvent, dragEvent, currentTotal);
-
   });
 
   /*
@@ -121,6 +119,7 @@ Ov.Controllers.Stack = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('points:releaseVote', function() {
+    Stack.Rank.setSelected(null);
     Stack.Rank.unFreeze();
     Stack.Line.hide();
   });

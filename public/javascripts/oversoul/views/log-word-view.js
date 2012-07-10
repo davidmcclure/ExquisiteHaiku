@@ -12,9 +12,9 @@ Ov.Views.LogWord = Backbone.View.extend({
   },
 
   events: {
-    'mouseenter':   'hover',
-    'mouseleave':   'unHover',
-    'mousedown':    'echo'
+    'mouseenter':       'hover',
+    'mouseleave':       'unHover',
+    'mousedown .word':  'echo'
   },
 
   /*
@@ -75,10 +75,12 @@ Ov.Views.LogWord = Backbone.View.extend({
    * @return void.
    */
   hover: function() {
-    Ov.vent.trigger('log:preview',
-      this.options.word,
-      this.options.value
-    );
+    if (!Ov._global.isDragging) {
+      Ov.vent.trigger('log:preview',
+        this.options.word,
+        this.options.value
+      );
+    }
   },
 
   /*
@@ -87,7 +89,9 @@ Ov.Views.LogWord = Backbone.View.extend({
    * @return void.
    */
   unHover: function() {
-    Ov.vent.trigger('log:cancel');
+    if (!Ov._global.isDragging) {
+      Ov.vent.trigger('log:cancel');
+    }
   },
 
   /*

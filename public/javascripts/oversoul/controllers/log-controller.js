@@ -26,6 +26,15 @@ Ov.Controllers.Log = (function(Backbone, Ov) {
   // -------
 
   /*
+   * When an echo is committed, re-freeze the stack.
+   *
+   * @return void.
+   */
+  Ov.vent.on('log:echo', function() {
+    Log.Stack.freeze();
+  });
+
+  /*
    * Propagate incoming vote.
    *
    * @param {String} word: The word.

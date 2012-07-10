@@ -13,9 +13,10 @@ Ov.Views.Stack = Backbone.View.extend({
 
     // Buckets.
     this.wordRows = [];
+    this.wordsToRow = {};
 
     // Trackers.
-    this.selectWord = null;
+    this.selected = null;
     this.visible = false;
     this.frozen = false;
 
@@ -43,6 +44,7 @@ Ov.Views.Stack = Backbone.View.extend({
 
       // Render values.
       this.wordRows[i].update(stack[i]);
+      this.wordsToRow[word] = this.wordRows[i];
 
     }, this));
 
@@ -63,6 +65,29 @@ Ov.Views.Stack = Backbone.View.extend({
     // Append and track.
     this.$el.append(row.$el);
     this.wordRows.push(row);
+
+  },
+
+  /*
+   * Set the currently selected word instance.
+   *
+   * @return void.
+   */
+  setSelected: function(word) {
+
+    // If the new selected word is different from
+    // the current selection.
+    if (!_.isNull(this.selected) &&
+      this.selected !== word) {
+
+        // Cancel an existing drag on the previous
+        // selection and clear out the drag lines.
+        this.wordsToRow[this.selected].endDrag();
+        Ov.vent.trigger('words:dragCancel');
+
+    }
+
+    this.selected = word;
 
   },
 

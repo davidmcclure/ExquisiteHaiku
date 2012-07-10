@@ -83,21 +83,6 @@ Ov.Views.Points = Backbone.View.extend({
   },
 
   /*
-   * If there are sufficient points, release the vote to
-   * the socket controller and terminate the drag on the
-   * drag on the word view instance.
-   *
-   * @param {Object} word: The stack word view instance.
-   * @param {Number} quantity: The vote quantity.
-   *
-   * @return void.
-   */
-  gatekeepDrag: function(word, quantity) {
-    this.gatekeepEcho(word.word, quantity);
-    word.endDrag();
-  },
-
-  /*
    * If there are sufficient points, release the log echo
    * to the socket controller.
    *
@@ -106,7 +91,7 @@ Ov.Views.Points = Backbone.View.extend({
    *
    * @return void.
    */
-  gatekeepEcho: function(word, quantity) {
+  commit: function(word, quantity) {
 
     // If sufficient points, commit.
     if (this.value - quantity >= 0) {
@@ -120,6 +105,21 @@ Ov.Views.Points = Backbone.View.extend({
       Ov.vent.trigger('words:dragCancel');
     }
 
+  },
+
+  /*
+   * If there are sufficient points, release the vote to
+   * the socket controller and terminate the drag on the
+   * drag on the word view instance.
+   *
+   * @param {Object} word: The stack word view instance.
+   * @param {Number} quantity: The vote quantity.
+   *
+   * @return void.
+   */
+  commitDrag: function(word, quantity) {
+    this.commit(word.word, quantity);
+    word.endDrag();
   }
 
 });

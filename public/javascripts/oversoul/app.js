@@ -4,7 +4,12 @@
 
 Ov = new Backbone.Marionette.Application();
 
+// --------------------
+// Instance namespaces.
 Ov.Controllers = {};
-Ov.Views = {};
 Ov.Collections = {};
+Ov.Views = {};
+
+// --------------------
+// Application globals.
 Ov._global = {};

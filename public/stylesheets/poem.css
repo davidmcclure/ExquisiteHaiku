@@ -34,7 +34,7 @@ body::-webkit-scrollbar{width:10px}
 #info #points.preview{color:#b3b3b3}
 #info #timer{display:inline-block;text-align:right;width:80px}
 #log{position:fixed;left:340px;top:10px;}
-#log.frozen .primary{opacity:.6}
+#log .overflow{opacity:.6}
 #log td{vertical-align:top;padding-right:1em}
 #log .log-row{cursor:pointer;}
 #log .log-row span.value{margin-left:5px;opacity:.7;font-size:11px}

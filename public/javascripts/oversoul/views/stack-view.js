@@ -4,6 +4,11 @@
 
 Ov.Views.Stack = Backbone.View.extend({
 
+  events: {
+    'mouseenter': 'freeze',
+    'mouseleave': 'unFreeze'
+  },
+
   /*
    * Prepare trackers.
    *
@@ -107,6 +112,7 @@ Ov.Views.Stack = Backbone.View.extend({
    * @return void.
    */
   unFreeze: function() {
+    if (Ov._global.isDragging) return;
     this.frozen = false;
     this.$el.removeClass('frozen');
   },

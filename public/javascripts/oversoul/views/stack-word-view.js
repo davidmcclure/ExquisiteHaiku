@@ -179,17 +179,19 @@ Ov.Views.StackWord = Backbone.View.extend({
       // Suppress scrolling.
       event.preventDefault();
 
-      // Broadcast the vote.
+      // Gather the total, end the drag.
       var total = this.dragDelta + this.dragTotal;
-      Ov.vent.trigger('words:dragCommit', this.word, total);
       this.endDrag();
+
+      // Broadcast.
+      Ov.vent.trigger('words:dragCommit', this.word, total);
 
     }
 
     // If the ESC key was pressed.
     else if (event.keyCode == 27) {
-      Ov.vent.trigger('words:dragCancel');
       this.endDrag();
+      Ov.vent.trigger('words:dragCancel');
     }
 
   },

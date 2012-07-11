@@ -3,8 +3,8 @@
 @import url("http://fonts.googleapis.com/css?family=Abel");
 body{font:300 18px "Helvetica Neue";font-weight:300;margin:2em;-webkit-user-select:none;-moz-user-select:none;}
 body::-webkit-scrollbar{width:10px}
-.positive{color:#2260ff}
-.negative{color:#b71515}
+.positive{color:#288bcc}
+.negative{color:#cc3f28}
 #poem{margin-bottom:1em;}
 #poem div.poem-line{margin-bottom:.3em}
 #poem input.blank{padding:2px;margin:0;width:40px;border:none;border-bottom:1px solid #808080;font:300 18px "Helvetica Neue";}
@@ -14,10 +14,10 @@ body::-webkit-scrollbar{width:10px}
 #poem .submission-word{cursor:pointer}
 #stack .word{padding-left:7px;text-align:left;cursor:ns-resize;}
 #stack .word.hover{color:#2260ff}
-#stack .word.select{color:#f00}
+#stack .word.select{color:#288bcc}
 #stack .ratio,#stack .churn{font:300 11px "Helvetica Neue";width:30px;text-align:right;opacity:.7;font-size:11px}
 #stack.frozen{color:#808080;}
-#stack.frozen .word.hover.select{color:#f00}
+#stack.frozen .word.hover.select{color:#288bcc}
 #stack .stack-row:first-child .word{font-weight:bold}
 #votes{font-family:Lekton;}
 #votes .word{cursor:pointer;line-height:.9em}
@@ -25,8 +25,8 @@ body::-webkit-scrollbar{width:10px}
 .drag-line{position:fixed;line-height:0;z-index:-1;top:0;left:0;}
 .drag-line svg{position:fixed;stroke-width:2;top:0;left:0;}
 .drag-line svg line,.drag-line svg text{font-size:2em;}
-.drag-line svg line.positive,.drag-line svg text.positive{stroke:#2260ff;fill:#2260ff}
-.drag-line svg line.negative,.drag-line svg text.negative{stroke:#b71515;fill:#b71515}
+.drag-line svg line.positive,.drag-line svg text.positive{stroke:#288bcc;fill:#288bcc}
+.drag-line svg line.negative,.drag-line svg text.negative{stroke:#cc3f28;fill:#cc3f28}
 .drag-line svg line.blocked,.drag-line svg text.blocked{stroke:#b3b3b3;fill:#b3b3b3}
 #info{float:right;font-size:1.6em;}
 #info span.info{margin-left:.4em}

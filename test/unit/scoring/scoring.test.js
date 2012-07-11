@@ -27,7 +27,7 @@ require('../../../app/models/round');
 var Round = mongoose.model('Round');
 
 // Scoring module.
-var scoring = require('../../../app/scoring');
+var scoring = require('../../../app/scoring/scoring');
 
 /*
  * ---------------------------

@@ -1,7 +1,7 @@
 /*
- * Performance benchmark for the Poem score() method.
+ * Performance benchmark for the scoring routine.
  *
- * To run: >> node poem.benchmark.js {#words} {#votes/word}
+ * To run: >> node scoring.benchmark.js {#words} {#votes/word}
  */
 
 // Module dependencies.
@@ -21,7 +21,7 @@ var Poem = mongoose.model('Poem');
 var Round = mongoose.model('Round');
 
 // Scoring module.
-var scoring = require('../../../app/scoring');
+var scoring = require('../../../app/scoring/scoring');
 
 // Create user.
 var user = new User({

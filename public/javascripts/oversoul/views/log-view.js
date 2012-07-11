@@ -4,6 +4,10 @@
 
 Ov.Views.Log = Backbone.View.extend({
 
+  options: {
+    maxLength: 50
+  },
+
   events: {
     'mouseenter':   'freeze',
     'mouseleave':   'unFreeze'
@@ -17,10 +21,12 @@ Ov.Views.Log = Backbone.View.extend({
   initialize: function() {
 
     // Getters.
-    this.primary = this.$el.find('td.primary');
-    this.overflow = this.$el.find('td.overflow');
+    this.primaryMarkup = this.$el.find('td.primary');
+    this.overflowMarkup = this.$el.find('td.overflow');
 
     // Trackers.
+    this.primaryVotes = [];
+    this.overflowVotes = [];
     this.empty = true;
     this.frozen = false;
 
@@ -33,8 +39,8 @@ Ov.Views.Log = Backbone.View.extend({
    */
   activateSubmit: function() {
     if (!this.empty) {
-      this.primary.empty();
-      this.overflow.empty();
+      this.primaryMarkup.empty();
+      this.overflowMarkup.empty();
       this.empty = true;
     }
   },
@@ -54,10 +60,20 @@ Ov.Views.Log = Backbone.View.extend({
       word: word, value: value
     });
 
-    // Prepend the row.
-    if (!this.frozen) this.primary.prepend(vote.$el);
-    else this.overflow.prepend(vote.$el);
+    // Prepend to primary.
+    if (!this.frozen) {
+      this.primaryMarkup.prepend(vote.$el);
+      this.primaryVotes.unshift(vote);
+    }
+
+    // If frozen, prepend to overflow.
+    else {
+      this.overflowMarkup.prepend(vote.$el);
+      this.overflowVotes.unshift(vote);
+    }
+
     this.empty = false;
+    this.prune();
 
   },
 
@@ -79,12 +95,38 @@ Ov.Views.Log = Backbone.View.extend({
   unFreeze: function() {
 
     // Merge overflow -> primary.
-    var overflow = this.overflow.contents().detach();
-    overflow.prependTo(this.primary);
+    var overflow = this.overflowMarkup.contents().detach();
+    overflow.prependTo(this.primaryMarkup);
+
+    // Merge the tracker arrays.
+    this.overflowVotes = this.overflowVotes.concat(
+      this.primaryVotes);
+    this.primaryVotes = this.overflowVotes;
+    this.overflowVotes = [];
 
     // Unfreeze and prune.
     this.frozen = false;
     this.$el.removeClass('frozen');
+    this.prune();
+
+  },
+
+  /*
+   * Reduce both stacks to contain maxLength votes.
+   *
+   * @return void.
+   */
+  prune: function() {
+
+    // Primary.
+    while (this.primaryVotes.length > this.options.maxLength) {
+      this.primaryVotes.pop().$el.remove();
+    }
+
+    // Overflow.
+    while (this.overflowVotes.length > this.options.maxLength) {
+      this.overflowVotes.pop().$el.remove();
+    }
 
   }
 

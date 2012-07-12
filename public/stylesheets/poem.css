@@ -13,7 +13,7 @@ body::-webkit-scrollbar{width:10px}
 #poem .submission-stack{position:absolute}
 #poem .submission-word{cursor:pointer}
 #stack .word{padding-left:7px;text-align:left;cursor:ns-resize;}
-#stack .word.hover{color:#2260ff}
+#stack .word.hover{color:#288bcc}
 #stack .word.select{color:#288bcc}
 #stack .ratio,#stack .churn{font:300 11px "Helvetica Neue";width:30px;text-align:right;opacity:.7;font-size:11px}
 #stack.frozen{color:#808080;}

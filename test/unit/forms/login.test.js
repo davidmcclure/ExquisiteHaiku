@@ -43,14 +43,16 @@ describe('Login Form', function() {
 
     // Create admin user.
     user1 = new User({
-      username:   'david',
-      password:   'password'
+      username: 'david',
+      password: 'password',
+      email: 'david@test.org'
     });
 
     // Create nont-admin user.
     user2 = new User({
-      username:   'kara',
-      password:   'password'
+      username: 'kara',
+      password: 'password',
+      email: 'kara@test.org'
     });
 
     // Save worker.

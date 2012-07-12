@@ -42,8 +42,9 @@ describe('Poem', function() {
 
     // Create user.
     user = new User({
-      username:   'david',
-      password:   'password'
+      username: 'david',
+      password: 'password',
+      email: 'david@test.org'
     });
 
   });

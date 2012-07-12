@@ -43,15 +43,17 @@ describe('Admin Controller', function() {
 
     // User 1.
     user1 = new User({
-      username:   'user1',
-      password:   'password'
-    });
+        username: 'user1',
+        password: 'password',
+        email: 'user1@test.org'
+      });
 
     // User 2.
     user2 = new User({
-      username:   'user2',
-      password:   'password'
-    });
+        username: 'user2',
+        password: 'password',
+        email: 'user2@test.org'
+      });
 
     // Create unstarted poem.
     unstarted = new Poem({

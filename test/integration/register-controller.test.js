@@ -35,9 +35,10 @@ describe('Register Controller', function() {
 
     // Create a user.
     user = new User({
-      username:   'kara',
-      password:   'password'
-    });
+        username: 'kara',
+        password: 'password',
+        email: 'kara@test.org'
+      });
 
     // Save.
     user.save(function(err) { done(); });
@@ -222,6 +223,89 @@ describe('Register Controller', function() {
 
     });
 
+    describe('email', function() {
+
+      it('should flash error for no email', function(done) {
+
+        // GET admin/install.
+        browser.visit(r+'admin/register', function() {
+
+          // Fill in form.
+          browser.pressButton('Submit', function() {
+
+            // Check for error.
+            browser.location.pathname.should.eql('/admin/register');
+            browser.query('span.help-inline.email').should.be.ok;
+            done();
+
+          });
+
+        });
+
+      });
+
+      it('should flash error for duplicate email', function(done) {
+
+        // GET admin/install.
+        browser.visit(r+'admin/register', function() {
+
+          // Fill in form, submit.
+          browser.fill('email', 'kara@test.org');
+          browser.pressButton('Submit', function() {
+
+            // Check for error.
+            browser.location.pathname.should.eql('/admin/register');
+            browser.query('span.help-inline.email').should.be.ok;
+            done();
+
+          });
+
+        });
+
+      });
+
+      it('should flash error for invalid email', function(done) {
+
+        // GET admin/install.
+        browser.visit(r+'admin/register', function() {
+
+          // Fill in form, submit.
+          browser.fill('email', 'invalid');
+          browser.pressButton('Submit', function() {
+
+            // Check for error.
+            browser.location.pathname.should.eql('/admin/register');
+            browser.query('span.help-inline.email').should.be.ok;
+            done();
+
+          });
+
+        });
+
+      });
+
+      it('should not flash an error when the username is valid', function(done) {
+
+        // GET admin/install.
+        browser.visit(r+'admin/register', function() {
+
+          // Fill in form, submit.
+          browser.fill('username', 'david');
+          browser.pressButton('Submit', function() {
+
+            // Check for error.
+            browser.location.pathname.should.eql('/admin/register');
+            assert(!browser.query('span.help-inline.username'));
+            done();
+
+          });
+
+        });
+
+      });
+
+    });
+
     describe('password', function() {
 
       it('should flash error for no password', function(done) {
@@ -359,6 +443,7 @@ describe('Register Controller', function() {
 
           // Fill in form, submit.
           browser.fill('username', 'david');
+          browser.fill('email', 'david@test.org');
           browser.fill('password', 'password');
           browser.fill('confirm', 'password');
           browser.pressButton('Submit', function() {
@@ -370,6 +455,7 @@ describe('Register Controller', function() {
             User.findOne({ username: 'david' }, function(err, user) {
               user.should.be.ok;
               user.username.should.eql('david');
+              user.email.should.eql('david@test.org');
               done();
             });
 

@@ -38,6 +38,16 @@ exports.form = function() {
       ]
     }),
 
+    // Email.
+    email: fields.email({
+      name: 'email',
+      label: 'Email',
+      required: 'Enter an email address.',
+      validators: [
+        customValidators.uniqueField(User, 'email', 'Email taken.')
+      ]
+    }),
+
     // Password.
     password: fields.password({
       name: 'password',

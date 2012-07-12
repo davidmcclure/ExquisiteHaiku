@@ -44,10 +44,16 @@ describe('Install Form', function() {
 
   describe('username', function() {
 
-    // Create a user.
     beforeEach(function(done) {
-      var user = new User({ username: 'kara' });
+
+      // Create a user.
+      var user = new User({
+        username: 'kara',
+        email: 'kara@test.org'
+      });
+
       user.save(function(err) { done(); });
+
     });
 
     it('should have a name attribute', function() {
@@ -115,6 +121,70 @@ describe('Install Form', function() {
         username: 'david'
       }).validate(function(err, form) {
         assert(!form.fields.username.error);
+        done();
+      });
+
+    });
+
+  });
+
+  describe('email', function() {
+
+    beforeEach(function(done) {
+
+      // Create a user.
+      var user = new User({
+        username: 'kara',
+        email: 'kara@test.org'
+      });
+
+      user.save(function(err) { done(); });
+
+    });
+
+    it('should have a name attribute', function() {
+      form.fields.email.name.should.be.ok;
+    });
+
+    it('should exist', function(done) {
+
+      form.bind({
+        email: ''
+      }).validate(function(err, form) {
+        form.fields.email.error.should.be.ok;
+        done();
+      });
+
+    });
+
+    it('should be unique', function(done) {
+
+      form.bind({
+        email: 'kara@test.org'
+      }).validate(function(err, form) {
+        form.fields.email.error.should.be.ok;
+        done();
+      });
+
+    });
+
+    it('should be valid', function(done) {
+
+      form.bind({
+        email: 'invalid'
+      }).validate(function(err, form) {
+        form.fields.email.error.should.be.ok;
+        done();
+      });
+
+    });
+
+    it('should validate when valid', function(done) {
+
+      form.bind({
+        email: 'david@test.org'
+      }).validate(function(err, form) {
+        assert(!form.fields.email.error);
         done();
       });
 

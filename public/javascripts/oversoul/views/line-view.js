@@ -75,8 +75,12 @@ Ov.Views.Line = Backbone.View.extend({
     if (height >= 0) this.setNegative();
     else this.setPositive();
 
+    // Compute font-size.
+    var fontSize = 12 + Math.abs(currentTotal)*0.1;
+
     // Position counter.
     this.total.text(currentTotal);
+    this.total.attr('style', 'font-size:'+fontSize);
     this.total.attr('y', dragEvent.pageY - scrollTop - 10);
     this.total.attr('x', dragEvent.pageX + 10);
 

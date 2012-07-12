@@ -91,16 +91,14 @@ describe('Custom Validators', function() {
 
       // Create a user.
       var user = new User({
-        username:   'david',
-        password:   'password'
+        username: 'david',
+        password: 'password',
+        email: 'david@test.org'
       });
 
-      // Save.
+      // Call the validator.
       user.save(function(err) {
-
-        // Call the validator.
         validator(form, field, callback);
-
       });
 
     });
@@ -115,8 +113,9 @@ describe('Custom Validators', function() {
 
       // Create user.
       user = new User({
-        username:   'david',
-        password:   'password'
+        username: 'david',
+        password: 'password',
+        email: 'david@test.org'
       });
 
       // Set field value.
@@ -197,8 +196,9 @@ describe('Custom Validators', function() {
 
       // Create user.
       user = new User({
-        username:   'david',
-        password:   'password'
+        username: 'david',
+        password: 'password',
+        email: 'david@test.org'
       });
 
       // Save.
@@ -254,14 +254,16 @@ describe('Custom Validators', function() {
 
       // Create user1.
       user1 = new User({
-        username:   'david',
-        password:   'password'
+        username: 'david',
+        password: 'password',
+        email: 'david@test.org'
       });
 
       // Create user2.
       user2 = new User({
-        username:   'kara',
-        password:   'password'
+        username: 'kara',
+        password: 'password',
+        email: 'kara@test.org'
       });
 
       // Save worker.

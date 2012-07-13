@@ -36,15 +36,35 @@ var Round = mongoose.model('Round');
 
 describe('Poem', function() {
 
-  var user;
+  var user, poem;
 
-  beforeEach(function() {
+  beforeEach(function(done) {
 
     // Create user.
     user = new User({
       username: 'david',
       password: 'password',
       email: 'david@test.org'
+    });
+
+    // Create poem.
+    poem = new Poem({
+      slug: 'test-poem',
+      user: user.id,
+      roundLength : 10000,
+      sliceInterval : 3,
+      minSubmissions : 5,
+      submissionVal : 100,
+      decayLifetime : 50,
+      seedCapital : 1000,
+      visibleWords : 500
+    });
+
+    // Save.
+    user.save(function(err) {
+      poem.save(function(err) {
+        done();
+      });
     });
 
   });
@@ -95,7 +115,7 @@ describe('Poem', function() {
 
         // Check for 0 documents.
         Poem.count({}, function(err, count) {
-          count.should.eql(0);
+          count.should.eql(1);
           done();
         });
 
@@ -106,25 +126,6 @@ describe('Poem', function() {
   });
 
   describe('field defaults', function() {
-
-    var poem;
-
-    beforeEach(function() {
-
-      // Create poem.
-      poem = new Poem({
-        slug: 'test-poem',
-        user: user.id,
-        roundLength : 10000,
-        sliceInterval : 3,
-        minSubmissions : 5,
-        submissionVal : 100,
-        decayLifetime : 50,
-        seedCapital : 1000,
-        visibleWords : 500
-      });
-
-    });
 
     it('should set "created" to the current date by default', function() {
       poem.created.should.be.ok;
@@ -140,26 +141,11 @@ describe('Poem', function() {
 
   });
 
+  describe('middleware', function() {
+
+  });
+
   describe('validators', function() {
-
-    var poem;
-
-    beforeEach(function() {
-
-      // Create poem.
-      poem = new Poem({
-        slug: 'test-poem',
-        user: user.id,
-        roundLength : 10000,
-        sliceInterval : 3,
-        minSubmissions : 5,
-        submissionVal : 100,
-        decayLifetime : 50,
-        seedCapital : 1000,
-        visibleWords : 500
-      });
-
-    });
 
     describe('started', function() {
 
@@ -282,25 +268,6 @@ describe('Poem', function() {
   });
 
   describe('virtual fields', function() {
-
-    var poem;
-
-    beforeEach(function() {
-
-      // Create poem.
-      poem = new Poem({
-        slug: 'test-poem',
-        user: user.id,
-        roundLength : 10000,
-        sliceInterval : 3,
-        minSubmissions : 5,
-        submissionVal : 100,
-        decayLifetime : 50,
-        seedCapital : 1000,
-        visibleWords : 500
-      });
-
-    });
 
     describe('id', function() {
 
@@ -492,30 +459,6 @@ describe('Poem', function() {
   });
 
   describe('methods', function() {
-
-    var poem;
-
-    beforeEach(function(done) {
-
-      // Create poem.
-      poem = new Poem({
-        slug: 'test-poem',
-        user: user.id,
-        roundLength : 10000,
-        sliceInterval : 3,
-        minSubmissions : 5,
-        submissionVal : 100,
-        decayLifetime : 50,
-        seedCapital : 1000,
-        visibleWords : 500
-      });
-
-      // Save.
-      poem.save(function(err) {
-        done();
-      });
-
-    });
 
     describe('start', function() {
 

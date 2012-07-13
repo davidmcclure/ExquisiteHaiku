@@ -5,6 +5,7 @@
 // Module dependencies.
 var _ = require('underscore');
 var syllables = require('../../lib/syllables');
+var randomstring = require('randomstring');
 
 // Round model.
 var round = require('./round');
@@ -15,6 +16,10 @@ var PoemSchema = new Schema({
   slug : {
     type: String,
     required: true
+  },
+  hash : {
+    type: String
+    // required: true
   },
   user : {
     type: Schema.ObjectId,
@@ -75,6 +80,30 @@ var PoemSchema = new Schema({
   rounds : [
     round.RoundSchema
   ]
+});
+
+
+/*
+ * -----------
+ * Middleware.
+ * -----------
+ */
+
+
+/*
+ * Populate the hash value.
+ *
+ * @return void.
+ */
+PoemSchema.pre('save', function(next) {
+
+  // If the hash is null.
+  if (_.isNull(this.hash)) {
+    this.hash = 'test';
+  }
+
+  next();
+
 });
 
 

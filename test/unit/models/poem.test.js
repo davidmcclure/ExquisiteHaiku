@@ -143,6 +143,10 @@ describe('Poem', function() {
 
   describe('middleware', function() {
 
+    it('should set the hash before save', function() {
+      should.exist(poem.hash);
+    });
+
   });
 
   describe('validators', function() {

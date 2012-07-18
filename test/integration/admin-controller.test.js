@@ -226,22 +226,22 @@ describe('Admin Controller', function() {
 
     it('should show poems', function() {
 
-      browser.text('tr[slug="unstarted"] td.title').should.eql('unstarted');
-      browser.text('tr[slug="running"] td.title').should.eql('running');
-      browser.text('tr[slug="paused"] td.title').should.eql('paused');
-      browser.text('tr[slug="complete"] td.title').should.eql('complete');
+      browser.text('tr[hash="'+unstarted.hash+'"] td.title').should.eql(unstarted.hash);
+      browser.text('tr[hash="'+running.hash+'"] td.title').should.eql(running.hash);
+      browser.text('tr[hash="'+paused.hash+'"] td.title').should.eql(paused.hash);
+      browser.text('tr[hash="'+complete.hash+'"] td.title').should.eql(complete.hash);
 
     });
 
     it('should show poems owned by other users', function() {
-      assert(!browser.query('tr[slug="user2poem"]'));
+      assert(!browser.query('tr[hash="user2poem"]'));
     });
 
     it('should show edit links for unstarted poems', function() {
 
       // Edit link for unstarted poem.
       browser.query(
-        'tr[slug="unstarted"] a.edit[href="/admin/poems/edit/unstarted"]'
+        'tr[hash="'+unstarted.hash+'"] a.edit[href="/admin/poems/edit/'+unstarted.hash+'"]'
       ).should.be.ok;
 
     });
@@ -249,9 +249,9 @@ describe('Admin Controller', function() {
     it('should not show edit links for started poems', function() {
 
       // No edit links for running, paused, and complete poems.
-      assert(!browser.query('tr[slug="running"] a.edit'));
-      assert(!browser.query('tr[slug="paused"] a.edit'));
-      assert(!browser.query('tr[slug="complete"] a.edit'));
+      assert(!browser.query('tr[hash="running"] a.edit'));
+      assert(!browser.query('tr[hash="paused"] a.edit'));
+      assert(!browser.query('tr[hash="complete"] a.edit'));
 
     });
 
@@ -259,17 +259,17 @@ describe('Admin Controller', function() {
 
       // Start link for unstarted poem.
       browser.query(
-        'tr[slug="unstarted"] a.start[href="/admin/poems/start/unstarted"]'
+        'tr[hash="'+unstarted.hash+'"] a.start[href="/admin/poems/start/'+unstarted.hash+'"]'
       ).should.be.ok;
 
       // Start link for paused poem.
       browser.query(
-        'tr[slug="paused"] a.start[href="/admin/poems/start/paused"]'
+        'tr[hash="'+paused.hash+'"] a.start[href="/admin/poems/start/'+paused.hash+'"]'
       ).should.be.ok;
 
       // No start links for running and complete poems.
-      assert(!browser.query('tr[slug="running"] a.start'));
-      assert(!browser.query('tr[slug="complete"] a.start'));
+      assert(!browser.query('tr[hash="'+running.hash+'"] a.start'));
+      assert(!browser.query('tr[hash="'+complete.hash+'"] a.start'));
 
     });
 
@@ -277,19 +277,19 @@ describe('Admin Controller', function() {
 
       // Stop link for running poem.
       browser.query(
-        'tr[slug="running"] a.stop[href="/admin/poems/stop/running"]'
+        'tr[hash="'+running.hash+'"] a.stop[href="/admin/poems/stop/'+running.hash+'"]'
       ).should.be.ok;
 
       // No stop links for unstarted and complete poems.
-      assert(!browser.query('tr[slug="unstarted"] a.stop'));
-      assert(!browser.query('tr[slug="complete"] a.stop'));
+      assert(!browser.query('tr[hash="'+unstarted.hash+'"] a.stop'));
+      assert(!browser.query('tr[hash="'+complete.hash+'"] a.stop'));
 
     });
 
     it('should not show a start or stop link for finished poems', function() {
 
-      assert(!browser.query('tr[slug="complete"] a.start'));
-      assert(!browser.query('tr[slug="complete"] a.stop'));
+      assert(!browser.query('tr[hash="'+complete.hash+'"] a.start'));
+      assert(!browser.query('tr[hash="'+complete.hash+'"] a.stop'));
 
     });
 
@@ -297,35 +297,35 @@ describe('Admin Controller', function() {
 
       // Delete link for unstarted poem.
       browser.query(
-        'tr[slug="unstarted"] a.delete[href="/admin/poems/delete/unstarted"]'
+        'tr[hash="'+unstarted.hash+'"] a.delete[href="/admin/poems/delete/'+unstarted.hash+'"]'
       ).should.be.ok;
 
       // Delete link for running poem.
       browser.query(
-        'tr[slug="running"] a.delete[href="/admin/poems/delete/running"]'
+        'tr[hash="'+running.hash+'"] a.delete[href="/admin/poems/delete/'+running.hash+'"]'
       ).should.be.ok;
 
-      // Complete link for running poem.
+      // Complete link for complete poem.
       browser.query(
-        'tr[slug="complete"] a.delete[href="/admin/poems/delete/complete"]'
+        'tr[hash="'+complete.hash+'"] a.delete[href="/admin/poems/delete/'+complete.hash+'"]'
       ).should.be.ok;
 
     });
 
     it('should show "unstarted" status for unstarted poems', function() {
-      browser.text('tr[slug="unstarted"] td.status').should.eql('unstarted');
+      browser.text('tr[hash="'+unstarted.hash+'"] td.status').should.eql('unstarted');
     });
 
     it('should show "running" status for running poems', function() {
-      browser.text('tr[slug="running"] td.status').should.eql('running');
+      browser.text('tr[hash="'+running.hash+'"] td.status').should.eql('running');
     });
 
     it('should show "paused" status for paused poems', function() {
-      browser.text('tr[slug="paused"] td.status').should.eql('paused');
+      browser.text('tr[hash="'+paused.hash+'"] td.status').should.eql('paused');
     });
 
     it('should show "complete" status for complete poems', function() {
-      browser.text('tr[slug="complete"] td.status').should.eql('complete');
+      browser.text('tr[hash="'+complete.hash+'"] td.status').should.eql('complete');
     });
 
   });

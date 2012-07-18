@@ -143,7 +143,7 @@ describe('Poem Form', function() {
 
       describe('when a poem document is not passed', function() {
 
-        it('should be unique relative to all poems', function(done) {
+        it('should block when not unique', function(done) {
 
           form.bind({
             slug: 'poem1'
@@ -169,7 +169,7 @@ describe('Poem Form', function() {
 
       describe('when poem document is passed', function() {
 
-        it('should be unique relative to other poems', function(done) {
+        it('should block when not unique', function(done) {
 
           // Rebuild the form with the poem.
           form = poemForm.form(poem1);

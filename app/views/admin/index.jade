@@ -14,9 +14,9 @@ if poems.length > 0
         th admin
     tbody
       each poem in poems
-        tr(slug=poem.slug)
+        tr(hash=poem.hash)
           td.title
-            a(href='/#{poem.slug}')= poem.slug
+            a(href='/#{poem.hash}')= poem.hash
           td.status
             if poem.unstarted
               | unstarted
@@ -35,9 +35,9 @@ if poems.length > 0
           td.visibleWords.gray= poem.visibleWords
           td
             if poem.unstarted || poem.paused
-              a.start.action(href='/admin/poems/start/#{poem.slug}') start
+              a.start.action(href='/admin/poems/start/#{poem.hash}') start
             if poem.unstarted
-              a.edit(href='/admin/poems/edit/#{poem.slug}') edit
+              a.edit(href='/admin/poems/edit/#{poem.hash}') edit
             if poem.running
-              a.stop.action(href='/admin/poems/stop/#{poem.slug}') stop
-            a.delete.danger(href='/admin/poems/delete/#{poem.slug}') delete
+              a.stop.action(href='/admin/poems/stop/#{poem.hash}') stop
+            a.delete.danger(href='/admin/poems/delete/#{poem.hash}') delete

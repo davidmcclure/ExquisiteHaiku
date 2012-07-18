@@ -18,7 +18,8 @@ var PoemSchema = new Schema({
     required: true
   },
   hash : {
-    type: String
+    type: String,
+    unique: true
     // required: true
   },
   user : {
@@ -98,8 +99,8 @@ var PoemSchema = new Schema({
 PoemSchema.pre('save', function(next) {
 
   // If the hash is null.
-  if (_.isNull(this.hash)) {
-    this.hash = 'test';
+  if (_.isUndefined(this.hash)) {
+    this.hash = randomstring.generate(10);
   }
 
   next();

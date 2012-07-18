@@ -142,7 +142,7 @@ module.exports = function(app, io) {
    * @middleware auth.ownsPoem: Pass if the poem belongs to the user.
    * @middleware auth.unstartedPoem: Block if the poem is started.
    */
-  app.get('/admin/poems/edit/:slug',
+  app.get('/admin/poems/edit/:hash',
     auth.isUser,
     auth.getPoem,
     auth.ownsPoem,
@@ -180,7 +180,7 @@ module.exports = function(app, io) {
    * @middleware auth.ownsPoem: Pass if the poem belongs to the user.
    * @middleware auth.unstartedPoem: Block if the poem is started.
    */
-  app.post('/admin/poems/edit/:slug',
+  app.post('/admin/poems/edit/:hash',
     auth.isUser,
     auth.getPoem,
     auth.ownsPoem,
@@ -236,7 +236,7 @@ module.exports = function(app, io) {
    * @middleware auth.getPoem: Pass the poem identified by :slug.
    * @middleware auth.ownsPoem: Pass if the poem belongs to the user.
    */
-  app.get('/admin/poems/delete/:slug',
+  app.get('/admin/poems/delete/:hash',
     auth.isUser,
     auth.getPoem,
     auth.ownsPoem,
@@ -260,7 +260,7 @@ module.exports = function(app, io) {
    * @middleware auth.getPoem: Pass the poem identified by :slug.
    * @middleware auth.ownsPoem: Pass if the poem belongs to the user.
    */
-  app.post('/admin/poems/delete/:slug',
+  app.post('/admin/poems/delete/:hash',
     auth.isUser,
     auth.getPoem,
     auth.ownsPoem,
@@ -283,7 +283,7 @@ module.exports = function(app, io) {
    * @middleware auth.getPoem: Pass the poem identified by :slug.
    * @middleware auth.ownsPoem: Pass if the poem belongs to the user.
    */
-  app.get('/admin/poems/start/:slug',
+  app.get('/admin/poems/start/:hash',
     auth.isUser,
     auth.getPoem,
     auth.ownsPoem,
@@ -312,7 +312,7 @@ module.exports = function(app, io) {
    * @middleware auth.getPoem: Pass the poem identified by :slug.
    * @middleware auth.ownsPoem: Pass if the poem belongs to the user.
    */
-  app.get('/admin/poems/stop/:slug',
+  app.get('/admin/poems/stop/:hash',
     auth.isUser,
     auth.getPoem,
     auth.ownsPoem,

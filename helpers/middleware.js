@@ -89,7 +89,7 @@ exports.noUsers = function (req, res, next) {
 exports.getPoem = function (req, res, next) {
 
   // Get the poem record, push into request.
-  Poem.findOne({ slug: req.params.slug }, function(err, poem) {
+  Poem.findOne({ hash: req.params.hash }, function(err, poem) {
     req.poem = poem;
     next();
   });

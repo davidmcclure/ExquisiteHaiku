@@ -334,7 +334,7 @@ describe('Route Middleware', function() {
       });
 
       // Set slug.
-      req.params = { slug: 'poem' };
+      req.params = { hash: poem.hash };
 
       // Call getPoem, check for next() and poem.
       auth.getPoem(req, res, next);

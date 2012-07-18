@@ -510,7 +510,7 @@ describe('Admin Controller', function() {
     it('should render the form', function(done) {
 
       // Go to poem edit page.
-      browser.visit(r+'admin/poems/edit/unstarted', function() {
+      browser.visit(r+'admin/poems/edit/'+unstarted.hash, function() {
 
         // Check for form.
         browser.query('form').should.be.ok;
@@ -564,7 +564,7 @@ describe('Admin Controller', function() {
     it('should redirect when the poem has been started', function(done) {
 
       // Go to poem edit page.
-      browser.visit(r+'admin/poems/edit/paused', function() {
+      browser.visit(r+'admin/poems/edit/'+paused.hash, function() {
 
         // Check for redirect.
         browser.location.pathname.should.eql('/admin/poems');
@@ -581,7 +581,7 @@ describe('Admin Controller', function() {
     beforeEach(function(done) {
 
       // GET admin/poems/edit/:slug.
-      browser.visit(r+'admin/poems/edit/unstarted', function() {
+      browser.visit(r+'admin/poems/edit/'+unstarted.hash, function() {
         done();
       });
 
@@ -596,7 +596,7 @@ describe('Admin Controller', function() {
         browser.pressButton('Save', function() {
 
           // Check for error.
-          browser.location.pathname.should.eql('/admin/poems/edit/unstarted');
+          browser.location.pathname.should.eql('/admin/poems/edit/'+unstarted.hash);
           browser.query('span.help-inline.slug').should.be.ok;
           done();
 
@@ -611,7 +611,7 @@ describe('Admin Controller', function() {
         browser.pressButton('Save', function() {
 
           // Check for error.
-          browser.location.pathname.should.eql('/admin/poems/edit/unstarted');
+          browser.location.pathname.should.eql('/admin/poems/edit/'+unstarted.hash);
           browser.query('span.help-inline.slug').should.be.ok;
           done();
 
@@ -626,7 +626,7 @@ describe('Admin Controller', function() {
         browser.pressButton('Save', function() {
 
           // Check for error.
-          browser.location.pathname.should.eql('/admin/poems/edit/unstarted');
+          browser.location.pathname.should.eql('/admin/poems/edit/'+unstarted.hash);
           browser.query('span.help-inline.slug').should.be.ok;
           done();
 
@@ -651,7 +651,7 @@ describe('Admin Controller', function() {
         browser.pressButton('Save', function() {
 
           // Check for errors.
-          browser.location.pathname.should.eql('/admin/poems/edit/unstarted');
+          browser.location.pathname.should.eql('/admin/poems/edit/'+unstarted.hash);
           browser.query('span.help-inline.roundLength').should.be.ok;
           browser.query('span.help-inline.sliceInterval').should.be.ok;
           browser.query('span.help-inline.minSubmissions').should.be.ok;
@@ -678,7 +678,7 @@ describe('Admin Controller', function() {
         browser.pressButton('Save', function() {
 
           // Check for errors.
-          browser.location.pathname.should.eql('/admin/poems/edit/unstarted');
+          browser.location.pathname.should.eql('/admin/poems/edit/'+unstarted.hash);
           browser.query('span.help-inline.roundLength').should.be.ok;
           browser.query('span.help-inline.sliceInterval').should.be.ok;
           browser.query('span.help-inline.minSubmissions').should.be.ok;
@@ -735,7 +735,7 @@ describe('Admin Controller', function() {
     it('should show the confirmation form', function(done) {
 
       // GET admin/poems/delete/:slug.
-      browser.visit(r+'admin/poems/delete/unstarted', function() {
+      browser.visit(r+'admin/poems/delete/'+unstarted.hash, function() {
 
         // Check for form and fields.
         browser.query('form').should.be.ok;
@@ -756,7 +756,7 @@ describe('Admin Controller', function() {
       Poem.count({}, function(err, count1) {
 
         // GET admin/poems/delete/:slug.
-        browser.visit(r+'admin/poems/delete/unstarted', function() {
+        browser.visit(r+'admin/poems/delete/'+unstarted.hash, function() {
 
           // Click the delete button.
           browser.pressButton('form button[type="submit"]', function() {
@@ -781,7 +781,7 @@ describe('Admin Controller', function() {
       beforeEach(function(done) {
 
         // Start the poem.
-        browser.visit(r+'admin/poems/start/unstarted', function() {
+        browser.visit(r+'admin/poems/start/'+unstarted.hash, function() {
           done();
         });
 
@@ -790,7 +790,7 @@ describe('Admin Controller', function() {
       it('should stop and remove the timer for the poem', function(done) {
 
         // GET admin/poems/delete/:slug.
-        browser.visit(r+'admin/poems/delete/unstarted', function() {
+        browser.visit(r+'admin/poems/delete/'+unstarted.hash, function() {
 
           // Click the delete button.
           browser.pressButton('form button[type="submit"]', function() {
@@ -810,7 +810,7 @@ describe('Admin Controller', function() {
 
     it('should start the timer for the poem', function(done) {
 
-      browser.visit(r+'admin/poems/start/unstarted', function() {
+      browser.visit(r+'admin/poems/start/'+unstarted.hash, function() {
         global.Oversoul.timers.should.have.keys(unstarted.id);
         done();
       });
@@ -819,7 +819,7 @@ describe('Admin Controller', function() {
 
     it('should create a starting round when the poem is unstarted', function(done) {
 
-      browser.visit(r+'admin/poems/start/unstarted', function() {
+      browser.visit(r+'admin/poems/start/'+unstarted.hash, function() {
 
         // Re-get unstarted.
         Poem.findOne({ slug: 'unstarted'}, function(err, unstarted) {
@@ -840,7 +840,7 @@ describe('Admin Controller', function() {
       // Capture round id.
       var roundId = paused.round.id;
 
-      browser.visit(r+'admin/poems/start/paused', function() {
+      browser.visit(r+'admin/poems/start/'+paused.hash, function() {
 
         // Re-get paused.
         Poem.findOne({ slug: 'paused'}, function(err, paused) {
@@ -858,7 +858,7 @@ describe('Admin Controller', function() {
 
     it('should set running=true', function(done) {
 
-      browser.visit(r+'admin/poems/start/unstarted', function() {
+      browser.visit(r+'admin/poems/start/'+unstarted.hash, function() {
 
         // Re-get the poem.
         Poem.findOne({ slug: 'unstarted' }, function(err, poem) {
@@ -872,7 +872,7 @@ describe('Admin Controller', function() {
 
     it('should redirect to the index view', function(done) {
 
-      browser.visit(r+'admin/poems/start/unstarted', function() {
+      browser.visit(r+'admin/poems/start/'+unstarted.hash, function() {
         browser.location.pathname.should.eql('/admin/poems');
         done();
       });
@@ -886,7 +886,7 @@ describe('Admin Controller', function() {
     beforeEach(function(done) {
 
       // Start the poem.
-      browser.visit(r+'admin/poems/start/unstarted', function() {
+      browser.visit(r+'admin/poems/start/'+unstarted.hash, function() {
         done();
       });
 
@@ -897,7 +897,7 @@ describe('Admin Controller', function() {
       // Confirm timer present at start.
       global.Oversoul.timers.should.have.keys(unstarted.id);
 
-      browser.visit(r+'admin/poems/stop/unstarted', function() {
+      browser.visit(r+'admin/poems/stop/'+unstarted.hash, function() {
         global.Oversoul.timers.should.not.have.keys(unstarted.id);
         done();
       });
@@ -906,7 +906,7 @@ describe('Admin Controller', function() {
 
     it('should set running=false', function(done) {
 
-      browser.visit(r+'admin/poems/stop/unstarted', function() {
+      browser.visit(r+'admin/poems/stop/'+unstarted.hash, function() {
 
         // Re-get the poem.
         Poem.findOne({ slug: 'unstarted' }, function(err, poem) {
@@ -920,7 +920,7 @@ describe('Admin Controller', function() {
 
     it('should redirect to the index view', function(done) {
 
-      browser.visit(r+'admin/poems/stop/unstarted', function() {
+      browser.visit(r+'admin/poems/stop/'+unstarted.hash, function() {
         browser.location.pathname.should.eql('/admin/poems');
         done();
       });

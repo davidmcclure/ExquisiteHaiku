@@ -22,7 +22,7 @@ module.exports = function(app) {
    *
    * @middleware auth.getPoem: Pass the poem identified by :slug.
    */
-  app.get('/:slug',
+  app.get('/:hash',
     auth.getPoem,
     function(req, res) {
 

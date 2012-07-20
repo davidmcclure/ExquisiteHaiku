@@ -99,47 +99,6 @@ describe('Poem Form', function() {
 
   });
 
-  describe('sliceInterval', function() {
-
-    it('should have a name attribute', function() {
-      form.fields.roundLength.name.should.be.ok;
-    });
-
-    it('should exist', function(done) {
-
-      form.bind({
-        sliceInterval: ''
-      }).validate(function(err, form) {
-        form.fields.sliceInterval.error.should.be.ok;
-        done();
-      });
-
-    });
-
-    it('should be a positive integer', function(done) {
-
-      form.bind({
-        sliceInterval: -5
-      }).validate(function(err, form) {
-        form.fields.sliceInterval.error.should.be.ok;
-        done();
-      });
-
-    });
-
-    it('should validate when valid', function(done) {
-
-      form.bind({
-        sliceInterval: 3
-      }).validate(function(err, form) {
-        assert(!form.fields.sliceInterval.error);
-        done();
-      });
-
-    });
-
-  });
-
   describe('minSubmissions', function() {
 
     it('should have a name attribute', function() {
@@ -297,47 +256,6 @@ describe('Poem Form', function() {
         seedCapital: 5
       }).validate(function(err, form) {
         assert(!form.fields.seedCapital.error);
-        done();
-      });
-
-    });
-
-  });
-
-  describe('visibleWords', function() {
-
-    it('should have a name attribute', function() {
-      form.fields.visibleWords.name.should.be.ok;
-    });
-
-    it('should exist', function(done) {
-
-      form.bind({
-        visibleWords: ''
-      }).validate(function(err, form) {
-        form.fields.visibleWords.error.should.be.ok;
-        done();
-      });
-
-    });
-
-    it('should be a positive integer', function(done) {
-
-      form.bind({
-        visibleWords: -5
-      }).validate(function(err, form) {
-        form.fields.visibleWords.error.should.be.ok;
-        done();
-      });
-
-    });
-
-    it('should validate when valid', function(done) {
-
-      form.bind({
-        visibleWords: 5
-      }).validate(function(err, form) {
-        assert(!form.fields.visibleWords.error);
         done();
       });
 

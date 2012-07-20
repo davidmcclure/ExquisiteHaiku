@@ -195,12 +195,10 @@ module.exports = function(app, io) {
           // Update the poem.
           req.poem.slug =             form.data.slug;
           req.poem.roundLength =      form.data.roundLength;
-          req.poem.sliceInterval =    form.data.sliceInterval;
           req.poem.minSubmissions =   form.data.minSubmissions;
           req.poem.submissionVal =    form.data.submissionVal;
           req.poem.decayLifetime =    form.data.decayLifetime;
           req.poem.seedCapital =      form.data.seedCapital;
-          req.poem.visibleWords =     form.data.visibleWords;
 
           // Save and redirect.
           req.poem.save(function(err) {

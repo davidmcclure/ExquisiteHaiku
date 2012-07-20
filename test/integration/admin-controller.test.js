@@ -340,12 +340,10 @@ describe('Admin Controller', function() {
           // Check for form and fields.
           browser.query('form').should.be.ok;
           browser.query('form input[name="roundLength"]').should.be.ok;
-          browser.query('form input[name="sliceInterval"]').should.be.ok;
           browser.query('form input[name="minSubmissions"]').should.be.ok;
           browser.query('form input[name="submissionVal"]').should.be.ok;
           browser.query('form input[name="decayLifetime"]').should.be.ok;
           browser.query('form input[name="seedCapital"]').should.be.ok;
-          browser.query('form input[name="visibleWords"]').should.be.ok;
           browser.query('form button[type="submit"]').should.be.ok;
           done();
 
@@ -378,12 +376,10 @@ describe('Admin Controller', function() {
           // Check for errors.
           browser.location.pathname.should.eql('/admin/poems/new');
           browser.query('span.help-inline.roundLength').should.be.ok;
-          browser.query('span.help-inline.sliceInterval').should.be.ok;
           browser.query('span.help-inline.minSubmissions').should.be.ok;
           browser.query('span.help-inline.submissionVal').should.be.ok;
           browser.query('span.help-inline.decayLifetime').should.be.ok;
           browser.query('span.help-inline.seedCapital').should.be.ok;
-          browser.query('span.help-inline.visibleWords').should.be.ok;
           done();
 
         });
@@ -394,23 +390,19 @@ describe('Admin Controller', function() {
 
         // Fill in form.
         browser.fill('roundLength', '-5');
-        browser.fill('sliceInterval', '-5');
         browser.fill('minSubmissions', '-5');
         browser.fill('submissionVal', '-5');
         browser.fill('decayLifetime', '-5');
         browser.fill('seedCapital', '-5');
-        browser.fill('visibleWords', '-5');
         browser.pressButton('Create', function() {
 
           // Check for errors.
           browser.location.pathname.should.eql('/admin/poems/new');
           browser.query('span.help-inline.roundLength').should.be.ok;
-          browser.query('span.help-inline.sliceInterval').should.be.ok;
           browser.query('span.help-inline.minSubmissions').should.be.ok;
           browser.query('span.help-inline.submissionVal').should.be.ok;
           browser.query('span.help-inline.decayLifetime').should.be.ok;
           browser.query('span.help-inline.seedCapital').should.be.ok;
-          browser.query('span.help-inline.visibleWords').should.be.ok;
           done();
 
         });
@@ -423,12 +415,10 @@ describe('Admin Controller', function() {
 
       // Fill in form.
       browser.fill('roundLength', 1);
-      browser.fill('sliceInterval', 1000);
       browser.fill('minSubmissions', 10);
       browser.fill('submissionVal', 100);
       browser.fill('decayLifetime', 50000);
       browser.fill('seedCapital', 1000);
-      browser.fill('visibleWords', 500);
       browser.pressButton('Create', function() {
 
         // Check for redirect.
@@ -468,11 +458,6 @@ describe('Admin Controller', function() {
           'form input[name="roundLength"][value="10000000"]'
         ).should.be.ok;
 
-        // Slice interval input and value.
-        browser.query(
-          'form input[name="sliceInterval"][value="1000"]'
-        ).should.be.ok;
-
         // Min submission input and value.
         browser.query(
           'form input[name="minSubmissions"][value="5"]'
@@ -491,11 +476,6 @@ describe('Admin Controller', function() {
         // Seed capital input and value.
         browser.query(
           'form input[name="seedCapital"][value="1000"]'
-        ).should.be.ok;
-
-        // Visible words input and value.
-        browser.query(
-          'form input[name="visibleWords"][value="500"]'
         ).should.be.ok;
 
         done();
@@ -536,23 +516,19 @@ describe('Admin Controller', function() {
 
         // Fill in form.
         browser.fill('roundLength', '');
-        browser.fill('sliceInterval', '');
         browser.fill('minSubmissions', '');
         browser.fill('submissionVal', '');
         browser.fill('decayLifetime', '');
         browser.fill('seedCapital', '');
-        browser.fill('visibleWords', '');
         browser.pressButton('Save', function() {
 
           // Check for errors.
           browser.location.pathname.should.eql('/admin/poems/edit/'+unstarted.hash);
           browser.query('span.help-inline.roundLength').should.be.ok;
-          browser.query('span.help-inline.sliceInterval').should.be.ok;
           browser.query('span.help-inline.minSubmissions').should.be.ok;
           browser.query('span.help-inline.submissionVal').should.be.ok;
           browser.query('span.help-inline.decayLifetime').should.be.ok;
           browser.query('span.help-inline.seedCapital').should.be.ok;
-          browser.query('span.help-inline.visibleWords').should.be.ok;
           done();
 
         });
@@ -563,23 +539,19 @@ describe('Admin Controller', function() {
 
         // Fill in form.
         browser.fill('roundLength', '-5');
-        browser.fill('sliceInterval', '-5');
         browser.fill('minSubmissions', '-5');
         browser.fill('submissionVal', '-5');
         browser.fill('decayLifetime', '-5');
         browser.fill('seedCapital', '-5');
-        browser.fill('visibleWords', '-5');
         browser.pressButton('Save', function() {
 
           // Check for errors.
           browser.location.pathname.should.eql('/admin/poems/edit/'+unstarted.hash);
           browser.query('span.help-inline.roundLength').should.be.ok;
-          browser.query('span.help-inline.sliceInterval').should.be.ok;
           browser.query('span.help-inline.minSubmissions').should.be.ok;
           browser.query('span.help-inline.submissionVal').should.be.ok;
           browser.query('span.help-inline.decayLifetime').should.be.ok;
           browser.query('span.help-inline.seedCapital').should.be.ok;
-          browser.query('span.help-inline.visibleWords').should.be.ok;
           done();
 
         });
@@ -592,12 +564,10 @@ describe('Admin Controller', function() {
 
       // Fill in form.
       browser.fill('roundLength', 2);
-      browser.fill('sliceInterval', 2000);
       browser.fill('minSubmissions', 20);
       browser.fill('submissionVal', 200);
       browser.fill('decayLifetime', 100);
       browser.fill('seedCapital', 2000);
-      browser.fill('visibleWords', 1000);
       browser.pressButton('Save', function() {
 
         // Check for redirect.
@@ -607,12 +577,10 @@ describe('Admin Controller', function() {
         Poem.findOne({ roundLength: 2 }, function(err, poem) {
           poem.should.be.ok;
           poem.roundLength.valueOf().should.eql(2);
-          poem.sliceInterval.valueOf().should.eql(2000);
           poem.minSubmissions.valueOf().should.eql(20);
           poem.submissionVal.valueOf().should.eql(200);
           poem.decayLifetime.valueOf().should.eql(100);
           poem.seedCapital.valueOf().should.eql(2000);
-          poem.visibleWords.valueOf().should.eql(1000);
           done();
         });
 

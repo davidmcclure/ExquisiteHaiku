@@ -37,16 +37,6 @@ exports.form = function(poem) {
       ]
     }),
 
-    // Slice interval.
-    sliceInterval: fields.string({
-      name: 'sliceInterval',
-      label: 'Slicing Interval',
-      required: 'Enter a slice interval.',
-      validators: [
-        customValidators.positiveInteger('Must be a positive integer.')
-      ]
-    }),
-
     // Minimum submssions.
     minSubmissions: fields.string({
       name: 'minSubmissions',
@@ -82,16 +72,6 @@ exports.form = function(poem) {
       name: 'seedCapital',
       label: 'Seed Capital',
       required: 'Enter a seed capital amount.',
-      validators: [
-        customValidators.positiveInteger('Must be a positive integer.')
-      ]
-    }),
-
-    // Visible words.
-    visibleWords: fields.string({
-      name: 'visibleWords',
-      label: 'Visible Words',
-      required: 'Enter a number of visible words.',
       validators: [
         customValidators.positiveInteger('Must be a positive integer.')
       ]

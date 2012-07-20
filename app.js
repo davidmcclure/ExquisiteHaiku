@@ -9,11 +9,11 @@ var MongoStore = require('connect-mongodb');
 var configFile = require('yaml-config');
 var fs = require('fs');
 
-// Load configuration.
-config = configFile.readConfig('config/config.yaml');
+// Configuration file.
+var config = configFile.readConfig('config/config.yaml');
 
 // Connect to database.
-require('./db-connect');
+require('./db-connect')(config);
 
 // Initialize session store.
 var sessionStore = new MongoStore({
@@ -27,7 +27,7 @@ var app = module.exports = express.createServer(
 
 // Boot settings.
 require('./settings')(app, sessionStore);
-require('./init')(app);
+require('./init')(app, config);
 
 // Run server.
 app.listen(3000);

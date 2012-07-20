@@ -100,12 +100,12 @@ module.exports = function(app, io) {
           var poem = new Poem({
             user:           req.user.id,
             roundLength:    form.data.roundLength,
-            sliceInterval:  form.data.sliceInterval,
             minSubmissions: form.data.minSubmissions,
             submissionVal:  form.data.submissionVal,
             decayLifetime:  form.data.decayLifetime,
             seedCapital:    form.data.seedCapital,
-            visibleWords:   form.data.visibleWords
+            sliceInterval:  app.settings.sliceInterval,
+            visibleWords:   app.settings.visibleWords
           });
 
           // Save and redirect.

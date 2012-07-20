@@ -438,12 +438,12 @@ describe('Admin Controller', function() {
         Poem.findOne({ roundLength: 1 }, function(err, poem) {
           poem.should.be.ok;
           poem.roundLength.valueOf().should.eql(1);
-          poem.sliceInterval.valueOf().should.eql(1000);
           poem.minSubmissions.valueOf().should.eql(10);
           poem.submissionVal.valueOf().should.eql(100);
           poem.decayLifetime.valueOf().should.eql(50000);
           poem.seedCapital.valueOf().should.eql(1000);
-          poem.visibleWords.valueOf().should.eql(500);
+          poem.sliceInterval.valueOf().should.eql(app.settings.sliceInterval);
+          poem.visibleWords.valueOf().should.eql(app.settings.visibleWords);
           done();
         });
 

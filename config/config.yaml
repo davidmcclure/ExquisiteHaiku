@@ -1,3 +1,7 @@
+default:
+  sliceInterval: 500
+  visibleWords: 200
+
 testing:
   db:
     uri: "mongodb://localhost/oversoul_testing"

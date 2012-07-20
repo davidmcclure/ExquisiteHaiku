@@ -5,12 +5,10 @@ if poems.length > 0
         th slug
         th status
         th round len
-        th slice int
         th min sub
         th sub val
         th decay
         th capital
-        th vis words
         th admin
     tbody
       each poem in poems
@@ -27,12 +25,10 @@ if poems.length > 0
             else if poem.complete
               | complete
           td.roundLength.gray= poem.roundLength
-          td.sliceInterval.gray= poem.sliceInterval
           td.minSubmissions.gray= poem.minSubmissions
           td.submissionVal.gray= poem.submissionVal
           td.decayLifetime.gray= poem.decayLifetime
           td.seedCapital.gray= poem.seedCapital
-          td.visibleWords.gray= poem.visibleWords
           td
             if poem.unstarted || poem.paused
               a.start.action(href='/admin/poems/start/#{poem.hash}') start

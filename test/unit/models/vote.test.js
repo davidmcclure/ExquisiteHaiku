@@ -1,5 +1,5 @@
 /*
- * Unit tests for round model.
+ * Unit tests for vote model.
  */
 
 // Module dependencies.
@@ -17,53 +17,49 @@ require('../db-connect');
 require('../../../app/models/round');
 var Round = mongoose.model('Round');
 
+// Vote model.
+require('../../../app/models/vote');
+var Vote = mongoose.model('Vote');
+
 
 /*
- * -----------------------
- * Round model unit tests.
- * -----------------------
+ * ----------------------
+ * Vote model unit tests.
+ * ----------------------
  */
 
 
-describe('Round', function() {
+describe('Vote', function() {
 
-  var round;
+  var round, vote;
 
-  // Create round.
+  // Create round and vote.
   beforeEach(function() {
     round = new Round();
+    vote = new Vote();
   });
 
   describe('required field validations', function() {
 
     it('should require all fields', function(done) {
 
-      // Create round, override defaults.
-      var round = new Round();
-      round.started = null;
-
       // Save.
-      round.save(function(err) {
+      vote.save(function(err) {
 
         // Check for errors.
-        err.errors.started.type.should.eql('required');
+        err.errors.round.type.should.eql('required');
+        err.errors.applied.type.should.eql('required');
+        err.errors.word.type.should.eql('required');
+        err.errors.quantity.type.should.eql('required');
 
         // Check for 0 documents.
-        Round.count({}, function(err, count) {
+        Vote.count({}, function(err, count) {
           count.should.eql(0);
           done();
         });
 
       });
 
-    });
-
-  });
-
-  describe('field defaults', function() {
-
-    it('should set "started" by default', function() {
-      round.started.should.be.ok;
     });
 
   });

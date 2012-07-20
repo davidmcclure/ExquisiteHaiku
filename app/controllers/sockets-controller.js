@@ -71,7 +71,7 @@ module.exports = function(app, io) {
 
         // Apply the starting votes.
         _.each(words, function(word) {
-          poem.vote(word, poem.submissionVal);
+          poem.vote(word, poem.submissionVal, Date.now());
         });
 
       });
@@ -91,7 +91,22 @@ module.exports = function(app, io) {
 
       // Get the poem.
       Poem.findById(id, function(err, poem) {
-        poem.vote(word, quantity);
+
+        // Register vote in memory.
+        var now = Date.now();
+        poem.vote(word, quantity, now);
+
+        // Create vote document.
+        var vote = new Vote({
+          round: poem.round.id,
+          applied: now,
+          word: word,
+          quantity: quantity
+        });
+
+        // Save.
+        vote.save(function(err) {});
+
       });
 
       socket.get('poem', function(err, slug) {

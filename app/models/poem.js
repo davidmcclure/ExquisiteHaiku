@@ -294,7 +294,7 @@ PoemSchema.methods.stop = function() {
 PoemSchema.methods.newRound = function() {
 
   // Create and push new round.
-  var round = new Round({ started: Date.now() });
+  var round = new Round();
   this.rounds.push(round);
 
   // Create votes array on global.
@@ -426,12 +426,13 @@ PoemSchema.methods.addWord = function(word) {
  *
  * @param {String} word: The word.
  * @param {Number} quantity: The point quantity.
+ * @param {Date} now: Current timestamp.
  *
  * @return void.
  */
-PoemSchema.methods.vote = function(word, quantity) {
+PoemSchema.methods.vote = function(word, quantity, now) {
 
-  var vote = [quantity, Date.now()];
+  var vote = [quantity, now];
 
   // If a tracker for the word exists.
   if (_.has(global.Oversoul.votes[this.round.id], word)) {

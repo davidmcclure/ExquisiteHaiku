@@ -59,8 +59,9 @@ poem.save(function(err) {
   _.each(_.range(numWords), function(i) {
 
     // Iterate over votesPerWord.
+    var now = Date.now();
     _.each(_.range(votesPerWord), function(j) {
-      poem.vote('word'+i, 100);
+      poem.vote('word'+i, 100, now);
     });
 
   });

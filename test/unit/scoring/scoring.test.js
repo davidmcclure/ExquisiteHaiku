@@ -190,9 +190,9 @@ describe('Scoring', function() {
         poem.addWord('is');
 
         // Apply votes.
-        poem.vote('first', 100);
-        poem.vote('second', 200);
-        poem.vote('third', 300);
+        poem.vote('first', 100, Date.now());
+        poem.vote('second', 200, Date.now());
+        poem.vote('third', 300, Date.now());
 
         // Save.
         poem.save(function(err) {

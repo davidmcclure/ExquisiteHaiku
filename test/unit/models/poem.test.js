@@ -760,7 +760,7 @@ describe('Poem', function() {
         it('should push the new vote', function() {
 
           // Call vote().
-          poem.vote('word', 100);
+          poem.vote('word', 100, Date.now);
 
           // Check for vote.
           var vote = global.Oversoul.votes[poem.round.id]['word'][0];
@@ -775,7 +775,7 @@ describe('Poem', function() {
         it('should create the id key and push new vote', function() {
 
           // Call vote().
-          poem.vote('word', 100);
+          poem.vote('word', 100, Date.now);
 
           // Check for vote.
           var vote = global.Oversoul.votes[poem.round.id]['word'][0];

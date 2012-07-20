@@ -26,7 +26,7 @@ var PoemSchema = new Schema({
   created : {
     type: Date,
     required: true,
-    default: Date.now()
+    default: Date.now
   },
   started : {
     type: Boolean,

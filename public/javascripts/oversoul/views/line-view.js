@@ -22,7 +22,7 @@ Ov.Views.Line = Backbone.View.extend({
     this.total = this.svg.append('svg:text');
 
     // Trackers.
-    this.current = null;
+    this.currentLine = null;
     this.lines = [];
 
   },
@@ -65,15 +65,15 @@ Ov.Views.Line = Backbone.View.extend({
 
     // Draw line.
     this.clearCurrent();
-    this.current = this.svg.append('svg:line')
+    this.currentLine = this.svg.append('svg:line')
       .attr('x1', initEvent.pageX)
       .attr('y1', initEvent.pageY - scrollTop)
       .attr('x2', dragEvent.pageX)
       .attr('y2', dragEvent.pageY - scrollTop);
 
-    // Positive drag.
-    if (height >= 0) this.setNegative();
-    else this.setPositive();
+    // Set positive/negative colors.
+    this.setLineColor(-height);
+    this.setTotalColor(currentTotal);
 
     // Compute font-size.
     var fontSize = 12 + Math.abs(currentTotal)*0.1;
@@ -128,8 +128,8 @@ Ov.Views.Line = Backbone.View.extend({
    * @return void.
    */
   clearCurrent: function() {
-    if (!_.isNull(this.current))
-      this.current.remove();
+    if (!_.isNull(this.currentLine))
+      this.currentLine.remove();
   },
 
   /*
@@ -138,30 +138,34 @@ Ov.Views.Line = Backbone.View.extend({
    * @return void.
    */
   lockCurrent: function() {
-    if (!_.isNull(this.current)) {
-      this.lines.push(this.current);
-      this.current = null;
+    if (!_.isNull(this.currentLine)) {
+      this.lines.push(this.currentLine);
+      this.currentLine = null;
     }
   },
 
   /*
    * Set positive drag.
    *
+   * @param {Number} height: The line height.
+   *
    * @return void.
    */
-  setPositive: function() {
-    this.current.attr('class', 'positive');
-    this.total.attr('class', 'positive');
+  setLineColor: function(height) {
+    if (height >= 0) this.currentLine.attr('class', 'positive');
+    else this.currentLine.attr('class', 'negative');
   },
 
   /*
    * Set negative drag.
    *
+   * @param {Number} currentTotal: The drag value.
+   *
    * @return void.
    */
-  setNegative: function() {
-    this.current.attr('class', 'negative');
-    this.total.attr('class', 'negative');
+  setTotalColor: function(currentTotal) {
+    if (currentTotal >= 0) this.total.attr('class', 'positive');
+    else this.total.attr('class', 'negative');
   },
 
   /*
@@ -170,8 +174,8 @@ Ov.Views.Line = Backbone.View.extend({
    * @return void.
    */
   setInvalid: function() {
-    if (!_.isNull(this.current))
-      this.current.attr('class', 'blocked');
+    if (!_.isNull(this.currentLine))
+      this.currentLine.attr('class', 'blocked');
     this.total.attr('class', 'blocked');
   }
 

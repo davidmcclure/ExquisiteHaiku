@@ -13,10 +13,6 @@ var Round = mongoose.model('Round');
 
 // Schema definition.
 var PoemSchema = new Schema({
-  slug : {
-    type: String,
-    required: true
-  },
   hash : {
     type: String,
     unique: true

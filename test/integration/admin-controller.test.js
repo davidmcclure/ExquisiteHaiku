@@ -15,11 +15,10 @@ var _ = require('underscore');
 process.env.NODE_ENV = 'testing';
 var app = require('../../app');
 
-// Models and reserved slugs.
+// Models.
 var User = mongoose.model('User');
 var Poem = mongoose.model('Poem');
 var Round = mongoose.model('Round');
-var _slugs = require('../../helpers/forms/_slugs');
 
 
 /*
@@ -340,7 +339,6 @@ describe('Admin Controller', function() {
 
           // Check for form and fields.
           browser.query('form').should.be.ok;
-          browser.query('form input[name="slug"]').should.be.ok;
           browser.query('form input[name="roundLength"]').should.be.ok;
           browser.query('form input[name="sliceInterval"]').should.be.ok;
           browser.query('form input[name="minSubmissions"]').should.be.ok;
@@ -366,54 +364,6 @@ describe('Admin Controller', function() {
       // GET admin/poems/new.
       browser.visit(r+'admin/poems/new', function() {
         done();
-      });
-
-    });
-
-    describe('slug', function() {
-
-      it('should flash error for no slug', function(done) {
-
-        // Fill in form.
-        browser.pressButton('Create', function() {
-
-          // Check for error.
-          browser.location.pathname.should.eql('/admin/poems/new');
-          browser.query('span.help-inline.slug').should.be.ok;
-          done();
-
-        });
-
-      });
-
-      it('should flash error for dup slug', function(done) {
-
-        // Fill in form.
-        browser.fill('slug', 'unstarted');
-        browser.pressButton('Create', function() {
-
-          // Check for error.
-          browser.location.pathname.should.eql('/admin/poems/new');
-          browser.query('span.help-inline.slug').should.be.ok;
-          done();
-
-        });
-
-      });
-
-      it('should flash error for reserved slug', function(done) {
-
-        // Fill in form.
-        browser.fill('slug', _slugs.blacklist[0]);
-        browser.pressButton('Create', function() {
-
-          // Check for error.
-          browser.location.pathname.should.eql('/admin/poems/new');
-          browser.query('span.help-inline.slug').should.be.ok;
-          done();
-
-        });
-
       });
 
     });
@@ -472,8 +422,7 @@ describe('Admin Controller', function() {
     it('should create a new poem and redirect on success', function(done) {
 
       // Fill in form.
-      browser.fill('slug', 'valid');
-      browser.fill('roundLength', 10000000);
+      browser.fill('roundLength', 1);
       browser.fill('sliceInterval', 1000);
       browser.fill('minSubmissions', 10);
       browser.fill('submissionVal', 100);
@@ -486,10 +435,9 @@ describe('Admin Controller', function() {
         browser.location.pathname.should.eql('/admin/poems');
 
         // Get poem.
-        Poem.findOne({ slug: 'valid' }, function(err, poem) {
+        Poem.findOne({ roundLength: 1 }, function(err, poem) {
           poem.should.be.ok;
-          poem.slug.should.eql('valid');
-          poem.roundLength.valueOf().should.eql(10000000);
+          poem.roundLength.valueOf().should.eql(1);
           poem.sliceInterval.valueOf().should.eql(1000);
           poem.minSubmissions.valueOf().should.eql(10);
           poem.submissionVal.valueOf().should.eql(100);
@@ -505,7 +453,7 @@ describe('Admin Controller', function() {
 
   });
 
-  describe('GET /admin/poems/edit/:slug', function() {
+  describe('GET /admin/poems/edit/:hash', function() {
 
     it('should render the form', function(done) {
 
@@ -514,11 +462,6 @@ describe('Admin Controller', function() {
 
         // Check for form.
         browser.query('form').should.be.ok;
-
-        // Slug input and value.
-        browser.query(
-          'form input[name="slug"][value="unstarted"]'
-        ).should.be.ok;
 
         // Round length input and value.
         browser.query(
@@ -576,62 +519,13 @@ describe('Admin Controller', function() {
 
   });
 
-  describe('POST /admin/poems/edit/:slug', function() {
+  describe('POST /admin/poems/edit/:hash', function() {
 
     beforeEach(function(done) {
 
-      // GET admin/poems/edit/:slug.
+      // GET admin/poems/edit/:hash.
       browser.visit(r+'admin/poems/edit/'+unstarted.hash, function() {
         done();
-      });
-
-    });
-
-    describe('slug', function() {
-
-      it('should flash error for no slug', function(done) {
-
-        // Fill in form.
-        browser.fill('slug', '');
-        browser.pressButton('Save', function() {
-
-          // Check for error.
-          browser.location.pathname.should.eql('/admin/poems/edit/'+unstarted.hash);
-          browser.query('span.help-inline.slug').should.be.ok;
-          done();
-
-        });
-
-      });
-
-      it('should flash error for dup slug', function(done) {
-
-        // Fill in form.
-        browser.fill('slug', 'running');
-        browser.pressButton('Save', function() {
-
-          // Check for error.
-          browser.location.pathname.should.eql('/admin/poems/edit/'+unstarted.hash);
-          browser.query('span.help-inline.slug').should.be.ok;
-          done();
-
-        });
-
-      });
-
-      it('should flash error for reserved slug', function(done) {
-
-        // Fill in form.
-        browser.fill('slug', _slugs.blacklist[0]);
-        browser.pressButton('Save', function() {
-
-          // Check for error.
-          browser.location.pathname.should.eql('/admin/poems/edit/'+unstarted.hash);
-          browser.query('span.help-inline.slug').should.be.ok;
-          done();
-
-        });
-
       });
 
     });
@@ -697,8 +591,7 @@ describe('Admin Controller', function() {
     it('should edit the poem and redirect on success', function(done) {
 
       // Fill in form.
-      browser.fill('slug', 'new');
-      browser.fill('roundLength', 20000);
+      browser.fill('roundLength', 2);
       browser.fill('sliceInterval', 2000);
       browser.fill('minSubmissions', 20);
       browser.fill('submissionVal', 200);
@@ -711,10 +604,9 @@ describe('Admin Controller', function() {
         browser.location.pathname.should.eql('/admin/poems');
 
         // Get poem.
-        Poem.findOne({ slug: 'new' }, function(err, poem) {
+        Poem.findOne({ roundLength: 2 }, function(err, poem) {
           poem.should.be.ok;
-          poem.slug.should.eql('new');
-          poem.roundLength.valueOf().should.eql(20000);
+          poem.roundLength.valueOf().should.eql(2);
           poem.sliceInterval.valueOf().should.eql(2000);
           poem.minSubmissions.valueOf().should.eql(20);
           poem.submissionVal.valueOf().should.eql(200);
@@ -730,11 +622,11 @@ describe('Admin Controller', function() {
 
   });
 
-  describe('GET /admin/poems/delete/:slug', function() {
+  describe('GET /admin/poems/delete/:hash', function() {
 
     it('should show the confirmation form', function(done) {
 
-      // GET admin/poems/delete/:slug.
+      // GET admin/poems/delete/:hash.
       browser.visit(r+'admin/poems/delete/'+unstarted.hash, function() {
 
         // Check for form and fields.
@@ -748,14 +640,14 @@ describe('Admin Controller', function() {
 
   });
 
-  describe('POST /admin/poems/delete/:slug', function() {
+  describe('POST /admin/poems/delete/:hash', function() {
 
     it('should delete the poem and redirect', function(done) {
 
       // Get starting poems count.
       Poem.count({}, function(err, count1) {
 
-        // GET admin/poems/delete/:slug.
+        // GET admin/poems/delete/:hash.
         browser.visit(r+'admin/poems/delete/'+unstarted.hash, function() {
 
           // Click the delete button.
@@ -789,7 +681,7 @@ describe('Admin Controller', function() {
 
       it('should stop and remove the timer for the poem', function(done) {
 
-        // GET admin/poems/delete/:slug.
+        // GET admin/poems/delete/:hash.
         browser.visit(r+'admin/poems/delete/'+unstarted.hash, function() {
 
           // Click the delete button.
@@ -806,7 +698,7 @@ describe('Admin Controller', function() {
 
   });
 
-  describe('GET /admin/poems/start/:slug', function() {
+  describe('GET /admin/poems/start/:hash', function() {
 
     it('should start the timer for the poem', function(done) {
 
@@ -822,7 +714,7 @@ describe('Admin Controller', function() {
       browser.visit(r+'admin/poems/start/'+unstarted.hash, function() {
 
         // Re-get unstarted.
-        Poem.findOne({ slug: 'unstarted'}, function(err, unstarted) {
+        Poem.findById(unstarted.id, function(err, unstarted) {
 
           // Check for new round.
           unstarted.rounds.length.should.eql(1);
@@ -843,7 +735,7 @@ describe('Admin Controller', function() {
       browser.visit(r+'admin/poems/start/'+paused.hash, function() {
 
         // Re-get paused.
-        Poem.findOne({ slug: 'paused'}, function(err, paused) {
+        Poem.findById(paused.id, function(err, paused) {
 
           // Check for no new round.
           paused.rounds.length.should.eql(1);
@@ -861,7 +753,7 @@ describe('Admin Controller', function() {
       browser.visit(r+'admin/poems/start/'+unstarted.hash, function() {
 
         // Re-get the poem.
-        Poem.findOne({ slug: 'unstarted' }, function(err, poem) {
+        Poem.findById(unstarted.id, function(err, poem) {
           poem.running.should.be.true;
           done();
         });
@@ -881,7 +773,7 @@ describe('Admin Controller', function() {
 
   });
 
-  describe('GET /admin/poems/stop/:slug', function() {
+  describe('GET /admin/poems/stop/:hash', function() {
 
     beforeEach(function(done) {
 
@@ -909,7 +801,7 @@ describe('Admin Controller', function() {
       browser.visit(r+'admin/poems/stop/'+unstarted.hash, function() {
 
         // Re-get the poem.
-        Poem.findOne({ slug: 'unstarted' }, function(err, poem) {
+        Poem.findById(unstarted.id, function(err, poem) {
           poem.running.should.be.false;
           done();
         });

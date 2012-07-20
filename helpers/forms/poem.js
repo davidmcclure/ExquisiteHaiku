@@ -27,38 +27,6 @@ exports.form = function(poem) {
 
   return forms.create({
 
-    // Slug.
-    slug: fields.string({
-      name: 'slug',
-      label: 'URL Slug',
-      required: 'Enter a slug.',
-      validators: (function() {
-
-        // Starting validators.
-        var baseValidators = [
-          customValidators.validSlug('Lowercase letters, numbers, hyphens.'),
-          customValidators.fieldAllowed(_slugs.blacklist, 'Reserved.')
-        ];
-
-        // If no document is passed, validate unique against all poems.
-        if (_.isUndefined(poem)) {
-          baseValidators.push(
-            customValidators.uniqueField(Poem, 'slug', 'Slug taken.')
-          );
-        }
-
-        // If document is passed, validate nonSelf unique.
-        else {
-          baseValidators.push(
-            customValidators.uniqueNonSelfField(Poem, 'slug', poem, 'Slug taken.')
-          );
-        }
-
-        return baseValidators;
-
-      })()
-    }),
-
     // Word round length.
     roundLength: fields.string({
       name: 'roundLength',

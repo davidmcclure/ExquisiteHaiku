@@ -31,7 +31,6 @@ var user = new User({
 
 // Create poem.
 var poem = new Poem({
-  slug: 'test-poem',
   user: user.id,
   roundLength : 10000,
   sliceInterval : 3,

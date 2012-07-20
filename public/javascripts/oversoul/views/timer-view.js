@@ -54,7 +54,7 @@ Ov.Views.Timer = Backbone.View.extend({
     );
 
     // Render.
-    this.minutes.text(now[0]);
+    this.minutes.text(now[0]+':');
     this.seconds.text(now[1]);
 
   },
@@ -70,7 +70,7 @@ Ov.Views.Timer = Backbone.View.extend({
   _msToDuration: function(d) {
     var sec = this._pad(Math.floor((d/1000) % 60)); d /= 60000;
     var min = this._pad(Math.floor(d % 60)); d /= 60;
-    return [min+':', sec];
+    return [min, sec];
   },
 
   /*

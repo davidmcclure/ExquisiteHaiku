@@ -9,7 +9,7 @@ var _ = require('underscore');
 var RoundSchema = new Schema({
   started : {
     type: Date,
-    default: Date.now(),
+    default: Date.now,
     required: true
   }
 });

@@ -11,6 +11,7 @@ var _ = require('underscore');
 
 // Models.
 var Poem = mongoose.model('Poem');
+var Vote = mongoose.model('Vote');
 
 module.exports = function(app, io) {
 

@@ -14,7 +14,8 @@ var VoteSchema = new Schema({
   },
   applied : {
     type: Date,
-    required: true
+    required: true,
+    default: Date.now
   },
   word : {
     type: String,
@@ -24,35 +25,6 @@ var VoteSchema = new Schema({
     type: Number,
     required: true
   }
-});
-
-
-/*
- * -----------
- * Middleware.
- * -----------
- */
-
-
-/*
- * Register the vote in memory.
- *
- * @return void.
- */
-VoteSchema.pre('save', function(next) {
-
-  var vote = [this.quantity, this.applied];
-
-  // If a tracker for the word exists.
-  if (_.has(global.Oversoul.votes[this.round], this.word)) {
-    global.Oversoul.votes[this.round][this.word].push(vote);
-  }
-
-  // Set votes tracker.
-  else {
-    global.Oversoul.votes[this.round][this.word] = [vote];
-  }
-
 });
 
 
@@ -71,6 +43,53 @@ VoteSchema.pre('save', function(next) {
 VoteSchema.virtual('id').get(function() {
   return this._id.toHexString();
 });
+
+
+/*
+ * -----------
+ * Middleware.
+ * -----------
+ */
+
+
+/*
+ * Call register on save.
+ *
+ * @return void.
+ */
+VoteSchema.pre('save', function(next) {
+  this.register();
+  next();
+});
+
+
+/*
+ * -----------------
+ * Document methods.
+ * -----------------
+ */
+
+
+/*
+ * Register the vote in memory.
+ *
+ * @return void.
+ */
+VoteSchema.methods.register = function() {
+
+  var vote = [this.quantity, this.applied];
+
+  // If a tracker for the word exists.
+  if (_.has(global.Oversoul.votes[this.round], this.word)) {
+    global.Oversoul.votes[this.round][this.word].push(vote);
+  }
+
+  // Set votes tracker.
+  else {
+    global.Oversoul.votes[this.round][this.word] = [vote];
+  }
+
+};
 
 
 // Register model.

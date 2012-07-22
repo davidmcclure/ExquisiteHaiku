@@ -33,15 +33,46 @@ describe('Vote', function() {
 
   var round, vote;
 
-  // Create round and vote.
   beforeEach(function() {
+
+    // Create round.
     round = new Round();
-    vote = new Vote();
+
+    // Create vote.
+    vote = new Vote({
+      round: round.id,
+      word: 'word',
+      quantity: 100
+    });
+
+  });
+
+  afterEach(function(done) {
+
+    // Truncate worker.
+    var remove = function(model, callback) {
+      model.collection.remove(function(err) {
+        callback(err, model);
+      });
+    };
+
+    // Clear rounds and votes.
+    async.map([
+      Round,
+      Vote
+    ], remove, function(err, models) {
+      done();
+    });
+
   });
 
   describe('required field validations', function() {
 
     it('should require all fields', function(done) {
+
+      // Create vote, override defaults.
+      var vote = new Vote();
+      vote.applied = null;
 
       // Save.
       vote.save(function(err) {
@@ -56,6 +87,54 @@ describe('Vote', function() {
         Vote.count({}, function(err, count) {
           count.should.eql(0);
           done();
+        });
+
+      });
+
+    });
+
+  });
+
+  describe('methods', function() {
+
+    describe('register', function() {
+
+      // Register round.
+      beforeEach(function() {
+        global.Oversoul.votes[vote.round] = {};
+      });
+
+      describe('when the word tracker exists', function() {
+
+        // Register word tracker.
+        beforeEach(function() {
+          global.Oversoul.votes[vote.round][vote.word] = [];
+        });
+
+        it('should push the new vote', function() {
+
+          // Register.
+          vote.register();
+
+          // Check for vote.
+          var memoryVote = global.Oversoul.votes[vote.round][vote.word][0];
+          memoryVote[0].should.eql(100);
+
+        });
+
+      });
+
+      describe('when the word tracker does not exist', function() {
+
+        it('should create the id key and push new vote', function() {
+
+          // Register.
+          vote.register();
+
+          // Check for vote.
+          var memoryVote = global.Oversoul.votes[vote.round][vote.word][0];
+          memoryVote[0].should.eql(100);
+
         });
 
       });

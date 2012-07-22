@@ -85,7 +85,10 @@ describe('Poem', function() {
     };
 
     // Clear users and poems.
-    async.map([User, Poem], remove, function(err, models) {
+    async.map([
+      User,
+      Poem
+    ], remove, function(err, models) {
       done();
     });
 
@@ -142,8 +145,12 @@ describe('Poem', function() {
 
   describe('middleware', function() {
 
-    it('should set the hash before save', function() {
-      should.exist(poem.hash);
+    describe('save', function() {
+
+      it('should set the hash before save', function() {
+        should.exist(poem.hash);
+      });
+
     });
 
   });
@@ -738,50 +745,6 @@ describe('Poem', function() {
         poem.words[1].should.eql(['that', 'an', 'idle', 'king', 'by', 'this']);
         poem.words[2].should.eql(['still', 'hearth', 'among']);
         poem.words.length.should.eql(3);
-
-      });
-
-    });
-
-    describe('vote', function() {
-
-      // Create round.
-      beforeEach(function() {
-        poem.newRound();
-      });
-
-      describe('when the word tracker exists', function() {
-
-        // Create round.
-        beforeEach(function() {
-          global.Oversoul.votes[poem.round.id]['word'] = [];
-        });
-
-        it('should push the new vote', function() {
-
-          // Call vote().
-          poem.vote('word', 100, Date.now);
-
-          // Check for vote.
-          var vote = global.Oversoul.votes[poem.round.id]['word'][0];
-          vote[0].should.eql(100);
-
-        });
-
-      });
-
-      describe('when the word tracker does not exist', function() {
-
-        it('should create the id key and push new vote', function() {
-
-          // Call vote().
-          poem.vote('word', 100, Date.now);
-
-          // Check for vote.
-          var vote = global.Oversoul.votes[poem.round.id]['word'][0];
-          vote[0].should.eql(100);
-
-        });
 
       });
 

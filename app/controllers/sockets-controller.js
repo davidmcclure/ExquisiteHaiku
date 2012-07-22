@@ -70,9 +70,19 @@ module.exports = function(app, io) {
       // Get the poem.
       Poem.findById(id, function(err, poem) {
 
-        // Apply the starting votes.
+        // Walk the words.
         _.each(words, function(word) {
-          poem.vote(word, poem.submissionVal, Date.now());
+
+          // Create the vote.
+          var vote = new Vote({
+            round: poem.round.id,
+            word: word,
+            quantity: poem.submissionVal
+          });
+
+          // Save.
+          vote.save(function(err) {});
+
         });
 
       });
@@ -93,14 +103,9 @@ module.exports = function(app, io) {
       // Get the poem.
       Poem.findById(id, function(err, poem) {
 
-        // Register vote in memory.
-        var now = Date.now();
-        poem.vote(word, quantity, now);
-
-        // Create vote document.
+        // Create the vote.
         var vote = new Vote({
           round: poem.round.id,
-          applied: now,
           word: word,
           quantity: quantity
         });

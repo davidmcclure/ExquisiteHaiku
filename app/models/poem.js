@@ -81,70 +81,6 @@ var PoemSchema = new Schema({
 
 
 /*
- * -----------
- * Middleware.
- * -----------
- */
-
-
-/*
- * Populate the hash value.
- *
- * @return void.
- */
-PoemSchema.pre('save', function(next) {
-
-  // If the hash is null.
-  if (_.isUndefined(this.hash)) {
-    this.hash = randomstring.generate(10);
-  }
-
-  next();
-
-});
-
-
-/*
- * -----------
- * Validators.
- * -----------
- */
-
-
-/*
- * If the poem has not been started, then running and complete
- * must be false.
- *
- * @return {Boolean}: True if the statuses are valid.
- */
-PoemSchema.path('started').validate(function(v) {
-  return v || (!this.running && !this.complete);
-});
-
-
-/*
- * If the poem is running, started must be true and complete
- * must be false.
- *
- * @return {Boolean}: True if the statuses are valid.
- */
-PoemSchema.path('running').validate(function(v) {
-  return !v || (this.started && !this.complete);
-});
-
-
-/*
- * If the poem is complete, started must be true and running
- * must be false.
- *
- * @return {Boolean}: True if the statuses are valid.
- */
-PoemSchema.path('complete').validate(function(v) {
-  return !v || (this.started && !this.running);
-});
-
-
-/*
  * -------------------
  * Virtual attributes.
  * -------------------
@@ -229,6 +165,70 @@ PoemSchema.virtual('syllableCount').get(function() {
 
   return count;
 
+});
+
+
+/*
+ * -----------
+ * Middleware.
+ * -----------
+ */
+
+
+/*
+ * Populate the hash value.
+ *
+ * @return void.
+ */
+PoemSchema.pre('save', function(next) {
+
+  // If the hash is null.
+  if (_.isUndefined(this.hash)) {
+    this.hash = randomstring.generate(10);
+  }
+
+  next();
+
+});
+
+
+/*
+ * -----------
+ * Validators.
+ * -----------
+ */
+
+
+/*
+ * If the poem has not been started, then running and complete
+ * must be false.
+ *
+ * @return {Boolean}: True if the statuses are valid.
+ */
+PoemSchema.path('started').validate(function(v) {
+  return v || (!this.running && !this.complete);
+});
+
+
+/*
+ * If the poem is running, started must be true and complete
+ * must be false.
+ *
+ * @return {Boolean}: True if the statuses are valid.
+ */
+PoemSchema.path('running').validate(function(v) {
+  return !v || (this.started && !this.complete);
+});
+
+
+/*
+ * If the poem is complete, started must be true and running
+ * must be false.
+ *
+ * @return {Boolean}: True if the statuses are valid.
+ */
+PoemSchema.path('complete').validate(function(v) {
+  return !v || (this.started && !this.running);
 });
 
 
@@ -417,32 +417,6 @@ PoemSchema.methods.addWord = function(word) {
   }
 
   return false;
-
-};
-
-
-/*
- * Commit a point allocation on a word.
- *
- * @param {String} word: The word.
- * @param {Number} quantity: The point quantity.
- * @param {Date} now: Current timestamp.
- *
- * @return void.
- */
-PoemSchema.methods.vote = function(word, quantity, now) {
-
-  var vote = [quantity, now];
-
-  // If a tracker for the word exists.
-  if (_.has(global.Oversoul.votes[this.round.id], word)) {
-    global.Oversoul.votes[this.round.id][word].push(vote);
-  }
-
-  // Set votes tracker.
-  else {
-    global.Oversoul.votes[this.round.id][word] = [vote];
-  }
 
 };
 

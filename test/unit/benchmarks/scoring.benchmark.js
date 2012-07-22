@@ -12,13 +12,21 @@ var _ = require('underscore');
 process.env.NODE_ENV = 'testing';
 require('../db-connect');
 
-// Models.
+// User model.
 require('../../../app/models/user');
-require('../../../app/models/poem');
-require('../../../app/models/round');
 var User = mongoose.model('User');
+
+// Poem model.
+require('../../../app/models/poem');
 var Poem = mongoose.model('Poem');
+
+// Round model.
+require('../../../app/models/round');
 var Round = mongoose.model('Round');
+
+// Vote model.
+require('../../../app/models/vote');
+var Vote = mongoose.model('Vote');
 
 // Scoring module.
 var scoring = require('../../../app/scoring/scoring');
@@ -60,13 +68,25 @@ poem.save(function(err) {
     // Iterate over votesPerWord.
     var now = Date.now();
     _.each(_.range(votesPerWord), function(j) {
-      poem.vote('word'+i, 100, now);
+
+      // Create vote.
+      var vote = new Vote({
+        round: poem.round.id,
+        applied: now,
+        word: 'word'+i,
+        quantity: 100
+      });
+
+      // Register.
+      vote.register();
+
     });
 
   });
 
   var t1 = Date.now();
   scoring.score(poem.id, Date.now(), function(result) {
+    console.log(result);
 
     var t2 = Date.now();
     console.log('%d words, %d votes/word', numWords, votesPerWord);

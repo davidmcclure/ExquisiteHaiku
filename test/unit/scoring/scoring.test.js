@@ -26,6 +26,10 @@ var Poem = mongoose.model('Poem');
 require('../../../app/models/round');
 var Round = mongoose.model('Round');
 
+// Vote model.
+require('../../../app/models/vote');
+var Vote = mongoose.model('Vote');
+
 // Scoring module.
 var scoring = require('../../../app/scoring/scoring');
 
@@ -189,13 +193,41 @@ describe('Scoring', function() {
         poem.addWord('it');
         poem.addWord('is');
 
-        // Apply votes.
-        poem.vote('first', 100, Date.now());
-        poem.vote('second', 200, Date.now());
-        poem.vote('third', 300, Date.now());
+        // Vote 1.
+        var vote1 = new Vote({
+          round: poem.round.id,
+          word: 'first',
+          quantity: 100
+        });
+
+        // Vote 2.
+        var vote2 = new Vote({
+          round: poem.round.id,
+          word: 'second',
+          quantity: 200
+        });
+
+        // Vote 3.
+        var vote3 = new Vote({
+          round: poem.round.id,
+          word: 'third',
+          quantity: 300
+        });
+
+        // Save worker.
+        var save = function(document, callback) {
+          document.save(function(err) {
+            callback(null, document);
+          });
+        };
 
         // Save.
-        poem.save(function(err) {
+        async.map([
+          poem,
+          vote1,
+          vote2,
+          vote3
+        ], save, function(err, documents) {
           done();
         });
 

@@ -28,6 +28,35 @@ var VoteSchema = new Schema({
 
 
 /*
+ * -----------
+ * Middleware.
+ * -----------
+ */
+
+
+/*
+ * Register the vote in memory.
+ *
+ * @return void.
+ */
+VoteSchema.pre('save', function(next) {
+
+  var vote = [this.quantity, this.applied];
+
+  // If a tracker for the word exists.
+  if (_.has(global.Oversoul.votes[this.round], this.word)) {
+    global.Oversoul.votes[this.round][this.word].push(vote);
+  }
+
+  // Set votes tracker.
+  else {
+    global.Oversoul.votes[this.round][this.word] = [vote];
+  }
+
+});
+
+
+/*
  * -------------------
  * Virtual attributes.
  * -------------------

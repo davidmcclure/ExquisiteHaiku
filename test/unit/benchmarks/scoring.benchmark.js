@@ -86,7 +86,6 @@ poem.save(function(err) {
 
   var t1 = Date.now();
   scoring.score(poem.id, Date.now(), function(result) {
-    console.log(result);
 
     var t2 = Date.now();
     console.log('%d words, %d votes/word', numWords, votesPerWord);

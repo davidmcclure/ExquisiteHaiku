@@ -73,7 +73,9 @@ describe('Scoring', function() {
     // Clear users and poems.
     async.map([
       User,
-      Poem
+      Poem,
+      Round,
+      Vote
     ], remove, function(err, models) {
       done();
     });

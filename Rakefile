@@ -19,7 +19,7 @@ namespace :bench do
 
   desc 'Run poem benchmark'
   task :poem do
-    sh %{node test/unit/benchmarks/scoring.benchmark.js 100 100}
+    sh %{node test/unit/benchmark/scoring.benchmark.js 100 100}
   end
 
 end

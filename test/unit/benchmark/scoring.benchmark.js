@@ -55,6 +55,9 @@ global.Oversoul = { votes: {} };
 // Create round.
 var round = poem.newRound();
 
+// Capture timestamp.
+var now = Date.now();
+
 // Save.
 poem.save(function(err) {
 
@@ -66,7 +69,6 @@ poem.save(function(err) {
   _.each(_.range(numWords), function(i) {
 
     // Iterate over votesPerWord.
-    var now = Date.now();
     _.each(_.range(votesPerWord), function(j) {
 
       // Create vote.
@@ -85,7 +87,7 @@ poem.save(function(err) {
   });
 
   var t1 = Date.now();
-  scoring.score(poem.id, Date.now(), function(result) {
+  scoring.score(poem.id, now+1000, function(result) {
 
     var t2 = Date.now();
     console.log('%d words, %d votes/word', numWords, votesPerWord);

@@ -441,7 +441,6 @@ describe('Route Middleware', function() {
 
       // Create poem.
       poem = new Poem({
-        slug:             'poem',
         user:             user.id,
         roundLength :     10000,
         sliceInterval :   3,

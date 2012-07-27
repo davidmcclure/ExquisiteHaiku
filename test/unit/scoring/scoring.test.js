@@ -161,7 +161,6 @@ describe('Scoring', function() {
 
       // Create poem.
       poem = new Poem({
-        slug: 'test-poem',
         user: user.id,
         started: true,
         running: true,

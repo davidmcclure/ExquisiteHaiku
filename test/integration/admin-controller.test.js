@@ -56,7 +56,6 @@ describe('Admin Controller', function() {
 
     // Create unstarted poem.
     unstarted = new Poem({
-      slug:             'unstarted',
       user:             user1.id,
       started:          false,
       running:          false,
@@ -72,7 +71,6 @@ describe('Admin Controller', function() {
 
     // Create running poem.
     running = new Poem({
-      slug:             'running',
       user:             user1.id,
       rounds:           [new Round()],
       started:          true,
@@ -89,7 +87,6 @@ describe('Admin Controller', function() {
 
     // Create paused poem.
     paused = new Poem({
-      slug:             'paused',
       user:             user1.id,
       rounds:           [new Round()],
       started:          true,
@@ -106,7 +103,6 @@ describe('Admin Controller', function() {
 
     // Create complete poem.
     complete = new Poem({
-      slug:             'complete',
       user:             user1.id,
       rounds:           [new Round()],
       started:          true,
@@ -123,7 +119,6 @@ describe('Admin Controller', function() {
 
     // Create user2 poem.
     user2poem = new Poem({
-      slug:             'user2poem',
       user:             user2.id,
       started:          false,
       running:          false,

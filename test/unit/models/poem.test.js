@@ -49,7 +49,6 @@ describe('Poem', function() {
 
     // Create poem.
     poem = new Poem({
-      slug: 'test-poem',
       user: user.id,
       roundLength : 10000,
       sliceInterval : 3,

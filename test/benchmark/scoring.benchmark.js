@@ -13,23 +13,23 @@ process.env.NODE_ENV = 'testing';
 require('../db-connect');
 
 // User model.
-require('../../../app/models/user');
+require('../../app/models/user');
 var User = mongoose.model('User');
 
 // Poem model.
-require('../../../app/models/poem');
+require('../../app/models/poem');
 var Poem = mongoose.model('Poem');
 
 // Round model.
-require('../../../app/models/round');
+require('../../app/models/round');
 var Round = mongoose.model('Round');
 
 // Vote model.
-require('../../../app/models/vote');
+require('../../app/models/vote');
 var Vote = mongoose.model('Vote');
 
 // Scoring module.
-var scoring = require('../../../app/scoring/scoring');
+var scoring = require('../../app/scoring/scoring');
 
 // Create user.
 var user = new User({

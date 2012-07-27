@@ -10,7 +10,7 @@ var sinon = require('sinon');
 
 // Boostrap the application.
 process.env.NODE_ENV = 'testing';
-require('../db-connect');
+require('../../db-connect');
 
 // User model.
 require('../../../app/models/user');

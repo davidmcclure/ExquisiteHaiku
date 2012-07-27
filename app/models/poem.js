@@ -15,9 +15,11 @@ var Round = mongoose.model('Round');
 var PoemSchema = new Schema({
   hash : {
     type: String,
-    unique: true
-    // required: true
-    // 'default': generateHash
+    unique: true,
+    required: true,
+    'default': function() {
+      return randomstring.generate(10);
+    }
   },
   user : {
     type: Schema.ObjectId,
@@ -419,23 +421,6 @@ PoemSchema.methods.addWord = function(word) {
 
   return false;
 
-};
-
-
-/*
- * --------
- * Helpers.
- * --------
- */
-
-
-/*
- * Generate identifier hash.
- *
- * @return {String}: The hash.
- */
-var generateHash = function() {
-  return randomstring.generate(10);
 };
 
 

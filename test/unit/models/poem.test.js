@@ -136,18 +136,6 @@ describe('Poem', function() {
 
   });
 
-  describe('middleware', function() {
-
-    describe('save', function() {
-
-      it('should set the hash before save', function() {
-        should.exist(poem.hash);
-      });
-
-    });
-
-  });
-
   describe('validators', function() {
 
     describe('started', function() {

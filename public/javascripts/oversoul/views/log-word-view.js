@@ -24,10 +24,14 @@ Ov.Views.LogWord = Backbone.View.extend({
    */
   initialize: function() {
 
+    // Set word and value.
+    this.word = this.options.word;
+    this.value = this.options.value;
+
     // Build template.
     var row = $(this.template()({
-      word: this.options.word,
-      value: this.options.value
+      word: this.word,
+      value: this.value
     }));
 
     // Append contents, get word.
@@ -46,7 +50,7 @@ Ov.Views.LogWord = Backbone.View.extend({
    * @return void.
    */
   renderSize: function() {
-    var size = 9 + Math.abs(this.options.value*0.05);
+    var size = 9 + Math.abs(this.value*0.05);
     this.wordMarkup.css('font-size', size);
   },
 
@@ -58,7 +62,7 @@ Ov.Views.LogWord = Backbone.View.extend({
   renderColor: function() {
 
     // Upvote.
-    if (this.options.value > 0) {
+    if (this.value > 0) {
       this.$el.addClass('positive');
     }
 
@@ -75,12 +79,9 @@ Ov.Views.LogWord = Backbone.View.extend({
    * @return void.
    */
   hover: function() {
-    if (!Ov._global.isDragging) {
-      Ov.vent.trigger('log:preview',
-        this.options.word,
-        this.options.value
-      );
-    }
+    if (Ov._global.isDragging) return;
+    Ov.vent.trigger('log:preview', this.word, this.value);
+    Ov.vent.trigger('words:hover', this.word);
   },
 
   /*
@@ -89,9 +90,8 @@ Ov.Views.LogWord = Backbone.View.extend({
    * @return void.
    */
   unHover: function() {
-    if (!Ov._global.isDragging) {
-      Ov.vent.trigger('log:cancel');
-    }
+    if (Ov._global.isDragging) return;
+    Ov.vent.trigger('log:cancel');
   },
 
   /*
@@ -101,8 +101,8 @@ Ov.Views.LogWord = Backbone.View.extend({
    */
   echo: function() {
     Ov.vent.trigger('log:echo',
-      this.options.word,
-      this.options.value
+      this.word,
+      this.value
     );
   }
 

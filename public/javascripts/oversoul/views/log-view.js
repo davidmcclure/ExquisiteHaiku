@@ -84,8 +84,8 @@ Ov.Views.Log = Backbone.View.extend({
    */
   freeze: function() {
     if (Ov._global.isDragging) return;
-    this.frozen = true;
     this.$el.addClass('frozen');
+    this.frozen = true;
   },
 
   /*
@@ -109,9 +109,11 @@ Ov.Views.Log = Backbone.View.extend({
     this.overflowVotes = [];
 
     // Unfreeze and prune.
-    this.frozen = false;
+    Ov.vent.trigger('words:unhover');
     this.$el.removeClass('frozen');
+    this.frozen = false;
     this.prune();
+
 
   },
 

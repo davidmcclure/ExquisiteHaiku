@@ -213,7 +213,6 @@ Ov.Views.StackWord = Backbone.View.extend({
    * @return void.
    */
   unHover: function() {
-    Ov.vent.trigger('words:unhover', this.word);
     this.wordMarkup.removeClass('hover');
   },
 

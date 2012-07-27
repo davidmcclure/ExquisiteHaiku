@@ -113,8 +113,9 @@ Ov.Views.Stack = Backbone.View.extend({
    */
   unFreeze: function() {
     if (Ov._global.isDragging) return;
-    this.frozen = false;
     this.$el.removeClass('frozen');
+    Ov.vent.trigger('words:unhover');
+    this.frozen = false;
   },
 
   /*

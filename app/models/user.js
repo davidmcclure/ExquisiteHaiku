@@ -17,6 +17,11 @@ var UserSchema = new Schema({
     required: true,
     unique: true
   },
+  created : {
+    type: Date,
+    required: true,
+    default: Date.now
+  },
   hash : {
     type: String
   },

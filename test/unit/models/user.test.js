@@ -33,14 +33,16 @@ describe('User', function() {
 
     it('should require username and email', function(done) {
 
-      // Create user with no username or admin.
+      // Create user, null fields.
       var user = new User();
+      user.created = null;
 
       // Save.
       user.save(function(err) {
 
         // Check for errors.
         err.errors.username.type.should.eql('required');
+        err.errors.created.type.should.eql('required');
         err.errors.email.type.should.eql('required');
 
         // Check for 0 documents.
@@ -51,6 +53,21 @@ describe('User', function() {
 
       });
 
+    });
+
+  });
+
+  describe('field defaults', function() {
+
+    var user;
+
+    // Stub user.
+    beforeEach(function() {
+      user = new User();
+    });
+
+    it('should set "created" to the current date by default', function() {
+      user.created.should.be.ok;
     });
 
   });
@@ -67,7 +84,9 @@ describe('User', function() {
       });
 
       // Save.
-      user.save(function(err) { done(); });
+      user.save(function(err) {
+        done();
+      });
 
     });
 

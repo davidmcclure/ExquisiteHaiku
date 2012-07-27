@@ -299,7 +299,6 @@ describe('Route Middleware', function() {
 
       // Create poem.
       poem = new Poem({
-        slug:             'poem',
         user:             user.id,
         roundLength :     10000,
         sliceInterval :   3,
@@ -365,7 +364,6 @@ describe('Route Middleware', function() {
 
       // Create poem1.
       poem = new Poem({
-        slug:             'poem',
         user:             user1.id,
         roundLength :     10000,
         sliceInterval :   3,

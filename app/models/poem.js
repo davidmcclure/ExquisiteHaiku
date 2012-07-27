@@ -16,7 +16,6 @@ var PoemSchema = new Schema({
   hash : {
     type: String,
     unique: true
-    // required: true
   },
   user : {
     type: Schema.ObjectId,

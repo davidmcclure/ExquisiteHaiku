@@ -7,6 +7,7 @@ var vows = require('mocha');
 var should = require('should');
 var assert = require('assert');
 var Browser = require('zombie');
+var helpers = require('../helpers');
 
 // Bootstrap the application.
 process.env.NODE_ENV = 'testing';

@@ -8,6 +8,7 @@ var should = require('should');
 var async = require('async');
 var assert = require('assert');
 var sinon = require('sinon');
+var helpers = require('../../helpers');
 
 // Boostrap the application.
 process.env.NODE_ENV = 'testing';
@@ -39,18 +40,11 @@ describe('Custom Validators', function() {
   // Clear users.
   afterEach(function(done) {
 
-    // Truncate worker.
-    var remove = function(model, callback) {
-      model.collection.remove(function(err) {
-        callback(err, model);
-      });
-    };
-
     // Truncate.
     async.map([
       User,
       Poem
-    ], remove, function(err, models) {
+    ], helpers.remove, function(err, models) {
       done();
     });
 
@@ -266,18 +260,11 @@ describe('Custom Validators', function() {
         email: 'kara@test.org'
       });
 
-      // Save worker.
-      var save = function(document, callback) {
-        document.save(function(err) {
-          callback(null, document);
-        });
-      };
-
       // Save.
       async.map([
         user1,
         user2
-      ], save, function(err, documents) {
+      ], helpers.save, function(err, documents) {
         done();
       });
 

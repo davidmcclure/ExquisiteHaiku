@@ -8,6 +8,7 @@ var should = require('should');
 var async = require('async');
 var assert = require('assert');
 var sinon = require('sinon');
+var helpers = require('../../helpers');
 
 // Boostrap the application.
 process.env.NODE_ENV = 'testing';
@@ -45,15 +46,11 @@ describe('Route Middleware', function() {
   // Clear users.
   afterEach(function(done) {
 
-    // Truncate worker.
-    var remove = function(model, callback) {
-      model.collection.remove(function(err) {
-        callback(err, model);
-      });
-    };
-
     // Truncate.
-    async.map([User, Poem], remove, function(err, models) {
+    async.map([
+      User,
+      Poem
+    ], helpers.remove, function(err, models) {
       done();
     });
 
@@ -309,15 +306,11 @@ describe('Route Middleware', function() {
         visibleWords :    500
       });
 
-      // Save worker.
-      var save = function(document, callback) {
-        document.save(function(err) {
-          callback(null, document);
-        });
-      };
-
       // Save.
-      async.map([user, poem], save, function(err, documents) {
+      async.map([
+        user,
+        poem
+      ], helpers.save, function(err, documents) {
         done();
       });
 
@@ -374,19 +367,12 @@ describe('Route Middleware', function() {
         visibleWords :    500
       });
 
-      // Save worker.
-      var save = function(document, callback) {
-        document.save(function(err) {
-          callback(null, document);
-        });
-      };
-
       // Save.
       async.map([
         user1,
         user2,
         poem
-      ], save, function(err, documents) {
+      ], helpers.save, function(err, documents) {
         done();
       });
 
@@ -451,15 +437,11 @@ describe('Route Middleware', function() {
         visibleWords :    500
       });
 
-      // Save worker.
-      var save = function(document, callback) {
-        document.save(function(err) {
-          callback(null, document);
-        });
-      };
-
       // Save.
-      async.map([user, poem], save, function(err, documents) {
+      async.map([
+        user,
+        poem
+      ], helpers.save, function(err, documents) {
         done();
       });
 

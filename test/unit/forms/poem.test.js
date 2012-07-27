@@ -8,6 +8,7 @@ var should = require('should');
 var async = require('async');
 var assert = require('assert');
 var sinon = require('sinon');
+var helpers = require('../../helpers');
 
 // Boostrap the application.
 process.env.NODE_ENV = 'testing';
@@ -21,9 +22,8 @@ var User = mongoose.model('User');
 require('../../../app/models/poem');
 var Poem = mongoose.model('Poem');
 
-// Form and reserved slugs.
+// Poem form.
 var poemForm = require('../../../helpers/forms/poem');
-var _slugs = require('../../../helpers/forms/_slugs');
 
 
 /*
@@ -44,15 +44,11 @@ describe('Poem Form', function() {
   // Clear collections.
   afterEach(function(done) {
 
-    // Truncate worker.
-    var remove = function(model, callback) {
-      model.collection.remove(function(err) {
-        callback(err, model);
-      });
-    };
-
     // Truncate.
-    async.map([User, Poem], remove, function(err, models) {
+    async.map([
+      User,
+      Poem
+    ], helpers.remove, function(err, models) {
       done();
     });
 

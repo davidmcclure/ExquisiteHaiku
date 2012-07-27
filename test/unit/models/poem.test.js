@@ -8,6 +8,7 @@ var should = require('should');
 var async = require('async');
 var assert = require('assert');
 var sinon = require('sinon');
+var helpers = require('../../helpers');
 var _ = require('underscore');
 
 // Boostrap the application.
@@ -76,18 +77,11 @@ describe('Poem', function() {
 
   after(function(done) {
 
-    // Truncate worker.
-    var remove = function(model, callback) {
-      model.collection.remove(function(err) {
-        callback(err, model);
-      });
-    };
-
     // Clear users and poems.
     async.map([
       User,
       Poem
-    ], remove, function(err, models) {
+    ], helpers.remove, function(err, models) {
       done();
     });
 

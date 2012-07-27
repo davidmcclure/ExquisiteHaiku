@@ -8,6 +8,7 @@ var should = require('should');
 var async = require('async');
 var assert = require('assert');
 var sinon = require('sinon');
+var helpers = require('../../helpers');
 var _ = require('underscore');
 
 // Boostrap the application.
@@ -63,20 +64,13 @@ describe('Scoring', function() {
 
   after(function(done) {
 
-    // Truncate worker.
-    var remove = function(model, callback) {
-      model.collection.remove(function(err) {
-        callback(err, model);
-      });
-    };
-
     // Clear users and poems.
     async.map([
       User,
       Poem,
       Round,
       Vote
-    ], remove, function(err, models) {
+    ], helpers.remove, function(err, models) {
       done();
     });
 
@@ -215,20 +209,13 @@ describe('Scoring', function() {
           quantity: 300
         });
 
-        // Save worker.
-        var save = function(document, callback) {
-          document.save(function(err) {
-            callback(null, document);
-          });
-        };
-
         // Save.
         async.map([
           poem,
           vote1,
           vote2,
           vote3
-        ], save, function(err, documents) {
+        ], helpers.save, function(err, documents) {
           done();
         });
 

@@ -8,6 +8,7 @@ var should = require('should');
 var async = require('async');
 var assert = require('assert');
 var sinon = require('sinon');
+var helpers = require('../../helpers');
 
 // Boostrap the application.
 process.env.NODE_ENV = 'testing';
@@ -55,18 +56,11 @@ describe('Login Form', function() {
       email: 'kara@test.org'
     });
 
-    // Save worker.
-    var save = function(document, callback) {
-      document.save(function(err) {
-        callback(null, document);
-      });
-    };
-
     // Save.
     async.map([
       user1,
       user2
-    ], save, function(err, documents) {
+    ], helpers.save, function(err, documents) {
       done()
     });
 

@@ -8,6 +8,7 @@ var should = require('should');
 var async = require('async');
 var assert = require('assert');
 var sinon = require('sinon');
+var helpers = require('../../helpers');
 
 // Boostrap the application.
 process.env.NODE_ENV = 'testing';
@@ -49,18 +50,11 @@ describe('Vote', function() {
 
   afterEach(function(done) {
 
-    // Truncate worker.
-    var remove = function(model, callback) {
-      model.collection.remove(function(err) {
-        callback(err, model);
-      });
-    };
-
     // Clear rounds and votes.
     async.map([
       Round,
       Vote
-    ], remove, function(err, models) {
+    ], helpers.remove, function(err, models) {
       done();
     });
 

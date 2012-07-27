@@ -9,6 +9,7 @@ var assert = require('assert');
 var Browser = require('zombie');
 var request = require('request');
 var async = require('async');
+var helpers = require('../helpers');
 var _ = require('underscore');
 
 // Bootstrap the application.
@@ -132,13 +133,6 @@ describe('Admin Controller', function() {
       visibleWords :    500
     });
 
-    // Save worker.
-    var save = function(document, callback) {
-      document.save(function(err) {
-        callback(null, document);
-      });
-    };
-
     // Save.
     async.map([
       user1,
@@ -148,7 +142,7 @@ describe('Admin Controller', function() {
       paused,
       complete,
       user2poem
-    ], save, function(err, documents) {
+    ], helpers.save, function(err, documents) {
 
       // Login as an admin user.
       browser.visit(r+'admin/login', function() {
@@ -177,18 +171,11 @@ describe('Admin Controller', function() {
     // Clear the timer hash.
     global.Oversoul.timers = {};
 
-    // Truncate worker.
-    var remove = function(model, callback) {
-      model.collection.remove(function(err) {
-        callback(err, model);
-      });
-    };
-
     // Truncate.
     async.map([
       User,
       Poem
-    ], remove, function(err, models) {
+    ], helpers.remove, function(err, models) {
       done();
     });
 

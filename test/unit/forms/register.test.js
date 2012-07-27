@@ -16,9 +16,8 @@ require('../../db-connect');
 require('../../../app/models/user');
 var User = mongoose.model('User');
 
-// Form and reserved slugs.
-var registerForm = require('../../../helpers/forms/register'),
-  _slugs = require('../../../helpers/forms/_slugs');
+// Register form.
+var registerForm = require('../../../helpers/forms/register');
 
 
 /*
@@ -97,17 +96,6 @@ describe('Install Form', function() {
 
       form.bind({
         username: 'kara'
-      }).validate(function(err, form) {
-        form.fields.username.error.should.be.ok;
-        done();
-      });
-
-    });
-
-    it('should not be a reserved slug', function(done) {
-
-      form.bind({
-        username: _slugs.blacklist[0]
       }).validate(function(err, form) {
         form.fields.username.error.should.be.ok;
         done();

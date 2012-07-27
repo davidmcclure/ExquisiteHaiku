@@ -27,8 +27,8 @@ Ov.Views.Log = Backbone.View.extend({
     // Trackers.
     this.primaryVotes = [];
     this.overflowVotes = [];
-    this.empty = true;
     this.frozen = false;
+    this.voting = false;
 
   },
 
@@ -99,9 +99,12 @@ Ov.Views.Log = Backbone.View.extend({
     var overflow = this.overflowMarkup.contents().detach();
     overflow.prependTo(this.primaryMarkup);
 
-    // Merge the tracker arrays.
+    // Append primary onto overflow.
     this.overflowVotes = this.overflowVotes.concat(
-      this.primaryVotes);
+      this.primaryVotes
+    );
+
+    // Overflow -> primary, clear overflow.
     this.primaryVotes = this.overflowVotes;
     this.overflowVotes = [];
 

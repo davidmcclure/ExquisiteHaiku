@@ -15,7 +15,7 @@ var VoteSchema = new Schema({
   applied : {
     type: Date,
     required: true,
-    default: Date.now
+    'default': Date.now
   },
   word : {
     type: String,

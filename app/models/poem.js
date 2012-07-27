@@ -16,6 +16,8 @@ var PoemSchema = new Schema({
   hash : {
     type: String,
     unique: true
+    // required: true
+    // 'default': generateHash
   },
   user : {
     type: Schema.ObjectId,
@@ -25,22 +27,22 @@ var PoemSchema = new Schema({
   created : {
     type: Date,
     required: true,
-    default: Date.now
+    'default': Date.now
   },
   started : {
     type: Boolean,
     required: true,
-    default: false
+    'default': false
   },
   running : {
     type: Boolean,
     required: true,
-    default: false
+    'default': false
   },
   complete : {
     type: Boolean,
     required: true,
-    default: false
+    'default': false
   },
   roundLength : {
     type: Number,
@@ -417,6 +419,23 @@ PoemSchema.methods.addWord = function(word) {
 
   return false;
 
+};
+
+
+/*
+ * --------
+ * Helpers.
+ * --------
+ */
+
+
+/*
+ * Generate identifier hash.
+ *
+ * @return {String}: The hash.
+ */
+var generateHash = function() {
+  return randomstring.generate(10);
 };
 
 

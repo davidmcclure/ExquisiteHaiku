@@ -25,7 +25,8 @@ body{font:300 18px "Helvetica Neue";font-weight:300;margin:2em;-webkit-user-sele
 .drag-line svg line.negative,.drag-line svg text.negative{stroke:#cc3f28;fill:#cc3f28}
 .drag-line svg line.blocked,.drag-line svg text.blocked{stroke:#b3b3b3;fill:#b3b3b3}
 #log{position:fixed;left:340px;top:10px;}
-#log.frozen .primary{opacity:.6}
+#log.frozen .primary span.word{opacity:.45;}
+#log.frozen .primary span.word:hover{opacity:1}
 #log td{vertical-align:top;padding-right:1em}
 #log .log-row{cursor:pointer;}
 #log .log-row span.value{margin-left:5px;opacity:.7;font-size:11px}

@@ -26,6 +26,24 @@ Ov.Controllers.Log = (function(Backbone, Ov) {
   // -------
 
   /*
+   * Clear the log stacks.
+   *
+   * @return void.
+   */
+  Ov.vent.on('state:submit', function(round) {
+    Log.Stack.activateSubmit();
+  });
+
+  /*
+   * Switch the blank into voting mode.
+   *
+   * @return void.
+   */
+  Ov.vent.on('state:vote', function() {
+    Log.Stack.activateVote();
+  });
+
+  /*
    * When an echo is committed, re-freeze the stack.
    *
    * @return void.
@@ -44,15 +62,6 @@ Ov.Controllers.Log = (function(Backbone, Ov) {
    */
   Ov.vent.on('socket:vote:in', function(word, quantity) {
     Log.Stack.add(word, quantity);
-  });
-
-  /*
-   * Clear the log stacks.
-   *
-   * @return void.
-   */
-  Ov.vent.on('state:submit', function(round) {
-    Log.Stack.activateSubmit();
   });
 
   return Log;

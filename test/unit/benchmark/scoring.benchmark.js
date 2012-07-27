@@ -46,7 +46,7 @@ var poem = new Poem({
   submissionVal : 100,
   decayLifetime : 60000,
   seedCapital : 1000,
-  visibleWords : 20
+  visibleWords : 5
 });
 
 // Initialize votes tracker.
@@ -74,7 +74,6 @@ poem.save(function(err) {
       // Create vote.
       var vote = new Vote({
         round: poem.round.id,
-        applied: now,
         word: 'word'+i,
         quantity: 100
       });
@@ -90,6 +89,7 @@ poem.save(function(err) {
   scoring.score(poem.id, now+1000, function(result) {
 
     var t2 = Date.now();
+    console.log(result.stack);
     console.log('%d words, %d votes/word', numWords, votesPerWord);
     console.log('Duration: %d', t2-t1);
 

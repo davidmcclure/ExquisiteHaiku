@@ -12,9 +12,9 @@ Ov.Views.LogWord = Backbone.View.extend({
   },
 
   events: {
-    'mouseenter':       'hover',
-    'mouseleave':       'unHover',
-    'mousedown .word':  'echo'
+    'mouseenter': 'hover',
+    'mouseleave': 'unHover',
+    'mousedown':  'echo'
   },
 
   /*
@@ -50,7 +50,7 @@ Ov.Views.LogWord = Backbone.View.extend({
    * @return void.
    */
   renderSize: function() {
-    var size = 10 + Math.abs(this.value*0.03);
+    var size = 10 + 0.05*(Math.abs(this.value));
     this.wordMarkup.css('font-size', size);
   },
 

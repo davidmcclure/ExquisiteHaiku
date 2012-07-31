@@ -3,7 +3,7 @@
 body
   font 300 18px "Helvetica Neue"
   font-weight 300
-  margin 1em 2em
+  margin 2em
   -webkit-user-select none
   -moz-user-select none
 
@@ -107,8 +107,6 @@ body
     .primary
       span.word
         opacity 0.45
-        &:hover
-          opacity 1 
 
   td
     vertical-align top
@@ -116,6 +114,9 @@ body
 
   .log-row
     cursor pointer
+    &:hover
+      span.word
+        opacity 1
 
     span.value
       margin-left 5px

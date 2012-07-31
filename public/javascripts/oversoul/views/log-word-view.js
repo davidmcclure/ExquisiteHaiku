@@ -50,7 +50,7 @@ Ov.Views.LogWord = Backbone.View.extend({
    * @return void.
    */
   renderSize: function() {
-    var size = 9 + Math.abs(this.value*0.05);
+    var size = 10 + Math.abs(this.value*0.03);
     this.wordMarkup.css('font-size', size);
   },
 

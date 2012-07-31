@@ -21,7 +21,7 @@ body{font:300 18px "Helvetica Neue";font-weight:300;margin:1em 2em;-webkit-user-
 .drag-line svg line.positive,.drag-line svg text.positive{stroke:#288bcc;fill:#288bcc}
 .drag-line svg line.negative,.drag-line svg text.negative{stroke:#cc3f28;fill:#cc3f28}
 .drag-line svg line.blocked,.drag-line svg text.blocked{stroke:#b3b3b3;fill:#b3b3b3}
-#log{position:fixed;left:300px;top:10px;}
+#log{position:fixed;left:360px;top:10px;}
 #log.frozen .primary span.word{opacity:.45;}
 #log.frozen .primary span.word:hover{opacity:1}
 #log td{vertical-align:top;padding-right:1em}

@@ -16,16 +16,11 @@ module.exports = function(app) {
     app.set('views', __dirname + '/app/views');
     app.set('view engine', 'jade');
 
-    // Initialize session store.
-    var sessionStore = new mongoStore({
-      db: mongoose.connections[0].db
-    });
-
     // Configure sessions.
     app.use(express.bodyParser());
     app.use(express.cookieParser('dev'));
     app.use(express.session({
-      store: sessionStore,
+      store: new mongoStore({ url: config.db.uri }),
       secret: 'dev'
     }));
 

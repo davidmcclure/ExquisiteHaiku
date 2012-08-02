@@ -2,7 +2,7 @@
  * Startup.
  */
 
-module.exports = function(app, config) {
+module.exports = function(app) {
 
   // Shell in-memory trackers.
   global.Oversoul = { timers: {}, votes: {} };

@@ -9,7 +9,7 @@ var http = require('http');
 var fs = require('fs');
 
 // Connect to database.
-var config = configFile.readConfig('config/config.yaml');
+config = configFile.readConfig('config/config.yaml');
 require('./db-connect')(config);
 
 // Create server.
@@ -18,7 +18,7 @@ var server = http.createServer(app);
 
 // Boot settings.
 require('./settings')(app);
-require('./init')(app, config);
+require('./init')(app);
 
 // Run server.
 app.listen(3000);
@@ -26,6 +26,10 @@ console.log(
   "Listening on port 3000 in %s mode",
   app.settings.env
 );
+
+app.get('/test', function(req, res) {
+  res.send('test');
+});
 
 // Bootstrap models.
 var modelsPath = __dirname + '/app/models';

@@ -1,6 +1,6 @@
 form.poems.form-horizontal(method='post')
   fieldset
     legend New Poem
-    != partial('../_includes/form/form', { form: form })
+    include ../_includes/form/form
   div.form-actions
     button.btn.btn-primary(type='submit') Create

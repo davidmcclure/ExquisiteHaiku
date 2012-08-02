@@ -1,6 +1,6 @@
 form.form-stacked.install(method='post')
   fieldset
     legend.logo Oversoul
-    != partial('../_includes/form/form', { form: form })
+    include ../_includes/form/form
   div.form-actions
     button.btn.btn-primary(type='submit') Submit

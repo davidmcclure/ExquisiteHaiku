@@ -4,10 +4,10 @@
 
 // Module dependencies and import hook.
 var express = require('express');
-var MongoStore = require('connect-mongodb');
+var mongoStore = require('connect-mongodb');
 
 // Start-up routine.
-module.exports = function(app, store) {
+module.exports = function(app) {
 
   // Configure express.
   app.configure(function() {
@@ -16,11 +16,16 @@ module.exports = function(app, store) {
     app.set('views', __dirname + '/app/views');
     app.set('view engine', 'jade');
 
+    // Initialize session store.
+    var sessionStore = new mongoStore({
+      db: mongoose.connections[0].db
+    });
+
     // Configure sessions.
     app.use(express.bodyParser());
     app.use(express.cookieParser('dev'));
     app.use(express.session({
-      store: store,
+      store: sessionStore,
       secret: 'dev'
     }));
 
@@ -51,8 +56,5 @@ module.exports = function(app, store) {
   app.configure('production', function() {
     app.use(express.errorHandler());
   });
-
-  // Register view helpers.
-  require('./helpers/views')(app);
 
 };

@@ -3,9 +3,6 @@
  */
 
 // Module dependencies.
-var parseCookie = require('connect').utils.parseCookie;
-var MongoStore = require('connect-mongodb');
-var Session = require('connect').session.Session;
 var syllables = require('../../lib/syllables');
 var _ = require('underscore');
 

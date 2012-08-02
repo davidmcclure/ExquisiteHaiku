@@ -4,29 +4,20 @@
 
  // Module dependencies.
 var express = require('express');
-var connect = require('connect');
-var MongoStore = require('connect-mongodb');
 var configFile = require('yaml-config');
+var http = require('http');
 var fs = require('fs');
 
-// Configuration file.
-var config = configFile.readConfig('config/config.yaml');
-
 // Connect to database.
+var config = configFile.readConfig('config/config.yaml');
 require('./db-connect')(config);
 
-// Initialize session store.
-var sessionStore = new MongoStore({
-  db: mongoose.connections[0].db
-});
-
 // Create server.
-var app = module.exports = express.createServer(
-  express.favicon()
-);
+var app = module.exports = express(express.favicon());
+var server = http.createServer(app);
 
 // Boot settings.
-require('./settings')(app, sessionStore);
+require('./settings')(app);
 require('./init')(app, config);
 
 // Run server.
@@ -44,7 +35,7 @@ modelFiles.forEach(function(file) {
 });
 
 // Run Socket.io.
-var io = require('socket.io').listen(app);
+var io = require('socket.io').listen(server);
 
 // Bootstrap controllers.
 var controllersPath = __dirname + '/app/controllers';

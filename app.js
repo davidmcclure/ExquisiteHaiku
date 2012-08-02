@@ -27,10 +27,6 @@ console.log(
   app.settings.env
 );
 
-app.get('/test', function(req, res) {
-  res.send('test');
-});
-
 // Bootstrap models.
 var modelsPath = __dirname + '/app/models';
 var modelFiles = fs.readdirSync(modelsPath);

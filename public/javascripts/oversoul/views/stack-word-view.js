@@ -13,7 +13,6 @@ Ov.Views.StackWord = Backbone.View.extend({
 
   events: {
     'mouseenter .word':   'hover',
-    'mouseleave .word':   'unHover',
     'mousedown .word':    'select'
   },
 
@@ -34,6 +33,8 @@ Ov.Views.StackWord = Backbone.View.extend({
 
     // Trackers.
     this.word = null;
+    this.churn = null;
+    this.ratio = null;
     this.dragTotal = 0;
     this.dragDelta = 0;
 
@@ -51,26 +52,19 @@ Ov.Views.StackWord = Backbone.View.extend({
    */
   update: function(data) {
 
+    // Capture data.
+    this.word = data[0];
+    this.churn = data[2];
+    this.ratio = data[3];
+
     // Render values.
     this.wordMarkup.text(data[0]);
     this.ratioMarkup.text(data[3]);
     this.churnMarkup.text(data[2]);
-    this.word = data[0];
 
-    // If churn 0.
-    if (data[2] === 0) {
-      this.setNeutral();
-    }
-
-    // If churn > 0.
-    else if (data[2] > 0) {
-      this.setPositive();
-    }
-
-    // If churn < 0.
-    else {
-      this.setNegative();
-    }
+    // Render styles.
+    this.renderSize();
+    this.renderColor();
 
   },
 
@@ -197,6 +191,27 @@ Ov.Views.StackWord = Backbone.View.extend({
   },
 
   /*
+   * Render size.
+   *
+   * @return void.
+   */
+  renderSize: function() {
+    var size = 18 + 0.05*(Math.abs(this.churn));
+    this.wordMarkup.css('font-size', size);
+  },
+
+  /*
+   * Render color.
+   *
+   * @return void.
+   */
+  renderColor: function() {
+    if (this.churn === 0) this.setNeutral();
+    else if (this.churn > 0) this.setPositive();
+    else this.setNegative();
+  },
+
+  /*
    * Render hover.
    *
    * @return void.
@@ -204,16 +219,6 @@ Ov.Views.StackWord = Backbone.View.extend({
   hover: function() {
     if (Ov._global.isDragging) return;
     Ov.vent.trigger('words:hover', this.word);
-    this.wordMarkup.addClass('hover');
-  },
-
-  /*
-   * Remove hover.
-   *
-   * @return void.
-   */
-  unHover: function() {
-    this.wordMarkup.removeClass('hover');
   },
 
   /*
@@ -258,6 +263,8 @@ Ov.Views.StackWord = Backbone.View.extend({
   setNeutral: function() {
     this.churnMarkup.removeClass('positive');
     this.churnMarkup.removeClass('negative');
+    this.wordMarkup.removeClass('positive');
+    this.wordMarkup.removeClass('negative');
   },
 
   /*
@@ -268,6 +275,8 @@ Ov.Views.StackWord = Backbone.View.extend({
   setPositive: function() {
     this.churnMarkup.addClass('positive');
     this.churnMarkup.removeClass('negative');
+    this.wordMarkup.addClass('positive');
+    this.wordMarkup.removeClass('negative');
   },
 
   /*
@@ -278,6 +287,8 @@ Ov.Views.StackWord = Backbone.View.extend({
   setNegative: function() {
     this.churnMarkup.addClass('negative');
     this.churnMarkup.removeClass('positive');
+    this.wordMarkup.addClass('negative');
+    this.wordMarkup.removeClass('positive');
   },
 
   /*
@@ -306,8 +317,7 @@ Ov.Views.StackWord = Backbone.View.extend({
    * @return void.
    */
   setDragNeutral: function() {
-    this.wordMarkup.removeClass('positive');
-    this.wordMarkup.removeClass('negative');
+    this.renderColor();
   }
 
 });

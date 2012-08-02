@@ -20,7 +20,7 @@ body
     margin-bottom 0.3em
 
   input.blank
-    padding 0 2px
+    padding 0 0 3px 3px
     margin 0
     width 80px
     border none
@@ -34,6 +34,7 @@ body
 
   .submission-stack
     position absolute
+    padding-top 5px
 
   .submission-word
     cursor pointer
@@ -58,11 +59,10 @@ body
     font-size 11px
 
   &.frozen
-    opacity 0.6
     .word
-      &.hover
-        &.select
-          color select
+      opacity 0.45
+      &:hover
+        opacity 1
 
   .stack-row
     &:first-child

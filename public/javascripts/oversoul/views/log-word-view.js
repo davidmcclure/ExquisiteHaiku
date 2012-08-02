@@ -60,17 +60,8 @@ Ov.Views.LogWord = Backbone.View.extend({
    * @return void.
    */
   renderColor: function() {
-
-    // Upvote.
-    if (this.value > 0) {
-      this.$el.addClass('positive');
-    }
-
-    // Downvote.
-    else {
-      this.$el.addClass('negative');
-    }
-
+    if (this.value > 0) this.$el.addClass('positive');
+    else this.$el.addClass('negative');
   },
 
   /*

@@ -3,17 +3,17 @@ body{font:300 18px "Helvetica Neue";font-weight:300;margin:2em;-webkit-user-sele
 .negative{color:#cc3f28}
 #poem{margin-bottom:1em;}
 #poem div.poem-line{margin-bottom:.3em}
-#poem input.blank{padding:0 2px;margin:0;width:80px;border:none;border-bottom:1px solid #808080;font:inherit;}
+#poem input.blank{padding:0 0 3px 3px;margin:0;width:80px;border:none;border-bottom:1px solid #808080;font:inherit;}
 #poem input.blank:focus{outline:none}
 #poem .poem-word{margin-right:4px}
-#poem .submission-stack{position:absolute}
+#poem .submission-stack{position:absolute;padding-top:5px}
 #poem .submission-word{cursor:pointer}
 #stack .word{padding-left:7px;text-align:left;cursor:ns-resize;}
 #stack .word.hover{color:#288bcc}
 #stack .word.select{color:#288bcc}
 #stack .ratio,#stack .churn{font-size:11px;width:30px;text-align:right;opacity:.7;font-size:11px}
-#stack.frozen{opacity:.6;}
-#stack.frozen .word.hover.select{color:#288bcc}
+#stack.frozen .word{opacity:.45;}
+#stack.frozen .word:hover{opacity:1}
 #stack .stack-row:first-child .word{font-weight:bold}
 .drag-line{position:fixed;line-height:0;z-index:-1;top:0;left:0;}
 .drag-line svg{position:fixed;stroke-width:2;top:0;left:0;}

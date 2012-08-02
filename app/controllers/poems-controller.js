@@ -29,7 +29,6 @@ module.exports = function(app) {
       // Render the layout.
       res.render('poem/index', {
         title:  req.params.slug,
-        layout: '_layouts/poem',
         poem:   JSON.stringify(req.poem)
       });
 

@@ -51,8 +51,6 @@ module.exports = function(app, io) {
         // Render the list.
         res.render('admin/index', {
           title:  'Oversoul',
-          nav:    { main: 'poems', sub: '' },
-          layout: '_layouts/admin',
           user:   req.user,
           poems:  poems
         });
@@ -73,8 +71,6 @@ module.exports = function(app, io) {
       // Render the form.
       res.render('admin/new', {
         title:  'New Poem',
-        nav:    { main: 'poems', sub: 'new' },
-        layout: '_layouts/admin',
         user:   req.user,
         form:   poemForm.form()
       });
@@ -121,8 +117,6 @@ module.exports = function(app, io) {
           // Re-render the form.
           res.render('admin/new', {
             title:  'New Poem',
-            nav:    { main: 'poems', sub: 'new' },
-            layout: '_layouts/admin',
             user:   req.user,
             form:   form
           });
@@ -162,8 +156,6 @@ module.exports = function(app, io) {
       // Render the form.
       res.render('admin/edit', {
         title:  'Edit Poem',
-        nav:    { main: 'poems', sub: '' },
-        layout: '_layouts/admin',
         user:   req.user,
         poem:   req.poem,
         form:   form
@@ -213,8 +205,6 @@ module.exports = function(app, io) {
           // Re-render the form.
           res.render('admin/edit', {
             title:  'Edit Poem',
-            nav:    { main: 'poems', sub: '' },
-            layout: '_layouts/admin',
             user:   req.user,
             poem:   req.poem,
             form:   form
@@ -242,8 +232,6 @@ module.exports = function(app, io) {
       // Render the form.
       res.render('admin/delete', {
         title:  'Delete Poem',
-        nav:    { main: 'poems', sub: '' },
-        layout: '_layouts/admin',
         user:   req.user,
         poem:   req.poem
       });

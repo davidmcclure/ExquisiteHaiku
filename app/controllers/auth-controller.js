@@ -32,8 +32,7 @@ module.exports = function(app) {
       // Render form.
       res.render('auth/login', {
         title:  'Login',
-        form:   loginForm.form(),
-        layout: '_layouts/auth'
+        form:   loginForm.form()
       });
 
   });
@@ -73,8 +72,7 @@ module.exports = function(app) {
           // Re-render the form.
           res.render('auth/login', {
             title:  'Login',
-            form:   form,
-            layout: '_layouts/auth'
+            form:   form
           });
 
         }

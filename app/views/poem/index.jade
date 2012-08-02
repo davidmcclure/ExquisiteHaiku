@@ -1,20 +1,24 @@
-div#info
-  span.info#points
-  span.info#timer
-    span.min
-    span.sec
+extends ../_layouts/poem
 
-div#poem
-table#stack
+block content
 
-table#log
-  tr
-    td.log.primary
-    td.log.overflow
+  div#info
+    span.info#points
+    span.info#timer
+      span.min
+      span.sec
 
-script(type="text/javascript")
-  var Poem = !{poem}
+  div#poem
+  table#stack
 
-span#measure
+  table#log
+    tr
+      td.log.primary
+      td.log.overflow
 
-include templates
+  script(type="text/javascript")
+    var Poem = !{poem}
+
+  span#measure
+
+  include templates

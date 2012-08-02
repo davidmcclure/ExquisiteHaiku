@@ -1,6 +1,9 @@
-form.form-stacked.login(method='post')
-  fieldset
-    legend.logo Oversoul
-    include ../_includes/form/form
-  div.actions
-    button.btn.btn-primary(type='submit') Submit
+extends ../_layouts/auth
+
+block content
+  form.form-stacked.login(method='post')
+    fieldset
+      legend.logo Oversoul
+      include ../_includes/form/form
+    div.actions
+      button.btn.btn-primary(type='submit') Submit

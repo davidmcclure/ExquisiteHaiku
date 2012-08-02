@@ -1,6 +1,9 @@
-form.poems.form-horizontal(method='post')
-  fieldset
-    legend Edit #{poem.slug}
-    include ../_includes/form/form
-  div.form-actions
-    button.btn.btn-primary(type='submit') Save
+extends ../_layouts/admin
+
+block content
+  form.poems.form-horizontal(method='post')
+    fieldset
+      legend Edit #{poem.slug}
+      include ../_includes/form/form
+    div.form-actions
+      button.btn.btn-primary(type='submit') Save

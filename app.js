@@ -14,14 +14,13 @@ require('./db-connect')(config);
 
 // Create server.
 var app = module.exports = express(express.favicon());
-var server = http.createServer(app);
 
 // Boot settings.
 require('./settings')(app);
 require('./init')(app);
 
 // Run server.
-app.listen(3000);
+var server = app.listen(3000);
 console.log(
   "Listening on port 3000 in %s mode",
   app.settings.env

@@ -3,7 +3,7 @@ body{font:300 18px "Helvetica Neue";font-weight:300;margin:2em;-webkit-user-sele
 .negative{color:#cc3f28}
 #poem{margin-bottom:1em;}
 #poem div.poem-line{margin-bottom:.3em}
-#poem input.blank{padding:0 2px;margin:0;width:40px;border:none;border-bottom:1px solid #808080;font:inherit;}
+#poem input.blank{padding:0 2px;margin:0;width:80px;border:none;border-bottom:1px solid #808080;font:inherit;}
 #poem input.blank:focus{outline:none}
 #poem .poem-word{margin-right:4px}
 #poem .submission-stack{position:absolute}

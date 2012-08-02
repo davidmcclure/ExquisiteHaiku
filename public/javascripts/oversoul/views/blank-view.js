@@ -25,7 +25,6 @@ Ov.Views.Blank = Backbone.View.extend({
     // Templates.
     this.__stack = this.stackTemplate();
     this.__word = this.wordTemplate();
-    this.__measure = $('#measure');
 
     // Buckets.
     this.words = [];
@@ -34,7 +33,6 @@ Ov.Views.Blank = Backbone.View.extend({
     // Trackers.
     this.frozen = false;
     this.voting = false;
-    this.defWidth = null;
 
     // Submissions stack.
     this.stack = $(this.__stack());
@@ -50,7 +48,6 @@ Ov.Views.Blank = Backbone.View.extend({
       // Keystroke down.
       'keydown': _.bind(function(e) {
         var char = String.fromCharCode(e.keyCode);
-        this.fitWidth(this.$el.val()+char);
       }, this)
 
     });
@@ -101,7 +98,6 @@ Ov.Views.Blank = Backbone.View.extend({
   insert: function(line) {
     line.append(this.$el);
     this.position(line);
-    this.defWidth = parseInt(this.$el.css('width'), 10);
   },
 
   /*
@@ -215,7 +211,6 @@ Ov.Views.Blank = Backbone.View.extend({
 
     // Clear input.
     this.$el.val('');
-    this.fitWidth('');
 
   },
 
@@ -313,7 +308,6 @@ Ov.Views.Blank = Backbone.View.extend({
    * @return void.
    */
   showPreview: function(word) {
-    this.fitWidth(word);
     if (this.frozen) return;
     this.$el.addClass('preview');
     this.$el.val(word);
@@ -328,28 +322,6 @@ Ov.Views.Blank = Backbone.View.extend({
     if (this.frozen) return;
     this.$el.removeClass('preview');
     this.$el.val('');
-    this.fitWidth('');
-  },
-
-  /*
-   * Adjust the width to fit the value.
-   *
-   * @return void.
-   */
-  fitWidth: function(value) {
-
-    // Measure value.
-    this.__measure.html(value);
-    var width = this.__measure.width();
-    this.__measure.html('');
-
-    // If less than default, revent to default.
-    if (width <= this.defWidth)
-      width = this.defWidth;
-
-    // Render width.
-    this.$el.css('width', width+3);
-
   },
 
   /*

@@ -4,6 +4,7 @@
 
  // Module dependencies.
 var express = require('express');
+var socket = require('socket.io');
 var configFile = require('yaml-config');
 var http = require('http');
 var fs = require('fs');
@@ -13,7 +14,7 @@ config = configFile.readConfig('config/config.yaml');
 require('./db-connect')(config);
 
 // Create server.
-var app = module.exports = express(express.favicon());
+var app = module.exports.app = express(express.favicon());
 
 // Boot settings.
 require('./settings')(app);
@@ -34,7 +35,7 @@ modelFiles.forEach(function(file) {
 });
 
 // Run Socket.io.
-var io = require('socket.io').listen(server);
+var io = module.exports.io = socket.listen(server);
 
 // Bootstrap controllers.
 var controllersPath = __dirname + '/app/controllers';

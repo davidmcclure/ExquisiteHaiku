@@ -11,7 +11,7 @@ var helpers = require('../helpers');
 
 // Bootstrap the application.
 process.env.NODE_ENV = 'testing';
-var app = require('../../app');
+var server = require('../../app');
 
 // Models.
 var User = mongoose.model('User');

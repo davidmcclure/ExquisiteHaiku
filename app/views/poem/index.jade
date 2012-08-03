@@ -2,12 +2,6 @@ extends ../_layouts/poem
 
 block content
 
-  div#info
-    span.info#points
-    span.info#timer
-      span.min
-      span.sec
-
   div#poem
   table#stack
 
@@ -15,6 +9,14 @@ block content
     tr
       td.log.primary
       td.log.overflow
+
+  div#info
+    div.label points
+    div.info#points
+    div.label clock
+    div.info#timer
+      span.min
+      span.sec
 
   script(type="text/javascript")
     var Poem = !{poem}

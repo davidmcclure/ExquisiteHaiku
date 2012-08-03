@@ -2,16 +2,19 @@
 
 body
   font 300 18px "Helvetica Neue"
-  font-weight 300
-  margin 2em
+  text-rendering optimizeLegibility
   -webkit-user-select none
   -moz-user-select none
+  font-weight 300
+  margin 2em
+
 
 .positive
   color positive
 
 .negative
   color negative
+
 
 #poem
   margin-bottom 1em
@@ -38,6 +41,7 @@ body
 
   .submission-word
     cursor pointer
+
 
 #stack
   z-index 1
@@ -69,6 +73,56 @@ body
       .word
         font-weight bold
 
+
+#log
+  z-index 2
+  position fixed
+  left 360px
+  top 10px
+
+  &.frozen
+    .primary
+      span.word
+        opacity 0.45
+
+  td
+    vertical-align top
+    padding-right 1em
+
+  .log-row
+    cursor pointer
+    &:hover
+      span.word
+        opacity 1
+
+    span.value
+      margin-left 5px
+      opacity 0.7
+      font-size 11px
+
+
+#info
+  position fixed
+  left 800px
+  top 50px
+
+  .info
+    font-size 80px
+    font-weight bold
+    opacity 0.15
+    line-height 60px
+    margin-bottom 25px
+
+  .label
+    font-style italic
+    opacity 0.3
+    padding-left 3px
+
+  #points
+    &.preview
+      opacity 0.5
+
+
 .drag-line
   position fixed
   line-height 0
@@ -97,50 +151,3 @@ body
       &.blocked
         stroke preview
         fill preview
-
-#log
-  z-index 2
-  position fixed
-  left 360px
-  top 10px
-
-  &.frozen
-    .primary
-      span.word
-        opacity 0.45
-
-  td
-    vertical-align top
-    padding-right 1em
-
-  .log-row
-    cursor pointer
-    &:hover
-      span.word
-        opacity 1
-
-    span.value
-      margin-left 5px
-      opacity 0.7
-      font-size 11px
-
-#info
-  font-size 14px
-  opacity 0.6
-  text-rendering optimizeLegibility
-  margin-bottom 1em
-
-  #points
-    &.preview
-      opacity 0.5
-
-  #timer
-    display inline-block
-    text-align right
-    width 50px
-
-#measure
-  position absolute
-  top -1000px
-  left -1000px
-  white-space pre

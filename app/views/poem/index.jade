@@ -3,6 +3,7 @@ extends ../_layouts/poem
 block content
 
   div#poem
+
   table#stack
 
   table#log
@@ -11,12 +12,20 @@ block content
       td.log.overflow
 
   div#info
+
     div.label points
     div.info#points
+
     div.label clock
     div.info#timer
       span.min
       span.sec
+
+    div.label votes
+    div.info#votes
+
+    div.label players
+    div.info#players
 
   script(type="text/javascript")
     var Poem = !{poem}

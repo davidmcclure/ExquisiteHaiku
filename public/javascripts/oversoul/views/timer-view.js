@@ -68,20 +68,21 @@ Ov.Views.Timer = Backbone.View.extend({
    * @return {Array}: [hs, min, sec, mls].
    */
   _msToDuration: function(d) {
-    var sec = this._pad(Math.floor((d/1000) % 60)); d /= 60000;
-    var min = this._pad(Math.floor(d % 60)); d /= 60;
+    var sec = this._format(Math.floor((d/1000) % 60)); d /= 60000;
+    var min = this._format(Math.floor(d % 60)); d /= 60;
     return [min, sec];
   },
 
   /*
    * If the passed value is a single digit, pad it with
-   * a single zero.
+   * a single zero. If the value is negative, set it to 0.
    *
    * @param {Number} val: The value.
    *
    * @return {Number} val: The padded value.
    */
-  _pad: function(val) {
+  _format: function(val) {
+    if (val < 0) val = 0;
     val = String(val);
     if (val.length < 2) val = 0+val;
     return val;

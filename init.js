@@ -4,8 +4,13 @@
 
 module.exports = function(app) {
 
-  // Shell in-memory trackers.
-  global.Oversoul = { timers: {}, votes: {} };
+  // In-memory stores.
+  global.Oversoul = {
+    timers:       {},
+    votes:        {},
+    playerCounts: {},
+    voteCounts:   {}
+  };
 
   // Set application constants.
   app.set('sliceInterval', config.sliceInterval);

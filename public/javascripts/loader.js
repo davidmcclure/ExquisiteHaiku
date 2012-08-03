@@ -49,6 +49,7 @@ load(
   a+'views/line-view.js',
   a+'views/points-view.js',
   a+'views/timer-view.js',
+  a+'views/count-view.js',
 
   // Controllers
   a+'controllers/poem-controller.js',

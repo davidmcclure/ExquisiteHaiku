@@ -19,6 +19,8 @@ Ov.Controllers.Info = (function(Backbone, Ov) {
   Ov.addInitializer(function() {
     Info.Points = new Ov.Views.Points({ el: '#points' });
     Info.Timer = new Ov.Views.Timer({ el: '#timer' });
+    Info.Votes = new Ov.Views.Count({ el: '#votes' });
+    Info.Players = new Ov.Views.Count({ el: '#players' });
   });
 
 
@@ -29,6 +31,8 @@ Ov.Controllers.Info = (function(Backbone, Ov) {
   /*
    * Reset the point value.
    *
+   * @param {Object} data: The incoming data packet.
+   *
    * @return void.
    */
   Ov.vent.on('socket:slice', function(data) {
@@ -36,11 +40,33 @@ Ov.Controllers.Info = (function(Backbone, Ov) {
   });
 
   /*
+   * Update vote count.
+   *
+   * @param {Number} count: The player count.
+   *
+   * @return void.
+   */
+  Ov.vent.on('socket:voteCount', function(count) {
+    Info.Votes.render(count);
+  });
+
+  /*
+   * Update player count.
+   *
+   * @param {Number} count: The player count.
+   *
+   * @return void.
+   */
+  Ov.vent.on('socket:playerCount', function(count) {
+    Info.Players.render(count);
+  });
+
+  /*
    * Reset the point value.
    *
    * @return void.
    */
-  Ov.vent.on('state:submit', function(round) {
+  Ov.vent.on('state:submit', function() {
     Info.Points.activateSubmit();
   });
 

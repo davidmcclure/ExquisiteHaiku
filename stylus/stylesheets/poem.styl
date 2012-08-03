@@ -23,11 +23,14 @@ body
     margin-bottom 0.3em
 
   input.blank
-    padding 0 0 3px 3px
+    padding 5px
     margin 0
     width 80px
-    border none
+    border none !important
+    border-radius 0
+    box-shadow none
     border-bottom 1px solid gray
+    background-color whiteSmoke
     font inherit
     &:focus
       outline none
@@ -114,13 +117,27 @@ body
     margin-bottom 25px
 
   .label
+    color black
+    background transparent
     font-style italic
     opacity 0.3
     padding-left 3px
+    font-size 16px
 
   #points
     &.preview
       opacity 0.5
+
+  .progress
+    margin 3px 0 7px 0
+    background-image none
+    box-shadow none
+    border-radius 2px
+
+    .bar
+      text-shadow none
+      background-image none
+      box-shadow none
 
 
 .drag-line

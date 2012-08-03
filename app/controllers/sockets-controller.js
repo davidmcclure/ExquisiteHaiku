@@ -29,7 +29,11 @@ module.exports = function(app, io) {
 
       // Increment player count, emit new value.
       var count = ++global.Oversoul.playerCounts[id];
-      io.sockets.in(id).emit('players', count);
+      io.sockets.in(id).emit('playerCount', count);
+
+      // Emit vote count.
+      io.sockets.in(id).emit('voteCount',
+        global.Oversoul.voteCounts[id]);
 
     });
 
@@ -89,6 +93,11 @@ module.exports = function(app, io) {
 
         });
 
+        // Increment vote count, emit new value.
+        global.Oversoul.voteCounts[id] += words.length;
+        io.sockets.in(id).emit('voteCount', 
+          global.Oversoul.voteCounts[id]);
+
       });
 
     });
@@ -119,8 +128,26 @@ module.exports = function(app, io) {
 
       });
 
+      // Echo the vote.
+      io.sockets.in(id).emit('vote', word, quantity);
+
+      // Increment vote count, emit new value.
+      var count = ++global.Oversoul.voteCounts[id];
+      io.sockets.in(id).emit('voteCount', count);
+
+    });
+
+    /*
+     * Deincrement player count.
+     *
+     * @return void.
+     */
+    socket.on('disconnect', function() {
+
+      // Deincrement player count, emit new value.
       socket.get('poem', function(err, id) {
-        io.sockets.in(id).emit('vote', word, quantity);
+        var count = --global.Oversoul.playerCounts[id];
+        io.sockets.in(id).emit('playerCount', count);
       });
 
     });

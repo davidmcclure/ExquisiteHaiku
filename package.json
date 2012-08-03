@@ -7,6 +7,7 @@
       "express": "= 3.0.0rc1"
     , "connect-mongodb": ">= 1.1.4"
     , "socket.io": ">= 0.9.5"
+    , "socket.io-client": ">= 0.9.9"
     , "jade": ">= 0.0.1"
     , "stylus": ">= 0.22.4"
     , "mongoose": ">= 2.4.10"

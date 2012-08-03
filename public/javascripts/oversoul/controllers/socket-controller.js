@@ -26,7 +26,7 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
      * @return void.
      */
     Socket.s.on('connect', function() {
-      Socket.s.emit('join', Poem.slug);
+      Socket.s.emit('join', Poem._id);
       Ov.vent.trigger('socket:connected');
     });
 

@@ -17,13 +17,13 @@ module.exports = function(app, io) {
     /*
      * Connect to a poem room.
      *
-     * @param {String} slug: The poem slug.
+     * @param {String} id: The poem id.
      *
      * @return void.
      */
-    socket.on('join', function(slug) {
-      socket.set('poem', slug, function() {});
-      socket.join(slug);
+    socket.on('join', function(id) {
+      socket.set('poem', id, function() {});
+      socket.join(id);
     });
 
     /*
@@ -112,8 +112,8 @@ module.exports = function(app, io) {
 
       });
 
-      socket.get('poem', function(err, slug) {
-        io.sockets.in(slug).emit('vote', word, quantity);
+      socket.get('poem', function(err, id) {
+        io.sockets.in(id).emit('vote', word, quantity);
       });
 
     });

@@ -18,6 +18,7 @@ Ov.Views.Timer = Backbone.View.extend({
     // Getters.
     this.minutes = this.$el.find('span.min');
     this.seconds = this.$el.find('span.sec');
+    this.bar = this.$el.prev('.progress').find('.bar');
 
     // Initialize update trackers.
     this.updateTime = null;
@@ -48,14 +49,17 @@ Ov.Views.Timer = Backbone.View.extend({
    */
   render: function() {
 
-    // Get time parts.
-    var now = this._msToDuration(
-      this.updateQuantity - (Date.now() - this.updateTime)
-    );
+    // Get duration and time parts.
+    var d = this.updateQuantity-(Date.now()-this.updateTime);
+    var now = this._msToDuration(d);
 
-    // Render.
+    // Render text.
     this.minutes.text(now[0]+':');
     this.seconds.text(now[1]);
+
+    // Render bar.
+    var percent = (d/Poem.roundLength)*100+'%';
+    this.bar.css('width', percent);
 
   },
 

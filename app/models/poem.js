@@ -264,10 +264,6 @@ PoemSchema.methods.start = function(slicer, emit, cb) {
     slicer, this.sliceInterval, this.id, emit, cb
   );
 
-  // Create player and vote count buckets.
-  global.Oversoul.playerCounts[this.id] = 0;
-  global.Oversoul.voteCounts[this.id] = 0;
-
   // Set trackers.
   this.running = true;
   this.started = true;

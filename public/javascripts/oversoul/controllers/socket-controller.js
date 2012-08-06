@@ -53,28 +53,6 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
       Ov.vent.trigger('socket:vote:in', word, quantity);
     });
 
-    /*
-     * Update players counter.
-     *
-     * @param {Number} count: The player count.
-     *
-     * @return void.
-     */
-    Socket.s.on('playerCount', function(count) {
-      Ov.vent.trigger('socket:playerCount', count);
-    });
-
-    /*
-     * Update votes counter.
-     *
-     * @param {Number} count: The vote count.
-     *
-     * @return void.
-     */
-    Socket.s.on('voteCount', function(count) {
-      Ov.vent.trigger('socket:voteCount', count);
-    });
-
   });
 
 

@@ -19,8 +19,6 @@ Ov.Controllers.Info = (function(Backbone, Ov) {
   Ov.addInitializer(function() {
     Info.Points = new Ov.Views.Points({ el: '#points' });
     Info.Timer = new Ov.Views.Timer({ el: '#timer' });
-    Info.Votes = new Ov.Views.Count({ el: '#votes' });
-    Info.Players = new Ov.Views.Count({ el: '#players' });
   });
 
 
@@ -37,28 +35,6 @@ Ov.Controllers.Info = (function(Backbone, Ov) {
    */
   Ov.vent.on('socket:slice', function(data) {
     Info.Timer.update(data.clock);
-  });
-
-  /*
-   * Update vote count.
-   *
-   * @param {Number} count: The player count.
-   *
-   * @return void.
-   */
-  Ov.vent.on('socket:voteCount', function(count) {
-    Info.Votes.render(count);
-  });
-
-  /*
-   * Update player count.
-   *
-   * @param {Number} count: The player count.
-   *
-   * @return void.
-   */
-  Ov.vent.on('socket:playerCount', function(count) {
-    Info.Players.render(count);
   });
 
   /*

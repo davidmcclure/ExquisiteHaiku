@@ -73,8 +73,6 @@ describe('Poem', function() {
   afterEach(function() {
     global.Oversoul.votes = {};
     global.Oversoul.timers = {};
-    global.Oversoul.playerCounts = {};
-    global.Oversoul.voteCounts = {};
   });
 
   after(function(done) {
@@ -467,17 +465,6 @@ describe('Poem', function() {
 
         // Check for key on timers hash.
         global.Oversoul.timers.should.have.keys(poem.id);
-
-      });
-
-      it('should shell out counts trackers', function() {
-
-        // Start.
-        poem.start(function() {}, function() {}).should.be.true;
-
-        // Check for key on count hashes.
-        global.Oversoul.playerCounts.should.have.keys(poem.id);
-        global.Oversoul.voteCounts.should.have.keys(poem.id);
 
       });
 

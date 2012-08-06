@@ -1,5 +1,5 @@
 default:
-  sliceInterval: 200
+  sliceInterval: 300
   visibleWords: 200
 
 testing:

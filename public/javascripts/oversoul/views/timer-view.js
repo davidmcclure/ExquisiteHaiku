@@ -5,7 +5,7 @@
 Ov.Views.Timer = Backbone.View.extend({
 
   options: {
-    refresh: 1000 // Ms between renders.
+    refresh: 250 // Ms between renders.
   },
 
   /*

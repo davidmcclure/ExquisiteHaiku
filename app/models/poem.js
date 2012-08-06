@@ -287,6 +287,11 @@ PoemSchema.methods.stop = function() {
   // Set tracker.
   this.running = false;
 
+  // If 17 syllables, mark complete.
+  if (this.syllableCount == 17) {
+    this.complete = true;
+  }
+
 };
 
 /*

@@ -532,6 +532,23 @@ describe('Poem', function() {
 
       });
 
+      it('should set "complete" to true when 17 syllables', function() {
+
+        // Set complete.
+        poem.words = [
+          ['it', 'little', 'profits'],
+          ['that', 'an', 'idle', 'king', 'by', 'this'],
+          ['still', 'hearth', 'among', 'these']
+        ];
+
+        // Stop.
+        poem.stop();
+
+        // Check complete.
+        poem.complete.should.be.true;
+
+      });
+
     });
 
     describe('addWord', function() {

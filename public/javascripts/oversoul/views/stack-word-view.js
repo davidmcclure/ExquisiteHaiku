@@ -118,7 +118,7 @@ Ov.Views.StackWord = Backbone.View.extend({
     var deltaY = initEvent.pageY - dragEvent.pageY;
     var x2 = Math.pow(deltaX, 2);
     var y2 = Math.pow(deltaY, 2);
-    this.dragDelta = Math.round(Math.sqrt(x2 + y2));
+    this.dragDelta = Math.round(Math.sqrt(x2 + y2)/4);
     if (deltaY < 0) { this.dragDelta *= -1; }
 
     // Get current total.

@@ -44,6 +44,8 @@ load(
   a+'views/blank-view.js',
   a+'views/stack-view.js',
   a+'views/stack-word-view.js',
+  a+'views/log-view.js',
+  a+'views/log-word-view.js',
   a+'views/line-view.js',
   a+'views/points-view.js',
   a+'views/timer-view.js',
@@ -53,6 +55,7 @@ load(
   a+'controllers/socket-controller.js',
   a+'controllers/round-controller.js',
   a+'controllers/stack-controller.js',
+  a+'controllers/log-controller.js',
   a+'controllers/info-controller.js'
 
 ).thenRun(function() {

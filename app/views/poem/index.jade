@@ -2,25 +2,25 @@ extends ../_layouts/poem
 
 block content
 
-  div.container
+  table#log
+    tr
+      td.log.primary
 
+  div.main
     div#poem
-
     table#stack
 
-    div#info
+  div#info
 
-      // div.label points
-      // div.progress
-        div.bar
-      div.info#points
+    div.info#points
+    div.progress
+      div.bar
 
-      // div.label clock
-      // div.progress
-        div.bar
-      div.info#timer
-        span.min
-        span.sec
+    div.progress.last
+      div.bar
+    div.info#timer
+      span.min
+      span.sec
 
   script(type="text/javascript")
     var Poem = !{poem}

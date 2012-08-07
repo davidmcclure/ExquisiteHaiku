@@ -10,7 +10,7 @@ Ov.Views.Points = Backbone.View.extend({
    * @return void.
    */
   initialize: function() {
-    // this.bar = this.$el.prev('.progress').find('.bar');
+    this.bar = this.$el.next('.progress').find('.bar');
     this.value = null;
     this.preview = null;
   },
@@ -48,7 +48,7 @@ Ov.Views.Points = Backbone.View.extend({
     this.$el.text(value);
     this.value = value;
     this.$el.removeClass('preview negative');
-    // this.renderBar(this.value);
+    this.renderBar(this.value);
   },
 
   /*
@@ -74,7 +74,7 @@ Ov.Views.Points = Backbone.View.extend({
     this.$el.text(this.preview);
     this.$el.addClass('preview');
     this.$el.removeClass('negative');
-    // this.renderBar(this.preview);
+    this.renderBar(this.preview);
 
     // Insufficient funds.
     if (this.preview < 0) {

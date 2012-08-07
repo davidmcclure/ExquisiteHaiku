@@ -15,6 +15,8 @@ body
 .negative
   color negative
 
+.main
+  margin-left 260px
 
 #poem
   margin-bottom 1em
@@ -80,7 +82,10 @@ body
 #log
   z-index 2
   position fixed
-  left 360px
+  text-align right
+  table-layout fixed
+  width 300px
+  left -15px
   top 10px
 
   &.frozen
@@ -99,7 +104,7 @@ body
         opacity 1
 
     span.value
-      margin-left 5px
+      margin-right 3px
       opacity 0.7
       font-size 11px
 
@@ -107,13 +112,12 @@ body
 #info
   z-index -2
   position fixed
-  left 800px
-  top 50px
+  left 700px
+  top 30px
 
   .info
     font-size 35px
     opacity 0.6
-    margin-bottom 10px
 
   .label
     color black
@@ -130,6 +134,7 @@ body
 
   .progress
     margin 3px 0 0 0
+    height 5px
     background-image none
     box-shadow none
     border-radius 2px
@@ -139,11 +144,15 @@ body
     .bar
       text-shadow none
       background-image none
+      background-color positive
       box-shadow none
       -moz-transition none;
       -webkit-transition none;
       -o-transition color 0 ease-in;
       transition none;
+
+    &.last
+      margin-top 7px
 
 
 .drag-line

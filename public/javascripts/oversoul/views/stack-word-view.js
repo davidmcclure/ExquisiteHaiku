@@ -62,7 +62,7 @@ Ov.Views.StackWord = Backbone.View.extend({
     this.ratio = data[4];
 
     // Compute aggregate churn.
-    this.churn = this.posChurn + Math.abs(this.negChurn);
+    this.churn = this.posChurn + this.negChurn;
 
     // Render values.
     this.wordMarkup.text(this.word);
@@ -126,7 +126,7 @@ Ov.Views.StackWord = Backbone.View.extend({
     var deltaY = initEvent.pageY - dragEvent.pageY;
     var x2 = Math.pow(deltaX, 2);
     var y2 = Math.pow(deltaY, 2);
-    this.dragDelta = Math.round(Math.sqrt(x2 + y2)/3);
+    this.dragDelta = Math.round(Math.sqrt(x2 + y2));
     if (deltaY < 0) { this.dragDelta *= -1; }
 
     // Get current total.

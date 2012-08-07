@@ -27,12 +27,15 @@ Ov.Views.StackWord = Backbone.View.extend({
     this.$el.append(this.template()());
 
     // Get components.
-    this.churnMarkup = this.$el.find('.churn');
+    this.posChurnMarkup = this.$el.find('.churn.pos');
+    this.negChurnMarkup = this.$el.find('.churn.neg');
     this.ratioMarkup = this.$el.find('.ratio');
     this.wordMarkup = this.$el.find('.word');
 
     // Trackers.
     this.word = null;
+    this.posChurn = null;
+    this.negChurn = null;
     this.churn = null;
     this.ratio = null;
     this.dragTotal = 0;
@@ -54,13 +57,18 @@ Ov.Views.StackWord = Backbone.View.extend({
 
     // Capture data.
     this.word = data[0];
-    this.churn = data[2];
-    this.ratio = data[3];
+    this.posChurn = data[2];
+    this.negChurn = data[3];
+    this.ratio = data[4];
+
+    // Compute aggregate churn.
+    this.churn = this.posChurn + Math.abs(this.negChurn);
 
     // Render values.
-    this.wordMarkup.text(data[0]);
-    this.ratioMarkup.text(data[3]);
-    this.churnMarkup.text(data[2]);
+    this.wordMarkup.text(this.word);
+    this.posChurnMarkup.text(this.posChurn);
+    this.negChurnMarkup.text(this.negChurn);
+    this.ratioMarkup.text(this.ratio);
 
     // Render styles.
     this.renderSize();
@@ -260,8 +268,6 @@ Ov.Views.StackWord = Backbone.View.extend({
    * @return void.
    */
   setNeutral: function() {
-    this.churnMarkup.removeClass('positive');
-    this.churnMarkup.removeClass('negative');
     this.wordMarkup.removeClass('positive');
     this.wordMarkup.removeClass('negative');
   },
@@ -272,8 +278,6 @@ Ov.Views.StackWord = Backbone.View.extend({
    * @return void.
    */
   setPositive: function() {
-    this.churnMarkup.addClass('positive');
-    this.churnMarkup.removeClass('negative');
     this.wordMarkup.addClass('positive');
     this.wordMarkup.removeClass('negative');
   },
@@ -284,8 +288,6 @@ Ov.Views.StackWord = Backbone.View.extend({
    * @return void.
    */
   setNegative: function() {
-    this.churnMarkup.addClass('negative');
-    this.churnMarkup.removeClass('positive');
     this.wordMarkup.addClass('negative');
     this.wordMarkup.removeClass('positive');
   },

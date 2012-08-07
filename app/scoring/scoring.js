@@ -23,8 +23,12 @@ var score = exports.score = function(id, now, emit, cb) {
   // Get poem.
   Poem.findById(id, function(err, poem) {
 
+    // Capture round id and words.
     var rId = poem.round.id;
     var words = global.Oversoul.votes[rId];
+
+    // The stack array, sorted by rank:
+    // [word, rank, +churn, -churn, ratio]
     var stack = [];
 
     // Get decay lifetime inverse.
@@ -35,7 +39,7 @@ var score = exports.score = function(id, now, emit, cb) {
     _.each(words, function(votes, word) {
 
       // Score votes.
-      stack.unshift([word, 0, 0]);
+      stack.unshift([word, 0, 0, 0]);
       _.each(votes, function(vote) {
 
         // Score.
@@ -43,9 +47,12 @@ var score = exports.score = function(id, now, emit, cb) {
           vote[0], vote[1], decayL, decayI, now
         );
 
-        // Add. 
+        // Add rank.
         stack[0][1] += score[0];
-        stack[0][2] += score[1];
+
+        // Add churn.
+        if (score[1] > 0) stack[0][2] += score[1];
+        else stack[0][3] += score[1];
 
       });
 
@@ -104,7 +111,7 @@ var score = exports.score = function(id, now, emit, cb) {
 
 
 /*
- * Compute the rank and churn value of a vote.
+ * Compute the rank and churn values of a vote.
  *
  * @param {Number} quantity: The vote quantity.
  * @param {Number} decayL: The decay lifetime.

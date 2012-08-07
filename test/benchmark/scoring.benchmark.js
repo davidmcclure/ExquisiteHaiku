@@ -46,7 +46,7 @@ var poem = new Poem({
   submissionVal : 100,
   decayLifetime : 60000,
   seedCapital : 1000,
-  visibleWords : 5
+  visibleWords : 10
 });
 
 // Initialize votes tracker.
@@ -75,7 +75,8 @@ poem.save(function(err) {
       var vote = new Vote({
         round: poem.round.id,
         word: 'word'+i,
-        quantity: 100
+        quantity: 100,
+        applied: now-(1000*i)
       });
 
       // Register.

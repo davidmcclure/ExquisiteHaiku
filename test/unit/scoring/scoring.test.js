@@ -234,8 +234,8 @@ describe('Scoring', function() {
             should.not.exist(result.stack[2]);
 
             // Check ratios.
-            result.stack[0][3].should.eql('1.00');
-            Number(result.stack[1][3]).should.be.below(1);
+            result.stack[0][4].should.eql('1.00');
+            Number(result.stack[1][4]).should.be.below(1);
             done();
 
           }, function() {});

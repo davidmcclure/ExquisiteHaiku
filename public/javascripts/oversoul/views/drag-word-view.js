@@ -1,12 +1,21 @@
 /*
- * Stack word view.
+ * Abstract class for draggable word.
  */
 
-Ov.Views.StackWord = Backbone.View.extend({
+Ov.Views.DragWord = Backbone.View.extend({
 
   events: {
-    'mousedown': 'addDrag'
+    'mouseenter .word': 'hover',
+    'mousedown .word':  'select'
   },
+
+  // @abstract
+  // The word string.
+  word: null,
+
+  // @abstract
+  // The word element.
+  wordMarkup: null,
 
   /*
    * Build template, get components.
@@ -22,6 +31,36 @@ Ov.Views.StackWord = Backbone.View.extend({
   },
 
   /*
+   * Render new values, set word tracker.
+   *
+   * @param {Array} data: Array of [word, value].
+   *
+   * @return void.
+   */
+  // update: function(data) {
+
+  //   // Capture data.
+  //   this.word = data[0];
+  //   this.posChurn = data[2];
+  //   this.negChurn = data[3];
+  //   this.ratio = data[4];
+
+  //   // Compute aggregate churn.
+  //   this.churn = this.posChurn + this.negChurn;
+
+  //   // Render values.
+  //   this.wordMarkup.text(this.word);
+  //   this.posChurnMarkup.text(this.posChurn);
+  //   this.negChurnMarkup.text(this.negChurn);
+  //   this.ratioMarkup.text(this.ratio);
+
+  //   // Render styles.
+  //   this.renderSize();
+  //   this.renderColor();
+
+  // },
+
+  /*
    * Bind drag listener.
    *
    * @param {Object} event: The mousedown event.
@@ -29,6 +68,8 @@ Ov.Views.StackWord = Backbone.View.extend({
    * @return void.
    */
   addDrag: function(event) {
+
+    console.log(event);
 
     // Reset listeners and trackers.
     $(window).unbind('keydown.drag');
@@ -83,7 +124,7 @@ Ov.Views.StackWord = Backbone.View.extend({
 
     // Broadcast the drag tick.
     Ov.vent.trigger('words:dragTick',
-      this.options.word,
+      this.word,
       currentTotal,
       initEvent,
       dragEvent
@@ -131,8 +172,7 @@ Ov.Views.StackWord = Backbone.View.extend({
       this.endDrag();
 
       // Broadcast.
-      Ov.vent.trigger('words:dragCommit',
-        this.options.word, total);
+      Ov.vent.trigger('words:dragCommit', this.word, total);
 
     }
 
@@ -142,6 +182,128 @@ Ov.Views.StackWord = Backbone.View.extend({
       Ov.vent.trigger('words:dragCancel');
     }
 
+  },
+
+  /*
+   * Render size.
+   *
+   * @return void.
+   */
+  renderSize: function() {
+    var size = 18 + 0.05*(Math.abs(this.value));
+    this.wordMarkup.css('font-size', size);
+  },
+
+  /*
+   * @abstract
+   * Render color.
+   *
+   * @return void.
+   */
+  renderColor: function() {
+
+  },
+
+  /*
+   * Render hover.
+   *
+   * @return void.
+   */
+  hover: function() {
+    if (Ov._global.isDragging) return;
+    Ov.vent.trigger('words:hover', this.word);
+  },
+
+  /*
+   * Render selection.
+   *
+   * @return void.
+   */
+  select: function(event) {
+    Ov.vent.trigger('words:select', this.word);
+    this.addDrag(event);
+  },
+
+  /*
+   * Remove selection.
+   *
+   * @return void.
+   */
+  unSelect: function() {
+    Ov.vent.trigger('words:unselect');
+    this.wordMarkup.removeClass('select');
+  },
+
+  /*
+   * Reset word after drag.
+   *
+   * @return void.
+   */
+  endDrag: function() {
+    this.unSelect();
+    this.setDragNeutral();
+    this.dragTotal = 0;
+    Ov._global.isDragging = false;
+    $(window).unbind('.drag');
+  },
+
+  /*
+   * Set 0 churn.
+   *
+   * @return void.
+   */
+  // setNeutral: function() {
+  //   this.wordMarkup.removeClass('positive');
+  //   this.wordMarkup.removeClass('negative');
+  // },
+
+  /*
+   * Set positive churn.
+   *
+   * @return void.
+   */
+  // setPositive: function() {
+  //   this.wordMarkup.addClass('positive');
+  //   this.wordMarkup.removeClass('negative');
+  // },
+
+  /*
+   * Set negative churn.
+   *
+   * @return void.
+   */
+  // setNegative: function() {
+  //   this.wordMarkup.addClass('negative');
+  //   this.wordMarkup.removeClass('positive');
+  // },
+
+  /*
+   * Set word color to match positive drag.
+   *
+   * @return void.
+   */
+  setDragPositive: function() {
+    this.wordMarkup.addClass('positive');
+    this.wordMarkup.removeClass('negative');
+  },
+
+  /*
+   * Set word color to match negative drag.
+   *
+   * @return void.
+   */
+  setDragNegative: function() {
+    this.wordMarkup.addClass('negative');
+    this.wordMarkup.removeClass('positive');
+  },
+
+  /*
+   * Reset word color.
+   *
+   * @return void.
+   */
+  setDragNeutral: function() {
+    this.renderColor();
   }
 
 });

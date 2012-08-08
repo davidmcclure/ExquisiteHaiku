@@ -36,13 +36,17 @@ load(
 
 ).then(
 
+  // Abstract classes.
+  a+'views/drag-word-view.js'
+
+).then(
+
   // Collections.
   a+'collections/round-collection.js',
 
   // Views.
   a+'views/poem-view.js',
   a+'views/blank-view.js',
-  a+'views/drag-word-view.js',
   a+'views/stack-view.js',
   a+'views/stack-word-view.js',
   a+'views/log-view.js',

@@ -276,7 +276,7 @@ module.exports = function(app, io) {
 
       // Broadcast callback.
       var emit = function(result) {
-        io.sockets.in(req.poem.slug).emit('slice', result);
+        io.sockets.in(req.poem.id).emit('slice', result);
       };
 
       // Create starting round, start.

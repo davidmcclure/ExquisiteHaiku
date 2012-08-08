@@ -61,7 +61,8 @@ Ov.Views.DragWord = Backbone.View.extend({
     });
 
     // Broadcast, track.
-    Ov.vent.trigger('words:dragStart', this.word);
+    // Ov.vent.trigger('words:dragStart', this.word);
+    this.onDragStart();
     Ov._global.isDragging = true;
 
   },

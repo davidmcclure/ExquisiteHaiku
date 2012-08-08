@@ -1,4 +1,5 @@
-body{font:300 18px "Helvetica Neue";text-rendering:optimizeLegibility;-webkit-user-select:none;-moz-user-select:none;font-weight:300;margin:2em}
+@import url("http://fonts.googleapis.com/css?family=Source+Sans+Pro:300");
+body{font:300 18px "Source Sans Pro";text-rendering:optimizeLegibility;-webkit-user-select:none;-moz-user-select:none;font-weight:300;margin:2em}
 .positive{color:#288bcc}
 .negative{color:#cc3f28}
 .main{margin-left:260px}
@@ -17,12 +18,13 @@ body{font:300 18px "Helvetica Neue";text-rendering:optimizeLegibility;-webkit-us
 #stack.frozen .word{opacity:.45;}
 #stack.frozen .word:hover{opacity:1}
 #stack .stack-row:first-child .word{font-weight:bold}
-#log{z-index:2;position:fixed;text-align:right;table-layout:fixed;width:300px;left:-15px;top:10px;}
-#log.frozen .primary span.word{opacity:.45}
-#log td{vertical-align:top;padding-right:1em}
-#log .log-row{cursor:pointer;}
-#log .log-row:hover span.word{opacity:1}
-#log .log-row span.value{margin-right:3px;opacity:.7;font-size:11px}
+#log,#overflow{position:fixed;top:10px;}
+#log .log-row,#overflow .log-row{cursor:pointer;}
+#log .log-row:hover span.word,#overflow .log-row:hover span.word{opacity:1}
+#log .log-row span.value,#overflow .log-row span.value{margin-right:3px;opacity:.7;font-size:11px}
+#log{z-index:2;direction:rtl;width:230px;}
+#log.frozen span.word{opacity:.45}
+#overflow{z-index:0;left:520px;opacity:.3}
 #info{z-index:-2;position:fixed;left:700px;top:30px;}
 #info .info{font-size:35px;opacity:.6}
 #info .label{color:#000;background:transparent;font-style:italic;font-weight:normal;opacity:.3;padding-left:3px;font-size:16px}

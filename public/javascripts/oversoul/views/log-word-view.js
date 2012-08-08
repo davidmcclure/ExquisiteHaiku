@@ -2,7 +2,7 @@
  * Log word view.
  */
 
-Ov.Views.LogWord = Ov.Views.DragWord.extend({
+Ov.Views.LogWord = Backbone.View.extend({
 
   tagName: 'div',
   className: 'log-row',
@@ -11,15 +11,18 @@ Ov.Views.LogWord = Ov.Views.DragWord.extend({
     return _.template($('#log-word').html());
   },
 
+  events: {
+    'mouseenter': 'hover',
+    'mouseleave': 'unHover',
+    'mousedown':  'echo'
+  },
+
   /*
    * Build template, get components.
    *
    * @return void.
    */
   initialize: function() {
-
-    // Call parent.initialize().
-    Ov.Views.DragWord.prototype.initialize.call(this);
 
     // Set word and value.
     this.word = this.options.word;
@@ -46,10 +49,10 @@ Ov.Views.LogWord = Ov.Views.DragWord.extend({
    *
    * @return void.
    */
-  // renderSize: function() {
-  //   var size = 10 + 0.05*(Math.abs(this.value));
-  //   this.wordMarkup.css('font-size', size);
-  // },
+  renderSize: function() {
+    var size = 10 + 0.05*(Math.abs(this.value));
+    this.wordMarkup.css('font-size', size);
+  },
 
   /*
    * Render color.
@@ -59,39 +62,39 @@ Ov.Views.LogWord = Ov.Views.DragWord.extend({
   renderColor: function() {
     if (this.value > 0) this.$el.addClass('positive');
     else this.$el.addClass('negative');
-  }
+  },
 
   /*
    * Render point preview.
    *
    * @return void.
    */
-  // hover: function() {
-  //   if (Ov._global.isDragging) return;
-  //   Ov.vent.trigger('log:preview', this.word, this.value);
-  //   Ov.vent.trigger('words:hover', this.word);
-  // },
+  hover: function() {
+    if (Ov._global.isDragging) return;
+    Ov.vent.trigger('log:preview', this.word, this.value);
+    Ov.vent.trigger('words:hover', this.word);
+  },
 
   /*
    * Cancel point preview.
    *
    * @return void.
    */
-  // unHover: function() {
-  //   if (Ov._global.isDragging) return;
-  //   Ov.vent.trigger('log:cancel');
-  // },
+  unHover: function() {
+    if (Ov._global.isDragging) return;
+    Ov.vent.trigger('log:cancel');
+  },
 
   /*
    * Duplicate the vote.
    *
    * @return void.
    */
-  // echo: function() {
-  //   Ov.vent.trigger('log:echo',
-  //     this.word,
-  //     this.value
-  //   );
-  // }
+  echo: function() {
+    Ov.vent.trigger('log:echo',
+      this.word,
+      this.value
+    );
+  }
 
 });

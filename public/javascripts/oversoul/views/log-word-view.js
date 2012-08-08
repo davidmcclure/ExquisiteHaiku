@@ -42,6 +42,16 @@ Ov.Views.LogWord = Ov.Views.DragWord.extend({
   },
 
   /*
+   * Process drag mouseup.
+   *
+   * @return void.
+   */
+  onDragComplete: function() {
+    Ov.Views.DragWord.prototype.onDragComplete.call(this);
+    if (this.dragTotal == 0) this.echo();
+  },
+
+  /*
    * Set positive.
    *
    * @return void.
@@ -61,18 +71,18 @@ Ov.Views.LogWord = Ov.Views.DragWord.extend({
     Ov.Views.DragWord.prototype.setNegative.call(this);
     this.$el.addClass('negative');
     this.$el.removeClass('positive');
-  }
+  },
 
   /*
    * Duplicate the vote.
    *
    * @return void.
    */
-  // echo: function() {
-  //   Ov.vent.trigger('log:echo',
-  //     this.word,
-  //     this.value
-  //   );
-  // }
+  echo: function() {
+    Ov.vent.trigger('log:echo',
+      this.word,
+      this.value
+    );
+  }
 
 });

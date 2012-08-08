@@ -10,7 +10,7 @@ body{font:200 18px "Source Sans Pro";text-rendering:optimizeLegibility;-webkit-u
 #poem .poem-word{margin-right:4px}
 #poem .submission-stack{position:absolute;padding-top:5px}
 #poem .submission-word{cursor:pointer}
-#stack{z-index:1;}
+#stack{z-index:1;display:inline-block;}
 #stack .word{padding-left:7px;text-align:left;cursor:ns-resize;}
 #stack .word.hover{color:#288bcc}
 #stack .word.select{color:#288bcc}

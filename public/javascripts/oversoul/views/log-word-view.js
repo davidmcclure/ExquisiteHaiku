@@ -42,45 +42,26 @@ Ov.Views.LogWord = Ov.Views.DragWord.extend({
   },
 
   /*
-   * Render size.
+   * Set positive.
    *
    * @return void.
    */
-  // renderSize: function() {
-  //   var size = 10 + 0.05*(Math.abs(this.value));
-  //   this.wordMarkup.css('font-size', size);
-  // },
+  setPositive: function() {
+    Ov.Views.DragWord.prototype.setPositive.call(this);
+    this.$el.addClass('positive');
+    this.$el.removeClass('negative');
+  },
 
   /*
-   * Render color.
+   * Set negative.
    *
    * @return void.
    */
-  renderColor: function() {
-    if (this.value > 0) this.$el.addClass('positive');
-    else this.$el.addClass('negative');
+  setNegative: function() {
+    Ov.Views.DragWord.prototype.setNegative.call(this);
+    this.$el.addClass('negative');
+    this.$el.removeClass('positive');
   }
-
-  /*
-   * Render point preview.
-   *
-   * @return void.
-   */
-  // hover: function() {
-  //   if (Ov._global.isDragging) return;
-  //   Ov.vent.trigger('log:preview', this.word, this.value);
-  //   Ov.vent.trigger('words:hover', this.word);
-  // },
-
-  /*
-   * Cancel point preview.
-   *
-   * @return void.
-   */
-  // unHover: function() {
-  //   if (Ov._global.isDragging) return;
-  //   Ov.vent.trigger('log:cancel');
-  // },
 
   /*
    * Duplicate the vote.

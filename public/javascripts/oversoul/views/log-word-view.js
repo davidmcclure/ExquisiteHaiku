@@ -48,7 +48,7 @@ Ov.Views.LogWord = Ov.Views.DragWord.extend({
    */
   onDragComplete: function() {
     Ov.Views.DragWord.prototype.onDragComplete.call(this);
-    if (this.dragTotal === 0) this.echo();
+    if (this.dragTotal == 0) this.echo();
   },
 
   /*

@@ -83,6 +83,11 @@ module.exports = function(app, io) {
           // Save.
           vote.save(function(err) {});
 
+          // Echo the vote.
+          io.sockets.in(id).emit('vote',
+            word, poem.submissionVal
+          );
+
         });
 
       });
@@ -116,7 +121,9 @@ module.exports = function(app, io) {
       });
 
       // Echo the vote.
-      io.sockets.in(id).emit('vote', word, quantity);
+      io.sockets.in(id).emit('vote',
+        word, quantity
+      );
 
     });
 

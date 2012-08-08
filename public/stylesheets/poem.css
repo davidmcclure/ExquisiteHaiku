@@ -14,14 +14,14 @@ body{font:200 18px "Source Sans Pro";text-rendering:optimizeLegibility;-webkit-u
 #stack .word{padding-left:7px;text-align:left;cursor:ns-resize;}
 #stack .word.hover{color:#288bcc}
 #stack .word.select{color:#288bcc}
-#stack .ratio,#stack .churn{font-size:11px;text-align:right;opacity:.7;font-size:11px}
-#stack.frozen .word{opacity:.45;}
-#stack.frozen .word:hover{opacity:1}
+#stack .ratio,#stack .churn{font-size:11px;text-align:right;font-size:11px}
+#stack.frozen .stack-row{opacity:.7;}
+#stack.frozen .stack-row:hover{opacity:1}
 #stack .stack-row:first-child .word{font-weight:bold}
 #log,#overflow{position:fixed;top:10px;}
 #log .log-row,#overflow .log-row{cursor:pointer;}
 #log .log-row:hover span.word,#overflow .log-row:hover span.word{opacity:1}
-#log .log-row span.value,#overflow .log-row span.value{margin-right:3px;opacity:.7;font-size:11px}
+#log .log-row span.value,#overflow .log-row span.value{margin-right:3px;font-size:11px}
 #log{z-index:2;direction:rtl;width:230px;}
 #log.frozen span.word{opacity:.45}
 #overflow{z-index:0;left:520px;opacity:.3}

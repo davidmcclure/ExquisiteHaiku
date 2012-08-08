@@ -31,7 +31,7 @@ Ov.Views.LogWord = Backbone.View.extend({
     // Build template.
     var row = $(this.template()({
       word: this.word,
-      value: this.value
+      value: Math.abs(this.value)
     }));
 
     // Append contents, get word.

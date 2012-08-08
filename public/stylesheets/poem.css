@@ -25,7 +25,7 @@ body{font:200 18px "Source Sans Pro";text-rendering:optimizeLegibility;-webkit-u
 #log{z-index:2;direction:rtl;width:230px;}
 #log.frozen span.word{opacity:.45}
 #overflow{z-index:0;left:520px;opacity:.3}
-#info{z-index:-2;position:fixed;left:700px;top:30px;}
+#info{z-index:-2;position:fixed;left:700px;top:24px;}
 #info .info{font-size:35px;opacity:.6}
 #info .label{color:#000;background:transparent;font-style:italic;font-weight:normal;opacity:.3;padding-left:3px;font-size:16px}
 #info #points.preview{opacity:.5}

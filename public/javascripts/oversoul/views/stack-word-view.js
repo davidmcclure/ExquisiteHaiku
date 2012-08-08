@@ -4,7 +4,7 @@
 
 Ov.Views.StackWord = Backbone.View.extend({
 
-  tagName: 'tr',
+  tagName: 'div',
   className: 'stack-row',
 
   template: function() {
@@ -12,8 +12,8 @@ Ov.Views.StackWord = Backbone.View.extend({
   },
 
   events: {
-    'mouseenter .word':   'hover',
-    'mousedown .word':    'select'
+    'mouseenter .word': 'hover',
+    'mousedown .word':  'select'
   },
 
   /*
@@ -41,9 +41,6 @@ Ov.Views.StackWord = Backbone.View.extend({
     this.dragTotal = 0;
     this.dragDelta = 0;
 
-    // Track dragging globally.
-    Ov._global.isDragging = false;
-
   },
 
   /*
@@ -67,7 +64,7 @@ Ov.Views.StackWord = Backbone.View.extend({
     // Render values.
     this.wordMarkup.text(this.word);
     this.posChurnMarkup.text(this.posChurn);
-    this.negChurnMarkup.text(this.negChurn);
+    this.negChurnMarkup.text(Math.abs(this.negChurn));
     this.ratioMarkup.text(this.ratio);
 
     // Render styles.

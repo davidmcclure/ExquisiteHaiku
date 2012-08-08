@@ -18,6 +18,7 @@ body{font:200 18px "Source Sans Pro";text-rendering:optimizeLegibility;-webkit-u
 #stack.frozen .stack-row{opacity:.7;}
 #stack.frozen .stack-row:hover{opacity:1}
 #stack .stack-row:first-child .word{font-weight:bold}
+#stack .stack-row .churn{margin-left:4px}
 #log,#overflow{position:fixed;top:10px;}
 #log .log-row,#overflow .log-row{cursor:pointer;}
 #log .log-row:hover span.word,#overflow .log-row:hover span.word{opacity:1}

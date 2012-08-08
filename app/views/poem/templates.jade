@@ -11,10 +11,10 @@ script(id="submission-word", type="text/template")
   div.submission-word <%= word %>
 
 script(id="stack-word", type="text/template")
-  td.churn.pos.positive
-  td.churn.neg.negative
-  td.ratio
-  td.word
+  span.ratio
+  span.word
+  span.churn.pos.positive
+  span.churn.neg.negative
 
 script(id="log-word", type="text/template")
   span.value <%= value %>

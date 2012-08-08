@@ -17,19 +17,48 @@ Ov.Views.DragWord = Backbone.View.extend({
   // The word element.
   wordMarkup: null,
 
-  // @abstract
-  // The current value.
-  value: null,
-
   /*
    * Build template, get components.
    *
    * @return void.
    */
   initialize: function() {
+
+    // Trackers.
     this.dragTotal = 0;
     this.dragDelta = 0;
+
   },
+
+  /*
+   * Render new values, set word tracker.
+   *
+   * @param {Array} data: Array of [word, value].
+   *
+   * @return void.
+   */
+  // update: function(data) {
+
+  //   // Capture data.
+  //   this.word = data[0];
+  //   this.posChurn = data[2];
+  //   this.negChurn = data[3];
+  //   this.ratio = data[4];
+
+  //   // Compute aggregate churn.
+  //   this.churn = this.posChurn + this.negChurn;
+
+  //   // Render values.
+  //   this.wordMarkup.text(this.word);
+  //   this.posChurnMarkup.text(this.posChurn);
+  //   this.negChurnMarkup.text(this.negChurn);
+  //   this.ratioMarkup.text(this.ratio);
+
+  //   // Render styles.
+  //   this.renderSize();
+  //   this.renderColor();
+
+  // },
 
   /*
    * Bind drag listener.
@@ -39,6 +68,8 @@ Ov.Views.DragWord = Backbone.View.extend({
    * @return void.
    */
   addDrag: function(event) {
+
+    console.log(event);
 
     // Reset listeners and trackers.
     $(window).unbind('keydown.drag');
@@ -164,44 +195,13 @@ Ov.Views.DragWord = Backbone.View.extend({
   },
 
   /*
+   * @abstract
    * Render color.
    *
    * @return void.
    */
   renderColor: function() {
-    if (this.value === 0) this.setNeutral();
-    else if (this.value > 0) this.setPositive();
-    else this.setNegative();
-  },
 
-  /*
-   * Set 0 churn.
-   *
-   * @return void.
-   */
-  setNeutral: function() {
-    this.wordMarkup.removeClass('positive');
-    this.wordMarkup.removeClass('negative');
-  },
-
-  /*
-   * Set positive churn.
-   *
-   * @return void.
-   */
-  setPositive: function() {
-    this.wordMarkup.addClass('positive');
-    this.wordMarkup.removeClass('negative');
-  },
-
-  /*
-   * Set negative churn.
-   *
-   * @return void.
-   */
-  setNegative: function() {
-    this.wordMarkup.addClass('negative');
-    this.wordMarkup.removeClass('positive');
   },
 
   /*
@@ -240,17 +240,42 @@ Ov.Views.DragWord = Backbone.View.extend({
    * @return void.
    */
   endDrag: function() {
-
-    // Unselect the word.
     this.unSelect();
     this.setDragNeutral();
-
-    // Update trackers, strip events.
     this.dragTotal = 0;
     Ov._global.isDragging = false;
     $(window).unbind('.drag');
-
   },
+
+  /*
+   * Set 0 churn.
+   *
+   * @return void.
+   */
+  // setNeutral: function() {
+  //   this.wordMarkup.removeClass('positive');
+  //   this.wordMarkup.removeClass('negative');
+  // },
+
+  /*
+   * Set positive churn.
+   *
+   * @return void.
+   */
+  // setPositive: function() {
+  //   this.wordMarkup.addClass('positive');
+  //   this.wordMarkup.removeClass('negative');
+  // },
+
+  /*
+   * Set negative churn.
+   *
+   * @return void.
+   */
+  // setNegative: function() {
+  //   this.wordMarkup.addClass('negative');
+  //   this.wordMarkup.removeClass('positive');
+  // },
 
   /*
    * Set word color to match positive drag.

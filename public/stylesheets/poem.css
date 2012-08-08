@@ -26,7 +26,7 @@ body{font:200 18px "Source Sans Pro";text-rendering:optimizeLegibility;-webkit-u
 #log{z-index:2;direction:rtl;width:230px;}
 #log.frozen span.word{opacity:.45}
 #overflow{z-index:0;left:520px;opacity:.3}
-#info{z-index:-2;position:fixed;left:700px;top:30px;}
+#info{z-index:-2;position:fixed;left:700px;top:25px;}
 #info .info{font-size:35px;opacity:.6}
 #info .label{color:#000;background:transparent;font-style:italic;font-weight:normal;opacity:.3;padding-left:3px;font-size:16px}
 #info #points.preview{opacity:.5}
@@ -39,3 +39,4 @@ body{font:200 18px "Source Sans Pro";text-rendering:optimizeLegibility;-webkit-u
 .drag-line svg line.positive,.drag-line svg text.positive{stroke:#288bcc;fill:#288bcc}
 .drag-line svg line.negative,.drag-line svg text.negative{stroke:#cc3f28;fill:#cc3f28}
 .drag-line svg line.blocked,.drag-line svg text.blocked{stroke:#b3b3b3;fill:#b3b3b3}
+#hash{position:fixed;bottom:0;right:20px;font-size:5em}

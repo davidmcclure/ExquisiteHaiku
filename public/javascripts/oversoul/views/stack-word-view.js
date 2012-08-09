@@ -54,8 +54,8 @@ Ov.Views.StackWord = Backbone.View.extend({
 
     // Capture data.
     this.word = data[0];
-    this.posChurn = data[2];
-    this.negChurn = data[3];
+    this.posChurn = Math.round(data[2]);
+    this.negChurn = Math.round(data[3]);
     this.ratio = data[4];
 
     // Compute aggregate churn.

@@ -39,4 +39,3 @@ body{font:200 18px "Source Sans Pro";text-rendering:optimizeLegibility;-webkit-u
 .drag-line svg line.positive,.drag-line svg text.positive{stroke:#288bcc;fill:#288bcc}
 .drag-line svg line.negative,.drag-line svg text.negative{stroke:#cc3f28;fill:#cc3f28}
 .drag-line svg line.blocked,.drag-line svg text.blocked{stroke:#b3b3b3;fill:#b3b3b3}
-#hash{position:fixed;bottom:0;right:20px;font-size:5em}

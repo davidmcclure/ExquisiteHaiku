@@ -125,12 +125,12 @@ var compute = exports.compute = function(
 
   // Compute churn.
   var decay = Math.exp(-(now - applied) * decayI);
-  var churn = Math.round(quantity * decay);
+  var churn = quantity * decay;
 
   // Compute rank.
   var b1 = quantity * -decayL;
   var b2 = b1 * decay;
-  var rank = Math.round(((b2 - b1) * 0.001));
+  var rank = ((b2 - b1) * 0.001);
 
   return [rank, churn];
 

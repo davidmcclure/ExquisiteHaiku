@@ -4,6 +4,7 @@
 
 // Module dependencies.
 var scoring = require('./app/scoring/scoring');
+var async = require('async');
 var _ = require('underscore');
 
 // Models.
@@ -30,7 +31,7 @@ var run = exports.run = function(app, config, io) {
   app.set('visibleWords', config.visibleWords);
 
   // Start poems.
-  startPoems(io, function() {});
+  exports.startPoems(io, function() {});
 
 };
 
@@ -39,23 +40,20 @@ var run = exports.run = function(app, config, io) {
  * Restart all running poems.
  *
  * @param {Object} io: The socket.io server.
+ * @param {Funciton} cb: Callback.
  *
  * @return void.
  */
-var startPoems = exports.startPoems = function(io) {
+var startPoems = exports.startPoems = function(io, cb) {
 
   // Get running poems.
-  Poem.find({
-    running: true
-  }, function(err, poems) {
+  Poem.find({ running: true }, function(err, poems) {
 
-    // Walk poems.
-    _.each(poems, function(poem) {
+    // Walk poems async.
+    async.map(poems, function(poem, callback) {
 
-      // Get votes.
-      Vote.find({
-        round: poem.round.id
-      }, function(err, votes) {
+      // Get votes for current round.
+      Vote.find({ round: poem.round.id }, function(err, votes) {
 
         // Register round.
         poem.round.register();
@@ -69,9 +67,12 @@ var startPoems = exports.startPoems = function(io) {
         var emit = scoring.getEmitter(io, poem.id);
         poem.start(scoring.execute, emit, function() {});
 
+        // Continue.
+        callback(null, poem);
+
       });
 
-    });
+    }, function(err, poems) { cb(); });
 
   });
 

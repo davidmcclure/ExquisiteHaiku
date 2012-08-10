@@ -92,14 +92,14 @@ describe('Init', function() {
     });
 
     it('should call startPoems()', function() {
-      sinon.assert.calledWith(init.startPoems, io);
+      sinon.assert.called(init.startPoems, io, function() {});
     });
 
   });
 
   describe('startPoems', function() {
 
-    var user, running, notRunning, vote1, vote2;
+    var user, running, notRunning, vote1, vote2, vote3;
 
     beforeEach(function(done) {
 
@@ -147,14 +147,21 @@ describe('Init', function() {
       // Vote 1.
       var vote1 = new Vote({
         round: running.round.id,
-        word: 'word',
+        word: 'word1',
         quantity: 100
       });
 
       // Vote 2.
       var vote2 = new Vote({
+        round: running.round.id,
+        word: 'word2',
+        quantity: 100
+      });
+
+      // Vote 3.
+      var vote3 = new Vote({
         round: notRunning.round.id,
-        word: 'word',
+        word: 'word3',
         quantity: 100
       });
 
@@ -164,15 +171,14 @@ describe('Init', function() {
         running,
         notRunning,
         vote1,
-        vote2
+        vote2,
+        vote3
       ], helpers.save, function(err, documents) {
-        
-        // Clear out in-memory stores.
-        global.Oversoul = { timers: {}, votes: {} };
 
         // Call startPoems.
-        init.startPoems();
-        done();
+        init.startPoems(io, function() {
+          done();
+        });
 
       });
 
@@ -184,8 +190,10 @@ describe('Init', function() {
       global.Oversoul.votes.should.have.keys(running.round.id);
 
       // Check for vote registrations.
-      global.Oversoul.votes[running.round.id].should.have.keys('word');
-      global.Oversoul.votes[running.round.id]['word'][0].should.eql(100);
+      global.Oversoul.votes[running.round.id].should.have.keys('word1');
+      global.Oversoul.votes[running.round.id]['word1'].length.should.eql(1);
+      global.Oversoul.votes[running.round.id].should.have.keys('word2');
+      global.Oversoul.votes[running.round.id]['word2'].length.should.eql(1);
 
       // Check for timer.
       global.Oversoul.timers.should.have.keys(running.id);

@@ -12,7 +12,7 @@
  */
 exports.save = function(document, callback) {
   document.save(function(err) {
-    callback(null, document);
+    callback(err, document);
   });
 };
 

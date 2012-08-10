@@ -22,11 +22,7 @@ module.exports = function(app, io) {
      * @return void.
      */
     socket.on('join', function(id) {
-
-      // Store id, join room.
-      socket.set('poem', id, function() {});
       socket.join(id);
-
     });
 
     /*

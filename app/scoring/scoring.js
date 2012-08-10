@@ -44,7 +44,12 @@ var score = exports.score = function(id, now, emit, cb) {
 
         // Score.
         var score = compute(
-          vote[0], vote[1], decayL, decayI, now);
+          vote[0],
+          vote[1],
+          decayL,
+          decayI,
+          now
+        );
 
         // Add rank.
         stack[0][1] += score[0];
@@ -64,29 +69,22 @@ var score = exports.score = function(id, now, emit, cb) {
     stack = stack.slice(0, poem.visibleWords);
 
     // Add rank ratios.
-    if (!_.isEmpty(stack)) {
-      stack = ratios(stack);
-    }
+    if (!_.isEmpty(stack)) stack = ratios(stack);
 
-    // Check for round expiration.
+    // If the round is expired.
     if (now > poem.roundExpiration) {
 
-      // Push new word.
+      // Add winning word to poem.
       if (!_.isEmpty(stack)) {
         poem.addWord(stack[0][0]);
         poem.markModified('words');
       }
 
       // If poem is complete, stop.
-      if (poem.syllableCount == 17) {
-        poem.stop();
-      }
+      if (poem.syllableCount == 17) poem.stop();
 
       // Otherwise, create new round.
-      else {
-        poem.newRound();
-        stack = [];
-      }
+      else { poem.newRound(); stack = []; }
 
     }
 
@@ -100,9 +98,7 @@ var score = exports.score = function(id, now, emit, cb) {
     });
 
     // Save poem.
-    poem.save(function(err) {
-      cb();
-    });
+    poem.save(function(err) { cb(); });
 
   });
 

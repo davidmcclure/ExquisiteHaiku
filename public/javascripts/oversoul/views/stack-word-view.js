@@ -12,8 +12,8 @@ Ov.Views.StackWord = Backbone.View.extend({
   },
 
   events: {
-    'mouseenter .word': 'hover',
-    'mousedown .word':  'select'
+    'mouseenter': 'hover',
+    'mousedown':  'select'
   },
 
   /*

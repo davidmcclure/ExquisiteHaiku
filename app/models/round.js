@@ -32,6 +32,23 @@ RoundSchema.virtual('id').get(function() {
 });
 
 
+/*
+ * -----------------
+ * Document methods.
+ * -----------------
+ */
+
+
+/*
+ * Register the round in memory.
+ *
+ * @return void.
+ */
+RoundSchema.methods.register = function() {
+  global.Oversoul.votes[this.id] = {};
+};
+
+
 // Register model.
 mongoose.model('Round', RoundSchema);
 var Round = mongoose.model('Round');

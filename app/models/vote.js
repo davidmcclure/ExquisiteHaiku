@@ -79,12 +79,12 @@ VoteSchema.methods.register = function() {
 
   var vote = [this.quantity, this.applied];
 
-  // If a tracker for the word exists.
+  // If a tracker for the word exists, add to it.
   if (_.has(global.Oversoul.votes[this.round], this.word)) {
     global.Oversoul.votes[this.round][this.word].push(vote);
   }
 
-  // Set votes tracker.
+  // Otherwise, create the tracker.
   else {
     global.Oversoul.votes[this.round][this.word] = [vote];
   }

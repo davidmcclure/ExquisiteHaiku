@@ -16,9 +16,15 @@ require('./db-connect')(config);
 // Create server.
 var app = module.exports.app = express(express.favicon());
 
+// Bootstrap models.
+var modelsPath = __dirname + '/app/models';
+var modelFiles = fs.readdirSync(modelsPath);
+modelFiles.forEach(function(file) {
+  require(modelsPath + '/' + file);
+});
+
 // Boot settings.
 require('./settings')(app);
-require('./init')(app);
 
 // Run server.
 var server = app.listen(3000);
@@ -27,15 +33,11 @@ console.log(
   app.settings.env
 );
 
-// Bootstrap models.
-var modelsPath = __dirname + '/app/models';
-var modelFiles = fs.readdirSync(modelsPath);
-modelFiles.forEach(function(file) {
-  require(modelsPath + '/' + file);
-});
-
 // Run Socket.io.
 var io = module.exports.io = socket.listen(server);
+
+// Run start-up routine.
+require('./init').run(app, io);
 
 // Bootstrap controllers.
 var controllersPath = __dirname + '/app/controllers';

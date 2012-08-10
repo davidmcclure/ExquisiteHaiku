@@ -11,6 +11,10 @@ var randomstring = require('randomstring');
 var round = require('./round');
 var Round = mongoose.model('Round');
 
+// Vote model.
+var vote = require('./vote');
+var Vote = mongoose.model('Vote');
+
 // Schema definition.
 var PoemSchema = new Schema({
   hash : {

@@ -3,7 +3,7 @@
  */
 
 // Module dependencies.
-var vows = require('mocha');
+var mocha = require('mocha');
 var should = require('should');
 var assert = require('assert');
 var Browser = require('zombie');
@@ -43,17 +43,17 @@ describe('Admin Controller', function() {
 
     // User 1.
     user1 = new User({
-        username: 'user1',
-        password: 'password',
-        email: 'user1@test.org'
-      });
+      username: 'user1',
+      password: 'password',
+      email: 'user1@test.org'
+    });
 
     // User 2.
     user2 = new User({
-        username: 'user2',
-        password: 'password',
-        email: 'user2@test.org'
-      });
+      username: 'user2',
+      password: 'password',
+      email: 'user2@test.org'
+    });
 
     // Create unstarted poem.
     unstarted = new Poem({

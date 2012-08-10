@@ -3,7 +3,7 @@
  */
 
 // Module dependencies.
-var vows = require('mocha');
+var mocha = require('mocha');
 var should = require('should');
 var assert = require('assert');
 var sinon = require('sinon');

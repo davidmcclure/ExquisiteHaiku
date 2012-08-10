@@ -3,7 +3,7 @@
  */
 
 // Module dependencies.
-var vows = require('mocha');
+var mocha = require('mocha');
 var should = require('should');
 var assert = require('assert');
 var Browser = require('zombie');
@@ -35,10 +35,10 @@ describe('Register Controller', function() {
 
     // Create a user.
     user = new User({
-        username: 'kara',
-        password: 'password',
-        email: 'kara@test.org'
-      });
+      username: 'kara',
+      password: 'password',
+      email: 'kara@test.org'
+    });
 
     // Save.
     user.save(function(err) { done(); });

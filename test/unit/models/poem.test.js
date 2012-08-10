@@ -27,6 +27,10 @@ var Poem = mongoose.model('Poem');
 require('../../../app/models/round');
 var Round = mongoose.model('Round');
 
+// Vote model.
+require('../../../app/models/vote');
+var Vote = mongoose.model('Vote');
+
 
 /*
  * ----------------------
@@ -783,11 +787,59 @@ describe('Poem', function() {
 
       });
 
-      it('should create a new votes object on globals', function() {
+      it('should create a new votes object on global', function() {
 
         // Add round.
         var round = poem.newRound();
         global.Oversoul.votes[round.id].should.eql({});
+
+      });
+
+      it('should delete votes object for previous round', function() {
+
+        // Add new round.
+        var round1 = poem.newRound();
+
+        // Vote 1.
+        var vote1 = new Vote({
+          round: poem.round.id,
+          word: 'first',
+          quantity: 100
+        });
+
+        // Vote 2.
+        var vote2 = new Vote({
+          round: poem.round.id,
+          word: 'second',
+          quantity: 200
+        });
+
+        // Vote 3.
+        var vote3 = new Vote({
+          round: poem.round.id,
+          word: 'third',
+          quantity: 300
+        });
+
+        // Register votes.
+        vote1.register();
+        vote2.register();
+        vote3.register();
+
+        // Check for current round votes.
+        global.Oversoul.votes[round1.id].should.have.keys(
+          'first',
+          'second',
+          'third'
+        );
+
+        // New round.
+        var round2 = poem.newRound();
+
+        // Check for round1 vote deletion.
+        console.log(global.Oversoul.votes);
+        global.Oversoul.votes.should.not.have.keys(round1.id);
+        global.Oversoul.votes.should.have.keys(round2.id);
 
       });
 

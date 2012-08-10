@@ -308,6 +308,13 @@ PoemSchema.methods.newRound = function() {
   // Create votes array on global.
   global.Oversoul.votes[round.id] = {};
 
+  // Delete votes for previous round.
+  if (this.rounds.length > 1) {
+    delete global.Oversoul.votes[
+      this.rounds[this.rounds.length-2].id
+    ];
+  }
+
   return round;
 
 };

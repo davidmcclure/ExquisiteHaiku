@@ -112,14 +112,16 @@ module.exports = function(app, io) {
         });
 
         // Save.
-        vote.save(function(err) {});
+        vote.save(function(err) {
+
+          // Echo the vote.
+          io.sockets.in(id).emit('vote',
+            word, quantity
+          );
+
+        });
 
       });
-
-      // Echo the vote.
-      io.sockets.in(id).emit('vote',
-        word, quantity
-      );
 
     });
 

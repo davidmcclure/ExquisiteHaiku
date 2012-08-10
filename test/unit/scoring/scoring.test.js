@@ -62,7 +62,6 @@ describe('Scoring', function() {
   // Clear votes object.
   afterEach(function() {
     global.Oversoul.votes = {};
-    global.Oversoul.words = {};
   });
 
   after(function(done) {

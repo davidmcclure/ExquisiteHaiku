@@ -10,7 +10,7 @@ var http = require('http');
 var fs = require('fs');
 
 // Connect to database.
-config = configFile.readConfig('config/config.yaml');
+var config = configFile.readConfig('config/config.yaml');
 require('./db-connect')(config);
 
 // Create server.
@@ -24,7 +24,7 @@ modelFiles.forEach(function(file) {
 });
 
 // Boot settings.
-require('./settings')(app);
+require('./settings')(app, config);
 
 // Run server.
 var server = app.listen(3000);
@@ -37,7 +37,7 @@ console.log(
 var io = module.exports.io = socket.listen(server);
 
 // Run start-up routine.
-require('./init').run(app, io);
+require('./init').run(app, io, config);
 
 // Bootstrap controllers.
 var controllersPath = __dirname + '/app/controllers';

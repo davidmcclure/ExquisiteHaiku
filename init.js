@@ -16,10 +16,11 @@ var Vote = mongoose.model('Vote');
  *
  * @param {Object} app: The node server.
  * @param {Object} io: The socket.io server.
+ * @param {Object} config: The configuration object.
  *
  * @return void.
  */
-var run = exports.run = function(app, io) {
+var run = exports.run = function(app, io, config) {
 
   // In-memory stores.
   global.Oversoul = { timers: {}, votes: {} };

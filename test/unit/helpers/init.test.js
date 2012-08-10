@@ -23,11 +23,23 @@ require('../../db-connect');
 
 describe('Init', function() {
 
+  // Reset Oversoul namespace.
+  afterEach(function() {
+    delete global.Oversoul;
+  });
+
   describe('run', function() {
+
+    it('should shell out "votes" and "timers" objects');
+    it('should set configuration options');
+    it('should call startPoems()');
 
   });
 
   describe('startPoems', function() {
+
+    it('should start running poems');
+    it('should not poems that are not running');
 
   });
 

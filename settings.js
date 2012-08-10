@@ -7,7 +7,7 @@ var express = require('express');
 var mongoStore = require('connect-mongodb');
 
 // Start-up routine.
-module.exports = function(app) {
+module.exports = function(app, config) {
 
   // Configure express.
   app.configure(function() {

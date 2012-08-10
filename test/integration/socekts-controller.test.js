@@ -9,6 +9,7 @@ var assert = require('assert');
 var Browser = require('zombie');
 var async = require('async');
 var helpers = require('../helpers');
+var sinon = require('sinon');
 var io = require('socket.io-client');
 
 // Bootstrap the application.
@@ -31,7 +32,7 @@ var Vote = mongoose.model('Vote');
 describe('Sockets Controller', function() {
 
   var r = 'http://localhost:3000';
-  var user, poem1, poem2, client1, client2;
+  var user, poem1, poem2, client1, client2, client3;
 
   beforeEach(function(done) {
 
@@ -73,7 +74,11 @@ describe('Sockets Controller', function() {
 
     // Connect client2.
     client2 = io.connect(r, {});
-    client2.emit('join', poem2.id);
+    client2.emit('join', poem1.id);
+
+    // Connect client3.
+    client3 = io.connect(r, {});
+    client3.emit('join', poem2.id);
 
     // Create rounds on poems.
     poem1.newRound();
@@ -150,20 +155,7 @@ describe('Sockets Controller', function() {
 
   describe('vote', function() {
 
-    it('should apply the vote', function(done) {
-
-      // Trigger vote event.
-      client1.emit('vote', poem1.id, 'word', 100);
-
-      // Hook onto the 'vote' event.
-      client1.on('vote', function(word, quantity) {
-        global.Oversoul.votes[poem1.round.id].should.have.keys('word');
-        global.Oversoul.votes[poem1.round.id]['word'][0][0].should.eql(100);
-        done();
-      });
-
-    });
-
+    it('should apply the vote');
     it('should echo the vote to players in the same poem');
     it('should not echo the vote to players in other poems');
 

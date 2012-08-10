@@ -15,12 +15,12 @@ var Vote = mongoose.model('Vote');
  * Top-level startup routine.
  *
  * @param {Object} app: The node server.
- * @param {Object} io: The socket.io server.
  * @param {Object} config: The configuration object.
+ * @param {Object} io: The socket.io server.
  *
  * @return void.
  */
-var run = exports.run = function(app, io, config) {
+var run = exports.run = function(app, config, io) {
 
   // In-memory stores.
   global.Oversoul = { timers: {}, votes: {} };
@@ -30,7 +30,7 @@ var run = exports.run = function(app, io, config) {
   app.set('visibleWords', config.visibleWords);
 
   // Start poems.
-  startPoems(io);
+  startPoems(io, function() {});
 
 };
 

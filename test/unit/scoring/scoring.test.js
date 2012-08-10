@@ -148,6 +148,24 @@ describe('Scoring', function() {
 
   });
 
+  describe('round', function() {
+
+    it('should round rank, +churn, -churn', function() {
+
+      var stack = [
+        ['word3', 3.14, 2.14, 1.14],
+        ['word2', 2.14, 1.14, 0.14]
+      ];
+
+      scoring.round(stack).should.eql([
+        ['word3', 3, 2, 1],
+        ['word2', 2, 1, 0]
+      ]);
+
+    });
+
+  });
+
   describe('score', function() {
 
     var poem, round;

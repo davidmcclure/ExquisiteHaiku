@@ -44,12 +44,7 @@ var score = exports.score = function(id, now, emit, cb) {
 
         // Score.
         var score = compute(
-          vote[0],
-          vote[1],
-          decayL,
-          decayI,
-          now
-        );
+          vote[0], vote[1], decayL, decayI, now);
 
         // Add rank.
         stack[0][1] += score[0];
@@ -64,6 +59,9 @@ var score = exports.score = function(id, now, emit, cb) {
 
     // Sort stack by rank.
     stack = sort(stack);
+
+    // Round rank and churn parts.
+    stack = round(stack);
 
     // Truncate to visible words.
     stack = stack.slice(0, poem.visibleWords);
@@ -199,6 +197,28 @@ var ratios = exports.ratios = function(stack) {
   });
 
   return stack;
+
+};
+
+
+/*
+ * Round the rank and churn values.
+ *
+ * @param {Array} stack: The stack.
+ *
+ * @return {Array} stack: The rounded stack.
+ */
+var round = exports.round = function(stack) {
+
+  // Round rank, +churn, -churn.
+  return _.map(stack, function(word) {
+    return [
+      word[0],
+      Math.round(word[1]),
+      Math.round(word[2]),
+      Math.round(word[3])
+    ];
+  });
 
 };
 

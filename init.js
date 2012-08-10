@@ -57,7 +57,7 @@ var startPoems = exports.startPoems = function(io) {
       }, function(err, votes) {
 
         // Register round.
-        global.Oversoul.votes[poem.round.id] = {};
+        poem.round.register();
 
         // Register votes.
         _.each(votes, function(vote) {

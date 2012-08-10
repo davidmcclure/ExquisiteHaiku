@@ -310,7 +310,7 @@ PoemSchema.methods.newRound = function() {
   this.rounds.push(round);
 
   // Create votes array on global.
-  global.Oversoul.votes[round.id] = {};
+  round.register();
 
   // If previous rounds exist.
   if (this.rounds.length > 1) {

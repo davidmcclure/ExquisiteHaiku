@@ -274,10 +274,8 @@ module.exports = function(app, io) {
     auth.ownsPoem,
     function(req, res) {
 
-      // Broadcast callback.
-      var emit = function(result) {
-        io.sockets.in(req.poem.id).emit('slice', result);
-      };
+      // Get broadcast callback.
+      var emit = scoring.getEmitter(io, req.poem.id);
 
       // Create starting round, start.
       if (req.poem.unstarted) req.poem.newRound();

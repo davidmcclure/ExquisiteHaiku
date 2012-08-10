@@ -64,12 +64,8 @@ var startPoems = exports.startPoems = function(io) {
           vote.register();
         });
 
-        // Broadcast callback.
-        var emit = function(result) {
-          io.sockets.in(poem.id).emit('slice', result);
-        };
-
         // Start poem.
+        var emit = scoring.getEmitter(io, poem.id);
         poem.start(scoring.execute, emit, function() {});
 
       });

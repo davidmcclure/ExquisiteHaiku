@@ -224,6 +224,21 @@ var round = exports.round = function(stack) {
 
 
 /*
+ * Generate the data slice emitter.
+ *
+ * @param {Object} io: The socket.io server.
+ * @param {String} id: The poem id.
+ *
+ * @return void.
+ */
+var getEmitter = exports.getEmitter = function(io, id) {
+  return function(result) {
+    io.sockets.in(id).emit('slice', result);
+  };
+};
+
+
+/*
  * Call score() with current Date.
  *
  * @param {Number} id: The id of the poem to score.

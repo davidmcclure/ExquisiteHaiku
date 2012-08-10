@@ -84,4 +84,17 @@ describe('Round', function() {
 
   });
 
+  describe('methods', function() {
+
+    describe('register', function() {
+
+      it('should create the empty votes tracker', function() {
+        round.register();
+        global.Oversoul.votes.should.have.keys(round.id);
+      }); 
+
+    });
+
+  });
+
 });

@@ -837,9 +837,22 @@ describe('Poem', function() {
         var round2 = poem.newRound();
 
         // Check for round1 vote deletion.
-        console.log(global.Oversoul.votes);
         global.Oversoul.votes.should.not.have.keys(round1.id);
         global.Oversoul.votes.should.have.keys(round2.id);
+
+      });
+
+      it('should stop the poem if no votes in previous round', function() {
+
+        // Spy on stop().
+        poem.stop = sinon.spy();
+
+        // Add new round.
+        poem.newRound();
+
+        // Add new round, check for stop().
+        poem.newRound();
+        sinon.assert.called(poem.stop);
 
       });
 

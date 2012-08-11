@@ -113,6 +113,12 @@ describe('Sockets Controller', function() {
 
   });
 
+  describe('join', function() {
+
+    it('should join the socket');
+
+  });
+
   describe('validate', function() {
 
     it('should call with false for invalid word', function(done) {

@@ -21,12 +21,20 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
     Socket.s = io.connect();
 
     /*
-     * Connect to poem.
+     * Request connection to poem.
      *
      * @return void.
      */
     Socket.s.on('connect', function() {
       Socket.s.emit('join', Poem._id);
+    });
+
+    /*
+     * When connected to poem.
+     *
+     * @return void.
+     */
+    Socket.s.on('join', function() {
       Ov.vent.trigger('socket:connected');
     });
 

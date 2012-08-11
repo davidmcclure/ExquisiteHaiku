@@ -23,6 +23,7 @@ module.exports = function(app, io) {
      */
     socket.on('join', function(id) {
       socket.join(id);
+      socket.emit('join');
     });
 
     /*

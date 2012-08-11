@@ -13,15 +13,17 @@ var Vote = mongoose.model('Vote');
 
 
 /*
- * Top-level startup routine.
+ * Create memory stores for votes and timers, restart
+ * running poems.
  *
  * @param {Object} app: The node server.
  * @param {Object} config: The configuration object.
  * @param {Object} io: The socket.io server.
+ * @param {Function} cb: Callback.
  *
  * @return void.
  */
-var run = exports.run = function(app, config, io) {
+module.exports = function(app, config, io, cb) {
 
   // In-memory stores.
   global.Oversoul = { timers: {}, votes: {} };
@@ -29,22 +31,6 @@ var run = exports.run = function(app, config, io) {
   // Set application constants.
   app.set('sliceInterval', config.sliceInterval);
   app.set('visibleWords', config.visibleWords);
-
-  // Start poems.
-  exports.startPoems(io, function() {});
-
-};
-
-
-/*
- * Restart all running poems.
- *
- * @param {Object} io: The socket.io server.
- * @param {Funciton} cb: Callback.
- *
- * @return void.
- */
-var startPoems = exports.startPoems = function(io, cb) {
 
   // Get running poems.
   Poem.find({ running: true }, function(err, poems) {
@@ -66,6 +52,9 @@ var startPoems = exports.startPoems = function(io, cb) {
         // Start poem.
         var emit = scoring.getEmitter(io, poem.id);
         poem.start(scoring.execute, emit, function() {});
+
+        if (process.env.NODE_ENV != 'testing')
+          console.log('Started %s', poem.hash);
 
         // Continue.
         callback(null, poem);

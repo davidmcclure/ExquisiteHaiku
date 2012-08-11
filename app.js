@@ -29,7 +29,7 @@ var server = app.listen(3000);
 var io = module.exports.io = socket.listen(server);
 
 // Start poems.
-require('./init').run(app, config, io);
+require('./init')(app, config, io, function() {});
 
 // Bootstrap controllers.
 var controllersPath = __dirname + '/app/controllers';

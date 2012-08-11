@@ -68,16 +68,21 @@ describe('Sockets Controller', function() {
       visibleWords : 500
     });
 
+    var options = {
+      transports: ['websocket'],
+      'force new connection': true
+    };
+
     // Connect client1.
-    client1 = io.connect(r, {});
+    client1 = io.connect(r, options);
     client1.emit('join', poem1.id);
 
     // Connect client2.
-    client2 = io.connect(r, {});
+    client2 = io.connect(r, options);
     client2.emit('join', poem1.id);
 
     // Connect client3.
-    client3 = io.connect(r, {});
+    client3 = io.connect(r, options);
     client3.emit('join', poem2.id);
 
     // Create rounds on poems.
@@ -115,7 +120,12 @@ describe('Sockets Controller', function() {
 
   describe('join', function() {
 
-    it('should join the socket');
+    it('should join the socket', function(done) {
+      client1.on('joined', function() {
+        client1.disconnect();
+        done();
+      });
+    });
 
   });
 
@@ -123,29 +133,48 @@ describe('Sockets Controller', function() {
 
     it('should call with false for invalid word', function(done) {
 
-      // Trigger 'validate' with non-word.
-      client1.emit('validate', poem1.id, 'invalidword', function(result) {
-        result.should.be.false;
-        done();
+      // Catch join.
+      client1.on('joined', function() {
+
+        // Trigger 'validate' with non-word.
+        client1.emit('validate', poem1.id, 'invalidword', function(result) {
+          result.should.be.false;
+          client1.disconnect();
+          done();
+        });
+
       });
 
     });
 
     it('should call with false when word does not fit', function(done) {
 
-      // Trigger 'validate' with word with too many syllables.
-      client1.emit('validate', poem1.id, 'excessive', function(result) {
-        result.should.be.false;
-        done();
+      // Catch join.
+      client1.on('joined', function() {
+
+        // Trigger 'validate' with word with too many syllables.
+        client1.emit('validate', poem1.id, 'excessive', function(result) {
+          result.should.be.false;
+          client1.disconnect();
+          done();
+        });
+
       });
+
     });
 
     it('should call with true when word fits', function(done) {
 
-      // Trigger 'validate' with valid word.
-      client1.emit('validate', poem1.id, 'profits', function(result) {
-        result.should.be.true;
-        done();
+      // Catch join.
+      client1.on('joined', function() {
+
+        // Trigger 'validate' with valid word.
+        client1.emit('validate', poem1.id, 'profits', function(result) {
+          result.should.be.true;
+          client1.disconnect();
+          done();
+        });
+
       });
 
     });

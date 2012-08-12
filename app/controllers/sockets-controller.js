@@ -4,6 +4,7 @@
 
 // Module dependencies.
 var syllables = require('../../lib/syllables');
+var async = require('async');
 var _ = require('underscore');
 
 // Models.
@@ -23,7 +24,7 @@ module.exports = function(app, io) {
      */
     socket.on('join', function(id) {
       socket.join(id);
-      socket.emit('joined');
+      socket.emit('join:complete');
     });
 
     /*
@@ -67,24 +68,38 @@ module.exports = function(app, io) {
       // Get the poem.
       Poem.findById(id, function(err, poem) {
 
+        // Votes array.
+        var votes = [];
+
         // Walk the words.
         _.each(words, function(word) {
 
           // Create the vote.
-          var vote = new Vote({
+          votes.push(new Vote({
             round: poem.round.id,
-            word: word,
-            quantity: poem.submissionVal
+            quantity: poem.submissionVal,
+            word: word
+          }));
+
+        });
+
+        // Save the vote collection.
+        async.map(votes, function(vote, cb) {
+
+          // Save the vote.
+          vote.save(function(err) {
+
+            // Echo the vote.
+            io.sockets.in(id).emit('vote',
+              vote.word, poem.submissionVal);
+
+            // Continue.
+            cb(null, vote);
+
           });
 
-          // Save.
-          vote.save(function(err) {});
-
-          // Echo the vote.
-          io.sockets.in(id).emit('vote',
-            word, poem.submissionVal
-          );
-
+        }, function (err, votes) {
+          socket.emit('submit:complete');
         });
 
       });
@@ -117,8 +132,7 @@ module.exports = function(app, io) {
 
           // Echo the vote.
           io.sockets.in(id).emit('vote',
-            word, quantity
-          );
+            word, quantity);
 
         });
 

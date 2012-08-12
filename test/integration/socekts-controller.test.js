@@ -121,8 +121,7 @@ describe('Sockets Controller', function() {
   describe('join', function() {
 
     it('should join the socket', function(done) {
-      client1.on('joined', function() {
-        client1.disconnect();
+      client1.on('join:complete', function() {
         done();
       });
     });
@@ -134,12 +133,11 @@ describe('Sockets Controller', function() {
     it('should call with false for invalid word', function(done) {
 
       // Catch join.
-      client1.on('joined', function() {
+      client1.on('join:complete', function() {
 
         // Trigger 'validate' with non-word.
         client1.emit('validate', poem1.id, 'invalidword', function(result) {
           result.should.be.false;
-          client1.disconnect();
           done();
         });
 
@@ -150,12 +148,11 @@ describe('Sockets Controller', function() {
     it('should call with false when word does not fit', function(done) {
 
       // Catch join.
-      client1.on('joined', function() {
+      client1.on('join:complete', function() {
 
         // Trigger 'validate' with word with too many syllables.
         client1.emit('validate', poem1.id, 'excessive', function(result) {
           result.should.be.false;
-          client1.disconnect();
           done();
         });
 
@@ -166,12 +163,11 @@ describe('Sockets Controller', function() {
     it('should call with true when word fits', function(done) {
 
       // Catch join.
-      client1.on('joined', function() {
+      client1.on('join:complete', function() {
 
         // Trigger 'validate' with valid word.
         client1.emit('validate', poem1.id, 'profits', function(result) {
           result.should.be.true;
-          client1.disconnect();
           done();
         });
 
@@ -183,8 +179,41 @@ describe('Sockets Controller', function() {
 
   describe('submit', function() {
 
-    it('should apply the starting votes');
-    it('should echo each of the starting votes');
+    var words = ['word1', 'word2', 'word3'];
+
+    it('should apply the votes');
+
+    it('should echo the votes', function(done) {
+
+      // Spy on the 'vote' event callback.
+      var voteCallback1 = sinon.spy();
+      var voteCallback2 = sinon.spy();
+      var voteCallback3 = sinon.spy();
+      client1.on('vote', voteCallback1);
+      client2.on('vote', voteCallback2);
+      client3.on('vote', voteCallback3);
+
+      // Catch join events for all clients.
+      client1.on('join:complete', function() {
+
+        // Trigger 'submit'.
+        client1.emit('submit', poem1.id, words);
+
+        // Catch submit:complete.
+        client1.on('submit:complete', function() {
+
+          // Check client1 echoes.
+          voteCallback1.callCount.should.eql(3);
+          sinon.assert.calledWith(voteCallback1, 'word1', 100);
+          sinon.assert.calledWith(voteCallback1, 'word2', 100);
+          sinon.assert.calledWith(voteCallback1, 'word3', 100);
+          done();
+
+        });
+
+      });
+
+    });
 
   });
 

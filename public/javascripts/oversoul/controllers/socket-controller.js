@@ -34,7 +34,7 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
      *
      * @return void.
      */
-    Socket.s.on('joined', function() {
+    Socket.s.on('join:complete', function() {
       Ov.vent.trigger('socket:connected');
     });
 

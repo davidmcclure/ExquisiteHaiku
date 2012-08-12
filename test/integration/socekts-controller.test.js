@@ -193,13 +193,13 @@ describe('Sockets Controller', function() {
       client2.on('vote', voteCallback2);
       client3.on('vote', voteCallback3);
 
-      // Catch join events for all clients.
+      // Catch 'join'.
       client1.on('join:complete', function() {
 
         // Trigger 'submit'.
         client1.emit('submit', poem1.id, words);
 
-        // Catch submit:complete.
+        // Catch 'submit:complete'.
         client1.on('submit:complete', function() {
 
           // Check client1 echoes.

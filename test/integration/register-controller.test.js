@@ -8,13 +8,17 @@ var should = require('should');
 var assert = require('assert');
 var Browser = require('zombie');
 var helpers = require('../helpers');
+var config = require('yaml-config');
+
+// Models.
+var User = mongoose.model('User');
+
+// Load configuration.
+var root = config.readConfig('test/config.yaml').root;
 
 // Bootstrap the application.
 process.env.NODE_ENV = 'testing';
 var server = require('../../app');
-
-// Models.
-var User = mongoose.model('User');
 
 /*
  * --------------------------------------
@@ -25,7 +29,6 @@ var User = mongoose.model('User');
 
 describe('Register Controller', function() {
 
-  var r = 'http://localhost:3000/';
   var browser, user;
 
   // Create user.
@@ -57,7 +60,7 @@ describe('Register Controller', function() {
     it('should render the form when there is not a user session', function(done) {
 
       // Hit the install route.
-      browser.visit(r+'admin/register', function() {
+      browser.visit(root+'admin/register', function() {
 
         // Check for form and fields.
         browser.query('form.install').should.be.ok;
@@ -74,7 +77,7 @@ describe('Register Controller', function() {
     it('should redirect when there is a user session', function(done) {
 
       // GET admin/login.
-      browser.visit(r+'admin/login', function() {
+      browser.visit(root+'admin/login', function() {
 
         // Fill in form, submit.
         browser.fill('username', 'kara');
@@ -82,7 +85,7 @@ describe('Register Controller', function() {
         browser.pressButton('Submit', function() {
 
           // Hit the register route as a logged-in user.
-          browser.visit(r+'admin/register', function() {
+          browser.visit(root+'admin/register', function() {
 
             // Check for redirect.
             browser.location.pathname.should.eql('/admin/poems');
@@ -105,7 +108,7 @@ describe('Register Controller', function() {
       it('should flash error for no username', function(done) {
 
         // GET admin/install.
-        browser.visit(r+'admin/register', function() {
+        browser.visit(root+'admin/register', function() {
 
           // Fill in form.
           browser.pressButton('Submit', function() {
@@ -124,7 +127,7 @@ describe('Register Controller', function() {
       it('should flash error for username < 4 characters', function(done) {
 
         // GET admin/install.
-        browser.visit(r+'admin/register', function() {
+        browser.visit(root+'admin/register', function() {
 
           // Fill in form, submit.
           browser.fill('username', 'dav');
@@ -144,7 +147,7 @@ describe('Register Controller', function() {
       it('should flash error for username > 20 characters', function(done) {
 
         // GET admin/install.
-        browser.visit(r+'admin/register', function() {
+        browser.visit(root+'admin/register', function() {
 
           // Fill in form, submit.
           browser.fill('username', 'srdavidwilliamcclurejr');
@@ -164,7 +167,7 @@ describe('Register Controller', function() {
       it('should flash error for duplicate username', function(done) {
 
         // GET admin/install.
-        browser.visit(r+'admin/register', function() {
+        browser.visit(root+'admin/register', function() {
 
           // Fill in form, submit.
           browser.fill('username', 'kara');
@@ -184,7 +187,7 @@ describe('Register Controller', function() {
       it('should not flash an error when the username is valid', function(done) {
 
         // GET admin/install.
-        browser.visit(r+'admin/register', function() {
+        browser.visit(root+'admin/register', function() {
 
           // Fill in form, submit.
           browser.fill('username', 'david');
@@ -208,7 +211,7 @@ describe('Register Controller', function() {
       it('should flash error for no email', function(done) {
 
         // GET admin/install.
-        browser.visit(r+'admin/register', function() {
+        browser.visit(root+'admin/register', function() {
 
           // Fill in form.
           browser.pressButton('Submit', function() {
@@ -227,7 +230,7 @@ describe('Register Controller', function() {
       it('should flash error for duplicate email', function(done) {
 
         // GET admin/install.
-        browser.visit(r+'admin/register', function() {
+        browser.visit(root+'admin/register', function() {
 
           // Fill in form, submit.
           browser.fill('email', 'kara@test.org');
@@ -247,7 +250,7 @@ describe('Register Controller', function() {
       it('should flash error for invalid email', function(done) {
 
         // GET admin/install.
-        browser.visit(r+'admin/register', function() {
+        browser.visit(root+'admin/register', function() {
 
           // Fill in form, submit.
           browser.fill('email', 'invalid');
@@ -267,7 +270,7 @@ describe('Register Controller', function() {
       it('should not flash an error when the username is valid', function(done) {
 
         // GET admin/install.
-        browser.visit(r+'admin/register', function() {
+        browser.visit(root+'admin/register', function() {
 
           // Fill in form, submit.
           browser.fill('username', 'david');
@@ -291,7 +294,7 @@ describe('Register Controller', function() {
       it('should flash error for no password', function(done) {
 
         // GET admin/install.
-        browser.visit(r+'admin/register', function() {
+        browser.visit(root+'admin/register', function() {
 
           // Fill in form.
           browser.pressButton('Submit', function() {
@@ -310,7 +313,7 @@ describe('Register Controller', function() {
       it('should flash error for password < 6 characters', function(done) {
 
         // GET admin/install.
-        browser.visit(r+'admin/register', function() {
+        browser.visit(root+'admin/register', function() {
 
           // Fill in form, submit.
           browser.fill('password', 'pass');
@@ -330,7 +333,7 @@ describe('Register Controller', function() {
       it('should not flash an error when the password is valid', function(done) {
 
         // GET admin/install.
-        browser.visit(r+'admin/register', function() {
+        browser.visit(root+'admin/register', function() {
 
           // Fill in form, submit.
           browser.fill('password', 'password');
@@ -354,7 +357,7 @@ describe('Register Controller', function() {
       it('should flash error for no confirmation', function(done) {
 
         // GET admin/install.
-        browser.visit(r+'admin/register', function() {
+        browser.visit(root+'admin/register', function() {
 
           // Fill in form.
           browser.pressButton('Submit', function() {
@@ -373,7 +376,7 @@ describe('Register Controller', function() {
       it('should flash error for mismatch with password', function(done) {
 
         // GET admin/install.
-        browser.visit(r+'admin/register', function() {
+        browser.visit(root+'admin/register', function() {
 
           // Fill in form, submit.
           browser.fill('password', 'password');
@@ -394,7 +397,7 @@ describe('Register Controller', function() {
       it('should not flash an error when the confirmation is valid', function(done) {
 
         // GET admin/install.
-        browser.visit(r+'admin/register', function() {
+        browser.visit(root+'admin/register', function() {
 
           // Fill in form, submit.
           browser.fill('password', 'password');
@@ -419,7 +422,7 @@ describe('Register Controller', function() {
       it('should create a new user and redirect for valid form', function(done) {
 
         // GET admin/install.
-        browser.visit(r+'admin/register', function() {
+        browser.visit(root+'admin/register', function() {
 
           // Fill in form, submit.
           browser.fill('username', 'david');

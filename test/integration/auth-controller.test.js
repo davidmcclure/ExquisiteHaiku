@@ -8,13 +8,17 @@ var should = require('should');
 var assert = require('assert');
 var Browser = require('zombie');
 var helpers = require('../helpers');
+var config = require('yaml-config');
+
+// Models.
+var User = mongoose.model('User');
+
+// Load configuration.
+var root = config.readConfig('test/config.yaml').root;
 
 // Bootstrap the application.
 process.env.NODE_ENV = 'testing';
 var server = require('../../app');
-
-// Models.
-var User = mongoose.model('User');
 
 
 /*
@@ -26,7 +30,6 @@ var User = mongoose.model('User');
 
 describe('Auth Controller', function() {
 
-  var r = 'http://localhost:3000/';
   var browser, user;
 
   // Create user.
@@ -58,7 +61,7 @@ describe('Auth Controller', function() {
     it('should render the form when there is not a user session', function(done) {
 
       // GET admin/login.
-      browser.visit(r+'admin/login', function() {
+      browser.visit(root+'admin/login', function() {
 
         // Check for form and fields.
         browser.query('form').should.be.ok;
@@ -74,7 +77,7 @@ describe('Auth Controller', function() {
     it('should redirect when there is a user session', function(done) {
 
       // GET admin/login.
-      browser.visit(r+'admin/login', function() {
+      browser.visit(root+'admin/login', function() {
 
         // Fill in form, submit.
         browser.fill('username', 'david');
@@ -82,7 +85,7 @@ describe('Auth Controller', function() {
         browser.pressButton('Submit', function() {
 
           // Hit the login route as a logged-in user.
-          browser.visit(r+'admin/login', function() {
+          browser.visit(root+'admin/login', function() {
 
             // Check for redirect.
             browser.location.pathname.should.eql('/admin/poems');
@@ -105,7 +108,7 @@ describe('Auth Controller', function() {
       it('should flash error for no username', function(done) {
 
         // GET admin/login.
-        browser.visit(r+'admin/login', function() {
+        browser.visit(root+'admin/login', function() {
 
           // Fill in form.
           browser.pressButton('Submit', function() {
@@ -124,7 +127,7 @@ describe('Auth Controller', function() {
       it('should flash error for non-existent username', function(done) {
 
         // GET admin/login.
-        browser.visit(r+'admin/login', function() {
+        browser.visit(root+'admin/login', function() {
 
           // Fill in form, submit.
           browser.fill('username', 'kara');
@@ -144,7 +147,7 @@ describe('Auth Controller', function() {
       it('should not flash an error when the username is valid', function(done) {
 
         // GET admin/login.
-        browser.visit(r+'admin/login', function() {
+        browser.visit(root+'admin/login', function() {
 
           // Fill in form, submit.
           browser.fill('username', 'david');
@@ -168,7 +171,7 @@ describe('Auth Controller', function() {
       it('should flash error for no password', function(done) {
 
         // GET admin/login.
-        browser.visit(r+'admin/login', function() {
+        browser.visit(root+'admin/login', function() {
 
           // Fill in form.
           browser.pressButton('Submit', function() {
@@ -187,7 +190,7 @@ describe('Auth Controller', function() {
       it('should flash error for incorrect password', function(done) {
 
         // GET admin/login.
-        browser.visit(r+'admin/login', function() {
+        browser.visit(root+'admin/login', function() {
 
           // Fill in form, submit.
           browser.fill('username', 'david');
@@ -212,7 +215,7 @@ describe('Auth Controller', function() {
       it('should log in and redirect for valid form', function(done) {
 
         // GET admin/login.
-        browser.visit(r+'admin/login', function() {
+        browser.visit(root+'admin/login', function() {
 
           // Fill in form, submit.
           browser.fill('username', 'david');
@@ -238,7 +241,7 @@ describe('Auth Controller', function() {
     it('should log out a logged-in user', function(done) {
 
       // GET admin/login.
-      browser.visit(r+'admin/login', function() {
+      browser.visit(root+'admin/login', function() {
 
         // Fill in form, submit.
         browser.fill('username', 'david');
@@ -246,7 +249,7 @@ describe('Auth Controller', function() {
         browser.pressButton('Submit', function() {
 
           // Hit the logout route as a logged-in user.
-          browser.visit(r+'admin/logout', function() {
+          browser.visit(root+'admin/logout', function() {
 
             // Check for redirect.
             browser.location.pathname.should.eql('/admin/login');

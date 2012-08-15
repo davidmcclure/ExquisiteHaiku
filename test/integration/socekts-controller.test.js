@@ -11,17 +11,21 @@ var async = require('async');
 var helpers = require('../helpers');
 var sinon = require('sinon');
 var io = require('socket.io-client');
+var config = require('yaml-config');
 var _ = require('underscore');
-
-// Bootstrap the application.
-process.env.NODE_ENV = 'testing';
-var server = require('../../app');
 
 // Models.
 var User = mongoose.model('User');
 var Poem = mongoose.model('Poem');
 var Round = mongoose.model('Round');
 var Vote = mongoose.model('Vote');
+
+// Load configuration.
+var root = config.readConfig('test/config.yaml').root;
+
+// Bootstrap the application.
+process.env.NODE_ENV = 'testing';
+var server = require('../../app');
 
 /*
  * -------------------------------------
@@ -32,7 +36,6 @@ var Vote = mongoose.model('Vote');
 
 describe('Sockets Controller', function() {
 
-  var r = 'http://localhost:3000';
   var user, poem1, poem2, client1, client2, client3;
 
   beforeEach(function(done) {
@@ -75,15 +78,15 @@ describe('Sockets Controller', function() {
     };
 
     // Connect client1.
-    client1 = io.connect(r, options);
+    client1 = io.connect(root, options);
     client1.emit('join', poem1.id);
 
     // Connect client2.
-    client2 = io.connect(r, options);
+    client2 = io.connect(root, options);
     client2.emit('join', poem1.id);
 
     // Connect client3.
-    client3 = io.connect(r, options);
+    client3 = io.connect(root, options);
     client3.emit('join', poem2.id);
 
     // Create rounds on poems.

@@ -107,6 +107,34 @@ describe('Scoring', function() {
 
   });
 
+  describe('merge', function() {
+
+    var stack, score;
+
+    beforeEach(function() {
+      stack = [['word', 0, 0, 0]];
+    });
+
+    it('should add rank', function() {
+      score = [100, 200];
+      scoring.merge(stack, score);
+      stack[0][1].should.eql(100);
+    });
+
+    it('should add negative churn', function() {
+      score = [100, -200];
+      scoring.merge(stack, score);
+      stack[0][3].should.eql(-200);
+    });
+
+    it('should add positive churn', function() {
+      score = [100, 200];
+      scoring.merge(stack, score);
+      stack[0][2].should.eql(200);
+    });
+
+  });
+
   describe('sort', function() {
 
     it('should sort on the second element', function() {

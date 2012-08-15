@@ -46,12 +46,8 @@ var score = exports.score = function(id, now, emit, cb) {
         var score = compute(
           vote[0], vote[1], decayL, decayI, now);
 
-        // Add rank.
-        stack[0][1] += score[0];
-
-        // Add churn.
-        if (score[1] > 0) stack[0][2] += score[1];
-        else stack[0][3] += score[1];
+        // Merge vote.
+        merge(stack, score);
 
       });
 
@@ -163,6 +159,28 @@ var compute = exports.compute = function(
   At dawn I pinched the little mound in my fingers
   And threw it into the wind.
   */
+
+};
+
+
+/*
+ * Merge new vote score into stack.
+ *
+ * @param {Array} stack: The stack.
+ * @param {Array} score: [rank, churn] for vote.
+ *
+ * @return {Array} stack: The updated stack.
+ */
+var merge = exports.merge = function(stack, score) {
+
+  // Add rank.
+  stack[0][1] += score[0];
+
+  // Add churn.
+  if (score[1] > 0) stack[0][2] += score[1];
+  else stack[0][3] += score[1];
+
+  return stack;
 
 };
 

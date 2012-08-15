@@ -7,20 +7,25 @@ var v = 'public/javascripts/vendor/';
 
 load(
 
-  // jQuery and Underscore.
+  // jQuery, Underscore, Moment, d3.
   v+'jquery/jquery.js',
-  v+'underscore/underscore.js'
+  v+'underscore/underscore.js',
+  v+'moment/moment.js',
+  v+'d3/d3.js'
 
 ).then(
 
-  // Backbone and Socket.io.
-  v+'backbone/backbone.js',
+  // Backbone.
+  v+'backbone/backbone.js'
+
+).then(
+
+  // Marionette and Socket.io.
   v+'backbone/marionette.js'
 
 ).then(
 
   // Backbone modules.
-  v+'backbone/backbone-query.js',
   v+'backbone/backbone-localstorage.js'
 
 ).then(
@@ -37,13 +42,20 @@ load(
   a+'views/poem-view.js',
   a+'views/blank-view.js',
   a+'views/stack-view.js',
-  a+'views/word-view.js',
+  a+'views/stack-word-view.js',
+  a+'views/log-view.js',
+  a+'views/log-word-view.js',
+  a+'views/line-view.js',
+  a+'views/points-view.js',
+  a+'views/timer-view.js',
 
   // Controllers
   a+'controllers/poem-controller.js',
   a+'controllers/socket-controller.js',
   a+'controllers/round-controller.js',
-  a+'controllers/stacks-controller.js'
+  a+'controllers/stack-controller.js',
+  a+'controllers/log-controller.js',
+  a+'controllers/info-controller.js'
 
 ).thenRun(function() {
 

@@ -20,9 +20,8 @@ describe('Round Collection', function() {
   describe('getCurrentRound', function() {
 
     beforeEach(function() {
-      Poem = {
-        rounds: [{_id: 'round1'}, {_id: 'round2'}]
-      };
+      Poem.rounds = [{_id: 'round1'}, {_id: 'round2'}];
+      Poem.seedCapital = 1000;
     });
 
     describe('when currentRound is not null', function() {
@@ -56,8 +55,9 @@ describe('Round Collection', function() {
       roundCollection.recordSubmission();
 
       // Check for record.
-      var record = roundCollection.query({round:1});
-      expect(record.length).toEqual(1);
+      var records = roundCollection.where({id:1});
+      expect(records.length).toEqual(1);
+      expect(records[0].get('points')).toEqual(1000);
 
     });
 

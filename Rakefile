@@ -1,4 +1,4 @@
-task :default => 'test:mocha'
+task :default => 'test:server'
 
 begin
   require 'jasmine'
@@ -7,8 +7,8 @@ end
 
 namespace :test do
 
-  desc 'Run the Mocha test suite'
-  task :mocha do
+  desc 'Run the Mocha suite'
+  task :server do
     sh %{mocha test/**/**/*.test.js test/**/*.test.js}
     Rake::Task['bench:poem'].execute
   end

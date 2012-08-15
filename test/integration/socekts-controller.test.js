@@ -11,6 +11,7 @@ var async = require('async');
 var helpers = require('../helpers');
 var sinon = require('sinon');
 var io = require('socket.io-client');
+var _ = require('underscore');
 
 // Bootstrap the application.
 process.env.NODE_ENV = 'testing';
@@ -181,7 +182,39 @@ describe('Sockets Controller', function() {
 
     var words = ['word1', 'word2', 'word3'];
 
-    it('should apply the votes');
+    it('should apply the votes', function(done) {
+
+      // Catch 'join'.
+      client1.on('join:complete', function() {
+
+        // Trigger 'submit'.
+        client1.emit('submit', poem1.id, words);
+
+        // Catch 'submit:complete'.
+        client1.on('submit:complete', function() {
+
+          // Check for votes.
+          Vote.find({ round: poem1.round.id }, function(err, votes) {
+
+            // Get words array.
+            var words = _.map(votes, function(vote) {
+              return vote.word;
+            });
+
+            // Check for words.
+            words.length.should.eql(3);
+            words.should.include('word1');
+            words.should.include('word2');
+            words.should.include('word3');
+            done();
+
+          });
+
+        });
+
+      });
+
+    });
 
     it('should echo the votes', function(done) {
 
@@ -202,12 +235,26 @@ describe('Sockets Controller', function() {
         // Catch 'submit:complete'.
         client1.on('submit:complete', function() {
 
-          // Check client1 echoes.
-          voteCallback1.callCount.should.eql(3);
-          sinon.assert.calledWith(voteCallback1, 'word1', 100);
-          sinon.assert.calledWith(voteCallback1, 'word2', 100);
-          sinon.assert.calledWith(voteCallback1, 'word3', 100);
-          done();
+          // Wait for echo callbacks to execute.
+          setTimeout(function() {
+
+            // Check client1 echoes.
+            voteCallback1.callCount.should.eql(3);
+            sinon.assert.calledWith(voteCallback1, 'word1', 100);
+            sinon.assert.calledWith(voteCallback1, 'word2', 100);
+            sinon.assert.calledWith(voteCallback1, 'word3', 100);
+
+            // Check client2 echoes.
+            voteCallback2.callCount.should.eql(3);
+            sinon.assert.calledWith(voteCallback2, 'word1', 100);
+            sinon.assert.calledWith(voteCallback2, 'word2', 100);
+            sinon.assert.calledWith(voteCallback2, 'word3', 100);
+
+            // Check client3 echoes.
+            voteCallback3.callCount.should.eql(0);
+            done();
+
+          }, 100);
 
         });
 
@@ -220,7 +267,9 @@ describe('Sockets Controller', function() {
   describe('vote', function() {
 
     it('should apply the vote');
+
     it('should echo the vote to players in the same poem');
+
     it('should not echo the vote to players in other poems');
 
   });

@@ -83,8 +83,8 @@ module.exports = function(app, io) {
 
         });
 
-        // Save the vote collection.
-        async.map(votes, function(vote, cb) {
+        // Save worker.
+        var save = function(vote, cb) {
 
           // Save the vote.
           vote.save(function(err) {
@@ -98,7 +98,10 @@ module.exports = function(app, io) {
 
           });
 
-        }, function (err, votes) {
+        };
+
+        // Execute save, notify completion.
+        async.map(votes, save, function (err, votes) {
           socket.emit('submit:complete');
         });
 
@@ -133,6 +136,9 @@ module.exports = function(app, io) {
           // Echo the vote.
           io.sockets.in(id).emit('vote',
             word, quantity);
+
+          // Notify completion.
+          socket.emit('vote:complete');
 
         });
 

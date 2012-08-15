@@ -26,13 +26,8 @@ Ov.Views.Blank = Backbone.View.extend({
     this.__stack = this.stackTemplate();
     this.__word = this.wordTemplate();
 
-    // Buckets.
-    this.words = [];
-    this.cache = { valid: [], invalid: [] };
-
-    // Trackers.
-    this.frozen = false;
-    this.voting = false;
+    // Initialize trackers.
+    this.initializeTrackers();
 
     // Submissions stack.
     this.stack = $(this.__stack());
@@ -43,11 +38,6 @@ Ov.Views.Blank = Backbone.View.extend({
       // Keystroke release.
       'keyup': _.bind(function(e) {
         if (!this.voting) this.processKeystroke(e);
-      }, this),
-
-      // Keystroke down.
-      'keydown': _.bind(function(e) {
-        var char = String.fromCharCode(e.keyCode);
       }, this)
 
     });
@@ -55,25 +45,41 @@ Ov.Views.Blank = Backbone.View.extend({
   },
 
   /*
-   * Activate submission mode.
+   * Shell out trackers and buckets.
    *
    * @return void.
+   */
+  initializeTrackers: function() {
+
+    // Buckets.
+    this.words = [];
+    this.cache = { valid: [], invalid: [] };
+
+    // Trackers.
+    this.frozen = false;
+    this.voting = false;
+
+  },
+
+  /*
+   * Activate submission mode.
+   *
+   * @return {Boolean}: False if voting.
    */
   activateSubmit: function() {
 
     // Break if not voting.
-    if (!this.voting) return;
+    if (!this.voting) return false;
 
     // Reset attributes.
-    this.voting = false;
-    this.words = [];
-    this.cache.valid = [];
-    this.cache.invalid = [];
+    this.initializeTrackers();
 
     // Clear the stack and blank.
     this.stack.empty();
     this.$el.removeAttr('disabled');
     this.$el.val('');
+
+    return true;
 
   },
 

@@ -17,6 +17,108 @@ describe('Blank View', function() {
     blankView = new Ov.Views.Blank();
   });
 
+  describe('initialize', function() {
+
+    describe('when voting', function() {
+
+      beforeEach(function() {
+        blankView.voting = true;
+      });
+
+      it('should not process keystrokes', function() {
+
+        // Spy on addWord();
+        spyOn(blankView, 'processKeystroke');
+
+        // Mock keypress event.
+        var e = $.Event('keyup');
+
+        // Trigger keypress.
+        blankView.$el.trigger(e);
+        expect(blankView.processKeystroke).not.toHaveBeenCalled();
+
+      });
+
+    });
+
+    describe('when not voting', function() {
+
+      beforeEach(function() {
+        blankView.voting = false;
+      });
+
+      it('should process keystrokes', function() {
+
+        // Spy on addWord();
+        spyOn(blankView, 'processKeystroke');
+
+        // Mock keypress event.
+        var e = $.Event('keyup');
+
+        // Trigger keypress.
+        blankView.$el.trigger(e);
+        expect(blankView.processKeystroke).toHaveBeenCalledWith(e);
+
+      });
+
+    });
+
+  });
+
+  describe('activateSubmit', function() {
+
+    describe('when voting', function() {
+
+      beforeEach(function() {
+
+        // Populate input, stack, and caches.
+        blankView.addWord('word');
+        blankView.cache.valid = ['valid'];
+        blankView.cache.invalid = ['invalid'];
+        blankView.$el.val('word');
+        blankView.voting = true;
+
+      });
+
+      it('should execute the state change', function() {
+        expect(blankView.activateSubmit()).toBeTruthy();
+      });
+
+      it('should reset trackers', function() {
+        blankView.activateSubmit();
+        expect(blankView.voting).toBeFalsy();
+        expect(blankView.cache.valid).toEqual([]);
+        expect(blankView.cache.invalid).toEqual([]);
+        expect(blankView.words).toEqual([]);
+      });
+
+      it('should clear the stack', function() {
+        blankView.activateSubmit();
+        expect(blankView.stack).toBeEmpty();
+      });
+
+      it('should enable the input', function() {
+        blankView.activateSubmit();
+        expect(blankView.$el).not.toHaveAttr('disabled', 'disabled');
+        expect(blankView.$el.val()).toEqual('');
+      });
+
+    });
+
+    describe('when not voting', function() {
+
+      beforeEach(function() {
+        blankView.voting = false;
+      });
+
+      it('should not execute the state change', function() {
+        expect(blankView.activateSubmit()).toBeFalsy();
+      });
+
+    });
+
+  });
+
   describe('insert', function() {
 
     var line;
@@ -101,46 +203,6 @@ describe('Blank View', function() {
       // Check positioning.
       expect(stackTop).toEqual(inputOffset.top + inputHeight);
       expect(stackLeft).toEqual(inputOffset.left);
-
-    });
-
-  });
-
-  describe('activateSubmit', function() {
-
-    describe('when activateSubmit has not been called', function() {
-
-      it('should not bind keypress event on the input', function() {
-
-        // Spy on addWord();
-        spyOn(blankView, 'processKeystroke');
-
-        // Trigger keypress.
-        blankView.$el.keypress();
-        expect(blankView.processKeystroke).not.toHaveBeenCalled();
-
-      });
-
-    });
-
-    describe('when activateSubmit has been called', function() {
-
-      it('should bind keypress event on the input', function() {
-
-        // Spy on addWord();
-        spyOn(blankView, 'processKeystroke');
-
-        // Mock keypress event.
-        var e = $.Event('keyup');
-
-        // Activate submission.
-        blankView.activateSubmit();
-
-        // Trigger keypress.
-        blankView.$el.trigger(e);
-        expect(blankView.processKeystroke).toHaveBeenCalledWith(e);
-
-      });
 
     });
 

@@ -46,7 +46,7 @@ var poem = new Poem({
   submissionVal : 100,
   decayLifetime : 60000,
   seedCapital : 1000,
-  visibleWords : 10
+  visibleWords : 3
 });
 
 // Initialize votes tracker.

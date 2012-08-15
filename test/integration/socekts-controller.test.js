@@ -206,6 +206,14 @@ describe('Sockets Controller', function() {
             words.should.include('word1');
             words.should.include('word2');
             words.should.include('word3');
+
+            // Check for in-memory vote registrations.
+            global.Oversoul.votes[poem1.round.id]['word1'].length.should.eql(1);
+            global.Oversoul.votes[poem1.round.id]['word2'].length.should.eql(1);
+            global.Oversoul.votes[poem1.round.id]['word3'].length.should.eql(1);
+            global.Oversoul.votes[poem1.round.id]['word1'][0][0].should.eql(100);
+            global.Oversoul.votes[poem1.round.id]['word2'][0][0].should.eql(100);
+            global.Oversoul.votes[poem1.round.id]['word3'][0][0].should.eql(100);
             done();
 
           });
@@ -266,11 +274,70 @@ describe('Sockets Controller', function() {
 
   describe('vote', function() {
 
-    it('should apply the vote');
+    it('should apply the vote', function(done) {
 
-    it('should echo the vote to players in the same poem');
+      // Catch 'join'.
+      client1.on('join:complete', function() {
 
-    it('should not echo the vote to players in other poems');
+        // Trigger 'vote'.
+        client1.emit('vote', poem1.id, 'word', 100);
+
+        // Catch 'vote:complete'.
+        client1.on('vote:complete', function() {
+
+          // Check for votes.
+          Vote.find({ round: poem1.round.id }, function(err, votes) {
+
+            // Check vote.
+            votes.length.should.eql(1);
+            votes[0].word.should.eql('word');
+            votes[0].quantity.should.eql(100);
+
+            // Check for in-memory vote registration.
+            global.Oversoul.votes[poem1.round.id]['word'].length.should.eql(1);
+            global.Oversoul.votes[poem1.round.id]['word'][0][0].should.eql(100);
+            done();
+
+          });
+
+        });
+
+      });
+
+    });
+
+    it('should echo the vote', function(done) {
+
+      // Spy on the 'vote' event callback.
+      var voteCallback1 = sinon.spy();
+      var voteCallback2 = sinon.spy();
+      var voteCallback3 = sinon.spy();
+      client1.on('vote', voteCallback1);
+      client2.on('vote', voteCallback2);
+      client3.on('vote', voteCallback3);
+
+      // Catch 'join'.
+      client1.on('join:complete', function() {
+
+        // Trigger 'vote'.
+        client1.emit('vote', poem1.id, 'word', 100);
+
+        // Catch 'vote:complete'.
+        client1.on('vote:complete', function() {
+
+          // Wait for echo callbacks to execute.
+          setTimeout(function() {
+            sinon.assert.calledWith(voteCallback1, 'word', 100);
+            sinon.assert.calledWith(voteCallback2, 'word', 100);
+            voteCallback3.notCalled.should.be.true;
+            done();
+          }, 100);
+
+        });
+
+      });
+
+    });
 
   });
 

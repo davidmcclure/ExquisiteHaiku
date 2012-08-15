@@ -91,7 +91,7 @@ module.exports = function(app, io) {
 
             // Echo the vote.
             io.sockets.in(id).emit('vote',
-              vote.word, poem.submissionVal);
+              vote.word, vote.quantity);
 
             // Continue.
             cb(null, vote);

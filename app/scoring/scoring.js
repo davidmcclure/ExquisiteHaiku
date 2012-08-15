@@ -103,9 +103,9 @@ var score = exports.score = function(id, now, emit, cb) {
  * Compute the rank and churn values of a vote.
  *
  * @param {Number} quantity: The vote quantity.
+ * @param {Date} applied: When the vote was applied.
  * @param {Number} decayL: The decay lifetime.
  * @param {Number} decayI: The decay lifetime inverse.
- * @param {Date} applied: When the vote was applied.
  * @param {Date} now: The current time.
  *
  * @return {Array}: [rank, churn].

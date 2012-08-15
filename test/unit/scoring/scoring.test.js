@@ -83,26 +83,17 @@ describe('Scoring', function() {
     var result;
 
     beforeEach(function() {
-      result = scoring.compute(100, 0, 500, 1/500, 1000);
+      result = scoring.compute(1, 0, 500, 1/500, 10000);
     });
 
     it('should return the correct rank', function() {
-
-      // Check rank value.
-      result[0].should.eql(
-        (500*100*-(Math.exp(-1000 * 1/500)) -
-        500*100*-(Math.exp(0))) * 0.001
-      );
-
+      var rank = Math.round(result[0]*10)/10;
+      rank.should.eql(0.5);
     });
 
     it('should return the correct churn', function() {
-
-      // Check churn value.
-      result[1].should.eql(
-        100*Math.exp(-1000 * 1/500)
-      );
-
+      var churn = Math.round(result[1]);
+      churn.should.eql(0);
     });
 
   });

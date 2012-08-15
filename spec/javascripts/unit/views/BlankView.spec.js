@@ -119,6 +119,51 @@ describe('Blank View', function() {
 
   });
 
+  describe('activateVote', function() {
+
+    describe('when not voting', function() {
+
+      beforeEach(function() {
+        blankView.voting = false;
+        blankView.$el.val('word');
+      });
+
+      it('should execute the state change', function() {
+        expect(blankView.activateVote()).toBeTruthy();
+      });
+
+      it('should set trackers', function() {
+        blankView.activateVote();
+        expect(blankView.voting).toBeTruthy();
+      });
+
+      it('should disable the input', function() {
+        blankView.activateVote();
+        expect(blankView.$el).toHaveAttr('disabled', 'disabled');
+        expect(blankView.$el.val()).toEqual('');
+      });
+
+      it('should hide the stack', function() {
+        blankView.activateVote();
+        expect(blankView.stack).not.toBeVisible();
+      });
+
+    });
+
+    describe('when voting', function() {
+
+      beforeEach(function() {
+        blankView.voting = true;
+      });
+
+      it('should not execute the state change', function() {
+        expect(blankView.activateVote()).toBeFalsy();
+      });
+
+    });
+
+  });
+
   describe('insert', function() {
 
     var line;

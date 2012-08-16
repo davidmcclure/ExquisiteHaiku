@@ -36,8 +36,8 @@ Ov.Views.Stack = Backbone.View.extend({
    */
   update: function(stack) {
 
-    // If frozen, break.
-    if (this.frozen || !this.visible) return;
+    // If frozen or not visible, break.
+    if (this.frozen || !this.visible) return false;
 
     _.times(stack.length, _.bind(function(i) {
 
@@ -52,6 +52,8 @@ Ov.Views.Stack = Backbone.View.extend({
       this.wordsToRow[word] = this.wordRows[i];
 
     }, this));
+
+    return true;
 
   },
 

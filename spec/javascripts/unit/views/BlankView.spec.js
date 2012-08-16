@@ -689,9 +689,19 @@ describe('Blank View', function() {
 
   describe('freeze', function() {
 
+    it('should set "frozen" true', function() {
+      blankView.freeze();
+      expect(blankView.frozen).toBeTruthy();
+    });
+
   });
 
   describe('unFreeze', function() {
+
+    it('should set "frozen" true', function() {
+      blankView.unFreeze();
+      expect(blankView.frozen).toBeFalsy();
+    });
 
   });
 

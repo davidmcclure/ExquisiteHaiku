@@ -296,6 +296,52 @@ describe('Blank View', function() {
 
     });
 
+    describe('control keystroke', function() {
+
+      beforeEach(function() {
+        Poem.minSubmissions = 3;
+      });
+
+      it('should not submit when not enough words', function() {
+
+        // 2/3 words.
+        blankView.words = ['word1', 'word2'];
+
+        // Watch trigger.
+        spyOn(Ov.vent, 'trigger');
+
+        // Set keycode and value.
+        e.keyCode = 17;
+        blankView.processKeystroke(e);
+
+        // Check for cached word.
+        expect(Ov.vent.trigger).not.toHaveBeenCalledWith(
+          blankView.words
+        );
+
+      });
+
+      it('should submit when enough words', function() {
+
+        // 3/3 words.
+        blankView.words = ['word1', 'word2', 'word3'];
+
+        // Watch trigger.
+        spyOn(Ov.vent, 'trigger');
+
+        // Set keycode and value.
+        e.keyCode = 17;
+        blankView.processKeystroke(e);
+
+        // Check for cached word.
+        expect(Ov.vent.trigger).toHaveBeenCalledWith(
+          'blank:submit', blankView.words
+        );
+
+      });
+
+    });
+
     describe('enter keystroke', function() {
 
       it('should add valid word', function() {

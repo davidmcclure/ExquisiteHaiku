@@ -325,9 +325,10 @@ Ov.Views.Blank = Backbone.View.extend({
    * @return void.
    */
   showPreview: function(word) {
-    if (this.frozen) return;
+    if (this.frozen) return false;
     this.$el.addClass('preview');
     this.$el.val(word);
+    return true;
   },
 
   /*
@@ -336,9 +337,10 @@ Ov.Views.Blank = Backbone.View.extend({
    * @return void.
    */
   hidePreview: function() {
-    if (this.frozen) return;
+    if (this.frozen) return false;
     this.$el.removeClass('preview');
     this.$el.val('');
+    return true;
   },
 
   /*

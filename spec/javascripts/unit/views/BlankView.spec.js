@@ -435,7 +435,7 @@ describe('Blank View', function() {
 
     });
 
-    describe('mousedown event', function() {
+    describe('mouse events', function() {
 
       var word;
 
@@ -445,14 +445,62 @@ describe('Blank View', function() {
         word = blankView.stack.find('div');
       });
 
-      it('should remove the word', function() {
+      describe('mousedown event', function() {
 
-        // Trigger mousedown on word.
-        word.mousedown();
-        expect(blankView.stack).toBeEmpty();
+        it('should remove the word', function() {
+          word.mousedown();
+          expect(blankView.stack).toBeEmpty();
+        });
 
       });
 
+      describe('mouseenter event', function() {
+
+        it('should add "negative" class', function() {
+          word.mouseenter();
+          expect(word).toHaveClass('negative');
+        });
+
+      });
+
+      describe('mouseleave event', function() {
+
+        it('should remove "negative" class', function() {
+          word.mouseleave();
+          expect(word).not.toHaveClass('negative');
+        });
+
+      });
+
+    });
+
+  });
+
+  describe('removeWord', function() {
+
+    var words;
+
+    beforeEach(function() {
+
+      // Add words.
+      blankView.addWord('word1');
+      blankView.addWord('word2');
+
+      // Get markup.
+      words = blankView.stack.find('div');
+
+    });
+
+    it('should remove the word markup', function() {
+      blankView.removeWord($(words[0]));
+      expect(blankView.stack).not.toContain(words[0]);
+      expect(blankView.stack).toContain(words[1]);
+    });
+
+    it('should remove the word from the tracker', function() {
+      blankView.removeWord($(words[0]));
+      expect(blankView.words).not.toContain('word2');
+      expect(blankView.words).toContain('word1');
     });
 
   });
@@ -573,32 +621,77 @@ describe('Blank View', function() {
 
   });
 
-  describe('removeWord', function() {
+  describe('showPreview', function() {
 
-    var words;
+    describe('when frozen', function() {
 
-    beforeEach(function() {
+      beforeEach(function() {
+        blankView.frozen = true;
+      });
 
-      // Add words.
-      blankView.addWord('word1');
-      blankView.addWord('word2');
-
-      // Get markup.
-      words = blankView.stack.find('div');
+      it('should not execute the preview', function() {
+        expect(blankView.showPreview('word')).toBeFalsy();
+        expect(blankView.$el).not.toHaveClass('preview');
+        expect(blankView.$el.val()).toEqual('');
+      });
 
     });
 
-    it('should remove the word markup', function() {
-      blankView.removeWord($(words[0]));
-      expect(blankView.stack).not.toContain(words[0]);
-      expect(blankView.stack).toContain(words[1]);
+    describe('when not frozen', function() {
+
+      beforeEach(function() {
+        blankView.frozen = false;
+      });
+
+      it('should not execute the preview', function() {
+        expect(blankView.showPreview('word')).toBeTruthy();
+        expect(blankView.$el).toHaveClass('preview');
+        expect(blankView.$el.val()).toEqual('word');
+      });
+
     });
 
-    it('should remove the word from the tracker', function() {
-      blankView.removeWord($(words[0]));
-      expect(blankView.words).not.toContain('word2');
-      expect(blankView.words).toContain('word1');
+  });
+
+  describe('hidePreview', function() {
+
+    describe('when frozen', function() {
+
+      beforeEach(function() {
+        blankView.showPreview('word');
+        blankView.frozen = true;
+      });
+
+      it('should not remove the preview', function() {
+        expect(blankView.hidePreview()).toBeFalsy();
+        expect(blankView.$el).toHaveClass('preview');
+        expect(blankView.$el.val()).toEqual('word');
+      });
+
     });
+
+    describe('when not frozen', function() {
+
+      beforeEach(function() {
+        blankView.showPreview('word');
+        blankView.frozen = false;
+      });
+
+      it('should remove the preview', function() {
+        expect(blankView.hidePreview()).toBeTruthy();
+        expect(blankView.$el).not.toHaveClass('preview');
+        expect(blankView.$el.val()).toEqual('');
+      });
+
+    });
+
+  });
+
+  describe('freeze', function() {
+
+  });
+
+  describe('unFreeze', function() {
 
   });
 

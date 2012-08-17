@@ -4,7 +4,7 @@
 
 describe('Submission', function() {
 
-  var blank;
+  var blank, e;
 
   // Get fixtures, run app.
   beforeEach(function() {
@@ -14,6 +14,9 @@ describe('Submission', function() {
 
   // Activate submit.
   beforeEach(function() {
+
+    // Mock keypress.
+    e = $.Event('keyup');
 
     // Shortcut views.
     blank = Ov.Controllers.Poem.BlankView;
@@ -30,83 +33,190 @@ describe('Submission', function() {
 
   });
 
-  describe('typing submissions into the blank', function() {
+  it('should queue a valid word', function() {
 
-    var e;
+    // Set word value.
+    blank.$el.val('valid1');
 
-    // Mock keypress event.
-    beforeEach(function() {
-      e = $.Event('keyup');
-    });
+    // Mock enter.
+    e.keyCode = 13;
+    blank.$el.trigger(e);
 
-    it('should queue a valid word', function() {
+    // Check for word.
+    var words = blank.stack.find('div.submission-word');
+    expect(words.length).toEqual(1);
+    expect(words[0]).toHaveText('valid1');
 
-      // Set word value.
-      blank.$el.val('valid1');
+  });
 
-      // Mock enter.
-      e.keyCode = 13;
-      blank.$el.trigger(e);
+  it('should lowercase and trim a valid word', function() {
 
-      // Check for word.
-      var words = blank.stack.find('div.submission-word');
-      expect(words.length).toEqual(1);
-      expect(words[0]).toHaveText('valid1');
+    // Set word value.
+    blank.$el.val(' Valid1  ');
 
-    });
+    // Mock enter.
+    e.keyCode = 13;
+    blank.$el.trigger(e);
 
-    it('should lowercase and trim a valid word', function() {
+    // Check for word.
+    var words = blank.stack.find('div.submission-word');
+    expect(words.length).toEqual(1);
+    expect(words[0]).toHaveText('valid1');
 
-      // Set word value.
-      blank.$el.val(' Valid1  ');
+  });
 
-      // Mock enter.
-      e.keyCode = 13;
-      blank.$el.trigger(e);
+  it('should prepend new words', function() {
 
-      // Check for word.
-      var words = blank.stack.find('div.submission-word');
-      expect(words.length).toEqual(1);
-      expect(words[0]).toHaveText('valid1');
+    // Add first word.
+    e.keyCode = 13;
+    blank.$el.val('valid1');
+    blank.$el.trigger(e);
 
-    });
+    // Add second word.
+    blank.$el.val('valid2');
+    blank.$el.trigger(e);
 
-    it('should prepend new words', function() {
+    // Check for word.
+    var words = blank.stack.find('div.submission-word');
+    expect(words.length).toEqual(2);
+    expect(words[0]).toHaveText('valid2');
+    expect(words[1]).toHaveText('valid1');
 
-      // Add first word.
-      e.keyCode = 13;
-      blank.$el.val('valid1');
-      blank.$el.trigger(e);
+  });
 
-      // Add second word.
-      blank.$el.val('valid2');
-      blank.$el.trigger(e);
+  it('should not queue an invalid word', function() {
 
-      // Check for word.
-      var words = blank.stack.find('div.submission-word');
-      expect(words.length).toEqual(2);
-      expect(words[0]).toHaveText('valid2');
-      expect(words[1]).toHaveText('valid1');
+    // Set word value.
+    blank.$el.val('invalid');
 
-    });
+    // Mock enter.
+    e.keyCode = 13;
+    blank.$el.trigger(e);
 
-    it('should not queue an invalid word', function() {
+    // Check for no word.
+    expect(blank.stack).not.toContain('div.submission-word');
 
-      // Set word value.
-      blank.$el.val('invalid');
+  });
 
-      // Mock enter.
-      e.keyCode = 13;
-      blank.$el.trigger(e);
+  it('should not double-queue a word', function() {
 
-      // Check for word.
-      expect(blank.stack).not.toContain('div.submission-word');
+    // Add word.
+    e.keyCode = 13;
+    blank.$el.val('valid1');
+    blank.$el.trigger(e);
 
-    });
+    // Try to re-add.
+    blank.$el.val('valid1');
+    blank.$el.trigger(e);
 
-    it('should not double-queue a word');
+    // Check just 1 instance.
+    var words = blank.stack.find('div.submission-word');
+    expect(words.length).toEqual(1);
+    expect(words[0]).toHaveText('valid1');
 
-    it('should queue previously deleted words');
+  });
+
+  it('should highlight words in stack on hover', function() {
+
+    // Add word.
+    e.keyCode = 13;
+    blank.$el.val('valid1');
+    blank.$el.trigger(e);
+
+    // Get word.
+    var word = blank.stack.find('div.submission-word').first();
+    word.trigger('mouseenter');
+    expect(word).toHaveClass('negative');
+
+  });
+
+  it('should delete words in stack on click', function() {
+
+    // Add word.
+    e.keyCode = 13;
+    blank.$el.val('valid1');
+    blank.$el.trigger(e);
+
+    // Get word, mock click.
+    var word = blank.stack.find('div.submission-word').first();
+    word.trigger('mousedown');
+
+    // Check for no word.
+    expect(blank.stack).not.toContain('div.submission-word');
+
+  });
+
+  it('should queue previously deleted words', function() {
+
+    // Add word.
+    e.keyCode = 13;
+    blank.$el.val('valid1');
+    blank.$el.trigger(e);
+
+    // Get word, mock click.
+    var word = blank.stack.find('div.submission-word').first();
+    word.trigger('mousedown');
+
+    // Re-add.
+    blank.$el.val('valid1');
+    blank.$el.trigger(e);
+
+    // Check for word.
+    var words = blank.stack.find('div.submission-word');
+    expect(words.length).toEqual(1);
+    expect(words[0]).toHaveText('valid1');
+
+  });
+
+  it('should block submission when not enough words', function() {
+
+    // Spy on blank:submit.
+    var cb = jasmine.createSpy();
+    Ov.vent.on('blank:submit', cb);
+
+    // Set minSubmissions.
+    Poem.minSubmissions = 3;
+
+    // Add 2 words.
+    e.keyCode = 13;
+    blank.$el.val('valid1');
+    blank.$el.trigger(e);
+    blank.$el.val('valid2');
+    blank.$el.trigger(e);
+
+    // Attempt to submit.
+    e.keyCode = 17;
+    blank.$el.trigger(e);
+    expect(cb).not.toHaveBeenCalled();
+
+  });
+
+  it('should emit correct word list when enough words', function() {
+
+    // Spy on blank:submit.
+    var cb = jasmine.createSpy();
+    Ov.vent.on('blank:submit', cb);
+
+    // Set minSubmissions.
+    Poem.minSubmissions = 3;
+
+    // Add 3 words.
+    e.keyCode = 13;
+    blank.$el.val('valid1');
+    blank.$el.trigger(e);
+    blank.$el.val('valid2');
+    blank.$el.trigger(e);
+    blank.$el.val('valid3');
+    blank.$el.trigger(e);
+
+    // Attempt to submit.
+    e.keyCode = 17;
+    blank.$el.trigger(e);
+    expect(cb).toHaveBeenCalledWith([
+      'valid1',
+      'valid2',
+      'valid3'
+    ]);
 
   });
 

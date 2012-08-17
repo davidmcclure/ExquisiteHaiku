@@ -1,5 +1,5 @@
 /*
- * Unit tests for BlankView.
+ * Unit tests for Blank.
  */
 
 describe('Blank View', function() {

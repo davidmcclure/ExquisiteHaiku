@@ -1,5 +1,5 @@
 /*
- * Unit tests for PoemView.
+ * Unit tests for Poem.
  */
 
 describe('Poem View', function() {

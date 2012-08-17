@@ -1,5 +1,5 @@
 /*
- * Unit tests for StackView.
+ * Unit tests for Stack.
  */
 
 describe('Stack View', function() {

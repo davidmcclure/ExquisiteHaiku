@@ -26,7 +26,7 @@ modelFiles.forEach(function(file) {
 
 // Run server and socket.io.
 var server = app.listen(config.port);
-var io = socket.listen(server);
+var io = socket.listen(server, { log: false });
 
 // Start poems.
 require('./init')(app, config, io, function() {});

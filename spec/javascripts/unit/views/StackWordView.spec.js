@@ -116,4 +116,127 @@ describe('Stack Word View', function() {
 
   });
 
+  describe('onDragTick', function() {
+
+    var initEvent, dragEvent;
+
+    beforeEach(function() {
+      stackWordView.update(['word', 100, 50, -50, '1.00']);
+      initEvent = { pageX: 0, pageY: 0 };
+      dragEvent = { pageX: 3, pageY: 4 };
+    });
+
+    it('should compute dragDelta', function() {
+
+      // Negative drag.
+      stackWordView.onDragTick(initEvent, dragEvent);
+      expect(stackWordView.dragDelta).toEqual(-5);
+
+      // Positive drag.
+      dragEvent = { pageX: -3, pageY: -4 };
+      stackWordView.onDragTick(initEvent, dragEvent);
+      expect(stackWordView.dragDelta).toEqual(5);
+
+    });
+
+    it('should set color', function() {
+
+      // Spy on style setters.
+      spyOn(stackWordView, 'setDragPositive');
+      spyOn(stackWordView, 'setDragNegative');
+
+      // Negative drag.
+      stackWordView.onDragTick(initEvent, dragEvent);
+      expect(stackWordView.setDragNegative).toHaveBeenCalled();
+
+      // Positive drag.
+      dragEvent = { pageX: -3, pageY: -4 };
+      stackWordView.onDragTick(initEvent, dragEvent);
+      expect(stackWordView.setDragPositive).toHaveBeenCalled();
+
+    });
+
+    it('should trigger "words:dragTick"', function() {
+
+      // Spy on words:dragTick.
+      var cb = jasmine.createSpy();
+      Ov.vent.on('words:dragTick', cb);
+
+      // Set dragTotal.
+      stackWordView.dragTotal = 100;
+
+      // Negative drag.
+      stackWordView.onDragTick(initEvent, dragEvent);
+      expect(cb).toHaveBeenCalledWith(
+        'word', 95, initEvent, dragEvent
+      );
+
+      // Positive drag.
+      dragEvent = { pageX: -3, pageY: -4 };
+      stackWordView.onDragTick(initEvent, dragEvent);
+      expect(cb).toHaveBeenCalledWith(
+        'word', 105, initEvent, dragEvent
+      );
+
+    });
+
+  });
+
+  describe('onDragComplete', function() {
+
+    it('should unbind mouse drag events');
+    it('should merge dragDelta into dragTotal');
+    it('should reset dragDelta');
+    it('should trigger "words:dragStop"');
+
+  });
+
+  describe('onDragKeydown', function() {
+
+    describe('when spacebar is pressed', function() {
+
+      it('should call endDrag()');
+      it('should trigger "words:dragCommit"');
+
+    });
+
+    describe('when ESC is pressed', function() {
+
+      it('should call endDrag()');
+      it('should trigger "words:dragCancel"');
+
+    });
+
+  });
+
+  describe('hover', function() {
+
+    it('should break if dragging');
+    it('should trigger "words:hover"');
+
+  });
+
+  describe('select', function() {
+
+    it('should trigger "words:select"');
+    it('should call addDrag()');
+
+  });
+
+  describe('unselect', function() {
+
+    it('should trigger "words:unselect"');
+    it('should call addDrag()');
+
+  });
+
+  describe('endDrag', function() {
+
+    it('should call unSelect()');
+    it('should reset dragTotal');
+    it('should set _global.isDragging false');
+    it('should unbind all .drag events');
+
+  });
+
 });

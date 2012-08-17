@@ -222,8 +222,9 @@ Ov.Views.StackWord = Backbone.View.extend({
    * @return void.
    */
   hover: function() {
-    if (Ov._global.isDragging) return;
+    if (Ov._global.isDragging) return false;
     Ov.vent.trigger('words:hover', this.word);
+    return true;
   },
 
   /*
@@ -243,7 +244,6 @@ Ov.Views.StackWord = Backbone.View.extend({
    */
   unSelect: function() {
     Ov.vent.trigger('words:unselect');
-    this.wordMarkup.removeClass('select');
   },
 
   /*
@@ -252,11 +252,16 @@ Ov.Views.StackWord = Backbone.View.extend({
    * @return void.
    */
   endDrag: function() {
+
+    // Unselect.
     this.unSelect();
     this.setDragNeutral();
+
+    // Untrack and unbind.
     this.dragTotal = 0;
     Ov._global.isDragging = false;
     $(window).unbind('.drag');
+
   },
 
   /*

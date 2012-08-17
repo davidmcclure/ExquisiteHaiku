@@ -62,7 +62,7 @@ Ov.Views.Stack = Backbone.View.extend({
    *
    * @return void.
    */
-  addRow: function(word) {
+  addRow: function() {
 
     // Build row view.
     var row = new Ov.Views.StackWord();
@@ -75,6 +75,8 @@ Ov.Views.Stack = Backbone.View.extend({
 
   /*
    * Set the currently selected word instance.
+   *
+   * @param {String} word: The word.
    *
    * @return void.
    */
@@ -112,10 +114,17 @@ Ov.Views.Stack = Backbone.View.extend({
    * @return void.
    */
   unFreeze: function() {
-    if (Ov._global.isDragging) return;
-    this.$el.removeClass('frozen');
+
+    // If dragging, break.
+    if (Ov._global.isDragging) return false;
+
+    // Manifest, trigger out.
     Ov.vent.trigger('words:unhover');
+    this.$el.removeClass('frozen');
     this.frozen = false;
+
+    return true;
+
   },
 
   /*

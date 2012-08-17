@@ -216,6 +216,166 @@ describe('Stack View', function() {
 
   describe('setSelected', function() {
 
+    beforeEach(function() {
+      stackView.show();
+      stackView.update([
+        ['word1', 100, 50, -50, '1.00'],
+        ['word2', 99, 49, -49, '0.99']
+      ]);
+    });
+
+    it('should set the "selected" tracker', function() {
+      stackView.setSelected('word1');
+      expect(stackView.selected).toEqual('word1');
+    });
+
+    describe('when previously selected word is different', function() {
+
+      it('should call endDrag() on previous word', function() {
+
+        // Spy on word1 endDrag().
+        var word1Row = stackView.wordsToRow['word1'];
+        spyOn(word1Row, 'endDrag');
+
+        // Select word1, then word2.
+        stackView.setSelected('word1');
+        stackView.setSelected('word2');
+        expect(stackView.selected).toEqual('word2');
+        expect(word1Row.endDrag).toHaveBeenCalled();
+
+      });
+
+    });
+
+    describe('when previously selected word is the same', function() {
+
+      it('should not call endDrag() on previous word', function() {
+
+        // Spy on word1 endDrag().
+        var word1Row = stackView.wordsToRow['word1'];
+        spyOn(word1Row, 'endDrag');
+
+        // Select word1, then word2.
+        stackView.setSelected('word1');
+        stackView.setSelected('word1');
+        expect(stackView.selected).toEqual('word1');
+        expect(word1Row.endDrag).not.toHaveBeenCalled();
+
+      });
+
+    });
+
+  });
+
+  describe('freeze', function() {
+
+    it('should set "frozen" true', function() {
+      stackView.freeze();
+      expect(stackView.frozen).toBeTruthy();
+    });
+
+    it('should add "frozen" class', function() {
+      stackView.freeze();
+      expect(stackView.$el).toHaveClass('frozen');
+    });
+
+  });
+
+  describe('unFreeze', function() {
+
+    beforeEach(function() {
+      stackView.freeze();
+    });
+
+    describe('when not dragging', function() {
+
+      it('should set "frozen" false', function() {
+        expect(stackView.unFreeze()).toBeTruthy();
+        expect(stackView.frozen).toBeFalsy();
+      });
+
+      it('should remove "frozen" class', function() {
+        expect(stackView.unFreeze()).toBeTruthy();
+        expect(stackView.$el).not.toHaveClass('frozen');
+      });
+
+      it('should trigger "words:unhover"', function() {
+
+        // Spy on words:unhover.
+        var cb = jasmine.createSpy();
+        Ov.vent.on('words:unhover', cb);
+
+        // Unfreeze, listen for words:unhover.
+        expect(stackView.unFreeze()).toBeTruthy();
+        expect(cb).toHaveBeenCalled();
+
+      });
+
+    });
+
+    describe('when dragging', function() {
+
+      beforeEach(function() {
+        Ov._global.isDragging = true;
+      });
+
+      it('should not set "frozen" false', function() {
+        expect(stackView.unFreeze()).toBeFalsy();
+        expect(stackView.frozen).toBeTruthy();
+      });
+
+      it('should not remove "frozen" class', function() {
+        expect(stackView.unFreeze()).toBeFalsy();
+        expect(stackView.$el).toHaveClass('frozen');
+      });
+
+      it('should not trigger "words:unhover"', function() {
+
+        // Spy on words:unhover.
+        var cb = jasmine.createSpy();
+        Ov.vent.on('words:unhover', cb);
+
+        // Unfreeze, listen for words:unhover.
+        expect(stackView.unFreeze()).toBeFalsy();
+        expect(cb).not.toHaveBeenCalled();
+
+      });
+
+    });
+
+  });
+
+  describe('show', function() {
+
+    beforeEach(function() {
+      stackView.hide();
+    });
+
+    it('should set "visible" tracker to true', function() {
+      stackView.show();
+      expect(stackView.visible).toBeTruthy();
+    });
+
+  });
+
+  describe('hide', function() {
+
+    beforeEach(function() {
+      stackView.show();
+      stackView.addRow();
+    });
+
+    it('should set "visible" tracker to false', function() {
+      stackView.hide();
+      expect(stackView.visible).toBeFalsy();
+    });
+
+    it('should empty the stack', function() {
+      stackView.hide();
+      expect(stackView.$el).toBeEmpty();
+      expect(stackView.wordRows.length).toEqual(0);
+    });
+
   });
 
 });

@@ -158,7 +158,7 @@ Ov.Views.Blank = Backbone.View.extend({
   processKeystroke: function(event) {
 
     // Get word, fit width.
-    var word = $.trim(this.$el.val());
+    var word = this.scrubWord(this.$el.val());
 
     // Enter keystroke.
     if (event.keyCode == 13) {

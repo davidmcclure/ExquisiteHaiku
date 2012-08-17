@@ -2,7 +2,7 @@
  * Socket.io mock.
  */
 
-var io = {
+io = {
 
   /*
    * Connect socket.
@@ -33,6 +33,31 @@ var io = {
        * @return void.
        */
       emit: function(event) {
+
+        switch (event) {
+
+          case 'validate':
+
+            // Valid words.
+            var valid = [
+              'valid1',
+              'valid2',
+              'valid3',
+              'valid4',
+              'valid5'
+            ];
+
+            // Valid word.
+            if (_.include(valid, arguments[2])) {
+              arguments[3](true);
+            }
+
+            // Invalid word.
+            else arguments[3](false);
+
+          break;
+
+        }
 
       }
 

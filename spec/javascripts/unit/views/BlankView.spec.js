@@ -266,7 +266,7 @@ describe('Blank View', function() {
       });
 
       // Mock keypress event.
-      e = $.Event('keypress');
+      e = $.Event('keyup');
 
     });
 

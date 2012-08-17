@@ -45,4 +45,54 @@ describe('Stack Word View', function() {
 
   });
 
+  describe('addDrag', function() {
+
+    var e;
+
+    beforeEach(function() {
+      e = $.Event('mousedown');
+    });
+
+    afterEach(function() {
+      stackWordView.endDrag();
+    });
+
+    it('should bind drag events on window', function() {
+
+      // Mock events.
+      var mousemove = $.Event('mousemove.drag');
+      var mouseup = $.Event('mouseup.drag');
+      var keydown = $.Event('keydown.drag');
+
+      // Spy on event callbacks.
+      spyOn(stackWordView, 'onDragTick');
+      spyOn(stackWordView, 'onDragComplete');
+      spyOn(stackWordView, 'onDragKeydown');
+
+      // Add drag.
+      stackWordView.addDrag(e);
+
+      // Check mousemove.
+      $(window).trigger(mousemove);
+      expect(stackWordView.onDragTick).toHaveBeenCalledWith(
+        e, mousemove);
+
+      // Check mouseup.
+      $(window).trigger(mouseup);
+      expect(stackWordView.onDragComplete).toHaveBeenCalled();
+
+      // Check keydown.
+      $(window).trigger(keydown);
+      expect(stackWordView.onDragKeydown).toHaveBeenCalledWith(keydown);
+
+    });
+
+    it('should reset dragDelta to 0');
+
+    it('should trigger "words:dragStart"');
+
+    it('should set global isDragging true');
+
+  });
+
 });

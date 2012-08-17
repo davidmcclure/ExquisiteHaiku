@@ -164,4 +164,40 @@ describe('Stack View', function() {
 
   });
 
+  describe('addRow', function() {
+
+    it('should add the row markup', function() {
+
+      var rows;
+
+      // Add a row.
+      stackView.addRow();
+      rows = stackView.$el.find('div.stack-row');
+      expect(rows.length).toEqual(1);
+
+      // Add another row.
+      stackView.addRow();
+      rows = stackView.$el.find('div.stack-row');
+      expect(rows.length).toEqual(2);
+
+    });
+
+    it('should update the rows tracker', function() {
+
+      var rows;
+
+      // Add a row.
+      stackView.addRow();
+      rows = stackView.$el.find('div.stack-row');
+      expect(stackView.wordRows[0].$el).toBe(rows[0]);
+
+      // Add another row.
+      stackView.addRow();
+      rows = stackView.$el.find('div.stack-row');
+      expect(stackView.wordRows[1].$el).toBe(rows[1]);
+
+    });
+
+  });
+
 });

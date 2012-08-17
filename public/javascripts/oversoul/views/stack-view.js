@@ -44,7 +44,7 @@ Ov.Views.Stack = Backbone.View.extend({
       // Get word, add row.
       var word = stack[i][0];
       if (i > this.wordRows.length-1) {
-        this.addRow(word);
+        this.addRow();
       }
 
       // Render values.
@@ -59,8 +59,6 @@ Ov.Views.Stack = Backbone.View.extend({
 
   /*
    * Construct and inject a word row.
-   *
-   * @param {String} word: The word text.
    *
    * @return void.
    */

@@ -80,6 +80,10 @@ describe('Stack View', function() {
         expect($(words[1]).find('.churn.pos').text()).toEqual('49');
         expect($(words[1]).find('.churn.neg').text()).toEqual('49');
 
+        // Check word -> row associations.
+        expect(stackView.wordsToRow['word1'].$el).toBe(words[0]);
+        expect(stackView.wordsToRow['word2'].$el).toBe(words[1]);
+
       });
 
       it('should update markup when it exists', function() {
@@ -111,6 +115,10 @@ describe('Stack View', function() {
         expect($(words[1]).find('.churn.pos').text()).toEqual('49');
         expect($(words[1]).find('.churn.neg').text()).toEqual('49');
         expect($(words[1]).find('.ratio').text()).toEqual('0.99');
+
+        // Check word -> row associations.
+        expect(stackView.wordsToRow['word3'].$el).toBe(words[0]);
+        expect(stackView.wordsToRow['word4'].$el).toBe(words[1]);
 
       });
 
@@ -158,6 +166,12 @@ describe('Stack View', function() {
         expect($(words[3]).find('.churn.neg').text()).toEqual('47');
         expect($(words[3]).find('.ratio').text()).toEqual('0.97');
 
+        // Check word -> row associations.
+        expect(stackView.wordsToRow['word3'].$el).toBe(words[0]);
+        expect(stackView.wordsToRow['word4'].$el).toBe(words[1]);
+        expect(stackView.wordsToRow['word1'].$el).toBe(words[2]);
+        expect(stackView.wordsToRow['word2'].$el).toBe(words[3]);
+
       });
 
     });
@@ -197,6 +211,10 @@ describe('Stack View', function() {
       expect(stackView.wordRows[1].$el).toBe(rows[1]);
 
     });
+
+  });
+
+  describe('setSelected', function() {
 
   });
 

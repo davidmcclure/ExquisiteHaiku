@@ -36,7 +36,7 @@ body{font:200 18px "Source Sans Pro";text-rendering:optimizeLegibility;-webkit-u
 #info .progress.last{margin-top:7px}
 .drag-line{position:fixed;line-height:0;z-index:-1;top:0;left:0;}
 .drag-line svg{position:fixed;stroke-width:2;top:0;left:0;}
-.drag-line svg line,.drag-line svg text{font-size:2em;}
-.drag-line svg line.positive,.drag-line svg text.positive{stroke:#288bcc;fill:#288bcc}
-.drag-line svg line.negative,.drag-line svg text.negative{stroke:#cc3f28;fill:#cc3f28}
-.drag-line svg line.blocked,.drag-line svg text.blocked{stroke:#b3b3b3;fill:#b3b3b3}
+.drag-line svg line,.drag-line svg text,.drag-line svg circle{font-size:2em;}
+.drag-line svg line.positive,.drag-line svg text.positive,.drag-line svg circle.positive{stroke:#288bcc;fill:#288bcc}
+.drag-line svg line.negative,.drag-line svg text.negative,.drag-line svg circle.negative{stroke:#cc3f28;fill:#cc3f28}
+.drag-line svg line.blocked,.drag-line svg text.blocked,.drag-line svg circle.blocked{stroke:#b3b3b3;fill:#b3b3b3}

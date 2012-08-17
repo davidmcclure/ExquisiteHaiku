@@ -17,12 +17,13 @@ Ov.Views.Line = Backbone.View.extend({
     // Get window element.
     this.window = $(window);
 
-    // Create SVG element and text element for total.
+    // Create SVG element.
     this.svg = d3.select(this.el).append('svg:svg');
     this.total = this.svg.append('svg:text');
 
     // Trackers.
-    this.currentLine = null;
+    this.line = null;
+    this.circle = null;
     this.lines = [];
 
   },
@@ -63,13 +64,30 @@ Ov.Views.Line = Backbone.View.extend({
     var height = dragEvent.pageY - initEvent.pageY;
     var scrollTop = $('body').scrollTop();
 
-    // Draw line.
-    this.clearCurrent();
-    this.currentLine = this.svg.append('svg:line')
+    // Clear current shapes.
+    // this.clearCurrent();
+
+    // If no line, create one.
+    if (_.isNull(this.line))
+      this.line = this.svg.append('svg:line');
+
+    // If no circle, create one.
+    if (_.isNull(this.circle))
+      this.circle = this.svg.append('svg:circle');
+
+    // Line.
+    this.line
       .attr('x1', initEvent.pageX)
       .attr('y1', initEvent.pageY - scrollTop)
       .attr('x2', dragEvent.pageX)
       .attr('y2', dragEvent.pageY - scrollTop);
+
+    // Circle.
+    this.circle
+      .attr('cx', initEvent.pageX)
+      .attr('cy', initEvent.pageY)
+      .attr('r', Math.abs(currentTotal))
+      .attr('opacity', 0.05);
 
     // Set positive/negative colors.
     this.setLineColor(-height);
@@ -111,13 +129,18 @@ Ov.Views.Line = Backbone.View.extend({
    */
   clear: function() {
 
-    // Remove lines.
+    // Clear lines.
     _.each(this.lines, function(line) {
       line.remove();
     });
 
+    // Clear circle.
+    if (!_.isNull(this.circle))
+      this.circle.remove();
+
     // Clear counter.
     this.total.text('');
+    this.circle = null;
     this.lines = [];
 
   },
@@ -128,8 +151,15 @@ Ov.Views.Line = Backbone.View.extend({
    * @return void.
    */
   clearCurrent: function() {
-    if (!_.isNull(this.currentLine))
-      this.currentLine.remove();
+
+    // Clear line.
+    if (!_.isNull(this.line))
+      this.line.remove();
+
+    // Clear circle.
+    if (!_.isNull(this.circle))
+      this.circle.remove();
+
   },
 
   /*
@@ -138,34 +168,45 @@ Ov.Views.Line = Backbone.View.extend({
    * @return void.
    */
   lockCurrent: function() {
-    if (!_.isNull(this.currentLine)) {
-      this.lines.push(this.currentLine);
-      this.currentLine = null;
+    if (!_.isNull(this.line)) {
+      this.lines.push(this.line);
+      this.line = null;
     }
   },
 
   /*
-   * Set positive drag.
+   * Set the color of the line.
    *
    * @param {Number} height: The line height.
    *
    * @return void.
    */
   setLineColor: function(height) {
-    if (height >= 0) this.currentLine.attr('class', 'positive');
-    else this.currentLine.attr('class', 'negative');
+    if (height >= 0) this.line.attr('class', 'positive');
+    else this.line.attr('class', 'negative');
   },
 
   /*
-   * Set negative drag.
+   * Set the color of the total and circle.
    *
    * @param {Number} currentTotal: The drag value.
    *
    * @return void.
    */
   setTotalColor: function(currentTotal) {
-    if (currentTotal >= 0) this.total.attr('class', 'positive');
-    else this.total.attr('class', 'negative');
+
+    // Positive.
+    if (currentTotal >= 0) {
+      this.total.attr('class', 'positive');
+      this.circle.attr('class', 'positive');
+    }
+
+    // Negative.
+    else {
+      this.total.attr('class', 'negative');
+      this.circle.attr('class', 'negative');
+    }
+
   },
 
   /*
@@ -174,8 +215,8 @@ Ov.Views.Line = Backbone.View.extend({
    * @return void.
    */
   setInvalid: function() {
-    if (!_.isNull(this.currentLine))
-      this.currentLine.attr('class', 'blocked');
+    if (!_.isNull(this.line))
+      this.line.attr('class', 'blocked');
     this.total.attr('class', 'blocked');
   }
 

@@ -378,4 +378,19 @@ describe('Stack View', function() {
 
   });
 
+  describe('empty', function() {
+
+    beforeEach(function() {
+      stackView.show();
+      stackView.addRow();
+    });
+
+    it('should empty the stack', function() {
+      stackView.empty();
+      expect(stackView.$el).toBeEmpty();
+      expect(stackView.wordRows.length).toEqual(0);
+    });
+
+  });
+
 });

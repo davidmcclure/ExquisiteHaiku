@@ -87,11 +87,32 @@ describe('Stack Word View', function() {
 
     });
 
-    it('should reset dragDelta to 0');
+    it('should reset dragDelta to 0', function() {
+      stackWordView.dragDelta = 100;
+      stackWordView.addDrag(e);
+      expect(stackWordView.dragDelta).toEqual(0);
+    });
 
-    it('should trigger "words:dragStart"');
+    it('should trigger "words:dragStart"', function() {
 
-    it('should set global isDragging true');
+      // Update word data.
+      stackWordView.update(['word', 100, 50, -50, '1.00']);
+
+      // Spy on words:dragStart.
+      var cb = jasmine.createSpy();
+      Ov.vent.on('words:dragStart', cb);
+
+      // Add drag.
+      stackWordView.addDrag(e);
+      expect(cb).toHaveBeenCalledWith('word');
+
+    });
+
+    it('should set global isDragging true', function() {
+      Ov._global.isDragging = false;
+      stackWordView.addDrag(e);
+      expect(Ov._global.isDragging).toBeTruthy();
+    });
 
   });
 

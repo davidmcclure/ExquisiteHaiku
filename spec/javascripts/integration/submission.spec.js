@@ -33,6 +33,13 @@ describe('Submission', function() {
 
   });
 
+  // Clear out localstorage.
+  afterEach(function() {
+    Ov.Controllers.Round.RoundCollection.each(function(i) {
+      i.destroy();
+    });
+  });
+
   it('should queue a valid word', function() {
 
     // Set word value.

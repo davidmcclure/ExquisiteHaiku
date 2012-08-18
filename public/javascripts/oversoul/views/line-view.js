@@ -86,10 +86,7 @@ Ov.Views.Line = Backbone.View.extend({
     this.circle
       .attr('cx', initEvent.pageX)
       .attr('cy', initEvent.pageY)
-      .attr('r', Math.abs(currentTotal))
-      .attr('stroke', 'red')
-      .attr('stroke-width', 3)
-      .attr('opacity', 0.05);
+      .attr('r', Math.abs(currentTotal));
 
     // Set positive/negative colors.
     this.setLineColor(-height);

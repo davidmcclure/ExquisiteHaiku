@@ -8,7 +8,8 @@ describe('Stack View', function() {
 
   // Get fixtures, run app.
   beforeEach(function() {
-    loadFixtures('fixtures.html');
+    loadFixtures('index.html');
+    loadFixtures('templates.html');
     Ov.start();
   });
 
@@ -26,7 +27,7 @@ describe('Stack View', function() {
       // Update.
       expect(stackView.update([
         ['word1', 100, 50, -50, '1.00'],
-        ['word1', 99, 50, -50, '0.99']
+        ['word2', 99, 50, -50, '0.99']
       ])).toBeFalsy();
 
       // Check for no words.
@@ -41,7 +42,7 @@ describe('Stack View', function() {
       // Update.
       expect(stackView.update([
         ['word1', 100, 50, -50, '1.00'],
-        ['word1', 99, 50, -50, '0.99']
+        ['word2', 99, 50, -50, '0.99']
       ])).toBeFalsy();
 
       // Check for no words.

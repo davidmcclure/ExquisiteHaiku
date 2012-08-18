@@ -8,7 +8,8 @@ describe('Poem View', function() {
 
   // Get fixtures, run app.
   beforeEach(function() {
-    loadFixtures('fixtures.html');
+    loadFixtures('index.html');
+    loadFixtures('templates.html');
     Ov.start();
   });
 

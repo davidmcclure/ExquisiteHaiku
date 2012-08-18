@@ -1,27 +1,5 @@
 extends ../_layouts/poem
 
 block content
-
-  div#log
-  div#overflow
-
-  div.main
-    div#poem
-    div#stack
-
-  div#info
-
-    div.info#points
-    div.progress
-      div.bar
-
-    div.progress.last
-      div.bar
-    div.info#timer
-      span.min
-      span.sec
-
-  script(type="text/javascript")
-    var Poem = !{poem}
-
+  include base
   include templates

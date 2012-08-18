@@ -8,7 +8,8 @@ describe('Submission', function() {
 
   // Get fixtures, run app.
   beforeEach(function() {
-    loadFixtures('fixtures.html');
+    loadFixtures('index.html');
+    loadFixtures('templates.html');
     Ov.start();
   });
 
@@ -18,7 +19,7 @@ describe('Submission', function() {
     // Mock keypress.
     e = $.Event('keyup');
 
-    // Shortcut views.
+    // Shortcut blank view.
     blank = Ov.Controllers.Poem.BlankView;
     blank.activateVote();
 
@@ -26,7 +27,7 @@ describe('Submission', function() {
     Ov.vent.trigger('socket:slice', {
       stack: [],
       syllables: 0,
-      round: 'round_id',
+      round: 'id',
       poem: [],
       clock: 10000
     });
@@ -35,9 +36,7 @@ describe('Submission', function() {
 
   // Clear out localstorage.
   afterEach(function() {
-    Ov.Controllers.Round.RoundCollection.each(function(i) {
-      i.destroy();
-    });
+    Ov.Controllers.Round.RoundCollection.reset();
   });
 
   it('should queue a valid word', function() {

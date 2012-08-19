@@ -8,8 +8,7 @@ describe('Stack', function() {
 
   // Get fixtures, run app.
   beforeEach(function() {
-    loadFixtures('index.html');
-    loadFixtures('templates.html');
+    loadFixtures('base.html', 'templates.html');
     Ov.start();
   });
 
@@ -64,7 +63,7 @@ describe('Stack', function() {
 
     // Word2.
     expect($(rows[1]).find('.ratio').text()).toEqual('0.99');
-    expect($(rows[1]).find('.word').text()).toEqual('word1');
+    expect($(rows[1]).find('.word').text()).toEqual('word2');
     expect($(rows[1]).find('.churn.pos').text()).toEqual('40');
     expect($(rows[1]).find('.churn.neg').text()).toEqual('41');
 

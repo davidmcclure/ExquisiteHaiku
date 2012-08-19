@@ -8,8 +8,7 @@ describe('Submission', function() {
 
   // Get fixtures, run app.
   beforeEach(function() {
-    loadFixtures('index.html');
-    loadFixtures('templates.html');
+    loadFixtures('base.html', 'templates.html');
     Ov.start();
   });
 
@@ -21,6 +20,8 @@ describe('Submission', function() {
 
     // Shortcut blank view.
     blank = Ov.Controllers.Poem.BlankView;
+
+    // Mock vote -> submit. 
     blank.activateVote();
 
     // Mock incoming data slice.

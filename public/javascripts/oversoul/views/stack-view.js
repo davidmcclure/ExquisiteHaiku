@@ -153,6 +153,7 @@ Ov.Views.Stack = Backbone.View.extend({
    */
   empty: function() {
     this.wordRows = [];
+    this.wordsToRow = {};
     this.$el.empty();
   }
 

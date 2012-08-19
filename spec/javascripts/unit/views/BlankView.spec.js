@@ -8,8 +8,7 @@ describe('Blank View', function() {
 
   // Get fixtures, run app.
   beforeEach(function() {
-    loadFixtures('index.html');
-    loadFixtures('templates.html');
+    loadFixtures('base.html', 'templates.html');
     Ov.start();
   });
 

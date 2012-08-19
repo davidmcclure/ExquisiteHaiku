@@ -42,9 +42,7 @@ Ov.Views.Poem = Backbone.View.extend({
   update: function(poem, syllables) {
 
     // Only render new poem.
-    if (syllables === this.syllables) {
-      return false;
-    }
+    if (syllables === this.syllables) return false;
 
     // Before render hook.
     Ov.vent.trigger('poem:render:before');

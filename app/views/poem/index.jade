@@ -1,5 +1,9 @@
 extends ../_layouts/poem
 
 block content
+
   include base
   include templates
+
+  script(type="text/javascript")
+    var Poem = !{poem}

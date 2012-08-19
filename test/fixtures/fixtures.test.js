@@ -22,28 +22,6 @@ describe('Fixtures', function() {
 
   it('render index.jade', function(done) {
 
-    // User.
-    var user = new User({
-      username: 'david',
-      password: 'password',
-      email: 'david@test.org'
-    });
-
-    // Mock poem.
-    var poem = new Poem({
-      user:             user.id,
-      started:          true,
-      running:          true,
-      complete:         false,
-      roundLength :     1000,
-      sliceInterval :   300,
-      minSubmissions :  10,
-      submissionVal :   100,
-      decayLifetime :   10000,
-      seedCapital :     1000,
-      visibleWords :    100
-    });
-
     fs.readFile(
       'app/views/poem/base.jade',
       'utf8', function(err, data) {
@@ -53,11 +31,8 @@ describe('Fixtures', function() {
 
         // Write file.
         fs.writeFile(
-          'spec/javascripts/fixtures/index.html',
-          template({
-            title: 'hash',
-            poem: poem
-          }), function(err) {
+          'spec/javascripts/fixtures/base.html',
+          template(), function(err) {
             done();
         });
 

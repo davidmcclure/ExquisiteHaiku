@@ -158,4 +158,39 @@ describe('Stack', function() {
 
   });
 
+  it('should render word sizes and colors', function() {
+
+    // Mock stack.
+    slice.stack = [
+      ['word1', 100, 1000, 0, '1.00'],
+      ['word2', 90, 0, -900, '0.50'],
+      ['word3', 80, 800, 0, '0.40'],
+      ['word4', 70, 0, -700, '0.30']
+    ];
+
+    // Trigger slice.
+    Ov.vent.trigger('socket:slice', slice);
+
+    // Get word rows.
+    var rows = stack.$el.find('div.stack-row');
+
+    // Check colors.
+    expect($(rows[0]).find('.word')).toHaveClass('positive');
+    expect($(rows[1]).find('.word')).toHaveClass('negative');
+    expect($(rows[2]).find('.word')).toHaveClass('positive');
+    expect($(rows[3]).find('.word')).toHaveClass('negative');
+
+    // Get sizes.
+    var w1size = parseInt($(rows[0]).find('.word').css('font-size'), 10);
+    var w2size = parseInt($(rows[1]).find('.word').css('font-size'), 10);
+    var w3size = parseInt($(rows[2]).find('.word').css('font-size'), 10);
+    var w4size = parseInt($(rows[3]).find('.word').css('font-size'), 10);
+
+    // Check sizes.
+    expect(w1size).toBeGreaterThan(w2size);
+    expect(w2size).toBeGreaterThan(w3size);
+    expect(w3size).toBeGreaterThan(w4size);
+
+  });
+
 });

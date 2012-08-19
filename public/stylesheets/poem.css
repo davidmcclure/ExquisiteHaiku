@@ -20,13 +20,13 @@ body{font:200 18px "Source Sans Pro";text-rendering:optimizeLegibility;-webkit-u
 #stack .ratio,#stack .churn{font-size:11px;text-align:right;font-size:11px}
 #stack.frozen .stack-row{opacity:.5;}
 #stack.frozen .stack-row:hover{opacity:1}
-#log,#overflow{position:fixed;top:10px;}
-#log .log-row,#overflow .log-row{cursor:pointer;}
-#log .log-row:hover span.word,#overflow .log-row:hover span.word{opacity:1}
-#log .log-row span.value,#overflow .log-row span.value{margin-right:3px;font-size:11px}
-#log{z-index:2;direction:rtl;width:230px;}
-#log.frozen span.word{opacity:.5}
-#overflow{z-index:0;left:520px;opacity:.3}
+#log .primary,#log .overflow{position:fixed;top:10px;}
+#log .primary .log-row,#log .overflow .log-row{cursor:pointer;}
+#log .primary .log-row:hover span.word,#log .overflow .log-row:hover span.word{opacity:1}
+#log .primary .log-row span.value,#log .overflow .log-row span.value{margin-right:3px;font-size:11px}
+#log .primary{z-index:2;direction:rtl;width:230px;}
+#log .primary.frozen span.word{opacity:.5}
+#log .overflow{z-index:0;left:520px;opacity:.3}
 #info{z-index:-2;position:fixed;left:700px;top:25px;}
 #info .info{font-size:35px;opacity:.6}
 #info .label{color:#000;background:transparent;font-style:italic;font-weight:normal;opacity:.3;padding-left:3px;font-size:16px}

@@ -86,35 +86,36 @@ body
 
 
 #log
-#overflow
-  position fixed
-  top 10px
 
-  .log-row
-    cursor pointer
-    &:hover
+  .primary
+  .overflow
+    position fixed
+    top 10px
+
+    .log-row
+      cursor pointer
+      &:hover
+        span.word
+          opacity 1
+
+      span.value
+        margin-right 3px
+        font-size 11px
+
+  .primary
+    z-index 2
+    direction rtl
+    width 230px
+
+    &.frozen
       span.word
-        opacity 1
+        opacity 0.5
 
-    span.value
-      margin-right 3px
-      font-size 11px
+  .overflow
+    z-index 0
+    left 520px
+    opacity 0.3
 
-
-#log
-  z-index 2
-  direction rtl
-  width 230px
-
-  &.frozen
-    span.word
-      opacity 0.5
-
-
-#overflow
-  z-index 0
-  left 520px
-  opacity 0.3
 
 #info
   z-index -2

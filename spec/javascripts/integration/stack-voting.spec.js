@@ -20,12 +20,12 @@ describe('Stack Voting', function() {
     line = Ov.Controllers.Stack.Line;
     points = Ov.Controllers.Info.Points;
 
-    // Set seedCapital.
-    Poem.seedCapital = 1000;
-
     // Mock submission.
     Ov.Controllers.Round.RoundCollection.currentRound = 'id';
     Ov.vent.trigger('blank:submit');
+
+    // Reset points.
+    points.value = 1000;
 
     // Mock incoming data slice.
     slice = {
@@ -518,7 +518,7 @@ describe('Stack Voting', function() {
     expect($('body')).not.toContain('div.drag-line');
 
     // Check for commited points.
-    expect(points.$el.text()).toEqual('990');
+    expect(points.$el.text()).toEqual('995');
     expect(points.$el).not.toHaveClass('preview');
 
     // Check for vote release.
@@ -551,7 +551,7 @@ describe('Stack Voting', function() {
     expect($('body')).not.toContain('div.drag-line');
 
     // Check for commited points.
-    expect(points.$el.text()).toEqual('990');
+    expect(points.$el.text()).toEqual('1000');
     expect(points.$el).not.toHaveClass('preview');
 
     // Check for vote release.
@@ -583,7 +583,7 @@ describe('Stack Voting', function() {
     expect($('body')).not.toContain('div.drag-line');
 
     // Check for commited points.
-    expect(points.$el.text()).toEqual('990');
+    expect(points.$el.text()).toEqual('1000');
     expect(points.$el).not.toHaveClass('preview');
 
     // Check for vote release.

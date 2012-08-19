@@ -17,7 +17,7 @@ Ov.Controllers.Log = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.addInitializer(function() {
-    Log.Stack = new Ov.Views.Log();
+    Log.Stack = new Ov.Views.Log({ el: '#log' });
   });
 
 

@@ -33,6 +33,7 @@ Ov.Views.Points = Backbone.View.extend({
    */
   activateVote: function(round) {
     if (_.isNull(this.value)) {
+      console.log(round);
       this.renderValue(round.get('points'));
     }
   },

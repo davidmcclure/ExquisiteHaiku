@@ -8,6 +8,11 @@ Ov.Views.Log = Backbone.View.extend({
     maxLength: 50
   },
 
+  events: {
+    'mouseenter .primary': 'freeze',
+    'mouseleave .primary': 'unFreeze'
+  },
+
   /*
    * Get markup.
    *
@@ -16,27 +21,14 @@ Ov.Views.Log = Backbone.View.extend({
   initialize: function() {
 
     // Getters.
-    this.primaryMarkup = $('#log');
-    this.overflowMarkup = $('#overflow');
+    this.primaryMarkup = this.$el.find('.primary');
+    this.overflowMarkup = this.$el.find('.overflow');
 
     // Trackers.
     this.primaryVotes = [];
     this.overflowVotes = [];
     this.frozen = false;
     this.voting = false;
-
-    // Listen for hover.
-    this.primaryMarkup.bind({
-
-      'mouseenter': _.bind(function() {
-        this.freeze();
-      }, this),
-
-      'mouseleave': _.bind(function() {
-        this.unFreeze();
-      }, this)
-
-    });
 
   },
 
@@ -134,7 +126,6 @@ Ov.Views.Log = Backbone.View.extend({
     this.primaryMarkup.removeClass('frozen');
     this.frozen = false;
     this.prune();
-
 
   },
 

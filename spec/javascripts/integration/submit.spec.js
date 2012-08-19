@@ -9,7 +9,6 @@ describe('Submission', function() {
   // Get fixtures, run app.
   beforeEach(function() {
     loadFixtures('base.html', 'templates.html');
-    Ov.start();
   });
 
   // Activate submit.

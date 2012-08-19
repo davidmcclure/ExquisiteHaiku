@@ -17,8 +17,8 @@ Ov.Controllers.Poem = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.addInitializer(function() {
-    Poem.PoemView = new Ov.Views.Poem();
-    Poem.BlankView = new Ov.Views.Blank();
+    Poem.Poem = new Ov.Views.Poem();
+    Poem.Blank = new Ov.Views.Blank();
   });
 
 
@@ -32,7 +32,7 @@ Ov.Controllers.Poem = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('state:submit', function() {
-    Poem.BlankView.activateSubmit();
+    Poem.Blank.activateSubmit();
   });
 
   /*
@@ -41,7 +41,7 @@ Ov.Controllers.Poem = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('state:vote', function() {
-    Poem.BlankView.activateVote();
+    Poem.Blank.activateVote();
   });
 
   /*
@@ -50,7 +50,7 @@ Ov.Controllers.Poem = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('poem:render:before', function() {
-    Poem.BlankView.detach();
+    Poem.Blank.detach();
   });
 
   /*
@@ -61,7 +61,7 @@ Ov.Controllers.Poem = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('poem:render:after', function(line) {
-    Poem.BlankView.insert(line);
+    Poem.Blank.insert(line);
   });
 
   /*
@@ -72,7 +72,7 @@ Ov.Controllers.Poem = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('socket:slice', function(data) {
-    Poem.PoemView.update(data.poem, data.syllables);
+    Poem.Poem.update(data.poem, data.syllables);
   });
 
   /*
@@ -81,7 +81,7 @@ Ov.Controllers.Poem = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('words:select', function() {
-    Poem.BlankView.freeze();
+    Poem.Blank.freeze();
   });
 
   /*
@@ -90,7 +90,7 @@ Ov.Controllers.Poem = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('words:unselect', function() {
-    Poem.BlankView.unFreeze();
+    Poem.Blank.unFreeze();
   });
 
   /*
@@ -101,7 +101,7 @@ Ov.Controllers.Poem = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('words:hover', function(word) {
-    Poem.BlankView.showPreview(word);
+    Poem.Blank.showPreview(word);
   });
 
   /*
@@ -112,7 +112,7 @@ Ov.Controllers.Poem = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('words:unhover', function(word) {
-    Poem.BlankView.hidePreview();
+    Poem.Blank.hidePreview();
   });
 
   return Poem;

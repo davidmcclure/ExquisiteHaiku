@@ -214,9 +214,15 @@ Ov.Views.Line = Backbone.View.extend({
    * @return void.
    */
   setInvalid: function() {
+
+    // Render line.
     if (!_.isNull(this.line))
       this.line.attr('class', 'blocked');
+
+    // Render total and circle.
     this.total.attr('class', 'blocked');
+    this.circle.attr('class', 'blocked');
+
   }
 
 });

@@ -18,7 +18,7 @@ describe('Submission', function() {
     e = $.Event('keyup');
 
     // Shortcut blank view.
-    blank = Ov.Controllers.Poem.BlankView;
+    blank = Ov.Controllers.Poem.Blank;
 
     // Mock vote -> submit. 
     blank.activateVote();
@@ -199,10 +199,6 @@ describe('Submission', function() {
 
   it('should emit correct word list when enough words', function() {
 
-    // Spy on blank:submit.
-    var cb = jasmine.createSpy();
-    Ov.vent.on('blank:submit', cb);
-
     // Set minSubmissions.
     Poem.minSubmissions = 3;
 
@@ -215,14 +211,14 @@ describe('Submission', function() {
     blank.$el.val('valid3');
     blank.$el.trigger(e);
 
+    // Spy on socket submission release.
+    spyOn(Ov.Controllers.Socket.s, 'emit');
+
     // Attempt to submit.
     e.keyCode = 17;
     blank.$el.trigger(e);
-    expect(cb).toHaveBeenCalledWith([
-      'valid1',
-      'valid2',
-      'valid3'
-    ]);
+    expect(Ov.Controllers.Socket.s.emit).toHaveBeenCalledWith(
+      'submit', 1, ['valid1', 'valid2', 'valid3']);
 
   });
 

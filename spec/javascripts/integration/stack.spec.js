@@ -13,7 +13,7 @@ describe('Stack', function() {
 
   beforeEach(function() {
 
-    // Shortcut blank view.
+    // Shortcut stack view.
     stack = Ov.Controllers.Stack.Rank;
 
     // Set seedCapital.
@@ -22,6 +22,7 @@ describe('Stack', function() {
     // Mock submission.
     Ov.Controllers.Round.RoundCollection.currentRound = 'id';
     Ov.vent.trigger('blank:submit');
+    stack.empty();
 
     // Mock incoming data slice.
     slice = {
@@ -103,6 +104,92 @@ describe('Stack', function() {
     expect($(rows[1]).find('.word').text()).toEqual('word1');
     expect($(rows[1]).find('.churn.pos').text()).toEqual('50');
     expect($(rows[1]).find('.churn.neg').text()).toEqual('51');
+
+  });
+
+  it('should not update words when frozen', function() {
+
+    // Initial stack.
+    slice.stack = [
+      ['word1', 100, 50, -51, '1.00'],
+      ['word2', 99, 40, -41, '0.99']
+    ];
+
+    // Trigger slice.
+    Ov.vent.trigger('socket:slice', slice);
+
+    // Should block rendering when frozen.
+    // -----------------------------------
+
+    // Trigger mouseenter.
+    stack.$el.trigger('mouseenter');
+
+    // Check for frozen class.
+    expect(stack.$el).toHaveClass('frozen');
+
+    // New words.
+    slice.stack = [
+      ['word2', 200, 60, -61, '1.00'],
+      ['word1', 100, 50, -51, '0.50'],
+      ['word3', 90, 40, -41, '0.40'],
+      ['word4', 80, 30, -31, '0.30']
+    ];
+
+    // Trigger slice.
+    Ov.vent.trigger('socket:slice', slice);
+
+    // Get word rows.
+    var rows = stack.$el.find('div.stack-row');
+    expect(rows.length).toEqual(2);
+
+    // Un-updated word1.
+    expect($(rows[0]).find('.ratio').text()).toEqual('1.00');
+    expect($(rows[0]).find('.word').text()).toEqual('word1');
+    expect($(rows[0]).find('.churn.pos').text()).toEqual('50');
+    expect($(rows[0]).find('.churn.neg').text()).toEqual('51');
+
+    // Un-updated word2.
+    expect($(rows[1]).find('.ratio').text()).toEqual('0.99');
+    expect($(rows[1]).find('.word').text()).toEqual('word2');
+    expect($(rows[1]).find('.churn.pos').text()).toEqual('40');
+    expect($(rows[1]).find('.churn.neg').text()).toEqual('41');
+
+    // Should resume rendering when un-frozen.
+    // ---------------------------------------
+
+    // Trigger mouseleave.
+    stack.$el.trigger('mouseleave');
+
+    // Trigger slice.
+    Ov.vent.trigger('socket:slice', slice);
+
+    // Get word rows.
+    rows = stack.$el.find('div.stack-row');
+    expect(rows.length).toEqual(4);
+
+    // Word2.
+    expect($(rows[0]).find('.ratio').text()).toEqual('1.00');
+    expect($(rows[0]).find('.word').text()).toEqual('word2');
+    expect($(rows[0]).find('.churn.pos').text()).toEqual('60');
+    expect($(rows[0]).find('.churn.neg').text()).toEqual('61');
+
+    // Word1.
+    expect($(rows[1]).find('.ratio').text()).toEqual('0.50');
+    expect($(rows[1]).find('.word').text()).toEqual('word1');
+    expect($(rows[1]).find('.churn.pos').text()).toEqual('50');
+    expect($(rows[1]).find('.churn.neg').text()).toEqual('51');
+
+    // Word3.
+    expect($(rows[2]).find('.ratio').text()).toEqual('0.40');
+    expect($(rows[2]).find('.word').text()).toEqual('word3');
+    expect($(rows[2]).find('.churn.pos').text()).toEqual('40');
+    expect($(rows[2]).find('.churn.neg').text()).toEqual('41');
+
+    // Word4.
+    expect($(rows[3]).find('.ratio').text()).toEqual('0.30');
+    expect($(rows[3]).find('.word').text()).toEqual('word4');
+    expect($(rows[3]).find('.churn.pos').text()).toEqual('30');
+    expect($(rows[3]).find('.churn.neg').text()).toEqual('31');
 
   });
 

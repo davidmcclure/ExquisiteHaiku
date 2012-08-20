@@ -62,4 +62,8 @@ load(
   // Mock poem.
   Poem = { _id: 1 };
 
+  // Load fixtures, run.
+  loadFixtures('base.html', 'templates.html');
+  Ov.start();
+
 });

@@ -35,7 +35,7 @@ describe('Stack', function() {
 
   });
 
-  // Clear out localstorage.
+  // Clear localstorage.
   afterEach(function() {
     Ov.Controllers.Round.RoundCollection.reset();
   });

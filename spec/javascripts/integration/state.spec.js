@@ -4,9 +4,17 @@
 
 describe('State', function() {
 
+  var blank, stack;
+
   // Get fixtures.
   beforeEach(function() {
     loadFixtures('base.html', 'templates.html');
+  });
+
+  // Shortcut classes.
+  beforeEach(function() {
+    blank = Ov.Controllers.Poem.Blank;
+    stack = Ov.Controllers.Stack.Rank;
   });
 
   // Clear localstorage.

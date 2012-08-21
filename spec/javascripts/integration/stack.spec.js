@@ -22,6 +22,8 @@ describe('Stack', function() {
     // Mock submission.
     Ov.Controllers.Round.RoundCollection.currentRound = 'id';
     Ov.vent.trigger('blank:submit');
+
+    // Clear stack.
     stack.empty();
 
     // Mock incoming data slice.

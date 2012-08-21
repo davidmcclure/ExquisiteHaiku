@@ -20,7 +20,7 @@ describe('Submission', function() {
     // Shortcut blank view.
     blank = Ov.Controllers.Poem.Blank;
 
-    // Mock vote -> submit. 
+    // Activate voting.
     blank.activateVote();
 
     // Mock incoming data slice.

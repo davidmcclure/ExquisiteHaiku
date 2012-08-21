@@ -45,7 +45,6 @@ Ov.Views.Line = Backbone.View.extend({
    */
   hide: function() {
     this.lockCurrent();
-    this.$el.detach();
     this.clear();
   },
 
@@ -141,6 +140,9 @@ Ov.Views.Line = Backbone.View.extend({
     this.total.text('');
     this.circle = null;
     this.lines = [];
+
+    // Remove container.
+    this.$el.detach();
 
   },
 

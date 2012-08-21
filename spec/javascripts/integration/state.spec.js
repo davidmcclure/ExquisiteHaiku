@@ -4,19 +4,25 @@
 
 describe('State', function() {
 
-  var poem, blank, stack, log, slice;
+  var poem, blank, stack, log, slice, e;
 
   // Get fixtures.
   beforeEach(function() {
     loadFixtures('base.html', 'templates.html');
+    Ov.Controllers.Stack.Rank.delegateEvents();
   });
 
-  // Shortcut classes.
   beforeEach(function() {
+
+    // Shortcut views.
     poem = Ov.Controllers.Poem.Poem;
     blank = Ov.Controllers.Poem.Blank;
     stack = Ov.Controllers.Stack.Rank;
     log = Ov.Controllers.Log.Stack;
+
+    // Mock keypress.
+    e = $.Event('keyup');
+
   });
 
   // Clear localstorage.
@@ -26,12 +32,7 @@ describe('State', function() {
 
   describe('submit -> vote', function() {
 
-    var e;
-
     beforeEach(function() {
-
-      // Mock keypress.
-      e = $.Event('keyup');
 
       // Activate voting. 
       blank.activateVote();
@@ -136,21 +137,152 @@ describe('State', function() {
 
   describe('vote -> submit', function() {
 
-    it('should clear blank');
+    var rows, word;
 
-    it('should clear stack');
+    beforeEach(function() {
 
-    it('should clear log');
+      // Mock submission.
+      Ov.Controllers.Round.RoundCollection.currentRound = 'id';
+      Ov.vent.trigger('blank:submit');
 
-    it('should clear in-progress vote');
+      // Mock incoming data slice.
+      slice = {
+        stack: [
+          ['word1', 100, 1000, 0, '1.00'],
+          ['word2', 90, 0, -900, '0.50'],
+          ['word3', 80, 800, 0, '0.40'],
+          ['word4', 70, 0, -700, '0.30']
+        ],
+        syllables: 0,
+        round: 'id',
+        poem: [],
+        clock: 10000
+      };
+
+      // Trigger slice.
+      Ov.vent.trigger('socket:slice', slice);
+
+      // Get rows and word.
+      rows = stack.$el.find('div.stack-row');
+      word = $(rows[0]);
+
+    });
+
+    it('should clear blank', function() {
+
+      // Trigger mouseenter.
+      word.trigger('mouseenter');
+
+      // Trigger new round.
+      slice.round = 'new';
+      Ov.vent.trigger('socket:slice', slice);
+
+      // Check for no preview.
+      expect(blank.$el.val()).toEqual('');
+
+      // Trigger mouseleave.
+      stack.$el.trigger('mouseleave');
+
+    });
+
+    it('should clear stack', function() {
+
+      // Trigger new round.
+      slice.round = 'new';
+      Ov.vent.trigger('socket:slice', slice);
+
+      // Check for words.
+      expect(stack.$el).toBeEmpty();
+
+    });
+
+    it('should clear log', function() {
+
+      // Ingest votes.
+      Ov.vent.trigger('socket:vote:in', 'word1', 100);
+      Ov.vent.trigger('socket:vote:in', 'word2', 200);
+
+      // Trigger new round.
+      slice.round = 'new';
+      Ov.vent.trigger('socket:slice', slice);
+
+      // Get word rows.
+      var rows = log.primaryMarkup.find('div.log-row');
+      expect(rows.length).toEqual(0);
+
+    });
+
+    it('should clear in-progress vote', function() {
+
+      // Click.
+      word.trigger($.Event('mousedown', {
+        pageX: 0, pageY: 0
+      }));
+
+      // Drag.
+      $(window).trigger($.Event('mousemove', {
+        pageX: -3, pageY: -4
+      }));
+
+      // Trigger new round.
+      slice.round = 'new';
+      Ov.vent.trigger('socket:slice', slice);
+
+      // Check for no drag.
+      expect($('body')).not.toContain('div.drag-line');
+
+    });
 
     it('should stop rendering stack');
 
-    it('should stop rendering log');
+    it('should stop rendering log', function() {
 
-    it('should enable blank');
+      // Trigger new round.
+      slice.round = 'new';
+      Ov.vent.trigger('socket:slice', slice);
 
-    it('should permit word submission');
+      // Ingest votes.
+      Ov.vent.trigger('socket:vote:in', 'word1', 100);
+      Ov.vent.trigger('socket:vote:in', 'word2', 200);
+
+      // Check for no drag.
+      expect(log.primaryMarkup).toBeEmpty();
+
+    });
+
+    it('should enable blank', function() {
+
+      // Trigger new round.
+      slice.round = 'new';
+      Ov.vent.trigger('socket:slice', slice);
+
+      // Check for no drag.
+      expect(blank.$el).not.toBeDisabled();
+
+    });
+
+    it('should permit word submission', function() {
+
+      // Trigger new round.
+      slice.round = 'new';
+      Ov.vent.trigger('socket:slice', slice);
+
+      // Add first word.
+      e.keyCode = 13;
+      blank.$el.val('valid1');
+      blank.$el.trigger(e);
+
+      // Add second word.
+      blank.$el.val('valid2');
+      blank.$el.trigger(e);
+
+      // Check for word.
+      var words = blank.stack.find('div.submission-word');
+      expect(words.length).toEqual(2);
+      expect(words[0]).toHaveText('valid2');
+      expect(words[1]).toHaveText('valid1');
+
+    });
 
   });
 

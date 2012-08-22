@@ -16,5 +16,5 @@ Ov.Views = {};
 // --------------------
 Ov.global = {
   isDragging: false,
-  isVoting: false
+  isVoting: null
 };

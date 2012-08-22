@@ -39,17 +39,38 @@ Ov.Controllers.Round = (function(Backbone, Ov) {
     // Try to retrieve a stored round.
     var round = Round.RoundCollection.get(data.round);
 
-    // // Vote -> submit.
-    // if (_.isEmpty(round) && Ov.global.isVoting) {
-    //   Ov.vent.trigger('state:submit');
-    //   Ov.global.isVoting = false;
-    // }
+    // If first slice.
+    if (_.isNull(Ov.global.isVoting)) {
 
-    // // Submit -> vote.
-    // else if (!Ov.global.isVoting) {
-    //   Ov.vent.trigger('state:vote', round);
-    //   Ov.global.isVoting = true;
-    // }
+      // Submitting.
+      if (_.isEmpty(round)) {
+        Ov.vent.trigger('state:submit');
+        Ov.global.isVoting = false;
+      }
+
+      // Voting.
+      else {
+        Ov.vent.trigger('state:vote', round);
+        Ov.global.isVoting = true;
+      }
+
+    }
+
+    else {
+
+      // Vote -> submit.
+      if (_.isEmpty(round) && Ov.global.isVoting) {
+        Ov.vent.trigger('state:submit');
+        Ov.global.isVoting = false;
+      }
+
+      // Submit -> vote.
+      else if (!_.isEmpty(round) && !Ov.global.isVoting) {
+        Ov.vent.trigger('state:vote', round);
+        Ov.global.isVoting = true;
+      }
+
+    }
 
     // Store the current round.
     Round.RoundCollection.currentRound = data.round;

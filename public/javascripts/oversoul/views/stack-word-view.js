@@ -104,7 +104,7 @@ Ov.Views.StackWord = Backbone.View.extend({
 
     // Broadcast, track.
     Ov.vent.trigger('words:dragStart', this.word);
-    Ov._global.isDragging = true;
+    Ov.global.isDragging = true;
 
   },
 
@@ -222,7 +222,7 @@ Ov.Views.StackWord = Backbone.View.extend({
    * @return void.
    */
   hover: function() {
-    if (Ov._global.isDragging) return false;
+    if (Ov.global.isDragging) return false;
     Ov.vent.trigger('words:hover', this.word);
     return true;
   },
@@ -259,7 +259,7 @@ Ov.Views.StackWord = Backbone.View.extend({
 
     // Untrack and unbind.
     this.dragTotal = 0;
-    Ov._global.isDragging = false;
+    Ov.global.isDragging = false;
     $(window).unbind('.drag');
 
   },

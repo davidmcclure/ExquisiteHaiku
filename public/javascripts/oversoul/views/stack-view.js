@@ -116,7 +116,7 @@ Ov.Views.Stack = Backbone.View.extend({
   unFreeze: function() {
 
     // If dragging, break.
-    if (Ov._global.isDragging) return false;
+    if (Ov.global.isDragging) return false;
 
     // Manifest, trigger out.
     Ov.vent.trigger('words:unhover');

@@ -14,4 +14,4 @@ Ov.Views = {};
 // --------------------
 // Application globals.
 // --------------------
-Ov._global = {};
+Ov.global = {};

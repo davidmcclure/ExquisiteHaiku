@@ -70,7 +70,7 @@ Ov.Views.LogWord = Backbone.View.extend({
    * @return void.
    */
   hover: function() {
-    if (Ov._global.isDragging) return;
+    if (Ov.global.isDragging) return;
     Ov.vent.trigger('log:preview', this.word, this.value);
     Ov.vent.trigger('words:hover', this.word);
   },
@@ -81,7 +81,7 @@ Ov.Views.LogWord = Backbone.View.extend({
    * @return void.
    */
   unHover: function() {
-    if (Ov._global.isDragging) return;
+    if (Ov.global.isDragging) return;
     Ov.vent.trigger('log:cancel');
   },
 

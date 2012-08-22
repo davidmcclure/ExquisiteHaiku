@@ -2,7 +2,7 @@
  * Application runner.
  */
 
- // Module dependencies.
+// Module dependencies.
 var express = require('express');
 var socket = require('socket.io');
 var configFile = require('yaml-config');

@@ -2,7 +2,7 @@
  * Define application settings and middleware.
  */
 
-// Module dependencies and import hook.
+// Module dependencies.
 var express = require('express');
 var mongoStore = require('connect-mongodb');
 

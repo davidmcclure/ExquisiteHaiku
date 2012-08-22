@@ -76,24 +76,6 @@ Ov.Controllers.Poem = (function(Backbone, Ov) {
   });
 
   /*
-   * When a word is selected, freeze the words:.
-   *
-   * @return void.
-   */
-  Ov.vent.on('words:select', function() {
-    Poem.Blank.freeze();
-  });
-
-  /*
-   * When a word is deselected, unfreeze the words:.
-   *
-   * @return void.
-   */
-  Ov.vent.on('words:unselect', function() {
-    Poem.Blank.unFreeze();
-  });
-
-  /*
    * When a word is hovered, render the poem preview.
    *
    * @param {String} word: The word.
@@ -101,7 +83,7 @@ Ov.Controllers.Poem = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('words:hover', function(word) {
-    Poem.Blank.showPreview(word);
+    if (!Ov.global.isDragging) Poem.Blank.showPreview(word);
   });
 
   /*
@@ -112,7 +94,7 @@ Ov.Controllers.Poem = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('words:unhover', function(word) {
-    Poem.Blank.hidePreview();
+    if (!Ov.global.isDragging) Poem.Blank.hidePreview();
   });
 
   return Poem;

@@ -43,17 +43,7 @@ Ov.Controllers.Stack = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('state:submit', function() {
-    Stack.Rank.hide();
     Stack.Line.clear();
-  });
-
-  /*
-   * Unfreeze the words.
-   *
-   * @return void.
-   */
-  Ov.vent.on('state:vote', function() {
-    Stack.Rank.show();
   });
 
   /*

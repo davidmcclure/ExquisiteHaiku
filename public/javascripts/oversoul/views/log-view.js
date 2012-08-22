@@ -28,7 +28,6 @@ Ov.Views.Log = Backbone.View.extend({
     this.primaryVotes = [];
     this.overflowVotes = [];
     this.frozen = false;
-    this.voting = false;
 
   },
 
@@ -38,21 +37,8 @@ Ov.Views.Log = Backbone.View.extend({
    * @return void.
    */
   activateSubmit: function() {
-    this.voting = false;
-    if (!this.empty) {
-      this.primaryMarkup.empty();
-      this.overflowMarkup.empty();
-      this.empty = true;
-    }
-  },
-
-  /*
-   * Enable log rendering.
-   *
-   * @return void.
-   */
-  activateVote: function() {
-    this.voting = true;
+    this.primaryMarkup.empty();
+    this.overflowMarkup.empty();
   },
 
   /*
@@ -64,9 +50,6 @@ Ov.Views.Log = Backbone.View.extend({
    * @return void.
    */
   add: function(word, value) {
-
-    // Break if submitting.
-    if (!this.voting) return;
 
     // Create the vote.
     var vote = new Ov.Views.LogWord({
@@ -96,7 +79,6 @@ Ov.Views.Log = Backbone.View.extend({
    * @return void.
    */
   freeze: function() {
-    if (Ov.global.isDragging) return;
     this.primaryMarkup.addClass('frozen');
     this.frozen = true;
   },

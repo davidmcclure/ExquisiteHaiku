@@ -33,7 +33,6 @@ Ov.Views.Points = Backbone.View.extend({
    */
   activateVote: function(round) {
     if (_.isNull(this.value)) {
-      console.log(round);
       this.renderValue(round.get('points'));
     }
   },
@@ -94,11 +93,8 @@ Ov.Views.Points = Backbone.View.extend({
    * @return void.
    */
   renderBar: function(quantity) {
-
-    // Build percentage.
     var percent = (quantity/Poem.seedCapital)*100+'%';
     this.bar.css('width', percent);
-
   },
 
   /*

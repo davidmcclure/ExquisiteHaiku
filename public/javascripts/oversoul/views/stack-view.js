@@ -22,7 +22,6 @@ Ov.Views.Stack = Backbone.View.extend({
 
     // Trackers.
     this.selected = null;
-    this.visible = false;
     this.frozen = false;
 
   },
@@ -36,8 +35,8 @@ Ov.Views.Stack = Backbone.View.extend({
    */
   update: function(stack) {
 
-    // If frozen or not visible, break.
-    if (this.frozen || !this.visible) return false;
+    // If frozen, break.
+    if (this.frozen) return false;
 
     _.times(stack.length, _.bind(function(i) {
 
@@ -52,8 +51,6 @@ Ov.Views.Stack = Backbone.View.extend({
       this.wordsToRow[word] = this.wordRows[i];
 
     }, this));
-
-    return true;
 
   },
 
@@ -116,34 +113,15 @@ Ov.Views.Stack = Backbone.View.extend({
   unFreeze: function() {
 
     // If dragging, break.
-    if (Ov.global.isDragging) return false;
+    if (Ov.global.isDragging) {
 
-    // Manifest, trigger out.
-    Ov.vent.trigger('words:unhover');
-    this.$el.removeClass('frozen');
-    this.frozen = false;
+      // Manifest, trigger out.
+      Ov.vent.trigger('words:unhover');
+      this.$el.removeClass('frozen');
+      this.frozen = false;
 
-    return true;
+    }
 
-  },
-
-  /*
-   * Show stacks.
-   *
-   * @return void.
-   */
-  show: function() {
-    this.visible = true;
-  },
-
-  /*
-   * Hide stacks.
-   *
-   * @return void.
-   */
-  hide: function() {
-    this.visible = false;
-    this.empty();
   },
 
   /*

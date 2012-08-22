@@ -14,4 +14,7 @@ Ov.Views = {};
 // --------------------
 // Application globals.
 // --------------------
-Ov.global = {};
+Ov.global = {
+  isDragging: false,
+  isVoting: false
+};

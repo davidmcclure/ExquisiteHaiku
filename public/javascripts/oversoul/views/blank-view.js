@@ -37,7 +37,7 @@ Ov.Views.Blank = Backbone.View.extend({
 
       // Keystroke release.
       'keyup': _.bind(function(e) {
-        if (!this.voting) this.processKeystroke(e);
+        this.processKeystroke(e);
       }, this)
 
     });
@@ -55,10 +55,6 @@ Ov.Views.Blank = Backbone.View.extend({
     this.words = [];
     this.cache = { valid: [], invalid: [] };
 
-    // Trackers.
-    this.frozen = false;
-    this.voting = false;
-
   },
 
   /*
@@ -68,9 +64,6 @@ Ov.Views.Blank = Backbone.View.extend({
    */
   activateSubmit: function() {
 
-    // Break if not voting.
-    if (!this.voting) return false;
-
     // Reset attributes.
     this.initializeTrackers();
 
@@ -78,8 +71,6 @@ Ov.Views.Blank = Backbone.View.extend({
     this.stack.empty();
     this.$el.removeAttr('disabled');
     this.$el.val('');
-
-    return true;
 
   },
 
@@ -90,18 +81,12 @@ Ov.Views.Blank = Backbone.View.extend({
    */
   activateVote: function() {
 
-    // Break if voting.
-    if (this.voting) return false;
-
     // Disable blank.
     this.$el.attr('disabled', 'disabled');
     this.$el.val('');
 
     // Hide stack.
     this.stack.detach();
-    this.voting = true;
-
-    return true;
 
   },
 
@@ -325,10 +310,8 @@ Ov.Views.Blank = Backbone.View.extend({
    * @return void.
    */
   showPreview: function(word) {
-    if (this.frozen) return false;
     this.$el.addClass('preview');
     this.$el.val(word);
-    return true;
   },
 
   /*
@@ -337,28 +320,8 @@ Ov.Views.Blank = Backbone.View.extend({
    * @return void.
    */
   hidePreview: function() {
-    if (this.frozen) return false;
     this.$el.removeClass('preview');
     this.$el.val('');
-    return true;
-  },
-
-  /*
-   * Freeze preview rendering.
-   *
-   * @return void.
-   */
-  freeze: function() {
-    this.frozen = true;
-  },
-
-  /*
-   * Unfreeze preview rendering.
-   *
-   * @return void.
-   */
-  unFreeze: function() {
-    this.frozen = false;
   }
 
 });

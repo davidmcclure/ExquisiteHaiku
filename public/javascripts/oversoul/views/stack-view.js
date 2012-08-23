@@ -22,6 +22,7 @@ Ov.Views.Stack = Backbone.View.extend({
 
     // Trackers.
     this.selected = null;
+    this.frozen = false;
 
   },
 
@@ -34,6 +35,10 @@ Ov.Views.Stack = Backbone.View.extend({
    */
   update: function(stack) {
 
+    // Break if frozen.
+    if (this.frozen) return;
+
+    // Walk stack words.
     _.times(stack.length, _.bind(function(i) {
 
       // Get word, add row.
@@ -74,6 +79,7 @@ Ov.Views.Stack = Backbone.View.extend({
    * @return void.
    */
   setSelected: function(word) {
+    console.log(this.wordsToRow);
 
     // If the new selected word is different from
     // the current selection.
@@ -98,6 +104,7 @@ Ov.Views.Stack = Backbone.View.extend({
    */
   freeze: function() {
     this.$el.addClass('frozen');
+    this.frozen = true;
   },
 
   /*
@@ -113,6 +120,7 @@ Ov.Views.Stack = Backbone.View.extend({
       // Manifest, trigger out.
       Ov.vent.trigger('words:unhover');
       this.$el.removeClass('frozen');
+      this.frozen = false;
 
     }
 
@@ -126,6 +134,7 @@ Ov.Views.Stack = Backbone.View.extend({
   empty: function() {
     this.wordRows = [];
     this.wordsToRow = {};
+    this.selected = null;
     this.$el.empty();
   }
 

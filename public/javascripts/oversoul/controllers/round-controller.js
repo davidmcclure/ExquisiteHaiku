@@ -44,14 +44,14 @@ Ov.Controllers.Round = (function(Backbone, Ov) {
 
       // Submitting.
       if (_.isEmpty(round)) {
-        Ov.vent.trigger('state:submit');
         Ov.global.isVoting = false;
+        Ov.vent.trigger('state:submit');
       }
 
       // Voting.
       else {
-        Ov.vent.trigger('state:vote', round);
         Ov.global.isVoting = true;
+        Ov.vent.trigger('state:vote', round);
       }
 
     }
@@ -60,15 +60,15 @@ Ov.Controllers.Round = (function(Backbone, Ov) {
 
       // Vote -> submit.
       if (_.isEmpty(round) && Ov.global.isVoting) {
-        Ov.vent.trigger('state:submit');
         Ov.global.isVoting = false;
         Ov.global.isDragging = false;
+        Ov.vent.trigger('state:submit');
       }
 
       // Submit -> vote.
       else if (!_.isEmpty(round) && !Ov.global.isVoting) {
-        Ov.vent.trigger('state:vote', round);
         Ov.global.isVoting = true;
+        Ov.vent.trigger('state:vote', round);
       }
 
     }

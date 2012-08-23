@@ -69,7 +69,7 @@ Ov.Views.Timer = Backbone.View.extend({
    *
    * @param {Number} d: The duration in milliseconds.
    *
-   * @return {Array}: [hs, min, sec, mls].
+   * @return {Array}: [min, sec].
    */
   _msToDuration: function(d) {
     var sec = this._format(Math.floor((d/1000) % 60)); d /= 60000;

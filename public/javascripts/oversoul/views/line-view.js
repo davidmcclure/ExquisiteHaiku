@@ -63,9 +63,6 @@ Ov.Views.Line = Backbone.View.extend({
     var height = dragEvent.pageY - initEvent.pageY;
     var scrollTop = $('body').scrollTop();
 
-    // Clear current shapes.
-    // this.clearCurrent();
-
     // If no line, create one.
     if (_.isNull(this.line))
       this.line = this.svg.append('svg:line');

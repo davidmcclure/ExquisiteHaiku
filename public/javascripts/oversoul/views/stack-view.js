@@ -22,7 +22,6 @@ Ov.Views.Stack = Backbone.View.extend({
 
     // Trackers.
     this.selected = null;
-    this.frozen = false;
 
   },
 
@@ -34,9 +33,6 @@ Ov.Views.Stack = Backbone.View.extend({
    * @return void.
    */
   update: function(stack) {
-
-    // If frozen, break.
-    if (this.frozen) return false;
 
     _.times(stack.length, _.bind(function(i) {
 
@@ -101,7 +97,6 @@ Ov.Views.Stack = Backbone.View.extend({
    * @return void.
    */
   freeze: function() {
-    this.frozen = true;
     this.$el.addClass('frozen');
   },
 
@@ -118,7 +113,6 @@ Ov.Views.Stack = Backbone.View.extend({
       // Manifest, trigger out.
       Ov.vent.trigger('words:unhover');
       this.$el.removeClass('frozen');
-      this.frozen = false;
 
     }
 

@@ -62,6 +62,7 @@ Ov.Controllers.Round = (function(Backbone, Ov) {
       if (_.isEmpty(round) && Ov.global.isVoting) {
         Ov.vent.trigger('state:submit');
         Ov.global.isVoting = false;
+        Ov.global.isDragging = false;
       }
 
       // Submit -> vote.

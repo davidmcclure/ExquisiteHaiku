@@ -233,6 +233,7 @@ Ov.Views.StackWord = Backbone.View.extend({
    * @return void.
    */
   select: function(event) {
+    console.log(this.word);
     Ov.vent.trigger('words:select', this.word);
     this.addDrag(event);
   },

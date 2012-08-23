@@ -43,6 +43,7 @@ Ov.Controllers.Stack = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('state:submit', function() {
+    Stack.Rank.empty();
     Stack.Line.clear();
   });
 

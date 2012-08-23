@@ -222,8 +222,9 @@ Ov.Views.StackWord = Backbone.View.extend({
    * @return void.
    */
   hover: function() {
-    if (Ov.global.isDragging)
+    if (!Ov.global.isDragging) {
       Ov.vent.trigger('words:hover', this.word);
+    }
   },
 
   /*

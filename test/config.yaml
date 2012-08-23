@@ -1,3 +1,2 @@
 default:
   root: "http://localhost:3000/"
-  jasmine: "http://localhost:1337/"

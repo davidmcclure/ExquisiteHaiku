@@ -4,7 +4,7 @@
 
 describe('Log Voting', function() {
 
-  var log, blank, points;
+  var log, blank, points, rounds;
 
   // Get fixtures.
   beforeEach(function() {
@@ -14,34 +14,21 @@ describe('Log Voting', function() {
 
   beforeEach(function() {
 
-    // Shortcut views.
-    log = Ov.Controllers.Log.Stack;
+    // Shortcut application objects.
     blank = Ov.Controllers.Poem.Blank;
     points = Ov.Controllers.Info.Points;
+    rounds = Ov.Controllers.Round.RoundCollection;
+    log = Ov.Controllers.Log.Stack;
 
-    // Mock submission.
-    Ov.Controllers.Round.RoundCollection.currentRound = 'id';
-    Ov.vent.trigger('blank:submit');
+    // Create round.
+    rounds.currentRound = 'id';
+    rounds.recordSubmission();
 
-    // Reset points.
+    // Set account value.
     points.value = 1000;
 
-    // Mock incoming data slice.
-    slice = {
-      stack: [
-        ['word1', 100, 1000, 0, '1.00'],
-        ['word2', 90, 0, -900, '0.50'],
-        ['word3', 80, 800, 0, '0.40'],
-        ['word4', 70, 0, -700, '0.30']
-      ],
-      syllables: 0,
-      round: 'id',
-      poem: [],
-      clock: 10000
-    };
-
-    // Trigger slice, get rows.
-    Ov.vent.trigger('socket:slice', slice);
+    // Activate voting.
+    Ov.global.isVoting = true;
 
   });
 

@@ -39,7 +39,6 @@ describe('Stack', function() {
 
   });
 
-  // Clear localstorage.
   afterEach(function() {
 
     // Clear localstorage.

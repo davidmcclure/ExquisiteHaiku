@@ -20,7 +20,7 @@ describe('Submission', function() {
     // Shortcut blank view.
     blank = Ov.Controllers.Poem.Blank;
 
-    // Activate voting.
+    // Activate submit.
     blank.activateSubmit();
 
   });

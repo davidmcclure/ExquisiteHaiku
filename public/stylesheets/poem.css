@@ -30,7 +30,7 @@ body{font:200 18px "Source Sans Pro";text-rendering:optimizeLegibility;-webkit-u
 #info .label{color:#000;background:transparent;font-style:italic;font-weight:normal;opacity:.3;padding-left:3px;font-size:16px}
 #info #points.preview{opacity:.5}
 #info .progress{margin:3px 0 0 0;height:5px;background-image:none;box-shadow:none;border-radius:2px;width:400px;z-index:-2;}
-#info .progress .bar{text-shadow:none;background-image:none;background-color:#ffc000;box-shadow:none;-moz-transition:none;-webkit-transition:none;-o-transition:color 0 ease-in;transition:none}
+#info .progress .bar{text-shadow:none;background-image:none;background-color:#fde22b;box-shadow:none;-moz-transition:none;-webkit-transition:none;-o-transition:color 0 ease-in;transition:none}
 #info .progress.last{margin-top:7px}
 .drag-line{position:fixed;line-height:0;z-index:-1;top:0;left:0;}
 .drag-line svg{position:fixed;stroke-width:2;top:0;left:0;}

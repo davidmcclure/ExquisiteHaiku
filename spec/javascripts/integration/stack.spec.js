@@ -4,29 +4,31 @@
 
 describe('Stack', function() {
 
-  var stack, slice;
+  var stack, rounds, slice;
 
   // Get fixtures.
   beforeEach(function() {
     loadFixtures('base.html', 'templates.html');
+    Ov.Controllers.Stack.Rank.delegateEvents();
   });
 
   beforeEach(function() {
 
-    // Shortcut stack view.
+    // Shortcut application components.
     stack = Ov.Controllers.Stack.Rank;
+    rounds = Ov.Controllers.Round.RoundCollection;
 
-    // Set seedCapital.
-    Poem.seedCapital = 1000;
+    // Create round.
+    rounds.currentRound = 'id';
+    rounds.recordSubmission();
 
-    // Mock submission.
-    Ov.Controllers.Round.RoundCollection.currentRound = 'id';
-    Ov.vent.trigger('blank:submit');
+    // Set account value.
+    points.value = 1000;
 
-    // Clear stack.
-    stack.empty();
+    // Activate voting.
+    Ov.global.isVoting = true;
 
-    // Mock incoming data slice.
+    // Data slice.
     slice = {
       stack: [],
       syllables: 0,
@@ -39,7 +41,13 @@ describe('Stack', function() {
 
   // Clear localstorage.
   afterEach(function() {
+
+    // Clear localstorage.
     Ov.Controllers.Round.RoundCollection.reset();
+
+    // Clear stack.
+    stack.empty();
+
   });
 
   it('should render words', function() {

@@ -79,7 +79,6 @@ Ov.Views.Stack = Backbone.View.extend({
    * @return void.
    */
   setSelected: function(word) {
-    console.log(this.wordsToRow);
 
     // If the new selected word is different from
     // the current selection.

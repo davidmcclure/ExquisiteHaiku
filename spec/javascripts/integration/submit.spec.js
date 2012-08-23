@@ -21,16 +21,7 @@ describe('Submission', function() {
     blank = Ov.Controllers.Poem.Blank;
 
     // Activate voting.
-    blank.activateVote();
-
-    // Mock incoming data slice.
-    Ov.vent.trigger('socket:slice', {
-      stack: [],
-      syllables: 0,
-      round: 'id',
-      poem: [],
-      clock: 10000
-    });
+    blank.activateSubmit();
 
   });
 

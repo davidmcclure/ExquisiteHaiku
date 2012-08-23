@@ -4,7 +4,8 @@
 
 describe('Stack Voting', function() {
 
-  var stack, blank, line, points, slice, rows, word;
+  var stack, blank, line, points,
+    rounds, slice, rows, word;
 
   // Get fixtures.
   beforeEach(function() {
@@ -18,16 +19,20 @@ describe('Stack Voting', function() {
     stack = Ov.Controllers.Stack.Rank;
     blank = Ov.Controllers.Poem.Blank;
     line = Ov.Controllers.Stack.Line;
+    rounds = Ov.Controllers.Round.RoundCollection;
     points = Ov.Controllers.Info.Points;
 
-    // Mock submission.
-    Ov.Controllers.Round.RoundCollection.currentRound = 'id';
-    Ov.vent.trigger('blank:submit');
+    // Create round.
+    rounds.currentRound = 'id';
+    rounds.recordSubmission();
 
-    // Reset points.
+    // Set account value.
     points.value = 1000;
 
-    // Mock incoming data slice.
+    // Activate voting.
+    Ov.global.isVoting = true;
+
+    // Data slice.
     slice = {
       stack: [
         ['word1', 100, 1000, 0, '1.00'],
@@ -48,9 +53,14 @@ describe('Stack Voting', function() {
 
   });
 
-  // Clear localstorage.
   afterEach(function() {
+
+    // Clear localstorage.
     Ov.Controllers.Round.RoundCollection.reset();
+
+    // Clear stack.
+    stack.empty();
+
   });
 
   it('should render preview on hover', function() {

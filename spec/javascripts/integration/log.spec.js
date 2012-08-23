@@ -32,15 +32,20 @@ describe('Log Voting', function() {
 
   });
 
-  // Clear localstorage.
   afterEach(function() {
+
+    // Clear localstorage.
     Ov.Controllers.Round.RoundCollection.reset();
+
+    // Clear log.
+    log.activateSubmit();
+
   });
 
   it('should render positive votes', function() {
 
     // Ingest vote.
-    Ov.vent.trigger('socket:vote:in', 'word1', 100);
+    Ov.vent.trigger('socket:vote:in', 'word', 100);
 
     // Get word rows.
     var rows = log.primaryMarkup.find('div.log-row');
@@ -48,7 +53,7 @@ describe('Log Voting', function() {
 
     // Check parts.
     expect($(rows[0]).find('span.value').text()).toEqual('100');
-    expect($(rows[0]).find('span.word').text()).toEqual('word1');
+    expect($(rows[0]).find('span.word').text()).toEqual('word');
 
     // Check color.
     expect($(rows[0])).toHaveClass('positive');
@@ -58,21 +63,18 @@ describe('Log Voting', function() {
   it('should render negative votes', function() {
 
     // Ingest vote.
-    Ov.vent.trigger('socket:vote:in', 'word2', -100);
+    Ov.vent.trigger('socket:vote:in', 'word', -100);
 
     // Get word rows.
     var rows = log.primaryMarkup.find('div.log-row');
-    expect(rows.length).toEqual(2);
+    expect(rows.length).toEqual(1);
 
     // Check parts.
     expect($(rows[0]).find('span.value').text()).toEqual('100');
-    expect($(rows[0]).find('span.word').text()).toEqual('word2');
-    expect($(rows[1]).find('span.value').text()).toEqual('100');
-    expect($(rows[1]).find('span.word').text()).toEqual('word1');
+    expect($(rows[0]).find('span.word').text()).toEqual('word');
 
     // Check color.
     expect($(rows[0])).toHaveClass('negative');
-    expect($(rows[1])).toHaveClass('positive');
 
   });
 
@@ -107,22 +109,27 @@ describe('Log Voting', function() {
     log.primaryMarkup.trigger('mouseenter');
     expect(log.primaryMarkup).toHaveClass('frozen');
 
+    // Unfreeze.
+    log.primaryMarkup.trigger('mouseleave');
+
   });
 
   it('should render point and blank previews on word hover', function() {
 
+    // Ingest vote.
+    Ov.vent.trigger('socket:vote:in', 'word', 100);
+
     // Get word rows.
     var rows = log.primaryMarkup.find('div.log-row');
-    expect(rows.length).toEqual(5);
 
     // Hover.
     $(rows[0]).trigger('mouseenter');
 
     // Check for blank preview.
-    expect(blank.$el.val()).toEqual('word7');
+    expect(blank.$el.val()).toEqual('word');
 
     // Check for point preview.
-    expect(points.$el.text()).toEqual('950');
+    expect(points.$el.text()).toEqual('900');
     expect(points.$el).toHaveClass('preview');
 
     // Blur.
@@ -139,22 +146,29 @@ describe('Log Voting', function() {
 
   it('should render new words in overflow during hover', function() {
 
+    // Ingest new words.
+    Ov.vent.trigger('socket:vote:in', 'word1', 10);
+    Ov.vent.trigger('socket:vote:in', 'word2', 20);
+    Ov.vent.trigger('socket:vote:in', 'word3', 30);
+    Ov.vent.trigger('socket:vote:in', 'word4', 40);
+    Ov.vent.trigger('socket:vote:in', 'word5', 50);
+
     // Freeze.
     log.primaryMarkup.trigger('mouseenter');
 
     // Ingest new words.
-    Ov.vent.trigger('socket:vote:in', 'word8', 40);
-    Ov.vent.trigger('socket:vote:in', 'word9', 30);
+    Ov.vent.trigger('socket:vote:in', 'word6', 60);
+    Ov.vent.trigger('socket:vote:in', 'word7', 70);
 
     // Get overflow word rows.
     var rows = log.overflowMarkup.find('div.log-row');
     expect(rows.length).toEqual(2);
 
     // Check parts.
-    expect($(rows[0]).find('span.value').text()).toEqual('30');
-    expect($(rows[0]).find('span.word').text()).toEqual('word9');
-    expect($(rows[1]).find('span.value').text()).toEqual('40');
-    expect($(rows[1]).find('span.word').text()).toEqual('word8');
+    expect($(rows[0]).find('span.value').text()).toEqual('70');
+    expect($(rows[0]).find('span.word').text()).toEqual('word7');
+    expect($(rows[1]).find('span.value').text()).toEqual('60');
+    expect($(rows[1]).find('span.word').text()).toEqual('word6');
 
     // Unfreeze.
     log.primaryMarkup.trigger('mouseleave');
@@ -166,15 +180,18 @@ describe('Log Voting', function() {
     expect(oRows.length).toEqual(0);
 
     // Check parts.
-    expect($(pRows[0]).find('span.word').text()).toEqual('word9');
-    expect($(pRows[1]).find('span.word').text()).toEqual('word8');
-    expect($(pRows[2]).find('span.word').text()).toEqual('word7');
-    expect($(pRows[3]).find('span.word').text()).toEqual('word6');
-    expect($(pRows[4]).find('span.word').text()).toEqual('word5');
+    expect($(pRows[0]).find('span.word').text()).toEqual('word7');
+    expect($(pRows[1]).find('span.word').text()).toEqual('word6');
+    expect($(pRows[2]).find('span.word').text()).toEqual('word5');
+    expect($(pRows[3]).find('span.word').text()).toEqual('word4');
+    expect($(pRows[4]).find('span.word').text()).toEqual('word3');
 
   });
 
   it('should execute echo vote', function() {
+
+    // Ingest vote.
+    Ov.vent.trigger('socket:vote:in', 'word', 100);
 
     // Spy on socket vote release.
     spyOn(Ov.Controllers.Socket.s, 'emit');
@@ -188,17 +205,17 @@ describe('Log Voting', function() {
 
     // Check for vote release.
     expect(Ov.Controllers.Socket.s.emit).toHaveBeenCalledWith(
-      'vote', 1, 'word9', 30);
+      'vote', 1, 'word', 100);
 
     // Check for updated points preview.
-    expect(points.$el.text()).toEqual('940');
+    expect(points.$el.text()).toEqual('800');
     expect(points.$el).toHaveClass('preview');
 
     // Blur.
     $(rows[0]).trigger('mouseleave');
 
     // Check for updated points.
-    expect(points.$el.text()).toEqual('970');
+    expect(points.$el.text()).toEqual('900');
     expect(points.$el).not.toHaveClass('preview');
 
   });

@@ -1,9 +1,9 @@
-extends ../_layouts/auth
+extends layout
 
 block content
   form.form-stacked.install(method='post')
     fieldset
       legend.logo Oversoul
-      include ../_includes/form/form
+      include ../form/form
     div.form-actions
       button.btn.btn-primary(type='submit') Submit

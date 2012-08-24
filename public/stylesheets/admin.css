@@ -1,7 +1,7 @@
 body{padding-top:50px}
 form.login,form.install,form.register{margin:6em auto 0 20em;}
 form.login legend,form.install legend,form.register legend{font-size:3em;border:none;font-weight:300;margin:0}
-form.login div.clearfix.error,form.install div.clearfix.error,form.register div.clearfix.error{padding-top:0;padding-bottom:0}
+form.login .help-inline,form.install .help-inline,form.register .help-inline{font-size:.8em}
 form.login h4,form.install h4,form.register h4{padding-bottom:.9em}
 form div.form-actions{background:none;border:none;padding:0}
 table.list td.title{font-weight:bold}

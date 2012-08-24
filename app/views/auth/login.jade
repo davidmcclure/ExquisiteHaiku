@@ -1,9 +1,8 @@
-extends layout
+extends ../index/layout
 
 block content
   form.form-stacked.login(method='post')
     fieldset
-      legend.logo Oversoul
       include ../form/form
     div.actions
-      button.btn.btn-primary(type='submit') Submit
+      button.btn.btn-custom.btn-large(type='submit') Submit

@@ -1,4 +1,4 @@
-@import url("http://fonts.googleapis.com/css?family=Source+Sans+Pro:200");
+@import url("http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900");
 body{font:200 18px "Source Sans Pro";text-rendering:optimizeLegibility;-webkit-user-select:none;-moz-user-select:none;font-weight:300;margin:2em}
 .positive{color:#288bcc}
 .negative{color:#cc3f28}
@@ -30,12 +30,12 @@ body{font:200 18px "Source Sans Pro";text-rendering:optimizeLegibility;-webkit-u
 #info .label{color:#000;background:transparent;font-style:italic;font-weight:normal;opacity:.3;padding-left:3px;font-size:16px}
 #info #points.preview{opacity:.5}
 #info .progress{margin:3px 0 0 0;height:5px;background-image:none;box-shadow:none;border-radius:2px;width:400px;z-index:-2;}
-#info .progress .bar{text-shadow:none;background-image:none;background-color:#fde22b;box-shadow:none;-moz-transition:none;-webkit-transition:none;-o-transition:color 0 ease-in;transition:none}
+#info .progress .bar{text-shadow:none;background-image:none;background-color:#288bcc;box-shadow:none;-moz-transition:none;-webkit-transition:none;-o-transition:color 0 ease-in;transition:none}
 #info .progress.last{margin-top:7px}
 .drag-line{position:fixed;line-height:0;z-index:-1;top:0;left:0;}
 .drag-line svg{position:fixed;stroke-width:2;top:0;left:0;}
-.drag-line svg line,.drag-line svg text,.drag-line svg circle{font-size:2em;}
-.drag-line svg line.positive,.drag-line svg text.positive,.drag-line svg circle.positive{stroke:#288bcc;fill:#288bcc}
-.drag-line svg line.negative,.drag-line svg text.negative,.drag-line svg circle.negative{stroke:#cc3f28;fill:#cc3f28}
-.drag-line svg line.blocked,.drag-line svg text.blocked,.drag-line svg circle.blocked{stroke:#b3b3b3;fill:#b3b3b3}
-.drag-line svg circle{opacity:.15}
+.drag-line svg line,.drag-line svg text{font-size:2em;}
+.drag-line svg line.positive,.drag-line svg text.positive{stroke:#288bcc;fill:#288bcc}
+.drag-line svg line.negative,.drag-line svg text.negative{stroke:#cc3f28;fill:#cc3f28}
+.drag-line svg line.blocked,.drag-line svg text.blocked{stroke:#b3b3b3;fill:#b3b3b3}
+.drag-line svg circle{fill:#b3b3b3;opacity:.1}

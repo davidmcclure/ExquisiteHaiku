@@ -10,7 +10,7 @@ var system = require('system');
 function waitFor(testFx, onReady, timeOut) {
 
   // Starting parameters.
-  var maxWait = timeOut ? timeOut : 3000;
+  var maxWait = timeOut ? timeOut : 10000;
   var start = Date.now();
   var condition = false;
 

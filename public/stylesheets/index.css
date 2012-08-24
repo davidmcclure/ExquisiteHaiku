@@ -1,1 +1,10 @@
 @import url("http://fonts.googleapis.com/css?family=Source+Sans+Pro:200");
+body{font:200 18px "Source Sans Pro";text-rendering:optimizeLegibility;font-weight:300;margin:2em}
+.section{display:inline;width:50%}
+.logo-container{margin-top:105px;float:left;text-align:right;}
+.logo-container .nav{margin:0 5px;}
+.logo-container .nav a{margin-left:1em}
+.logo-container .logo{font-size:60px;line-height:70px}
+.logo-container .tag{margin:5px;font-size:15px}
+.lyra-container{float:right}
+.grid:before{content:'';position:fixed;background-color:#269;background:-webkit-linear-gradient(whiteSmoke 1px,transparent 1px),-webkit-linear-gradient(0,whiteSmoke 1px,transparent 1px);background:-moz-linear-gradient(whiteSmoke 1px,transparent 1px),-moz-linear-gradient(0,whiteSmoke 1px,transparent 1px);background:-o-linear-gradient(whiteSmoke 1px,transparent 1px),-o-linear-gradient(0,whiteSmoke 1px,transparent 1px);background:-ms-linear-gradient(whiteSmoke 1px,transparent 1px),-ms-linear-gradient(0,whiteSmoke 1px,transparent 1px);background:linear-gradient(whiteSmoke 1px,transparent 1px),linear-gradient(0,whiteSmoke 1px,transparent 1px);-webkit-background-size:20px 20px,20px 20px;-moz-background-size:20px 20px,20px 20px;background-size:20px 20px,20px 20px;background-position:20px 20px,20px 20px;z-index:-1;top:0;right:0;bottom:0;left:0;pointer-events:none}

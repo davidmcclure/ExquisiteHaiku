@@ -63,7 +63,7 @@ page.open(system.args[1], function(status) {
 
   else {
 
-    console.log('Running Jasmine suite:');
+    console.log('\nRunning Jasmine suite:');
     waitFor(function() {
       return page.evaluate(function() {
         if ($('.passingAlert') || $('.failingAlert'))
@@ -84,12 +84,20 @@ page.open(system.args[1], function(status) {
         // If passing.
         var passingAlert = $('.passingAlert');
         if (passingAlert.length) {
-          console.log(passingAlert.text());
+          console.log(passingAlert.text()+'\n');
         }
 
         // Failing.
         else {
-          console.log($('.failingAlert').text());
+          console.log($('.failingAlert').text()+'\n');
+
+          // Get failing specs.
+          var failing = $('.specDetail.failed');
+          failing.each(function(i, spec) {
+            console.log($(spec).find('.description').text());
+            console.log($(spec).find('.resultMessage').text()+'\n');
+          });
+
         }
 
       });

@@ -52,7 +52,7 @@ describe('Log Voting', function() {
     expect(rows.length).toEqual(1);
 
     // Check parts.
-    expect($(rows[0]).find('span.value').text()).toEqual('100');
+    expect($(rows[0]).find('span.value').text()).toEqual('10');
     expect($(rows[0]).find('span.word').text()).toEqual('word');
 
     // Check color.

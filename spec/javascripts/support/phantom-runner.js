@@ -71,7 +71,12 @@ page.open(system.args[1], function(status) {
       });
     }, function() {
       page.evaluate(function() {
-        console.log($('.passingAlert').text());
+        var symbols = '';
+        $('ul.symbolSummary li').each(function(i, li) {
+          if ($(li).hasClass('passed')) symbols+='.';
+          else if ($(li).hasClass('failed')) symbols+='x';
+        });
+        console.log(symbols);
       });
       phantom.exit();
     }, 3000);

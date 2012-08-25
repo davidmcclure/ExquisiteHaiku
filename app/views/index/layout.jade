@@ -4,12 +4,13 @@ html
     include css
     title= title
   body
+    div.grid
     div.container
-      div.section.left
+      div.section.logo-container
         div.nav
           a(href='/admin/login') login
           a(href='/admin/register') register
         a(href='/').logo exquisitehaiku
         div.tag real-time, collaborative haiku composition
-      div.section.right
+      div.section.lyra-container
         block content

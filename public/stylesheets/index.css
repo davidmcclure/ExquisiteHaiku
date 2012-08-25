@@ -2,13 +2,13 @@
 body{font:300 18px "Source Sans Pro";text-rendering:optimizeLegibility;margin:2em}
 ::selection,::-moz-selection{background:#08c;color:#fff;text-shadow:none}
 .section{display:inline;width:50%}
-.left{margin-top:105px;float:left;text-align:right;}
-.left .nav{margin:0 5px;}
-.left .nav a{text-decoration:none;margin-left:1em}
-.left .logo{text-decoration:none;font-weight:200;font-size:60px;line-height:70px}
-.left .tag{margin:5px;font-size:15px}
-.right{float:right;margin:30px 110px 0}
-body:before{content:'';position:fixed;background:-webkit-linear-gradient(whiteSmoke 1px,transparent 1px),-webkit-linear-gradient(0,whiteSmoke 1px,transparent 1px);background:-moz-linear-gradient(whiteSmoke 1px,transparent 1px),-moz-linear-gradient(0,whiteSmoke 1px,transparent 1px);background:-o-linear-gradient(whiteSmoke 1px,transparent 1px),-o-linear-gradient(0,whiteSmoke 1px,transparent 1px);background:-ms-linear-gradient(whiteSmoke 1px,transparent 1px),-ms-linear-gradient(0,whiteSmoke 1px,transparent 1px);background:linear-gradient(whiteSmoke 1px,transparent 1px),linear-gradient(0,whiteSmoke 1px,transparent 1px);-webkit-background-size:20px 20px,20px 20px;-moz-background-size:20px 20px,20px 20px;background-size:20px 20px,20px 20px;background-position:20px 20px,20px 20px;z-index:-1;top:0;right:0;bottom:0;left:0;pointer-events:none}
+.logo-container{margin-top:105px;float:left;text-align:right;}
+.logo-container .nav{margin:0 5px;}
+.logo-container .nav a{text-decoration:none;margin-left:1em}
+.logo-container .logo{text-decoration:none;font-weight:200;font-size:60px;line-height:70px}
+.logo-container .tag{margin:5px;font-size:15px}
+.lyra-container{float:right;margin:30px 110px 0}
+.grid:before{content:'';position:fixed;background:-webkit-linear-gradient(whiteSmoke 1px,transparent 1px),-webkit-linear-gradient(0,whiteSmoke 1px,transparent 1px);background:-moz-linear-gradient(whiteSmoke 1px,transparent 1px),-moz-linear-gradient(0,whiteSmoke 1px,transparent 1px);background:-o-linear-gradient(whiteSmoke 1px,transparent 1px),-o-linear-gradient(0,whiteSmoke 1px,transparent 1px);background:-ms-linear-gradient(whiteSmoke 1px,transparent 1px),-ms-linear-gradient(0,whiteSmoke 1px,transparent 1px);background:linear-gradient(whiteSmoke 1px,transparent 1px),linear-gradient(0,whiteSmoke 1px,transparent 1px);-webkit-background-size:20px 20px,20px 20px;-moz-background-size:20px 20px,20px 20px;background-size:20px 20px,20px 20px;background-position:20px 20px,20px 20px;z-index:-1;top:0;right:0;bottom:0;left:0;pointer-events:none}
 form .help-inline{font-size:.8em}
 form input,form textarea,form select{font-family:"Source Sans Pro";border-radius:1px;box-shadow:none}
 form .btn{font-family:"Source Sans Pro";border-radius:1px;border:none}

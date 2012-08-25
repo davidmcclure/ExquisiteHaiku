@@ -1,16 +1,10 @@
-@import url("http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900");
-body{font:300 18px "Source Sans Pro";text-rendering:optimizeLegibility;margin:2em}
-::selection,::-moz-selection{background:#08c;color:#fff;text-shadow:none}
+@import url("http://fonts.googleapis.com/css?family=Source+Sans+Pro:200");
+body{font:200 18px "Source Sans Pro";text-rendering:optimizeLegibility;font-weight:300;margin:2em}
 .section{display:inline;width:50%}
 .logo-container{margin-top:105px;float:left;text-align:right;}
 .logo-container .nav{margin:0 5px;}
-.logo-container .nav a{text-decoration:none;margin-left:1em}
-.logo-container .logo{text-decoration:none;font-weight:200;font-size:60px;line-height:70px}
+.logo-container .nav a{margin-left:1em}
+.logo-container .logo{font-size:60px;line-height:70px}
 .logo-container .tag{margin:5px;font-size:15px}
-.lyra-container{float:right;margin:30px 110px 0}
-.grid:before{content:'';position:fixed;background:-webkit-linear-gradient(whiteSmoke 1px,transparent 1px),-webkit-linear-gradient(0,whiteSmoke 1px,transparent 1px);background:-moz-linear-gradient(whiteSmoke 1px,transparent 1px),-moz-linear-gradient(0,whiteSmoke 1px,transparent 1px);background:-o-linear-gradient(whiteSmoke 1px,transparent 1px),-o-linear-gradient(0,whiteSmoke 1px,transparent 1px);background:-ms-linear-gradient(whiteSmoke 1px,transparent 1px),-ms-linear-gradient(0,whiteSmoke 1px,transparent 1px);background:linear-gradient(whiteSmoke 1px,transparent 1px),linear-gradient(0,whiteSmoke 1px,transparent 1px);-webkit-background-size:20px 20px,20px 20px;-moz-background-size:20px 20px,20px 20px;background-size:20px 20px,20px 20px;background-position:20px 20px,20px 20px;z-index:-1;top:0;right:0;bottom:0;left:0;pointer-events:none}
-form .help-inline{font-size:.8em}
-form input,form textarea,form select{font-family:"Source Sans Pro";border-radius:1px;box-shadow:none}
-form .btn{font-family:"Source Sans Pro";border-radius:1px;border:none}
-form .btn-custom{background-color:#0d8ac5 !important;background-repeat:repeat-x;background-image:-khtml-gradient(linear,left top,left bottom,from(#0c8ac4),to(#0c8ac4));background-image:-moz-linear-gradient(top,#0c8ac4,#0c8ac4);background-image:-ms-linear-gradient(top,#0c8ac4,#0c8ac4);background-image:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#0c8ac4),color-stop(100%,#0c8ac4));background-image:-webkit-linear-gradient(top,#0c8ac4,#0c8ac4);background-image:-o-linear-gradient(top,#0c8ac4,#0c8ac4);background-image:linear-gradient(#0c8ac4,#0c8ac4);border-color:#0c8ac4 #0c8ac4 #0d8ac5;color:#fff !important;text-shadow:0 -1px 0 rgba(0,0,0,0);-webkit-font-smoothing:antialiased;}
-form .btn-custom:hover{background-color:#0e9fe1 !important;background-repeat:repeat-x;background-image:-khtml-gradient(linear,left top,left bottom,from(#0e9ee1),to(#0e9ee1));background-image:-moz-linear-gradient(top,#0e9ee1,#0e9ee1);background-image:-ms-linear-gradient(top,#0e9ee1,#0e9ee1);background-image:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#0e9ee1),color-stop(100%,#0e9ee1));background-image:-webkit-linear-gradient(top,#0e9ee1,#0e9ee1);background-image:-o-linear-gradient(top,#0e9ee1,#0e9ee1);background-image:linear-gradient(#0e9ee1,#0e9ee1);border-color:#0e9ee1 #0e9ee1 #0e9fe1}
+.lyra-container{float:right}
+.grid:before{content:'';position:fixed;background-color:#269;background:-webkit-linear-gradient(whiteSmoke 1px,transparent 1px),-webkit-linear-gradient(0,whiteSmoke 1px,transparent 1px);background:-moz-linear-gradient(whiteSmoke 1px,transparent 1px),-moz-linear-gradient(0,whiteSmoke 1px,transparent 1px);background:-o-linear-gradient(whiteSmoke 1px,transparent 1px),-o-linear-gradient(0,whiteSmoke 1px,transparent 1px);background:-ms-linear-gradient(whiteSmoke 1px,transparent 1px),-ms-linear-gradient(0,whiteSmoke 1px,transparent 1px);background:linear-gradient(whiteSmoke 1px,transparent 1px),linear-gradient(0,whiteSmoke 1px,transparent 1px);-webkit-background-size:20px 20px,20px 20px;-moz-background-size:20px 20px,20px 20px;background-size:20px 20px,20px 20px;background-position:20px 20px,20px 20px;z-index:-1;top:0;right:0;bottom:0;left:0;pointer-events:none}

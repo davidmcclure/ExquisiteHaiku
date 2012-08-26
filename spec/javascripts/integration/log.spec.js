@@ -11,23 +11,7 @@ describe('Log Voting', function() {
   });
 
   beforeEach(function() {
-
-    // Create round.
-    _t.rounds.currentRound = 'id';
-    _t.rounds.recordSubmission();
-
-    // Set account value.
-    _t.points.value = 1000;
-
-    // Set log maxLength.
-    _t.log.options.maxLength = 5;
-
-    // Clear log.
-    _t.log.activateSubmit();
-
-    // Activate voting.
-    Ov.global.isVoting = true;
-
+    _t.voting();
   });
 
   it('should render positive votes', function() {

@@ -14,32 +14,24 @@ describe('Stack Voting', function() {
 
   beforeEach(function() {
 
-    // Create round.
-    _t.rounds.currentRound = 'id';
-    _t.rounds.recordSubmission();
+    _t.voting();
 
-    // Set account value.
-    _t.points.value = 1000;
+    // Stack.
+    var stack = [
+      ['word1', 100, 1000, 0, '1.00'],
+      ['word2', 90, 0, -900, '0.50'],
+      ['word3', 80, 800, 0, '0.40'],
+      ['word4', 70, 0, -700, '0.30']
+    ];
 
-    // Activate voting.
-    Ov.global.isVoting = true;
-
-    // Data slice.
+    // Slice.
     slice = {
-      stack: [
-        ['word1', 100, 1000, 0, '1.00'],
-        ['word2', 90, 0, -900, '0.50'],
-        ['word3', 80, 800, 0, '0.40'],
-        ['word4', 70, 0, -700, '0.30']
-      ],
+      stack: stack,
       syllables: 0,
       round: 'id',
       poem: [],
       clock: 10000
     };
-
-    // Clear stack.
-    _t.rank.empty();
 
     // Trigger slice, get rows.
     Ov.vent.trigger('socket:slice', slice);
@@ -78,17 +70,17 @@ describe('Stack Voting', function() {
 
     // Check for values and dimensions.
     expect(_t.line.total.text()).toEqual('5');
-    expect(_t.line.attr('x1')).toEqual('0');
-    expect(_t.line.attr('y1')).toEqual('0');
-    expect(_t.line.attr('x2')).toEqual('-3');
-    expect(_t.line.attr('y2')).toEqual('-4');
+    expect(_t.line.line.attr('x1')).toEqual('0');
+    expect(_t.line.line.attr('y1')).toEqual('0');
+    expect(_t.line.line.attr('x2')).toEqual('-3');
+    expect(_t.line.line.attr('y2')).toEqual('-4');
     expect(_t.line.circle.attr('cx')).toEqual('0');
     expect(_t.line.circle.attr('cy')).toEqual('0');
     expect(_t.line.circle.attr('r')).toEqual('5');
 
     // Check for colors.
     expect(_t.line.total.attr('class')).toEqual('positive');
-    expect(_t.line.attr('class')).toEqual('positive');
+    expect(_t.line.line.attr('class')).toEqual('positive');
     expect(_t.line.circle.attr('class')).toEqual('positive');
 
     // Check for point preview.
@@ -119,17 +111,17 @@ describe('Stack Voting', function() {
 
     // Check for values and dimensions.
     expect(_t.line.total.text()).toEqual('-5');
-    expect(_t.line.attr('x1')).toEqual('0');
-    expect(_t.line.attr('y1')).toEqual('0');
-    expect(_t.line.attr('x2')).toEqual('3');
-    expect(_t.line.attr('y2')).toEqual('4');
+    expect(_t.line.line.attr('x1')).toEqual('0');
+    expect(_t.line.line.attr('y1')).toEqual('0');
+    expect(_t.line.line.attr('x2')).toEqual('3');
+    expect(_t.line.line.attr('y2')).toEqual('4');
     expect(_t.line.circle.attr('cx')).toEqual('0');
     expect(_t.line.circle.attr('cy')).toEqual('0');
     expect(_t.line.circle.attr('r')).toEqual('5');
 
     // Check for colors.
     expect(_t.line.total.attr('class')).toEqual('negative');
-    expect(_t.line.attr('class')).toEqual('negative');
+    expect(_t.line.line.attr('class')).toEqual('negative');
     expect(_t.line.circle.attr('class')).toEqual('negative');
 
     // Check for point preview.
@@ -408,7 +400,7 @@ describe('Stack Voting', function() {
 
     // Check for colors.
     expect(_t.line.total.attr('class')).toEqual('blocked');
-    expect(_t.line.attr('class')).toEqual('blocked');
+    expect(_t.line.line.attr('class')).toEqual('blocked');
     expect(_t.line.circle.attr('class')).toEqual('blocked');
 
     // Check for point preview.
@@ -439,7 +431,7 @@ describe('Stack Voting', function() {
 
     // Check for colors.
     expect(_t.line.total.attr('class')).toEqual('blocked');
-    expect(_t.line.attr('class')).toEqual('blocked');
+    expect(_t.line.line.attr('class')).toEqual('blocked');
     expect(_t.line.circle.attr('class')).toEqual('blocked');
 
     // Check for point preview.

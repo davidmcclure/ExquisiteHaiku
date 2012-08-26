@@ -9,6 +9,7 @@ describe('Log Voting', function() {
   // Get fixtures.
   beforeEach(function() {
     loadFixtures('base.html', 'templates.html');
+    Ov.Controllers.Round.RoundCollection.reset();
     Ov.Controllers.Log.Stack.delegateEvents();
   });
 
@@ -27,18 +28,14 @@ describe('Log Voting', function() {
     // Set account value.
     points.value = 1000;
 
-    // Activate voting.
-    Ov.global.isVoting = true;
-
-  });
-
-  afterEach(function() {
-
-    // Clear localstorage.
-    Ov.Controllers.Round.RoundCollection.reset();
+    // Set log maxLength.
+    log.options.maxLength = 5;
 
     // Clear log.
     log.activateSubmit();
+
+    // Activate voting.
+    Ov.global.isVoting = true;
 
   });
 
@@ -79,9 +76,6 @@ describe('Log Voting', function() {
   });
 
   it('should prune log stack when it exceeds max count', function() {
-
-    // Set maxLength.
-    log.options.maxLength = 5;
 
     // Ingest vote.
     Ov.vent.trigger('socket:vote:in', 'word3', 90);

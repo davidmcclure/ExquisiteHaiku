@@ -10,6 +10,7 @@ describe('Stack Voting', function() {
   // Get fixtures.
   beforeEach(function() {
     loadFixtures('base.html', 'templates.html');
+    Ov.Controllers.Round.RoundCollection.reset();
     Ov.Controllers.Stack.Rank.delegateEvents();
   });
 
@@ -46,20 +47,13 @@ describe('Stack Voting', function() {
       clock: 10000
     };
 
+    // Clear stack.
+    stack.empty();
+
     // Trigger slice, get rows.
     Ov.vent.trigger('socket:slice', slice);
     rows = stack.$el.find('div.stack-row');
     word = $(rows[0]);
-
-  });
-
-  afterEach(function() {
-
-    // Clear localstorage.
-    Ov.Controllers.Round.RoundCollection.reset();
-
-    // Clear stack.
-    stack.empty();
 
   });
 

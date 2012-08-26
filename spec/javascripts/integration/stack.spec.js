@@ -9,6 +9,7 @@ describe('Stack', function() {
   // Get fixtures.
   beforeEach(function() {
     loadFixtures('base.html', 'templates.html');
+    Ov.Controllers.Round.RoundCollection.reset();
     Ov.Controllers.Stack.Rank.delegateEvents();
   });
 
@@ -17,6 +18,7 @@ describe('Stack', function() {
     // Shortcut application components.
     stack = Ov.Controllers.Stack.Rank;
     rounds = Ov.Controllers.Round.RoundCollection;
+    points = Ov.Controllers.Info.Points;
 
     // Create round.
     rounds.currentRound = 'id';
@@ -28,6 +30,9 @@ describe('Stack', function() {
     // Activate voting.
     Ov.global.isVoting = true;
 
+    // Clear stack.
+    stack.empty();
+
     // Data slice.
     slice = {
       stack: [],
@@ -36,16 +41,6 @@ describe('Stack', function() {
       poem: [],
       clock: 10000
     };
-
-  });
-
-  afterEach(function() {
-
-    // Clear localstorage.
-    Ov.Controllers.Round.RoundCollection.reset();
-
-    // Clear stack.
-    stack.empty();
 
   });
 

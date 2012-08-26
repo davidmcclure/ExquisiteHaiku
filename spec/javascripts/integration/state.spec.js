@@ -9,6 +9,7 @@ describe('State', function() {
   // Get fixtures.
   beforeEach(function() {
     loadFixtures('base.html', 'templates.html');
+    Ov.Controllers.Round.RoundCollection.reset();
     Ov.Controllers.Stack.Rank.delegateEvents();
   });
 
@@ -20,6 +21,9 @@ describe('State', function() {
     poem = Ov.Controllers.Poem.Poem;
     stack = Ov.Controllers.Stack.Rank;
     log = Ov.Controllers.Log.Stack;
+
+    // Clear stack.
+    stack.empty();
 
     // Data slice.
     slice = {
@@ -34,16 +38,6 @@ describe('State', function() {
       poem: [],
       clock: 10000
     };
-
-  });
-
-  afterEach(function() {
-
-    // Clear localstorage.
-    Ov.Controllers.Round.RoundCollection.reset();
-
-    // Clear stack.
-    stack.empty();
 
   });
 
@@ -173,9 +167,14 @@ describe('State', function() {
 
   describe('submit -> vote', function() {
 
-    var e;
+    var e, round;
 
     beforeEach(function() {
+
+      // Create round.
+      round = rounds.create({
+        id: 'id', points: 100
+      });
 
       // Force poem render.
       poem.syllables = null;
@@ -192,7 +191,7 @@ describe('State', function() {
 
       // Submit -> vote.
       Ov.global.isVoting = true;
-      Ov.vent.trigger('state:vote');
+      Ov.vent.trigger('state:vote', round);
 
       // Check for detached stack.
       expect(poem.$el).not.toContain(blank.stack);
@@ -203,7 +202,7 @@ describe('State', function() {
 
       // Submit -> vote.
       Ov.global.isVoting = true;
-      Ov.vent.trigger('state:vote');
+      Ov.vent.trigger('state:vote', round);
 
       // Check for disabled blank.
       expect(blank.$el).toBeDisabled();
@@ -215,7 +214,7 @@ describe('State', function() {
       // Submit -> vote.
       blank.$el.val('word');
       Ov.global.isVoting = true;
-      Ov.vent.trigger('state:vote');
+      Ov.vent.trigger('state:vote', round);
 
       // Check for empty blank.
       expect(blank.$el.val()).toEqual('');
@@ -226,7 +225,7 @@ describe('State', function() {
 
       // Submit -> vote.
       Ov.global.isVoting = true;
-      Ov.vent.trigger('state:vote');
+      Ov.vent.trigger('state:vote', round);
 
       // Trigger slice.
       Ov.vent.trigger('socket:slice', slice);
@@ -241,7 +240,7 @@ describe('State', function() {
 
       // Submit -> vote.
       Ov.global.isVoting = true;
-      Ov.vent.trigger('state:vote');
+      Ov.vent.trigger('state:vote', round);
 
       // Ingest vote.
       Ov.vent.trigger('socket:vote:in', 'word', 100);
@@ -260,9 +259,14 @@ describe('State', function() {
 
     beforeEach(function() {
 
+      // Create round.
+      var round = rounds.create({
+        id: 'id', points: 100
+      });
+
       // Set voting.
       Ov.global.isVoting = true;
-      Ov.vent.trigger('state:vote');
+      Ov.vent.trigger('state:vote', round);
       e = $.Event('keyup');
 
     });
@@ -390,7 +394,6 @@ describe('State', function() {
       blank.$el.trigger(e);
 
       // Check for stack and word.
-      expect(poem.$el).toContain(blank.stack);
       var words = blank.stack.find('div.submission-word');
       expect(words.length).toEqual(1);
 

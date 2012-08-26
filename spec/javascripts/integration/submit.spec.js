@@ -9,10 +9,17 @@ describe('Submission', function() {
   // Get fixtures, run app.
   beforeEach(function() {
     loadFixtures('base.html', 'templates.html');
+    Ov.Controllers.Round.RoundCollection.reset();
   });
 
   // Activate submit.
   beforeEach(function() {
+
+    // Shortcut views.
+    rounds = Ov.Controllers.Round.RoundCollection;
+
+    // Create round.
+    rounds.currentRound = 'id';
 
     // Mock keypress.
     e = $.Event('keyup');
@@ -23,11 +30,6 @@ describe('Submission', function() {
     // Activate submit.
     blank.activateSubmit();
 
-  });
-
-  // Clear localstorage.
-  afterEach(function() {
-    Ov.Controllers.Round.RoundCollection.reset();
   });
 
   it('should queue a valid word', function() {

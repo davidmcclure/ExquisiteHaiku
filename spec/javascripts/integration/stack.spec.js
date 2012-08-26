@@ -9,7 +9,7 @@ describe('Stack', function() {
   // Get fixtures.
   beforeEach(function() {
     loadFixtures('base.html', 'templates.html');
-    Ov.Controllers.Round.RoundCollection.reset();
+    Ov.Controllers.Round.Rounds.reset();
     Ov.Controllers.Stack.Rank.delegateEvents();
   });
 
@@ -17,7 +17,7 @@ describe('Stack', function() {
 
     // Shortcut application components.
     stack = Ov.Controllers.Stack.Rank;
-    rounds = Ov.Controllers.Round.RoundCollection;
+    rounds = Ov.Controllers.Round.Rounds;
     points = Ov.Controllers.Info.Points;
 
     // Create round.

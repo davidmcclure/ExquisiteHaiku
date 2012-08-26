@@ -16,10 +16,10 @@ Ov.Controllers.Poem = (function(Backbone, Ov) {
    *
    * @return void.
    */
-  Ov.addInitializer(function() {
+  Poem.init = function() {
     Poem.Poem = new Ov.Views.Poem();
     Poem.Blank = new Ov.Views.Blank();
-  });
+  };
 
 
   // -------
@@ -97,6 +97,9 @@ Ov.Controllers.Poem = (function(Backbone, Ov) {
     if (!Ov.global.isDragging) Poem.Blank.hidePreview();
   });
 
+
+  // Export.
+  Ov.addInitializer(function() { Poem.init(); });
   return Poem;
 
 })(Backbone, Ov);

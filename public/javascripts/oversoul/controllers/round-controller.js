@@ -16,10 +16,10 @@ Ov.Controllers.Round = (function(Backbone, Ov) {
    *
    * @return void.
    */
-  Ov.addInitializer(function() {
-    Round.RoundCollection = new Ov.Collections.Round();
-    Round.RoundCollection.fetch();
-  });
+  Round.init = function() {
+    Round.Rounds = new Ov.Collections.Round();
+    Round.Rounds.fetch();
+  };
 
 
   // -------
@@ -37,7 +37,7 @@ Ov.Controllers.Round = (function(Backbone, Ov) {
   Ov.vent.on('socket:slice', function(data) {
 
     // Try to retrieve a stored round.
-    var round = Round.RoundCollection.get(data.round);
+    var round = Round.Rounds.get(data.round);
 
     // If first slice.
     if (_.isNull(Ov.global.isVoting)) {
@@ -74,7 +74,7 @@ Ov.Controllers.Round = (function(Backbone, Ov) {
     }
 
     // Store the current round.
-    Round.RoundCollection.currentRound = data.round;
+    Round.Rounds.currentRound = data.round;
 
   });
 
@@ -85,7 +85,7 @@ Ov.Controllers.Round = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('blank:submit', function() {
-    Round.RoundCollection.recordSubmission();
+    Round.Rounds.recordSubmission();
   });
 
   /*
@@ -98,8 +98,8 @@ Ov.Controllers.Round = (function(Backbone, Ov) {
   Ov.vent.on('points:newValue', function(value) {
 
     // Retrieve the round record.
-    var round = Round.RoundCollection.get(
-      Round.RoundCollection.getCurrentRound()
+    var round = Round.Rounds.get(
+      Round.Rounds.getCurrentRound()
     );
 
     // Set new point value, save.
@@ -108,6 +108,9 @@ Ov.Controllers.Round = (function(Backbone, Ov) {
 
   });
 
+
+  // Export.
+  Ov.addInitializer(function() { Round.init(); });
   return Round;
 
 })(Backbone, Ov);

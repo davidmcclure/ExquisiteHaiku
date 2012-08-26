@@ -10,7 +10,7 @@ describe('Stack Voting', function() {
   // Get fixtures.
   beforeEach(function() {
     loadFixtures('base.html', 'templates.html');
-    Ov.Controllers.Round.RoundCollection.reset();
+    Ov.Controllers.Round.Rounds.reset();
     Ov.Controllers.Stack.Rank.delegateEvents();
   });
 
@@ -20,7 +20,7 @@ describe('Stack Voting', function() {
     stack = Ov.Controllers.Stack.Rank;
     blank = Ov.Controllers.Poem.Blank;
     line = Ov.Controllers.Stack.Line;
-    rounds = Ov.Controllers.Round.RoundCollection;
+    rounds = Ov.Controllers.Round.Rounds;
     points = Ov.Controllers.Info.Points;
 
     // Create round.

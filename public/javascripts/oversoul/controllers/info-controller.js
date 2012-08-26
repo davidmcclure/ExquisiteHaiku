@@ -16,10 +16,10 @@ Ov.Controllers.Info = (function(Backbone, Ov) {
    *
    * @return void.
    */
-  Ov.addInitializer(function() {
+  Info.init = function() {
     Info.Points = new Ov.Views.Points({ el: '#points' });
     Info.Timer = new Ov.Views.Timer({ el: '#timer' });
-  });
+  };
 
 
   // -------
@@ -126,6 +126,9 @@ Ov.Controllers.Info = (function(Backbone, Ov) {
     Info.Points.releaseLogEcho(word, quantity);
   });
 
+
+  // Export.
+  Ov.addInitializer(function() { Info.init(); });
   return Info;
 
 })(Backbone, Ov);

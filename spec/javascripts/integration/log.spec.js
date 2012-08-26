@@ -9,7 +9,7 @@ describe('Log Voting', function() {
   // Get fixtures.
   beforeEach(function() {
     loadFixtures('base.html', 'templates.html');
-    Ov.Controllers.Round.RoundCollection.reset();
+    Ov.Controllers.Round.Rounds.reset();
     Ov.Controllers.Log.Stack.delegateEvents();
   });
 
@@ -18,7 +18,7 @@ describe('Log Voting', function() {
     // Shortcut application objects.
     blank = Ov.Controllers.Poem.Blank;
     points = Ov.Controllers.Info.Points;
-    rounds = Ov.Controllers.Round.RoundCollection;
+    rounds = Ov.Controllers.Round.Rounds;
     log = Ov.Controllers.Log.Stack;
 
     // Create round.

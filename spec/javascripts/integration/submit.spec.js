@@ -9,14 +9,14 @@ describe('Submission', function() {
   // Get fixtures, run app.
   beforeEach(function() {
     loadFixtures('base.html', 'templates.html');
-    Ov.Controllers.Round.RoundCollection.reset();
+    Ov.Controllers.Round.Rounds.reset();
   });
 
   // Activate submit.
   beforeEach(function() {
 
     // Shortcut views.
-    rounds = Ov.Controllers.Round.RoundCollection;
+    rounds = Ov.Controllers.Round.Rounds;
 
     // Create round.
     rounds.currentRound = 'id';

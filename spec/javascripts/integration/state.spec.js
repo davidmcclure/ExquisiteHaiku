@@ -9,14 +9,14 @@ describe('State', function() {
   // Get fixtures.
   beforeEach(function() {
     loadFixtures('base.html', 'templates.html');
-    Ov.Controllers.Round.RoundCollection.reset();
+    Ov.Controllers.Round.Rounds.reset();
     Ov.Controllers.Stack.Rank.delegateEvents();
   });
 
   beforeEach(function() {
 
     // Shortcut application objects.
-    rounds = Ov.Controllers.Round.RoundCollection;
+    rounds = Ov.Controllers.Round.Rounds;
     blank = Ov.Controllers.Poem.Blank;
     poem = Ov.Controllers.Poem.Poem;
     stack = Ov.Controllers.Stack.Rank;

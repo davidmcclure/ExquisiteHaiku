@@ -16,10 +16,10 @@ Ov.Controllers.Stack = (function(Backbone, Ov) {
    *
    * @return void.
    */
-  Ov.addInitializer(function() {
+  Stack.init = function() {
     Stack.Rank = new Ov.Views.Stack({ el: '#stack' });
     Stack.Line = new Ov.Views.Line();
-  });
+  };
 
 
   // -------
@@ -127,6 +127,9 @@ Ov.Controllers.Stack = (function(Backbone, Ov) {
     Stack.Line.setInvalid();
   });
 
+
+  // Export.
+  Ov.addInitializer(function() { Stack.init(); });
   return Stack;
 
 })(Backbone, Ov);

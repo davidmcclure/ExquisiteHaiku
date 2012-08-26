@@ -12,11 +12,11 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
   // ---------------
 
   /*
-   * Instantiate Socket.io and connect to the room.
+   * Connect Socket.io.
    *
    * @return void.
    */
-  Ov.addInitializer(function() {
+  Socket.init = function() {
 
     Socket.s = io.connect();
 
@@ -61,12 +61,12 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
       Ov.vent.trigger('socket:vote:in', word, quantity);
     });
 
-  });
+  };
 
 
-  // -------
-  // Events.
-  // -------
+  // ----------------
+  // Outgoing events.
+  // ----------------
 
   /*
    * Validate a word.
@@ -105,6 +105,9 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
     Socket.s.emit('vote', Poem._id, word, quantity);
   });
 
+
+  // Export.
+  Ov.addInitializer(function() { Socket.init(); });
   return Socket;
 
 })(Backbone, Ov);

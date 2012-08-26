@@ -16,9 +16,9 @@ Ov.Controllers.Log = (function(Backbone, Ov) {
    *
    * @return void.
    */
-  Ov.addInitializer(function() {
+  Log.init = function() {
     Log.Stack = new Ov.Views.Log({ el: '#log' });
-  });
+  };
 
 
   // -------
@@ -46,6 +46,9 @@ Ov.Controllers.Log = (function(Backbone, Ov) {
     if (Ov.global.isVoting) Log.Stack.add(word, quantity);
   });
 
+
+  // Export.
+  Ov.addInitializer(function() { Log.init(); });
   return Log;
 
 })(Backbone, Ov);

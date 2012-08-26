@@ -261,7 +261,7 @@ describe('State', function() {
 
       // Create round.
       var round = rounds.create({
-        id: 'id', points: 100
+        id: 'id2', points: 100
       });
 
       // Set voting.

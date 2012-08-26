@@ -4,35 +4,26 @@
 
 describe('Log Voting', function() {
 
-  var log, blank, points, rounds;
-
   // Get fixtures.
   beforeEach(function() {
     loadFixtures('base.html', 'templates.html');
-    Ov.Controllers.Round.Rounds.reset();
-    Ov.Controllers.Log.Stack.delegateEvents();
+    _t.reset();
   });
 
   beforeEach(function() {
 
-    // Shortcut application objects.
-    blank = Ov.Controllers.Poem.Blank;
-    points = Ov.Controllers.Info.Points;
-    rounds = Ov.Controllers.Round.Rounds;
-    log = Ov.Controllers.Log.Stack;
-
     // Create round.
-    rounds.currentRound = 'id';
-    rounds.recordSubmission();
+    _t.rounds.currentRound = 'id';
+    _t.rounds.recordSubmission();
 
     // Set account value.
-    points.value = 1000;
+    _t.points.value = 1000;
 
     // Set log maxLength.
-    log.options.maxLength = 5;
+    _t.log.options.maxLength = 5;
 
     // Clear log.
-    log.activateSubmit();
+    _t.log.activateSubmit();
 
     // Activate voting.
     Ov.global.isVoting = true;
@@ -45,7 +36,7 @@ describe('Log Voting', function() {
     Ov.vent.trigger('socket:vote:in', 'word', 100);
 
     // Get word rows.
-    var rows = log.primaryMarkup.find('div.log-row');
+    var rows = _t.log.primaryMarkup.find('div.log-row');
     expect(rows.length).toEqual(1);
 
     // Check parts.
@@ -63,7 +54,7 @@ describe('Log Voting', function() {
     Ov.vent.trigger('socket:vote:in', 'word', -100);
 
     // Get word rows.
-    var rows = log.primaryMarkup.find('div.log-row');
+    var rows = _t.log.primaryMarkup.find('div.log-row');
     expect(rows.length).toEqual(1);
 
     // Check parts.
@@ -85,7 +76,7 @@ describe('Log Voting', function() {
     Ov.vent.trigger('socket:vote:in', 'word7', 50);
 
     // Get word rows.
-    var rows = log.primaryMarkup.find('div.log-row');
+    var rows = _t.log.primaryMarkup.find('div.log-row');
     expect(rows.length).toEqual(5);
 
     // Check parts.
@@ -100,11 +91,11 @@ describe('Log Voting', function() {
   it('should freeze the stack on hover', function() {
 
     // Freeze.
-    log.primaryMarkup.trigger('mouseenter');
-    expect(log.primaryMarkup).toHaveClass('frozen');
+    _t.log.primaryMarkup.trigger('mouseenter');
+    expect(_t.log.primaryMarkup).toHaveClass('frozen');
 
     // Unfreeze.
-    log.primaryMarkup.trigger('mouseleave');
+    _t.log.primaryMarkup.trigger('mouseleave');
 
   });
 
@@ -114,27 +105,27 @@ describe('Log Voting', function() {
     Ov.vent.trigger('socket:vote:in', 'word', 100);
 
     // Get word rows.
-    var rows = log.primaryMarkup.find('div.log-row');
+    var rows = _t.log.primaryMarkup.find('div.log-row');
 
     // Hover.
     $(rows[0]).trigger('mouseenter');
 
     // Check for blank preview.
-    expect(blank.$el.val()).toEqual('word');
+    expect(_t.blank.$el.val()).toEqual('word');
 
     // Check for point preview.
-    expect(points.$el.text()).toEqual('900');
-    expect(points.$el).toHaveClass('preview');
+    expect(_t.points.$el.text()).toEqual('900');
+    expect(_t.points.$el).toHaveClass('preview');
 
     // Blur.
     $(rows[0]).trigger('mouseleave');
 
     // Check for not blank preview.
-    expect(blank.$el.val()).toEqual('');
+    expect(_t.blank.$el.val()).toEqual('');
 
     // Check for not point preview.
-    expect(points.$el.text()).toEqual('1000');
-    expect(points.$el).not.toHaveClass('preview');
+    expect(_t.points.$el.text()).toEqual('1000');
+    expect(_t.points.$el).not.toHaveClass('preview');
 
   });
 
@@ -148,14 +139,14 @@ describe('Log Voting', function() {
     Ov.vent.trigger('socket:vote:in', 'word5', 50);
 
     // Freeze.
-    log.primaryMarkup.trigger('mouseenter');
+    _t.log.primaryMarkup.trigger('mouseenter');
 
     // Ingest new words.
     Ov.vent.trigger('socket:vote:in', 'word6', 60);
     Ov.vent.trigger('socket:vote:in', 'word7', 70);
 
     // Get overflow word rows.
-    var rows = log.overflowMarkup.find('div.log-row');
+    var rows = _t.log.overflowMarkup.find('div.log-row');
     expect(rows.length).toEqual(2);
 
     // Check parts.
@@ -165,12 +156,12 @@ describe('Log Voting', function() {
     expect($(rows[1]).find('span.word').text()).toEqual('word6');
 
     // Unfreeze.
-    log.primaryMarkup.trigger('mouseleave');
+    _t.log.primaryMarkup.trigger('mouseleave');
 
     // Get primary and overflow word rows.
-    var pRows = log.primaryMarkup.find('div.log-row');
+    var pRows = _t.log.primaryMarkup.find('div.log-row');
     expect(pRows.length).toEqual(5);
-    var oRows = log.overflowMarkup.find('div.log-row');
+    var oRows = _t.log.overflowMarkup.find('div.log-row');
     expect(oRows.length).toEqual(0);
 
     // Check parts.
@@ -191,7 +182,7 @@ describe('Log Voting', function() {
     spyOn(Ov.Controllers.Socket.s, 'emit');
 
     // Get word rows.
-    var rows = log.primaryMarkup.find('div.log-row');
+    var rows = _t.log.primaryMarkup.find('div.log-row');
 
     // Echo.
     $(rows[0]).trigger('mouseenter');
@@ -202,15 +193,15 @@ describe('Log Voting', function() {
       'vote', 1, 'word', 100);
 
     // Check for updated points preview.
-    expect(points.$el.text()).toEqual('800');
-    expect(points.$el).toHaveClass('preview');
+    expect(_t.points.$el.text()).toEqual('800');
+    expect(_t.points.$el).toHaveClass('preview');
 
     // Blur.
     $(rows[0]).trigger('mouseleave');
 
     // Check for updated points.
-    expect(points.$el.text()).toEqual('900');
-    expect(points.$el).not.toHaveClass('preview');
+    expect(_t.points.$el.text()).toEqual('900');
+    expect(_t.points.$el).not.toHaveClass('preview');
 
   });
 
@@ -223,14 +214,14 @@ describe('Log Voting', function() {
     Ov.vent.trigger('socket:vote:in', 'word10', 1001);
 
     // Get word rows.
-    var rows = log.primaryMarkup.find('div.log-row');
+    var rows = _t.log.primaryMarkup.find('div.log-row');
 
     // Hover.
     $(rows[0]).trigger('mouseenter');
 
     // Check for updated points preview.
-    expect(points.$el.text()).toEqual('-1');
-    expect(points.$el).toHaveClass('negative');
+    expect(_t.points.$el.text()).toEqual('-1');
+    expect(_t.points.$el).toHaveClass('negative');
 
     // Echo.
     $(rows[0]).trigger('mousedown');
@@ -243,8 +234,8 @@ describe('Log Voting', function() {
     $(rows[0]).trigger('mouseleave');
 
     // Check for updated points.
-    expect(points.$el.text()).toEqual('1000');
-    expect(points.$el).not.toHaveClass('preview');
+    expect(_t.points.$el.text()).toEqual('1000');
+    expect(_t.points.$el).not.toHaveClass('preview');
 
   });
 

@@ -4,31 +4,22 @@
 
 describe('Stack Voting', function() {
 
-  var stack, blank, line, points,
-    rounds, slice, rows, word;
+  var rows, word;
 
   // Get fixtures.
   beforeEach(function() {
     loadFixtures('base.html', 'templates.html');
-    Ov.Controllers.Round.Rounds.reset();
-    Ov.Controllers.Stack.Rank.delegateEvents();
+    _t.reset();
   });
 
   beforeEach(function() {
 
-    // Shortcut views.
-    stack = Ov.Controllers.Stack.Rank;
-    blank = Ov.Controllers.Poem.Blank;
-    line = Ov.Controllers.Stack.Line;
-    rounds = Ov.Controllers.Round.Rounds;
-    points = Ov.Controllers.Info.Points;
-
     // Create round.
-    rounds.currentRound = 'id';
-    rounds.recordSubmission();
+    _t.rounds.currentRound = 'id';
+    _t.rounds.recordSubmission();
 
     // Set account value.
-    points.value = 1000;
+    _t.points.value = 1000;
 
     // Activate voting.
     Ov.global.isVoting = true;
@@ -48,11 +39,11 @@ describe('Stack Voting', function() {
     };
 
     // Clear stack.
-    stack.empty();
+    _t.rank.empty();
 
     // Trigger slice, get rows.
     Ov.vent.trigger('socket:slice', slice);
-    rows = stack.$el.find('div.stack-row');
+    rows = _t.rank.$el.find('div.stack-row');
     word = $(rows[0]);
 
   });
@@ -63,13 +54,13 @@ describe('Stack Voting', function() {
     word.trigger('mouseenter');
 
     // Check for preview.
-    expect(blank.$el.val()).toEqual('word1');
+    expect(_t.blank.$el.val()).toEqual('word1');
 
     // Trigger mouseleave.
-    stack.$el.trigger('mouseleave');
+    _t.rank.$el.trigger('mouseleave');
 
     // Check for no preview.
-    expect(blank.$el.val()).toEqual('');
+    expect(_t.blank.$el.val()).toEqual('');
 
   });
 
@@ -86,23 +77,23 @@ describe('Stack Voting', function() {
     }));
 
     // Check for values and dimensions.
-    expect(line.total.text()).toEqual('5');
-    expect(line.line.attr('x1')).toEqual('0');
-    expect(line.line.attr('y1')).toEqual('0');
-    expect(line.line.attr('x2')).toEqual('-3');
-    expect(line.line.attr('y2')).toEqual('-4');
-    expect(line.circle.attr('cx')).toEqual('0');
-    expect(line.circle.attr('cy')).toEqual('0');
-    expect(line.circle.attr('r')).toEqual('5');
+    expect(_t.line.total.text()).toEqual('5');
+    expect(_t.line.attr('x1')).toEqual('0');
+    expect(_t.line.attr('y1')).toEqual('0');
+    expect(_t.line.attr('x2')).toEqual('-3');
+    expect(_t.line.attr('y2')).toEqual('-4');
+    expect(_t.line.circle.attr('cx')).toEqual('0');
+    expect(_t.line.circle.attr('cy')).toEqual('0');
+    expect(_t.line.circle.attr('r')).toEqual('5');
 
     // Check for colors.
-    expect(line.total.attr('class')).toEqual('positive');
-    expect(line.line.attr('class')).toEqual('positive');
-    expect(line.circle.attr('class')).toEqual('positive');
+    expect(_t.line.total.attr('class')).toEqual('positive');
+    expect(_t.line.attr('class')).toEqual('positive');
+    expect(_t.line.circle.attr('class')).toEqual('positive');
 
     // Check for point preview.
-    expect(points.$el.text()).toEqual('995');
-    expect(points.$el).toHaveClass('preview');
+    expect(_t.points.$el.text()).toEqual('995');
+    expect(_t.points.$el).toHaveClass('preview');
 
     // Cancel drag.
     $(window).trigger($.Event('keydown.drag', {
@@ -127,23 +118,23 @@ describe('Stack Voting', function() {
     }));
 
     // Check for values and dimensions.
-    expect(line.total.text()).toEqual('-5');
-    expect(line.line.attr('x1')).toEqual('0');
-    expect(line.line.attr('y1')).toEqual('0');
-    expect(line.line.attr('x2')).toEqual('3');
-    expect(line.line.attr('y2')).toEqual('4');
-    expect(line.circle.attr('cx')).toEqual('0');
-    expect(line.circle.attr('cy')).toEqual('0');
-    expect(line.circle.attr('r')).toEqual('5');
+    expect(_t.line.total.text()).toEqual('-5');
+    expect(_t.line.attr('x1')).toEqual('0');
+    expect(_t.line.attr('y1')).toEqual('0');
+    expect(_t.line.attr('x2')).toEqual('3');
+    expect(_t.line.attr('y2')).toEqual('4');
+    expect(_t.line.circle.attr('cx')).toEqual('0');
+    expect(_t.line.circle.attr('cy')).toEqual('0');
+    expect(_t.line.circle.attr('r')).toEqual('5');
 
     // Check for colors.
-    expect(line.total.attr('class')).toEqual('negative');
-    expect(line.line.attr('class')).toEqual('negative');
-    expect(line.circle.attr('class')).toEqual('negative');
+    expect(_t.line.total.attr('class')).toEqual('negative');
+    expect(_t.line.attr('class')).toEqual('negative');
+    expect(_t.line.circle.attr('class')).toEqual('negative');
 
     // Check for point preview.
-    expect(points.$el.text()).toEqual('995');
-    expect(points.$el).toHaveClass('preview');
+    expect(_t.points.$el.text()).toEqual('995');
+    expect(_t.points.$el).toHaveClass('preview');
 
     // Cancel drag.
     $(window).trigger($.Event('keydown.drag', {
@@ -184,28 +175,28 @@ describe('Stack Voting', function() {
     $(window).trigger('mouseup');
 
     // Check for values and dimensions.
-    expect(line.total.text()).toEqual('10');
-    expect(line.lines[0].attr('x1')).toEqual('0');
-    expect(line.lines[0].attr('y1')).toEqual('0');
-    expect(line.lines[0].attr('x2')).toEqual('-3');
-    expect(line.lines[0].attr('y2')).toEqual('-4');
-    expect(line.lines[1].attr('x1')).toEqual('0');
-    expect(line.lines[1].attr('y1')).toEqual('0');
-    expect(line.lines[1].attr('x2')).toEqual('-4');
-    expect(line.lines[1].attr('y2')).toEqual('-3');
-    expect(line.circle.attr('cx')).toEqual('0');
-    expect(line.circle.attr('cy')).toEqual('0');
-    expect(line.circle.attr('r')).toEqual('10');
+    expect(_t.line.total.text()).toEqual('10');
+    expect(_t.line.lines[0].attr('x1')).toEqual('0');
+    expect(_t.line.lines[0].attr('y1')).toEqual('0');
+    expect(_t.line.lines[0].attr('x2')).toEqual('-3');
+    expect(_t.line.lines[0].attr('y2')).toEqual('-4');
+    expect(_t.line.lines[1].attr('x1')).toEqual('0');
+    expect(_t.line.lines[1].attr('y1')).toEqual('0');
+    expect(_t.line.lines[1].attr('x2')).toEqual('-4');
+    expect(_t.line.lines[1].attr('y2')).toEqual('-3');
+    expect(_t.line.circle.attr('cx')).toEqual('0');
+    expect(_t.line.circle.attr('cy')).toEqual('0');
+    expect(_t.line.circle.attr('r')).toEqual('10');
 
     // Check for colors.
-    expect(line.total.attr('class')).toEqual('positive');
-    expect(line.lines[0].attr('class')).toEqual('positive');
-    expect(line.lines[1].attr('class')).toEqual('positive');
-    expect(line.circle.attr('class')).toEqual('positive');
+    expect(_t.line.total.attr('class')).toEqual('positive');
+    expect(_t.line.lines[0].attr('class')).toEqual('positive');
+    expect(_t.line.lines[1].attr('class')).toEqual('positive');
+    expect(_t.line.circle.attr('class')).toEqual('positive');
 
     // Check for point preview.
-    expect(points.$el.text()).toEqual('990');
-    expect(points.$el).toHaveClass('preview');
+    expect(_t.points.$el.text()).toEqual('990');
+    expect(_t.points.$el).toHaveClass('preview');
 
     // Cancel drag.
     $(window).trigger($.Event('keydown.drag', {
@@ -246,28 +237,28 @@ describe('Stack Voting', function() {
     $(window).trigger('mouseup');
 
     // Check for values and dimensions.
-    expect(line.total.text()).toEqual('-10');
-    expect(line.lines[0].attr('x1')).toEqual('0');
-    expect(line.lines[0].attr('y1')).toEqual('0');
-    expect(line.lines[0].attr('x2')).toEqual('3');
-    expect(line.lines[0].attr('y2')).toEqual('4');
-    expect(line.lines[1].attr('x1')).toEqual('0');
-    expect(line.lines[1].attr('y1')).toEqual('0');
-    expect(line.lines[1].attr('x2')).toEqual('4');
-    expect(line.lines[1].attr('y2')).toEqual('3');
-    expect(line.circle.attr('cx')).toEqual('0');
-    expect(line.circle.attr('cy')).toEqual('0');
-    expect(line.circle.attr('r')).toEqual('10');
+    expect(_t.line.total.text()).toEqual('-10');
+    expect(_t.line.lines[0].attr('x1')).toEqual('0');
+    expect(_t.line.lines[0].attr('y1')).toEqual('0');
+    expect(_t.line.lines[0].attr('x2')).toEqual('3');
+    expect(_t.line.lines[0].attr('y2')).toEqual('4');
+    expect(_t.line.lines[1].attr('x1')).toEqual('0');
+    expect(_t.line.lines[1].attr('y1')).toEqual('0');
+    expect(_t.line.lines[1].attr('x2')).toEqual('4');
+    expect(_t.line.lines[1].attr('y2')).toEqual('3');
+    expect(_t.line.circle.attr('cx')).toEqual('0');
+    expect(_t.line.circle.attr('cy')).toEqual('0');
+    expect(_t.line.circle.attr('r')).toEqual('10');
 
     // Check for colors.
-    expect(line.total.attr('class')).toEqual('negative');
-    expect(line.lines[0].attr('class')).toEqual('negative');
-    expect(line.lines[1].attr('class')).toEqual('negative');
-    expect(line.circle.attr('class')).toEqual('negative');
+    expect(_t.line.total.attr('class')).toEqual('negative');
+    expect(_t.line.lines[0].attr('class')).toEqual('negative');
+    expect(_t.line.lines[1].attr('class')).toEqual('negative');
+    expect(_t.line.circle.attr('class')).toEqual('negative');
 
     // Check for point preview.
-    expect(points.$el.text()).toEqual('990');
-    expect(points.$el).toHaveClass('preview');
+    expect(_t.points.$el.text()).toEqual('990');
+    expect(_t.points.$el).toHaveClass('preview');
 
     // Cancel drag.
     $(window).trigger($.Event('keydown.drag', {
@@ -308,28 +299,28 @@ describe('Stack Voting', function() {
     $(window).trigger('mouseup');
 
     // Check for values and dimensions.
-    expect(line.total.text()).toEqual('8');
-    expect(line.lines[0].attr('x1')).toEqual('0');
-    expect(line.lines[0].attr('y1')).toEqual('0');
-    expect(line.lines[0].attr('x2')).toEqual('3');
-    expect(line.lines[0].attr('y2')).toEqual('4');
-    expect(line.lines[1].attr('x1')).toEqual('0');
-    expect(line.lines[1].attr('y1')).toEqual('0');
-    expect(line.lines[1].attr('x2')).toEqual('-5');
-    expect(line.lines[1].attr('y2')).toEqual('-12');
-    expect(line.circle.attr('cx')).toEqual('0');
-    expect(line.circle.attr('cy')).toEqual('0');
-    expect(line.circle.attr('r')).toEqual('8');
+    expect(_t.line.total.text()).toEqual('8');
+    expect(_t.line.lines[0].attr('x1')).toEqual('0');
+    expect(_t.line.lines[0].attr('y1')).toEqual('0');
+    expect(_t.line.lines[0].attr('x2')).toEqual('3');
+    expect(_t.line.lines[0].attr('y2')).toEqual('4');
+    expect(_t.line.lines[1].attr('x1')).toEqual('0');
+    expect(_t.line.lines[1].attr('y1')).toEqual('0');
+    expect(_t.line.lines[1].attr('x2')).toEqual('-5');
+    expect(_t.line.lines[1].attr('y2')).toEqual('-12');
+    expect(_t.line.circle.attr('cx')).toEqual('0');
+    expect(_t.line.circle.attr('cy')).toEqual('0');
+    expect(_t.line.circle.attr('r')).toEqual('8');
 
     // Check for colors.
-    expect(line.total.attr('class')).toEqual('positive');
-    expect(line.lines[0].attr('class')).toEqual('negative');
-    expect(line.lines[1].attr('class')).toEqual('positive');
-    expect(line.circle.attr('class')).toEqual('positive');
+    expect(_t.line.total.attr('class')).toEqual('positive');
+    expect(_t.line.lines[0].attr('class')).toEqual('negative');
+    expect(_t.line.lines[1].attr('class')).toEqual('positive');
+    expect(_t.line.circle.attr('class')).toEqual('positive');
 
     // Check for point preview.
-    expect(points.$el.text()).toEqual('992');
-    expect(points.$el).toHaveClass('preview');
+    expect(_t.points.$el.text()).toEqual('992');
+    expect(_t.points.$el).toHaveClass('preview');
 
     // Cancel drag.
     $(window).trigger($.Event('keydown.drag', {
@@ -370,28 +361,28 @@ describe('Stack Voting', function() {
     $(window).trigger('mouseup');
 
     // Check for values and dimensions.
-    expect(line.total.text()).toEqual('-8');
-    expect(line.lines[0].attr('x1')).toEqual('0');
-    expect(line.lines[0].attr('y1')).toEqual('0');
-    expect(line.lines[0].attr('x2')).toEqual('-3');
-    expect(line.lines[0].attr('y2')).toEqual('-4');
-    expect(line.lines[1].attr('x1')).toEqual('0');
-    expect(line.lines[1].attr('y1')).toEqual('0');
-    expect(line.lines[1].attr('x2')).toEqual('5');
-    expect(line.lines[1].attr('y2')).toEqual('12');
-    expect(line.circle.attr('cx')).toEqual('0');
-    expect(line.circle.attr('cy')).toEqual('0');
-    expect(line.circle.attr('r')).toEqual('8');
+    expect(_t.line.total.text()).toEqual('-8');
+    expect(_t.line.lines[0].attr('x1')).toEqual('0');
+    expect(_t.line.lines[0].attr('y1')).toEqual('0');
+    expect(_t.line.lines[0].attr('x2')).toEqual('-3');
+    expect(_t.line.lines[0].attr('y2')).toEqual('-4');
+    expect(_t.line.lines[1].attr('x1')).toEqual('0');
+    expect(_t.line.lines[1].attr('y1')).toEqual('0');
+    expect(_t.line.lines[1].attr('x2')).toEqual('5');
+    expect(_t.line.lines[1].attr('y2')).toEqual('12');
+    expect(_t.line.circle.attr('cx')).toEqual('0');
+    expect(_t.line.circle.attr('cy')).toEqual('0');
+    expect(_t.line.circle.attr('r')).toEqual('8');
 
     // Check for colors.
-    expect(line.total.attr('class')).toEqual('negative');
-    expect(line.lines[0].attr('class')).toEqual('positive');
-    expect(line.lines[1].attr('class')).toEqual('negative');
-    expect(line.circle.attr('class')).toEqual('negative');
+    expect(_t.line.total.attr('class')).toEqual('negative');
+    expect(_t.line.lines[0].attr('class')).toEqual('positive');
+    expect(_t.line.lines[1].attr('class')).toEqual('negative');
+    expect(_t.line.circle.attr('class')).toEqual('negative');
 
     // Check for point preview.
-    expect(points.$el.text()).toEqual('992');
-    expect(points.$el).toHaveClass('preview');
+    expect(_t.points.$el.text()).toEqual('992');
+    expect(_t.points.$el).toHaveClass('preview');
 
     // Cancel drag.
     $(window).trigger($.Event('keydown.drag', {
@@ -416,13 +407,13 @@ describe('Stack Voting', function() {
     }));
 
     // Check for colors.
-    expect(line.total.attr('class')).toEqual('blocked');
-    expect(line.line.attr('class')).toEqual('blocked');
-    expect(line.circle.attr('class')).toEqual('blocked');
+    expect(_t.line.total.attr('class')).toEqual('blocked');
+    expect(_t.line.attr('class')).toEqual('blocked');
+    expect(_t.line.circle.attr('class')).toEqual('blocked');
 
     // Check for point preview.
-    expect(points.$el.text()).toEqual('-414');
-    expect(points.$el).toHaveClass('negative');
+    expect(_t.points.$el.text()).toEqual('-414');
+    expect(_t.points.$el).toHaveClass('negative');
 
     // Cancel drag.
     $(window).trigger($.Event('keydown.drag', {
@@ -447,13 +438,13 @@ describe('Stack Voting', function() {
     }));
 
     // Check for colors.
-    expect(line.total.attr('class')).toEqual('blocked');
-    expect(line.line.attr('class')).toEqual('blocked');
-    expect(line.circle.attr('class')).toEqual('blocked');
+    expect(_t.line.total.attr('class')).toEqual('blocked');
+    expect(_t.line.attr('class')).toEqual('blocked');
+    expect(_t.line.circle.attr('class')).toEqual('blocked');
 
     // Check for point preview.
-    expect(points.$el.text()).toEqual('-414');
-    expect(points.$el).toHaveClass('negative');
+    expect(_t.points.$el.text()).toEqual('-414');
+    expect(_t.points.$el).toHaveClass('negative');
 
     // Cancel drag.
     $(window).trigger($.Event('keydown.drag', {
@@ -489,8 +480,8 @@ describe('Stack Voting', function() {
     expect($('body')).not.toContain('div.drag-line');
 
     // Check for commited points.
-    expect(points.$el.text()).toEqual('995');
-    expect(points.$el).not.toHaveClass('preview');
+    expect(_t.points.$el.text()).toEqual('995');
+    expect(_t.points.$el).not.toHaveClass('preview');
 
     // Check for vote release.
     expect(Ov.Controllers.Socket.s.emit).toHaveBeenCalledWith(
@@ -522,8 +513,8 @@ describe('Stack Voting', function() {
     expect($('body')).not.toContain('div.drag-line');
 
     // Check for commited points.
-    expect(points.$el.text()).toEqual('995');
-    expect(points.$el).not.toHaveClass('preview');
+    expect(_t.points.$el.text()).toEqual('995');
+    expect(_t.points.$el).not.toHaveClass('preview');
 
     // Check for vote release.
     expect(Ov.Controllers.Socket.s.emit).toHaveBeenCalledWith(
@@ -555,8 +546,8 @@ describe('Stack Voting', function() {
     expect($('body')).not.toContain('div.drag-line');
 
     // Check for commited points.
-    expect(points.$el.text()).toEqual('1000');
-    expect(points.$el).not.toHaveClass('preview');
+    expect(_t.points.$el.text()).toEqual('1000');
+    expect(_t.points.$el).not.toHaveClass('preview');
 
     // Check for vote release.
     expect(Ov.Controllers.Socket.s.emit).not.toHaveBeenCalled();
@@ -587,8 +578,8 @@ describe('Stack Voting', function() {
     expect($('body')).not.toContain('div.drag-line');
 
     // Check for commited points.
-    expect(points.$el.text()).toEqual('1000');
-    expect(points.$el).not.toHaveClass('preview');
+    expect(_t.points.$el.text()).toEqual('1000');
+    expect(_t.points.$el).not.toHaveClass('preview');
 
     // Check for vote release.
     expect(Ov.Controllers.Socket.s.emit).not.toHaveBeenCalledWith();
@@ -622,7 +613,7 @@ describe('Stack Voting', function() {
     Ov.vent.trigger('socket:slice', slice);
 
     // Get word rows.
-    var rows = stack.$el.find('div.stack-row');
+    var rows = _t.rank.$el.find('div.stack-row');
 
     // Check for unchanged order.
     expect($(rows[0]).find('.word').text()).toEqual('word1');
@@ -642,7 +633,7 @@ describe('Stack Voting', function() {
     Ov.vent.trigger('socket:slice', slice);
 
     // Get word rows.
-    rows = stack.$el.find('div.stack-row');
+    rows = _t.rank.$el.find('div.stack-row');
 
     // Check for changed order.
     expect($(rows[0]).find('.word').text()).toEqual('word2');

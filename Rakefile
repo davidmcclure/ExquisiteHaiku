@@ -1,25 +1,17 @@
-task :default => 'test:server'
+task :default => 'test'
 
 begin
   require 'jasmine'
   load 'jasmine/tasks/jasmine.rake'
 end
 
-namespace :test do
-
-  desc 'Run the Mocha suite'
-  task :server do
-    sh %{mocha test/**/**/*.test.js test/**/*.test.js}
-    Rake::Task['bench:poem'].execute
-  end
-
+desc 'Run the test suites'
+task :test do
+  sh %{mocha test/**/**/*.test.js test/**/*.test.js}
+  Rake::Task['benchmark'].execute
 end
 
-namespace :bench do
-
-  desc 'Run poem benchmark'
-  task :poem do
-    sh %{node test/benchmark/scoring.benchmark.js 100 100}
-  end
-
+desc 'Run benchmark'
+task :benchmark do
+  sh %{node test/benchmark/scoring.benchmark.js 100 100}
 end

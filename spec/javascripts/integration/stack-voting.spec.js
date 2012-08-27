@@ -4,7 +4,7 @@
 
 describe('Stack Voting', function() {
 
-  var rows, word;
+  var slice, rows, word;
 
   // Get fixtures.
   beforeEach(function() {

@@ -33,18 +33,13 @@ _t.reset = function() {
   _t.timer = Ov.Controllers.Info.Timer;
 
   // Set testing constants.
-  _t.points.value = 1000;
+  _t.rounds.reset();
   _t.log.options.maxLength = 5;
+  _t.points.value = 1000;
 
 };
 
 _t.voting = function() {
-
-  // Create round.
-  _t.rounds.currentRound = 'id';
   _t.rounds.recordSubmission();
-
-  // Activate voting.
   Ov.global.isVoting = true;
-
 };

@@ -4,45 +4,30 @@
 
 describe('Submission', function() {
 
-  var blank, e;
+  var e;
 
   // Get fixtures, run app.
   beforeEach(function() {
     loadFixtures('base.html', 'templates.html');
-    Ov.Controllers.Round.Rounds.reset();
+    _t.reset();
   });
 
-  // Activate submit.
+  // Mock keypress.
   beforeEach(function() {
-
-    // Shortcut views.
-    rounds = Ov.Controllers.Round.Rounds;
-
-    // Create round.
-    rounds.currentRound = 'id';
-
-    // Mock keypress.
     e = $.Event('keyup');
-
-    // Shortcut blank view.
-    blank = Ov.Controllers.Poem.Blank;
-
-    // Activate submit.
-    blank.activateSubmit();
-
   });
 
   it('should queue a valid word', function() {
 
     // Set word value.
-    blank.$el.val('valid1');
+    _t.blank.$el.val('valid1');
 
     // Mock enter.
     e.keyCode = 13;
-    blank.$el.trigger(e);
+    _t.blank.$el.trigger(e);
 
     // Check for word.
-    var words = blank.stack.find('div.submission-word');
+    var words = _t.blank.stack.find('div.submission-word');
     expect(words.length).toEqual(1);
     expect(words[0]).toHaveText('valid1');
 
@@ -51,14 +36,14 @@ describe('Submission', function() {
   it('should lowercase and trim a valid word', function() {
 
     // Set word value.
-    blank.$el.val(' Valid1  ');
+    _t.blank.$el.val(' Valid1  ');
 
     // Mock enter.
     e.keyCode = 13;
-    blank.$el.trigger(e);
+    _t.blank.$el.trigger(e);
 
     // Check for word.
-    var words = blank.stack.find('div.submission-word');
+    var words = _t.blank.stack.find('div.submission-word');
     expect(words.length).toEqual(1);
     expect(words[0]).toHaveText('valid1');
 
@@ -68,15 +53,15 @@ describe('Submission', function() {
 
     // Add first word.
     e.keyCode = 13;
-    blank.$el.val('valid1');
-    blank.$el.trigger(e);
+    _t.blank.$el.val('valid1');
+    _t.blank.$el.trigger(e);
 
     // Add second word.
-    blank.$el.val('valid2');
-    blank.$el.trigger(e);
+    _t.blank.$el.val('valid2');
+    _t.blank.$el.trigger(e);
 
     // Check for word.
-    var words = blank.stack.find('div.submission-word');
+    var words = _t.blank.stack.find('div.submission-word');
     expect(words.length).toEqual(2);
     expect(words[0]).toHaveText('valid2');
     expect(words[1]).toHaveText('valid1');
@@ -86,14 +71,14 @@ describe('Submission', function() {
   it('should not queue an invalid word', function() {
 
     // Set word value.
-    blank.$el.val('invalid');
+    _t.blank.$el.val('invalid');
 
     // Mock enter.
     e.keyCode = 13;
-    blank.$el.trigger(e);
+    _t.blank.$el.trigger(e);
 
     // Check for no word.
-    expect(blank.stack).not.toContain('div.submission-word');
+    expect(_t.blank.stack).not.toContain('div.submission-word');
 
   });
 
@@ -101,15 +86,15 @@ describe('Submission', function() {
 
     // Add word.
     e.keyCode = 13;
-    blank.$el.val('valid1');
-    blank.$el.trigger(e);
+    _t.blank.$el.val('valid1');
+    _t.blank.$el.trigger(e);
 
     // Try to re-add.
-    blank.$el.val('valid1');
-    blank.$el.trigger(e);
+    _t.blank.$el.val('valid1');
+    _t.blank.$el.trigger(e);
 
     // Check just 1 instance.
-    var words = blank.stack.find('div.submission-word');
+    var words = _t.blank.stack.find('div.submission-word');
     expect(words.length).toEqual(1);
     expect(words[0]).toHaveText('valid1');
 
@@ -119,11 +104,11 @@ describe('Submission', function() {
 
     // Add word.
     e.keyCode = 13;
-    blank.$el.val('valid1');
-    blank.$el.trigger(e);
+    _t.blank.$el.val('valid1');
+    _t.blank.$el.trigger(e);
 
     // Get word.
-    var word = blank.stack.find('div.submission-word').first();
+    var word = _t.blank.stack.find('div.submission-word').first();
     word.trigger('mouseenter');
     expect(word).toHaveClass('negative');
 
@@ -133,15 +118,15 @@ describe('Submission', function() {
 
     // Add word.
     e.keyCode = 13;
-    blank.$el.val('valid1');
-    blank.$el.trigger(e);
+    _t.blank.$el.val('valid1');
+    _t.blank.$el.trigger(e);
 
     // Get word, mock click.
-    var word = blank.stack.find('div.submission-word').first();
+    var word = _t.blank.stack.find('div.submission-word').first();
     word.trigger('mousedown');
 
     // Check for no word.
-    expect(blank.stack).not.toContain('div.submission-word');
+    expect(_t.blank.stack).not.toContain('div.submission-word');
 
   });
 
@@ -149,19 +134,19 @@ describe('Submission', function() {
 
     // Add word.
     e.keyCode = 13;
-    blank.$el.val('valid1');
-    blank.$el.trigger(e);
+    _t.blank.$el.val('valid1');
+    _t.blank.$el.trigger(e);
 
     // Get word, mock click.
-    var word = blank.stack.find('div.submission-word').first();
+    var word = _t.blank.stack.find('div.submission-word').first();
     word.trigger('mousedown');
 
     // Re-add.
-    blank.$el.val('valid1');
-    blank.$el.trigger(e);
+    _t.blank.$el.val('valid1');
+    _t.blank.$el.trigger(e);
 
     // Check for word.
-    var words = blank.stack.find('div.submission-word');
+    var words = _t.blank.stack.find('div.submission-word');
     expect(words.length).toEqual(1);
     expect(words[0]).toHaveText('valid1');
 
@@ -178,14 +163,14 @@ describe('Submission', function() {
 
     // Add 2 words.
     e.keyCode = 13;
-    blank.$el.val('valid1');
-    blank.$el.trigger(e);
-    blank.$el.val('valid2');
-    blank.$el.trigger(e);
+    _t.blank.$el.val('valid1');
+    _t.blank.$el.trigger(e);
+    _t.blank.$el.val('valid2');
+    _t.blank.$el.trigger(e);
 
     // Attempt to submit.
     e.keyCode = 17;
-    blank.$el.trigger(e);
+    _t.blank.$el.trigger(e);
     expect(cb).not.toHaveBeenCalled();
 
   });
@@ -197,19 +182,19 @@ describe('Submission', function() {
 
     // Add 3 words.
     e.keyCode = 13;
-    blank.$el.val('valid1');
-    blank.$el.trigger(e);
-    blank.$el.val('valid2');
-    blank.$el.trigger(e);
-    blank.$el.val('valid3');
-    blank.$el.trigger(e);
+    _t.blank.$el.val('valid1');
+    _t.blank.$el.trigger(e);
+    _t.blank.$el.val('valid2');
+    _t.blank.$el.trigger(e);
+    _t.blank.$el.val('valid3');
+    _t.blank.$el.trigger(e);
 
     // Spy on socket submission release.
     spyOn(Ov.Controllers.Socket.s, 'emit');
 
     // Attempt to submit.
     e.keyCode = 17;
-    blank.$el.trigger(e);
+    _t.blank.$el.trigger(e);
     expect(Ov.Controllers.Socket.s.emit).toHaveBeenCalledWith(
       'submit', 1, ['valid1', 'valid2', 'valid3']);
 

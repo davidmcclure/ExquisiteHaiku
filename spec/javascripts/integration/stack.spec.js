@@ -4,36 +4,19 @@
 
 describe('Stack', function() {
 
-  var stack, rounds, slice;
+  var slice;
 
   // Get fixtures.
   beforeEach(function() {
     loadFixtures('base.html', 'templates.html');
-    Ov.Controllers.Round.Rounds.reset();
-    Ov.Controllers.Stack.Rank.delegateEvents();
+    _t.reset();
   });
 
   beforeEach(function() {
 
-    // Shortcut application components.
-    stack = Ov.Controllers.Stack.Rank;
-    rounds = Ov.Controllers.Round.Rounds;
-    points = Ov.Controllers.Info.Points;
+    _t.voting();
 
-    // Create round.
-    rounds.currentRound = 'id';
-    rounds.recordSubmission();
-
-    // Set account value.
-    points.value = 1000;
-
-    // Activate voting.
-    Ov.global.isVoting = true;
-
-    // Clear stack.
-    stack.empty();
-
-    // Data slice.
+    // Slice.
     slice = {
       stack: [],
       syllables: 0,
@@ -56,7 +39,7 @@ describe('Stack', function() {
     Ov.vent.trigger('socket:slice', slice);
 
     // Get word rows.
-    var rows = stack.$el.find('div.stack-row');
+    var rows = _t.rank.$el.find('div.stack-row');
     expect(rows.length).toEqual(2);
 
     // Word1.
@@ -94,7 +77,7 @@ describe('Stack', function() {
     Ov.vent.trigger('socket:slice', slice);
 
     // Get word rows.
-    var rows = stack.$el.find('div.stack-row');
+    var rows = _t.rank.$el.find('div.stack-row');
     expect(rows.length).toEqual(2);
 
     // Word2.
@@ -126,10 +109,10 @@ describe('Stack', function() {
     // -----------------------------------
 
     // Trigger mouseenter.
-    stack.$el.trigger('mouseenter');
+    _t.rank.$el.trigger('mouseenter');
 
     // Check for frozen class.
-    expect(stack.$el).toHaveClass('frozen');
+    expect(_t.rank.$el).toHaveClass('frozen');
 
     // New words.
     slice.stack = [
@@ -143,7 +126,7 @@ describe('Stack', function() {
     Ov.vent.trigger('socket:slice', slice);
 
     // Get word rows.
-    var rows = stack.$el.find('div.stack-row');
+    var rows = _t.rank.$el.find('div.stack-row');
     expect(rows.length).toEqual(2);
 
     // Un-updated word1.
@@ -162,13 +145,13 @@ describe('Stack', function() {
     // ---------------------------------------
 
     // Trigger mouseleave.
-    stack.$el.trigger('mouseleave');
+    _t.rank.$el.trigger('mouseleave');
 
     // Trigger slice.
     Ov.vent.trigger('socket:slice', slice);
 
     // Get word rows.
-    rows = stack.$el.find('div.stack-row');
+    rows = _t.rank.$el.find('div.stack-row');
     expect(rows.length).toEqual(4);
 
     // Word2.
@@ -220,7 +203,7 @@ describe('Stack', function() {
     Ov.vent.trigger('socket:slice', slice);
 
     // Get word rows.
-    var rows = stack.$el.find('div.stack-row');
+    var rows = _t.rank.$el.find('div.stack-row');
     expect(rows.length).toEqual(4);
 
     // Word2.
@@ -263,7 +246,7 @@ describe('Stack', function() {
     Ov.vent.trigger('socket:slice', slice);
 
     // Get word rows.
-    var rows = stack.$el.find('div.stack-row');
+    var rows = _t.rank.$el.find('div.stack-row');
 
     // Check colors.
     expect($(rows[0]).find('.word')).toHaveClass('positive');

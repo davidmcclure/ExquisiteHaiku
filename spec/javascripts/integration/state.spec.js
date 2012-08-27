@@ -4,35 +4,27 @@
 
 describe('State', function() {
 
-  var slice, rounds, blank, poem, stack, log;
+  var slice;
 
   // Get fixtures.
   beforeEach(function() {
     loadFixtures('base.html', 'templates.html');
-    Ov.Controllers.Round.Rounds.reset();
-    Ov.Controllers.Stack.Rank.delegateEvents();
+    _t.reset();
   });
 
   beforeEach(function() {
 
-    // Shortcut application objects.
-    rounds = Ov.Controllers.Round.Rounds;
-    blank = Ov.Controllers.Poem.Blank;
-    poem = Ov.Controllers.Poem.Poem;
-    stack = Ov.Controllers.Stack.Rank;
-    log = Ov.Controllers.Log.Stack;
+    // Stack.
+    var stack = [
+      ['word1', 100, 1000, 0, '1.00'],
+      ['word2', 90, 0, -900, '0.50'],
+      ['word3', 80, 800, 0, '0.40'],
+      ['word4', 70, 0, -700, '0.30']
+    ];
 
-    // Clear stack.
-    stack.empty();
-
-    // Data slice.
+    // Slice.
     slice = {
-      stack: [
-        ['word1', 100, 1000, 0, '1.00'],
-        ['word2', 90, 0, -900, '0.50'],
-        ['word3', 80, 800, 0, '0.40'],
-        ['word4', 70, 0, -700, '0.30']
-      ],
+      stack: stack,
       syllables: 0,
       round: 'id',
       poem: [],
@@ -70,8 +62,8 @@ describe('State', function() {
         Ov.vent.on('state:vote', cb);
 
         // Record round submission.
-        rounds.currentRound = 'id';
-        rounds.recordSubmission();
+        _t.rounds.currentRound = 'id';
+        _t.rounds.recordSubmission();
 
         // Trigger slice.
         Ov.vent.trigger('socket:slice', slice);
@@ -95,8 +87,8 @@ describe('State', function() {
         Ov.vent.on('state:vote', cb);
 
         // Record round submission.
-        rounds.currentRound = 'id';
-        rounds.recordSubmission();
+        _t.rounds.currentRound = 'id';
+        _t.rounds.recordSubmission();
 
         // Trigger slice.
         Ov.vent.trigger('socket:slice', slice);
@@ -116,8 +108,8 @@ describe('State', function() {
         Ov.vent.on('state:vote', cb);
 
         // Record round submission.
-        rounds.currentRound = 'id';
-        rounds.recordSubmission();
+        _t.rounds.currentRound = 'id';
+        _t.rounds.recordSubmission();
 
         // Trigger slice.
         Ov.vent.trigger('socket:slice', slice);
@@ -172,12 +164,12 @@ describe('State', function() {
     beforeEach(function() {
 
       // Create round.
-      round = rounds.create({
+      round = _t.rounds.create({
         id: 'id', points: 100
       });
 
       // Force poem render.
-      poem.syllables = null;
+      _t.poem.syllables = null;
       Ov.vent.trigger('socket:slice', slice);
 
       // Set submitting.
@@ -194,7 +186,7 @@ describe('State', function() {
       Ov.vent.trigger('state:vote', round);
 
       // Check for detached stack.
-      expect(poem.$el).not.toContain(blank.stack);
+      expect(_t.poem.$el).not.toContain(_t.blank.stack);
 
     });
 
@@ -205,19 +197,19 @@ describe('State', function() {
       Ov.vent.trigger('state:vote', round);
 
       // Check for disabled blank.
-      expect(blank.$el).toBeDisabled();
+      expect(_t.blank.$el).toBeDisabled();
 
     });
 
     it('should clear the blank', function() {
 
       // Submit -> vote.
-      blank.$el.val('word');
+      _t.blank.$el.val('word');
       Ov.global.isVoting = true;
       Ov.vent.trigger('state:vote', round);
 
       // Check for empty blank.
-      expect(blank.$el.val()).toEqual('');
+      expect(_t.blank.$el.val()).toEqual('');
 
     });
 
@@ -231,7 +223,7 @@ describe('State', function() {
       Ov.vent.trigger('socket:slice', slice);
 
       // Get word rows.
-      var rows = stack.$el.find('div.stack-row');
+      var rows = _t.rank.$el.find('div.stack-row');
       expect(rows.length).toEqual(4);
 
     });
@@ -246,7 +238,7 @@ describe('State', function() {
       Ov.vent.trigger('socket:vote:in', 'word', 100);
 
       // Get word rows.
-      var rows = log.primaryMarkup.find('div.log-row');
+      var rows = _t.log.primaryMarkup.find('div.log-row');
       expect(rows.length).toEqual(1);
 
     });
@@ -260,7 +252,7 @@ describe('State', function() {
     beforeEach(function() {
 
       // Create round.
-      var round = rounds.create({
+      var round = _t.rounds.create({
         id: 'id2', points: 100
       });
 
@@ -274,12 +266,12 @@ describe('State', function() {
     it('should clear blank', function() {
 
       // Vote -> submit.
-      blank.$el.val('word');
+      _t.blank.$el.val('word');
       Ov.global.isVoting = false;
       Ov.vent.trigger('state:submit');
 
       // Check for empty blank.
-      expect(blank.$el.val()).toEqual('');
+      expect(_t.blank.$el.val()).toEqual('');
 
     });
 
@@ -293,7 +285,7 @@ describe('State', function() {
       Ov.vent.trigger('state:submit');
 
       // Check for empty blank.
-      expect(stack.$el).toBeEmpty();
+      expect(_t.rank.$el).toBeEmpty();
 
     });
 
@@ -307,7 +299,7 @@ describe('State', function() {
       Ov.vent.trigger('state:submit');
 
       // Check for empty blank.
-      expect(log.primaryMarkup).toBeEmpty();
+      expect(_t.log.primaryMarkup).toBeEmpty();
 
     });
 
@@ -315,7 +307,7 @@ describe('State', function() {
 
       // Trigger slice, get rows.
       Ov.vent.trigger('socket:slice', slice);
-      var rows = stack.$el.find('div.stack-row');
+      var rows = _t.rank.$el.find('div.stack-row');
       var word = $(rows[0]);
 
       // Click.
@@ -347,7 +339,7 @@ describe('State', function() {
       Ov.vent.trigger('socket:slice', slice);
 
       // Check for empty blank.
-      expect(stack.$el).toBeEmpty();
+      expect(_t.rank.$el).toBeEmpty();
 
     });
 
@@ -361,7 +353,7 @@ describe('State', function() {
       Ov.vent.trigger('socket:vote:in', 'word', 100);
 
       // Check for empty blank.
-      expect(log.primaryMarkup).toBeEmpty();
+      expect(_t.log.primaryMarkup).toBeEmpty();
 
     });
 
@@ -372,7 +364,7 @@ describe('State', function() {
       Ov.vent.trigger('state:submit');
 
       // Check for enabled blank.
-      expect(blank.$el).not.toBeDisabled();
+      expect(_t.blank.$el).not.toBeDisabled();
 
     });
 
@@ -383,18 +375,18 @@ describe('State', function() {
       Ov.vent.trigger('state:submit');
 
       // Force poem render.
-      poem.syllables = null;
+      _t.poem.syllables = null;
       Ov.vent.trigger('socket:slice', slice);
 
       // Set word value.
-      blank.$el.val('valid1');
+      _t.blank.$el.val('valid1');
 
       // Mock enter.
       e.keyCode = 13;
-      blank.$el.trigger(e);
+      _t.blank.$el.trigger(e);
 
       // Check for stack and word.
-      var words = blank.stack.find('div.submission-word');
+      var words = _t.blank.stack.find('div.submission-word');
       expect(words.length).toEqual(1);
 
     });

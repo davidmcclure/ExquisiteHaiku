@@ -60,6 +60,6 @@ load(
 ).thenRun(function() {
 
   // Mock poem.
-  Poem = { _id: 1 };
+  Poem = { _id: 1, rounds: [{ _id: 'id', points: 1000 }] };
 
 });

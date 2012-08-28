@@ -6,11 +6,6 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
 
   var Socket = {};
 
-
-  // ---------------
-  // Initialization.
-  // ---------------
-
   /*
    * Connect Socket.io.
    *
@@ -19,6 +14,10 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
   Socket.init = function() {
 
     Socket.s = io.connect();
+
+    // ----------------
+    // Incoming events.
+    // ----------------
 
     /*
      * Request connection to poem.

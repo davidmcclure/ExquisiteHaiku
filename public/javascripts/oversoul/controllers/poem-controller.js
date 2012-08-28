@@ -45,6 +45,15 @@ Ov.Controllers.Poem = (function(Backbone, Ov) {
   });
 
   /*
+   * Switch the poem into completed mode.
+   *
+   * @return void.
+   */
+  Ov.vent.on('state:complete', function() {
+
+  });
+
+  /*
    * Detach the blank before the poems is rendered.
    *
    * @return void.

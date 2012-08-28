@@ -58,8 +58,13 @@ Ov.Controllers.Round = (function(Backbone, Ov) {
 
     else {
 
+      // Complete.
+      if (data.syllables === 17) {
+        Ov.vent.trigger('state:complete');
+      }
+
       // Vote -> submit.
-      if (_.isEmpty(round) && Ov.global.isVoting) {
+      else if (_.isEmpty(round) && Ov.global.isVoting) {
         Ov.global.isVoting = false;
         Ov.global.isDragging = false;
         Ov.vent.trigger('state:submit');

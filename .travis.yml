@@ -3,5 +3,9 @@ language: node_js
 node_js:
   - "0.8"
 
-before_script: "bundle install"
-script: "rake"
+before_script:
+  - "bundle install"
+  - "rake jasmine"
+
+script:
+  - "phantomjs spec/javascripts/support/phantom-runner.js http://localhost:8888"

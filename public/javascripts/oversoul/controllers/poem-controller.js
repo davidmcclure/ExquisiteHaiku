@@ -50,8 +50,17 @@ Ov.Controllers.Poem = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('state:complete', function() {
+
+    // Remove blank and stack.
     Poem.Blank.activateComplete();
-    Ov.vent.trigger('poem:complete', Poem.Poem.$el);
+
+    // If necessary, render the poem.
+    if (_.isNull(Poem.Poem.syllables))
+      Poem.Poem.render(P.words);
+
+    // Release the poem.
+    Ov.vent.trigger('poem:complete', Poem.Poem.$el.contents());
+
   });
 
   /*

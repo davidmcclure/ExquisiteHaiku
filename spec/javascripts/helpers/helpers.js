@@ -20,6 +20,7 @@ _t.reset = function() {
   Ov.Controllers.Stack.init();
   Ov.Controllers.Log.init();
   Ov.Controllers.Info.init();
+  Ov.Controllers.End.init();
 
   // Shortcut components
   _t.socket = Ov.Controllers.Socket.s;

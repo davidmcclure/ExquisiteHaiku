@@ -17,8 +17,16 @@ Ov.Controllers.Round = (function(Backbone, Ov) {
    * @return void.
    */
   Round.init = function() {
+
+    // Fetch localstorage.
     Round.Rounds = new Ov.Collections.Round();
     Round.Rounds.fetch();
+
+    // If not running, render static poem.
+    Ov.on('initialize:after', function() {
+      if (!P.running) Ov.vent.trigger('state:complete');
+    });
+
   };
 
 

@@ -167,7 +167,7 @@ Ov.Views.Blank = Backbone.View.extend({
 
     // ** dev: submit with CONTROL.
     else if (event.keyCode == 17) {
-      if (this.words.length >= Poem.minSubmissions) {
+      if (this.words.length >= P.minSubmissions) {
         Ov.vent.trigger('blank:submit', this.words);
       }
     }

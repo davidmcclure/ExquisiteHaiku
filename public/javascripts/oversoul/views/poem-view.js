@@ -52,19 +52,8 @@ Ov.Views.Poem = Backbone.View.extend({
     this.$el.empty();
     this.lines = [];
 
-    // Walk lines.
-    _.each(poem, _.bind(function(line) {
-
-      // Insert line.
-      var newLine = this.addLine();
-
-      // Walk words.
-      _.each(line, _.bind(function(word) {
-        var wordMarkup = $(this.__word({ word: word }));
-        newLine.append(wordMarkup);
-      }, this));
-
-    }, this));
+    // Render the poem.
+    this.render(poem);
 
     // If poem is on first line.
     if (syllables < 5) {
@@ -91,6 +80,31 @@ Ov.Views.Poem = Backbone.View.extend({
     this.syllables = syllables;
 
     return true;
+
+  },
+
+  /*
+   * Render the poem.
+   *
+   * @param {Array} poem: The poem.
+   *
+   * @return void.
+   */
+  render: function(poem) {
+
+    // Walk lines.
+    _.each(poem, _.bind(function(line) {
+
+      // Insert line.
+      var newLine = this.addLine();
+
+      // Walk words.
+      _.each(line, _.bind(function(word) {
+        var wordMarkup = $(this.__word({ word: word }));
+        newLine.append(wordMarkup);
+      }, this));
+
+    }, this));
 
   },
 

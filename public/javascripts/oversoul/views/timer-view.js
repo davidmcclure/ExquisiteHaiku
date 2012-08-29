@@ -58,7 +58,7 @@ Ov.Views.Timer = Backbone.View.extend({
     this.seconds.text(now[1]);
 
     // Render bar.
-    var percent = (d/Poem.roundLength)*100+'%';
+    var percent = (d/P.roundLength)*100+'%';
     this.bar.css('width', percent);
 
   },

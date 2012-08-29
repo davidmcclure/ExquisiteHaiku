@@ -29,7 +29,7 @@ Ov.Collections.Round = Backbone.Collection.extend({
 
     // Else, use the templated Poem object.
     else {
-      return _.last(Poem.rounds)._id;
+      return _.last(P.rounds)._id;
     }
 
   },
@@ -42,7 +42,7 @@ Ov.Collections.Round = Backbone.Collection.extend({
   recordSubmission: function() {
     this.create({
       id: this.getCurrentRound(),
-      points: Poem.seedCapital
+      points: P.seedCapital
     });
   }
 

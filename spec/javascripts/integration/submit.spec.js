@@ -159,7 +159,7 @@ describe('Submission', function() {
     Ov.vent.on('blank:submit', cb);
 
     // Set minSubmissions.
-    Poem.minSubmissions = 3;
+    P.minSubmissions = 3;
 
     // Add 2 words.
     e.keyCode = 13;
@@ -178,7 +178,7 @@ describe('Submission', function() {
   it('should emit correct word list when enough words', function() {
 
     // Set minSubmissions.
-    Poem.minSubmissions = 3;
+    P.minSubmissions = 3;
 
     // Add 3 words.
     e.keyCode = 13;

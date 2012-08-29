@@ -25,7 +25,7 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
      * @return void.
      */
     Socket.s.on('connect', function() {
-      Socket.s.emit('join', Poem._id);
+      Socket.s.emit('join', P._id);
     });
 
     /*
@@ -77,7 +77,7 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
    */
   Ov.vent.on('blank:validate', function(word, cb) {
     var vcb = function(valid) { cb(valid); };
-    Socket.s.emit('validate', Poem._id, word, vcb);
+    Socket.s.emit('validate', P._id, word, vcb);
   });
 
   /*
@@ -89,7 +89,7 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('blank:submit', function(words, cb) {
-    Socket.s.emit('submit', Poem._id, words);
+    Socket.s.emit('submit', P._id, words);
   });
 
   /*
@@ -101,7 +101,7 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('points:releaseVote', function(word, quantity) {
-    Socket.s.emit('vote', Poem._id, word, quantity);
+    Socket.s.emit('vote', P._id, word, quantity);
   });
 
 

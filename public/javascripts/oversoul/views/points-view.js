@@ -21,7 +21,7 @@ Ov.Views.Points = Backbone.View.extend({
    * @return void.
    */
   activateSubmit: function() {
-    this.renderValue(Poem.seedCapital);
+    this.renderValue(P.seedCapital);
   },
 
   /*
@@ -93,7 +93,7 @@ Ov.Views.Points = Backbone.View.extend({
    * @return void.
    */
   renderBar: function(quantity) {
-    var percent = (quantity/Poem.seedCapital)*100+'%';
+    var percent = (quantity/P.seedCapital)*100+'%';
     this.bar.css('width', percent);
   },
 

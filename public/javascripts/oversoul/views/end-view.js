@@ -28,7 +28,7 @@ Ov.Views.End = Backbone.View.extend({
    */
   render: function(poem) {
     this.poem.append(poem);
-    this.hash.text(Poem.hash);
+    this.hash.text(P.hash);
     $('body').html('');
     $('body').append(this.container);
   }

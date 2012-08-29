@@ -12,12 +12,23 @@ var helpers = require('../helpers');
 var sinon = require('sinon');
 var io = require('socket.io-client');
 var config = require('yaml-config');
+var mongoose = require('mongoose');
 var _ = require('underscore');
 
-// Models.
+// User model.
+require('../../app/models/user');
 var User = mongoose.model('User');
+
+// Poem model.
+require('../../app/models/poem');
 var Poem = mongoose.model('Poem');
+
+// Round model.
+require('../../app/models/round');
 var Round = mongoose.model('Round');
+
+// Vote model.
+require('../../app/models/vote');
 var Vote = mongoose.model('Vote');
 
 // Load configuration.
@@ -120,6 +131,11 @@ describe('Sockets Controller', function() {
       done();
     });
 
+  });
+
+  // Close connection.
+  after(function() {
+    mongoose.connection.close();
   });
 
   describe('join', function() {

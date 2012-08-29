@@ -3,12 +3,13 @@
  */
 
 // Module dependencies.
+var mongoose = require('mongoose');
 var _ = require('underscore');
 
 // Schema definition.
-var VoteSchema = new Schema({
+var VoteSchema = new mongoose.Schema({
   round : {
-    type: Schema.ObjectId,
+    type: mongoose.Schema.ObjectId,
     ref: 'Round',
     required: true
   },

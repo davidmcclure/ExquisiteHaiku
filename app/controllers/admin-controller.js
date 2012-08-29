@@ -46,7 +46,7 @@ module.exports = function(app, io) {
       // Get poems, sort by date created.
       Poem.find({
         user: req.user.id
-      }).sort('created', -1).execFind(function(err, poems) {
+      }).sort('-created').execFind(function(err, poems) {
 
         // Render the list.
         res.render('admin/index', {

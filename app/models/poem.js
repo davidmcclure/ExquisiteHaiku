@@ -3,9 +3,10 @@
  */
 
 // Module dependencies.
-var _ = require('underscore');
-var syllables = require('../../lib/syllables');
 var randomstring = require('randomstring');
+var syllables = require('../../lib/syllables');
+var mongoose = require('mongoose');
+var _ = require('underscore');
 
 // Round model.
 var round = require('./round');
@@ -16,7 +17,7 @@ var vote = require('./vote');
 var Vote = mongoose.model('Vote');
 
 // Schema definition.
-var PoemSchema = new Schema({
+var PoemSchema = new mongoose.Schema({
   hash : {
     type: String,
     unique: true,
@@ -26,7 +27,7 @@ var PoemSchema = new Schema({
     }
   },
   user : {
-    type: Schema.ObjectId,
+    type: mongoose.Schema.ObjectId,
     ref: 'User',
     required: true
   },

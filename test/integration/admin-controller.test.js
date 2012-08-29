@@ -11,11 +11,19 @@ var request = require('request');
 var async = require('async');
 var config = require('yaml-config');
 var helpers = require('../helpers');
+var mongoose = require('mongoose');
 var _ = require('underscore');
 
-// Models.
+// User model.
+require('../../app/models/user');
 var User = mongoose.model('User');
+
+// Poem model.
+require('../../app/models/poem');
 var Poem = mongoose.model('Poem');
+
+// Round model.
+require('../../app/models/round');
 var Round = mongoose.model('Round');
 
 // Load configuration.
@@ -182,6 +190,11 @@ describe('Admin Controller', function() {
       done();
     });
 
+  });
+
+  // Close connection.
+  after(function() {
+    mongoose.connection.close();
   });
 
   describe('GET /admin', function() {

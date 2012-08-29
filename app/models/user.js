@@ -4,9 +4,10 @@
 
 // Module dependencies.
 var crypto = require('crypto');
+var mongoose = require('mongoose');
 
 // Schema definition.
-var UserSchema = new Schema({
+var UserSchema = new mongoose.Schema({
   username : {
     type: String,
     required: true,

@@ -9,8 +9,10 @@ var assert = require('assert');
 var Browser = require('zombie');
 var helpers = require('../helpers');
 var config = require('yaml-config');
+var mongoose = require('mongoose');
 
-// Models.
+// User model.
+require('../../app/models/user');
 var User = mongoose.model('User');
 
 // Load configuration.
@@ -53,6 +55,11 @@ describe('Register Controller', function() {
     User.collection.remove(function(err) {
       done();
     });
+  });
+
+  // Close connection.
+  after(function() {
+    mongoose.connection.close();
   });
 
   describe('GET /admin/install', function() {

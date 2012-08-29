@@ -3,10 +3,11 @@
  */
 
 // Module dependencies.
+var mongoose = require('mongoose');
 var _ = require('underscore');
 
 // Schema definition.
-var RoundSchema = new Schema({
+var RoundSchema = new mongoose.Schema({
   started : {
     type: Date,
     'default': Date.now,

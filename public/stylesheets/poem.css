@@ -39,3 +39,7 @@ body{font:200 18px "Source Sans Pro";text-rendering:optimizeLegibility;-webkit-u
 .drag-line svg line.negative,.drag-line svg text.negative,.drag-line svg circle.negative{stroke:#cc3f28;fill:#cc3f28}
 .drag-line svg line.blocked,.drag-line svg text.blocked,.drag-line svg circle.blocked{stroke:#b3b3b3;fill:#b3b3b3}
 .drag-line svg circle{opacity:.08}
+.complete-poem .hash{font-size:2.4em;opacity:.5}
+.complete-poem .poem{font-size:3em;}
+.complete-poem .poem .poem-line{margin:0;}
+.complete-poem .poem .poem-line .poem-word{margin-right:10px}

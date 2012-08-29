@@ -50,7 +50,8 @@ Ov.Controllers.Poem = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('state:complete', function() {
-
+    Poem.Blank.activateComplete();
+    Ov.vent.trigger('poem:complete', Poem.Poem.$el);
   });
 
   /*

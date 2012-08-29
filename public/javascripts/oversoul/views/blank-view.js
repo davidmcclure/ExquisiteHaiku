@@ -91,6 +91,16 @@ Ov.Views.Blank = Backbone.View.extend({
   },
 
   /*
+   * Activate complete mode.
+   *
+   * @return void.
+   */
+  activateComplete: function() {
+    this.$el.remove();
+    this.stack.remove();
+  },
+
+  /*
    * Insert the blank at the end of the passed line.
    *
    * @param {Element} line: The line container.

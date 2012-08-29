@@ -25,6 +25,17 @@ Ov.Controllers.End = (function(Backbone, Ov) {
   // Events.
   // -------
 
+  /*
+   * Render the completed poem.
+   *
+   * @param {Element} poem: The poem markup.
+   *
+   * @return void.
+   */
+  Ov.vent.on('poem:complete', function(poem) {
+    End.End.render(poem);
+  });
+
 
   // Export.
   Ov.addInitializer(function() { End.init(); });

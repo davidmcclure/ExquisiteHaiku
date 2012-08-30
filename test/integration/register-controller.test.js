@@ -57,11 +57,6 @@ describe('Register Controller', function() {
     });
   });
 
-  // Close connection.
-  after(function() {
-    mongoose.connection.close();
-  });
-
   describe('GET /admin/install', function() {
 
     it('should render the form when there is not a user session', function(done) {

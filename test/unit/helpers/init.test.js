@@ -15,13 +15,21 @@ var _ = require('underscore');
 process.env.NODE_ENV = 'testing';
 require('../../db-connect');
 
-// Models.
+// User model.
+require('../../../app/models/user');
 var User = mongoose.model('User');
+
+// Poem model.
+require('../../../app/models/poem');
 var Poem = mongoose.model('Poem');
+
+// Vote model.
+require('../../../app/models/vote');
 var Vote = mongoose.model('Vote');
 
 // Init module.
 var init = require('../../../init');
+
 
 /*
  * ----------------

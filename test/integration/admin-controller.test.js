@@ -192,11 +192,6 @@ describe('Admin Controller', function() {
 
   });
 
-  // Close connection.
-  after(function() {
-    mongoose.connection.close();
-  });
-
   describe('GET /admin', function() {
 
     it('should redirect to /admin/poems', function(done) {

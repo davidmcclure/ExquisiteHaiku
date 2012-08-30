@@ -12,3 +12,6 @@ config = configFile.readConfig('config.yaml');
 exports = mongoose = require('mongoose');
 mongoose.connect(config.db.uri);
 exports = Schema = mongoose.Schema;
+
+// In-memory stores.
+global.Oversoul = { timers: {}, votes: {} };

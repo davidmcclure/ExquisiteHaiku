@@ -133,11 +133,6 @@ describe('Sockets Controller', function() {
 
   });
 
-  // Close connection.
-  after(function() {
-    mongoose.connection.close();
-  });
-
   describe('join', function() {
 
     it('should join the socket', function(done) {

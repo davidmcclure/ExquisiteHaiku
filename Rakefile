@@ -14,4 +14,4 @@ end
 desc 'Run benchmark'
 task :benchmark do
   sh %{node test/benchmark/scoring.benchmark.js 100 100}
-end
+nd

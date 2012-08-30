@@ -25,9 +25,6 @@ var Vote = mongoose.model('Vote');
  */
 module.exports = function(app, config, io, cb) {
 
-  // In-memory stores.
-  global.Oversoul = { timers: {}, votes: {} };
-
   // Set application constants.
   app.set('sliceInterval', config.sliceInterval);
   app.set('visibleWords', config.visibleWords);

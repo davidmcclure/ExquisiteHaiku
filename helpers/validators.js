@@ -5,8 +5,12 @@
 // Module dependencies.
 var _ = require('underscore');
 
-// Models.
+// User model.
+require('../app/models/user');
 var User = mongoose.model('User');
+
+// Poem model.
+require('../app/models/poem');
 var Poem = mongoose.model('Poem');
 
 

@@ -54,56 +54,55 @@ page.onConsoleMessage = function(msg) {
 };
 
 // Run the suite.
-page.open(system.args[1], function(status) {
+setInterval(function() {
 
-  if (status !== 'success') {
-    console.log('Unable to open tests.');
-    phantom.exit();
-  }
+  page.open(system.args[1], function(status) {
 
-  else {
+    if (status == 'success') {
 
-    console.log('\nRunning Jasmine suite:');
-    waitFor(function() {
-      return page.evaluate(function() {
-        if ($('.passingAlert') || $('.failingAlert'))
-          return true;
-        return false;
-      });
-    }, function() {
-      page.evaluate(function() {
-
-        // Build dots.
-        var symbols = '';
-        $('ul.symbolSummary li').each(function(i, li) {
-          if ($(li).hasClass('passed')) symbols+='.';
-          else if ($(li).hasClass('failed')) symbols+='x';
+      console.log('\nRunning Jasmine suite:');
+      waitFor(function() {
+        return page.evaluate(function() {
+          if ($('.passingAlert') || $('.failingAlert'))
+            return true;
+          return false;
         });
-        console.log(symbols);
+      }, function() {
+        page.evaluate(function() {
 
-        // If passing.
-        var passingAlert = $('.passingAlert');
-        if (passingAlert.length) {
-          console.log(passingAlert.text()+'\n');
-        }
-
-        // Failing.
-        else {
-          console.log($('.failingAlert').text()+'\n');
-
-          // Get failing specs.
-          var failing = $('.specDetail.failed');
-          failing.each(function(i, spec) {
-            console.log($(spec).find('.description').text());
-            console.log($(spec).find('.resultMessage').text()+'\n');
+          // Build dots.
+          var symbols = '';
+          $('ul.symbolSummary li').each(function(i, li) {
+            if ($(li).hasClass('passed')) symbols+='.';
+            else if ($(li).hasClass('failed')) symbols+='x';
           });
+          console.log(symbols);
 
-        }
+          // If passing.
+          var passingAlert = $('.passingAlert');
+          if (passingAlert.length) {
+            console.log(passingAlert.text()+'\n');
+          }
 
-      });
-      phantom.exit();
-    }, 3000);
+          // Failing.
+          else {
+            console.log($('.failingAlert').text()+'\n');
 
-  }
+            // Get failing specs.
+            var failing = $('.specDetail.failed');
+            failing.each(function(i, spec) {
+              console.log($(spec).find('.description').text());
+              console.log($(spec).find('.resultMessage').text()+'\n');
+            });
 
-});
+          }
+
+        });
+        phantom.exit();
+      }, 5000);
+
+    }
+
+  });
+
+}, 100);

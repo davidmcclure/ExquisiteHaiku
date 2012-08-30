@@ -12,9 +12,6 @@ var _ = require('underscore');
 // Models.
 var Poem = mongoose.model('Poem');
 
-// Reserved slugs.
-var _slugs = require('./_slugs');
-
 
 /*
  * -----------

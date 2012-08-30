@@ -162,10 +162,6 @@ describe('Init', function() {
 
   });
 
-  it('should shell out "votes" and "timers" objects', function() {
-    global.Oversoul.should.have.keys('votes', 'timers');
-  });
-
   it('should set configuration options', function() {
     sinon.assert.calledWith(app.set, 'sliceInterval', 300);  
     sinon.assert.calledWith(app.set, 'visibleWords', 100);  

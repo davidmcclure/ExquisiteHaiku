@@ -7,11 +7,12 @@ end
 
 desc 'Run the test suites'
 task :test do
-  sh %{mocha test/**/**/*.test.js test/**/*.test.js}
+  # sh %{mocha test/**/**/*.test.js test/**/*.test.js}
+  sh %{mocha test/integration/*.test.js}
   Rake::Task['benchmark'].execute
 end
 
 desc 'Run benchmark'
 task :benchmark do
   sh %{node test/benchmark/scoring.benchmark.js 100 100}
-nd
+end

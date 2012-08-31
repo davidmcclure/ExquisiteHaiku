@@ -9,4 +9,4 @@ before_script:
   - "sh -e /etc/init.d/xvfb start"
 
 script:
-  - "rake test:travis"
+  - "rake test:all"

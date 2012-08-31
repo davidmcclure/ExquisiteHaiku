@@ -2,33 +2,7 @@
  * Unit tests for vote model.
  */
 
-// Module dependencies.
-var mocha = require('mocha');
-var should = require('should');
-var async = require('async');
-var assert = require('assert');
-var sinon = require('sinon');
-var helpers = require('../../helpers');
-
-// Boostrap the application.
-process.env.NODE_ENV = 'testing';
-require('../../db-connect');
-
-// Round model.
-require('../../../app/models/round');
-var Round = mongoose.model('Round');
-
-// Vote model.
-require('../../../app/models/vote');
-var Vote = mongoose.model('Vote');
-
-
-/*
- * ----------------------
- * Vote model unit tests.
- * ----------------------
- */
-
+require('../../dependencies');
 
 describe('Vote', function() {
 
@@ -142,7 +116,7 @@ describe('Vote', function() {
     describe('id', function() {
 
       it('should have a virtual field for "id"', function() {
-        should.exist(round.id);
+        assert.exist(round.id);
       });
 
       it('should be a string', function() {

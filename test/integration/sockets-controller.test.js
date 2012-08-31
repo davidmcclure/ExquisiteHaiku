@@ -2,48 +2,7 @@
  * Integration tests for sockets controller.
  */
 
-// Module dependencies.
-var mocha = require('mocha');
-var should = require('should');
-var assert = require('assert');
-var Browser = require('zombie');
-var async = require('async');
-var helpers = require('../helpers');
-var sinon = require('sinon');
-var io = require('socket.io-client');
-var config = require('yaml-config');
-var mongoose = require('mongoose');
-var _ = require('underscore');
-
-// User model.
-require('../../app/models/user');
-var User = mongoose.model('User');
-
-// Poem model.
-require('../../app/models/poem');
-var Poem = mongoose.model('Poem');
-
-// Round model.
-require('../../app/models/round');
-var Round = mongoose.model('Round');
-
-// Vote model.
-require('../../app/models/vote');
-var Vote = mongoose.model('Vote');
-
-// Load configuration.
-var root = config.readConfig('test/config.yaml').root;
-
-// Bootstrap the application.
-process.env.NODE_ENV = 'testing';
-var server = require('../../app');
-
-/*
- * -------------------------------------
- * Sockets controller integration tests.
- * -------------------------------------
- */
-
+require('../dependencies');
 
 describe('Sockets Controller', function() {
 
@@ -89,15 +48,15 @@ describe('Sockets Controller', function() {
     };
 
     // Connect client1.
-    client1 = io.connect(root, options);
+    client1 = ioClient.connect(root, options);
     client1.emit('join', poem1.id);
 
     // Connect client2.
-    client2 = io.connect(root, options);
+    client2 = ioClient.connect(root, options);
     client2.emit('join', poem1.id);
 
     // Connect client3.
-    client3 = io.connect(root, options);
+    client3 = ioClient.connect(root, options);
     client3.emit('join', poem2.id);
 
     // Create rounds on poems.

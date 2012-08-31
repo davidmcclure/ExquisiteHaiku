@@ -2,33 +2,7 @@
  * Integration tests for auth controller.
  */
 
-// Module dependencies.
-var mocha = require('mocha');
-var should = require('should');
-var assert = require('assert');
-var Browser = require('zombie');
-var helpers = require('../helpers');
-var config = require('yaml-config');
-var mongoose = require('mongoose');
-
-// User model.
-require('../../app/models/user');
-var User = mongoose.model('User');
-
-// Load configuration.
-var root = config.readConfig('test/config.yaml').root;
-
-// Bootstrap the application.
-process.env.NODE_ENV = 'testing';
-var server = require('../../app');
-
-
-/*
- * ----------------------------------
- * Auth controller integration tests.
- * ----------------------------------
- */
-
+require('../dependencies');
 
 describe('Auth Controller', function() {
 

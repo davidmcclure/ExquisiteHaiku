@@ -6,6 +6,7 @@
 var _ = require('underscore');
 
 // Poem model.
+require('../models/poem');
 var Poem = mongoose.model('Poem');
 
 

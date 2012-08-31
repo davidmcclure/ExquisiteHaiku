@@ -2,41 +2,7 @@
  * Unit tests for application startup.
  */
 
-// Module dependencies.
-var mocha = require('mocha');
-var should = require('should');
-var async = require('async');
-var assert = require('assert');
-var sinon = require('sinon');
-var helpers = require('../../helpers');
-var _ = require('underscore');
-
-// Boostrap the application.
-process.env.NODE_ENV = 'testing';
-require('../../db-connect');
-
-// User model.
-require('../../../app/models/user');
-var User = mongoose.model('User');
-
-// Poem model.
-require('../../../app/models/poem');
-var Poem = mongoose.model('Poem');
-
-// Vote model.
-require('../../../app/models/vote');
-var Vote = mongoose.model('Vote');
-
-// Init module.
-var init = require('../../../init');
-
-
-/*
- * ----------------
- * Init unit tests.
- * ----------------
- */
-
+require('../../dependencies');
 
 describe('Init', function() {
 
@@ -170,7 +136,7 @@ describe('Init', function() {
   it('should start running poems', function() {
 
     // Check for round registraton.
-    global.Oversoul.votes.should.have.keys(running.round.id);
+    assert.exist(global.Oversoul.votes[running.round.id]);
 
     // Check for vote registrations.
     global.Oversoul.votes[running.round.id].should.have.keys('word1', 'word2');

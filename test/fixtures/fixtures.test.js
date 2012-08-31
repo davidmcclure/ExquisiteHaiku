@@ -2,25 +2,7 @@
  * Fixture generator for front-end test suite.
  */
 
-// Module dependencies.
-var fs = require('fs');
-var jade = require('jade');
-
-// User model.
-require('../../app/models/user');
-var User = mongoose.model('User');
-
-// Poem model.
-require('../../app/models/poem');
-var Poem = mongoose.model('Poem');
-
-
-/*
- * ----------------
- * Render fixtures.
- * ----------------
- */
-
+require('../dependencies');
 
 describe('Fixtures', function() {
 

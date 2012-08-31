@@ -2,25 +2,7 @@
  * Unit tests for user model.
  */
 
-// Module dependencies.
-var mocha = require('mocha');
-var should = require('should');
-
-// Boostrap the application.
-process.env.NODE_ENV = 'testing';
-require('../../db-connect');
-
-// User model.
-require('../../../app/models/user');
-var User = mongoose.model('User');
-
-
-/*
- * ----------------------
- * User model unit tests.
- * ----------------------
- */
-
+require('../../dependencies');
 
 describe('User', function() {
 
@@ -150,7 +132,7 @@ describe('User', function() {
     });
 
     it('should have a virtual field for "id"', function() {
-      should.exist(user.id);
+      assert.exist(user.id);
     });
 
     it('should be a string', function() {

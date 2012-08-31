@@ -2,44 +2,7 @@
  * Integration tests for admin controller.
  */
 
-// Module dependencies.
-var mocha = require('mocha');
-var should = require('should');
-var assert = require('assert');
-var Browser = require('zombie');
-var request = require('request');
-var async = require('async');
-var config = require('yaml-config');
-var helpers = require('../helpers');
-var mongoose = require('mongoose');
-var _ = require('underscore');
-
-// User model.
-require('../../app/models/user');
-var User = mongoose.model('User');
-
-// Poem model.
-require('../../app/models/poem');
-var Poem = mongoose.model('Poem');
-
-// Round model.
-require('../../app/models/round');
-var Round = mongoose.model('Round');
-
-// Load configuration.
-var root = config.readConfig('test/config.yaml').root;
-
-// Bootstrap the application.
-process.env.NODE_ENV = 'testing';
-var server = require('../../app');
-
-
-/*
- * ----------------------------------
- * Admin controller integration tests.
- * ----------------------------------
- */
-
+require('../dependencies');
 
 describe('Admin Controller', function() {
 
@@ -679,7 +642,7 @@ describe('Admin Controller', function() {
 
           // Check for new round.
           unstarted.rounds.length.should.eql(1);
-          should.exist(unstarted.round);
+          assert.exist(unstarted.round);
           done();
 
         });

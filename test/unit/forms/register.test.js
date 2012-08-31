@@ -2,30 +2,7 @@
  * Unit tests for registration form.
  */
 
-// Module dependencies.
-var mocha = require('mocha');
-var should = require('should');
-var assert = require('assert');
-var sinon = require('sinon');
-
-// Boostrap the application.
-process.env.NODE_ENV = 'testing';
-require('../../db-connect');
-
-// User model.
-require('../../../app/models/user');
-var User = mongoose.model('User');
-
-// Register form.
-var registerForm = require('../../../helpers/forms/register');
-
-
-/*
- * -------------------------
- * Register form unit tests.
- * -------------------------
- */
-
+require('../../dependencies');
 
 describe('Install Form', function() {
 

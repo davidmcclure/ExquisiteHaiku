@@ -2,42 +2,7 @@
  * Unit tests for poem model.
  */
 
-// Module dependencies.
-var mocha = require('mocha');
-var should = require('should');
-var async = require('async');
-var assert = require('assert');
-var sinon = require('sinon');
-var helpers = require('../../helpers');
-var _ = require('underscore');
-
-// Boostrap the application.
-process.env.NODE_ENV = 'testing';
-require('../../db-connect');
-
-// User model.
-require('../../../app/models/user');
-var User = mongoose.model('User');
-
-// Poem model.
-require('../../../app/models/poem');
-var Poem = mongoose.model('Poem');
-
-// Round model.
-require('../../../app/models/round');
-var Round = mongoose.model('Round');
-
-// Vote model.
-require('../../../app/models/vote');
-var Vote = mongoose.model('Vote');
-
-
-/*
- * ----------------------
- * Poem model unit tests.
- * ----------------------
- */
-
+require('../../dependencies');
 
 describe('Poem', function() {
 
@@ -267,7 +232,7 @@ describe('Poem', function() {
     describe('id', function() {
 
       it('should have a virtual field for "id"', function() {
-        should.exist(poem.id);
+        assert.exist(poem.id);
       });
 
       it('should be a string', function() {
@@ -279,7 +244,7 @@ describe('Poem', function() {
     describe('unstarted', function() {
 
       it('should have a virtual field for "unstarted"', function() {
-        should.exist(poem.unstarted);
+        assert.exist(poem.unstarted);
       });
 
       it('should be true when started=false', function() {
@@ -297,7 +262,7 @@ describe('Poem', function() {
     describe('paused', function() {
 
       it('should have a virtual field for "paused"', function() {
-        should.exist(poem.paused);
+        assert.exist(poem.paused);
       });
 
       it('should be false when the poem is running', function() {
@@ -334,7 +299,7 @@ describe('Poem', function() {
       });
 
       it('should return null when a round does not exist', function() {
-        should.not.exist(poem.round);
+        assert.not.exist(poem.round);
       });
 
     });
@@ -763,16 +728,16 @@ describe('Poem', function() {
 
         // Check for well-formed round.
         poem.rounds.length.should.eql(1);
-        should.exist(poem.rounds[0].id);
-        should.exist(poem.rounds[0].started);
+        assert.exist(poem.rounds[0].id);
+        assert.exist(poem.rounds[0].started);
 
         // Add a second round.
         poem.newRound();
 
         // Check for well-formed round.
         poem.rounds.length.should.eql(2);
-        should.exist(poem.rounds[1].id);
-        should.exist(poem.rounds[1].started);
+        assert.exist(poem.rounds[1].id);
+        assert.exist(poem.rounds[1].started);
 
       });
 
@@ -782,8 +747,8 @@ describe('Poem', function() {
         var round = poem.newRound();
 
         // Check for well-formed round.
-        should.exist(round.id);
-        should.exist(round.started);
+        assert.exist(round.id);
+        assert.exist(round.started);
 
       });
 

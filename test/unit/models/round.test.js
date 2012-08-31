@@ -2,28 +2,7 @@
  * Unit tests for round model.
  */
 
-// Module dependencies.
-var mocha = require('mocha');
-var should = require('should');
-var async = require('async');
-var assert = require('assert');
-var sinon = require('sinon');
-
-// Boostrap the application.
-process.env.NODE_ENV = 'testing';
-require('../../db-connect');
-
-// Round model.
-require('../../../app/models/round');
-var Round = mongoose.model('Round');
-
-
-/*
- * -----------------------
- * Round model unit tests.
- * -----------------------
- */
-
+require('../../dependencies');
 
 describe('Round', function() {
 
@@ -73,7 +52,7 @@ describe('Round', function() {
     describe('id', function() {
 
       it('should have a virtual field for "id"', function() {
-        should.exist(round.id);
+        assert.exist(round.id);
       });
 
       it('should be a string', function() {

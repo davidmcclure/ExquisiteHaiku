@@ -2,36 +2,7 @@
  * Unit tests for poem form.
  */
 
-// Module dependencies.
-var mocha = require('mocha');
-var should = require('should');
-var async = require('async');
-var assert = require('assert');
-var sinon = require('sinon');
-var helpers = require('../../helpers');
-
-// Boostrap the application.
-process.env.NODE_ENV = 'testing';
-require('../../db-connect');
-
-// User model.
-require('../../../app/models/user');
-var User = mongoose.model('User');
-
-// Poem model.
-require('../../../app/models/poem');
-var Poem = mongoose.model('Poem');
-
-// Poem form.
-var poemForm = require('../../../helpers/forms/poem');
-
-
-/*
- * ---------------------
- * Poem form unit tests.
- * ---------------------
- */
-
+require('../../dependencies');
 
 describe('Poem Form', function() {
 

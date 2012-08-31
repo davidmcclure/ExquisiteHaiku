@@ -2,44 +2,7 @@
  * Unit tests for scoring routine.
  */
 
-// Module dependencies.
-var mocha = require('mocha');
-var should = require('should');
-var async = require('async');
-var assert = require('assert');
-var sinon = require('sinon');
-var helpers = require('../../helpers');
-var _ = require('underscore');
-
-// Boostrap the application.
-process.env.NODE_ENV = 'testing';
-require('../../db-connect');
-
-// User model.
-require('../../../app/models/user');
-var User = mongoose.model('User');
-
-// Poem model.
-require('../../../app/models/poem');
-var Poem = mongoose.model('Poem');
-
-// Round model.
-require('../../../app/models/round');
-var Round = mongoose.model('Round');
-
-// Vote model.
-require('../../../app/models/vote');
-var Vote = mongoose.model('Vote');
-
-// Scoring module.
-var scoring = require('../../../app/scoring/scoring');
-
-/*
- * ---------------------------
- * Scoring routine unit tests.
- * ---------------------------
- */
-
+require('../../dependencies');
 
 describe('Scoring', function() {
 
@@ -271,7 +234,7 @@ describe('Scoring', function() {
             // Check order.
             result.stack[0][0].should.eql('third');
             result.stack[1][0].should.eql('second');
-            should.not.exist(result.stack[2]);
+            assert.not.exist(result.stack[2]);
 
             // Check ratios.
             result.stack[0][4].should.eql('1.00');
@@ -429,7 +392,7 @@ describe('Scoring', function() {
               // Check for poem.
               result.poem[0][0].valueOf().should.eql('it');
               result.poem[0][1].valueOf().should.eql('is');
-              should.not.exist(result.poem[2]);
+              assert.not.exist(result.poem[2]);
               done();
 
             }, function() {});

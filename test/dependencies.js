@@ -58,6 +58,9 @@ auth = require('../helpers/middleware');
 // Validators.
 validators = require('../helpers/validators');
 
+// Scoring module.
+scoring = require('../app/scoring/scoring');
+
 
 // Config
 // ------

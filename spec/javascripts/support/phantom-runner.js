@@ -58,7 +58,7 @@ page.onConsoleMessage = function(msg) {
 // Run the Jasmine suite.
 page.open(system.args[1], function(status) {
 
-  console.log('\nRunning Jasmine suite:');
+  console.log('\nJasmine:');
   waitFor(function() {
     return page.evaluate(function() {
       if ($('.passingAlert') || $('.failingAlert'))
@@ -94,8 +94,6 @@ page.open(system.args[1], function(status) {
         });
 
       }
-
-      console.log('done');
 
     });
     phantom.exit();

@@ -21,17 +21,14 @@ namespace :test do
 
   desc 'Run the Jasmine suite'
   task :client do
-    puts 'starting jasmine...'
     PTY.spawn('rake jasmine JASMINE_PORT=1337') do |stdin, stdout, pid|
       stdin.each do |line|
         if line.include?('CTRL+C to stop')
           PTY.spawn('phantomjs spec/javascripts/support/phantom-runner.js http://localhost:1337') do |stdin, stdout, pid|
             stdin.each do |line|
               print line
-              if line.include?('done')
-                exit
-              end
             end
+            Process.wait(pid)
           end
         end
       end

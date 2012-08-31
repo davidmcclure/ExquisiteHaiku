@@ -1,2 +1,2 @@
 source :rubygems
-gem 'jasmine', '1.2.1'
+gem 'jasmine'

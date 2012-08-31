@@ -1,6 +1,5 @@
-task :default => 'test'
-
 begin
+  require 'pty'
   require 'jasmine'
   load 'jasmine/tasks/jasmine.rake'
 end
@@ -12,17 +11,22 @@ namespace :test do
     sh %{mocha test/**/**/*.test.js test/**/*.test.js}
   end
 
-  desc 'Run the browser suite'
-  multitask :client => ['test:jasmine', 'test:phantom']
-
-  desc 'Run the Jasmine server'
-  task :jasmine do
-    sh %{rake jasmine JASMINE_PORT=1337}
-  end
-
-  desc 'Run the Phantom collector'
-  task :phantom do
-    sh %{phantomjs spec/javascripts/support/phantom-runner.js http://localhost:1337}
+  desc 'Run the Jasmine suite'
+  task :client do
+    @shell = PTY.spawn('rake jasmine JASMINE_PORT=1337') do |stdin, stdout, pid|
+      stdin.each do |line|
+        if line.include?('CTRL+C to stop')
+          PTY.spawn('phantomjs spec/javascripts/support/phantom-runner.js http://localhost:1337') do |stdin, stdout, pid|
+            stdin.each do |line|
+              print line
+              if line.include?('done')
+                exit
+              end
+            end
+          end
+        end
+      end
+    end
   end
 
 end

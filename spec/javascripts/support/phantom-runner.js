@@ -1,4 +1,9 @@
+/*
+ * Application runner.
+ */
+
 var system = require('system');
+
 
 /**
  * Poll for a condition on the page.
@@ -41,11 +46,8 @@ function waitFor(testFx, onReady, timeOut) {
 
 }
 
-if (system.args.length !== 2) {
-  console.log('Usage: phantom-runner.js {URL}');
-  phantom.exit(1);
-}
 
+// Create the page.
 var page = require('webpage').create();
 
 // Pipe page console logs to terminal.
@@ -53,56 +55,50 @@ page.onConsoleMessage = function(msg) {
   console.log(msg);
 };
 
-// Run the suite.
-setInterval(function() {
+// Run the Jasmine suite.
+page.open(system.args[1], function(status) {
 
-  page.open(system.args[1], function(status) {
+  console.log('\nRunning Jasmine suite:');
+  waitFor(function() {
+    return page.evaluate(function() {
+      if ($('.passingAlert') || $('.failingAlert'))
+        return true;
+      return false;
+    });
+  }, function() {
+    page.evaluate(function() {
 
-    if (status == 'success') {
+      // Build dots.
+      var symbols = '';
+      $('ul.symbolSummary li').each(function(i, li) {
+        if ($(li).hasClass('passed')) symbols+='.';
+        else if ($(li).hasClass('failed')) symbols+='x';
+      });
+      console.log(symbols);
 
-      console.log('\nRunning Jasmine suite:');
-      waitFor(function() {
-        return page.evaluate(function() {
-          if ($('.passingAlert') || $('.failingAlert'))
-            return true;
-          return false;
+      // If passing.
+      var passingAlert = $('.passingAlert');
+      if (passingAlert.length) {
+        console.log(passingAlert.text()+'\n');
+      }
+
+      // Failing.
+      else {
+        console.log($('.failingAlert').text()+'\n');
+
+        // Get failing specs.
+        var failing = $('.specDetail.failed');
+        failing.each(function(i, spec) {
+          console.log($(spec).find('.description').text());
+          console.log($(spec).find('.resultMessage').text()+'\n');
         });
-      }, function() {
-        page.evaluate(function() {
 
-          // Build dots.
-          var symbols = '';
-          $('ul.symbolSummary li').each(function(i, li) {
-            if ($(li).hasClass('passed')) symbols+='.';
-            else if ($(li).hasClass('failed')) symbols+='x';
-          });
-          console.log(symbols);
+      }
 
-          // If passing.
-          var passingAlert = $('.passingAlert');
-          if (passingAlert.length) {
-            console.log(passingAlert.text()+'\n');
-          }
+      console.log('done');
 
-          // Failing.
-          else {
-            console.log($('.failingAlert').text()+'\n');
+    });
+    phantom.exit();
+  }, 5000);
 
-            // Get failing specs.
-            var failing = $('.specDetail.failed');
-            failing.each(function(i, spec) {
-              console.log($(spec).find('.description').text());
-              console.log($(spec).find('.resultMessage').text()+'\n');
-            });
-
-          }
-
-        });
-        phantom.exit();
-      }, 5000);
-
-    }
-
-  });
-
-}, 100);
+});

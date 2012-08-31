@@ -14,6 +14,12 @@ namespace :test do
     Rake::Task['test:client'].invoke
   end
 
+  desc 'Run travis tests'
+  task :travis do
+    Rake::Task['test:server'].invoke
+    Rake::Task['jasmine:ci'].invoke
+  end
+
   desc 'Run the server suite'
   task :server do
     sh %{mocha test/**/**/*.test.js test/**/*.test.js}

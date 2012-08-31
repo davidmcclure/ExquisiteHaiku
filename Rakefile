@@ -21,6 +21,7 @@ namespace :test do
 
   desc 'Run the Jasmine suite'
   task :client do
+    puts 'starting jasmine...'
     PTY.spawn('rake jasmine JASMINE_PORT=1337') do |stdin, stdout, pid|
       stdin.each do |line|
         if line.include?('CTRL+C to stop')

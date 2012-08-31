@@ -4,6 +4,8 @@ begin
   load 'jasmine/tasks/jasmine.rake'
 end
 
+task :default => 'test:client'
+
 namespace :test do
 
   desc 'Run the server suite'

@@ -1,8 +1,11 @@
 @import url("http://fonts.googleapis.com/css?family=Source+Sans+Pro:200");
-body{font:200 18px "Source Sans Pro";text-rendering:optimizeLegibility;-webkit-user-select:none;-moz-user-select:none;margin:2em}
+body{font:200 18px "Source Sans Pro";text-rendering:optimizeLegibility;-webkit-user-select:none;-moz-user-select:none;margin:.5em}
 .logo-block{margin-top:7em;}
 .logo-block h1.logo{margin-top:5px;}
 .logo-block h1.logo a:hover{text-decoration:none}
 .logo-block button.new-poem{font-size:28px;font-family:inherit;margin-top:5px}
-.logo-block a.nav{margin-right:.5em;opacity:.95}
+.logo-block a.nav{margin-right:.5em;font-size:13px}
 .logo-block p.free{margin:3px 0 0 15px}
+.secondary-nav{white-space:nowrap;}
+.secondary-nav a,.secondary-nav span{font-size:13px;margin-right:1em;color:#808080}
+.secondary-nav span{opacity:.8}

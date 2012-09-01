@@ -1,7 +1,8 @@
 @import url("http://fonts.googleapis.com/css?family=Source+Sans+Pro:200");
 body{font:200 18px "Source Sans Pro";text-rendering:optimizeLegibility;-webkit-user-select:none;-moz-user-select:none;margin:2em}
 .logo-block{margin-top:7em;}
-.logo-block h1.logo{margin-top:5px}
+.logo-block h1.logo{margin-top:5px;}
+.logo-block h1.logo a:hover{text-decoration:none}
 .logo-block button.new-poem{font-size:28px;font-family:inherit;margin-top:5px}
 .logo-block a.nav{margin-right:.5em;opacity:.95}
 .logo-block p.free{margin:3px 0 0 15px}

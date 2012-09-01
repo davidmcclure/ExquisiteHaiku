@@ -36,7 +36,7 @@ describe('Auth Controller', function() {
 
     it('should render the form when there is not a user session', function(done) {
 
-      // Hit the install route.
+      // GET admin/register.
       browser.visit(root+'admin/register', function() {
 
         // Check for form and fields.
@@ -84,7 +84,7 @@ describe('Auth Controller', function() {
 
       it('should flash error for no username', function(done) {
 
-        // GET admin/install.
+        // GET admin/register.
         browser.visit(root+'admin/register', function() {
 
           // Fill in form.

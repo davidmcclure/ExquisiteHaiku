@@ -77,6 +77,7 @@ Ov.Views.Points = Backbone.View.extend({
     this.renderBar(this.preview);
 
     // Insufficient funds.
+    console.log(this.preview);
     if (this.preview < 0) {
       this.$el.removeClass('preview');
       this.$el.addClass('negative');

@@ -3,7 +3,7 @@ body{font:200 18px "Source Sans Pro";text-rendering:optimizeLegibility;-webkit-u
 .logo-block{margin-top:7em;}
 .logo-block h1.logo{margin-top:5px;}
 .logo-block h1.logo a:hover{text-decoration:none}
-.logo-block button.new-poem{font-size:28px;font-family:inherit;margin-top:5px}
+.logo-block button.new-poem{font-size:28px;margin-top:5px}
 .logo-block a.nav{margin-right:.5em;font-size:13px}
 .logo-block p.free{margin:3px 0 0 15px}
 .secondary-nav{white-space:nowrap;}

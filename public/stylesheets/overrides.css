@@ -1,1 +1,3 @@
-.btn{border:0;border-radius:2px}
+.btn{border:0;border-radius:2px;font-family:inherit}
+input,textarea{box-shadow:none;border-radius:1px;font-family:inherit}
+.help-inline{font-size:13px}

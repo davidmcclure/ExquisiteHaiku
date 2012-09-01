@@ -2,7 +2,42 @@
  * Integration tests for auth controller.
  */
 
-require('../dependencies');
+// Modules
+// -------
+var mocha = require('mocha');
+var should = require('should');
+var assert = require('assert');
+var Browser = require('zombie');
+var async = require('async');
+var config = require('yaml-config');
+var mongoose = require('mongoose');
+var helpers = require('../helpers');
+var _ = require('underscore');
+
+
+// Models
+// ------
+
+// User.
+require('../../app/models/user');
+var User = mongoose.model('User');
+
+
+// Config
+// ------
+
+var root = config.readConfig('test/config.yaml').root;
+
+
+// Run
+// ---
+
+process.env.NODE_ENV = 'testing';
+var server = require('../../app');
+
+
+// Specs
+// -----
 
 describe('Auth Controller', function() {
 

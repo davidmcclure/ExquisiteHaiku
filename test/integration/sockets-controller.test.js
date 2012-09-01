@@ -2,7 +2,56 @@
  * Integration tests for sockets controller.
  */
 
-require('../dependencies');
+// Modules
+// -------
+var mocha = require('mocha');
+var should = require('should');
+var assert = require('assert');
+var Browser = require('zombie');
+var async = require('async');
+var config = require('yaml-config');
+var mongoose = require('mongoose');
+var helpers = require('../helpers');
+var ioClient = require('socket.io-client');
+var sinon = require('sinon');
+var _ = require('underscore');
+
+
+// Models
+// ------
+
+// User.
+require('../../app/models/user');
+var User = mongoose.model('User');
+
+// Poem.
+require('../../app/models/poem');
+var Poem = mongoose.model('Poem');
+
+// Round.
+require('../../app/models/round');
+var Round = mongoose.model('Round');
+
+// Vote.
+require('../../app/models/vote');
+var Vote = mongoose.model('Vote');
+
+
+// Config
+// ------
+
+var root = config.readConfig('test/config.yaml').root;
+
+
+// Run
+// ---
+
+process.env.NODE_ENV = 'testing';
+var server = require('../../app');
+
+
+// Specs
+// -----
 
 describe('Sockets Controller', function() {
 

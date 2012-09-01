@@ -3,6 +3,7 @@
  */
 
 // Module dependencies.
+var mongoose = require('mongoose');
 var _ = require('underscore');
 
 // Poem model.

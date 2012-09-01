@@ -2,6 +2,9 @@
  * Authentication middleware.
  */
 
+// Module dependencies.
+var mongoose = require('mongoose');
+
 // Models.
 var User = mongoose.model('User');
 var Poem = mongoose.model('Poem');

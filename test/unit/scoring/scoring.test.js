@@ -2,7 +2,61 @@
  * Unit tests for scoring routine.
  */
 
-require('../../dependencies');
+// Modules
+// -------
+var mocha = require('mocha');
+var should = require('should');
+var assert = require('assert');
+var async = require('async');
+var sinon = require('sinon');
+var config = require('yaml-config');
+var mongoose = require('mongoose');
+var helpers = require('../../helpers');
+var _ = require('underscore');
+
+
+// Models
+// ------
+
+// User.
+require('../../../app/models/user');
+var User = mongoose.model('User');
+
+// Poem.
+require('../../../app/models/poem');
+var Poem = mongoose.model('Poem');
+
+// Round.
+require('../../../app/models/round');
+var Round = mongoose.model('Round');
+
+// Vote.
+require('../../../app/models/vote');
+var Vote = mongoose.model('Vote');
+
+
+// Config
+// ------
+
+// Scoring module.
+var scoring = require('../../../app/scoring/scoring');
+
+
+// Config
+// ------
+
+var root = config.readConfig('test/config.yaml').root;
+
+
+// Run
+// ---
+
+process.env.NODE_ENV = 'testing';
+var server = require('../../../app');
+
+
+// Specs
+// -----
 
 describe('Scoring', function() {
 

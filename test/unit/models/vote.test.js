@@ -2,7 +2,46 @@
  * Unit tests for vote model.
  */
 
-require('../../dependencies');
+// Modules
+// -------
+var mocha = require('mocha');
+var should = require('should');
+var assert = require('assert');
+var async = require('async');
+var sinon = require('sinon');
+var config = require('yaml-config');
+var mongoose = require('mongoose');
+var helpers = require('../../helpers');
+var _ = require('underscore');
+
+
+// Models
+// ------
+
+// Round.
+require('../../../app/models/round');
+var Round = mongoose.model('Round');
+
+// Vote.
+require('../../../app/models/vote');
+var Vote = mongoose.model('Vote');
+
+
+// Config
+// ------
+
+var root = config.readConfig('test/config.yaml').root;
+
+
+// Run
+// ---
+
+process.env.NODE_ENV = 'testing';
+var server = require('../../../app');
+
+
+// Specs
+// -----
 
 describe('Vote', function() {
 

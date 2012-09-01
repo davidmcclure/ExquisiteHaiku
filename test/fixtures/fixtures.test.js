@@ -2,7 +2,29 @@
  * Fixture generator for front-end test suite.
  */
 
-require('../dependencies');
+// Modules
+// -------
+var mocha = require('mocha');
+var config = require('yaml-config');
+var fs = require('fs');
+var jade = require('jade');
+
+
+// Config
+// ------
+
+var root = config.readConfig('test/config.yaml').root;
+
+
+// Run
+// ---
+
+process.env.NODE_ENV = 'testing';
+var server = require('../../app');
+
+
+// Specs
+// -----
 
 describe('Fixtures', function() {
 

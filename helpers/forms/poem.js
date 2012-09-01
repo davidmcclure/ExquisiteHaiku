@@ -4,6 +4,7 @@
 
  // Module dependencies.
 var forms = require('forms');
+var mongoose = require('mongoose');
 var fields = forms.fields;
 var validators = forms.validators;
 var customValidators = require('../validators');

@@ -19,6 +19,11 @@ namespace :test do
     sh %{mocha test/**/**/*.test.js test/**/*.test.js}
   end
 
+  desc 'Run the Jasmine server'
+  task :jasmine do
+    sh %{rake jasmine JASMINE_PORT=1337}
+  end
+
 end
 
 namespace :bench do

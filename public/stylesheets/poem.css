@@ -1,5 +1,5 @@
 @import url("http://fonts.googleapis.com/css?family=Source+Sans+Pro:200");
-body{font:200 18px "Source Sans Pro";text-rendering:optimizeLegibility;-webkit-user-select:none;-moz-user-select:none;font-weight:300;margin:2em}
+body{font:200 18px "Source Sans Pro";text-rendering:optimizeLegibility;-webkit-user-select:none;-moz-user-select:none;margin:2em}
 .positive{color:#288bcc}
 .negative{color:#cc3f28}
 .main{margin-left:260px}

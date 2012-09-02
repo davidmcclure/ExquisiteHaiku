@@ -32,8 +32,9 @@ module.exports = function(app) {
 
       // Render form.
       res.render('auth/register', {
-        title:  'Register',
-        form:   registerForm.form()
+        title: 'Register',
+        form: registerForm.form(),
+        menu: 'register'
       });
 
   });
@@ -72,8 +73,9 @@ module.exports = function(app) {
 
           // Re-render form.
           res.render('auth/register', {
-            title:  'Register',
-            form:   form
+            title: 'Register',
+            form: form,
+            menu: 'register'
           });
 
         }
@@ -93,8 +95,9 @@ module.exports = function(app) {
 
       // Render form.
       res.render('auth/login', {
-        title:  'Login',
-        form:   loginForm.form()
+        title: 'Login',
+        form: loginForm.form(),
+        menu: 'login'
       });
 
   });
@@ -133,8 +136,9 @@ module.exports = function(app) {
 
           // Re-render the form.
           res.render('auth/login', {
-            title:  'Login',
-            form:   form
+            title: 'Login',
+            form: form,
+            menu: 'login'
           });
 
         }

@@ -103,9 +103,15 @@ describe('Poem', function() {
 
     it('should require all fields', function(done) {
 
-      // Create poem, override defaults.
+      // Create poem.
       var poem = new Poem();
+
+      // Overrids defaults.
       poem.created = null;
+      poem.started = null;
+      poem.running = null;
+      poem.complete = null;
+      poem.published = null;
 
       // Save.
       poem.save(function(err) {
@@ -113,6 +119,10 @@ describe('Poem', function() {
         // Check for errors.
         err.errors.user.type.should.eql('required');
         err.errors.created.type.should.eql('required');
+        err.errors.started.type.should.eql('required');
+        err.errors.running.type.should.eql('required');
+        err.errors.complete.type.should.eql('required');
+        err.errors.published.type.should.eql('required');
         err.errors.roundLength.type.should.eql('required');
         err.errors.sliceInterval.type.should.eql('required');
         err.errors.minSubmissions.type.should.eql('required');
@@ -138,12 +148,20 @@ describe('Poem', function() {
       poem.created.should.be.ok;
     });
 
+    it('should set "started" to false by default', function() {
+      poem.started.should.be.false;
+    });
+
     it('should set "running" to false by default', function() {
       poem.running.should.be.false;
     });
 
     it('should set "complete" to false by default', function() {
       poem.running.should.be.false;
+    });
+
+    it('should set "published" to true by default', function() {
+      poem.published.should.be.true;
     });
 
   });

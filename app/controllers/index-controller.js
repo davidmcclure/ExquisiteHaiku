@@ -23,7 +23,8 @@ module.exports = function(app) {
 
     // Render the layout.
     res.render('index/index', {
-      title: 'equisitehaiku'
+      title: 'equisitehaiku',
+      menu: 'index'
     });
 
   });

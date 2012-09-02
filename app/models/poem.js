@@ -51,6 +51,11 @@ var PoemSchema = new mongoose.Schema({
     required: true,
     'default': false
   },
+  published : {
+    type: Boolean,
+    required: true,
+    'default': true
+  },
   roundLength : {
     type: Number,
     required: true

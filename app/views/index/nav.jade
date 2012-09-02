@@ -10,8 +10,8 @@ div.container
     span.span8
       block content
     span.span4.logo-block
-      a.nav(href="/admin/login") login
-      a.nav(href="/admin/register") register
+      a.nav(href="/admin/login", class=(menu=="login" ? "active" : "")) login
+      a.nav(href="/admin/register", class=(menu=="register" ? "active" : "")) register
       h1.logo
         a(href="/") exquisitehaiku
       p real-time, collaborative haiku composition

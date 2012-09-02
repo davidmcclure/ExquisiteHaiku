@@ -1,5 +1,6 @@
 @import url("http://fonts.googleapis.com/css?family=Source+Sans+Pro:200");
-body{font:200 18px "Source Sans Pro";text-rendering:optimizeLegibility;-webkit-user-select:none;-moz-user-select:none;margin:.5em}
+::selection,::-moz-selection{background:#0060cc;color:#fff}
+body{font:200 18px "Source Sans Pro";text-rendering:optimizeLegibility;margin:.5em}
 .active{color:#c00;}
 .active:hover{color:#7a0000}
 .logo-block{margin-top:7em;}

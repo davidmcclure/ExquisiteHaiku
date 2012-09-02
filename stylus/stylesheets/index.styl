@@ -9,15 +9,24 @@
 
 
 body
-  font 200 18px "Source Sans Pro"
+  font-family "Source Sans Pro"
+  font-size 18px
+  font-weight 300
   text-rendering optimizeLegibility
   margin 0.5em
 
 
-.active
-  color negative
+a.nav
+span.nav
+  margin-right 1em
+  font-size 13px
+  color black
+
   &:hover
-    color darken(negative, 40%)
+    color negative
+
+  &.active
+    color negative
 
 
 .logo-block
@@ -25,6 +34,7 @@ body
 
   h1.logo
     margin-top 5px
+    font-weight 300
 
     a:hover
       text-decoration none
@@ -32,10 +42,7 @@ body
   button.new-poem
     font-size 28px
     margin-top 5px
-
-  a.nav
-    margin-right 0.5em
-    font-size 13px
+    font-weight 400
 
   p.free
     margin 3px 0 0 15px
@@ -48,7 +55,7 @@ body
   span
     font-size 13px
     margin-right 1em
-    color gray
+    color black
 
   span
     opacity 0.8

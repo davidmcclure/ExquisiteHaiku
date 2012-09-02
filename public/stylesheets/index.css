@@ -1,14 +1,14 @@
-@import url("http://fonts.googleapis.com/css?family=Source+Sans+Pro:200");
+@import url("http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400");
 ::selection,::-moz-selection{background:#0060cc;color:#fff}
-body{font:200 18px "Source Sans Pro";text-rendering:optimizeLegibility;margin:.5em}
-.active{color:#c00;}
-.active:hover{color:#7a0000}
+body{font-family:"Source Sans Pro";font-size:18px;font-weight:300;text-rendering:optimizeLegibility;margin:.5em}
+a.nav,span.nav{margin-right:1em;font-size:13px;color:#000;}
+a.nav:hover,span.nav:hover{color:#b94a48}
+a.nav.active,span.nav.active{color:#b94a48}
 .logo-block{margin-top:7em;}
-.logo-block h1.logo{margin-top:5px;}
+.logo-block h1.logo{margin-top:5px;font-weight:300;}
 .logo-block h1.logo a:hover{text-decoration:none}
-.logo-block button.new-poem{font-size:28px;margin-top:5px}
-.logo-block a.nav{margin-right:.5em;font-size:13px}
+.logo-block button.new-poem{font-size:28px;margin-top:5px;font-weight:400}
 .logo-block p.free{margin:3px 0 0 15px}
 .secondary-nav{white-space:nowrap;}
-.secondary-nav a,.secondary-nav span{font-size:13px;margin-right:1em;color:#808080}
+.secondary-nav a,.secondary-nav span{font-size:13px;margin-right:1em;color:#000}
 .secondary-nav span{opacity:.8}

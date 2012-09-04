@@ -58,7 +58,7 @@ exports.isUser = function (req, res, next) {
  * @return void.
  */
 exports.noUser = function (req, res, next) {
-  if (req.session.user_id) res.redirect('/admin/poems');
+  if (req.session.user_id) res.redirect('/admin');
   else next();
 };
 
@@ -113,7 +113,7 @@ exports.getPoem = function (req, res, next) {
  */
 exports.ownsPoem = function (req, res, next) {
   if (req.poem.user == req.user.id) next();
-  else res.redirect('/admin/poems');
+  else res.redirect('/admin');
 };
 
 
@@ -129,5 +129,5 @@ exports.ownsPoem = function (req, res, next) {
  */
 exports.unstartedPoem = function (req, res, next) {
   if (!req.poem.started) next();
-  else res.redirect('/admin/poems');
+  else res.redirect('/admin');
 };

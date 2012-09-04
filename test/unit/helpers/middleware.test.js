@@ -218,7 +218,7 @@ describe('Route Middleware', function() {
 
         // Call noUser, check for res.redirect().
         auth.noUser(req, res, next);
-        sinon.assert.calledWith(res.redirect, '/admin/poems');
+        sinon.assert.calledWith(res.redirect, '/admin');
         done();
 
       });
@@ -406,7 +406,7 @@ describe('Route Middleware', function() {
 
       // Call ownsPoem, check for redirect.
       auth.ownsPoem(req, res, next);
-      sinon.assert.calledWith(res.redirect, '/admin/poems');
+      sinon.assert.calledWith(res.redirect, '/admin');
       done();
 
     });
@@ -480,7 +480,7 @@ describe('Route Middleware', function() {
 
         // Call unstartedPoem, check for redirect.
         auth.unstartedPoem(req, res, next);
-        sinon.assert.calledWith(res.redirect, '/admin/poems');
+        sinon.assert.calledWith(res.redirect, '/admin');
         done();
 
       });

@@ -76,7 +76,7 @@ module.exports = function(app, io) {
         title: 'New Poem',
         user: req.user,
         form: poemForm.form(),
-        menu: null
+        menu: 'new'
       });
 
   });

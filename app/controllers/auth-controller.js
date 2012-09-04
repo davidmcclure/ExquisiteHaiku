@@ -63,7 +63,7 @@ module.exports = function(app) {
           // Save and redirect.
           user.save(function() {
               req.session.user_id = user.id;
-              res.redirect('/admin/poems');
+              res.redirect('/admin');
           });
 
         },
@@ -124,7 +124,7 @@ module.exports = function(app) {
             // Authenticate and redirect.
             if (user.authenticate(form.data.password)) {
               req.session.user_id = user.id;
-              res.redirect('/admin/poems');
+              res.redirect('/admin');
             }
 
           });

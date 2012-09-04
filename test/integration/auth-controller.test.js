@@ -444,7 +444,7 @@ describe('Auth Controller', function() {
           browser.pressButton('Submit', function() {
 
             // Check for redirect.
-            browser.location.pathname.should.eql('/admin/poems');
+            browser.location.pathname.should.eql('/admin');
 
             // Get user.
             User.findOne({ username: 'kara' }, function(err, user) {
@@ -630,7 +630,7 @@ describe('Auth Controller', function() {
           browser.pressButton('Submit', function() {
 
             // Check for redirect.
-            browser.location.pathname.should.eql('/admin/poems');
+            browser.location.pathname.should.eql('/admin');
             done();
 
           });

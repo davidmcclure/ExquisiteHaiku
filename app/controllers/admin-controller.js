@@ -24,14 +24,16 @@ var Round = mongoose.model('Round');
 module.exports = function(app, io) {
 
   /*
-   * Redirect to /admin/poems.
-   *
-   * @middleware auth.isUser: Block if there is no user session.
+   * Front page.
    */
-  app.get('/admin',
-    auth.isUser,
-    function(req, res) {
-      res.redirect('/admin/poems');
+  app.get('/', function(req, res) {
+
+    // Render the layout.
+    res.render('index/index', {
+      title: 'equisitehaiku',
+      menu: 'index'
+    });
+
   });
 
   /*
@@ -39,7 +41,7 @@ module.exports = function(app, io) {
    *
    * @middleware auth.isUser: Block if there is no user session.
    */
-  app.get('/admin/poems',
+  app.get('/admin',
     auth.isUser,
     function(req, res) {
 
@@ -64,7 +66,7 @@ module.exports = function(app, io) {
    *
    * @middleware auth.isUser: Block if there is no user session.
    */
-  app.get('/admin/poems/new',
+  app.get('/admin/new',
     auth.isUser,
     function(req, res) {
 
@@ -82,7 +84,7 @@ module.exports = function(app, io) {
    *
    * @middleware auth.isUser: Block if there is no user session.
    */
-  app.post('/admin/poems/new',
+  app.post('/admin/new',
     auth.isUser,
     function(req, res) {
 
@@ -106,7 +108,7 @@ module.exports = function(app, io) {
 
           // Save and redirect.
           poem.save(function(err) {
-            res.redirect('/admin/poems');
+            res.redirect('/admin');
           });
 
         },

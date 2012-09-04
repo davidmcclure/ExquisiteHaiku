@@ -29,7 +29,7 @@ module.exports = function(app, io) {
   app.get('/', function(req, res) {
 
     // Render the layout.
-    res.render('index/index', {
+    res.render('admin/index', {
       title: 'equisitehaiku',
       menu: 'index'
     });
@@ -51,10 +51,11 @@ module.exports = function(app, io) {
       }).sort('-created').execFind(function(err, poems) {
 
         // Render the list.
-        res.render('admin/index', {
+        res.render('admin/browse', {
           title: 'Oversoul',
           user: req.user,
-          poems: poems
+          poems: poems,
+          menu: null
         });
 
       });
@@ -74,7 +75,8 @@ module.exports = function(app, io) {
       res.render('admin/new', {
         title: 'New Poem',
         user: req.user,
-        form: poemForm.form()
+        form: poemForm.form(),
+        menu: null
       });
 
   });
@@ -120,7 +122,8 @@ module.exports = function(app, io) {
           res.render('admin/new', {
             title: 'New Poem',
             user: req.user,
-            form: form
+            form: form,
+            menu: null
           });
 
         }

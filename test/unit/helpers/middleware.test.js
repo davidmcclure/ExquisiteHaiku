@@ -73,34 +73,14 @@ describe('Route Middleware', function() {
 
   });
 
-  describe('isUser', function() {
+  describe('getUser', function() {
 
-    it('should redirect when there is no session', function() {
+    var user;
 
-      // Spy on res.
-      res.redirect = sinon.spy();
-
-      auth.isUser(req, res, next);
-      sinon.assert.calledWith(res.redirect, '/admin/login');
-
-    });
-
-    it('should redirect a non-existent user', function(done) {
-
-      // Spy on res.
-      res.redirect = sinon.spy(function() {
-        sinon.assert.calledWith(res.redirect, '/admin/login');
-        done();
-      });
-
-      // Spy on next.
-      next = sinon.spy(function() {
-        sinon.assert.calledWith(res.redirect, '/admin/login');
-        done();
-      });
+    beforeEach(function(done) {
 
       // Create user.
-      var user = new User({
+      user = new User({
         username: 'david',
         password: 'password',
         email: 'david@test.org'
@@ -108,19 +88,80 @@ describe('Route Middleware', function() {
 
       // Save.
       user.save(function(err) {
-
-        // Set user id.
-        req.session.user_id = user.id;
-
-        // Delete the user.
-        user.remove(function(err) {
-
-          // Call isUser.
-          auth.isUser(req, res, next);
-
-        });
-
+        done();
       });
+
+    });
+
+    it('should set req.user when session exists', function(done) {
+
+      // Set user id.
+      req.session.user_id = user.id;
+
+      // Call getUser.
+      auth.getUser(req, res, function() {
+        req.user.should.not.be.false;
+        req.user.id.should.eql(user.id);
+        done();
+      });
+
+    });
+
+    it('should set req.user = false when session does not exist', function(done) {
+
+      // Call getUser with no session.
+      auth.getUser(req, res, function() {
+        req.user.should.be.false;
+        done();
+      });
+
+    });
+
+    it('should set req.user = false for non-existent user', function(done) {
+
+      // Set non-existent user id.
+      req.session.user_id = 'invalid';
+
+      // Call getUser.
+      auth.getUser(req, res, function() {
+        req.user.should.be.false;
+        done();
+      });
+
+    });
+
+  });
+
+  describe('isUser', function() {
+
+    it('should redirect when there is no session', function() {
+
+      // Spy on res.
+      res.redirect = sinon.spy();
+
+      // Call isUser().
+      auth.isUser(req, res, next);
+      sinon.assert.calledWith(res.redirect, '/admin/login');
+
+    });
+
+    it('should redirect a non-existent user', function(done) {
+
+      // Assert redirect.
+      var spy = function() {
+        sinon.assert.calledWith(res.redirect, '/admin/login');
+        done();
+      };
+
+      // Spy on res and next.
+      res.redirect = sinon.spy(spy);
+      next = sinon.spy(spy);
+
+      // Set non-existent id.
+      req.session.user_id = 'invalid';
+
+      // Call isUser.
+      auth.isUser(req, res, next);
 
     });
 

@@ -31,15 +31,15 @@ exports.getUser = function (req, res, next) {
 
   req.user = false;
 
-  // Check for user id in session.
+  // Try to find user.
   if (req.session.user_id) {
-
-    // Get the user record, push into request.
     User.findById(req.session.user_id, function(err, user) {
-      if (user) { req.user = user; next(); }
+      if (user) req.user = user;
+      next();
     });
-
   }
+
+  else next();
 
 };
 

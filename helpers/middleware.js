@@ -18,8 +18,8 @@ var Poem = mongoose.model('Poem');
 
 
 /*
- * If there is a session, attach the user to the request.
- * If there is not a session, attach req.user = false.
+ * If there is a session, attach the user to the request. If
+ * there is not a session, attach req.user = false.
  *
  * @param {Object} req: The request.
  * @param {Object} res: The response.
@@ -91,24 +91,7 @@ exports.noUser = function (req, res, next) {
 
 
 /*
- * Only allow anonymous sessions when there are no users in the system.
- *
- * @param {Object} req: The request.
- * @param {Object} res: The response.
- * @param {Callback} next: The next middleware.
- *
- * @return void.
- */
-exports.noUsers = function (req, res, next) {
-  User.count({}, function(err, count) {
-    if (count > 0) res.redirect('/admin/login');
-    else next();
-  });
-};
-
-
-/*
- * Load poem by way of :slug parameter on request.
+ * Attach poem to the request.
  *
  * @param {Object} req: The request.
  * @param {Object} res: The response.
@@ -128,9 +111,9 @@ exports.getPoem = function (req, res, next) {
 
 
 /*
- * Only allow the owner of the poem with the :slug passed in from
- * the route. Called after isUser and getPoem, which pass the poem
- * and user documents.
+ * Only allow the owner of the poem with the :slug passed in
+ * from the route. Called after isUser and getPoem, which pass
+ * the poem and user documents.
  *
  * @param {Object} req: The request.
  * @param {Object} res: The response.
@@ -145,8 +128,8 @@ exports.ownsPoem = function (req, res, next) {
 
 
 /*
- * Only allow when req.poem has not been started. Called after getPoem,
- * which passes the poem document.
+ * Only allow when req.poem has not been started. Called after
+ * getPoem, which passes the poem document.
  *
  * @param {Object} req: The request.
  * @param {Object} res: The response.

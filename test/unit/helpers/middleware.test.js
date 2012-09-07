@@ -251,53 +251,6 @@ describe('Route Middleware', function() {
 
   });
 
-  describe('noUsers', function() {
-
-    it('should redirect when there is at least 1 user', function(done) {
-
-      // Spy on res.
-      res.redirect = sinon.spy(function() {
-        sinon.assert.calledWith(res.redirect, '/admin/login');
-        done();
-      });
-
-      // Spy on next.
-      next = sinon.spy(function() {
-        sinon.assert.calledWith(res.redirect, '/admin/login');
-        done();
-      });
-
-      // Create user.
-      var user = new User({
-        username: 'david',
-        password: 'password',
-        email: 'david@test.org'
-      });
-
-      // Save.
-      user.save(function(err) {
-
-        // Call noUsers, check for res.redirect().
-        auth.noUsers(req, res, next);
-
-      });
-
-    });
-
-    it('should call next() there are 0 users', function(done) {
-
-      // Spy on next.
-      next = sinon.spy();
-
-      // Call noUsers, check for next().
-      auth.noUser(req, res, next);
-      sinon.assert.called(next);
-      done();
-
-    });
-
-  });
-
   describe('getPoem', function() {
 
     var user, poem;

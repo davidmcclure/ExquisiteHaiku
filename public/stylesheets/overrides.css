@@ -1,6 +1,10 @@
 p{font-family:inherit;color:#000}
 .btn{font-family:"Bowlby One SC";border:0;border-radius:2px}
-input[type='text'],input[type='password'],textarea{display:block;box-shadow:none;border-radius:1px;font-family:inherit;width:150px;}
+.btn-group button{font-family:"Source Sans Pro";border:1px solid #c0c0c0;}
+.btn-group button:first-child{border-top-left-radius:2px !important;border-bottom-left-radius:2px !important}
+.btn-group button:last-child{border-top-right-radius:2px !important;border-bottom-right-radius:2px !important}
+.btn-group button.active{box-shadow:none}
+input[type='text'],input[type='password'],textarea{display:block;box-shadow:none;border-radius:1px;border-style:dashed;font-family:inherit;width:150px;}
 input[type='text']:focus,input[type='password']:focus,textarea:focus{box-shadow:none}
 .help-inline{font-size:13px}
 .form-actions{background:transparent;border:none;padding:0}

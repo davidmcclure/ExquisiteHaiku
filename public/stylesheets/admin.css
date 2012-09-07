@@ -1,10 +1,4 @@
 @import url("http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400");
-@import url("http://fonts.googleapis.com/css?family=Fascinate+Inline");
-@import url("http://fonts.googleapis.com/css?family=Londrina+Sketch");
-@import url("http://fonts.googleapis.com/css?family=Codystar:300,400");
-@import url("http://fonts.googleapis.com/css?family=Megrim");
-@import url("http://fonts.googleapis.com/css?family=Mrs+Saint+Delafield");
-@import url("http://fonts.googleapis.com/css?family=Londrina+Outline");
 @import url("http://fonts.googleapis.com/css?family=Bowlby+One+SC");
 ::selection,::-moz-selection{background:#0060cc;color:#fff}
 body{font-family:"Source Sans Pro";font-size:18px;font-weight:300;text-rendering:optimizeLegibility;margin:.5em}
@@ -22,4 +16,5 @@ a.nav.active{color:#e13d16}
 .secondary-nav{white-space:nowrap;}
 .secondary-nav span{opacity:.8}
 form{margin:5.4em 0 0 5em;}
-form h1.form-header{margin-bottom:.5em;font-weight:300}
+form h1.form-header{font-family:"Bowlby One SC";font-size:1.4em;margin-bottom:.5em;font-weight:300;opacity:.8}
+form.new input[name='roundLength']{padding:20px;font-size:35px}

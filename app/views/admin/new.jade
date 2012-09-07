@@ -1,3 +1,15 @@
 extends layout
 
 block content
+  form.new(method='post')
+    h1.form-header new poem
+    div.control-group
+      label.control-label(for='roundLength') Round Length
+      div.controls
+        input(type='text', name='roundLength', autocomplete='off')
+        div.btn-group(data-toggle='buttons-radio')
+          button.btn.btn-small(type='button') seconds
+          button.btn.btn-small(type='button') minutes
+          button.btn.btn-small(type='button') hours
+    div.form-actions
+      button.btn.btn-large.btn-primary(type='submit') Create

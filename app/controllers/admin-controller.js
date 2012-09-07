@@ -71,7 +71,7 @@ module.exports = function(app, io) {
    * @middleware auth.isUser: Block if there is no user session.
    */
   app.get('/admin/new',
-    auth.isUser,
+    auth.getUser,
     function(req, res) {
 
       // Render the form.

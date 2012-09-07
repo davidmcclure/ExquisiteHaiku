@@ -1,4 +1,7 @@
 @import url("http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400");
+@import url("http://fonts.googleapis.com/css?family=Miniver");
+@import url("http://fonts.googleapis.com/css?family=Life+Savers");
+@import url("http://fonts.googleapis.com/css?family=Fascinate+Inline");
 ::selection,::-moz-selection{background:#0060cc;color:#fff}
 body{font-family:"Source Sans Pro";font-size:18px;font-weight:300;text-rendering:optimizeLegibility;margin:.5em}
 p{font-size:14px}
@@ -7,7 +10,7 @@ a.nav:hover{color:#e13d16}
 a.nav.active{color:#e13d16}
 .auth{font-size:14px}
 .logo-block{margin-top:6em;}
-.logo-block .user{font-size:5em;margin:60px 0 20px -5px;line-height:1em;font-weight:200;color:#e13d16}
+.logo-block .user{font-family:"Fascinate Inline";font-size:6em;margin:110px 0 20px -5px;line-height:1em;font-weight:200}
 .logo-block h1.logo{margin:5px 0 0 0;font-weight:300;}
 .logo-block h1.logo a:hover{text-decoration:none}
 .logo-block a.new-poem{font-size:28px;margin-top:5px;font-weight:400}

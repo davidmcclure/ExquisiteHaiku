@@ -14,5 +14,3 @@ a.nav.active,span.nav a.active{color:#b94a48}
 .secondary-nav span{opacity:.8}
 form{margin:5.4em 5em;}
 form h1.form-header{margin-bottom:.5em;font-weight:300}
-form.new{margin-top:9em;}
-form.new input[name='roundLength']{font-size:50px;padding:0 20px;height:100px;width:400px}

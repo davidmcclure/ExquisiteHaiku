@@ -18,6 +18,33 @@ var Poem = mongoose.model('Poem');
 
 
 /*
+ * If there is a session, attach the user to the request.
+ * If there is not a session, attach req.user = false.
+ *
+ * @param {Object} req: The request.
+ * @param {Object} res: The response.
+ * @param {Callback} next: The next middleware.
+ *
+ * @return void.
+ */
+exports.getUser = function (req, res, next) {
+
+  req.user = false;
+
+  // Check for user id in session.
+  if (req.session.user_id) {
+
+    // Get the user record, push into request.
+    User.findById(req.session.user_id, function(err, user) {
+      if (user) { req.user = user; next(); }
+    });
+
+  }
+
+};
+
+
+/*
  * Only allow authenticated users.
  *
  * @param {Object} req: The request.

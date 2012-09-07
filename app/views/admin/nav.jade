@@ -2,12 +2,9 @@ div.container
 
   div.row
 
-    // Secondary nav.
     span.span5.offset7.secondary-nav
       a.nav(href="#") about
       a.nav(href="#") terms of service 
-      a.nav(href="#") press
-      a.nav(href="#") blog
       span.nav © 2012 <a href="https://twitter.com/clured" target="_blank" class="nav">@clured</a>
 
   div.row
@@ -18,7 +15,6 @@ div.container
 
     span.span5.logo-block
 
-      // Auth nav.
       div.auth
         if user
           a.nav(href="/admin/logout") logout
@@ -32,3 +28,6 @@ div.container
         p real-time, multi-player haiku composition
         a(href="/admin/new", class=(menu=="new" ? "btn-danger" : "")).btn.btn-primary.btn-large.new-poem New Poem
         p.free ( free, anonymous )
+
+      if user
+        div.user= user.username

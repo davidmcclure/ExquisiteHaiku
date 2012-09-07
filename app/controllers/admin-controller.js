@@ -33,7 +33,7 @@ module.exports = function(app, io) {
     // Render the layout.
     res.render('admin/index', {
       title: 'equisitehaiku',
-      user: req.user.id,
+      user: req.user,
       menu: 'index'
     });
 

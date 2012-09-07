@@ -26,11 +26,14 @@ module.exports = function(app, io) {
   /*
    * Front page.
    */
-  app.get('/', function(req, res) {
+  app.get('/', 
+    auth.getUser,
+    function(req, res) {
 
     // Render the layout.
     res.render('admin/index', {
       title: 'equisitehaiku',
+      user: req.user.id,
       menu: 'index'
     });
 
@@ -52,7 +55,7 @@ module.exports = function(app, io) {
 
         // Render the list.
         res.render('admin/browse', {
-          title: 'Oversoul',
+          title: 'equisitehaiku',
           user: req.user,
           poems: poems,
           menu: null

@@ -1,20 +1,34 @@
 div.container
+
   div.row
+
+    // Secondary nav.
     span.span4.offset8.secondary-nav
       a.nav(href="#") about
       a.nav(href="#") terms of service 
       a.nav(href="#") press
       a.nav(href="#") blog
       span.nav © 2012 <a href="https://twitter.com/clured" target="_blank" class="nav">@clured</a>
+
   div.row
     span.span8
       block content
+      // ** dev
       &nbsp;
+
     span.span4.logo-block
-      a.nav(href="/admin/login", class=(menu=="login" ? "active" : "")) login
-      a.nav(href="/admin/register", class=(menu=="register" ? "active" : "")) register
-      h1.logo
-        a(href="/") exquisitehaiku
-      p real-time, multi-player haiku composition
-      a(href="/admin/new", class=(menu=="new" ? "btn-danger" : "")).btn.btn-primary.btn-large.new-poem New Poem
-      p.free ( free, anonymous )
+
+      // Auth nav.
+      div.auth
+        if user
+          a.nav(href="/admin/logout") logout
+        else
+          a.nav(href="/admin/login", class=(menu=="login" ? "active" : "")) login
+          a.nav(href="/admin/register", class=(menu=="register" ? "active" : "")) register
+
+      div.logo
+        h1.logo
+          a(href="/") exquisitehaiku
+        p real-time, multi-player haiku composition
+        a(href="/admin/new", class=(menu=="new" ? "btn-danger" : "")).btn.btn-primary.btn-large.new-poem New Poem
+        p.free ( free, anonymous )

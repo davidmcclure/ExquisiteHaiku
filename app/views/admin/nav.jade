@@ -17,6 +17,7 @@ div.container
 
       div.auth
         if user
+          span.user= user.username
           a.nav(href="/admin/logout") logout
         else
           a.nav(href="/admin/login", class=(menu=="login" ? "active" : "")) login
@@ -29,6 +30,3 @@ div.container
         a(href="/admin/new", class=(menu=="new" ? "btn-danger" : "")).btn.btn-primary.btn-large.new-poem New Poem
         if !user
           p.free ( free, anonymous )
-
-      if user
-        div.user= user.username

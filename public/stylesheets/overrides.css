@@ -1,5 +1,5 @@
 p{font-family:inherit;color:#000}
-.btn{border:0;border-radius:2px;font-family:inherit}
+.btn{font-family:"Bowlby One SC";border:0;border-radius:2px}
 input[type='text'],input[type='password'],textarea{display:block;box-shadow:none;border-radius:1px;font-family:inherit;width:150px;}
 input[type='text']:focus,input[type='password']:focus,textarea:focus{box-shadow:none}
 .help-inline{font-size:13px}

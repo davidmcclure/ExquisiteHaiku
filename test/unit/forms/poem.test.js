@@ -73,6 +73,10 @@ describe('Poem Form', function() {
 
   describe('roundLengthValue', function() {
 
+    it('should have a default', function() {
+      form.fields.roundLengthValue.default.should.exist;
+    });
+
     it('should exist', function(done) {
 
       form.bind({
@@ -110,6 +114,10 @@ describe('Poem Form', function() {
 
   describe('roundLengthUnit', function() {
 
+    it('should have a default', function() {
+      form.fields.roundLengthUnit.default.should.exist;
+    });
+
     it('should exist', function(done) {
 
       form.bind({
@@ -135,6 +143,10 @@ describe('Poem Form', function() {
   });
 
   describe('minSubmissions', function() {
+
+    it('should have a default', function() {
+      form.fields.minSubmissions.default.should.exist;
+    });
 
     it('should exist', function(done) {
 
@@ -173,6 +185,10 @@ describe('Poem Form', function() {
 
   describe('submissionVal', function() {
 
+    it('should have a default', function() {
+      form.fields.submissionVal.default.should.exist;
+    });
+
     it('should exist', function(done) {
 
       form.bind({
@@ -209,6 +225,10 @@ describe('Poem Form', function() {
   });
 
   describe('decayLifetime', function() {
+
+    it('should have a default', function() {
+      form.fields.decayLifetime.default.should.exist;
+    });
 
     it('should exist', function(done) {
 
@@ -247,6 +267,10 @@ describe('Poem Form', function() {
 
   describe('seedCapital', function() {
 
+    it('should have a default', function() {
+      form.fields.seedCapital.default.should.exist;
+    });
+
     it('should exist', function(done) {
 
       form.bind({
@@ -278,6 +302,14 @@ describe('Poem Form', function() {
         done();
       });
 
+    });
+
+  });
+
+  describe('published', function() {
+
+    it('should have a default', function() {
+      form.fields.published.default.should.exist;
     });
 
   });

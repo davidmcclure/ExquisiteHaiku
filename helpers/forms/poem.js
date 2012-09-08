@@ -28,6 +28,7 @@ exports.form = function(poem) {
     // Word round value.
     roundLengthValue: fields.string({
       required: 'Enter a round length.',
+      default: 3,
       validators: [
         customValidators.positiveInteger('Must be a positive integer.')
       ]
@@ -35,12 +36,14 @@ exports.form = function(poem) {
 
     // Word round unit.
     roundLengthUnit: fields.string({
-      required: 'Enter a round length unit.'
+      required: 'Enter a round length unit.',
+      default: 'minutes'
     }),
 
     // Minimum submssions.
     minSubmissions: fields.string({
       required: 'Enter a minimum number of submissions.',
+      default: 5,
       validators: [
         customValidators.positiveInteger('Must be a positive integer.')
       ]
@@ -49,6 +52,7 @@ exports.form = function(poem) {
     // Submission value.
     submissionVal: fields.string({
       required: 'Enter a point value for blind submissions.',
+      default: 100,
       validators: [
         customValidators.positiveInteger('Must be a positive integer.')
       ]
@@ -57,6 +61,7 @@ exports.form = function(poem) {
     // Decay lifetime.
     decayLifetime: fields.string({
       required: 'Enter a decay lifetime.',
+      default: 20,
       validators: [
         customValidators.positiveInteger('Must be a positive integer.')
       ]
@@ -65,13 +70,16 @@ exports.form = function(poem) {
     // Seed capital.
     seedCapital: fields.string({
       required: 'Enter a seed capital amount.',
+      default: 10000,
       validators: [
         customValidators.positiveInteger('Must be a positive integer.')
       ]
     }),
 
     // Published.
-    published: fields.boolean()
+    published: fields.boolean({
+      default: true
+    })
 
   });
 

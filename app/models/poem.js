@@ -56,8 +56,12 @@ var PoemSchema = new mongoose.Schema({
     required: true,
     'default': true
   },
-  roundLength : {
+  roundLengthValue : {
     type: Number,
+    required: true
+  },
+  roundLengthUnit : {
+    type: String,
     required: true
   },
   sliceInterval : {
@@ -137,6 +141,16 @@ PoemSchema.virtual('paused').get(function() {
  */
 PoemSchema.virtual('round').get(function() {
   return _.last(this.rounds);
+});
+
+
+/*
+ * Get round length in milliseconds.
+ *
+ * @return {Number}: The round length.
+ */
+PoemSchema.virtual('roundLength').get(function() {
+  return 10000;
 });
 
 
@@ -242,6 +256,17 @@ PoemSchema.path('running').validate(function(v) {
  */
 PoemSchema.path('complete').validate(function(v) {
   return !v || (this.started && !this.running);
+});
+
+
+/*
+ * Round length unit can only be 'seconds' or 'minutes'.
+ *
+ * @return {Boolean}: True if the unit is valid.
+ */
+PoemSchema.path('roundLengthUnit').validate(function(v) {
+  return _.include(['seconds', 'minutes'],
+    this.roundLengthUnit);
 });
 
 

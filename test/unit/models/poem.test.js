@@ -63,7 +63,8 @@ describe('Poem', function() {
     // Create poem.
     poem = new Poem({
       user: user.id,
-      roundLength : 10000,
+      roundLengthValue : 3,
+      roundLengthUnit : 'minutes',
       sliceInterval : 3,
       minSubmissions : 5,
       submissionVal : 100,
@@ -123,7 +124,8 @@ describe('Poem', function() {
         err.errors.running.type.should.eql('required');
         err.errors.complete.type.should.eql('required');
         err.errors.published.type.should.eql('required');
-        err.errors.roundLength.type.should.eql('required');
+        err.errors.roundLengthValue.type.should.eql('required');
+        err.errors.roundLengthUnit.type.should.eql('required');
         err.errors.sliceInterval.type.should.eql('required');
         err.errors.minSubmissions.type.should.eql('required');
         err.errors.submissionVal.type.should.eql('required');
@@ -252,7 +254,7 @@ describe('Poem', function() {
 
     });
 
-    describe('valid permutations', function() {
+    describe('valid status permutations', function() {
 
       it('should pass with !started, !running, !complete', function(done) {
         poem.started = false;
@@ -280,6 +282,34 @@ describe('Poem', function() {
         poem.complete = true;
         poem.save(function(err) {
           assert(!err);
+          done();
+        });
+      });
+
+    });
+
+    describe('roundLengthUnit', function() {
+
+      it('should pass with "seconds"', function(done) {
+        poem.roundLengthUnit = 'seconds';
+        poem.save(function(err) {
+          assert(!err);
+          done();
+        });
+      });
+
+      it('should pass with "minutes"', function(done) {
+        poem.roundLengthUnit = 'minutes';
+        poem.save(function(err) {
+          assert(!err);
+          done();
+        });
+      });
+
+      it('should block invalid unit', function(done) {
+        poem.roundLengthUnit = 'invalid';
+        poem.save(function(err) {
+          err.errors.roundLengthUnit.should.be.ok;
           done();
         });
       });

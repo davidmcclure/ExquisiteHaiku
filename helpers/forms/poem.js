@@ -40,6 +40,15 @@ exports.form = function(poem) {
       default: 'minutes'
     }),
 
+    // Seed capital.
+    seedCapital: fields.string({
+      required: 'Enter a seed capital amount.',
+      default: 18000,
+      validators: [
+        customValidators.positiveInteger('Must be a positive integer.')
+      ]
+    }),
+
     // Minimum submssions.
     minSubmissions: fields.string({
       required: 'Enter a minimum number of submissions.',
@@ -62,15 +71,6 @@ exports.form = function(poem) {
     decayLifetime: fields.string({
       required: 'Enter a decay lifetime.',
       default: 20,
-      validators: [
-        customValidators.positiveInteger('Must be a positive integer.')
-      ]
-    }),
-
-    // Seed capital.
-    seedCapital: fields.string({
-      required: 'Enter a seed capital amount.',
-      default: 10000,
       validators: [
         customValidators.positiveInteger('Must be a positive integer.')
       ]

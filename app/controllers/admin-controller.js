@@ -101,15 +101,15 @@ module.exports = function(app, io) {
 
           // Create the poem.
           var poem = new Poem({
-            minSubmissions:     form.data.minSubmissions,
-            submissionVal:      form.data.submissionVal,
-            decayLifetime:      form.data.decayLifetime,
             seedCapital:        form.data.seedCapital,
             roundLengthValue:   form.data.roundLengthValue,
             roundLengthUnit:    form.data.roundLengthUnit,
             published:          form.data.published,
-            sliceInterval:      app.settings.sliceInterval,
-            visibleWords:       app.settings.visibleWords
+            minSubmissions:     global.config.minSubmissions,
+            submissionVal:      global.config.submissionVal,
+            decayLifetime:      global.config.decayLifetime,
+            sliceInterval:      global.config.sliceInterval,
+            visibleWords:       global.config.visibleWords
           });
 
           // If session, store user id.

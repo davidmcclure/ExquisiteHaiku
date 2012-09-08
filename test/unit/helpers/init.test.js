@@ -67,7 +67,7 @@ describe('Init', function() {
     };
 
     // Mock config.
-    config = {
+    global.config = {
       sliceInterval: 300,
       visibleWords: 100
     };
@@ -150,7 +150,7 @@ describe('Init', function() {
     ], helpers.save, function(err, documents) {
 
       // Run init.
-      init(app, config, io, function() {
+      init(app, io, function() {
         done();
       });
 
@@ -178,11 +178,6 @@ describe('Init', function() {
       done();
     });
 
-  });
-
-  it('should set configuration options', function() {
-    sinon.assert.calledWith(app.set, 'sliceInterval', 300);  
-    sinon.assert.calledWith(app.set, 'visibleWords', 100);  
   });
 
   it('should start running poems', function() {

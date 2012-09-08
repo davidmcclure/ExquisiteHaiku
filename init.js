@@ -18,17 +18,13 @@ var Vote = mongoose.model('Vote');
  * running poems.
  *
  * @param {Object} app: The node server.
- * @param {Object} config: The configuration object.
  * @param {Object} io: The socket.io server.
  * @param {Function} cb: Callback.
  *
  * @return void.
  */
-module.exports = function(app, config, io, cb) {
-
-  // Set application constants.
-  app.set('sliceInterval', config.sliceInterval);
-  app.set('visibleWords', config.visibleWords);
+module.exports = function(app, io, cb) {
+  cb = cb || function() {};
 
   // Get running poems.
   Poem.find({ running: true }, function(err, poems) {

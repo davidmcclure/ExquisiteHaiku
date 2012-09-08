@@ -2,16 +2,15 @@ default:
   port: 3000
   sliceInterval: 300
   visibleWords: 200
+  minSubmissions: 5
+  submissionVal: 100
+  decayLifetime: 20000
 
 testing:
-  db:
-    uri: "mongodb://localhost/oversoul_testing"
+  db: "mongodb://localhost/oversoul_testing"
 development:
-  db:
-    uri: "mongodb://localhost/oversoul_development"
+  db: "mongodb://localhost/oversoul_development"
 staging:
-  db:
-    uri: "mongodb://localhost/oversoul_staging"
+  db: "mongodb://localhost/oversoul_staging"
 production:
-  db:
-    uri: "mongodb://localhost/oversoul_production"
+  db: "mongodb://localhost/oversoul_production"

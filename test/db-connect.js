@@ -10,7 +10,7 @@ config = configFile.readConfig('config.yaml');
 
 // Connect.
 exports = mongoose = require('mongoose');
-mongoose.connect(config.db.uri);
+mongoose.connect(config.db);
 exports = Schema = mongoose.Schema;
 
 // In-memory stores.

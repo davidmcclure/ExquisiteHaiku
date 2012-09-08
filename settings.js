@@ -7,7 +7,7 @@ var express = require('express');
 var mongoStore = require('connect-mongodb');
 
 // Start-up routine.
-module.exports = function(app, config) {
+module.exports = function(app) {
 
   // Configure express.
   app.configure(function() {
@@ -20,7 +20,7 @@ module.exports = function(app, config) {
     app.use(express.bodyParser());
     app.use(express.cookieParser('dev'));
     app.use(express.session({
-      store: new mongoStore({ url: config.db.uri }),
+      store: new mongoStore({ url: global.config.db }),
       secret: 'dev'
     }));
 

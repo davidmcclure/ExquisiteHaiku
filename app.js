@@ -10,12 +10,12 @@ var http = require('http');
 var fs = require('fs');
 
 // Connect to database.
-var config = configFile.readConfig('config.yaml');
-require('./db-connect')(config);
+global.config = configFile.readConfig('config.yaml');
+require('./db-connect');
 
 // Create server.
 var app = module.exports.app = express(express.favicon());
-require('./settings')(app, config);
+require('./settings')(app);
 
 // Bootstrap models.
 var modelsPath = __dirname + '/app/models';
@@ -25,11 +25,11 @@ modelFiles.forEach(function(file) {
 });
 
 // Run server and socket.io.
-var server = app.listen(config.port);
+var server = app.listen(global.config.port);
 var io = socket.listen(server, { log: false });
 
 // Start poems.
-require('./init')(app, config, io, function() {});
+require('./init')(app, io);
 
 // Bootstrap controllers.
 var controllersPath = __dirname + '/app/controllers';
@@ -39,4 +39,4 @@ controllerFiles.forEach(function(file) {
 });
 
 console.log("Listening on port %d in %s mode",
-  config.port, app.settings.env);
+  global.config.port, app.settings.env);

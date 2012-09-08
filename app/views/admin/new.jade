@@ -52,8 +52,8 @@ block content
           span.help-inline.roundLengthValue= rLenVal.error
 
     // Shortcut seed capital field, get error.
-    - var field = form.fields.seedCapital
-    - var error = field.errorHTML() != ''
+    - var seedCap = form.fields.seedCapital
+    - var error = seedCap.errorHTML() != ''
 
     // Seed capital.
     div.control-group(class=(error ? 'error' : ''))
@@ -64,10 +64,10 @@ block content
           type='text',
           name='seedCapital',
           autocomplete='off',
-          value=field.value)
+          value=seedCap.value)
 
         if error
-          span.help-inline.seedCapital= field.seedCapital.error
+          span.help-inline.seedCapital= seedCap.error
 
     // Published.
     div.control-group

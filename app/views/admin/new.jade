@@ -6,7 +6,7 @@ block js
 
 block content
 
-  form.new(method='post')
+  form#new(method='post')
 
     h1.form-header new poem
 
@@ -14,44 +14,44 @@ block content
     div.control-group.roundLength
       label.control-label(for='roundLengthValue') Round Length
       div.controls
-        input(type='text', name='roundLengthValue', autocomplete='off', value=form.fields.roundLengthValue.default)
+        input.rLenVal(type='text', name='roundLengthValue', autocomplete='off', value=form.fields.roundLengthValue.default)
         div.btn-group(data-toggle='buttons-radio')
-          button.btn.btn-small(type='button', class=(form.fields.roundLengthUnit.default=='seconds' ? 'active' : '')) seconds
-          button.btn.btn-small(type='button', class=(form.fields.roundLengthUnit.default=='minutes' ? 'active' : '')) minutes
-        input(type='hidden', name='roundLengthUnit')
+          button.seconds.btn.btn-small(type='button', class=(form.fields.roundLengthUnit.default=='seconds' ? 'active' : '')) seconds
+          button.minutes.btn.btn-small(type='button', class=(form.fields.roundLengthUnit.default=='minutes' ? 'active' : '')) minutes
+        input.rLenUnit(type='hidden', name='roundLengthUnit', value=form.fields.roundLengthUnit.default)
 
     // Seed capital.
     div.control-group
       label.control-label(for='seedCapital') Starting Points
       div.controls
-        input(type='text', name='seedCapital', autocomplete='off', value=form.fields.seedCapital.default)
+        input.seedCap(type='text', name='seedCapital', autocomplete='off', value=form.fields.seedCapital.default)
 
     // Minimum submissions.
     div.control-group
       label.control-label(for='minSubmissions') Minimum Submissions 
       div.controls
-        input(type='text', name='minSubmissions', autocomplete='off', value=form.fields.minSubmissions.default)
+        input.minSub(type='text', name='minSubmissions', autocomplete='off', value=form.fields.minSubmissions.default)
 
     // Submission value.
     div.control-group
       label.control-label(for='submissionVal') Submission Value 
       div.controls
-        input(type='text', name='submissionVal', autocomplete='off', value=form.fields.submissionVal.default)
+        input.subVal(type='text', name='submissionVal', autocomplete='off', value=form.fields.submissionVal.default)
 
     // Decay lifetime.
     div.control-group
       label.control-label(for='decayLifetime') Decay Halflife
       div.controls
-        input(type='text', name='decayLifetime', autocomplete='off', value=form.fields.decayLifetime.default)
+        input.decLife(type='text', name='decayLifetime', autocomplete='off', value=form.fields.decayLifetime.default)
 
     // Published.
     div.control-group
       div.controls
         label.checkbox
           if form.fields.published.default
-            input(type='checkbox', name='published', checked='checked')
+            input.published(type='checkbox', name='published', checked='checked')
           else
-            input(type='checkbox', name='published')
+            input.published(type='checkbox', name='published')
           span Published
 
     div.form-actions

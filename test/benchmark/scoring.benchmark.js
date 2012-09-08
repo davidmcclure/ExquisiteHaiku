@@ -40,13 +40,12 @@ var user = new User({
 // Create poem.
 var poem = new Poem({
   user: user.id,
-  roundLength : 10000,
-  sliceInterval : 3,
-  minSubmissions : 5,
-  submissionVal : 100,
-  decayLifetime : 60000,
-  seedCapital : 1000,
-  visibleWords : 3
+  roundLength: 10000,
+  sliceInterval: 3,
+  submissionVal: 100,
+  decayLifetime: 60000,
+  seedCapital: 1000,
+  visibleWords: 3
 });
 
 // Initialize votes tracker.

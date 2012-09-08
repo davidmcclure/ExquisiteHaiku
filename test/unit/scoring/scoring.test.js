@@ -214,12 +214,11 @@ describe('Scoring', function() {
         running: true,
         roundLengthValue: 10,
         roundLengthUnit: 'seconds',
-        sliceInterval : 3,
-        minSubmissions : 5,
-        submissionVal : 100,
-        decayLifetime : 50000,
-        seedCapital : 1000,
-        visibleWords : 2
+        sliceInterval: 3,
+        submissionVal: 100,
+        decayLifetime: 50000,
+        seedCapital: 1000,
+        visibleWords: 2
       });
 
       // Save.

@@ -69,28 +69,26 @@ describe('Sockets Controller', function() {
     // Create poem.
     poem1 = new Poem({
       user: user.id,
-      roundLengthValue : 10,
-      roundLengthUnit : 'seconds',
-      sliceInterval : 3,
-      minSubmissions : 5,
-      submissionVal : 100,
-      decayLifetime : 50,
-      seedCapital : 1000,
-      visibleWords : 500,
+      roundLengthValue: 10,
+      roundLengthUnit: 'seconds',
+      sliceInterval: 3,
+      submissionVal: 100,
+      decayLifetime: 50,
+      seedCapital: 1000,
+      visibleWords: 500,
       words: [['it', 'little']]
     });
 
     // Create poem.
     poem2 = new Poem({
       user: user.id,
-      roundLengthValue : 10,
-      roundLengthUnit : 'seconds',
-      sliceInterval : 3,
-      minSubmissions : 5,
-      submissionVal : 100,
-      decayLifetime : 50,
-      seedCapital : 1000,
-      visibleWords : 500
+      roundLengthValue: 10,
+      roundLengthUnit: 'seconds',
+      sliceInterval: 3,
+      submissionVal: 100,
+      decayLifetime: 50,
+      seedCapital: 1000,
+      visibleWords: 500
     });
 
     var options = {

@@ -2,7 +2,6 @@ default:
   port: 3000
   sliceInterval: 300
   visibleWords: 200
-  minSubmissions: 5
   submissionVal: 100
   decayLifetime: 20000
 

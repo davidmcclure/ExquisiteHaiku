@@ -67,10 +67,6 @@ var PoemSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  minSubmissions : {
-    type: Number,
-    required: true
-  },
   submissionVal : {
     type: Number,
     required: true

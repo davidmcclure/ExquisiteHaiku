@@ -245,7 +245,6 @@ describe('Route Middleware', function() {
         roundLengthValue: 10,
         roundLengthUnit: 'seconds',
         sliceInterval: 3,
-        minSubmissions: 5,
         submissionVal: 100,
         decayLifetime: 50,
         seedCapital: 1000,
@@ -302,7 +301,6 @@ describe('Route Middleware', function() {
         user: user1.id,
         roundLength: 10000,
         sliceInterval: 3,
-        minSubmissions: 5,
         submissionVal: 100,
         decayLifetime: 50,
         seedCapital: 1000,
@@ -364,14 +362,13 @@ describe('Route Middleware', function() {
 
       // Create poem.
       poem = new Poem({
-        user:             user.id,
-        roundLength :     10000,
-        sliceInterval :   3,
-        minSubmissions :  5,
-        submissionVal :   100,
-        decayLifetime :   50,
-        seedCapital :     1000,
-        visibleWords :    500
+        user: user.id,
+        roundLength: 10000,
+        sliceInterval: 3,
+        submissionVal: 100,
+        decayLifetime: 50,
+        seedCapital: 1000,
+        visibleWords: 500
       });
 
       // Save.

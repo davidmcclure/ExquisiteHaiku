@@ -105,7 +105,6 @@ module.exports = function(app, io) {
             roundLengthValue:   form.data.roundLengthValue,
             roundLengthUnit:    form.data.roundLengthUnit,
             published:          form.data.published,
-            minSubmissions:     global.config.minSubmissions,
             submissionVal:      global.config.submissionVal,
             decayLifetime:      global.config.decayLifetime,
             sliceInterval:      global.config.sliceInterval,

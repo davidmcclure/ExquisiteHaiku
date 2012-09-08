@@ -19,8 +19,8 @@ form{margin-top:5em;}
 form h1.form-header{font-family:"Bowlby One SC";font-size:1.4em;margin-bottom:.5em;font-weight:300;opacity:.8}
 form.new{margin-top:2.4em;}
 form.new input[type='text']{display:inline-block;padding:10px;font-size:20px;width:100px}
-form.new input[name='roundLength']{padding:20px;font-size:35px;width:80px;border:2px solid #7e7e7e;}
-form.new input[name='roundLength']:focus{border-color:#08c}
+form.new input[name='roundLengthValue']{padding:20px;font-size:35px;width:80px;border:2px solid #7e7e7e;}
+form.new input[name='roundLengthValue']:focus{border-color:#08c}
 form.new .control-group{margin-bottom:5px}
 form.new div.roundLength{margin-bottom:.8em}
 form.new .btn-group{display:inline-block;margin:-9px 0 0 10px}

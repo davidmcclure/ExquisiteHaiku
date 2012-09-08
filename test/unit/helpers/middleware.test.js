@@ -242,7 +242,8 @@ describe('Route Middleware', function() {
       // Create poem.
       poem = new Poem({
         user: user.id,
-        roundLength: 10000,
+        roundLengthValue: 10,
+        roundLengthUnit: 'seconds',
         sliceInterval: 3,
         minSubmissions: 5,
         submissionVal: 100,

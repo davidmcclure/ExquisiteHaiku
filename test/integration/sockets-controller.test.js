@@ -69,7 +69,8 @@ describe('Sockets Controller', function() {
     // Create poem.
     poem1 = new Poem({
       user: user.id,
-      roundLength : 10000,
+      roundLengthValue : 10,
+      roundLengthUnit : 'seconds',
       sliceInterval : 3,
       minSubmissions : 5,
       submissionVal : 100,
@@ -82,7 +83,8 @@ describe('Sockets Controller', function() {
     // Create poem.
     poem2 = new Poem({
       user: user.id,
-      roundLength : 10000,
+      roundLengthValue : 10,
+      roundLengthUnit : 'seconds',
       sliceInterval : 3,
       minSubmissions : 5,
       submissionVal : 100,

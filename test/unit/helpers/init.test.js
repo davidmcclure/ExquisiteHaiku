@@ -84,32 +84,34 @@ describe('Init', function() {
 
     // Create running poem.
     running = new Poem({
-      user:             user.id,
-      started:          true,
-      running:          true,
-      complete:         false,
-      roundLength :     500000,
-      sliceInterval :   1000,
-      minSubmissions :  5,
-      submissionVal :   100,
-      decayLifetime :   50000,
-      seedCapital :     1000,
-      visibleWords :    500
+      user: user.id,
+      started: true,
+      running: true,
+      complete: false,
+      roundLengthValue: 10,
+      roundLengthUnit: 'seconds',
+      sliceInterval: 1000,
+      minSubmissions: 5,
+      submissionVal: 100,
+      decayLifetime: 50000,
+      seedCapital: 1000,
+      visibleWords: 500
     });
 
     // Create not running poem.
     notRunning = new Poem({
-      user:             user.id,
-      started:          true,
-      running:          false,
-      complete:         false,
-      roundLength :     500000,
-      sliceInterval :   1000,
-      minSubmissions :  5,
-      submissionVal :   100,
-      decayLifetime :   50000,
-      seedCapital :     1000,
-      visibleWords :    500
+      user: user.id,
+      started: true,
+      running: false,
+      complete: false,
+      roundLengthValue: 10,
+      roundLengthUnit: 'seconds',
+      sliceInterval: 1000,
+      minSubmissions: 5,
+      submissionVal: 100,
+      decayLifetime: 50000,
+      seedCapital: 1000,
+      visibleWords: 500
     });
 
     // Create rounds.

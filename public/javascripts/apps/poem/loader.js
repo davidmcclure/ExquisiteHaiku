@@ -2,7 +2,7 @@
  * Include dependencies.
  */
 
-var a = 'javascripts/oversoul/';
+var a = 'javascripts/apps/poem/';
 var v = 'javascripts/vendor/';
 
 load(

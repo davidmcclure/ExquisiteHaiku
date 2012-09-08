@@ -13,7 +13,6 @@ block content
         div.btn-group(data-toggle='buttons-radio')
           button.btn.btn-small(type='button') seconds
           button.btn.btn-small(type='button') minutes
-          button.btn.btn-small(type='button') hours
 
     div.control-group
       label.control-label(for='minSubmissions') Minimum Submissions 
@@ -34,6 +33,12 @@ block content
       label.control-label(for='seedCapital') Starting Points
       div.controls
         input(type='text', name='seedCapital', autocomplete='off')
+
+    div.control-group
+      div.controls
+        label.checkbox
+          input(type='checkbox', name='published')
+          span Published
 
     div.form-actions
       button.btn.btn-large.btn-primary(type='submit') Create

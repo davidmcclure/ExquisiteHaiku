@@ -118,7 +118,6 @@ describe('Poem', function() {
       poem.save(function(err) {
 
         // Check for errors.
-        err.errors.user.type.should.eql('required');
         err.errors.created.type.should.eql('required');
         err.errors.started.type.should.eql('required');
         err.errors.running.type.should.eql('required');

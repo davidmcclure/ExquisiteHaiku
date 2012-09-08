@@ -11,44 +11,83 @@ block content
     h1.form-header new poem
 
     // Round length.
-    div.control-group.roundLength
-      label.control-label(for='roundLengthValue') Round Length
-      div.controls
-        input.rLenVal(type='text', name='roundLengthValue', autocomplete='off', value=form.fields.roundLengthValue.default)
-        div.btn-group(data-toggle='buttons-radio')
-          button.seconds.btn.btn-small(type='button', class=(form.fields.roundLengthUnit.default=='seconds' ? 'active' : '')) seconds
-          button.minutes.btn.btn-small(type='button', class=(form.fields.roundLengthUnit.default=='minutes' ? 'active' : '')) minutes
-        input.rLenUnit(type='hidden', name='roundLengthUnit', value=form.fields.roundLengthUnit.default)
+    if form.fields.roundLengthValue.errorHTML() == ''
+      div.control-group.roundLength
+        label.control-label(for='roundLengthValue') Round Length
+        div.controls
+          input.rLenVal(type='text', name='roundLengthValue', autocomplete='off', value=form.fields.roundLengthValue.value)
+          div.btn-group(data-toggle='buttons-radio')
+            button.seconds.btn.btn-small(type='button', class=(form.fields.roundLengthUnit.value=='seconds' ? 'active' : '')) seconds
+            button.minutes.btn.btn-small(type='button', class=(form.fields.roundLengthUnit.value=='minutes' ? 'active' : '')) minutes
+          input.rLenUnit(type='hidden', name='roundLengthUnit', value=form.fields.roundLengthUnit.value)
+    else
+      div.control-group.roundLength.error
+        label.control-label(for='roundLengthValue') Round Length
+        div.controls
+          input.rLenVal(type='text', name='roundLengthValue', autocomplete='off', value=form.fields.roundLengthValue.value)
+          div.btn-group(data-toggle='buttons-radio')
+            button.seconds.btn.btn-small(type='button', class=(form.fields.roundLengthUnit.value=='seconds' ? 'active' : '')) seconds
+            button.minutes.btn.btn-small(type='button', class=(form.fields.roundLengthUnit.value=='minutes' ? 'active' : '')) minutes
+          input.rLenUnit(type='hidden', name='roundLengthUnit', value=form.fields.roundLengthUnit.value)
+          span.help-inline.roundLengthValue= form.fields.roundLengthValue.error
 
     // Seed capital.
-    div.control-group
-      label.control-label(for='seedCapital') Starting Points
-      div.controls
-        input.seedCap(type='text', name='seedCapital', autocomplete='off', value=form.fields.seedCapital.default)
+    if form.fields.seedCapital.errorHTML() == ''
+      div.control-group
+        label.control-label(for='seedCapital') Starting Points
+        div.controls
+          input.seedCap(type='text', name='seedCapital', autocomplete='off', value=form.fields.seedCapital.value)
+    else
+      div.control-group.error
+        label.control-label(for='seedCapital') Starting Points
+        div.controls
+          input.seedCap(type='text', name='seedCapital', autocomplete='off', value=form.fields.seedCapital.value)
+          span.help-inline.seedCapital= form.fields.seedCapital.error
 
     // Minimum submissions.
-    div.control-group
-      label.control-label(for='minSubmissions') Minimum Submissions 
-      div.controls
-        input.minSub(type='text', name='minSubmissions', autocomplete='off', value=form.fields.minSubmissions.default)
+    if form.fields.minSubmissions.errorHTML() == ''
+      div.control-group
+        label.control-label(for='minSubmissions') Min. Submissions 
+        div.controls
+          input.minSub(type='text', name='minSubmissions', autocomplete='off', value=form.fields.minSubmissions.value)
+    else
+      div.control-group.error
+        label.control-label(for='minSubmissions') Min. Submissions 
+        div.controls
+          input.minSub(type='text', name='minSubmissions', autocomplete='off', value=form.fields.minSubmissions.value)
+          span.help-inline.minSubmissions= form.fields.minSubmissions.error
 
     // Submission value.
-    div.control-group
-      label.control-label(for='submissionVal') Submission Value 
-      div.controls
-        input.subVal(type='text', name='submissionVal', autocomplete='off', value=form.fields.submissionVal.default)
+    if form.fields.submissionVal.errorHTML() == ''
+      div.control-group
+        label.control-label(for='submissionVal') Submission Value 
+        div.controls
+          input.subVal(type='text', name='submissionVal', autocomplete='off', value=form.fields.submissionVal.value)
+    else
+      div.control-group.error
+        label.control-label(for='submissionVal') Submission Value 
+        div.controls
+          input.subVal(type='text', name='submissionVal', autocomplete='off', value=form.fields.submissionVal.value)
+          span.help-inline.submissionVal= form.fields.submissionVal.error
 
     // Decay lifetime.
-    div.control-group
-      label.control-label(for='decayLifetime') Decay Halflife
-      div.controls
-        input.decLife(type='text', name='decayLifetime', autocomplete='off', value=form.fields.decayLifetime.default)
+    if form.fields.decayLifetime.errorHTML() == ''
+      div.control-group
+        label.control-label(for='decayLifetime') Decay Halflife
+        div.controls
+          input.decLife(type='text', name='decayLifetime', autocomplete='off', value=form.fields.decayLifetime.value)
+    else
+      div.control-group.error
+        label.control-label(for='decayLifetime') Decay Halflife
+        div.controls
+          input.decLife(type='text', name='decayLifetime', autocomplete='off', value=form.fields.decayLifetime.value)
+          span.help-inline.decayLifetime= form.fields.decayLifetime.error
 
     // Published.
     div.control-group
       div.controls
         label.checkbox
-          if form.fields.published.default
+          if form.fields.published.value
             input.published(type='checkbox', name='published', checked='checked')
           else
             input.published(type='checkbox', name='published')

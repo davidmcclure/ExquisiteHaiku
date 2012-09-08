@@ -73,8 +73,8 @@ describe('Poem Form', function() {
 
   describe('roundLengthValue', function() {
 
-    it('should have a default', function() {
-      form.fields.roundLengthValue.default.should.exist;
+    it('should have a default value', function() {
+      form.fields.roundLengthValue.value.should.exist;
     });
 
     it('should exist', function(done) {
@@ -114,8 +114,8 @@ describe('Poem Form', function() {
 
   describe('roundLengthUnit', function() {
 
-    it('should have a default', function() {
-      form.fields.roundLengthUnit.default.should.exist;
+    it('should have a default value', function() {
+      form.fields.roundLengthUnit.value.should.exist;
     });
 
     it('should exist', function(done) {
@@ -144,8 +144,8 @@ describe('Poem Form', function() {
 
   describe('minSubmissions', function() {
 
-    it('should have a default', function() {
-      form.fields.minSubmissions.default.should.exist;
+    it('should have a default value', function() {
+      form.fields.minSubmissions.value.should.exist;
     });
 
     it('should exist', function(done) {
@@ -185,8 +185,8 @@ describe('Poem Form', function() {
 
   describe('submissionVal', function() {
 
-    it('should have a default', function() {
-      form.fields.submissionVal.default.should.exist;
+    it('should have a default value', function() {
+      form.fields.submissionVal.value.should.exist;
     });
 
     it('should exist', function(done) {
@@ -226,8 +226,8 @@ describe('Poem Form', function() {
 
   describe('decayLifetime', function() {
 
-    it('should have a default', function() {
-      form.fields.decayLifetime.default.should.exist;
+    it('should have a default value', function() {
+      form.fields.decayLifetime.value.should.exist;
     });
 
     it('should exist', function(done) {
@@ -267,8 +267,8 @@ describe('Poem Form', function() {
 
   describe('seedCapital', function() {
 
-    it('should have a default', function() {
-      form.fields.seedCapital.default.should.exist;
+    it('should have a default value', function() {
+      form.fields.seedCapital.value.should.exist;
     });
 
     it('should exist', function(done) {
@@ -308,8 +308,8 @@ describe('Poem Form', function() {
 
   describe('published', function() {
 
-    it('should have a default', function() {
-      form.fields.published.default.should.exist;
+    it('should have a default value', function() {
+      form.fields.published.value.should.exist;
     });
 
   });

@@ -32,9 +32,10 @@ Create.Views.Form = Backbone.View.extend({
 
     // Get new value.
     var val = this._getRoundLengthMs();
+    val = !_.isNaN(val) ? val/10 : '';
 
     // Update seed capital.
-    this.seedCap.val(val/10);
+    this.seedCap.val(val);
 
   },
 
@@ -66,7 +67,7 @@ Create.Views.Form = Backbone.View.extend({
   _getRoundLengthMs: function() {
     var ms = parseInt(this.rLenVal.val(), 10) * 1000;
     if (this.rLenUnit.val() == 'minutes') ms *= 60;
-    return !_.isNaN(ms) ? ms : 0;
+    return ms;
   }
 
 });

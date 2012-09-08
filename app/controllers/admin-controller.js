@@ -90,26 +90,30 @@ module.exports = function(app, io) {
    * @middleware auth.isUser: Block if there is no user session.
    */
   app.post('/admin/new',
-    auth.isUser,
+    auth.getUser,
     function(req, res) {
 
       // Pass control to the form.
       poemForm.form().handle(req, {
 
-        // If field validations pass.
+        // If validations pass.
         success: function(form) {
 
           // Create the poem.
           var poem = new Poem({
-            user:           req.user.id,
-            roundLength:    form.data.roundLength,
-            minSubmissions: form.data.minSubmissions,
-            submissionVal:  form.data.submissionVal,
-            decayLifetime:  form.data.decayLifetime,
-            seedCapital:    form.data.seedCapital,
-            sliceInterval:  app.settings.sliceInterval,
-            visibleWords:   app.settings.visibleWords
+            minSubmissions:     form.data.minSubmissions,
+            submissionVal:      form.data.submissionVal,
+            decayLifetime:      form.data.decayLifetime,
+            seedCapital:        form.data.seedCapital,
+            roundLengthValue:   form.data.roundLengthValue,
+            roundLengthUnit:    form.data.roundLengthUnit,
+            published:          form.data.published,
+            sliceInterval:      app.settings.sliceInterval,
+            visibleWords:       app.settings.visibleWords
           });
+
+          // If session, store user id.
+          if (req.user) poem.user = req.user.id;
 
           // Save and redirect.
           poem.save(function(err) {
@@ -118,7 +122,7 @@ module.exports = function(app, io) {
 
         },
 
-        // If field validations fail.
+        // If validations fail.
         other: function(form) {
 
           // Re-render the form.
@@ -126,7 +130,7 @@ module.exports = function(app, io) {
             title: 'New Poem',
             user: req.user,
             form: form,
-            menu: null
+            menu: 'new'
           });
 
         }

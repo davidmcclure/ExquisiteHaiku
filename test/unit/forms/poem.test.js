@@ -71,18 +71,14 @@ describe('Poem Form', function() {
 
   });
 
-  describe('roundLength', function() {
-
-    it('should have a name attribute', function() {
-      form.fields.roundLength.name.should.be.ok;
-    });
+  describe('roundLengthValue', function() {
 
     it('should exist', function(done) {
 
       form.bind({
-        roundLength: ''
+        roundLengthValue: ''
       }).validate(function(err, form) {
-        form.fields.roundLength.error.should.be.ok;
+        form.fields.roundLengthValue.error.should.be.ok;
         done();
       });
 
@@ -91,9 +87,9 @@ describe('Poem Form', function() {
     it('should be a positive integer', function(done) {
 
       form.bind({
-        roundLength: -5
+        roundLengthValue: -5
       }).validate(function(err, form) {
-        form.fields.roundLength.error.should.be.ok;
+        form.fields.roundLengthValue.error.should.be.ok;
         done();
       });
 
@@ -102,9 +98,35 @@ describe('Poem Form', function() {
     it('should validate when valid', function(done) {
 
       form.bind({
-        roundLength: 1000
+        roundLengthValue: 1000
       }).validate(function(err, form) {
-        assert(!form.fields.roundLength.error);
+        assert(!form.fields.roundLengthValue.error);
+        done();
+      });
+
+    });
+
+  });
+
+  describe('roundLengthUnit', function() {
+
+    it('should exist', function(done) {
+
+      form.bind({
+        roundLengthUnit: ''
+      }).validate(function(err, form) {
+        form.fields.roundLengthUnit.error.should.be.ok;
+        done();
+      });
+
+    });
+
+    it('should validate when valid', function(done) {
+
+      form.bind({
+        roundLengthUnit: 'seconds'
+      }).validate(function(err, form) {
+        assert(!form.fields.roundLengthUnit.error);
         done();
       });
 
@@ -113,10 +135,6 @@ describe('Poem Form', function() {
   });
 
   describe('minSubmissions', function() {
-
-    it('should have a name attribute', function() {
-      form.fields.minSubmissions.name.should.be.ok;
-    });
 
     it('should exist', function(done) {
 
@@ -155,10 +173,6 @@ describe('Poem Form', function() {
 
   describe('submissionVal', function() {
 
-    it('should have a name attribute', function() {
-      form.fields.submissionVal.name.should.be.ok;
-    });
-
     it('should exist', function(done) {
 
       form.bind({
@@ -196,10 +210,6 @@ describe('Poem Form', function() {
 
   describe('decayLifetime', function() {
 
-    it('should have a name attribute', function() {
-      form.fields.decayLifetime.name.should.be.ok;
-    });
-
     it('should exist', function(done) {
 
       form.bind({
@@ -236,10 +246,6 @@ describe('Poem Form', function() {
   });
 
   describe('seedCapital', function() {
-
-    it('should have a name attribute', function() {
-      form.fields.seedCapital.name.should.be.ok;
-    });
 
     it('should exist', function(done) {
 

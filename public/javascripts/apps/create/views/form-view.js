@@ -6,24 +6,36 @@ Create.Views.Form = Backbone.View.extend({
 
   el: '#new',
 
+  events: {
+    'click button.seconds': 'setUnitSeconds',
+    'click button.minutes': 'setUnitMinutes'
+  },
+
   /*
    * Get components.
    *
    * @return void.
    */
   initialize: function() {
-
-    // Get inputs.
-    this.rLenVal = this.$el.find('input.rLenVal');
     this.rLenUnit = this.$el.find('input.rLenUnit');
-    this.rLenSec = this.$el.find('button.seconds');
-    this.rLenMin = this.$el.find('button.minutes');
-    this.seedCap = this.$el.find('input.seedCap');
-    this.minSub = this.$el.find('input.minSub');
-    this.subVal = this.$el.find('input.subVal');
-    this.decLife = this.$el.find('input.decLife');
-    this.published = this.$el.find('input.published');
+  },
 
+  /*
+   * Set round length unit to 'seconds'.
+   *
+   * @return void.
+   */
+  setUnitSeconds: function() {
+    this.rLenUnit.val('seconds');
+  },
+
+  /*
+   * Set round length unit to 'minutes'.
+   *
+   * @return void.
+   */
+  setUnitMinutes: function() {
+    this.rLenUnit.val('minutes');
   }
 
 });

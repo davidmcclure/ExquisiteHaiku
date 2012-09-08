@@ -6,34 +6,41 @@ block content
 
     h1.form-header new poem
 
+    // Round length.
     div.control-group.roundLength
-      label.control-label(for='roundLength') Round Length
+      label.control-label(for='roundLengthValue') Round Length
       div.controls
-        input(type='text', name='roundLength', autocomplete='off')
+        input(type='text', name='roundLengthValue', autocomplete='off')
         div.btn-group(data-toggle='buttons-radio')
           button.btn.btn-small(type='button') seconds
           button.btn.btn-small(type='button') minutes
+        input(type='hidden', name='roundLengthUnit')
 
+    // Minimum submissions.
     div.control-group
       label.control-label(for='minSubmissions') Minimum Submissions 
       div.controls
         input(type='text', name='minSubmissions', autocomplete='off')
 
+    // Submission value.
     div.control-group
       label.control-label(for='submissionVal') Submission Value 
       div.controls
         input(type='text', name='submissionVal', autocomplete='off')
 
+    // Decay lifetime.
     div.control-group
       label.control-label(for='decayLifetime') Decay Halflife
       div.controls
         input(type='text', name='decayLifetime', autocomplete='off')
 
+    // Seed capital.
     div.control-group
       label.control-label(for='seedCapital') Starting Points
       div.controls
         input(type='text', name='seedCapital', autocomplete='off')
 
+    // Published.
     div.control-group
       div.controls
         label.checkbox

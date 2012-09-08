@@ -1,5 +1,9 @@
 extends layout
 
+block js
+  script(src='/javascripts/vendor/load/load.js')
+  script(src='/javascripts/apps/create/loader.js')
+
 block content
 
   form.new(method='post')

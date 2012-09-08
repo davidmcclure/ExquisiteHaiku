@@ -2,6 +2,7 @@
 @import url("http://fonts.googleapis.com/css?family=Bowlby+One+SC");
 ::selection,::-moz-selection{background:#0060cc;color:#fff}
 body{font-family:"Source Sans Pro";font-size:18px;font-weight:300;text-rendering:optimizeLegibility;margin:.5em}
+body:before{content:'';position:fixed;pointer-events:none;background:-webkit-linear-gradient(whiteSmoke 1px,transparent 1px),-webkit-linear-gradient(0,whiteSmoke 1px,transparent 1px);-webkit-background-size:10px 10px,10px 10px;z-index:-1;top:0;right:0;bottom:0;left:0}
 p{font-size:14px}
 .nav{margin-right:1em;font-size:14px;color:#000}
 a.nav:hover,a.nav.active{color:#08c}

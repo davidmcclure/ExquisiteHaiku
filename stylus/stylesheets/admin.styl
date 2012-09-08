@@ -15,6 +15,19 @@ body
   text-rendering optimizeLegibility
   margin 0.5em
 
+body:before
+
+  content ''
+  position fixed
+  pointer-events none
+  background -webkit-linear-gradient(whiteSmoke 1px,transparent 1px),-webkit-linear-gradient(0,whiteSmoke 1px,transparent 1px)
+  -webkit-background-size 10px 10px, 10px 10px
+  z-index -1
+  top 0
+  right 0
+  bottom 0
+  left 0
+
 p
   font-size 14px
 
@@ -28,7 +41,6 @@ a.nav
   &:hover
   &.active
     color #08C
-
 
 .auth
   font-size 14px

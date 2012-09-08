@@ -5,9 +5,9 @@
  // Module dependencies.
 var forms = require('forms');
 var mongoose = require('mongoose');
-var fields = forms.fields;
-var validators = forms.validators;
 var customValidators = require('../validators');
+var validators = forms.validators;
+var fields = forms.fields;
 var _ = require('underscore');
 
 // Models.
@@ -44,33 +44,6 @@ exports.form = function(poem) {
     seedCapital: fields.string({
       required: 'Enter a seed capital amount.',
       value: 18000,
-      validators: [
-        customValidators.positiveInteger('Must be a positive integer.')
-      ]
-    }),
-
-    // Minimum submssions.
-    minSubmissions: fields.string({
-      required: 'Enter a minimum number of submissions.',
-      value: 5,
-      validators: [
-        customValidators.positiveInteger('Must be a positive integer.')
-      ]
-    }),
-
-    // Submission value.
-    submissionVal: fields.string({
-      required: 'Enter a point value for blind submissions.',
-      value: 100,
-      validators: [
-        customValidators.positiveInteger('Must be a positive integer.')
-      ]
-    }),
-
-    // Decay lifetime.
-    decayLifetime: fields.string({
-      required: 'Enter a decay lifetime.',
-      value: 20,
       validators: [
         customValidators.positiveInteger('Must be a positive integer.')
       ]

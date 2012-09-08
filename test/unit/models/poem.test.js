@@ -395,6 +395,22 @@ describe('Poem', function() {
 
     });
 
+    describe('roundLength', function() {
+
+      it('should convert from seconds', function() {
+        poem.roundLengthValue = 30;
+        poem.roundLengthUnit = 'seconds';
+        poem.roundLength.should.eql(30000);
+      });
+
+      it('should convert from minutes', function() {
+        poem.roundLengthValue = 3;
+        poem.roundLengthUnit = 'minutes';
+        poem.roundLength.should.eql(180000);
+      });
+
+    });
+
     describe('roundExpiration', function() {
 
       it('should return the correct expiration when a round exists', function() {

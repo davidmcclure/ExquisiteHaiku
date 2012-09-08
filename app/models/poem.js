@@ -150,7 +150,9 @@ PoemSchema.virtual('round').get(function() {
  * @return {Number}: The round length.
  */
 PoemSchema.virtual('roundLength').get(function() {
-  return 10000;
+  var ms = this.roundLengthValue * 1000;
+  if (this.roundLengthUnit == 'minutes') ms *= 60;
+  return ms;
 });
 
 

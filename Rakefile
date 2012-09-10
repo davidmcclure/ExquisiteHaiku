@@ -1,5 +1,4 @@
 begin
-  require 'pty'
   require 'jasmine'
   load 'jasmine/tasks/jasmine.rake'
 end

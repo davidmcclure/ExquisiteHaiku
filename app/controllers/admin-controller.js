@@ -138,24 +138,4 @@ module.exports = function(app, io) {
 
   });
 
-  /*
-   * Poem status page.
-   *
-   * @middleware auth.getUser: Try to get a user session.
-   */
-  app.get('/:hash/admin',
-    auth.getPoem,
-    auth.getUser,
-    function(req, res) {
-
-      // Show start/stop.
-      res.render('admin/status', {
-        title: req.params.hash,
-        user: req.user,
-        poem: req.poem,
-        menu: null
-      });
-
-  });
-
 };

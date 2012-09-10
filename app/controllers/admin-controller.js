@@ -68,7 +68,7 @@ module.exports = function(app, io) {
   /*
    * New poem form.
    *
-   * @middleware auth.isUser: Block if there is no user session.
+   * @middleware auth.getUser: Try to get a user session.
    */
   app.get('/admin/new',
     auth.getUser,
@@ -87,7 +87,7 @@ module.exports = function(app, io) {
   /*
    * Handle poem form submission.
    *
-   * @middleware auth.isUser: Block if there is no user session.
+   * @middleware auth.getUser: Try to get a user session.
    */
   app.post('/admin/new',
     auth.getUser,
@@ -116,7 +116,7 @@ module.exports = function(app, io) {
 
           // Save and redirect.
           poem.save(function(err) {
-            res.redirect('/admin');
+            res.redirect('/' + poem.hash + '/admin');
           });
 
         },
@@ -134,6 +134,26 @@ module.exports = function(app, io) {
 
         }
 
+      });
+
+  });
+
+  /*
+   * Poem status page.
+   *
+   * @middleware auth.getUser: Try to get a user session.
+   */
+  app.get('/:hash/admin',
+    auth.getPoem,
+    auth.getUser,
+    function(req, res) {
+
+      // Show start/stop.
+      res.render('admin/status', {
+        title: req.params.hash,
+        user: req.user,
+        poem: req.poem,
+        menu: null
       });
 
   });

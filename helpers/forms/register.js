@@ -1,5 +1,5 @@
 /*
- * Installation form.
+ * Register form.
  */
 
  // Module dependencies.
@@ -7,16 +7,16 @@ var forms = require('forms');
 var mongoose = require('mongoose');
 var fields = forms.fields;
 var validators = forms.validators;
-var customValidators = require('../validators');
+var custom = require('../validators');
 
 // Models.
 var User = mongoose.model('User');
 
 
 /*
- * ------------------
- * Installation form.
- * ------------------
+ * --------------
+ * Register form.
+ * --------------
  */
 
 
@@ -31,7 +31,7 @@ exports.form = function() {
       required: 'Enter a username.',
       validators: [
         validators.rangeLength(4, 20, '4-20 characters.'),
-        customValidators.uniqueField(User, 'username', 'Username taken.')
+        custom.uniqueField(User, 'username', 'Username taken.')
       ]
     }),
 
@@ -41,7 +41,7 @@ exports.form = function() {
       label: 'Email',
       required: 'Enter an email address.',
       validators: [
-        customValidators.uniqueField(User, 'email', 'Email taken.')
+        custom.uniqueField(User, 'email', 'Email taken.')
       ]
     }),
 

@@ -5,8 +5,7 @@
  // Module dependencies.
 var forms = require('forms');
 var mongoose = require('mongoose');
-var customValidators = require('../validators');
-var validators = forms.validators;
+var validators = require('../validators');
 var fields = forms.fields;
 var _ = require('underscore');
 
@@ -30,7 +29,7 @@ exports.form = function(poem) {
       required: 'Enter a round length.',
       value: 3,
       validators: [
-        customValidators.positiveInteger('Must be a positive integer.')
+        validators.positiveInteger('Must be a positive integer.')
       ]
     }),
 
@@ -45,7 +44,7 @@ exports.form = function(poem) {
       required: 'Enter a seed capital amount.',
       value: 18000,
       validators: [
-        customValidators.positiveInteger('Must be a positive integer.')
+        validators.positiveInteger('Must be a positive integer.')
       ]
     }),
 
@@ -54,7 +53,7 @@ exports.form = function(poem) {
       required: 'Enter a minimum number of submissions.',
       value: 5,
       validators: [
-        customValidators.positiveInteger('Must be a positive integer.')
+        validators.positiveInteger('Must be a positive integer.')
       ]
     }),
 
@@ -63,7 +62,7 @@ exports.form = function(poem) {
       required: 'Enter a point value for blind submissions.',
       value: 100,
       validators: [
-        customValidators.positiveInteger('Must be a positive integer.')
+        validators.positiveInteger('Must be a positive integer.')
       ]
     }),
 
@@ -72,7 +71,7 @@ exports.form = function(poem) {
       required: 'Enter a decay lifetime.',
       value: 20,
       validators: [
-        customValidators.positiveInteger('Must be a positive integer.')
+        validators.positiveInteger('Must be a positive integer.')
       ]
     }),
 

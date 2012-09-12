@@ -5,14 +5,13 @@
  // Module dependencies.
 var forms = require('forms');
 var fields = forms.fields;
-var validators = forms.validators;
-var customValidators = require('../validators');
+var validators = require('../validators');
 
 
 /*
- * ----------------------
- * Installation form.
- * ----------------------
+ * -----------
+ * Login form.
+ * -----------
  */
 
 
@@ -26,7 +25,7 @@ exports.form = function() {
       label: 'Username',
       required: 'Enter a username.',
       validators: [
-        customValidators.usernameExists('Does not exist.')
+        validators.usernameExists('Does not exist.')
       ]
     }),
 
@@ -36,7 +35,7 @@ exports.form = function() {
       label: 'Password',
       required: 'Enter a password.',
       validators: [
-        customValidators.passwordCorrect('Incorrect.')
+        validators.passwordCorrect('Incorrect.')
       ]
     })
 

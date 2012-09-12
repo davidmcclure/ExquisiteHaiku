@@ -5,12 +5,13 @@ div.container
     span.span5.offset7.secondary-nav
       a.nav(href="#") about
       a.nav(href="#") terms of service 
-      span.nav © 2012 <a href="https://twitter.com/clured" target="_blank" class="nav">@clured</a>
+      span.nav © 2012 
+        - var twitterUrl = "https://twitter.com/clured"
+        a.nav(href="#{twitterUrl}", target="_blank") @clured
 
   div.row
     span.span5.offset2
       block content
-      // ** dev
       &nbsp;
 
     span.span5.logo-block
@@ -20,13 +21,17 @@ div.container
           span.user= user.username
           a.nav(href="/admin/logout") logout
         else
-          a.nav(href="/admin/login", class=(menu=="login" ? "active" : "")) login
-          a.nav(href="/admin/register", class=(menu=="register" ? "active" : "")) register
+          - var c = menu=="login" ? "active" : ""
+          a.nav(href="/admin/login", class=c) login
+          - var c = menu=="register" ? "active" : ""
+          a.nav(href="/admin/register", class=c) register
 
       div.logo
         h1.logo
           a(href="/") exquisitehaiku
         p real-time, multi-player haiku composition
-        a(href="/admin/new", class=(menu=="new" ? "btn-inverse" : "")).btn.btn-primary.btn-large.new-poem New Poem
+        - var c = menu=="new" ? "btn-inverse" : ""
+        a(href="/admin/new", class=c
+          ).btn.btn-primary.btn-large.new-poem New Poem
         if !user
           p.free ( free, anonymous )

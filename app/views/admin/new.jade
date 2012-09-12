@@ -23,30 +23,28 @@ block content
 
         // Length input
         input.rLenVal(
-          type='text',
-          name='roundLengthValue',
-          autocomplete='off',
+          type='text'
+          name='roundLengthValue'
+          autocomplete='off'
           value=rLenVal.value)
 
         // Unit radio buttons.
         div.btn-group(data-toggle='buttons-radio')
 
           // Get active class.
-          - var sClass = rLenUnit.value == 'seconds' ? 'active' : ''
-          - var mClass = rLenUnit.value == 'minutes' ? 'active' : ''
+          - var sClass = rLenUnit.value=='seconds'?'active':''
+          - var mClass = rLenUnit.value=='minutes'?'active':''
 
           // Render the buttons.
           button.seconds.btn.btn-small(
-            type='button',
-            class=sClass) seconds
+            type='button', class=sClass) seconds
           button.minutes.btn.btn-small(
-            type='button',
-            class=mClass) minutes
+            type='button', class=mClass) minutes
 
         // Hidden unit input.
         input.rLenUnit(
-          type='hidden',
-          name='roundLengthUnit',
+          type='hidden'
+          name='roundLengthUnit'
           value=rLenUnit.value)
 
         if error
@@ -61,9 +59,9 @@ block content
       div.controls
 
         input.seedCap(
-          type='text',
-          name='seedCapital',
-          autocomplete='off',
+          type='text'
+          name='seedCapital'
+          autocomplete='off'
           value=seedCap.value)
 
         if error
@@ -78,9 +76,9 @@ block content
       div.controls
 
         input.minSub(
-          type='text',
-          name='minSubmissions',
-          autocomplete='off',
+          type='text'
+          name='minSubmissions'
+          autocomplete='off'
           value=minSub.value)
 
         if error
@@ -95,9 +93,9 @@ block content
       div.controls
 
         input.subVal(
-          type='text',
-          name='submissionVal',
-          autocomplete='off',
+          type='text'
+          name='submissionVal'
+          autocomplete='off'
           value=subVal.value)
 
         if error
@@ -112,9 +110,9 @@ block content
       div.controls
 
         input.decLife(
-          type='text',
-          name='decayLifetime',
-          autocomplete='off',
+          type='text'
+          name='decayLifetime'
+          autocomplete='off'
           value=subVal.value)
 
         if error
@@ -127,12 +125,12 @@ block content
         label.checkbox
           if form.fields.published.value
             input.published(
-              type='checkbox',
-              name='published',
+              type='checkbox'
+              name='published'
               checked='checked')
           else
             input.published(
-              type='checkbox',
+              type='checkbox'
               name='published')
           span Published
 

@@ -104,11 +104,11 @@ module.exports = function(app, io) {
             seedCapital:        form.data.seedCapital,
             roundLengthValue:   form.data.roundLengthValue,
             roundLengthUnit:    form.data.roundLengthUnit,
-            published:          form.data.published,
-            submissionVal:      global.config.submissionVal,
-            decayLifetime:      global.config.decayLifetime,
-            sliceInterval:      global.config.sliceInterval,
-            visibleWords:       global.config.visibleWords
+            submissionVal:      form.data.submissionVal,
+            decayLifetime:      form.data.decayLifetime,
+            sliceInterval:      form.data.sliceInterval,
+            visibleWords:       form.data.visibleWords,
+            published:          form.data.published
           });
 
           // If session, store user id.

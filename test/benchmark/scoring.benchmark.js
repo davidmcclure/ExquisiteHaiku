@@ -41,7 +41,8 @@ var user = new User({
 var poem = new Poem({
   user: user.id,
   roundLength: 10000,
-  sliceInterval: 3,
+  sliceInterval: 300,
+  minSubmissions: 5,
   submissionVal: 100,
   decayLifetime: 60000,
   seedCapital: 1000,

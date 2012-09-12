@@ -3,11 +3,11 @@ div.container
   div.row
 
     span.span5.offset7.secondary-nav
-      a.nav(href="#") about
-      a.nav(href="#") terms of service 
+      a.nav(href='#') about
+      a.nav(href='#') terms of service 
       span.nav © 2012 
-        - var twitterUrl = "https://twitter.com/clured"
-        a.nav(href="#{twitterUrl}", target="_blank") @clured
+        - var twitterUrl = 'https://twitter.com/clured'
+        a.nav(href='#{twitterUrl}', target='_blank') @clured
 
   div.row
     span.span5.offset2
@@ -19,19 +19,18 @@ div.container
       div.auth
         if user
           span.user= user.username
-          a.nav(href="/admin/logout") logout
+          a.nav(href='/admin/logout') logout
         else
-          - var c = menu=="login" ? "active" : ""
-          a.nav(href="/admin/login", class=c) login
-          - var c = menu=="register" ? "active" : ""
-          a.nav(href="/admin/register", class=c) register
+          - var c = menu=='login' ? 'active' : ''
+          a.nav(href='/admin/login', class=c) login
+          - var c = menu=='register' ? 'active' : ''
+          a.nav(href='/admin/register', class=c) register
 
       div.logo
         h1.logo
-          a(href="/") exquisitehaiku
+          a(href='/') exquisitehaiku
         p real-time, multi-player haiku composition
-        - var c = menu=="new" ? "btn-inverse" : ""
-        a(href="/admin/new", class=c
-          ).btn.btn-primary.btn-large.new-poem New Poem
-        if !user
-          p.free ( free, anonymous )
+        - var c = menu=='new' ? 'btn-inverse' : ''
+        if user
+          a(href='/admin/new', class=c
+            ).btn.btn-primary.btn-large.new-poem New Poem

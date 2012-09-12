@@ -27,7 +27,7 @@ module.exports = function(app, io) {
    * Front page.
    */
   app.get('/', 
-    auth.getUser,
+    auth.isUser,
     function(req, res) {
 
     // Render the layout.
@@ -71,7 +71,7 @@ module.exports = function(app, io) {
    * @middleware auth.getUser: Try to get a user session.
    */
   app.get('/admin/new',
-    auth.getUser,
+    auth.isUser,
     function(req, res) {
 
       // Render the form.
@@ -90,7 +90,7 @@ module.exports = function(app, io) {
    * @middleware auth.getUser: Try to get a user session.
    */
   app.post('/admin/new',
-    auth.getUser,
+    auth.isUser,
     function(req, res) {
 
       // Pass control to the form.
@@ -101,6 +101,7 @@ module.exports = function(app, io) {
 
           // Create the poem.
           var poem = new Poem({
+            user:               req.user.id,
             seedCapital:        form.data.seedCapital,
             roundLengthValue:   form.data.roundLengthValue,
             roundLengthUnit:    form.data.roundLengthUnit,
@@ -110,9 +111,6 @@ module.exports = function(app, io) {
             visibleWords:       form.data.visibleWords,
             published:          form.data.published
           });
-
-          // If session, store user id.
-          if (req.user) poem.user = req.user.id;
 
           // Save and redirect.
           poem.save(function(err) {

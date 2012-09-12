@@ -48,19 +48,19 @@ exports.form = function(poem) {
       ]
     }),
 
-    // Minimum submssions.
-    minSubmissions: fields.string({
-      required: 'Enter a minimum number of submissions.',
-      value: 5,
+    // Submission value.
+    submissionVal: fields.string({
+      required: 'Enter a point value for blind submissions.',
+      value: 100,
       validators: [
         validators.positiveInteger('Must be a positive integer.')
       ]
     }),
 
-    // Submission value.
-    submissionVal: fields.string({
-      required: 'Enter a point value for blind submissions.',
-      value: 100,
+    // Minimum submssions.
+    minSubmissions: fields.string({
+      required: 'Enter a minimum number of submissions.',
+      value: 5,
       validators: [
         validators.positiveInteger('Must be a positive integer.')
       ]

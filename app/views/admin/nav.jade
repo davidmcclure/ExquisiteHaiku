@@ -28,9 +28,9 @@ div.container
 
       div.logo
         h1.logo
-          a(href='/') exquisitehaiku
+          a(href=(user ? '/admin' : '/')) exquisitehaiku
         p real-time, multi-player haiku composition
         - var c = menu=='new' ? 'btn-inverse' : ''
         if user
-          a(href='/admin/new', class=c
-            ).btn.btn-primary.btn-large.new-poem New Poem
+          a.btn.btn-primary.btn-large.new-poem(
+            href='/admin/new', class=c) New Poem

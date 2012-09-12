@@ -1,3 +1,10 @@
 extends layout
 
 block content
+  each poem in poems
+    div.poem
+      div.hash= poem.hash
+      each line in poem.words
+        div.line
+          each word in line
+            span.word= word

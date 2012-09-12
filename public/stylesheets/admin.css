@@ -1,6 +1,6 @@
 @import url("http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400");
 @import url("http://fonts.googleapis.com/css?family=Bowlby+One+SC");
-@import url("http://fonts.googleapis.com/css?family=PTMono");
+@import url("http://fonts.googleapis.com/css?family=PT+Mono");
 ::selection,::-moz-selection{background:#0060cc;color:#fff}
 body{font-family:"Source Sans Pro";font-size:18px;font-weight:300;text-rendering:optimizeLegibility;margin:.5em}
 body:before{content:'';position:fixed;pointer-events:none;background:-webkit-linear-gradient(whiteSmoke 1px,transparent 1px),-webkit-linear-gradient(0,whiteSmoke 1px,transparent 1px);-webkit-background-size:10px 10px,10px 10px;z-index:-1;top:0;right:0;bottom:0;left:0}
@@ -26,3 +26,7 @@ form#new .control-group{margin-bottom:5px;}
 form#new .control-group.error input{border-color:#b94a48 !important}
 form#new div.roundLength{margin-bottom:.8em}
 form#new .btn-group{display:inline-block;margin:-9px 0 0 10px}
+.poem{margin-bottom:1.2em;}
+.poem .hash{margin-bottom:.2em;font-family:"PT Mono";font-size:18px}
+.poem .line{line-height:24px}
+.poem .word{margin-right:5px;font-size:24px;font-weight:200}

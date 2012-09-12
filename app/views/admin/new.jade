@@ -68,58 +68,55 @@ block content
           span.help-inline.seedCapital= seedCap.error
 
 
-    div#advanced
+    // Submission value.
+    - var subVal = form.fields.submissionVal
+    - var error = subVal.errorHTML() != ''
+    div.control-group(class=(error ? 'error' : ''))
+      label.control-label(for='submissionVal') Submission value
+      div.controls
+
+        input.subVal(
+          type='text'
+          name='submissionVal'
+          autocomplete='off'
+          value=subVal.value)
+
+        if error
+          span.help-inline.submissionVal= subVal.error
 
 
-      // Submission value.
-      - var subVal = form.fields.submissionVal
-      - var error = subVal.errorHTML() != ''
-      div.control-group(class=(error ? 'error' : ''))
-        label.control-label(for='submissionVal') Submission value
-        div.controls
+    // Minimum submissions.
+    - var minSub = form.fields.minSubmissions
+    - var error = minSub.errorHTML() != ''
+    div.control-group(class=(error ? 'error' : ''))
+      label.control-label(for='minSubmissions') Min. Submissions
+      div.controls
 
-          input.subVal(
-            type='text'
-            name='submissionVal'
-            autocomplete='off'
-            value=subVal.value)
+        input.minSub(
+          type='text'
+          name='minSubmissions'
+          autocomplete='off'
+          value=minSub.value)
 
-          if error
-            span.help-inline.submissionVal= subVal.error
-
-
-      // Minimum submissions.
-      - var minSub = form.fields.minSubmissions
-      - var error = minSub.errorHTML() != ''
-      div.control-group(class=(error ? 'error' : ''))
-        label.control-label(for='minSubmissions') Min. Submissions
-        div.controls
-
-          input.minSub(
-            type='text'
-            name='minSubmissions'
-            autocomplete='off'
-            value=minSub.value)
-
-          if error
-            span.help-inline.minSubmissions= minSub.error
+        if error
+          span.help-inline.minSubmissions= minSub.error
 
 
-      // Decay lifetime.
-      - var decLife = form.fields.decayLifetime
-      - var error = decLife.errorHTML() != ''
-      div.control-group(class=(error ? 'error' : ''))
-        label.control-label(for='decayLifetime') Decay Lifetime
-        div.controls
+    // Decay lifetime.
+    - var decLife = form.fields.decayLifetime
+    - var error = decLife.errorHTML() != ''
+    div.control-group(class=(error ? 'error' : ''))
+      label.control-label(for='decayLifetime') Decay Lifetime
+      div.controls
 
-          input.decLife(
-            type='text'
-            name='decayLifetime'
-            autocomplete='off'
-            value=decLife.value)
+        input.decLife(
+          type='text'
+          name='decayLifetime'
+          autocomplete='off'
+          value=decLife.value)
 
-          if error
-            span.help-inline.decayLifetime= decLife.error
+        if error
+          span.help-inline.decayLifetime= decLife.error
 
 
     // Published.

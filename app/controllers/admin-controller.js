@@ -27,7 +27,7 @@ module.exports = function(app, io) {
    * Front page.
    */
   app.get('/', 
-    auth.isUser,
+    auth.getUser,
     function(req, res) {
 
     // Render the layout.
@@ -49,9 +49,10 @@ module.exports = function(app, io) {
     function(req, res) {
 
       // Get poems, sort by date created.
-      Poem.find({
-        user: req.user.id
-      }).sort('-created').execFind(function(err, poems) {
+      Poem
+      .find({ user: req.user.id })
+      .sort('-created')
+      .exec(function(err, poems) {
 
         // Render the list.
         res.render('admin/browse', {
@@ -106,15 +107,16 @@ module.exports = function(app, io) {
             roundLengthValue:   form.data.roundLengthValue,
             roundLengthUnit:    form.data.roundLengthUnit,
             submissionVal:      form.data.submissionVal,
+            minSubmissions:     form.data.minSubmissions,
             decayLifetime:      form.data.decayLifetime,
-            sliceInterval:      form.data.sliceInterval,
-            visibleWords:       form.data.visibleWords,
+            sliceInterval:      config.sliceInterval,
+            visibleWords:       config.visibleWords,
             published:          form.data.published
           });
 
           // Save and redirect.
           poem.save(function(err) {
-            res.redirect('/' + poem.hash + '/admin');
+            res.redirect('/admin');
           });
 
         },

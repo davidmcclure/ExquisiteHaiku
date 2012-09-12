@@ -140,6 +140,130 @@ describe('Poem Form', function() {
 
     });
 
+
+
+  describe('minSubmissions', function() {
+
+    it('should have a default value', function() {
+      form.fields.minSubmissions.value.should.exist;
+    });
+
+    it('should exist', function(done) {
+
+      form.bind({
+        minSubmissions: ''
+      }).validate(function(err, form) {
+        form.fields.minSubmissions.error.should.be.ok;
+        done();
+      });
+
+    });
+
+    it('should be a positive integer', function(done) {
+
+      form.bind({
+        minSubmissions: -5
+      }).validate(function(err, form) {
+        form.fields.minSubmissions.error.should.be.ok;
+        done();
+      });
+
+    });
+
+    it('should validate when valid', function(done) {
+
+      form.bind({
+        minSubmissions: 5
+      }).validate(function(err, form) {
+        assert(!form.fields.minSubmissions.error);
+        done();
+      });
+
+    });
+
+  });
+
+  describe('submissionVal', function() {
+
+    it('should have a default value', function() {
+      form.fields.submissionVal.value.should.exist;
+    });
+
+    it('should exist', function(done) {
+
+      form.bind({
+        submissionVal: ''
+      }).validate(function(err, form) {
+        form.fields.submissionVal.error.should.be.ok;
+        done();
+      });
+
+    });
+
+    it('should be a positive integer', function(done) {
+
+      form.bind({
+        submissionVal: -5
+      }).validate(function(err, form) {
+        form.fields.submissionVal.error.should.be.ok;
+        done();
+      });
+
+    });
+
+    it('should validate when valid', function(done) {
+
+      form.bind({
+        submissionVal: 5
+      }).validate(function(err, form) {
+        assert(!form.fields.submissionVal.error);
+        done();
+      });
+
+    });
+
+  });
+
+  describe('decayLifetime', function() {
+
+    it('should have a default value', function() {
+      form.fields.decayLifetime.value.should.exist;
+    });
+
+    it('should exist', function(done) {
+
+      form.bind({
+        decayLifetime: ''
+      }).validate(function(err, form) {
+        form.fields.decayLifetime.error.should.be.ok;
+        done();
+      });
+
+    });
+
+    it('should be a positive integer', function(done) {
+
+      form.bind({
+        decayLifetime: -5
+      }).validate(function(err, form) {
+        form.fields.decayLifetime.error.should.be.ok;
+        done();
+      });
+
+    });
+
+    it('should validate when valid', function(done) {
+
+      form.bind({
+        decayLifetime: 5
+      }).validate(function(err, form) {
+        assert(!form.fields.decayLifetime.error);
+        done();
+      });
+
+    });
+
+  });
   });
 
   describe('published', function() {

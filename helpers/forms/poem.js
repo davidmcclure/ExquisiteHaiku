@@ -49,6 +49,33 @@ exports.form = function(poem) {
       ]
     }),
 
+    // Minimum submssions.
+    minSubmissions: fields.string({
+      required: 'Enter a minimum number of submissions.',
+      value: 5,
+      validators: [
+        customValidators.positiveInteger('Must be a positive integer.')
+      ]
+    }),
+
+    // Submission value.
+    submissionVal: fields.string({
+      required: 'Enter a point value for blind submissions.',
+      value: 100,
+      validators: [
+        customValidators.positiveInteger('Must be a positive integer.')
+      ]
+    }),
+
+    // Decay lifetime.
+    decayLifetime: fields.string({
+      required: 'Enter a decay lifetime.',
+      value: 20,
+      validators: [
+        customValidators.positiveInteger('Must be a positive integer.')
+      ]
+    }),
+
     // Published.
     published: fields.boolean({
       value: true

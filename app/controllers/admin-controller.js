@@ -137,4 +137,64 @@ module.exports = function(app, io) {
 
   });
 
+  /*
+   * Delete poem.
+   *
+   * @middleware auth.isUser: Block if there is no user session.
+   * @middleware auth.getPoem: Pass the poem identified by :slug.
+   * @middleware auth.ownsPoem: Pass if the poem belongs to the user.
+   */
+  app.post('/admin/poems/delete/:hash',
+    auth.isUser,
+    auth.getPoem,
+    auth.ownsPoem,
+    function(req, res) {
+
+      // Stop poem..
+      req.poem.stop();
+
+      // Remove and redirect.
+      req.poem.remove(function(err) {
+        res.redirect('/admin/poems');
+      });
+
+  });
+
+  /*
+   * Start poem.
+   *
+   * @middleware auth.isUser: Block if there is no user session.
+   * @middleware auth.getPoem: Pass the poem identified by :slug.
+   * @middleware auth.ownsPoem: Pass if the poem belongs to the user.
+   */
+  app.post('/admin/poems/start/:hash',
+    auth.isUser,
+    auth.getPoem,
+    auth.ownsPoem,
+    function(req, res) {
+
+      // Get broadcast callback.
+      var emit = scoring.getEmitter(io, req.poem.id);
+
+      // Create starting round, start.
+      if (req.poem.unstarted) req.poem.newRound();
+      req.poem.start(scoring.execute, emit, function() {});
+
+  });
+
+  /*
+   * Stop poem.
+   *
+   * @middleware auth.isUser: Block if there is no user session.
+   * @middleware auth.getPoem: Pass the poem identified by :slug.
+   * @middleware auth.ownsPoem: Pass if the poem belongs to the user.
+   */
+  app.get('/admin/poems/stop/:hash',
+    auth.isUser,
+    auth.getPoem,
+    auth.ownsPoem,
+    function(req, res) {
+      req.poem.stop();
+  });
+
 };

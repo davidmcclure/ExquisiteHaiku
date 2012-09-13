@@ -25,19 +25,19 @@ exports._ = require('underscore');
 
 // User.
 var user = require('../app/models/user');
-exports.User = mongoose.model('User');
+exports.User = exports.mongoose.model('User');
 
 // Poem.
 var poem = require('../app/models/poem');
-exports.Poem = mongoose.model('Poem');
+exports.Poem = exports.mongoose.model('Poem');
 
 // Round.
 var round = require('../app/models/round');
-exports.Round = mongoose.model('Round');
+exports.Round = exports.mongoose.model('Round');
 
 // Vote.
 var vote = require('../app/models/vote');
-exports.Vote = mongoose.model('Vote');
+exports.Vote = exports.mongoose.model('Vote');
 
 
 // Helpers
@@ -63,7 +63,7 @@ exports.validators = require('../helpers/validators');
 // ------
 
 // Load configuration.
-exports.root = config.readConfig('test/config.yaml').root;
+exports.root = exports.config.readConfig('test/config.yaml').root;
 
 
 // Run

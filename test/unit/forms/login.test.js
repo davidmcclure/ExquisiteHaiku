@@ -2,49 +2,7 @@
  * Unit tests for login form.
  */
 
-// Modules
-// -------
-var mocha = require('mocha');
-var should = require('should');
-var assert = require('assert');
-var async = require('async');
-var sinon = require('sinon');
-var config = require('yaml-config');
-var mongoose = require('mongoose');
-var helpers = require('../../helpers');
-var _ = require('underscore');
-
-
-// Models
-// ------
-
-// User.
-require('../../../app/models/user');
-var User = mongoose.model('User');
-
-
-// Helpers
-// -------
-
-// Login form.
-var loginForm = require('../../../helpers/forms/login');
-
-
-// Config
-// ------
-
-var root = config.readConfig('test/config.yaml').root;
-
-
-// Run
-// ---
-
-process.env.NODE_ENV = 'testing';
-var server = require('../../../app');
-
-
-// Specs
-// -----
+var _t = require('../../dependencies.js');
 
 describe('Login Form', function() {
 
@@ -53,27 +11,27 @@ describe('Login Form', function() {
   beforeEach(function(done) {
 
     // Create the form.
-    form = loginForm.form();
+    form = _t.loginForm.form();
 
     // Create admin user.
-    user1 = new User({
+    user1 = new _t.User({
       username: 'david',
       password: 'password',
       email: 'david@test.org'
     });
 
     // Create nont-admin user.
-    user2 = new User({
+    user2 = new _t.User({
       username: 'kara',
       password: 'password',
       email: 'kara@test.org'
     });
 
     // Save.
-    async.map([
+    _t.async.map([
       user1,
       user2
-    ], helpers.save, function(err, documents) {
+    ], _t.helpers.save, function(err, documents) {
       done()
     });
 
@@ -81,7 +39,7 @@ describe('Login Form', function() {
 
   // Clear collections.
   afterEach(function(done) {
-    User.collection.remove(function(err) { done(); });
+    _t.User.collection.remove(function(err) { done(); });
   });
 
   describe('username', function() {
@@ -117,7 +75,7 @@ describe('Login Form', function() {
       form.bind({
         username: 'david'
       }).validate(function(err, form) {
-        assert(!form.fields.username.error);
+        _t.assert(!form.fields.username.error);
         done();
       });
 
@@ -148,7 +106,7 @@ describe('Login Form', function() {
         username: 'david',
         password: 'password'
       }).validate(function(err, form) {
-        assert(!form.fields.password.error);
+        _t.assert(!form.fields.password.error);
         done();
       });
 

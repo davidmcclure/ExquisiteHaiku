@@ -203,16 +203,16 @@ describe('Admin Controller', function() {
 
   describe('GET /admin/new', function() {
 
-      // Log user in.
-      beforeEach(function(done) {
-        browser.visit(_t.root+'admin/login', function() {
-          browser.fill('username', 'user1');
-          browser.fill('password', 'password');
-          browser.pressButton('Submit', function() {
-            done();
-          });
+    // Log user in.
+    beforeEach(function(done) {
+      browser.visit(_t.root+'admin/login', function() {
+        browser.fill('username', 'user1');
+        browser.fill('password', 'password');
+        browser.pressButton('Submit', function() {
+          done();
         });
       });
+    });
 
     it('should render the form', function(done) {
 
@@ -238,9 +238,103 @@ describe('Admin Controller', function() {
 
   describe('POST /admin/new', function() {
 
-    it('should flash errors for empty fields');
-    it('should flash errors for ! positive integers');
-    it('should create a new poem and redirect on success');
+    // GET /admin/new.
+    beforeEach(function(done) {
+      browser.visit(_t.root+'admin/login', function() {
+        browser.fill('username', 'user1');
+        browser.fill('password', 'password');
+        browser.pressButton('Submit', function() {
+          browser.visit(_t.root+'admin/new', function() {
+            done();
+          });
+        });
+      });
+    });
+
+    it('should flash errors for empty fields', function(done) {
+
+      // Empty form.
+      browser.fill('roundLengthValue', '');
+      browser.fill('seedCapital', '');
+      browser.fill('submissionVal', '');
+      browser.fill('minSubmissions', '');
+      browser.fill('decayLifetime', '');
+      browser.pressButton('Create', function() {
+
+        // Check for errors.
+        browser.location.pathname.should.eql('/admin/new');
+        browser.query('span.help-inline.roundLengthValue').should.be.ok;
+        browser.query('span.help-inline.seedCapital').should.be.ok;
+        browser.query('span.help-inline.submissionVal').should.be.ok;
+        browser.query('span.help-inline.minSubmissions').should.be.ok;
+        browser.query('span.help-inline.decayLifetime').should.be.ok;
+
+        // Check that no poem was created.
+        _t.Poem.count(function(err, count) {
+          count.should.eql(0);
+          done();
+        });
+
+      });
+
+    });
+
+    it('should flash errors for ! positive integers', function(done) {
+
+      // Empty form.
+      browser.fill('roundLengthValue', '-5');
+      browser.fill('seedCapital', '-5');
+      browser.fill('submissionVal', '-5');
+      browser.fill('minSubmissions', '-5');
+      browser.fill('decayLifetime', '-5');
+      browser.pressButton('Create', function() {
+
+        // Check for errors.
+        browser.location.pathname.should.eql('/admin/new');
+        browser.query('span.help-inline.roundLengthValue').should.be.ok;
+        browser.query('span.help-inline.seedCapital').should.be.ok;
+        browser.query('span.help-inline.submissionVal').should.be.ok;
+        browser.query('span.help-inline.minSubmissions').should.be.ok;
+        browser.query('span.help-inline.decayLifetime').should.be.ok;
+
+        // Check that no poem was created.
+        _t.Poem.count(function(err, count) {
+          count.should.eql(0);
+          done();
+        });
+
+      });
+
+    });
+
+    it('should create a new poem and redirect on success', function(done) {
+
+      // Empty form.
+      browser.fill('roundLengthValue', '3');
+      browser.fill('roundLengthUnit', 'minutes');
+      browser.fill('seedCapital', '18000');
+      browser.fill('submissionVal', '100');
+      browser.fill('minSubmissions', '5');
+      browser.fill('decayLifetime', '20');
+      browser.pressButton('Create', function() {
+
+        // Check for redirect.
+        browser.location.pathname.should.eql('/admin');
+
+        // Get all poem, check parameters.
+        _t.Poem.find({}, function(err, poems) {
+          poems[0].roundLengthValue.should.eql(3);
+          poems[0].roundLengthUnit.should.eql('minutes');
+          poems[0].seedCapital.should.eql(18000);
+          poems[0].submissionVal.should.eql(100);
+          poems[0].minSubmissions.should.eql(5);
+          poems[0].decayLifetime.should.eql(20);
+          done();
+        });
+
+      });
+
+    });
 
   });
 

@@ -155,8 +155,37 @@ describe('Admin Controller', function() {
 
   });
 
-  describe('test', function() {
-    _t.assert(true);
+  describe('GET /', function() {
+
+    describe('for anonymous user', function() {
+
+      it('should show login link');
+      it('should shoe register link');
+
+    });
+
+    describe('for logged in user', function() {
+
+      it('should not show login link');
+      it('should not show register link');
+      it('should show logout link');
+
+    });
+
+  });
+
+  describe('GET /admin/new', function() {
+
+    it('should render the form');
+
+  });
+
+  describe('POST /admin/new', function() {
+
+    it('should flash errors for empty fields');
+    it('should flash errors for ! positive integers');
+    it('should create a new poem and redirect on success');
+
   });
 
 });

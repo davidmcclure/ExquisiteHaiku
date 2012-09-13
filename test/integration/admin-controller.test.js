@@ -47,7 +47,7 @@ describe('Admin Controller', function() {
     // Create running poem.
     running = new _t.Poem({
       user:             user1.id,
-      rounds:           [new Round()],
+      rounds:           [new _t.Round()],
       started:          true,
       running:          true,
       complete:         false,
@@ -63,7 +63,7 @@ describe('Admin Controller', function() {
     // Create paused poem.
     paused = new _t.Poem({
       user:             user1.id,
-      rounds:           [new Round()],
+      rounds:           [new _t.Round()],
       started:          true,
       running:          false,
       complete:         false,
@@ -79,7 +79,7 @@ describe('Admin Controller', function() {
     // Create complete poem.
     complete = new _t.Poem({
       user:             user1.id,
-      rounds:           [new Round()],
+      rounds:           [new _t.Round()],
       started:          true,
       running:          false,
       complete:         true,
@@ -108,7 +108,7 @@ describe('Admin Controller', function() {
     });
 
     // Save.
-    async.map([
+    _t.async.map([
       user1,
       user2,
       unstarted,
@@ -117,19 +117,7 @@ describe('Admin Controller', function() {
       complete,
       user2poem
     ], _t.helpers.save, function(err, documents) {
-
-      // Login as an admin user.
-      browser.visit(root+'admin/login', function() {
-
-        // Fill in form, submit.
-        browser.fill('username', 'user1');
-        browser.fill('password', 'password');
-        browser.pressButton('Submit', function() {
-          done();
-        });
-
-      });
-
+      done();
     });
 
   });
@@ -138,7 +126,7 @@ describe('Admin Controller', function() {
   afterEach(function(done) {
 
     // Clear the intervals.
-    _.each(global.Oversoul.timers, function(int, id) {
+    _t._.each(global.Oversoul.timers, function(int, id) {
       clearInterval(int);
     });
 
@@ -146,7 +134,7 @@ describe('Admin Controller', function() {
     global.Oversoul.timers = {};
 
     // Truncate.
-    async.map([
+    _t.async.map([
       _t.User,
       _t.Poem
     ], _t.helpers.remove, function(err, models) {
@@ -159,16 +147,55 @@ describe('Admin Controller', function() {
 
     describe('for anonymous user', function() {
 
-      it('should show login link');
-      it('should shoe register link');
+      it('should show login link', function(done) {
+        browser.visit(_t.root, function() {
+          browser.query('a[href="/admin/login"]').should.be.ok;
+          done();
+        });
+      });
+
+      it('should show register link', function(done) {
+        browser.visit(_t.root, function() {
+          browser.query('a[href="/admin/register"]').should.be.ok;
+          done();
+        });
+      });
 
     });
 
     describe('for logged in user', function() {
 
-      it('should not show login link');
-      it('should not show register link');
-      it('should show logout link');
+      // Log user in.
+      beforeEach(function(done) {
+        browser.visit(_t.root+'admin/login', function() {
+          browser.fill('username', 'user1');
+          browser.fill('password', 'password');
+          browser.pressButton('Submit', function() {
+            done();
+          });
+        });
+      });
+
+      it('should not show login link', function(done) {
+        browser.visit(_t.root, function() {
+          _t.assert(!browser.query('a[href="/admin/login"]'));
+          done();
+        });
+      });
+
+      it('should not show register link', function(done) {
+        browser.visit(_t.root, function() {
+          _t.assert(!browser.query('a[href="/admin/register"]'));
+          done();
+        });
+      });
+
+      it('should show logout link', function(done) {
+        browser.visit(_t.root, function() {
+          browser.query('a[href="/admin/logout"]').should.be.ok;
+          done();
+        });
+      });
 
     });
 

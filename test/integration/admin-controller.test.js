@@ -203,7 +203,36 @@ describe('Admin Controller', function() {
 
   describe('GET /admin/new', function() {
 
-    it('should render the form');
+      // Log user in.
+      beforeEach(function(done) {
+        browser.visit(_t.root+'admin/login', function() {
+          browser.fill('username', 'user1');
+          browser.fill('password', 'password');
+          browser.pressButton('Submit', function() {
+            done();
+          });
+        });
+      });
+
+    it('should render the form', function(done) {
+
+      browser.visit(_t.root+'admin/new', function() {
+
+        // Check for form and fields.
+        browser.query('form').should.be.ok;
+        browser.query('form input[name="roundLengthValue"]').should.be.ok;
+        browser.query('form input[name="roundLengthUnit"]').should.be.ok;
+        browser.query('form input[name="seedCapital"]').should.be.ok;
+        browser.query('form input[name="submissionVal"]').should.be.ok;
+        browser.query('form input[name="minSubmissions"]').should.be.ok;
+        browser.query('form input[name="decayLifetime"]').should.be.ok;
+        browser.query('form input[name="published"]').should.be.ok;
+        browser.query('form button[type="submit"]').should.be.ok;
+        done();
+
+      });
+
+    });
 
   });
 

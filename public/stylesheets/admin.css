@@ -19,7 +19,8 @@ a.nav:hover,a.nav.active{color:#08c}
 form{margin-top:5em;}
 form h1.form-header{font-family:"Bowlby One SC";font-size:1.4em;margin-bottom:.5em;font-weight:300;opacity:.8}
 form#new{margin-top:2.4em;}
-form#new input[type='text']{display:inline-block;padding:10px;font-size:20px;width:100px;color:#bbb}
+form#new input[type='text']{display:inline-block;font-weight:300;padding:10px;font-size:20px;width:100px;color:#bbb;}
+form#new input[type='text']:focus{color:#555}
 form#new input[name='roundLengthValue']{padding:20px;font-size:35px;width:80px;border:2px solid #7e7e7e;color:#555;}
 form#new input[name='roundLengthValue']:focus{border-color:#08c}
 form#new .control-group{margin-bottom:5px;}
@@ -27,6 +28,6 @@ form#new .control-group.error input{border-color:#b94a48 !important}
 form#new div.roundLength{margin-bottom:.8em}
 form#new .btn-group{display:inline-block;margin:-9px 0 0 10px}
 .poem{margin-bottom:1.2em;}
-.poem .hash{margin-bottom:.2em;font-family:"PT Mono";font-size:18px}
+.poem .hash{margin-bottom:.2em;font-family:Consolas;font-size:14px;opacity:.6}
 .poem .line{line-height:24px}
 .poem .word{margin-right:5px;font-size:24px;font-weight:200}

@@ -98,10 +98,14 @@ form
 
     input[type='text']
       display inline-block
+      font-weight 300
       padding 10px
       font-size 20px
       width 100px
       color #bbb
+
+      &:focus
+        color #555
 
     input[name='roundLengthValue']
       padding 20px
@@ -133,8 +137,9 @@ form
 
   .hash
     margin-bottom 0.2em
-    font-family "PT Mono"
-    font-size 18px
+    font-family Consolas
+    font-size 14px
+    opacity 0.6
 
   .line
     line-height 24px

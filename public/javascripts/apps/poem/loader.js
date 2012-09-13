@@ -10,7 +10,6 @@ load(
   // jQuery, Underscore, Moment, d3.
   v+'jquery/jquery.js',
   v+'underscore/underscore.js',
-  v+'moment/moment.js',
   v+'d3/d3.js'
 
 ).then(

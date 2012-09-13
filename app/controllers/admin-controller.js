@@ -189,7 +189,7 @@ module.exports = function(app, io) {
    * @middleware auth.getPoem: Pass the poem identified by :slug.
    * @middleware auth.ownsPoem: Pass if the poem belongs to the user.
    */
-  app.get('/admin/poems/stop/:hash',
+  app.post('/admin/poems/stop/:hash',
     auth.isUser,
     auth.getPoem,
     auth.ownsPoem,

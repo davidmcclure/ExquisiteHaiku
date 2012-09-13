@@ -7,12 +7,12 @@
 exports.mocha = require('mocha');
 exports.should = require('should');
 exports.assert = require('assert');
-exports.Browser = require('zombie');
+exports.browser = require('zombie');
 exports.async = require('async');
 exports.sinon = require('sinon');
 exports.config = require('yaml-config');
 exports.mongoose = require('mongoose');
-exports.ioClient = require('socket.io-client');
+exports.io = require('socket.io-client');
 exports.init = require('../init');
 exports.helpers = require('./helpers');
 exports.fs = require('fs');
@@ -57,6 +57,9 @@ exports.auth = require('../helpers/middleware');
 
 // Validators.
 exports.validators = require('../helpers/validators');
+
+// Scoring.
+exports.scoring = require('../app/scoring/scoring');
 
 
 // Config

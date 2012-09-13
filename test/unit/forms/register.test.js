@@ -2,62 +2,20 @@
  * Unit tests for registration form.
  */
 
-// Modules
-// -------
-var mocha = require('mocha');
-var should = require('should');
-var assert = require('assert');
-var async = require('async');
-var sinon = require('sinon');
-var config = require('yaml-config');
-var mongoose = require('mongoose');
-var helpers = require('../../helpers');
-var _ = require('underscore');
+var _t = require('../../dependencies.js');
 
-
-// Models
-// ------
-
-// User.
-require('../../../app/models/user');
-var User = mongoose.model('User');
-
-
-// Helpers
-// -------
-
-// Login form.
-var registerForm = require('../../../helpers/forms/register');
-
-
-// Config
-// ------
-
-var root = config.readConfig('test/config.yaml').root;
-
-
-// Run
-// ---
-
-process.env.NODE_ENV = 'testing';
-var server = require('../../../app');
-
-
-// Specs
-// -----
-
-describe('Install Form', function() {
+describe('Register Form', function() {
 
   var form;
 
   // Construct form.
   beforeEach(function() {
-    form = registerForm.form();
+    form = _t.registerForm.form();
   });
 
   // Clear collections.
   afterEach(function(done) {
-    User.collection.remove(function(err) { done(); });
+    _t.User.collection.remove(function(err) { done(); });
   });
 
   describe('username', function() {
@@ -65,7 +23,7 @@ describe('Install Form', function() {
     beforeEach(function(done) {
 
       // Create a user.
-      var user = new User({
+      var user = new _t.User({
         username: 'kara',
         email: 'kara@test.org'
       });
@@ -127,7 +85,7 @@ describe('Install Form', function() {
       form.bind({
         username: 'david'
       }).validate(function(err, form) {
-        assert(!form.fields.username.error);
+        _t.assert(!form.fields.username.error);
         done();
       });
 
@@ -140,7 +98,7 @@ describe('Install Form', function() {
     beforeEach(function(done) {
 
       // Create a user.
-      var user = new User({
+      var user = new _t.User({
         username: 'kara',
         email: 'kara@test.org'
       });
@@ -191,7 +149,7 @@ describe('Install Form', function() {
       form.bind({
         email: 'david@test.org'
       }).validate(function(err, form) {
-        assert(!form.fields.email.error);
+        _t.assert(!form.fields.email.error);
         done();
       });
 
@@ -232,7 +190,7 @@ describe('Install Form', function() {
       form.bind({
         password: 'password'
       }).validate(function(err, form) {
-        assert(!form.fields.password.error);
+        _t.assert(!form.fields.password.error);
         done();
       });
 
@@ -276,7 +234,7 @@ describe('Install Form', function() {
         password: 'password',
         confirm: 'password'
       }).validate(function(err, form) {
-        assert(!form.fields.confirm.error);
+        _t.assert(!form.fields.confirm.error);
         done();
       });
 

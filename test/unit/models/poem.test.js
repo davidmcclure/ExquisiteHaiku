@@ -2,50 +2,7 @@
  * Unit tests for poem model.
  */
 
-// Modules
-// -------
-var mocha = require('mocha');
-var should = require('should');
-var assert = require('assert');
-var async = require('async');
-var sinon = require('sinon');
-var config = require('yaml-config');
-var mongoose = require('mongoose');
-var helpers = require('../../helpers');
-var _ = require('underscore');
-
-
-// Models
-// ------
-
-// User.
-require('../../../app/models/user');
-var User = mongoose.model('User');
-
-// Poem.
-require('../../../app/models/poem');
-var Poem = mongoose.model('Poem');
-
-// Vote.
-require('../../../app/models/vote');
-var Vote = mongoose.model('Vote');
-
-
-// Config
-// ------
-
-var root = config.readConfig('test/config.yaml').root;
-
-
-// Run
-// ---
-
-process.env.NODE_ENV = 'testing';
-var server = require('../../../app');
-
-
-// Specs
-// -----
+var _t = require('../../dependencies.js');
 
 describe('Poem', function() {
 
@@ -54,14 +11,14 @@ describe('Poem', function() {
   beforeEach(function(done) {
 
     // Create user.
-    user = new User({
+    user = new _t.User({
       username: 'david',
       password: 'password',
       email: 'david@test.org'
     });
 
     // Create poem.
-    poem = new Poem({
+    poem = new _t.Poem({
       user: user.id,
       roundLengthValue : 3,
       roundLengthUnit : 'minutes',
@@ -91,10 +48,10 @@ describe('Poem', function() {
   after(function(done) {
 
     // Clear users and poems.
-    async.map([
-      User,
-      Poem
-    ], helpers.remove, function(err, models) {
+    _t.async.map([
+      _t.User,
+      _t.Poem
+    ], _t.helpers.remove, function(err, models) {
       done();
     });
 
@@ -105,7 +62,7 @@ describe('Poem', function() {
     it('should require all fields', function(done) {
 
       // Create poem.
-      var poem = new Poem();
+      var poem = new _t.Poem();
 
       // Overrids defaults.
       poem.created = null;
@@ -132,7 +89,7 @@ describe('Poem', function() {
         err.errors.seedCapital.type.should.eql('required');
 
         // Check for 0 documents.
-        Poem.count({}, function(err, count) {
+        _t.Poem.count({}, function(err, count) {
           count.should.eql(1);
           done();
         });
@@ -260,7 +217,7 @@ describe('Poem', function() {
         poem.running = false;
         poem.complete = false;
         poem.save(function(err) {
-          assert(!err);
+          _t.assert(!err);
           done();
         });
       });
@@ -270,7 +227,7 @@ describe('Poem', function() {
         poem.running = true;
         poem.complete = false;
         poem.save(function(err) {
-          assert(!err);
+          _t.assert(!err);
           done();
         });
       });
@@ -280,7 +237,7 @@ describe('Poem', function() {
         poem.running = false;
         poem.complete = true;
         poem.save(function(err) {
-          assert(!err);
+          _t.assert(!err);
           done();
         });
       });
@@ -292,7 +249,7 @@ describe('Poem', function() {
       it('should pass with "seconds"', function(done) {
         poem.roundLengthUnit = 'seconds';
         poem.save(function(err) {
-          assert(!err);
+          _t.assert(!err);
           done();
         });
       });
@@ -300,7 +257,7 @@ describe('Poem', function() {
       it('should pass with "minutes"', function(done) {
         poem.roundLengthUnit = 'minutes';
         poem.save(function(err) {
-          assert(!err);
+          _t.assert(!err);
           done();
         });
       });
@@ -322,7 +279,7 @@ describe('Poem', function() {
     describe('id', function() {
 
       it('should have a virtual field for "id"', function() {
-        assert.exist(poem.id);
+        _t.assert.exist(poem.id);
       });
 
       it('should be a string', function() {
@@ -334,7 +291,7 @@ describe('Poem', function() {
     describe('unstarted', function() {
 
       it('should have a virtual field for "unstarted"', function() {
-        assert.exist(poem.unstarted);
+        _t.assert.exist(poem.unstarted);
       });
 
       it('should be true when started=false', function() {
@@ -352,7 +309,7 @@ describe('Poem', function() {
     describe('paused', function() {
 
       it('should have a virtual field for "paused"', function() {
-        assert.exist(poem.paused);
+        _t.assert.exist(poem.paused);
       });
 
       it('should be false when the poem is running', function() {
@@ -389,7 +346,7 @@ describe('Poem', function() {
       });
 
       it('should return null when a round does not exist', function() {
-        assert.not.exist(poem.round);
+        _t.assert.not.exist(poem.round);
       });
 
     });
@@ -433,7 +390,7 @@ describe('Poem', function() {
       });
 
       it('should return null when a round does not exist', function() {
-        assert(!poem.roundExpiration);
+        _t.assert(!poem.roundExpiration);
       });
 
     });
@@ -834,16 +791,16 @@ describe('Poem', function() {
 
         // Check for well-formed round.
         poem.rounds.length.should.eql(1);
-        assert.exist(poem.rounds[0].id);
-        assert.exist(poem.rounds[0].started);
+        _t.assert.exist(poem.rounds[0].id);
+        _t.assert.exist(poem.rounds[0].started);
 
         // Add a second round.
         poem.newRound();
 
         // Check for well-formed round.
         poem.rounds.length.should.eql(2);
-        assert.exist(poem.rounds[1].id);
-        assert.exist(poem.rounds[1].started);
+        _t.assert.exist(poem.rounds[1].id);
+        _t.assert.exist(poem.rounds[1].started);
 
       });
 
@@ -853,8 +810,8 @@ describe('Poem', function() {
         var round = poem.newRound();
 
         // Check for well-formed round.
-        assert.exist(round.id);
-        assert.exist(round.started);
+        _t.assert.exist(round.id);
+        _t.assert.exist(round.started);
 
       });
 
@@ -872,21 +829,21 @@ describe('Poem', function() {
         var round1 = poem.newRound();
 
         // Vote 1.
-        var vote1 = new Vote({
+        var vote1 = new _t.Vote({
           round: poem.round.id,
           word: 'first',
           quantity: 100
         });
 
         // Vote 2.
-        var vote2 = new Vote({
+        var vote2 = new _t.Vote({
           round: poem.round.id,
           word: 'second',
           quantity: 200
         });
 
         // Vote 3.
-        var vote3 = new Vote({
+        var vote3 = new _t.Vote({
           round: poem.round.id,
           word: 'third',
           quantity: 300
@@ -916,14 +873,14 @@ describe('Poem', function() {
       it('should stop the poem if no votes in previous round', function() {
 
         // Spy on stop().
-        poem.stop = sinon.spy();
+        poem.stop = _t.sinon.spy();
 
         // Add new round.
         poem.newRound();
 
         // Add new round, check for stop().
         poem.newRound();
-        sinon.assert.called(poem.stop);
+        _t.sinon.assert.called(poem.stop);
 
       });
 
@@ -943,7 +900,7 @@ describe('Poem', function() {
       });
 
       it('should return null when no round exists', function() {
-        assert(!poem.timeLeftInRound(Date.now()));
+        _t.assert(!poem.timeLeftInRound(Date.now()));
       });
 
     });

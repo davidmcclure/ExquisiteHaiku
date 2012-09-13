@@ -1,71 +1,25 @@
 /*
- * Unit tests for poem form.
+ * Unit tests for _t.Poem form.
  */
 
-// Modules
-// -------
-var mocha = require('mocha');
-var should = require('should');
-var assert = require('assert');
-var async = require('async');
-var sinon = require('sinon');
-var config = require('yaml-config');
-var mongoose = require('mongoose');
-var helpers = require('../../helpers');
-var _ = require('underscore');
+var _t = require('../../dependencies.js');
 
-
-// Models
-// ------
-
-// User.
-require('../../../app/models/user');
-var User = mongoose.model('User');
-
-// Poem.
-require('../../../app/models/poem');
-var Poem = mongoose.model('Poem');
-
-
-// Helpers
-// -------
-
-// Login form.
-var poemForm = require('../../../helpers/forms/poem');
-
-
-// Config
-// ------
-
-var root = config.readConfig('test/config.yaml').root;
-
-
-// Run
-// ---
-
-process.env.NODE_ENV = 'testing';
-var server = require('../../../app');
-
-
-// Specs
-// -----
-
-describe('Poem Form', function() {
+describe('_t.Poem Form', function() {
 
   var form;
 
   beforeEach(function() {
-    form = poemForm.form();
+    form = _t.poemForm.form();
   });
 
   // Clear collections.
   afterEach(function(done) {
 
     // Truncate.
-    async.map([
-      User,
-      Poem
-    ], helpers.remove, function(err, models) {
+    _t.async.map([
+      _t.User,
+      _t.Poem
+    ], _t.helpers.remove, function(err, models) {
       done();
     });
 
@@ -104,7 +58,7 @@ describe('Poem Form', function() {
       form.bind({
         roundLengthValue: 1000
       }).validate(function(err, form) {
-        assert(!form.fields.roundLengthValue.error);
+        _t.assert(!form.fields.roundLengthValue.error);
         done();
       });
 
@@ -134,7 +88,7 @@ describe('Poem Form', function() {
       form.bind({
         roundLengthUnit: 'seconds'
       }).validate(function(err, form) {
-        assert(!form.fields.roundLengthUnit.error);
+        _t.assert(!form.fields.roundLengthUnit.error);
         done();
       });
 
@@ -175,7 +129,7 @@ describe('Poem Form', function() {
       form.bind({
         minSubmissions: 5
       }).validate(function(err, form) {
-        assert(!form.fields.minSubmissions.error);
+        _t.assert(!form.fields.minSubmissions.error);
         done();
       });
 
@@ -216,7 +170,7 @@ describe('Poem Form', function() {
       form.bind({
         submissionVal: 5
       }).validate(function(err, form) {
-        assert(!form.fields.submissionVal.error);
+        _t.assert(!form.fields.submissionVal.error);
         done();
       });
 
@@ -257,7 +211,7 @@ describe('Poem Form', function() {
       form.bind({
         decayLifetime: 5
       }).validate(function(err, form) {
-        assert(!form.fields.decayLifetime.error);
+        _t.assert(!form.fields.decayLifetime.error);
         done();
       });
 

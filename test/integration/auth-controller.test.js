@@ -2,42 +2,7 @@
  * Integration tests for auth controller.
  */
 
-// Modules
-// -------
-var mocha = require('mocha');
-var should = require('should');
-var assert = require('assert');
-var Browser = require('zombie');
-var async = require('async');
-var config = require('yaml-config');
-var mongoose = require('mongoose');
-var helpers = require('../helpers');
-var _ = require('underscore');
-
-
-// Models
-// ------
-
-// User.
-require('../../app/models/user');
-var User = mongoose.model('User');
-
-
-// Config
-// ------
-
-var root = config.readConfig('test/config.yaml').root;
-
-
-// Run
-// ---
-
-process.env.NODE_ENV = 'testing';
-var server = require('../../app');
-
-
-// Specs
-// -----
+var _t = require('../dependencies.js');
 
 describe('Auth Controller', function() {
 
@@ -46,10 +11,10 @@ describe('Auth Controller', function() {
   // Create user.
   beforeEach(function(done) {
 
-    browser = new Browser();
+    browser = new _t.browser();
 
     // Create a user.
-    user = new User({
+    user = new _t.User({
       username: 'david',
       password: 'password',
       email: 'david@test.org'
@@ -62,7 +27,7 @@ describe('Auth Controller', function() {
 
   // Clear documents.
   afterEach(function(done) {
-    User.collection.remove(function(err) {
+    _t.User.collection.remove(function(err) {
       done();
     });
   });
@@ -72,7 +37,7 @@ describe('Auth Controller', function() {
     it('should render the form when there is not a user session', function(done) {
 
       // GET admin/register.
-      browser.visit(root+'admin/register', function() {
+      browser.visit(_t.root+'admin/register', function() {
 
         // Check for form and fields.
         browser.query('form.register').should.be.ok;
@@ -89,7 +54,7 @@ describe('Auth Controller', function() {
     it('should redirect when there is a user session', function(done) {
 
       // GET admin/login.
-      browser.visit(root+'admin/login', function() {
+      browser.visit(_t.root+'admin/login', function() {
 
         // Fill in form, submit.
         browser.fill('username', 'david');
@@ -97,7 +62,7 @@ describe('Auth Controller', function() {
         browser.pressButton('Submit', function() {
 
           // Hit the register route as a logged-in user.
-          browser.visit(root+'admin/register', function() {
+          browser.visit(_t.root+'admin/register', function() {
 
             // Check for redirect.
             browser.location.pathname.should.eql('/admin');
@@ -120,7 +85,7 @@ describe('Auth Controller', function() {
       it('should flash error for no username', function(done) {
 
         // GET admin/register.
-        browser.visit(root+'admin/register', function() {
+        browser.visit(_t.root+'admin/register', function() {
 
           // Fill in form.
           browser.pressButton('Submit', function() {
@@ -139,7 +104,7 @@ describe('Auth Controller', function() {
       it('should flash error for username < 4 characters', function(done) {
 
         // GET admin/install.
-        browser.visit(root+'admin/register', function() {
+        browser.visit(_t.root+'admin/register', function() {
 
           // Fill in form, submit.
           browser.fill('username', 'dav');
@@ -159,7 +124,7 @@ describe('Auth Controller', function() {
       it('should flash error for username > 20 characters', function(done) {
 
         // GET admin/install.
-        browser.visit(root+'admin/register', function() {
+        browser.visit(_t.root+'admin/register', function() {
 
           // Fill in form, submit.
           browser.fill('username', 'srdavidwilliamcclurejr');
@@ -179,7 +144,7 @@ describe('Auth Controller', function() {
       it('should flash error for duplicate username', function(done) {
 
         // GET admin/install.
-        browser.visit(root+'admin/register', function() {
+        browser.visit(_t.root+'admin/register', function() {
 
           // Fill in form, submit.
           browser.fill('username', 'david');
@@ -199,7 +164,7 @@ describe('Auth Controller', function() {
       it('should not flash an error when the username is valid', function(done) {
 
         // GET admin/install.
-        browser.visit(root+'admin/register', function() {
+        browser.visit(_t.root+'admin/register', function() {
 
           // Fill in form, submit.
           browser.fill('username', 'kara');
@@ -207,7 +172,7 @@ describe('Auth Controller', function() {
 
             // Check for error.
             browser.location.pathname.should.eql('/admin/register');
-            assert(!browser.query('span.help-inline.username'));
+            _t.assert(!browser.query('span.help-inline.username'));
             done();
 
           });
@@ -223,7 +188,7 @@ describe('Auth Controller', function() {
       it('should flash error for no email', function(done) {
 
         // GET admin/install.
-        browser.visit(root+'admin/register', function() {
+        browser.visit(_t.root+'admin/register', function() {
 
           // Fill in form.
           browser.pressButton('Submit', function() {
@@ -242,7 +207,7 @@ describe('Auth Controller', function() {
       it('should flash error for duplicate email', function(done) {
 
         // GET admin/install.
-        browser.visit(root+'admin/register', function() {
+        browser.visit(_t.root+'admin/register', function() {
 
           // Fill in form, submit.
           browser.fill('email', 'david@test.org');
@@ -262,7 +227,7 @@ describe('Auth Controller', function() {
       it('should flash error for invalid email', function(done) {
 
         // GET admin/install.
-        browser.visit(root+'admin/register', function() {
+        browser.visit(_t.root+'admin/register', function() {
 
           // Fill in form, submit.
           browser.fill('email', 'invalid');
@@ -282,7 +247,7 @@ describe('Auth Controller', function() {
       it('should not flash an error when the username is valid', function(done) {
 
         // GET admin/install.
-        browser.visit(root+'admin/register', function() {
+        browser.visit(_t.root+'admin/register', function() {
 
           // Fill in form, submit.
           browser.fill('username', 'kara');
@@ -290,7 +255,7 @@ describe('Auth Controller', function() {
 
             // Check for error.
             browser.location.pathname.should.eql('/admin/register');
-            assert(!browser.query('span.help-inline.username'));
+            _t.assert(!browser.query('span.help-inline.username'));
             done();
 
           });
@@ -306,7 +271,7 @@ describe('Auth Controller', function() {
       it('should flash error for no password', function(done) {
 
         // GET admin/install.
-        browser.visit(root+'admin/register', function() {
+        browser.visit(_t.root+'admin/register', function() {
 
           // Fill in form.
           browser.pressButton('Submit', function() {
@@ -325,7 +290,7 @@ describe('Auth Controller', function() {
       it('should flash error for password < 6 characters', function(done) {
 
         // GET admin/install.
-        browser.visit(root+'admin/register', function() {
+        browser.visit(_t.root+'admin/register', function() {
 
           // Fill in form, submit.
           browser.fill('password', 'pass');
@@ -345,7 +310,7 @@ describe('Auth Controller', function() {
       it('should not flash an error when the password is valid', function(done) {
 
         // GET admin/install.
-        browser.visit(root+'admin/register', function() {
+        browser.visit(_t.root+'admin/register', function() {
 
           // Fill in form, submit.
           browser.fill('password', 'password');
@@ -353,7 +318,7 @@ describe('Auth Controller', function() {
 
             // Check for error.
             browser.location.pathname.should.eql('/admin/register');
-            assert(!browser.query('span.help-inline.password'));
+            _t.assert(!browser.query('span.help-inline.password'));
             done();
 
           });
@@ -369,7 +334,7 @@ describe('Auth Controller', function() {
       it('should flash error for no confirmation', function(done) {
 
         // GET admin/install.
-        browser.visit(root+'admin/register', function() {
+        browser.visit(_t.root+'admin/register', function() {
 
           // Fill in form.
           browser.pressButton('Submit', function() {
@@ -388,7 +353,7 @@ describe('Auth Controller', function() {
       it('should flash error for mismatch with password', function(done) {
 
         // GET admin/install.
-        browser.visit(root+'admin/register', function() {
+        browser.visit(_t.root+'admin/register', function() {
 
           // Fill in form, submit.
           browser.fill('password', 'password');
@@ -409,7 +374,7 @@ describe('Auth Controller', function() {
       it('should not flash an error when the confirmation is valid', function(done) {
 
         // GET admin/install.
-        browser.visit(root+'admin/register', function() {
+        browser.visit(_t.root+'admin/register', function() {
 
           // Fill in form, submit.
           browser.fill('password', 'password');
@@ -418,7 +383,7 @@ describe('Auth Controller', function() {
 
             // Check for error.
             browser.location.pathname.should.eql('/admin/register');
-            assert(!browser.query('span.help-inline.confirm'));
+            _t.assert(!browser.query('span.help-inline.confirm'));
             done();
 
           });
@@ -434,7 +399,7 @@ describe('Auth Controller', function() {
       it('should create a new user and redirect for valid form', function(done) {
 
         // GET admin/install.
-        browser.visit(root+'admin/register', function() {
+        browser.visit(_t.root+'admin/register', function() {
 
           // Fill in form, submit.
           browser.fill('username', 'kara');
@@ -447,7 +412,7 @@ describe('Auth Controller', function() {
             browser.location.pathname.should.eql('/admin');
 
             // Get user.
-            User.findOne({ username: 'kara' }, function(err, user) {
+            _t.User.findOne({ username: 'kara' }, function(err, user) {
               user.should.be.ok;
               user.email.should.eql('kara@test.org');
               done();
@@ -468,7 +433,7 @@ describe('Auth Controller', function() {
     it('should render the form when there is not a user session', function(done) {
 
       // GET admin/login.
-      browser.visit(root+'admin/login', function() {
+      browser.visit(_t.root+'admin/login', function() {
 
         // Check for form and fields.
         browser.query('form').should.be.ok;
@@ -484,7 +449,7 @@ describe('Auth Controller', function() {
     it('should redirect when there is a user session', function(done) {
 
       // GET admin/login.
-      browser.visit(root+'admin/login', function() {
+      browser.visit(_t.root+'admin/login', function() {
 
         // Fill in form, submit.
         browser.fill('username', 'david');
@@ -492,7 +457,7 @@ describe('Auth Controller', function() {
         browser.pressButton('Submit', function() {
 
           // Hit the login route as a logged-in user.
-          browser.visit(root+'admin/login', function() {
+          browser.visit(_t.root+'admin/login', function() {
 
             // Check for redirect.
             browser.location.pathname.should.eql('/admin');
@@ -515,7 +480,7 @@ describe('Auth Controller', function() {
       it('should flash error for no username', function(done) {
 
         // GET admin/login.
-        browser.visit(root+'admin/login', function() {
+        browser.visit(_t.root+'admin/login', function() {
 
           // Fill in form.
           browser.pressButton('Submit', function() {
@@ -534,7 +499,7 @@ describe('Auth Controller', function() {
       it('should flash error for non-existent username', function(done) {
 
         // GET admin/login.
-        browser.visit(root+'admin/login', function() {
+        browser.visit(_t.root+'admin/login', function() {
 
           // Fill in form, submit.
           browser.fill('username', 'kara');
@@ -554,7 +519,7 @@ describe('Auth Controller', function() {
       it('should not flash an error when the username is valid', function(done) {
 
         // GET admin/login.
-        browser.visit(root+'admin/login', function() {
+        browser.visit(_t.root+'admin/login', function() {
 
           // Fill in form, submit.
           browser.fill('username', 'david');
@@ -562,7 +527,7 @@ describe('Auth Controller', function() {
 
             // Check for error.
             browser.location.pathname.should.eql('/admin/login');
-            assert(!browser.query('span.help-inline.username'));
+            _t.assert(!browser.query('span.help-inline.username'));
             done();
 
           });
@@ -578,7 +543,7 @@ describe('Auth Controller', function() {
       it('should flash error for no password', function(done) {
 
         // GET admin/login.
-        browser.visit(root+'admin/login', function() {
+        browser.visit(_t.root+'admin/login', function() {
 
           // Fill in form.
           browser.pressButton('Submit', function() {
@@ -597,7 +562,7 @@ describe('Auth Controller', function() {
       it('should flash error for incorrect password', function(done) {
 
         // GET admin/login.
-        browser.visit(root+'admin/login', function() {
+        browser.visit(_t.root+'admin/login', function() {
 
           // Fill in form, submit.
           browser.fill('username', 'david');
@@ -622,7 +587,7 @@ describe('Auth Controller', function() {
       it('should log in and redirect for valid form', function(done) {
 
         // GET admin/login.
-        browser.visit(root+'admin/login', function() {
+        browser.visit(_t.root+'admin/login', function() {
 
           // Fill in form, submit.
           browser.fill('username', 'david');
@@ -648,7 +613,7 @@ describe('Auth Controller', function() {
     it('should log out a logged-in user', function(done) {
 
       // GET admin/login.
-      browser.visit(root+'admin/login', function() {
+      browser.visit(_t.root+'admin/login', function() {
 
         // Fill in form, submit.
         browser.fill('username', 'david');
@@ -656,7 +621,7 @@ describe('Auth Controller', function() {
         browser.pressButton('Submit', function() {
 
           // Hit the logout route as a logged-in user.
-          browser.visit(root+'admin/logout', function() {
+          browser.visit(_t.root+'admin/logout', function() {
 
             // Check for redirect.
             browser.location.pathname.should.eql('/admin/login');

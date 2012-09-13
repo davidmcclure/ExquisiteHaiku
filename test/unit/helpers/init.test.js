@@ -2,57 +2,7 @@
  * Unit tests for application startup.
  */
 
-// Modules
-// -------
-var mocha = require('mocha');
-var should = require('should');
-var assert = require('assert');
-var async = require('async');
-var sinon = require('sinon');
-var config = require('yaml-config');
-var mongoose = require('mongoose');
-var helpers = require('../../helpers');
-var _ = require('underscore');
-
-
-// Models
-// ------
-
-// User.
-require('../../../app/models/user');
-var User = mongoose.model('User');
-
-// Poem.
-require('../../../app/models/poem');
-var Poem = mongoose.model('Poem');
-
-// Vote.
-require('../../../app/models/vote');
-var Vote = mongoose.model('Vote');
-
-
-// Helpers
-// -------
-
-// Init.
-var init = require('../../../init');
-
-
-// Config
-// ------
-
-var root = config.readConfig('test/config.yaml').root;
-
-
-// Run
-// ---
-
-process.env.NODE_ENV = 'testing';
-var server = require('../../../app');
-
-
-// Specs
-// -----
+var _t = require('../../dependencies.js');
 
 describe('Init', function() {
 
@@ -63,7 +13,7 @@ describe('Init', function() {
 
     // Mock app.
     app = {
-      set: sinon.spy()
+      set: _t.sinon.spy()
     };
 
     // Mock config.
@@ -76,14 +26,14 @@ describe('Init', function() {
     io = {};
 
     // Create user.
-    user = new User({
+    user = new _t.User({
       username: 'david',
       password: 'password',
       email: 'david@test.org'
     });
 
     // Create running poem.
-    running = new Poem({
+    running = new _t.Poem({
       user: user.id,
       started: true,
       running: true,
@@ -99,7 +49,7 @@ describe('Init', function() {
     });
 
     // Create not running poem.
-    notRunning = new Poem({
+    notRunning = new _t.Poem({
       user: user.id,
       started: true,
       running: false,
@@ -118,39 +68,39 @@ describe('Init', function() {
     running.newRound();
     notRunning.newRound();
 
-    // Vote 1.
-    var vote1 = new Vote({
+    // _t.Vote 1.
+    var vote1 = new _t.Vote({
       round: running.round.id,
       word: 'word1',
       quantity: 100
     });
 
-    // Vote 2.
-    var vote2 = new Vote({
+    // _t.Vote 2.
+    var vote2 = new _t.Vote({
       round: running.round.id,
       word: 'word2',
       quantity: 100
     });
 
-    // Vote 3.
-    var vote3 = new Vote({
+    // _t.Vote 3.
+    var vote3 = new _t.Vote({
       round: notRunning.round.id,
       word: 'word3',
       quantity: 100
     });
 
     // Save.
-    async.map([
+    _t.async.map([
       user,
       running,
       notRunning,
       vote1,
       vote2,
       vote3
-    ], helpers.save, function(err, documents) {
+    ], _t.helpers.save, function(err, documents) {
 
       // Run init.
-      init(app, io, function() {
+      _t.init(app, io, function() {
         done();
       });
 
@@ -162,7 +112,7 @@ describe('Init', function() {
   afterEach(function(done) {
 
     // Clear the intervals.
-    _.each(global.Oversoul.timers, function(int, id) {
+    _t._.each(global.Oversoul.timers, function(int, id) {
       clearInterval(int);
     });
 
@@ -170,11 +120,11 @@ describe('Init', function() {
     global.Oversoul = { timers: {}, votes: {} };
 
     // Truncate.
-    async.map([
-      User,
-      Poem,
-      Vote
-    ], helpers.remove, function(err, models) {
+    _t.async.map([
+      _t.User,
+      _t.Poem,
+      _t.Vote
+    ], _t.helpers.remove, function(err, models) {
       done();
     });
 
@@ -183,7 +133,7 @@ describe('Init', function() {
   it('should start running poems', function() {
 
     // Check for round registraton.
-    assert.exist(global.Oversoul.votes[running.round.id]);
+    _t.assert.exist(global.Oversoul.votes[running.round.id]);
 
     // Check for vote registrations.
     global.Oversoul.votes[running.round.id].should.have.keys('word1', 'word2');

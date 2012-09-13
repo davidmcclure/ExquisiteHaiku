@@ -2,48 +2,13 @@
  * Unit tests for user model.
  */
 
-// Modules
-// -------
-var mocha = require('mocha');
-var should = require('should');
-var assert = require('assert');
-var async = require('async');
-var sinon = require('sinon');
-var config = require('yaml-config');
-var mongoose = require('mongoose');
-var helpers = require('../../helpers');
-var _ = require('underscore');
-
-
-// Models
-// ------
-
-// User.
-require('../../../app/models/user');
-var User = mongoose.model('User');
-
-
-// Config
-// ------
-
-var root = config.readConfig('test/config.yaml').root;
-
-
-// Run
-// ---
-
-process.env.NODE_ENV = 'testing';
-var server = require('../../../app');
-
-
-// Specs
-// -----
+var _t = require('../../dependencies.js');
 
 describe('User', function() {
 
   // Clear users.
   afterEach(function(done) {
-    User.collection.remove(function(err) { done(); });
+    _t.User.collection.remove(function(err) { done(); });
   });
 
   describe('required field validations', function() {
@@ -51,7 +16,7 @@ describe('User', function() {
     it('should require username and email', function(done) {
 
       // Create user, null fields.
-      var user = new User();
+      var user = new _t.User();
       user.created = null;
 
       // Save.
@@ -63,7 +28,7 @@ describe('User', function() {
         err.errors.email.type.should.eql('required');
 
         // Check for 0 documents.
-        User.count({}, function(err, count) {
+        _t.User.count({}, function(err, count) {
           count.should.eql(0);
           done();
         });
@@ -80,7 +45,7 @@ describe('User', function() {
 
     // Stub user.
     beforeEach(function() {
-      user = new User();
+      user = new _t.User();
     });
 
     it('should set "created" to the current date by default', function() {
@@ -95,7 +60,7 @@ describe('User', function() {
     beforeEach(function(done) {
 
       // Create user.
-      var user = new User({
+      var user = new _t.User({
         username: 'david',
         email: 'david@test.org'
       });
@@ -110,7 +75,7 @@ describe('User', function() {
     it('should block duplicate usernames', function(done) {
 
       // Create a new user with duplicate username.
-      var dupUser = new User({
+      var dupUser = new _t.User({
         username: 'david',
         email: 'david2@test.org'
       });
@@ -122,7 +87,7 @@ describe('User', function() {
         err.code.should.eql(11000);
 
         // Check for 1 document.
-        User.count({}, function(err, count) {
+        _t.User.count({}, function(err, count) {
           count.should.eql(1);
           done();
         });
@@ -134,7 +99,7 @@ describe('User', function() {
     it('should block duplicate email addresses', function(done) {
 
       // Create a new user with duplicate email.
-      var dupUser = new User({
+      var dupUser = new _t.User({
         username: 'david2',
         email: 'david@test.org'
       });
@@ -146,7 +111,7 @@ describe('User', function() {
         err.code.should.eql(11000);
 
         // Check for 1 document.
-        User.count({}, function(err, count) {
+        _t.User.count({}, function(err, count) {
           count.should.eql(1);
           done();
         });
@@ -163,11 +128,11 @@ describe('User', function() {
 
     // Stub user.
     beforeEach(function() {
-      user = new User();
+      user = new _t.User();
     });
 
     it('should have a virtual field for "id"', function() {
-      assert.exist(user.id);
+      _t.assert.exist(user.id);
     });
 
     it('should be a string', function() {
@@ -182,7 +147,7 @@ describe('User', function() {
 
     // Stub user.
     beforeEach(function() {
-      user = new User({ password: 'password' });
+      user = new _t.User({ password: 'password' });
     });
 
     it('should set _password, salt, and hash', function() {
@@ -203,7 +168,7 @@ describe('User', function() {
 
     // Stub user.
     beforeEach(function() {
-      user = new User({ password: 'password' });
+      user = new _t.User({ password: 'password' });
     });
 
     it('should return true for correct password', function() {

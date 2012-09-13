@@ -2,46 +2,7 @@
  * Unit tests for vote model.
  */
 
-// Modules
-// -------
-var mocha = require('mocha');
-var should = require('should');
-var assert = require('assert');
-var async = require('async');
-var sinon = require('sinon');
-var config = require('yaml-config');
-var mongoose = require('mongoose');
-var helpers = require('../../helpers');
-var _ = require('underscore');
-
-
-// Models
-// ------
-
-// Round.
-require('../../../app/models/round');
-var Round = mongoose.model('Round');
-
-// Vote.
-require('../../../app/models/vote');
-var Vote = mongoose.model('Vote');
-
-
-// Config
-// ------
-
-var root = config.readConfig('test/config.yaml').root;
-
-
-// Run
-// ---
-
-process.env.NODE_ENV = 'testing';
-var server = require('../../../app');
-
-
-// Specs
-// -----
+var _t = require('../../dependencies.js');
 
 describe('Vote', function() {
 
@@ -50,10 +11,10 @@ describe('Vote', function() {
   beforeEach(function() {
 
     // Create round.
-    round = new Round();
+    round = new _t.Round();
 
     // Create vote.
-    vote = new Vote({
+    vote = new _t.Vote({
       round: round.id,
       word: 'word',
       quantity: 100
@@ -64,10 +25,10 @@ describe('Vote', function() {
   afterEach(function(done) {
 
     // Clear rounds and votes.
-    async.map([
-      Round,
-      Vote
-    ], helpers.remove, function(err, models) {
+    _t.async.map([
+      _t.Round,
+      _t.Vote
+    ], _t.helpers.remove, function(err, models) {
       done();
     });
 
@@ -78,7 +39,7 @@ describe('Vote', function() {
     it('should require all fields', function(done) {
 
       // Create vote, override defaults.
-      var vote = new Vote();
+      var vote = new _t.Vote();
       vote.applied = null;
 
       // Save.
@@ -91,7 +52,7 @@ describe('Vote', function() {
         err.errors.quantity.type.should.eql('required');
 
         // Check for 0 documents.
-        Vote.count({}, function(err, count) {
+        _t.Vote.count({}, function(err, count) {
           count.should.eql(0);
           done();
         });
@@ -155,7 +116,7 @@ describe('Vote', function() {
     describe('id', function() {
 
       it('should have a virtual field for "id"', function() {
-        assert.exist(round.id);
+        _t.assert.exist(round.id);
       });
 
       it('should be a string', function() {

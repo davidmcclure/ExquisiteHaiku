@@ -2,56 +2,7 @@
  * Integration tests for sockets controller.
  */
 
-// Modules
-// -------
-var mocha = require('mocha');
-var should = require('should');
-var assert = require('assert');
-var Browser = require('zombie');
-var async = require('async');
-var config = require('yaml-config');
-var mongoose = require('mongoose');
-var helpers = require('../helpers');
-var ioClient = require('socket.io-client');
-var sinon = require('sinon');
-var _ = require('underscore');
-
-
-// Models
-// ------
-
-// User.
-require('../../app/models/user');
-var User = mongoose.model('User');
-
-// Poem.
-require('../../app/models/poem');
-var Poem = mongoose.model('Poem');
-
-// Round.
-require('../../app/models/round');
-var Round = mongoose.model('Round');
-
-// Vote.
-require('../../app/models/vote');
-var Vote = mongoose.model('Vote');
-
-
-// Config
-// ------
-
-var root = config.readConfig('test/config.yaml').root;
-
-
-// Run
-// ---
-
-process.env.NODE_ENV = 'testing';
-var server = require('../../app');
-
-
-// Specs
-// -----
+var _t = require('../dependencies.js');
 
 describe('Sockets Controller', function() {
 
@@ -60,14 +11,14 @@ describe('Sockets Controller', function() {
   beforeEach(function(done) {
 
     // Create user.
-    user = new User({
+    user = new _t.User({
       username: 'david',
       password: 'password',
       email: 'david@test.org'
     });
 
     // Create poem.
-    poem1 = new Poem({
+    poem1 = new _t.Poem({
       user: user.id,
       roundLengthValue: 10,
       roundLengthUnit: 'seconds',
@@ -81,7 +32,7 @@ describe('Sockets Controller', function() {
     });
 
     // Create poem.
-    poem2 = new Poem({
+    poem2 = new _t.Poem({
       user: user.id,
       roundLengthValue: 10,
       roundLengthUnit: 'seconds',
@@ -98,15 +49,15 @@ describe('Sockets Controller', function() {
     };
 
     // Connect client1.
-    client1 = ioClient.connect(root, options);
+    client1 = _t.io.connect(_t.root, options);
     client1.emit('join', poem1.id);
 
     // Connect client2.
-    client2 = ioClient.connect(root, options);
+    client2 = _t.io.connect(_t.root, options);
     client2.emit('join', poem1.id);
 
     // Connect client3.
-    client3 = ioClient.connect(root, options);
+    client3 = _t.io.connect(_t.root, options);
     client3.emit('join', poem2.id);
 
     // Create rounds on poems.
@@ -114,11 +65,11 @@ describe('Sockets Controller', function() {
     poem2.newRound();
 
     // Save.
-    async.map([
+    _t.async.map([
       user,
       poem1,
       poem2
-    ], helpers.save, function(err, documents) {
+    ], _t.helpers.save, function(err, documents) {
       done();
     });
 
@@ -131,12 +82,12 @@ describe('Sockets Controller', function() {
     global.Oversoul.votes = {};
 
     // Clear collections.
-    async.map([
-      User,
-      Poem,
-      Round,
-      Vote
-    ], helpers.remove, function(err, models) {
+    _t.async.map([
+      _t.User,
+      _t.Poem,
+      _t.Round,
+      _t.Vote
+    ], _t.helpers.remove, function(err, models) {
       done();
     });
 
@@ -217,10 +168,10 @@ describe('Sockets Controller', function() {
         client1.on('submit:complete', function() {
 
           // Check for votes.
-          Vote.find({ round: poem1.round.id }, function(err, votes) {
+          _t.Vote.find({ round: poem1.round.id }, function(err, votes) {
 
             // Get words array.
-            var words = _.map(votes, function(vote) {
+            var words = _t._.map(votes, function(vote) {
               return vote.word;
             });
 
@@ -250,9 +201,9 @@ describe('Sockets Controller', function() {
     it('should echo the votes', function(done) {
 
       // Spy on the 'vote' event callback.
-      var voteCallback1 = sinon.spy();
-      var voteCallback2 = sinon.spy();
-      var voteCallback3 = sinon.spy();
+      var voteCallback1 = _t.sinon.spy();
+      var voteCallback2 = _t.sinon.spy();
+      var voteCallback3 = _t.sinon.spy();
       client1.on('vote', voteCallback1);
       client2.on('vote', voteCallback2);
       client3.on('vote', voteCallback3);
@@ -271,15 +222,15 @@ describe('Sockets Controller', function() {
 
             // Check client1 echoes.
             voteCallback1.callCount.should.eql(3);
-            sinon.assert.calledWith(voteCallback1, 'word1', 100);
-            sinon.assert.calledWith(voteCallback1, 'word2', 100);
-            sinon.assert.calledWith(voteCallback1, 'word3', 100);
+            _t.sinon.assert.calledWith(voteCallback1, 'word1', 100);
+            _t.sinon.assert.calledWith(voteCallback1, 'word2', 100);
+            _t.sinon.assert.calledWith(voteCallback1, 'word3', 100);
 
             // Check client2 echoes.
             voteCallback2.callCount.should.eql(3);
-            sinon.assert.calledWith(voteCallback2, 'word1', 100);
-            sinon.assert.calledWith(voteCallback2, 'word2', 100);
-            sinon.assert.calledWith(voteCallback2, 'word3', 100);
+            _t.sinon.assert.calledWith(voteCallback2, 'word1', 100);
+            _t.sinon.assert.calledWith(voteCallback2, 'word2', 100);
+            _t.sinon.assert.calledWith(voteCallback2, 'word3', 100);
 
             // Check client3 echoes.
             voteCallback3.callCount.should.eql(0);
@@ -309,7 +260,7 @@ describe('Sockets Controller', function() {
         client1.on('vote:complete', function() {
 
           // Check for votes.
-          Vote.find({ round: poem1.round.id }, function(err, votes) {
+          _t.Vote.find({ round: poem1.round.id }, function(err, votes) {
 
             // Check vote.
             votes.length.should.eql(1);
@@ -332,9 +283,9 @@ describe('Sockets Controller', function() {
     it('should echo the vote', function(done) {
 
       // Spy on the 'vote' event callback.
-      var voteCallback1 = sinon.spy();
-      var voteCallback2 = sinon.spy();
-      var voteCallback3 = sinon.spy();
+      var voteCallback1 = _t.sinon.spy();
+      var voteCallback2 = _t.sinon.spy();
+      var voteCallback3 = _t.sinon.spy();
       client1.on('vote', voteCallback1);
       client2.on('vote', voteCallback2);
       client3.on('vote', voteCallback3);
@@ -350,8 +301,8 @@ describe('Sockets Controller', function() {
 
           // Wait for echo callbacks to execute.
           setTimeout(function() {
-            sinon.assert.calledWith(voteCallback1, 'word', 100);
-            sinon.assert.calledWith(voteCallback2, 'word', 100);
+            _t.sinon.assert.calledWith(voteCallback1, 'word', 100);
+            _t.sinon.assert.calledWith(voteCallback2, 'word', 100);
             voteCallback3.notCalled.should.be.true;
             done();
           }, 100);

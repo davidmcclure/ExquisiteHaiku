@@ -2,53 +2,7 @@
  * Unit tests for route middleware methods.
  */
 
-// Modules
-// -------
-var mocha = require('mocha');
-var should = require('should');
-var assert = require('assert');
-var async = require('async');
-var sinon = require('sinon');
-var config = require('yaml-config');
-var mongoose = require('mongoose');
-var helpers = require('../../helpers');
-var _ = require('underscore');
-
-
-// Models
-// ------
-
-// User.
-require('../../../app/models/user');
-var User = mongoose.model('User');
-
-// Poem.
-require('../../../app/models/poem');
-var Poem = mongoose.model('Poem');
-
-
-// Helpers
-// -------
-
-// Auth.
-var auth = require('../../../helpers/middleware');
-
-
-// Config
-// ------
-
-var root = config.readConfig('test/config.yaml').root;
-
-
-// Run
-// ---
-
-process.env.NODE_ENV = 'testing';
-var server = require('../../../app');
-
-
-// Specs
-// -----
+var _t = require('../../dependencies.js');
 
 describe('Route Middleware', function() {
 
@@ -64,10 +18,10 @@ describe('Route Middleware', function() {
   afterEach(function(done) {
 
     // Truncate.
-    async.map([
-      User,
-      Poem
-    ], helpers.remove, function(err, models) {
+    _t.async.map([
+      _t.User,
+      _t.Poem
+    ], _t.helpers.remove, function(err, models) {
       done();
     });
 
@@ -80,7 +34,7 @@ describe('Route Middleware', function() {
     beforeEach(function(done) {
 
       // Create user.
-      user = new User({
+      user = new _t.User({
         username: 'david',
         password: 'password',
         email: 'david@test.org'
@@ -99,7 +53,7 @@ describe('Route Middleware', function() {
       req.session.user_id = user.id;
 
       // Call getUser.
-      auth.getUser(req, res, function() {
+      _t.auth.getUser(req, res, function() {
         req.user.should.not.be.false;
         req.user.id.should.eql(user.id);
         done();
@@ -110,7 +64,7 @@ describe('Route Middleware', function() {
     it('should set req.user = false when session does not exist', function(done) {
 
       // Call getUser with no session.
-      auth.getUser(req, res, function() {
+      _t.auth.getUser(req, res, function() {
         req.user.should.be.false;
         done();
       });
@@ -123,7 +77,7 @@ describe('Route Middleware', function() {
       req.session.user_id = 'invalid';
 
       // Call getUser.
-      auth.getUser(req, res, function() {
+      _t.auth.getUser(req, res, function() {
         req.user.should.be.false;
         done();
       });
@@ -137,10 +91,10 @@ describe('Route Middleware', function() {
     it('should redirect when there is no session', function(done) {
 
       // Spy on res.
-      res.redirect = sinon.spy();
+      res.redirect = _t.sinon.spy();
 
       // Call isUser().
-      auth.isUser(req, { redirect: function(route) {
+      _t.auth.isUser(req, { redirect: function(route) {
         route.should.eql('/admin/login');
         done();
       }}, next);
@@ -153,7 +107,7 @@ describe('Route Middleware', function() {
       req.session.user_id = 'invalid';
 
       // Call isUser.
-      auth.isUser(req, { redirect: function(route) {
+      _t.auth.isUser(req, { redirect: function(route) {
         route.should.eql('/admin/login');
         done();
       }}, next);
@@ -163,7 +117,7 @@ describe('Route Middleware', function() {
     it('should set req.user when user exists', function(done) {
 
       // Create user.
-      var user = new User({
+      var user = new _t.User({
         username: 'david',
         password: 'password',
         email: 'david@test.org'
@@ -176,7 +130,7 @@ describe('Route Middleware', function() {
         req.session.user_id = user.id;
 
         // Call isUser, check for next().
-        auth.isUser(req, res, function() {
+        _t.auth.isUser(req, res, function() {
           req.user.should.be.ok;
           req.user.id.should.eql(user.id);
           done();
@@ -188,12 +142,12 @@ describe('Route Middleware', function() {
 
   });
 
-  describe('noUser', function() {
+  describe('no_t.User', function() {
 
     it('should redirect when user session exists', function(done) {
 
       // Create user.
-      var user = new User({
+      var user = new _t.User({
         username: 'david',
         password: 'password',
         email: 'david@test.org'
@@ -205,8 +159,8 @@ describe('Route Middleware', function() {
         // Set user id.
         req.session.user_id = user.id;
 
-        // Call noUser, check for res.redirect().
-        auth.noUser(req, { redirect: function(route) {
+        // Call no_t.User, check for res.redirect().
+        _t.auth.noUser(req, { redirect: function(route) {
           route.should.eql('/admin');
           done();
         }}, next);
@@ -217,8 +171,8 @@ describe('Route Middleware', function() {
 
     it('should call next() if no session', function(done) {
 
-      // Call noUser.
-      auth.noUser(req, res, function() {
+      // Call no_t.User.
+      _t.auth.noUser(req, res, function() {
         done();
       });
 
@@ -233,14 +187,14 @@ describe('Route Middleware', function() {
     beforeEach(function(done) {
 
       // Create user.
-      user = new User({
+      user = new _t.User({
         username: 'david',
         password: 'password',
         email: 'david@test.org'
       });
 
       // Create poem.
-      poem = new Poem({
+      poem = new _t.Poem({
         user: user.id,
         roundLengthValue: 10,
         roundLengthUnit: 'seconds',
@@ -253,10 +207,10 @@ describe('Route Middleware', function() {
       });
 
       // Save.
-      async.map([
+      _t.async.map([
         user,
         poem
-      ], helpers.save, function(err, documents) {
+      ], _t.helpers.save, function(err, documents) {
         done();
       });
 
@@ -268,7 +222,7 @@ describe('Route Middleware', function() {
       req.params = { hash: poem.hash };
 
       // Call getPoem, check for next() and poem.
-      auth.getPoem(req, res, function() {
+      _t.auth.getPoem(req, res, function() {
         req.poem.id.should.eql(poem.id);
         done();
       });
@@ -284,21 +238,21 @@ describe('Route Middleware', function() {
     beforeEach(function(done) {
 
       // Create user1.
-      user1 = new User({
+      user1 = new _t.User({
         username: 'david',
         password: 'password',
         email: 'david@test.org'
       });
 
       // Create user2.
-      user2 = new User({
+      user2 = new _t.User({
         username: 'kara',
         password: 'password',
         email: 'kara@test.org'
       });
 
       // Create poem1.
-      poem = new Poem({
+      poem = new _t.Poem({
         user: user1.id,
         roundLength: 10000,
         sliceInterval: 300,
@@ -310,11 +264,11 @@ describe('Route Middleware', function() {
       });
 
       // Save.
-      async.map([
+      _t.async.map([
         user1,
         user2,
         poem
-      ], helpers.save, function(err, documents) {
+      ], _t.helpers.save, function(err, documents) {
         done();
       });
 
@@ -327,7 +281,7 @@ describe('Route Middleware', function() {
       req.user = user2;
 
       // Call ownsPoem, check for redirect.
-      auth.ownsPoem(req, { redirect: function(route) {
+      _t.auth.ownsPoem(req, { redirect: function(route) {
         route.should.eql('/admin');
         done();
       }}, next);
@@ -341,7 +295,7 @@ describe('Route Middleware', function() {
       req.user = user1;
 
       // Call ownsPoem, check for redirect.
-      auth.ownsPoem(req, res, function() {
+      _t.auth.ownsPoem(req, res, function() {
         done();
       });
 
@@ -356,14 +310,14 @@ describe('Route Middleware', function() {
     beforeEach(function(done) {
 
       // Create user.
-      user = new User({
+      user = new _t.User({
         username: 'david',
         password: 'password',
         email: 'david@test.org'
       });
 
       // Create poem.
-      poem = new Poem({
+      poem = new _t.Poem({
         user: user.id,
         roundLength: 10000,
         sliceInterval: 300,
@@ -375,10 +329,10 @@ describe('Route Middleware', function() {
       });
 
       // Save.
-      async.map([
+      _t.async.map([
         user,
         poem
-      ], helpers.save, function(err, documents) {
+      ], _t.helpers.save, function(err, documents) {
         done();
       });
 
@@ -396,7 +350,7 @@ describe('Route Middleware', function() {
         req.poem = poem;
 
         // Call unstartedPoem, check for redirect.
-        auth.unstartedPoem(req, { redirect: function(route) {
+        _t.auth.unstartedPoem(req, { redirect: function(route) {
           route.should.eql('/admin');
           done();
         }}, next);
@@ -417,7 +371,7 @@ describe('Route Middleware', function() {
         req.poem = poem;
 
         // Call unstartedPoem, check for redirect.
-        auth.unstartedPoem(req, res, function() {
+        _t.auth.unstartedPoem(req, res, function() {
           done();
         });
 

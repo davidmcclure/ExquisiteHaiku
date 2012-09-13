@@ -6,7 +6,6 @@
 var poemForm = require('../../helpers/forms/poem');
 var scoring = require('../../app/scoring/scoring');
 var auth = require('../../helpers/middleware');
-var async = require('async');
 var _ = require('underscore');
 
 // Models.

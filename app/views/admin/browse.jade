@@ -8,3 +8,9 @@ block content
         div.line
           each word in line
             span.word= word
+      div.actions
+        if poem.unstarted || poem.paused
+          a(href='#') start
+        if poem.running
+          a(href='#') stop
+        a.danger(href='#') delete

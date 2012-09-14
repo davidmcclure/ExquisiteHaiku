@@ -15,19 +15,6 @@ body
   text-rendering optimizeLegibility
   margin 0.5em
 
-body:before
-
-  content ''
-  position fixed
-  pointer-events none
-  background -webkit-linear-gradient(whiteSmoke 1px,transparent 1px),-webkit-linear-gradient(0,whiteSmoke 1px,transparent 1px)
-  -webkit-background-size 10px 10px, 10px 10px
-  z-index -1
-  top 0
-  right 0
-  bottom 0
-  left 0
-
 p
   font-size 14px
 
@@ -66,9 +53,10 @@ a.nav
       text-decoration none
 
   a.new-poem
-    font-family logoFont
+    font-family 'Lilita One'
     font-size 26px
     margin-top 5px
+    padding-bottom 7px
     font-weight 300
 
   p.free
@@ -151,7 +139,7 @@ form
     display block
     margin-bottom 0.2em
     font-family monoFont
-    font-size 24px
+    font-size 25px
     color black
 
   .line

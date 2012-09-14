@@ -39,13 +39,11 @@ describe('Poem', function() {
 
   });
 
-  // Clear votes object.
-  afterEach(function() {
+  afterEach(function(done) {
+
+    // Clear global trackers.
     global.Oversoul.votes = {};
     global.Oversoul.timers = {};
-  });
-
-  after(function(done) {
 
     // Clear users and poems.
     _t.async.map([
@@ -53,6 +51,43 @@ describe('Poem', function() {
       _t.Poem
     ], _t.helpers.remove, function(err, models) {
       done();
+    });
+
+  });
+
+  describe('middleware', function() {
+
+    describe('save', function() {
+
+      it('should set hash', function(done) {
+
+        // Delete hash, save.
+        delete poem.hash;
+        poem.save(function(err) {
+          poem.hash.should.be.ok;
+          done();
+        });
+
+      });
+
+      it('should set roundLength when unit is seconds', function(done) {
+        poem.roundLengthUnit = 'seconds';
+        poem.roundLengthValue = 30;
+        poem.save(function(err) {
+          poem.roundLength.should.eql(30*1000);
+          done();
+        });
+      });
+
+      it('should set roundLength when unit is minutes', function(done) {
+        poem.roundLengthUnit = 'minutes';
+        poem.roundLengthValue = 3;
+        poem.save(function(err) {
+          poem.roundLength.should.eql(3*60*1000);
+          done();
+        });
+      });
+
     });
 
   });
@@ -347,22 +382,6 @@ describe('Poem', function() {
 
       it('should return null when a round does not exist', function() {
         _t.assert.not.exist(poem.round);
-      });
-
-    });
-
-    describe('roundLength', function() {
-
-      it('should convert from seconds', function() {
-        poem.roundLengthValue = 30;
-        poem.roundLengthUnit = 'seconds';
-        poem.roundLength.should.eql(30000);
-      });
-
-      it('should convert from minutes', function() {
-        poem.roundLengthValue = 3;
-        poem.roundLengthUnit = 'minutes';
-        poem.roundLength.should.eql(180000);
       });
 
     });

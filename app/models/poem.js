@@ -63,6 +63,10 @@ var PoemSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  roundLength : {
+    type: Number
+    // required: true
+  },
   sliceInterval : {
     type: Number,
     required: true
@@ -93,6 +97,35 @@ var PoemSchema = new mongoose.Schema({
   rounds : [
     round.RoundSchema
   ]
+});
+
+
+/*
+ * -----------
+ * Middleware.
+ * -----------
+ */
+
+
+/*
+ * Populate the hash and roundLength values.
+ *
+ * @return void.
+ */
+PoemSchema.pre('save', function(next) {
+
+  // If the hash is null, generate.
+  if (_.isUndefined(this.hash)) {
+    this.hash = randomstring.generate(10);
+  }
+
+  // Compute roundLength in milliseconds.
+  this.roundLength = this.roundLengthValue * 1000;
+  if (this.roundLengthUnit == 'minutes')
+    this.roundLength *= 60;
+
+  next();
+
 });
 
 
@@ -144,18 +177,6 @@ PoemSchema.virtual('round').get(function() {
 
 
 /*
- * Get round length in milliseconds.
- *
- * @return {Number}: The round length.
- */
-PoemSchema.virtual('roundLength').get(function() {
-  var ms = this.roundLengthValue * 1000;
-  if (this.roundLengthUnit == 'minutes') ms *= 60;
-  return ms;
-});
-
-
-/*
  * Get round expiration.
  *
  * @return {Date}: The expiration stamp.
@@ -192,30 +213,6 @@ PoemSchema.virtual('syllableCount').get(function() {
   });
 
   return count;
-
-});
-
-
-/*
- * -----------
- * Middleware.
- * -----------
- */
-
-
-/*
- * Populate the hash value.
- *
- * @return void.
- */
-PoemSchema.pre('save', function(next) {
-
-  // If the hash is null.
-  if (_.isUndefined(this.hash)) {
-    this.hash = randomstring.generate(10);
-  }
-
-  next();
 
 });
 

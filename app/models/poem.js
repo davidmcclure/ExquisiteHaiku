@@ -64,8 +64,8 @@ var PoemSchema = new mongoose.Schema({
     required: true
   },
   roundLength : {
-    type: Number
-    // required: true
+    type: Number,
+    required: true
   },
   sliceInterval : {
     type: Number,
@@ -112,17 +112,12 @@ var PoemSchema = new mongoose.Schema({
  *
  * @return void.
  */
-PoemSchema.pre('save', function(next) {
-
-  // If the hash is null, generate.
-  if (_.isUndefined(this.hash)) {
-    this.hash = randomstring.generate(10);
-  }
+PoemSchema.pre('validate', function(next) {
 
   // Compute roundLength in milliseconds.
-  this.roundLength = this.roundLengthValue * 1000;
-  if (this.roundLengthUnit == 'minutes')
-    this.roundLength *= 60;
+  var ms = this.roundLengthValue * 1000;
+  if (this.roundLengthUnit == 'minutes') ms *= 60;
+  this.roundLength = ms;
 
   next();
 

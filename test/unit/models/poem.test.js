@@ -57,18 +57,7 @@ describe('Poem', function() {
 
   describe('middleware', function() {
 
-    describe('save', function() {
-
-      it('should set hash', function(done) {
-
-        // Delete hash, save.
-        delete poem.hash;
-        poem.save(function(err) {
-          poem.hash.should.be.ok;
-          done();
-        });
-
-      });
+    describe('validate', function() {
 
       it('should set roundLength when unit is seconds', function(done) {
         poem.roundLengthUnit = 'seconds';

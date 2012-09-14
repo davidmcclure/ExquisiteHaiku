@@ -1,6 +1,10 @@
+@import url("http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400");
+@import url("http://fonts.googleapis.com/css?family=Bowlby+One+SC");
+@import url("http://fonts.googleapis.com/css?family=PT+Mono");
+@import url("http://fonts.googleapis.com/css?family=Londrina+Solid");
 p{font-family:inherit;color:#000}
-.btn{font-family:"Bowlby One SC";border:0;border-radius:2px}
-.btn-group button{font-family:"Source Sans Pro";border:1px solid #c0c0c0;}
+.btn{font-family:'Bowlby One SC';border:0;border-radius:2px}
+.btn-group button{font-family:'Source Sans Pro';border:1px solid #c0c0c0;}
 .btn-group button:first-child{border-top-left-radius:2px !important;border-bottom-left-radius:2px !important}
 .btn-group button:last-child{border-top-right-radius:2px !important;border-bottom-right-radius:2px !important}
 .btn-group button.active{box-shadow:none;background-color:#646464;border-color:#646464;color:#fff;text-shadow:none}

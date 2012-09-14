@@ -59,7 +59,7 @@ describe('Auth Controller', function() {
         // Fill in form, submit.
         browser.fill('username', 'david');
         browser.fill('password', 'password');
-        browser.pressButton('REGISTER', function() {
+        browser.pressButton('LOGIN', function() {
 
           // Hit the register route as a logged-in user.
           browser.visit(_t.root+'admin/register', function() {

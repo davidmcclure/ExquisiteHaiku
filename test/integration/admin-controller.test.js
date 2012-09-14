@@ -292,7 +292,7 @@ describe('Admin Controller', function() {
       browser.fill('submissionVal', '-5');
       browser.fill('minSubmissions', '-5');
       browser.fill('decayHalflife', '-5');
-      browser.pressButton('Create', function() {
+      browser.pressButton('CREATE', function() {
 
         // Check for errors.
         browser.location.pathname.should.eql('/admin/new');
@@ -321,7 +321,7 @@ describe('Admin Controller', function() {
       browser.fill('submissionVal', '100');
       browser.fill('minSubmissions', '5');
       browser.fill('decayHalflife', '20');
-      browser.pressButton('Create', function() {
+      browser.pressButton('CREATE', function() {
 
         // Check for redirect.
         browser.location.pathname.should.eql('/admin');

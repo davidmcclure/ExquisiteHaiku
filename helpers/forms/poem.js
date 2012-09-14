@@ -66,9 +66,9 @@ exports.form = function(poem) {
       ]
     }),
 
-    // Decay lifetime.
-    decayLifetime: fields.string({
-      required: 'Enter a decay lifetime.',
+    // Decay halflife.
+    decayHalflife: fields.string({
+      required: 'Enter a decay halflife.',
       value: 20,
       validators: [
         validators.positiveInteger('Must be a positive integer.')

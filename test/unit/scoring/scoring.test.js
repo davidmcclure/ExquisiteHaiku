@@ -4,7 +4,7 @@
 
 var _t = require('../../dependencies.js');
 
-describe('_t.scoring', function() {
+describe('Scoring', function() {
 
   var user, now;
 
@@ -163,7 +163,7 @@ describe('_t.scoring', function() {
         sliceInterval: 300,
         minSubmissions: 5,
         submissionVal: 100,
-        decayLifetime: 50000,
+        decayHalflife: 50,
         seedCapital: 1000,
         visibleWords: 2
       });

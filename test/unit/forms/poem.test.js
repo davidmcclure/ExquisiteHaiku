@@ -178,18 +178,18 @@ describe('_t.Poem Form', function() {
 
   });
 
-  describe('decayLifetime', function() {
+  describe('decayHalflife', function() {
 
     it('should have a default value', function() {
-      form.fields.decayLifetime.value.should.exist;
+      form.fields.decayHalflife.value.should.exist;
     });
 
     it('should exist', function(done) {
 
       form.bind({
-        decayLifetime: ''
+        decayHalflife: ''
       }).validate(function(err, form) {
-        form.fields.decayLifetime.error.should.be.ok;
+        form.fields.decayHalflife.error.should.be.ok;
         done();
       });
 
@@ -198,9 +198,9 @@ describe('_t.Poem Form', function() {
     it('should be a positive integer', function(done) {
 
       form.bind({
-        decayLifetime: -5
+        decayHalflife: -5
       }).validate(function(err, form) {
-        form.fields.decayLifetime.error.should.be.ok;
+        form.fields.decayHalflife.error.should.be.ok;
         done();
       });
 
@@ -209,9 +209,9 @@ describe('_t.Poem Form', function() {
     it('should validate when valid', function(done) {
 
       form.bind({
-        decayLifetime: 5
+        decayHalflife: 5
       }).validate(function(err, form) {
-        _t.assert(!form.fields.decayLifetime.error);
+        _t.assert(!form.fields.decayHalflife.error);
         done();
       });
 

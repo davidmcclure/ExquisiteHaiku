@@ -213,6 +213,17 @@ PoemSchema.virtual('syllableCount').get(function() {
 
 
 /*
+ * Convert decay halflife in seconds to mean decay
+ * lifetime in milliseconds.
+ *
+ * @return {Number}: The mean decay lifetime.
+ */
+PoemSchema.virtual('decayLifetime').get(function() {
+  return this.decayHalflife * 1000 * Math.log(2);
+});
+
+
+/*
  * -----------
  * Validators.
  * -----------

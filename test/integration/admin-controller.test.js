@@ -230,7 +230,7 @@ describe('Admin Controller', function() {
         browser.query('form input[name="seedCapital"]').should.be.ok;
         browser.query('form input[name="submissionVal"]').should.be.ok;
         browser.query('form input[name="minSubmissions"]').should.be.ok;
-        browser.query('form input[name="decayLifetime"]').should.be.ok;
+        browser.query('form input[name="decayHalflife"]').should.be.ok;
         browser.query('form input[name="published"]').should.be.ok;
         browser.query('form button[type="submit"]').should.be.ok;
         done();
@@ -263,7 +263,7 @@ describe('Admin Controller', function() {
       browser.fill('seedCapital', '');
       browser.fill('submissionVal', '');
       browser.fill('minSubmissions', '');
-      browser.fill('decayLifetime', '');
+      browser.fill('decayHalflife', '');
       browser.pressButton('Create', function() {
 
         // Check for errors.
@@ -272,11 +272,11 @@ describe('Admin Controller', function() {
         browser.query('span.help-inline.seedCapital').should.be.ok;
         browser.query('span.help-inline.submissionVal').should.be.ok;
         browser.query('span.help-inline.minSubmissions').should.be.ok;
-        browser.query('span.help-inline.decayLifetime').should.be.ok;
+        browser.query('span.help-inline.decayHalflife').should.be.ok;
 
         // Check that no poem was created.
         _t.Poem.count(function(err, count) {
-          count.should.eql(0);
+          count.should.eql(5);
           done();
         });
 
@@ -291,7 +291,7 @@ describe('Admin Controller', function() {
       browser.fill('seedCapital', '-5');
       browser.fill('submissionVal', '-5');
       browser.fill('minSubmissions', '-5');
-      browser.fill('decayLifetime', '-5');
+      browser.fill('decayHalflife', '-5');
       browser.pressButton('Create', function() {
 
         // Check for errors.
@@ -300,11 +300,11 @@ describe('Admin Controller', function() {
         browser.query('span.help-inline.seedCapital').should.be.ok;
         browser.query('span.help-inline.submissionVal').should.be.ok;
         browser.query('span.help-inline.minSubmissions').should.be.ok;
-        browser.query('span.help-inline.decayLifetime').should.be.ok;
+        browser.query('span.help-inline.decayHalflife').should.be.ok;
 
         // Check that no poem was created.
         _t.Poem.count(function(err, count) {
-          count.should.eql(0);
+          count.should.eql(5);
           done();
         });
 
@@ -320,20 +320,23 @@ describe('Admin Controller', function() {
       browser.fill('seedCapital', '18000');
       browser.fill('submissionVal', '100');
       browser.fill('minSubmissions', '5');
-      browser.fill('decayLifetime', '20');
+      browser.fill('decayHalflife', '20');
       browser.pressButton('Create', function() {
 
         // Check for redirect.
         browser.location.pathname.should.eql('/admin');
 
         // Get all poem, check parameters.
-        _t.Poem.find({}, function(err, poems) {
-          poems[0].roundLengthValue.should.eql(3);
-          poems[0].roundLengthUnit.should.eql('minutes');
-          poems[0].seedCapital.should.eql(18000);
-          poems[0].submissionVal.should.eql(100);
-          poems[0].minSubmissions.should.eql(5);
-          poems[0].decayLifetime.should.eql(20);
+        _t.Poem.find()
+        .sort('-created')
+        .exec(function(err, poems) {
+          var poem = _t._.first(poems);
+          poem.roundLengthValue.should.eql(3);
+          poem.roundLengthUnit.should.eql('minutes');
+          poem.seedCapital.should.eql(18000);
+          poem.submissionVal.should.eql(100);
+          poem.minSubmissions.should.eql(5);
+          poem.decayHalflife.should.eql(20);
           done();
         });
 

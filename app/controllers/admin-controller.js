@@ -107,7 +107,7 @@ module.exports = function(app, io) {
             roundLengthUnit:    form.data.roundLengthUnit,
             submissionVal:      form.data.submissionVal,
             minSubmissions:     form.data.minSubmissions,
-            decayHalflife:      form.data.decayLifetime,
+            decayHalflife:      form.data.decayHalflife,
             sliceInterval:      config.sliceInterval,
             visibleWords:       config.visibleWords,
             published:          form.data.published

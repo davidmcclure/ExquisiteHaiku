@@ -102,21 +102,21 @@ block content
           span.help-inline.minSubmissions= minSub.error
 
 
-    // Decay lifetime.
-    - var decLife = form.fields.decayLifetime
+    // Decay halflife.
+    - var decLife = form.fields.decayHalflife
     - var error = decLife.errorHTML() != ''
     div.control-group(class=(error ? 'error' : ''))
-      label.control-label(for='decayLifetime') Decay Lifetime
+      label.control-label(for='decayHalflife') Decay Halflife
       div.controls
 
         input.decLife(
           type='text'
-          name='decayLifetime'
+          name='decayHalflife'
           autocomplete='off'
           value=decLife.value)
 
         if error
-          span.help-inline.decayLifetime= decLife.error
+          span.help-inline.decayHalflife= decLife.error
 
 
     // Published.

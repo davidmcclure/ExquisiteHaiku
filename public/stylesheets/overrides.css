@@ -2,8 +2,9 @@
 @import url("http://fonts.googleapis.com/css?family=Bowlby+One+SC");
 @import url("http://fonts.googleapis.com/css?family=PT+Mono");
 @import url("http://fonts.googleapis.com/css?family=Lilita+One");
+@import url("http://fonts.googleapis.com/css?family=Quicksand:300,400,700");
 p{font-family:inherit;color:#000}
-.btn{font-family:'Lilita One';border:0;border-radius:2px}
+.btn{font-family:'Quicksand';border:0;border-radius:2px;font-weight:bold}
 .btn-primary{background:#08c;}
 .btn-primary:hover{background:#005580}
 .btn-inverse{background:#333;}

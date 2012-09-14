@@ -59,7 +59,7 @@ describe('Auth Controller', function() {
         // Fill in form, submit.
         browser.fill('username', 'david');
         browser.fill('password', 'password');
-        browser.pressButton('Submit', function() {
+        browser.pressButton('REGISTER', function() {
 
           // Hit the register route as a logged-in user.
           browser.visit(_t.root+'admin/register', function() {
@@ -88,7 +88,7 @@ describe('Auth Controller', function() {
         browser.visit(_t.root+'admin/register', function() {
 
           // Fill in form.
-          browser.pressButton('Submit', function() {
+          browser.pressButton('REGISTER', function() {
 
             // Check for error.
             browser.location.pathname.should.eql('/admin/register');
@@ -108,7 +108,7 @@ describe('Auth Controller', function() {
 
           // Fill in form, submit.
           browser.fill('username', 'dav');
-          browser.pressButton('Submit', function() {
+          browser.pressButton('REGISTER', function() {
 
             // Check for error.
             browser.location.pathname.should.eql('/admin/register');
@@ -128,7 +128,7 @@ describe('Auth Controller', function() {
 
           // Fill in form, submit.
           browser.fill('username', 'srdavidwilliamcclurejr');
-          browser.pressButton('Submit', function() {
+          browser.pressButton('REGISTER', function() {
 
             // Check for error.
             browser.location.pathname.should.eql('/admin/register');
@@ -148,7 +148,7 @@ describe('Auth Controller', function() {
 
           // Fill in form, submit.
           browser.fill('username', 'david');
-          browser.pressButton('Submit', function() {
+          browser.pressButton('REGISTER', function() {
 
             // Check for error.
             browser.location.pathname.should.eql('/admin/register');
@@ -168,7 +168,7 @@ describe('Auth Controller', function() {
 
           // Fill in form, submit.
           browser.fill('username', 'kara');
-          browser.pressButton('Submit', function() {
+          browser.pressButton('REGISTER', function() {
 
             // Check for error.
             browser.location.pathname.should.eql('/admin/register');
@@ -191,7 +191,7 @@ describe('Auth Controller', function() {
         browser.visit(_t.root+'admin/register', function() {
 
           // Fill in form.
-          browser.pressButton('Submit', function() {
+          browser.pressButton('REGISTER', function() {
 
             // Check for error.
             browser.location.pathname.should.eql('/admin/register');
@@ -211,7 +211,7 @@ describe('Auth Controller', function() {
 
           // Fill in form, submit.
           browser.fill('email', 'david@test.org');
-          browser.pressButton('Submit', function() {
+          browser.pressButton('REGISTER', function() {
 
             // Check for error.
             browser.location.pathname.should.eql('/admin/register');
@@ -231,7 +231,7 @@ describe('Auth Controller', function() {
 
           // Fill in form, submit.
           browser.fill('email', 'invalid');
-          browser.pressButton('Submit', function() {
+          browser.pressButton('REGISTER', function() {
 
             // Check for error.
             browser.location.pathname.should.eql('/admin/register');
@@ -251,7 +251,7 @@ describe('Auth Controller', function() {
 
           // Fill in form, submit.
           browser.fill('username', 'kara');
-          browser.pressButton('Submit', function() {
+          browser.pressButton('REGISTER', function() {
 
             // Check for error.
             browser.location.pathname.should.eql('/admin/register');
@@ -274,7 +274,7 @@ describe('Auth Controller', function() {
         browser.visit(_t.root+'admin/register', function() {
 
           // Fill in form.
-          browser.pressButton('Submit', function() {
+          browser.pressButton('REGISTER', function() {
 
             // Check for error.
             browser.location.pathname.should.eql('/admin/register');
@@ -294,7 +294,7 @@ describe('Auth Controller', function() {
 
           // Fill in form, submit.
           browser.fill('password', 'pass');
-          browser.pressButton('Submit', function() {
+          browser.pressButton('REGISTER', function() {
 
             // Check for error.
             browser.location.pathname.should.eql('/admin/register');
@@ -314,7 +314,7 @@ describe('Auth Controller', function() {
 
           // Fill in form, submit.
           browser.fill('password', 'password');
-          browser.pressButton('Submit', function() {
+          browser.pressButton('REGISTER', function() {
 
             // Check for error.
             browser.location.pathname.should.eql('/admin/register');
@@ -337,7 +337,7 @@ describe('Auth Controller', function() {
         browser.visit(_t.root+'admin/register', function() {
 
           // Fill in form.
-          browser.pressButton('Submit', function() {
+          browser.pressButton('REGISTER', function() {
 
             // Check for error.
             browser.location.pathname.should.eql('/admin/register');
@@ -358,7 +358,7 @@ describe('Auth Controller', function() {
           // Fill in form, submit.
           browser.fill('password', 'password');
           browser.fill('confirm', 'mismatch');
-          browser.pressButton('Submit', function() {
+          browser.pressButton('REGISTER', function() {
 
             // Check for error.
             browser.location.pathname.should.eql('/admin/register');
@@ -379,7 +379,7 @@ describe('Auth Controller', function() {
           // Fill in form, submit.
           browser.fill('password', 'password');
           browser.fill('confirm', 'password');
-          browser.pressButton('Submit', function() {
+          browser.pressButton('REGISTER', function() {
 
             // Check for error.
             browser.location.pathname.should.eql('/admin/register');
@@ -406,7 +406,7 @@ describe('Auth Controller', function() {
           browser.fill('email', 'kara@test.org');
           browser.fill('password', 'password');
           browser.fill('confirm', 'password');
-          browser.pressButton('Submit', function() {
+          browser.pressButton('REGISTER', function() {
 
             // Check for redirect.
             browser.location.pathname.should.eql('/admin');
@@ -454,7 +454,7 @@ describe('Auth Controller', function() {
         // Fill in form, submit.
         browser.fill('username', 'david');
         browser.fill('password', 'password');
-        browser.pressButton('Submit', function() {
+        browser.pressButton('LOGIN', function() {
 
           // Hit the login route as a logged-in user.
           browser.visit(_t.root+'admin/login', function() {
@@ -483,7 +483,7 @@ describe('Auth Controller', function() {
         browser.visit(_t.root+'admin/login', function() {
 
           // Fill in form.
-          browser.pressButton('Submit', function() {
+          browser.pressButton('LOGIN', function() {
 
             // Check for error.
             browser.location.pathname.should.eql('/admin/login');
@@ -503,7 +503,7 @@ describe('Auth Controller', function() {
 
           // Fill in form, submit.
           browser.fill('username', 'kara');
-          browser.pressButton('Submit', function() {
+          browser.pressButton('LOGIN', function() {
 
             // Check for error.
             browser.location.pathname.should.eql('/admin/login');
@@ -523,7 +523,7 @@ describe('Auth Controller', function() {
 
           // Fill in form, submit.
           browser.fill('username', 'david');
-          browser.pressButton('Submit', function() {
+          browser.pressButton('LOGIN', function() {
 
             // Check for error.
             browser.location.pathname.should.eql('/admin/login');
@@ -546,7 +546,7 @@ describe('Auth Controller', function() {
         browser.visit(_t.root+'admin/login', function() {
 
           // Fill in form.
-          browser.pressButton('Submit', function() {
+          browser.pressButton('LOGIN', function() {
 
             // Check for error.
             browser.location.pathname.should.eql('/admin/login');
@@ -567,7 +567,7 @@ describe('Auth Controller', function() {
           // Fill in form, submit.
           browser.fill('username', 'david');
           browser.fill('password', 'incorrect');
-          browser.pressButton('Submit', function() {
+          browser.pressButton('LOGIN', function() {
 
             // Check for error.
             browser.location.pathname.should.eql('/admin/login');
@@ -592,7 +592,7 @@ describe('Auth Controller', function() {
           // Fill in form, submit.
           browser.fill('username', 'david');
           browser.fill('password', 'password');
-          browser.pressButton('Submit', function() {
+          browser.pressButton('LOGIN', function() {
 
             // Check for redirect.
             browser.location.pathname.should.eql('/admin');
@@ -618,7 +618,7 @@ describe('Auth Controller', function() {
         // Fill in form, submit.
         browser.fill('username', 'david');
         browser.fill('password', 'password');
-        browser.pressButton('Submit', function() {
+        browser.pressButton('LOGIN', function() {
 
           // Hit the logout route as a logged-in user.
           browser.visit(_t.root+'admin/logout', function() {

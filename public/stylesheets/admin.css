@@ -1,7 +1,6 @@
 @import url("http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400");
 @import url("http://fonts.googleapis.com/css?family=Bowlby+One+SC");
 @import url("http://fonts.googleapis.com/css?family=PT+Mono");
-@import url("http://fonts.googleapis.com/css?family=Lilita+One");
 @import url("http://fonts.googleapis.com/css?family=Quicksand:300,400,700");
 ::selection,::-moz-selection{background:#08c;color:#fff}
 body{font-family:'Source Sans Pro';font-size:18px;font-weight:300;text-rendering:optimizeLegibility;margin:.5em}
@@ -22,15 +21,15 @@ form h1.form-header{font-family:'Quicksand';font-size:1.4em;margin-bottom:.5em;o
 form.inline{display:inline;margin-right:.4em;}
 form.inline button{padding:0;font-family:'Source Sans Pro';font-weight:300;font-size:1em}
 form.login,form.register{margin-top:5em}
-form.new{margin-top:2.4em;}
-form.new input[type='text']{display:inline-block;font-weight:300;padding:10px;font-size:20px;width:100px;color:#bbb;}
-form.new input[type='text']:focus{color:#555}
-form.new input[name='roundLengthValue']{padding:20px;font-size:35px;width:80px;border:2px solid #7e7e7e;color:#555;}
-form.new input[name='roundLengthValue']:focus{border-color:#08c}
-form.new .control-group{margin-bottom:5px;}
-form.new .control-group.error input{border-color:#b94a48 !important}
-form.new div.roundLength{margin-bottom:.8em}
-form.new .btn-group{display:inline-block;margin:-9px 0 0 10px}
+form#new{margin-top:2.4em;}
+form#new input[type='text']{display:inline-block;font-weight:300;padding:10px;font-size:20px;width:100px;color:#bbb;}
+form#new input[type='text']:focus{color:#555}
+form#new input[name='roundLengthValue']{padding:20px;font-size:35px;width:80px;border:2px solid #7e7e7e;color:#555;}
+form#new input[name='roundLengthValue']:focus{border-color:#08c}
+form#new .control-group{margin-bottom:5px;}
+form#new .control-group.error input{border-color:#b94a48 !important}
+form#new div.roundLength{margin-bottom:.8em}
+form#new .btn-group button{padding:1px 9px;font-weight:400;font-size:12px;background-image:none}
 .poem{margin-bottom:1.6em;}
 .poem .hash{display:block;margin-bottom:.2em;font-family:'PT Mono';font-size:25px;color:#000}
 .poem .line{line-height:24px}

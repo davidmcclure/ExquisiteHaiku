@@ -1,7 +1,6 @@
 @import url("http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400");
 @import url("http://fonts.googleapis.com/css?family=Bowlby+One+SC");
 @import url("http://fonts.googleapis.com/css?family=PT+Mono");
-@import url("http://fonts.googleapis.com/css?family=Lilita+One");
 @import url("http://fonts.googleapis.com/css?family=Quicksand:300,400,700");
 p{font-family:inherit;color:#000}
 .btn{font-family:'Quicksand';border:0;border-radius:2px;font-weight:bold}
@@ -12,7 +11,7 @@ p{font-family:inherit;color:#000}
 .btn-group button{font-family:'Source Sans Pro';border:1px solid #c0c0c0;}
 .btn-group button:first-child{border-top-left-radius:2px !important;border-bottom-left-radius:2px !important}
 .btn-group button:last-child{border-top-right-radius:2px !important;border-bottom-right-radius:2px !important}
-.btn-group button.active{box-shadow:none;background-color:#646464;border-color:#646464;color:#fff;text-shadow:none}
+.btn-group button.active{box-shadow:none;background-color:#333;border-color:#646464;color:#fff;text-shadow:none}
 input[type='text'],input[type='password'],textarea{-webkit-transition:color linear .2s;display:block;box-shadow:none;border-radius:1px;border-color:#c0c0c0;font-family:inherit;width:150px;}
 input[type='text']:focus,input[type='password']:focus,textarea:focus{box-shadow:none}
 .help-inline{display:block;font-size:13px}

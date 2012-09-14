@@ -175,7 +175,7 @@ describe('Admin Controller', function() {
         browser.visit(_t.root+'admin/login', function() {
           browser.fill('username', 'user1');
           browser.fill('password', 'password');
-          browser.pressButton('Submit', function() {
+          browser.pressButton('LOGIN', function() {
             done();
           });
         });
@@ -213,7 +213,7 @@ describe('Admin Controller', function() {
       browser.visit(_t.root+'admin/login', function() {
         browser.fill('username', 'user1');
         browser.fill('password', 'password');
-        browser.pressButton('Submit', function() {
+        browser.pressButton('LOGIN', function() {
           done();
         });
       });
@@ -248,7 +248,7 @@ describe('Admin Controller', function() {
       browser.visit(_t.root+'admin/login', function() {
         browser.fill('username', 'user1');
         browser.fill('password', 'password');
-        browser.pressButton('Submit', function() {
+        browser.pressButton('LOGIN', function() {
           browser.visit(_t.root+'admin/new', function() {
             done();
           });
@@ -264,7 +264,7 @@ describe('Admin Controller', function() {
       browser.fill('submissionVal', '');
       browser.fill('minSubmissions', '');
       browser.fill('decayHalflife', '');
-      browser.pressButton('Create', function() {
+      browser.pressButton('CREATE', function() {
 
         // Check for errors.
         browser.location.pathname.should.eql('/admin/new');

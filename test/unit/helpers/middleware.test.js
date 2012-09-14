@@ -201,7 +201,7 @@ describe('Route Middleware', function() {
         sliceInterval: 300,
         minSubmissions: 5,
         submissionVal: 100,
-        decayLifetime: 50,
+        decayHalflife: 20,
         seedCapital: 1000,
         visibleWords: 500
       });
@@ -258,7 +258,7 @@ describe('Route Middleware', function() {
         sliceInterval: 300,
         minSubmissions: 5,
         submissionVal: 100,
-        decayLifetime: 50,
+        decayHalflife: 20,
         seedCapital: 1000,
         visibleWords: 500
       });
@@ -323,7 +323,7 @@ describe('Route Middleware', function() {
         sliceInterval: 300,
         minSubmissions: 5,
         submissionVal: 100,
-        decayLifetime: 50,
+        decayHalflife: 50,
         seedCapital: 1000,
         visibleWords: 500
       });

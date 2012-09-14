@@ -35,11 +35,12 @@ describe('Admin Controller', function() {
       started:          false,
       running:          false,
       complete:         false,
-      roundLength :     10000000,
+      roundLengthValue: 3,
+      roundLengthUnit:  'minutes',
       sliceInterval :   1000,
       minSubmissions :  5,
       submissionVal :   100,
-      decayLifetime :   50000,
+      decayHalflife :   20,
       seedCapital :     1000,
       visibleWords :    500
     });
@@ -51,11 +52,12 @@ describe('Admin Controller', function() {
       started:          true,
       running:          true,
       complete:         false,
-      roundLength :     10000000,
+      roundLengthValue: 3,
+      roundLengthUnit:  'minutes',
       sliceInterval :   1000,
       minSubmissions :  5,
       submissionVal :   100,
-      decayLifetime :   50000,
+      decayHalflife :   20,
       seedCapital :     1000,
       visibleWords :    500
     });
@@ -67,11 +69,12 @@ describe('Admin Controller', function() {
       started:          true,
       running:          false,
       complete:         false,
-      roundLength :     10000000,
+      roundLengthValue: 3,
+      roundLengthUnit:  'minutes',
       sliceInterval :   1000,
       minSubmissions :  5,
       submissionVal :   100,
-      decayLifetime :   50000,
+      decayHalflife :   20,
       seedCapital :     1000,
       visibleWords :    500
     });
@@ -83,11 +86,12 @@ describe('Admin Controller', function() {
       started:          true,
       running:          false,
       complete:         true,
-      roundLength :     10000000,
+      roundLengthValue: 3,
+      roundLengthUnit:  'minutes',
       sliceInterval :   1000,
       minSubmissions :  5,
       submissionVal :   100,
-      decayLifetime :   50000,
+      decayHalflife :   20,
       seedCapital :     1000,
       visibleWords :    500
     });
@@ -98,11 +102,12 @@ describe('Admin Controller', function() {
       started:          false,
       running:          false,
       complete:         false,
-      roundLength :     10000000,
+      roundLengthValue: 3,
+      roundLengthUnit:  'minutes',
       sliceInterval :   1000,
       minSubmissions :  5,
       submissionVal :   100,
-      decayLifetime :   50000,
+      decayHalflife :   20,
       seedCapital :     1000,
       visibleWords :    500
     });

@@ -17,31 +17,23 @@ describe('Socket Controller', function() {
       email: 'david@test.org'
     });
 
-    // Create poem.
-    poem1 = new _t.Poem({
+    // Poem parameters.
+    var params = {
       user: user.id,
-      roundLengthValue: 10,
-      roundLengthUnit: 'seconds',
+      roundLengthValue: 3,
+      roundLengthUnit: 'minutes',
       sliceInterval: 300,
       minSubmissions: 5,
       submissionVal: 100,
-      decayLifetime: 50,
+      decayHalflife: 20,
       seedCapital: 1000,
       visibleWords: 500,
       words: [['it', 'little']]
-    });
+    };
 
-    // Create poem.
-    poem2 = new _t.Poem({
-      user: user.id,
-      roundLengthValue: 10,
-      roundLengthUnit: 'seconds',
-      sliceInterval: 300,
-      submissionVal: 100,
-      decayLifetime: 50,
-      seedCapital: 1000,
-      visibleWords: 500
-    });
+    // Create poems.
+    poem1 = new _t.Poem(params);
+    poem2 = new _t.Poem(params);
 
     var options = {
       transports: ['websocket'],

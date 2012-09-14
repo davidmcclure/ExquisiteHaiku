@@ -79,7 +79,7 @@ var PoemSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  decayLifetime : {
+  decayHalflife : {
     type: Number,
     required: true
   },
@@ -210,23 +210,6 @@ PoemSchema.virtual('syllableCount').get(function() {
   return count;
 
 });
-
-
-/*
- * --------
- * Getters.
- * --------
- */
-
-
-/*
- * Get decay lifetime.
- *
- * @return {Number}: The lifetime in milliseconds.
- */
-// PoemSchema.path('decayLifetime').get(function() {
-  // return this.decayLifetime * 1000;
-// });
 
 
 /*

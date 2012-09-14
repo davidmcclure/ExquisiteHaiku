@@ -25,7 +25,7 @@ describe('Poem', function() {
       sliceInterval: 300,
       minSubmissions: 5,
       submissionVal : 100,
-      decayLifetime : 50,
+      decayHalflife : 20,
       seedCapital : 1000,
       visibleWords : 500
     });
@@ -109,7 +109,7 @@ describe('Poem', function() {
         err.errors.sliceInterval.type.should.eql('required');
         err.errors.minSubmissions.type.should.eql('required');
         err.errors.submissionVal.type.should.eql('required');
-        err.errors.decayLifetime.type.should.eql('required');
+        err.errors.decayHalflife.type.should.eql('required');
         err.errors.seedCapital.type.should.eql('required');
 
         // Check for 0 documents.

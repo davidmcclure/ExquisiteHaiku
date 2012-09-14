@@ -43,7 +43,7 @@ describe('Init', function() {
       sliceInterval: 300,
       minSubmissions: 5,
       submissionVal: 100,
-      decayLifetime: 50000,
+      decayHalflife: 20,
       seedCapital: 1000,
       visibleWords: 500
     });
@@ -59,7 +59,7 @@ describe('Init', function() {
       sliceInterval: 300,
       minSubmissions: 5,
       submissionVal: 100,
-      decayLifetime: 50000,
+      decayHalflife: 20,
       seedCapital: 1000,
       visibleWords: 500
     });

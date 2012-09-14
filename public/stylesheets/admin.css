@@ -1,22 +1,23 @@
 @import url("http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400");
 @import url("http://fonts.googleapis.com/css?family=Bowlby+One+SC");
 @import url("http://fonts.googleapis.com/css?family=PT+Mono");
+@import url("http://fonts.googleapis.com/css?family=Londrina+Solid");
 ::selection,::-moz-selection{background:#0060cc;color:#fff}
-body{font-family:"Source Sans Pro";font-size:18px;font-weight:300;text-rendering:optimizeLegibility;margin:.5em}
+body{font-family:'Source Sans Pro';font-size:18px;font-weight:300;text-rendering:optimizeLegibility;margin:.5em}
 body:before{content:'';position:fixed;pointer-events:none;background:-webkit-linear-gradient(whiteSmoke 1px,transparent 1px),-webkit-linear-gradient(0,whiteSmoke 1px,transparent 1px);-webkit-background-size:10px 10px,10px 10px;z-index:-1;top:0;right:0;bottom:0;left:0}
 p{font-size:14px}
 .nav{margin-right:1em;font-size:14px;color:#000}
 a.nav:hover,a.nav.active{color:#08c}
 .auth{font-size:14px}
 .logo-block{margin-top:6em;}
-.logo-block .user{font-family:"Bowlby One SC";line-height:1em;font-weight:200;margin-right:1em;position:relative;top:1px}
-.logo-block h1.logo{font-family:"Bowlby One SC";margin:5px 0 0 0;font-weight:300;}
+.logo-block .user{font-family:'Bowlby One SC';line-height:1em;font-weight:200;margin-right:1em;position:relative;top:1px}
+.logo-block h1.logo{font-family:'Bowlby One SC';margin:5px 0 0 0;font-weight:300;}
 .logo-block h1.logo a:hover{text-decoration:none}
-.logo-block a.new-poem{font-family:"Bowlby One SC";font-size:26px;margin-top:5px;font-weight:300;padding-bottom:5px}
+.logo-block a.new-poem{font-family:'Bowlby One SC';font-size:26px;margin-top:5px;font-weight:300;padding-bottom:5px}
 .logo-block p.free{margin:3px 0 0 15px}
 .secondary-nav{white-space:nowrap;}
 .secondary-nav span{opacity:.8}
-form h1.form-header{font-family:"Bowlby One SC";font-size:1.4em;margin-bottom:.5em;font-weight:300;opacity:.8}
+form h1.form-header{font-family:'Bowlby One SC';font-size:1.4em;margin-bottom:.5em;font-weight:300;opacity:.8}
 form.inline{display:inline;margin-right:.4em;}
 form.inline button{padding:0;font-family:"Source Sans Pro";font-weight:300;font-size:1em}
 form.login,form.register{margin-top:5em}

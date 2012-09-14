@@ -7,7 +7,6 @@ body{font-family:'Source Sans Pro';font-size:18px;font-weight:300;text-rendering
 p{font-size:14px}
 .nav{margin-right:1em;font-size:14px;color:#000}
 a.nav:hover,a.nav.active{color:#08c}
-.auth{font-size:14px}
 .logo-block{margin-top:6em;}
 .logo-block .user{font-family:'Bowlby One SC';line-height:1em;font-weight:200;margin-right:1em;position:relative;top:1px}
 .logo-block h1.logo{font-family:'Quicksand';margin:5px 0 0 -3px;}

@@ -178,7 +178,12 @@ module.exports = function(app, io) {
 
       // Create starting round, start.
       if (req.poem.unstarted) req.poem.newRound();
-      req.poem.start(scoring.execute, emit, function() {});
+      req.poem.start(scoring.execute, emit);
+
+      // Save and redirect.
+      req.poem.save(function(err) {
+        res.redirect('/admin');
+      });
 
   });
 
@@ -194,7 +199,15 @@ module.exports = function(app, io) {
     auth.getPoem,
     auth.ownsPoem,
     function(req, res) {
+
+      // Stop.
       req.poem.stop();
+
+      // Save and redirect.
+      req.poem.save(function(err) {
+        res.redirect('/admin');
+      });
+
   });
 
 };

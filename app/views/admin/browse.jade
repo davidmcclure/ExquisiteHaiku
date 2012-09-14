@@ -4,7 +4,7 @@ block content
 
   each poem in poems
     div.poem
-      div.hash= poem.hash
+      a.hash(href='/#{poem.hash}')= poem.hash
       each line in poem.words
         div.line
           each word in line

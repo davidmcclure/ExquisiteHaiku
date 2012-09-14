@@ -290,6 +290,8 @@ PoemSchema.path('roundLengthUnit').validate(function(v) {
  */
 PoemSchema.methods.start = function(slicer, emit, cb) {
 
+  cb = cb || function() {};
+
   // Block if timer already exists.
   if (_.has(global.Oversoul.timers, this.id)) {
     return false;

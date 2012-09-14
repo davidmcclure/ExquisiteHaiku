@@ -1,7 +1,9 @@
 @import url("http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400");
+@import url("http://fonts.googleapis.com/css?family=Bowlby+One+SC");
+@import url("http://fonts.googleapis.com/css?family=PT+Mono");
 body{font:200 18px "Source Sans Pro";text-rendering:optimizeLegibility;-webkit-user-select:none;-moz-user-select:none;margin:2em}
 .positive{color:#0060cc}
-.negative{color:#b94a48}
+.negative{color:#e13d16}
 .main{margin-left:260px}
 #poem{margin-bottom:1em;}
 #poem div.poem-line{margin-bottom:.3em}
@@ -36,7 +38,7 @@ body{font:200 18px "Source Sans Pro";text-rendering:optimizeLegibility;-webkit-u
 .drag-line svg{position:fixed;stroke-width:2;top:0;left:0;}
 .drag-line svg line,.drag-line svg text,.drag-line svg circle{font-size:2em;}
 .drag-line svg line.positive,.drag-line svg text.positive,.drag-line svg circle.positive{stroke:#0060cc;fill:#0060cc}
-.drag-line svg line.negative,.drag-line svg text.negative,.drag-line svg circle.negative{stroke:#b94a48;fill:#b94a48}
+.drag-line svg line.negative,.drag-line svg text.negative,.drag-line svg circle.negative{stroke:#e13d16;fill:#e13d16}
 .drag-line svg line.blocked,.drag-line svg text.blocked,.drag-line svg circle.blocked{stroke:#b3b3b3;fill:#b3b3b3}
 .drag-line svg circle{opacity:.08}
 .complete-poem{margin-left:260px;}

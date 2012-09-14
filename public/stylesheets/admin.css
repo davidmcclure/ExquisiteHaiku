@@ -30,9 +30,9 @@ form.new .control-group.error input{border-color:#b94a48 !important}
 form.new div.roundLength{margin-bottom:.8em}
 form.new .btn-group{display:inline-block;margin:-9px 0 0 10px}
 .poem{margin-bottom:1.6em;}
-.poem .hash{margin-bottom:.2em;font-family:"PT Mono";font-size:16px;color:#0060cc}
+.poem .hash{margin-bottom:.2em;font-family:"PT Mono";font-size:16px}
 .poem .line{line-height:24px}
-.poem .word{margin-right:5px;font-size:24px;font-weight:400}
+.poem .word{margin-right:5px;font-size:23px;font-weight:300}
 .poem .actions{margin-top:.2em;}
 .poem .actions a{margin-right:.3em;font-size:.9em;}
 .poem .actions a.danger{color:#bd362f}

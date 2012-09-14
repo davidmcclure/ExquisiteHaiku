@@ -4,7 +4,7 @@
 
 var _t = require('../dependencies.js');
 
-describe('Sockets Controller', function() {
+describe('Socket Controller', function() {
 
   var user, poem1, poem2, client1, client2, client3;
 

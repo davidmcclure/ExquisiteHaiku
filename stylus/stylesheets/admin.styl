@@ -84,7 +84,6 @@ a.nav
 
 
 form
-  margin-top 5em
 
   h1.form-header
     font-family "Bowlby One SC"
@@ -93,7 +92,21 @@ form
     font-weight 300
     opacity 0.8
 
-  &#new
+  &.inline
+    display inline
+    margin-right 0.4em
+
+    button
+      padding 0
+      font-family "Source Sans Pro"
+      font-weight 300
+      font-size 1em
+
+  &.login
+  &.register
+    margin-top 5em
+
+  &.new
     margin-top 2.4em
 
     input[type='text']

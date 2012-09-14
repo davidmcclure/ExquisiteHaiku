@@ -144,7 +144,7 @@ module.exports = function(app, io) {
    * @middleware auth.getPoem: Pass the poem identified by :slug.
    * @middleware auth.ownsPoem: Pass if the poem belongs to the user.
    */
-  app.post('/admin/poems/delete/:hash',
+  app.post('/admin/delete/:hash',
     auth.isUser,
     auth.getPoem,
     auth.ownsPoem,
@@ -155,7 +155,7 @@ module.exports = function(app, io) {
 
       // Remove and redirect.
       req.poem.remove(function(err) {
-        res.redirect('/admin/poems');
+        res.redirect('/admin');
       });
 
   });
@@ -167,7 +167,7 @@ module.exports = function(app, io) {
    * @middleware auth.getPoem: Pass the poem identified by :slug.
    * @middleware auth.ownsPoem: Pass if the poem belongs to the user.
    */
-  app.post('/admin/poems/start/:hash',
+  app.post('/admin/start/:hash',
     auth.isUser,
     auth.getPoem,
     auth.ownsPoem,
@@ -189,7 +189,7 @@ module.exports = function(app, io) {
    * @middleware auth.getPoem: Pass the poem identified by :slug.
    * @middleware auth.ownsPoem: Pass if the poem belongs to the user.
    */
-  app.post('/admin/poems/stop/:hash',
+  app.post('/admin/stop/:hash',
     auth.isUser,
     auth.getPoem,
     auth.ownsPoem,

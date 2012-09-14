@@ -64,8 +64,8 @@ var PoemSchema = new mongoose.Schema({
     required: true
   },
   roundLength : {
-    type: Number
-    // required: true
+    type: Number,
+    required: true
   },
   sliceInterval : {
     type: Number,

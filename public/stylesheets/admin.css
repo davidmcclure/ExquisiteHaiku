@@ -35,5 +35,5 @@ form#new .btn-group button{padding:1px 9px;font-weight:400;font-size:12px;backgr
 .poem .line{line-height:24px}
 .poem .word{margin-right:3px}
 .poem .actions{margin-top:.2em;}
-.poem .actions a{margin-right:.3em;font-size:.9em;}
-.poem .actions a.danger{color:#bd362f}
+.poem .actions button{margin-right:.3em;font-size:.9em;}
+.poem .actions button.danger{color:#bd362f}

@@ -101,7 +101,7 @@ describe('Init', function() {
 
       // Run init.
       _t.init(app, io, function() {
-        // done();
+        done();
       });
 
     });

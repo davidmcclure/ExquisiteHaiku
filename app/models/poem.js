@@ -213,6 +213,23 @@ PoemSchema.virtual('syllableCount').get(function() {
 
 
 /*
+ * --------
+ * Getters.
+ * --------
+ */
+
+
+/*
+ * Get decay lifetime.
+ *
+ * @return {Number}: The lifetime in milliseconds.
+ */
+// PoemSchema.path('decayLifetime').get(function() {
+  // return this.decayLifetime * 1000;
+// });
+
+
+/*
  * -----------
  * Validators.
  * -----------

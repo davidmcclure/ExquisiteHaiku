@@ -27,8 +27,6 @@ describe('Login Form', function() {
       email: 'kara@test.org'
     });
 
-    console.log('running');
-
     // Save.
     _t.async.map([
       user1,

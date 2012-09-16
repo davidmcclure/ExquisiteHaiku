@@ -14,14 +14,17 @@ block content
 
         if poem.unstarted || poem.paused
           form.inline.start(method='post'
-            action='/admin/start/#{poem.hash}')
+            action='/admin/start/#{poem.hash}'
+            hash=poem.hash)
             button.btn.btn-link(type='submit') start
 
         if poem.running
           form.inline.stop(method='post'
-            action='/admin/stop/#{poem.hash}')
+            action='/admin/stop/#{poem.hash}'
+            hash=poem.hash)
             button.btn.btn-link(type='submit') stop
 
         form.inline.delete(method='post'
-          action='/admin/delete/#{poem.hash}')
+          action='/admin/delete/#{poem.hash}'
+          hash=poem.hash)
           button.btn.btn-link.danger(type='submit') delete

@@ -141,7 +141,7 @@ describe('Init', function() {
     global.Oversoul.votes[running.round.id]['word2'].length.should.eql(1);
 
     // Check for timer.
-    global.Oversoul.timers.should.have.keys(running.id);
+    global.Oversoul.timers[running.id].should.be.ok;
 
   });
 

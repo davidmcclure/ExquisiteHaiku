@@ -186,31 +186,23 @@ describe('Admin Controller', function() {
       _t.assert(!browser.query('div.poem[hash='+user2poem.hash+']'));
     });
 
-    it('should show start link for unstarted poems', function() {
-      browser.query('div.poem[hash="'+unstarted.hash+
-        '"] form.start[action="/admin/start/'+unstarted.hash+'"]'
-      ).should.be.ok;
+    it('should show start link for unstarted and paused poems', function() {
+      browser.query('form.start[action="/admin/start/'+unstarted.hash+
+        '"]').should.be.ok;
+      browser.query('form.start[action="/admin/start/'+paused.hash+
+        '"]').should.be.ok;
     });
 
-    it('should show start link for paused poems', function() {
-      browser.query('div.poem[hash="'+paused.hash+
-        '"] form.start[action="/admin/start/'+paused.hash+'"]'
-      ).should.be.ok;
-    });
-
-    it('should not show start links for running poems', function() {
-      _t.assert(!browser.query('div.poem[hash="'+running.hash+
-        '"] form.start'));
-    });
-
-    it('should not show start links for complete poems', function() {
-      _t.assert(!browser.query('div.poem[hash="'+complete.hash+
-        '"] form.start'));
+    it('should not show start links for running and complete poems', function() {
+      _t.assert(!browser.query('form.start[action="/admin/start/'+
+        running.hash+'"]'));
+      _t.assert(!browser.query('form.start[action="/admin/start/'+
+        complete.hash+'"]'));
     });
 
     it('should show stop link for running poems', function() {
-      _t.assert(browser.query('div.poem[hash="'+running.hash+
-        '"] form.stop'));
+      browser.query('form.stop[action="/admin/stop/'+running.hash+
+        '"]').should.be.ok;
     });
 
     it('should not show start or stop links for finished poems', function() {
@@ -365,14 +357,16 @@ describe('Admin Controller', function() {
 
   describe('POST /admin/start/:hash', function() {
 
-    // GET /admin, start unstarted.
     beforeEach(function(done) {
+
+      // GET /admin, start unstarted.
       browser.visit(_t.root+'admin', function() {
         browser.pressButton('div.poem[hash='+unstarted.hash+
           '] form.start button', function() {
           done();
         });
       });
+
     });
 
     it('should start the timer', function() {
@@ -401,7 +395,7 @@ describe('Admin Controller', function() {
 
     it('should set running = true', function(done) {
 
-      // Re-get unstarted, check for round.
+      // Re-get unstarted, check running.
       _t.Poem.findById(unstarted.id, function(err, unstarted) {
         unstarted.running.should.be.true;
         done();
@@ -417,21 +411,99 @@ describe('Admin Controller', function() {
 
   describe('POST /admin/stop/:hash', function() {
 
-    it('should stop the timer');
+    beforeEach(function(done) {
 
-    it('should set running = false');
+      // GET /admin, start unstarted.
+      browser.visit(_t.root+'admin', function() {
+        browser.pressButton('form.start[hash='+unstarted.hash+
+          '] button', function() {
 
-    it('should redirect');
+          // Then stop unstarted.
+          browser.pressButton('form.stop[hash='+unstarted.hash+
+            '] button',function() {
+            done();
+          });
+
+        });
+      });
+
+    });
+
+    it('should stop the timer', function() {
+      global.Oversoul.timers.should.not.have.keys(unstarted.id);
+    });
+
+    it('should set running = false', function(done) {
+
+      // Re-get unstarted, check running.
+      _t.Poem.findById(unstarted.id, function(err, poem) {
+        poem.running.should.be.false;
+        done();
+      });
+
+    });
+
+    it('should redirect', function() {
+      browser.location.pathname.should.eql('/admin');
+    });
 
   });
 
   describe('POST /admin/delete/:hash', function() {
 
-    it('should delete the poem and redirect');
+    describe('when the poem is not running', function() {
+
+      beforeEach(function(done) {
+
+        // GET /admin, delete unstarted.
+        browser.visit(_t.root+'admin', function() {
+          browser.pressButton('form.delete[hash='+unstarted.hash+
+            '] button', function() {
+              done();
+          });
+        });
+
+      });
+
+      it('should delete the poem', function(done) {
+
+        // Check for no unstarted.
+        _t.Poem.findById(unstarted.id, function(err, poem) {
+          _t.assert(!poem);
+          done();
+        });
+
+      });
+
+      it('should redirect', function() {
+        browser.location.pathname.should.eql('/admin');
+      });
+
+    });
 
     describe('when the poem is running', function() {
 
-      it('should stop the poem and remove the timer');
+      beforeEach(function(done) {
+
+        // GET /admin, start unstarted.
+        browser.visit(_t.root+'admin', function() {
+          browser.pressButton('form.start[hash='+unstarted.hash+
+            '] button', function() {
+
+            // Then delete unstarted.
+            browser.pressButton('form.delete[hash='+unstarted.hash+
+              '] button',function() {
+              done();
+            });
+
+          });
+        });
+
+      });
+
+      it('should remove the timer', function() {
+        _t.assert(!global.Oversoul.timers[unstarted.id]);
+      });
 
     });
 

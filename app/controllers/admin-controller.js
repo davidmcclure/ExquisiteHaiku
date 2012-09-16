@@ -23,22 +23,6 @@ var Round = mongoose.model('Round');
 module.exports = function(app, io) {
 
   /*
-   * Front page.
-   */
-  app.get('/', 
-    auth.getUser,
-    function(req, res) {
-
-    // Render the layout.
-    res.render('admin/index', {
-      title: 'equisitehaiku',
-      user: req.user,
-      menu: 'index'
-    });
-
-  });
-
-  /*
    * Show poems.
    *
    * @middleware auth.isUser: Block if there is no user session.

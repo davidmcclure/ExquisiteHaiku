@@ -122,7 +122,16 @@ describe('Admin Controller', function() {
       complete,
       user2poem
     ], _t.helpers.save, function(err, documents) {
-      done();
+
+      // Log in as user1.
+      browser.visit(_t.root+'admin/login', function() {
+        browser.fill('username', 'user1');
+        browser.fill('password', 'password');
+        browser.pressButton('LOGIN', function() {
+          done();
+        });
+      });
+
     });
 
   });
@@ -148,25 +157,15 @@ describe('Admin Controller', function() {
 
   });
 
+  // ** TMP
+
   describe('GET /admin', function() {
 
-    // Log in user1.
+    // GET /admin.
     beforeEach(function(done) {
-
-      // Log in as user1.
-      browser.visit(_t.root+'admin/login', function() {
-        browser.fill('username', 'user1');
-        browser.fill('password', 'password');
-        browser.pressButton('LOGIN', function() {
-
-          // GET /admin.
-          browser.visit(_t.root+'admin', function() {
-            done();
-          });
-
-        });
+      browser.visit(_t.root+'admin', function() {
+        done();
       });
-
     });
 
     it('should show poems', function() {
@@ -234,18 +233,9 @@ describe('Admin Controller', function() {
 
   });
 
-  describe('GET /admin/new', function() {
+  // ** /TMP
 
-    // Log user in.
-    beforeEach(function(done) {
-      browser.visit(_t.root+'admin/login', function() {
-        browser.fill('username', 'user1');
-        browser.fill('password', 'password');
-        browser.pressButton('LOGIN', function() {
-          done();
-        });
-      });
-    });
+  describe('GET /admin/new', function() {
 
     it('should render the form', function(done) {
 
@@ -273,14 +263,8 @@ describe('Admin Controller', function() {
 
     // GET /admin/new.
     beforeEach(function(done) {
-      browser.visit(_t.root+'admin/login', function() {
-        browser.fill('username', 'user1');
-        browser.fill('password', 'password');
-        browser.pressButton('LOGIN', function() {
-          browser.visit(_t.root+'admin/new', function() {
-            done();
-          });
-        });
+      browser.visit(_t.root+'admin/new', function() {
+        done();
       });
     });
 
@@ -381,26 +365,14 @@ describe('Admin Controller', function() {
 
   describe('POST /admin/start/:hash', function() {
 
-    // Log in user1.
+    // GET /admin, start unstarted.
     beforeEach(function(done) {
-
-      // Log in as user1.
-      browser.visit(_t.root+'admin/login', function() {
-        browser.fill('username', 'user1');
-        browser.fill('password', 'password');
-        browser.pressButton('LOGIN', function() {
-
-          // GET /admin, start unstarted.
-          browser.visit(_t.root+'admin', function() {
-            browser.pressButton('div.poem[hash='+unstarted.hash+
-              '] form.start button', function() {
-              done();
-            });
-          });
-
+      browser.visit(_t.root+'admin', function() {
+        browser.pressButton('div.poem[hash='+unstarted.hash+
+          '] form.start button', function() {
+          done();
         });
       });
-
     });
 
     it('should start the timer', function() {

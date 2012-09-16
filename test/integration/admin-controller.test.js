@@ -439,15 +439,65 @@ describe('Admin Controller', function() {
 
   describe('POST /admin/start/:hash', function() {
 
-    it('should start the timer');
+    // Log in user1.
+    beforeEach(function(done) {
 
-    it('should create starting round for unstarted poem');
+      // Log in as user1.
+      browser.visit(_t.root+'admin/login', function() {
+        browser.fill('username', 'user1');
+        browser.fill('password', 'password');
+        browser.pressButton('LOGIN', function() {
 
-    it('should not create new round for paused poem');
+          // GET /admin, start unstarted.
+          browser.visit(_t.root+'admin', function() {
+            browser.pressButton('div.poem[hash='+unstarted.hash+
+              '] form.start button', function() {
+              done();
+            });
+          });
 
-    it('should set running = true');
+        });
+      });
 
-    it('should redirect');
+    });
+
+    it('should start the timer', function() {
+      global.Oversoul.timers.should.have.keys(unstarted.id);
+    });
+
+    it('should create starting round for unstarted poem', function(done) {
+
+      // Re-get unstarted, check for round.
+      _t.Poem.findById(unstarted.id, function(err, unstarted) {
+        unstarted.rounds.length.should.eql(1);
+        done();
+      });
+
+    });
+
+    it('should not create new round for paused poem', function(done) {
+
+      // Re-get paused, check for 1 round.
+      _t.Poem.findById(paused.id, function(err, paused) {
+        paused.rounds.length.should.eql(1);
+        done();
+      });
+
+    });
+
+    it('should set running = true', function(done) {
+
+      // Re-get unstarted, check for round.
+      _t.Poem.findById(unstarted.id, function(err, unstarted) {
+        unstarted.running.should.be.true;
+        done();
+      });
+
+    });
+
+    it('should redirect', function() {
+      browser.location.pathname.should.eql('/admin');
+    });
 
   });
 

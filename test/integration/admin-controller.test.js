@@ -206,6 +206,24 @@ describe('Admin Controller', function() {
 
   });
 
+  describe('GET /admin', function() {
+
+    it('should show poems');
+
+    it('should not show poems owned by other users');
+
+    it('should show start link for unstarted poems');
+
+    it('should show start link for paused poems');
+
+    it('should show stop link for running poems');
+
+    it('should not show start or stop links for finished poems');
+
+    it('should show delete links for all poems');
+
+  });
+
   describe('GET /admin/new', function() {
 
     // Log user in.
@@ -314,35 +332,52 @@ describe('Admin Controller', function() {
 
     it('should create a new poem and redirect on success', function(done) {
 
-      // Empty form.
-      browser.fill('roundLengthValue', '3');
-      browser.fill('roundLengthUnit', 'minutes');
-      browser.fill('seedCapital', '18000');
-      browser.fill('submissionVal', '100');
-      browser.fill('minSubmissions', '5');
-      browser.fill('decayHalflife', '20');
-      browser.pressButton('CREATE', function() {
+      _t.Poem.count(function(err, count) {
 
-        // Check for redirect.
-        browser.location.pathname.should.eql('/admin');
+        // Empty form.
+        browser.fill('roundLengthValue', '3');
+        browser.fill('roundLengthUnit', 'minutes');
+        browser.fill('seedCapital', '18000');
+        browser.fill('submissionVal', '100');
+        browser.fill('minSubmissions', '5');
+        browser.fill('decayHalflife', '20');
+        browser.pressButton('CREATE', function() {
 
-        // Get all poem, check parameters.
-        _t.Poem.find()
-        .sort('-created')
-        .exec(function(err, poems) {
-          var poem = _t._.first(poems);
-          poem.roundLengthValue.should.eql(3);
-          poem.roundLengthUnit.should.eql('minutes');
-          poem.seedCapital.should.eql(18000);
-          poem.submissionVal.should.eql(100);
-          poem.minSubmissions.should.eql(5);
-          poem.decayHalflife.should.eql(20);
-          done();
+          // Check for redirect.
+          browser.location.pathname.should.eql('/admin');
+
+          // Get all poem, check parameters.
+          _t.Poem.find()
+          .sort('-created')
+          .exec(function(err, poems) {
+            var poem = _t._.first(poems);
+            poems.length.should.eql(count+1);
+            poem.roundLengthValue.should.eql(3);
+            poem.roundLengthUnit.should.eql('minutes');
+            poem.seedCapital.should.eql(18000);
+            poem.submissionVal.should.eql(100);
+            poem.minSubmissions.should.eql(5);
+            poem.decayHalflife.should.eql(20);
+            done();
+          });
+
         });
 
       });
 
     });
+
+  });
+
+  describe('POST /admin/start/:hash', function() {
+
+  });
+
+  describe('POST /admin/stop/:hash', function() {
+
+  });
+
+  describe('POST /admin/delete/:hash', function() {
 
   });
 

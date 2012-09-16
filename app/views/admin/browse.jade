@@ -3,7 +3,7 @@ extends layout
 block content
 
   each poem in poems
-    div.poem
+    div.poem(hash=poem.hash)
       a.hash(href='/#{poem.hash}')= poem.hash
       each line in poem.words
         div.line
@@ -13,15 +13,15 @@ block content
       div.actions
 
         if poem.unstarted || poem.paused
-          form.inline(method='post'
+          form.inline.start(method='post'
             action='/admin/start/#{poem.hash}')
             button.btn.btn-link(type='submit') start
 
         if poem.running
-          form.inline(method='post'
+          form.inline.stop(method='post'
             action='/admin/stop/#{poem.hash}')
             button.btn.btn-link(type='submit') stop
 
-        form.inline(method='post'
+        form.inline.delete(method='post'
           action='/admin/delete/#{poem.hash}')
           button.btn.btn-link.danger(type='submit') delete

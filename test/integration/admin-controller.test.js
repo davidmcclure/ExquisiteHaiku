@@ -208,19 +208,87 @@ describe('Admin Controller', function() {
 
   describe('GET /admin', function() {
 
-    it('should show poems');
+    // Log in user1.
+    beforeEach(function(done) {
 
-    it('should not show poems owned by other users');
+      // Log in as user1.
+      browser.visit(_t.root+'admin/login', function() {
+        browser.fill('username', 'user1');
+        browser.fill('password', 'password');
+        browser.pressButton('LOGIN', function() {
 
-    it('should show start link for unstarted poems');
+          // GET /admin.
+          browser.visit(_t.root+'admin', function() {
+            done();
+          });
 
-    it('should show start link for paused poems');
+        });
+      });
 
-    it('should show stop link for running poems');
+    });
 
-    it('should not show start or stop links for finished poems');
+    it('should show poems', function() {
 
-    it('should show delete links for all poems');
+      // Check for self poems.
+      browser.text('div.poem[hash='+unstarted.hash+'] a.hash').
+        should.eql(unstarted.hash);
+      browser.text('div.poem[hash='+running.hash+'] a.hash').
+        should.eql(running.hash);
+      browser.text('div.poem[hash='+paused.hash+'] a.hash').
+        should.eql(paused.hash);
+      browser.text('div.poem[hash='+complete.hash+'] a.hash').
+        should.eql(complete.hash);
+
+    });
+
+    it('should not show poems owned by other users', function() {
+      _t.assert(!browser.query('div.poem[hash='+user2poem.hash+']'));
+    });
+
+    it('should show start link for unstarted poems', function() {
+      browser.query('div.poem[hash="'+unstarted.hash+
+        '"] form.start[action="/admin/start/'+unstarted.hash+'"]'
+      ).should.be.ok;
+    });
+
+    it('should show start link for paused poems', function() {
+      browser.query('div.poem[hash="'+paused.hash+
+        '"] form.start[action="/admin/start/'+paused.hash+'"]'
+      ).should.be.ok;
+    });
+
+    it('should not show start links for running poems', function() {
+      _t.assert(!browser.query('div.poem[hash="'+running.hash+
+        '"] form.start'));
+    });
+
+    it('should not show start links for complete poems', function() {
+      _t.assert(!browser.query('div.poem[hash="'+complete.hash+
+        '"] form.start'));
+    });
+
+    it('should show stop link for running poems', function() {
+      _t.assert(browser.query('div.poem[hash="'+running.hash+
+        '"] form.stop'));
+    });
+
+    it('should not show start or stop links for finished poems', function() {
+      _t.assert(!browser.query('div.poem[hash="'+complete.hash+
+        '"] form.start'));
+      _t.assert(!browser.query('div.poem[hash="'+complete.hash+
+        '"] form.stop'));
+    });
+
+    it('should show delete links for all poems', function() {
+      _t.assert(browser.query('div.poem[hash="'+unstarted.hash+
+        '"] form.delete'));
+      _t.assert(browser.query('div.poem[hash="'+running.hash+
+        '"] form.delete'));
+      _t.assert(browser.query('div.poem[hash="'+paused.hash+
+        '"] form.delete'));
+      _t.assert(browser.query('div.poem[hash="'+complete.hash+
+        '"] form.delete'));
+    });
 
   });
 
@@ -371,13 +439,37 @@ describe('Admin Controller', function() {
 
   describe('POST /admin/start/:hash', function() {
 
+    it('should start the timer');
+
+    it('should create starting round for unstarted poem');
+
+    it('should not create new round for paused poem');
+
+    it('should set running = true');
+
+    it('should redirect');
+
   });
 
   describe('POST /admin/stop/:hash', function() {
 
+    it('should stop the timer');
+
+    it('should set running = false');
+
+    it('should redirect');
+
   });
 
   describe('POST /admin/delete/:hash', function() {
+
+    it('should delete the poem and redirect');
+
+    describe('when the poem is running', function() {
+
+      it('should stop the poem and remove the timer');
+
+    });
 
   });
 

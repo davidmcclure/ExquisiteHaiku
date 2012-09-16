@@ -148,64 +148,6 @@ describe('Admin Controller', function() {
 
   });
 
-  describe('GET /', function() {
-
-    describe('for anonymous user', function() {
-
-      it('should show login link', function(done) {
-        browser.visit(_t.root, function() {
-          browser.query('a[href="/admin/login"]').should.be.ok;
-          done();
-        });
-      });
-
-      it('should show register link', function(done) {
-        browser.visit(_t.root, function() {
-          browser.query('a[href="/admin/register"]').should.be.ok;
-          done();
-        });
-      });
-
-    });
-
-    describe('for logged in user', function() {
-
-      // Log user in.
-      beforeEach(function(done) {
-        browser.visit(_t.root+'admin/login', function() {
-          browser.fill('username', 'user1');
-          browser.fill('password', 'password');
-          browser.pressButton('LOGIN', function() {
-            done();
-          });
-        });
-      });
-
-      it('should not show login link', function(done) {
-        browser.visit(_t.root, function() {
-          _t.assert(!browser.query('a[href="/admin/login"]'));
-          done();
-        });
-      });
-
-      it('should not show register link', function(done) {
-        browser.visit(_t.root, function() {
-          _t.assert(!browser.query('a[href="/admin/register"]'));
-          done();
-        });
-      });
-
-      it('should show logout link', function(done) {
-        browser.visit(_t.root, function() {
-          browser.query('a[href="/admin/logout"]').should.be.ok;
-          done();
-        });
-      });
-
-    });
-
-  });
-
   describe('GET /admin', function() {
 
     // Log in user1.

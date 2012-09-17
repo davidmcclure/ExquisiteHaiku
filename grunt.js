@@ -94,6 +94,11 @@ module.exports = function(grunt) {
         separator: ';'
       }
 
+    },
+
+    watch: {
+      files: ['<config:min.test.src>'],
+      tasks: ['min:poem', 'min:admin', 'min:test']
     }
 
   });

@@ -48,7 +48,6 @@ load(
   a+'views/line-view.js',
   a+'views/points-view.js',
   a+'views/timer-view.js',
-  a+'views/end-view.js',
 
   // Controllers
   a+'controllers/poem-controller.js',
@@ -56,8 +55,7 @@ load(
   a+'controllers/round-controller.js',
   a+'controllers/stack-controller.js',
   a+'controllers/log-controller.js',
-  a+'controllers/info-controller.js',
-  a+'controllers/end-controller.js'
+  a+'controllers/info-controller.js'
 
 ).thenRun(function() {
 

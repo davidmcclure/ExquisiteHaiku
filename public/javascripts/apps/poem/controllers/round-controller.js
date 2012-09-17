@@ -17,16 +17,8 @@ Ov.Controllers.Round = (function(Backbone, Ov) {
    * @return void.
    */
   Round.init = function() {
-
-    // Fetch localstorage.
     Round.Rounds = new Ov.Collections.Round();
     Round.Rounds.fetch();
-
-    // If not running, render static poem.
-    Ov.on('initialize:after', function() {
-      if (!P.running) Ov.vent.trigger('state:complete');
-    });
-
   };
 
 
@@ -66,13 +58,8 @@ Ov.Controllers.Round = (function(Backbone, Ov) {
 
     else {
 
-      // Complete.
-      if (data.syllables === 17) {
-        Ov.vent.trigger('state:complete');
-      }
-
       // Vote -> submit.
-      else if (_.isEmpty(round) && Ov.global.isVoting) {
+      if (_.isEmpty(round) && Ov.global.isVoting) {
         Ov.global.isVoting = false;
         Ov.global.isDragging = false;
         Ov.vent.trigger('state:submit');

@@ -11,7 +11,7 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
 
-    concat: {
+    min: {
       poem: {
         src: [
           vendor+'jquery/jquery.js',

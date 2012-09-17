@@ -18,6 +18,7 @@ module.exports = function(grunt) {
           vendor+'underscore/underscore.js',
           vendor+'d3/d3.js',
           vendor+'backbone/backbone.js',
+          vendor+'backbone/marionette.js',
           vendor+'backbone/backbone-localstorage.js',
           poem+'app.js',
           poem+'collections/round-collection.js',
@@ -37,7 +38,8 @@ module.exports = function(grunt) {
           poem+'controllers/log-controller.js',
           poem+'controllers/info-controller.js'
         ],
-        dest: payload+'poem.min.js'
+        dest: payload+'poem.min.js',
+        separator: ';'
       },
       admin: {
 

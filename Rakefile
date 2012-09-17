@@ -9,6 +9,7 @@ namespace :test do
 
   desc 'Run all tests'
   task :all do
+    sh %{grunt min:test}
     Rake::Task['test:server'].invoke
     Rake::Task['jasmine:ci'].invoke
   end

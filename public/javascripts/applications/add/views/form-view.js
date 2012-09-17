@@ -2,7 +2,7 @@
  * Form view.
  */
 
-Create.Views.Form = Backbone.View.extend({
+Add.Views.Form = Backbone.View.extend({
 
   el: '#new',
 

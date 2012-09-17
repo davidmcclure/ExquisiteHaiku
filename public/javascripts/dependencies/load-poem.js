@@ -2,7 +2,7 @@
  * Include dependencies.
  */
 
-var a = 'javascripts/apps/poem/';
+var a = 'javascripts/applications/poem/';
 var v = 'javascripts/vendor/';
 
 load(

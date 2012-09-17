@@ -2,7 +2,7 @@
  * Form controller.
  */
 
-Create.Controllers.Form = (function(Backbone, Create) {
+Add.Controllers.Form = (function(Backbone, Add) {
 
   var Form = {};
 
@@ -17,12 +17,12 @@ Create.Controllers.Form = (function(Backbone, Create) {
    * @return void.
    */
   Form.init = function() {
-    Form.Form = new Create.Views.Form();
+    Form.Form = new Add.Views.Form();
   };
 
 
   // Export.
-  Create.addInitializer(function() { Form.init(); });
+  Add.addInitializer(function() { Form.init(); });
   return Form;
 
-})(Backbone, Create);
+})(Backbone, Add);

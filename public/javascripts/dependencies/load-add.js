@@ -2,7 +2,7 @@
  * Include dependencies.
  */
 
-var a = '/javascripts/apps/create/';
+var a = '/javascripts/applications/add/';
 var b = '/stylesheets/bootstrap/js/';
 var v = '/javascripts/vendor/';
 
@@ -46,7 +46,7 @@ load(
 
   // Run.
   $(function() {
-    Create.start();
+    Add.start();
   });
 
 });

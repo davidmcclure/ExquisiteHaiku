@@ -2,10 +2,10 @@
  * Application runner.
  */
 
-Create = new Backbone.Marionette.Application();
+Add = new Backbone.Marionette.Application();
 
 // --------------------
 // Instance namespaces.
 // --------------------
-Create.Controllers = {};
-Create.Views = {};
+Add.Controllers = {};
+Add.Views = {};

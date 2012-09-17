@@ -1,26 +1,23 @@
+# Load stages.
 set :stages, %w[staging production]
 set :default_stage, "staging"
 require 'capistrano/ext/multistage'
 
+# Repository information.
 set :application, "exquisitehaiku"
 set :repository,  "git@github.com:davidmcclure/ExquisiteHaiku.git"
 set :scm, :git
 set :branch, 'master'
 
 set :deploy_via, :remote_cache
-set :deploy_to, "/var/www/#{application}"
+set :use_sudo, true
+default_run_options[:pty] = true
 
-set :host, "localhost" # put this in your stage file
 set :node_file, "app.js"
 set :user, "davidmcclure"
 
-set :use_sudo, true
-
-default_run_options[:pty] = true
-
 role :app, host
 set :use_sudo, true
-
 set :bluepill, "path/to/bluepill"
 
 namespace :deploy do
@@ -44,8 +41,6 @@ namespace :deploy do
   desc "Create deployment directory"
   task :create_directory, :roles => :app, :except => { :no_release => true }  do
     run "#{try_sudo} mkdir -p #{deploy_to}"
-    # this shoudln't be necessary; sudo as the user should have all the same perms
-    #run "#{try_sudo} chown #{user}:#{user} #{deploy_to}"
   end
 
 end

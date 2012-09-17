@@ -7,7 +7,7 @@ var v = 'javascripts/vendor/';
 
 load(
 
-  // jQuery, Underscore, Moment, d3.
+  // jQuery, Underscore, d3.
   v+'jquery/jquery.js',
   v+'underscore/underscore.js',
   v+'d3/d3.js'

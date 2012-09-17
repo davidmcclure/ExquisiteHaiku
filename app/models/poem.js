@@ -405,6 +405,7 @@ PoemSchema.methods.addWord = function(word) {
 
   // Word syllable count.
   var syll = syllables[word];
+  var count;
 
   // Non-word.
   if (!_.has(syllables, word)) {
@@ -421,7 +422,7 @@ PoemSchema.methods.addWord = function(word) {
   else if (this.words.length == 1) {
 
     // Sum syllables.
-    var count = 0;
+    count = 0;
     _.each(this.words[0], function(w) {
       count += syllables[w];
     });
@@ -444,7 +445,7 @@ PoemSchema.methods.addWord = function(word) {
   else if (this.words.length == 2) {
 
     // Sum syllables.
-    var count = 0;
+    count = 0;
     _.each(this.words[1], function(w) {
       count += syllables[w];
     });
@@ -458,7 +459,7 @@ PoemSchema.methods.addWord = function(word) {
     // If line 2 full, create line 3.
     else if (count == 7) {
       this.words.push([word]);
-      return true
+      return true;
     }
 
   }
@@ -467,7 +468,7 @@ PoemSchema.methods.addWord = function(word) {
   else if (this.words.length == 3) {
 
     // Sum syllables.
-    var count = 0;
+    count = 0;
     _.each(this.words[2], function(w) {
       count += syllables[w];
     });

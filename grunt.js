@@ -4,49 +4,50 @@
 
 module.exports = function(grunt) {
 
-  // File prefixes.
   var vendor =    'public/javascripts/vendor/';
-  var boot =      'public/stylesheets/bootstrap/js/';
-  var build =     'public/javascripts/payloads/';
-  var poem =      'public/javascripts/applications/poem/';
-  var add =       'public/javascripts/applications/add/';
+  var poemApp =   'public/javascripts/applications/poem/';
+  var addApp =    'public/javascripts/applications/add/';
+  var bootstrap = 'public/stylesheets/bootstrap/js/';
+  var payload =   'public/javascripts/payloads/';
 
-  // Vendor load order.
-  var vendorOrder = [
+  var adminVendor = [
     vendor+'jquery/jquery.js',
     vendor+'underscore/underscore.js',
-    vendor+'d3/d3.js',
     vendor+'backbone/backbone.js',
-    vendor+'backbone/marionette.js',
-    vendor+'backbone/localstorage.js'
+    vendor+'backbone/marionette.js'
   ];
+
+  var poemVendor = adminVendor.concat([
+    vendor+'d3/d3.js',
+    vendor+'backbone/localstorage.js'
+  ]);
 
   grunt.initConfig({
 
     concat: {
 
       poem: {
-        src: vendorOrder.concat([
-          poem+'**/*.js'
+        src: poemVendor.concat([
+          poemApp+'**/*.js'
         ]),
-        dest: build+'poem.js'
+        dest: payload+'poem.js'
       },
 
       admin: {
-        src: vendorOrder.concat([
-          boot+'bootstrap.min.js',
-          add+'**/*.js'
+        src: adminVendor.concat([
+          bootstrap+'bootstrap.min.js',
+          addApp+'**/*.js'
         ]),
-        dest: build+'admin.js'
+        dest: payload+'admin.js'
       },
 
       test: {
-        src: vendorOrder.concat([
-          boot+'bootstrap.min.js',
-          poem+'**/*.js',
-          add+'**/*.js'
+        src: poemVendor.concat([
+          bootstrap+'bootstrap.min.js',
+          poemApp+'**/*.js',
+          addApp+'**/*.js'
         ]),
-        dest: build+'test.js'
+        dest: payload+'test.js'
       }
 
     },
@@ -55,19 +56,19 @@ module.exports = function(grunt) {
 
       poem: {
         src: ['<config:concat.poem.src>'],
-        dest: build+'poem.js',
+        dest: payload+'poem.js',
         separator: ';'
       },
 
       admin: {
         src: ['<config:concat.admin.src>'],
-        dest: build+'admin.js',
+        dest: payload+'admin.js',
         separator: ';'
       },
 
       test: {
         src: ['<config:concat.test.src>'],
-        dest: build+'test.js',
+        dest: payload+'test.js',
         separator: ';'
       }
 

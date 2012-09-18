@@ -23,6 +23,34 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
 
+    concat: {
+
+      poem: {
+        src: vendorOrder.concat([
+          poem+'**/*.js'
+        ]),
+        dest: payload+'poem.min.js'
+      },
+
+      admin: {
+        src: vendorOrder.concat([
+          bootstrap+'bootstrap.min.js',
+          add+'**/*.js'
+        ]),
+        dest: payload+'admin.min.js'
+      },
+
+      test: {
+        src: vendorOrder.concat([
+          bootstrap+'bootstrap.min.js',
+          poem+'**/*.js',
+          add+'**/*.js'
+        ]),
+        dest: payload+'test.min.js'
+      }
+
+    },
+
     min: {
 
       poem: {
@@ -44,8 +72,9 @@ module.exports = function(grunt) {
 
       test: {
         src: vendorOrder.concat([
-          '<config:min.poem.src>',
-          '<config:min.admin.src>'
+          bootstrap+'bootstrap.min.js',
+          poem+'**/*.js',
+          add+'**/*.js'
         ]),
         dest: payload+'test.min.js',
         separator: ';'

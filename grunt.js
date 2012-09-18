@@ -6,10 +6,10 @@ module.exports = function(grunt) {
 
   // File prefixes.
   var vendor = 'public/javascripts/vendor/';
-  var bootstrap = 'public/stylesheets/bootstrap/js/';
-  var payload = 'public/javascripts/payloads/';
   var poem = 'public/javascripts/applications/poem/';
   var add = 'public/javascripts/applications/add/';
+  var bootstrap = 'public/stylesheets/bootstrap/js/';
+  var payload = 'public/javascripts/payloads/';
 
   // Vendor load order.
   var vendorOrder = [
@@ -26,26 +26,29 @@ module.exports = function(grunt) {
     concat: {
 
       poem: {
-        src: vendorOrder.concat([
+        src: [
+          vendor+'**/*.js',
           poem+'**/*.js'
-        ]),
+        ],
         dest: payload+'poem.js'
       },
 
       admin: {
-        src: vendorOrder.concat([
+        src: [
+          vendor+'**/*.js'.
           bootstrap+'bootstrap.min.js',
           add+'**/*.js'
-        ]),
+        ],
         dest: payload+'admin.js'
       },
 
       test: {
-        src: vendorOrder.concat([
+        src: [
+          vendor+'**/*.js'.
           bootstrap+'bootstrap.min.js',
           poem+'**/*.js',
           add+'**/*.js'
-        ]),
+        ],
         dest: payload+'test.js'
       }
 
@@ -54,28 +57,19 @@ module.exports = function(grunt) {
     min: {
 
       poem: {
-        src: vendorOrder.concat([
-          poem+'**/*.js'
-        ]),
+        src: ['<config:concat.poem.src>'],
         dest: payload+'poem.js',
         separator: ';'
       },
 
       admin: {
-        src: vendorOrder.concat([
-          bootstrap+'bootstrap.min.js',
-          add+'**/*.js'
-        ]),
+        src: ['<config:concat.admin.src>'],
         dest: payload+'admin.js',
         separator: ';'
       },
 
       test: {
-        src: vendorOrder.concat([
-          bootstrap+'bootstrap.min.js',
-          poem+'**/*.js',
-          add+'**/*.js'
-        ]),
+        src: ['<config:concat.test.src>'],
         dest: payload+'test.js',
         separator: ';'
       }

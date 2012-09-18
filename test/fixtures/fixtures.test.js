@@ -46,4 +46,29 @@ describe('Fixtures', function() {
 
   });
 
+  // it('render new.jade', function(done) {
+
+  //   _t.fs.readFile(
+  //     'app/views/admin/new.jade',
+  //     'utf8', function(err, data) {
+
+  //       // Construct form.
+  //       var form = _t.poemForm.form();
+
+  //       // Compile template function.
+  //       var template = _t.jade.compile(data, {
+  //         locals: { form: form }
+  //       });
+
+  //       // Write file.
+  //       _t.fs.writeFile(
+  //         'spec/javascripts/fixtures/new.html',
+  //         template(), function(err) {
+  //           done();
+  //       });
+
+  //   });
+
+  // });
+
 });

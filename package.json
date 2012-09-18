@@ -21,6 +21,7 @@
     , "request": ">= 2.9"
     , "randomstring": ">= 1.0.1"
     , "grunt": ">= 0.3.15"
+    , "grunt-closure-compiler": ">= 0.0.10"
     , "forms": "https://github.com/davidmcclure/forms/tarball/master"
   }
 }

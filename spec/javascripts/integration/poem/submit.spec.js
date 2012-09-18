@@ -9,7 +9,7 @@ describe('Submission', function() {
   // Get fixtures, run app.
   beforeEach(function() {
     loadFixtures('base.html', 'templates.html');
-    _t.reset();
+    _t.loadPoem();
   });
 
   // Mock keypress.

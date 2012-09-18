@@ -51,8 +51,7 @@ helpers:
 #   - **/*[sS]pec.js
 #
 spec_files:
-    - integration/*.spec.js
-    - unit/**/*.spec.js
+    - integration/**/*.spec.js
 
 # src_dir
 #

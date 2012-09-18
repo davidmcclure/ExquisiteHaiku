@@ -4,7 +4,15 @@
 
 _t = {};
 
-_t.reset = function() {
+
+// --------------------
+// Application loaders.
+// --------------------
+
+/*
+ * Load poem application.
+ */
+_t.loadPoem = function() {
 
   // Globals.
   Ov.global = {
@@ -39,7 +47,15 @@ _t.reset = function() {
 
 };
 
-_t.voting = function() {
+
+// --------------------
+// Application loaders.
+// --------------------
+
+/*
+ * Activate voting state.
+ */
+_t.isVoting = function() {
   _t.rounds.recordSubmission();
   Ov.global.isVoting = true;
 };

@@ -9,12 +9,12 @@ describe('Stack Voting', function() {
   // Get fixtures.
   beforeEach(function() {
     loadFixtures('base.html', 'templates.html');
-    _t.reset();
+    _t.loadPoem();
   });
 
   beforeEach(function() {
 
-    _t.voting();
+    _t.isVoting();
 
     // Stack.
     var stack = [

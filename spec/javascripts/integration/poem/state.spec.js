@@ -9,7 +9,7 @@ describe('State', function() {
   // Get fixtures.
   beforeEach(function() {
     loadFixtures('base.html', 'templates.html');
-    _t.reset();
+    _t.loadPoem();
   });
 
   beforeEach(function() {

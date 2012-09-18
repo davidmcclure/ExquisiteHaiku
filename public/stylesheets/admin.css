@@ -30,7 +30,8 @@ form#new .control-group.error input{border-color:#b94a48 !important}
 form#new div.roundLength{margin-bottom:.8em}
 form#new .btn-group button{padding:1px 9px;font-weight:400;font-size:12px;background-image:none}
 .poem{margin-bottom:1.6em;}
-.poem .hash{display:block;margin-bottom:.2em;font-family:'PT Mono';font-size:25px;color:#000}
+.poem .hash{display:block;margin-bottom:.2em;font-family:'Quicksand';font-size:23px;font-weight:bold;color:#000;}
+.poem .hash:hover{color:#08c}
 .poem .line{line-height:24px}
 .poem .word{margin-right:3px}
 .poem .actions{margin-top:.2em;}

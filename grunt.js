@@ -29,7 +29,7 @@ module.exports = function(grunt) {
         src: vendorOrder.concat([
           poem+'**/*.js'
         ]),
-        dest: payload+'poem.min.js'
+        dest: payload+'poem.js'
       },
 
       admin: {
@@ -37,7 +37,7 @@ module.exports = function(grunt) {
           bootstrap+'bootstrap.min.js',
           add+'**/*.js'
         ]),
-        dest: payload+'admin.min.js'
+        dest: payload+'admin.js'
       },
 
       test: {
@@ -46,7 +46,7 @@ module.exports = function(grunt) {
           poem+'**/*.js',
           add+'**/*.js'
         ]),
-        dest: payload+'test.min.js'
+        dest: payload+'test.js'
       }
 
     },
@@ -57,7 +57,7 @@ module.exports = function(grunt) {
         src: vendorOrder.concat([
           poem+'**/*.js'
         ]),
-        dest: payload+'poem.min.js',
+        dest: payload+'poem.js',
         separator: ';'
       },
 
@@ -66,7 +66,7 @@ module.exports = function(grunt) {
           bootstrap+'bootstrap.min.js',
           add+'**/*.js'
         ]),
-        dest: payload+'admin.min.js',
+        dest: payload+'admin.js',
         separator: ';'
       },
 
@@ -76,15 +76,21 @@ module.exports = function(grunt) {
           poem+'**/*.js',
           add+'**/*.js'
         ]),
-        dest: payload+'test.min.js',
+        dest: payload+'test.js',
         separator: ';'
       }
 
     },
 
     watch: {
-      files: ['<config:min.test.src>'],
-      tasks: ['min:poem', 'min:admin']
+      poem: {
+        files: ['<config:concat.poem.src>'],
+        tasks: ['concat:poem']
+      },
+      admin: {
+        files: ['<config:concat.admin.src>'],
+        tasks: ['concat:admin']
+      }
     }
 
   });

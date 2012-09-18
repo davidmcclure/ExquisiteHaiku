@@ -4,7 +4,6 @@
 
 Ov = new Backbone.Marionette.Application();
 
-
 // --------------------
 // Instance namespaces.
 // --------------------

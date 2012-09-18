@@ -5,11 +5,11 @@
 module.exports = function(grunt) {
 
   // File prefixes.
-  var vendor = 'public/javascripts/vendor/';
-  var poem = 'public/javascripts/applications/poem/';
-  var add = 'public/javascripts/applications/add/';
-  var bootstrap = 'public/stylesheets/bootstrap/js/';
-  var payload = 'public/javascripts/payloads/';
+  var vendor =    'public/javascripts/vendor/';
+  var boot =      'public/stylesheets/bootstrap/js/';
+  var build =     'public/javascripts/payloads/';
+  var poem =      'public/javascripts/applications/poem/';
+  var add =       'public/javascripts/applications/add/';
 
   // Vendor load order.
   var vendorOrder = [
@@ -26,30 +26,27 @@ module.exports = function(grunt) {
     concat: {
 
       poem: {
-        src: [
-          vendor+'**/*.js',
+        src: vendorOrder.concat([
           poem+'**/*.js'
-        ],
-        dest: payload+'poem.js'
+        ]),
+        dest: build+'poem.js'
       },
 
       admin: {
-        src: [
-          vendor+'**/*.js'.
-          bootstrap+'bootstrap.min.js',
+        src: vendorOrder.concat([
+          boot+'bootstrap.min.js',
           add+'**/*.js'
-        ],
-        dest: payload+'admin.js'
+        ]),
+        dest: build+'admin.js'
       },
 
       test: {
-        src: [
-          vendor+'**/*.js'.
-          bootstrap+'bootstrap.min.js',
+        src: vendorOrder.concat([
+          boot+'bootstrap.min.js',
           poem+'**/*.js',
           add+'**/*.js'
-        ],
-        dest: payload+'test.js'
+        ]),
+        dest: build+'test.js'
       }
 
     },
@@ -58,19 +55,19 @@ module.exports = function(grunt) {
 
       poem: {
         src: ['<config:concat.poem.src>'],
-        dest: payload+'poem.js',
+        dest: build+'poem.js',
         separator: ';'
       },
 
       admin: {
         src: ['<config:concat.admin.src>'],
-        dest: payload+'admin.js',
+        dest: build+'admin.js',
         separator: ';'
       },
 
       test: {
         src: ['<config:concat.test.src>'],
-        dest: payload+'test.js',
+        dest: build+'test.js',
         separator: ';'
       }
 

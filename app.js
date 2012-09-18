@@ -10,8 +10,8 @@ var http = require('http');
 var fs = require('fs');
 
 // Connect to database.
-global.config = configFile.readConfig('config.yaml');
-require('./db-connect');
+global.config = configFile.readConfig('config/config.yaml');
+require('./config/db-connect');
 
 // Create server.
 var app = module.exports.app = express(express.favicon());
@@ -29,7 +29,7 @@ var server = app.listen(global.config.port);
 var io = socket.listen(server, { log: false });
 
 // Start poems.
-require('./init')(app, io);
+require('./config/init')(app, io);
 
 // Bootstrap controllers.
 var controllersPath = __dirname + '/app/controllers';

@@ -27,13 +27,17 @@ module.exports = function(app, io, cb) {
   cb = cb || function() {};
 
   // Get running poems.
-  Poem.find({ running: true }, function(err, poems) {
+  Poem.find({
+    running: true
+  }, function(err, poems) {
 
     // Walk poems async.
     async.map(poems, function(poem, callback) {
 
       // Get votes for current round.
-      Vote.find({ round: poem.round.id }, function(err, votes) {
+      Vote.find({
+        round: poem.round.id
+      }, function(err, votes) {
 
         // Register round.
         poem.round.register();

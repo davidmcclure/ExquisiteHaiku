@@ -20,7 +20,7 @@ form h1.form-header{font-family:'Quicksand';font-size:1.4em;margin-bottom:.5em;o
 form.inline{display:inline;margin-right:.4em;}
 form.inline button{padding:0;font-family:'Source Sans Pro';font-weight:300;font-size:1em}
 form.login,form.register{margin-top:5em}
-form#new{margin-top:2.4em;}
+form#new{margin-top:3.6em;}
 form#new input[type='text']{display:inline-block;font-weight:300;padding:10px;font-size:20px;width:100px;color:#bbb;}
 form#new input[type='text']:focus{color:#555}
 form#new input[name='roundLengthValue']{padding:20px;font-size:35px;width:80px;border:2px solid #7e7e7e;color:#555;}
@@ -30,10 +30,10 @@ form#new .control-group.error input{border-color:#b94a48 !important}
 form#new div.roundLength{margin-bottom:.8em}
 form#new .btn-group button{padding:1px 9px;font-weight:400;font-size:12px;background-image:none}
 .poem{margin-bottom:1.6em;}
-.poem .hash{display:block;margin-bottom:.2em;font-family:'Quicksand';font-size:16px;font-weight:bold;color:#000;}
+.poem .hash{display:block;margin-bottom:.2em;font-family:'PT Mono';font-size:18px;color:#000;}
 .poem .hash:hover{color:#08c}
-.poem .line{line-height:24px}
-.poem .word{margin-right:3px}
+.poem .line{line-height:16px}
+.poem .word{margin-right:3px;font-size:14px;color:#000}
 .poem .actions{margin-top:.2em;}
 .poem .actions button{margin-right:.3em;font-size:.9em;}
 .poem .actions button.danger{color:#bd362f}

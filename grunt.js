@@ -11,15 +11,15 @@ module.exports = function(grunt) {
   var bootstrap = 'public/stylesheets/bootstrap/js/';
 
   var adminVendor = [
-    c.vendor+c.vendor.jquery,
-    c.vendor+c.vendor.underscore,
-    c.vendor+c.vendor.backbone,
-    c.vendor+c.vendor.marionette
+    c.components+c.vendor.jquery,
+    c.components+c.vendor.underscore,
+    c.components+c.vendor.backbone,
+    c.components+c.vendor.marionette
   ];
 
   var poemVendor = adminVendor.concat([
-    vendor+c.vendor.localstorage,
-    vendor+c.vendor.d3
+    c.components+c.vendor.localstorage,
+    c.components+c.vendor.d3
   ]);
 
   grunt.initConfig({
@@ -30,7 +30,7 @@ module.exports = function(grunt) {
         src: poemVendor.concat([
           c.apps.poem+'**/*.js'
         ]),
-        dest: payload+'poem.js',
+        dest: c.payload+'poem.js',
         separator: ';'
       },
 
@@ -39,7 +39,7 @@ module.exports = function(grunt) {
           bootstrap+'bootstrap.min.js',
           c.apps.add+'**/*.js'
         ]),
-        dest: payload+'admin.js',
+        dest: c.payload+'admin.js',
         separator: ';'
       },
 
@@ -49,7 +49,7 @@ module.exports = function(grunt) {
           c.apps.poem+'**/*.js',
           c.apps.add+'**/*.js'
         ]),
-        dest: payload+'test.js',
+        dest: c.payload+'test.js',
         separator: ';'
       }
 
@@ -59,19 +59,19 @@ module.exports = function(grunt) {
 
       poem: {
         src: ['<config:concat.poem.src>'],
-        dest: payload+'poem.js',
+        dest: c.payload+'poem.js',
         separator: ';'
       },
 
       admin: {
         src: ['<config:concat.admin.src>'],
-        dest: payload+'admin.js',
+        dest: c.payload+'admin.js',
         separator: ';'
       },
 
       test: {
         src: ['<config:concat.test.src>'],
-        dest: payload+'test.js',
+        dest: c.payload+'test.js',
         separator: ';'
       }
 

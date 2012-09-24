@@ -34,3 +34,18 @@ namespace :bench do
   end
 
 end
+
+desc 'Build the application'
+task :build do
+  js = 'public/javascripts'
+  sh %{npm install}
+  sh %{cd #{js} && bower install}
+  sh %{cd #{js}/components/bootstrap && make bootstrap}
+  sh %{grunt min}
+end
+
+desc 'Clean pacakges'
+task :clean do
+  sh %{rm -rf node_modules}
+  sh %{rm -rf public/javascripts/components}
+end

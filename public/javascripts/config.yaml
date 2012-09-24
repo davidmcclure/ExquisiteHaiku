@@ -1,6 +1,6 @@
 default:
 
-  vendor: "public/javascripts/components/"
+  components: "public/javascripts/components/"
   payload: "public/javascripts/payloads/"
 
   apps:

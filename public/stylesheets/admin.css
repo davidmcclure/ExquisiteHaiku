@@ -18,7 +18,7 @@ a.nav:hover,a.nav.active{color:#08c}
 .secondary-nav span{opacity:.8}
 form h1.form-header{font-family:'Quicksand';font-size:1.4em;margin-bottom:.5em;opacity:.8}
 form.inline{display:inline;margin-right:.4em;}
-form.inline button{padding:2px 7px 3px;font-family:'Source Sans Pro';font-weight:300;font-size:1em}
+form.inline button{padding:0;font-family:'Source Sans Pro';font-weight:300;font-size:1em}
 form.login,form.register{margin-top:5em}
 form#new{margin-top:3.6em;}
 form#new input[type='text']{display:inline-block;font-weight:300;padding:10px;font-size:20px;width:100px;color:#bbb;}
@@ -32,8 +32,8 @@ form#new .btn-group button{padding:1px 9px;font-weight:400;font-size:12px;backgr
 .poem{margin-bottom:1.6em;}
 .poem .hash{display:block;margin-bottom:.2em;font-family:'PT Mono';font-size:18px;color:#000;}
 .poem .hash:hover{color:#08c}
-.poem .line{line-height:19px}
-.poem .word{margin-right:4px;font-size:17px;color:#000}
+.poem .line{line-height:16px}
+.poem .word{margin-right:3px;font-size:14px;color:#000}
 .poem .actions{margin-top:.2em;}
 .poem .actions button{margin-right:.3em;font-size:.9em;}
 .poem .actions button.danger{color:#bd362f}

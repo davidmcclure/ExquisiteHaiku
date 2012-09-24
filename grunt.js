@@ -8,8 +8,6 @@ var c = config.readConfig('public/javascripts/config.yaml');
 
 module.exports = function(grunt) {
 
-  var bootstrap = 'public/stylesheets/bootstrap/js/';
-
   var adminVendor = [
     c.components+c.vendor.jquery,
     c.components+c.vendor.underscore,
@@ -36,7 +34,7 @@ module.exports = function(grunt) {
 
       admin: {
         src: adminVendor.concat([
-          bootstrap+'bootstrap.min.js',
+          c.components+c.vendor.bootstrap,
           c.apps.add+'**/*.js'
         ]),
         dest: c.payload+'admin.js',
@@ -45,7 +43,7 @@ module.exports = function(grunt) {
 
       test: {
         src: poemVendor.concat([
-          bootstrap+'bootstrap.min.js',
+          c.components+c.vendor.bootstrap,
           c.apps.poem+'**/*.js',
           c.apps.add+'**/*.js'
         ]),

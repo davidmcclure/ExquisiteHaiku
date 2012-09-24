@@ -6,6 +6,8 @@ p{font-family:inherit;color:#000}
 .btn{font-family:'Quicksand';border:0;border-radius:2px;font-weight:bold}
 .btn-primary{background:#08c;}
 .btn-primary:hover{background:#005580}
+.btn-danger{background:#ac0000;}
+.btn-danger:hover{background:#8c0000}
 .btn-inverse{background:#333;}
 .btn-inverse:hover{background:#333}
 .btn-group button{font-family:'Source Sans Pro';border:1px solid #c0c0c0;}

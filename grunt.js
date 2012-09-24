@@ -2,24 +2,24 @@
  * Grunt file.
  */
 
+// Get package configuration.
+var config = require('yaml-config');
+var c = config.readConfig('public/javascripts/config.yaml');
+
 module.exports = function(grunt) {
 
-  var vendor =    'public/javascripts/components/';
-  var poemApp =   'public/javascripts/applications/poem/';
-  var addApp =    'public/javascripts/applications/add/';
   var bootstrap = 'public/stylesheets/bootstrap/js/';
-  var payload =   'public/javascripts/payloads/';
 
   var adminVendor = [
-    vendor+'jquery/jquery.js',
-    vendor+'underscore/underscore-min.js',
-    vendor+'backbone/backbone-min.js',
-    vendor+'backbone.marionette/lib/backbone.marionette.min.js'
+    c.vendor+c.vendor.jquery,
+    c.vendor+c.vendor.underscore,
+    c.vendor+c.vendor.backbone,
+    c.vendor+c.vendor.marionette
   ];
 
   var poemVendor = adminVendor.concat([
-    vendor+'Backbone.localStorage/backbone.localStorage.js',
-    vendor+'d3/d3.v2.min.js'
+    vendor+c.vendor.localstorage,
+    vendor+c.vendor.d3
   ]);
 
   grunt.initConfig({
@@ -28,7 +28,7 @@ module.exports = function(grunt) {
 
       poem: {
         src: poemVendor.concat([
-          poemApp+'**/*.js'
+          c.apps.poem+'**/*.js'
         ]),
         dest: payload+'poem.js',
         separator: ';'
@@ -37,7 +37,7 @@ module.exports = function(grunt) {
       admin: {
         src: adminVendor.concat([
           bootstrap+'bootstrap.min.js',
-          addApp+'**/*.js'
+          c.apps.add+'**/*.js'
         ]),
         dest: payload+'admin.js',
         separator: ';'
@@ -46,8 +46,8 @@ module.exports = function(grunt) {
       test: {
         src: poemVendor.concat([
           bootstrap+'bootstrap.min.js',
-          poemApp+'**/*.js',
-          addApp+'**/*.js'
+          c.apps.poem+'**/*.js',
+          c.apps.add+'**/*.js'
         ]),
         dest: payload+'test.js',
         separator: ';'

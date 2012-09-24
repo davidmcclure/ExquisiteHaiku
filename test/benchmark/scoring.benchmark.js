@@ -40,11 +40,12 @@ var user = new User({
 // Create poem.
 var poem = new Poem({
   user: user.id,
-  roundLength: 10000,
+  roundLengthValue: 3,
+  roundLengthUnit: 'minutes',
   sliceInterval: 300,
   minSubmissions: 5,
   submissionVal: 100,
-  decayLifetime: 60000,
+  decayHalflife: 20,
   seedCapital: 1000,
   visibleWords: 3
 });
@@ -92,6 +93,7 @@ poem.save(function(err) {
     var t2 = Date.now();
     console.log('%d words, %d votes/word', numWords, votesPerWord);
     console.log('Duration: %d', t2-t1);
+    console.log(result.stack);
 
   }, function() {
 

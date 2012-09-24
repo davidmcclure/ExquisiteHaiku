@@ -20,14 +20,14 @@ describe('Poem', function() {
     // Create poem.
     poem = new _t.Poem({
       user: user.id,
-      roundLengthValue : 3,
-      roundLengthUnit : 'minutes',
+      roundLengthValue: 3,
+      roundLengthUnit: 'minutes',
       sliceInterval: 300,
       minSubmissions: 5,
-      submissionVal : 100,
-      decayHalflife : 20,
-      seedCapital : 1000,
-      visibleWords : 500
+      submissionVal: 100,
+      decayHalflife: 20,
+      seedCapital: 1000,
+      visibleWords: 500
     });
 
     // Save.

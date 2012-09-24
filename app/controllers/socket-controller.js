@@ -3,6 +3,7 @@
  */
 
 // Module dependencies.
+var mongoose = require('mongoose');
 var syllables = require('../../lib/syllables');
 var async = require('async');
 var _ = require('underscore');

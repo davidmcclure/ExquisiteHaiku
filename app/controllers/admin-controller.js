@@ -3,6 +3,7 @@
  */
 
 // Module dependencies.
+var mongoose = require('mongoose');
 var poemForm = require('../../helpers/forms/poem');
 var scoring = require('../../app/scoring/scoring');
 var auth = require('../../helpers/middleware');

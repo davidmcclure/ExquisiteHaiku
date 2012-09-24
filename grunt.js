@@ -4,7 +4,7 @@
 
 module.exports = function(grunt) {
 
-  var vendor =    'public/javascripts/vendor/';
+  var vendor =    'public/javascripts/components/';
   var poemApp =   'public/javascripts/applications/poem/';
   var addApp =    'public/javascripts/applications/add/';
   var bootstrap = 'public/stylesheets/bootstrap/js/';
@@ -12,14 +12,14 @@ module.exports = function(grunt) {
 
   var adminVendor = [
     vendor+'jquery/jquery.js',
-    vendor+'underscore/underscore.js',
-    vendor+'backbone/backbone.js',
-    vendor+'backbone/marionette.js'
+    vendor+'underscore/underscore-min.js',
+    vendor+'backbone/backbone-min.js',
+    vendor+'backbone.marionette/lib/backbone.marionette.min.js'
   ];
 
   var poemVendor = adminVendor.concat([
-    vendor+'d3/d3.js',
-    vendor+'backbone/localstorage.js'
+    vendor+'Backbone.localStorage/backbone.localStorage.js',
+    vendor+'d3/d3.v2.min.js'
   ]);
 
   grunt.initConfig({
@@ -30,7 +30,8 @@ module.exports = function(grunt) {
         src: poemVendor.concat([
           poemApp+'**/*.js'
         ]),
-        dest: payload+'poem.js'
+        dest: payload+'poem.js',
+        separator: ';'
       },
 
       admin: {
@@ -38,7 +39,8 @@ module.exports = function(grunt) {
           bootstrap+'bootstrap.min.js',
           addApp+'**/*.js'
         ]),
-        dest: payload+'admin.js'
+        dest: payload+'admin.js',
+        separator: ';'
       },
 
       test: {
@@ -47,7 +49,8 @@ module.exports = function(grunt) {
           poemApp+'**/*.js',
           addApp+'**/*.js'
         ]),
-        dest: payload+'test.js'
+        dest: payload+'test.js',
+        separator: ';'
       }
 
     },

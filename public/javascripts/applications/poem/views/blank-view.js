@@ -22,15 +22,8 @@ Ov.Views.Blank = Backbone.View.extend({
    */
   initialize: function() {
 
-    // Templates.
-    this.__stack = this.stackTemplate();
-    this.__word = this.wordTemplate();
-
-    // Initialize trackers.
-    this.initializeTrackers();
-
-    // Submissions stack.
-    this.stack = $(this.__stack());
+    // Validation cache.
+    this.cache = { valid: [], invalid: [] };
 
     // Bind events.
     this.$el.bind({
@@ -45,52 +38,6 @@ Ov.Views.Blank = Backbone.View.extend({
   },
 
   /*
-   * Shell out trackers and buckets.
-   *
-   * @return void.
-   */
-  initializeTrackers: function() {
-
-    // Buckets.
-    this.words = [];
-    this.cache = { valid: [], invalid: [] };
-
-  },
-
-  /*
-   * Activate submission mode.
-   *
-   * @return {Boolean}: False if voting.
-   */
-  activateSubmit: function() {
-
-    // Reset attributes.
-    this.initializeTrackers();
-
-    // Clear the stack and blank.
-    this.stack.empty();
-    this.$el.removeAttr('disabled');
-    this.$el.val('');
-
-  },
-
-  /*
-   * Activate voting mode.
-   *
-   * @return void.
-   */
-  activateVote: function() {
-
-    // Disable blank.
-    this.$el.attr('disabled', 'disabled');
-    this.$el.val('');
-
-    // Hide stack.
-    this.stack.detach();
-
-  },
-
-  /*
    * Insert the blank at the end of the passed line.
    *
    * @param {Element} line: The line container.
@@ -99,7 +46,6 @@ Ov.Views.Blank = Backbone.View.extend({
    */
   insert: function(line) {
     line.append(this.$el);
-    this.position(line);
   },
 
   /*
@@ -109,28 +55,6 @@ Ov.Views.Blank = Backbone.View.extend({
    */
   detach: function() {
     this.$el.detach();
-  },
-
-  /*
-   * Position the stack container.
-   *
-   * @return void.
-   */
-  position: function(line) {
-
-    // Get input offset and height.
-    var offset = this.$el.position();
-    var height = this.$el.outerHeight();
-
-    // Insert markup.
-    line.append(this.stack);
-
-    // Position.
-    this.stack.css({
-      'top': offset.top + height,
-      'left': offset.left
-    });
-
   },
 
   /*
@@ -175,7 +99,7 @@ Ov.Views.Blank = Backbone.View.extend({
    * @return void.
    */
   addWord: function(word) {
-    Ov.vent.trigger('points:releaseVote', word, P.submissionVal);
+    Ov.vent.trigger('points:vote', word, P.submissionVal);
     this.$el.val('');
   },
 

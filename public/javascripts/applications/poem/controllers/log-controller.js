@@ -30,8 +30,8 @@ Ov.Controllers.Log = (function(Backbone, Ov) {
    *
    * @return void.
    */
-  Ov.vent.on('state:submit', function(round) {
-    Log.Stack.activateSubmit();
+  Ov.vent.on('state:newRound', function(round) {
+    Log.Stack.clear();
   });
 
   /*

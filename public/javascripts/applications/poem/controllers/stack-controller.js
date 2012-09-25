@@ -38,13 +38,12 @@ Ov.Controllers.Stack = (function(Backbone, Ov) {
   });
 
   /*
-   * Freeze and empty the words.
+   * Empty the stack, clear the drag line.
    *
    * @return void.
    */
-  Ov.vent.on('state:submit', function() {
+  Ov.vent.on('state:newRound', function() {
     Stack.Rank.empty();
-    Stack.Rank.unFreeze();
     Stack.Line.clear();
   });
 
@@ -110,7 +109,7 @@ Ov.Controllers.Stack = (function(Backbone, Ov) {
    *
    * @return void.
    */
-  Ov.vent.on('points:releaseVote', function() {
+  Ov.vent.on('points:vote', function() {
     Stack.Rank.setSelected(null);
     Stack.Rank.unFreeze();
     Stack.Line.hide();

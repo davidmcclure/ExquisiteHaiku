@@ -36,7 +36,7 @@ Ov.Views.Log = Backbone.View.extend({
    *
    * @return void.
    */
-  activateSubmit: function() {
+  clear: function() {
     this.primaryMarkup.empty();
     this.overflowMarkup.empty();
   },

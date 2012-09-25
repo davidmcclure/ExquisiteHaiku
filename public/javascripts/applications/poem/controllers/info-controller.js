@@ -27,7 +27,7 @@ Ov.Controllers.Info = (function(Backbone, Ov) {
   // -------
 
   /*
-   * Reset the point value.
+   * Update the clock.
    *
    * @param {Object} data: The incoming data packet.
    *
@@ -64,11 +64,20 @@ Ov.Controllers.Info = (function(Backbone, Ov) {
   });
 
   /*
-   * Cancel a point preview.
+   * Cancel a point preview on drag cancel.
    *
    * @return void.
    */
   Ov.vent.on('words:dragCancel', function() {
+    Info.Points.reset();
+  });
+
+  /*
+   * Cancel a point preview on mouseleave log word.
+   *
+   * @return void.
+   */
+  Ov.vent.on('log:cancel', function() {
     Info.Points.reset();
   });
 
@@ -94,15 +103,6 @@ Ov.Controllers.Info = (function(Backbone, Ov) {
    */
   Ov.vent.on('log:preview', function(word, quantity) {
     Info.Points.renderPreview(quantity);
-  });
-
-  /*
-   * Cancel point preview.
-   *
-   * @return void.
-   */
-  Ov.vent.on('log:cancel', function() {
-    Info.Points.reset();
   });
 
   /*

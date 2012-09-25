@@ -27,24 +27,6 @@ Ov.Controllers.Poem = (function(Backbone, Ov) {
   // -------
 
   /*
-   * Switch the blank into submission mode.
-   *
-   * @return void.
-   */
-  Ov.vent.on('state:submit', function() {
-    Poem.Blank.activateSubmit();
-  });
-
-  /*
-   * Switch the blank into voting mode.
-   *
-   * @return void.
-   */
-  Ov.vent.on('state:vote', function() {
-    Poem.Blank.activateVote();
-  });
-
-  /*
    * Detach the blank before the poems is rendered.
    *
    * @return void.

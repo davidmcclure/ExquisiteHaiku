@@ -91,7 +91,7 @@ Ov.Views.Points = Backbone.View.extend({
     // If sufficient points, commit.
     if (this.balance - Math.abs(quantity) >= 0) {
       this.renderValue(this.preview);
-      Ov.vent.trigger('points:releaseVote', word, quantity);
+      Ov.vent.trigger('points:vote', word, quantity);
       Ov.vent.trigger('points:newValue', this.balance);
     }
 
@@ -116,7 +116,7 @@ Ov.Views.Points = Backbone.View.extend({
     // If sufficient points, commit.
     if (this.balance - Math.abs(quantity) >= 0) {
       this.renderValue(this.preview);
-      Ov.vent.trigger('points:releaseVote', word, quantity);
+      Ov.vent.trigger('points:vote', word, quantity);
       Ov.vent.trigger('points:newValue', this.balance);
       this.renderPreview(quantity);
     }

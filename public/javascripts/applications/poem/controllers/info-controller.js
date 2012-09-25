@@ -64,24 +64,6 @@ Ov.Controllers.Info = (function(Backbone, Ov) {
   });
 
   /*
-   * Cancel a point preview on drag cancel.
-   *
-   * @return void.
-   */
-  Ov.vent.on('words:dragCancel', function() {
-    Info.Points.reset();
-  });
-
-  /*
-   * Cancel a point preview on mouseleave log word.
-   *
-   * @return void.
-   */
-  Ov.vent.on('log:cancel', function() {
-    Info.Points.reset();
-  });
-
-  /*
    * Commit new point account value after a vote.
    *
    * @param {String} word: The word.
@@ -115,6 +97,33 @@ Ov.Controllers.Info = (function(Backbone, Ov) {
    */
   Ov.vent.on('log:echo', function(word, quantity) {
     Info.Points.releaseLogEcho(word, quantity);
+  });
+
+  /*
+   * Cancel a point preview on drag cancel.
+   *
+   * @return void.
+   */
+  Ov.vent.on('words:dragCancel', function() {
+    Info.Points.reset();
+  });
+
+  /*
+   * Cancel a point preview on mouseleave log word.
+   *
+   * @return void.
+   */
+  Ov.vent.on('log:cancel', function() {
+    Info.Points.reset();
+  });
+
+  /*
+   * Cancel a point preview on round switch.
+   *
+   * @return void.
+   */
+  Ov.vent.on('state:newRound', function() {
+    Info.Points.reset();
   });
 
 

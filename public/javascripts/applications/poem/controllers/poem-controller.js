@@ -45,25 +45,6 @@ Ov.Controllers.Poem = (function(Backbone, Ov) {
   });
 
   /*
-   * Switch the poem into completed mode.
-   *
-   * @return void.
-   */
-  Ov.vent.on('state:complete', function() {
-
-    // Remove blank and stack.
-    Poem.Blank.activateComplete();
-
-    // If necessary, render the poem.
-    if (_.isNull(Poem.Poem.syllables))
-      Poem.Poem.render(P.words);
-
-    // Release the poem.
-    Ov.vent.trigger('poem:complete', Poem.Poem.$el.contents());
-
-  });
-
-  /*
    * Detach the blank before the poems is rendered.
    *
    * @return void.

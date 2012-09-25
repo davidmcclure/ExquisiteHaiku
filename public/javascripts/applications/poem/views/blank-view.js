@@ -91,16 +91,6 @@ Ov.Views.Blank = Backbone.View.extend({
   },
 
   /*
-   * Activate complete mode.
-   *
-   * @return void.
-   */
-  activateComplete: function() {
-    this.$el.remove();
-    this.stack.remove();
-  },
-
-  /*
    * Insert the blank at the end of the passed line.
    *
    * @param {Element} line: The line container.
@@ -165,13 +155,6 @@ Ov.Views.Blank = Backbone.View.extend({
 
     }
 
-    // ** dev: submit with CONTROL.
-    else if (event.keyCode == 17) {
-      if (this.words.length >= P.minSubmissions) {
-        Ov.vent.trigger('blank:submit', this.words);
-      }
-    }
-
     // Regular keystroke.
     if (event.keyCode !== 13) {
 
@@ -192,38 +175,8 @@ Ov.Views.Blank = Backbone.View.extend({
    * @return void.
    */
   addWord: function(word) {
-
-    // Build word.
-    var wordMarkup = $(this.__word({ word: word }));
-
-    // Prepend markup, tack value.
-    this.stack.prepend(wordMarkup);
-    this.words.push(word);
-    wordMarkup.data('word', word);
-
-    // Bind events.
-    wordMarkup.bind({
-
-      // Highlight word red.
-      'mouseenter': _.bind(function() {
-        wordMarkup.addClass('negative');
-      }, this),
-
-      // Unhighlight word.
-      'mouseleave': _.bind(function() {
-        wordMarkup.removeClass('negative');
-      }, this),
-
-      // Remove word from stack.
-      'mousedown': _.bind(function() {
-        this.removeWord(wordMarkup);
-      }, this)
-
-    });
-
-    // Clear input.
+    Ov.vent.trigger('points:releaseVote', word, P.submissionVal);
     this.$el.val('');
-
   },
 
   /*

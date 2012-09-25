@@ -38,23 +38,14 @@ Ov.Controllers.Info = (function(Backbone, Ov) {
   });
 
   /*
-   * Reset the point value.
-   *
-   * @return void.
-   */
-  Ov.vent.on('state:submit', function() {
-    Info.Points.activateSubmit();
-  });
-
-  /*
    * Initialize the point value.
    *
    * @param {Object} round: The round record.
    *
    * @return void.
    */
-  Ov.vent.on('state:vote', function(round) {
-    Info.Points.activateVote(round);
+  Ov.vent.on('state:newRound', function(round) {
+    Info.Points.renderValue(round.get('points'));
   });
 
   /*

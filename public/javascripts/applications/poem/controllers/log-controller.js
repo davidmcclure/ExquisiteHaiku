@@ -43,7 +43,7 @@ Ov.Controllers.Log = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('socket:vote:in', function(word, quantity) {
-    if (Ov.global.isVoting) Log.Stack.add(word, quantity);
+    Log.Stack.add(word, quantity);
   });
 
 

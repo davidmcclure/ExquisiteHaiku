@@ -10,7 +10,7 @@ body{font:200 18px "Source Sans Pro";text-rendering:optimizeLegibility;-webkit-u
 #poem div.poem-line{margin-bottom:.3em}
 #poem input.blank{padding:5px;margin:0;width:80px;border:none !important;border-radius:0;box-shadow:none;border-bottom:1px solid #808080;background-color:whiteSmoke;font:inherit;}
 #poem input.blank:focus{outline:none}
-#poem .poem-word{margin-right:4px}
+#poem .poem-word{margin-right:4px;font-size:1.1em}
 #poem .submission-stack{position:absolute;padding-top:5px}
 #poem .submission-word{cursor:pointer}
 #stack{z-index:1;display:inline-block;}
@@ -28,8 +28,8 @@ body{font:200 18px "Source Sans Pro";text-rendering:optimizeLegibility;-webkit-u
 #log .primary{z-index:2;direction:rtl;width:230px;}
 #log .primary.frozen span.word{opacity:.5}
 #log .overflow{z-index:0;left:520px;opacity:.3}
-#info{z-index:-2;position:fixed;left:700px;top:25px;}
-#info .info{font-size:35px;opacity:.6}
+#info{z-index:-2;position:fixed;left:600px;top:25px;}
+#info .info{font-size:8em;font-weight:bold;opacity:.25}
 #info .label{color:#000;background:transparent;font-style:italic;font-weight:normal;opacity:.3;padding-left:3px;font-size:16px}
 #info #points.preview{opacity:.5}
 #info .progress{margin:3px 0 0 0;height:5px;background-image:none;box-shadow:none;border-radius:2px;width:400px;z-index:-2;}

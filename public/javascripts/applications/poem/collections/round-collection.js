@@ -12,7 +12,7 @@ Ov.Collections.Round = Backbone.Collection.extend({
    * @return void.
    */
   initialize: function() {
-    this.currentRound = null;
+    this.currentRoundId = null;
   },
 
   /*
@@ -20,30 +20,26 @@ Ov.Collections.Round = Backbone.Collection.extend({
    *
    * @return {Number}: The round id.
    */
-  getCurrentRound: function() {
+  getCurrentRoundId: function() {
 
     // If defined, return currentRound.
-    if (!_.isNull(this.currentRound)) {
-      return this.currentRound;
-    }
+    if (!_.isNull(this.currentRoundId))
+      return this.currentRoundId;
 
-    // Else, use the templated Poem object.
-    else {
-      return _.last(P.rounds)._id;
-    }
+    // Else, use the Poem object.
+    else return _.last(P.rounds)._id;
 
   },
 
   /*
    * Store the current round as submitted.
    *
-   * @return void.
+   * @param {String} id: The round id.
+   *
+   * @return {Object}: The new round.
    */
-  recordSubmission: function() {
-    this.create({
-      id: this.getCurrentRound(),
-      points: P.seedCapital
-    });
+  recordRound: function(id) {
+    return this.create({ id: id, points: P.seedCapital });
   }
 
 });

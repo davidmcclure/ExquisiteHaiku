@@ -19,6 +19,7 @@ Ov.Controllers.Round = (function(Backbone, Ov) {
   Round.init = function() {
     Round.Rounds = new Ov.Collections.Round();
     Round.Rounds.fetch();
+    Round.started = false;
   };
 
 
@@ -39,53 +40,18 @@ Ov.Controllers.Round = (function(Backbone, Ov) {
     // Try to retrieve a stored round.
     var round = Round.Rounds.get(data.round);
 
-    // If first slice.
-    if (_.isNull(Ov.global.isVoting)) {
-
-      // Submitting.
-      if (_.isEmpty(round)) {
-        Ov.global.isVoting = false;
-        Ov.vent.trigger('state:submit');
-      }
-
-      // Voting.
-      else {
-        Ov.global.isVoting = true;
-        Ov.vent.trigger('state:vote', round);
-      }
-
+    // Create round.
+    if (_.isEmpty(round)) {
+      round = Round.Rounds.recordRound(data.round);
+      Ov.vent.trigger('state:newRound', round);
     }
 
-    else {
-
-      // Vote -> submit.
-      if (_.isEmpty(round) && Ov.global.isVoting) {
-        Ov.global.isVoting = false;
-        Ov.global.isDragging = false;
-        Ov.vent.trigger('state:submit');
-      }
-
-      // Submit -> vote.
-      else if (!_.isEmpty(round) && !Ov.global.isVoting) {
-        Ov.global.isVoting = true;
-        Ov.vent.trigger('state:vote', round);
-      }
-
+    // If unstarted.
+    else if (!Round.started) {
+      Ov.vent.trigger('state:newRound', round);
+      Round.started = true;
     }
 
-    // Store the current round.
-    Round.Rounds.currentRound = data.round;
-
-  });
-
-  /*
-   * When words are submitted, store the current round id
-   * in the list of rounds that have been submitted.
-   *
-   * @return void.
-   */
-  Ov.vent.on('blank:submit', function() {
-    Round.Rounds.recordSubmission();
   });
 
   /*
@@ -99,8 +65,7 @@ Ov.Controllers.Round = (function(Backbone, Ov) {
 
     // Retrieve the round record.
     var round = Round.Rounds.get(
-      Round.Rounds.getCurrentRound()
-    );
+      Round.Rounds.getCurrentRoundId());
 
     // Set new point value, save.
     round.set('points', value);

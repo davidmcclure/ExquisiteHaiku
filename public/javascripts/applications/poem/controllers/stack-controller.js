@@ -34,9 +34,7 @@ Ov.Controllers.Stack = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('socket:slice', function(data) {
-    if (!Ov.global.isDragging && Ov.global.isVoting) {
-      Stack.Rank.update(data.stack);
-    }
+    if (!Ov.global.isDragging) Stack.Rank.update(data.stack);
   });
 
   /*

@@ -16,6 +16,7 @@ Ov.Views.Timer = Backbone.View.extend({
   initialize: function() {
 
     // Getters.
+    this.percent = this.$el.find('span.percent');
     this.minutes = this.$el.find('span.min');
     this.seconds = this.$el.find('span.sec');
 
@@ -52,7 +53,11 @@ Ov.Views.Timer = Backbone.View.extend({
     var d = this.updateQuantity-(Date.now()-this.updateTime);
     var now = this._msToDuration(d);
 
+    // Get percent.
+    var percent = this.updateQuantity / P.roundLength;
+
     // Render text.
+    this.percent.text(percent.toFixed(2));
     this.minutes.text(now[0]+':');
     this.seconds.text(now[1]);
 

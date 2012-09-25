@@ -64,8 +64,7 @@ Ov.Controllers.Round = (function(Backbone, Ov) {
   Ov.vent.on('points:newValue', function(value) {
 
     // Retrieve the round record.
-    var round = Round.Rounds.get(
-      Round.Rounds.getCurrentRoundId());
+    var round = Round.Rounds.getCurrentRound();
 
     // Set new point value, save.
     round.set('points', value);

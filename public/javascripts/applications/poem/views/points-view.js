@@ -10,7 +10,23 @@ Ov.Views.Points = Backbone.View.extend({
    * @return void.
    */
   initialize: function() {
-    this.value = null;
+
+    // Getters.
+    this.percent = this.$el.find('span.percent');
+    this.value = this.$el.find('span.value');
+
+    // Value tracker.
+    this.balance = null;
+
+  },
+
+  /*
+   * Render the current base value.
+   *
+   * @return void.
+   */
+  reset: function() {
+    this.renderValue(this.balance);
   },
 
   /*
@@ -21,18 +37,18 @@ Ov.Views.Points = Backbone.View.extend({
    * @return void.
    */
   renderValue: function(value) {
-    this.$el.text(value);
-    this.value = value;
-    this.$el.removeClass('preview negative');
-  },
 
-  /*
-   * Render the current base value.
-   *
-   * @return void.
-   */
-  reset: function() {
-    this.renderValue(this.value);
+    // Compute percent.
+    var percent = value / P.seedCapital;
+
+    // Render values.
+    this.value.text(value);
+    this.percent.text(percent.toFixed(2));
+    this.$el.removeClass('preview negative');
+
+    // Update tracker.
+    this.balance = value;
+
   },
 
   /*
@@ -44,16 +60,18 @@ Ov.Views.Points = Backbone.View.extend({
    */
   renderPreview: function(quantity) {
 
-    // Render the value.
-    this.preview = this.value - Math.abs(quantity);
-    this.$el.text(this.preview);
-    this.$el.addClass('preview');
-    this.$el.removeClass('negative');
+    // Compute preview and percent.
+    this.preview = this.balance - Math.abs(quantity);
+    var percent = this.preview / P.seedCapital;
+
+    // Render values.
+    this.value.text(this.preview);
+    this.percent.text(percent.toFixed(2));
+    this.$el.removeClass('negative').addClass('preview');
 
     // Insufficient funds.
     if (this.preview < 0) {
-      this.$el.removeClass('preview');
-      this.$el.addClass('negative');
+      this.$el.removeClass('preview').addClass('negative');
       Ov.vent.trigger('points:invalid');
     }
 
@@ -71,10 +89,10 @@ Ov.Views.Points = Backbone.View.extend({
   releaseStackVote: function(word, quantity) {
 
     // If sufficient points, commit.
-    if (this.value - Math.abs(quantity) >= 0) {
+    if (this.balance - Math.abs(quantity) >= 0) {
       this.renderValue(this.preview);
       Ov.vent.trigger('points:releaseVote', word, quantity);
-      Ov.vent.trigger('points:newValue', this.value);
+      Ov.vent.trigger('points:newValue', this.balance);
     }
 
     // Otherwise, cancel the drag.
@@ -96,10 +114,10 @@ Ov.Views.Points = Backbone.View.extend({
   releaseLogEcho: function(word, quantity) {
 
     // If sufficient points, commit.
-    if (this.value - Math.abs(quantity) >= 0) {
+    if (this.balance - Math.abs(quantity) >= 0) {
       this.renderValue(this.preview);
       Ov.vent.trigger('points:releaseVote', word, quantity);
-      Ov.vent.trigger('points:newValue', this.value);
+      Ov.vent.trigger('points:newValue', this.balance);
       this.renderPreview(quantity);
     }
 

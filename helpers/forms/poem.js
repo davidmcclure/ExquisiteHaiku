@@ -69,7 +69,7 @@ exports.form = function(poem) {
     // Decay halflife.
     decayHalflife: fields.string({
       required: 'Enter a decay halflife.',
-      value: 20,
+      value: 10,
       validators: [
         validators.positiveInteger('Must be a positive integer.')
       ]

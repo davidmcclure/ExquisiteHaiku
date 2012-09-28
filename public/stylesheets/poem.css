@@ -2,9 +2,8 @@
 @import url("http://fonts.googleapis.com/css?family=Bowlby+One+SC");
 @import url("http://fonts.googleapis.com/css?family=PT+Mono");
 @import url("http://fonts.googleapis.com/css?family=Quicksand:300,400,700");
-@import url("http://fonts.googleapis.com/css?family=Alfa+Slab+One");
-@import url("http://fonts.googleapis.com/css?family=Dosis:200,300,400,500,600,700,800");
-body{font:400 18px 'Dosis';text-rendering:optimizeLegibility;-webkit-user-select:none;-moz-user-select:none;margin:2em}
+@import url("http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900");
+body{font:800 18px 'Lato';text-rendering:optimizeLegibility;-webkit-user-select:none;-moz-user-select:none;margin:2em}
 .positive{color:#08c}
 .negative{color:#333}
 .main{margin-left:260px}
@@ -32,7 +31,7 @@ body{font:400 18px 'Dosis';text-rendering:optimizeLegibility;-webkit-user-select
 #log .overflow{z-index:0;left:520px;opacity:.3}
 #info{z-index:-2;position:fixed;left:600px;top:25px;}
 #info.info{display:inline-block;margin-right:1em}
-#info .percent{font-size:6em;font-weight:200;opacity:.25;margin-right:5px}
+#info .percent{font-size:6em;font-weight:300;opacity:.25;margin-right:5px}
 #info #points.preview{opacity:.5}
 .drag-line{position:fixed;line-height:0;z-index:-1;top:0;left:0;}
 .drag-line svg{position:fixed;stroke-width:2;top:0;left:0;}

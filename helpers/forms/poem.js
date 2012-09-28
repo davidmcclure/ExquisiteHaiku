@@ -57,15 +57,6 @@ exports.form = function(poem) {
       ]
     }),
 
-    // Minimum submssions.
-    minSubmissions: fields.string({
-      required: 'Enter a minimum number of submissions.',
-      value: 5,
-      validators: [
-        validators.positiveInteger('Must be a positive integer.')
-      ]
-    }),
-
     // Decay halflife.
     decayHalflife: fields.string({
       required: 'Enter a decay halflife.',

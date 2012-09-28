@@ -84,23 +84,6 @@ block content
           span.help-inline.submissionVal= subVal.error
 
 
-    // Minimum submissions.
-    - var minSub = form.fields.minSubmissions
-    - var error = minSub.errorHTML() != ''
-    div.control-group(class=(error ? 'error' : ''))
-      label.control-label(for='minSubmissions') Min. Submissions
-      div.controls
-
-        input.minSub(
-          type='text'
-          name='minSubmissions'
-          autocomplete='off'
-          value=minSub.value)
-
-        if error
-          span.help-inline.minSubmissions= minSub.error
-
-
     // Decay halflife.
     - var decLife = form.fields.decayHalflife
     - var error = decLife.errorHTML() != ''

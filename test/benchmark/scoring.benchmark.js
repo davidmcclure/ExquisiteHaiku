@@ -43,7 +43,6 @@ var poem = new Poem({
   roundLengthValue: 3,
   roundLengthUnit: 'minutes',
   sliceInterval: 300,
-  minSubmissions: 5,
   submissionVal: 100,
   decayHalflife: 20,
   seedCapital: 1000,

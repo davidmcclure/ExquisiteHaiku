@@ -9,7 +9,6 @@ describe('Login Form', function() {
   var form, user1, user2;
 
   beforeEach(function(done) {
-    done();
 
     // Create the form.
     form = _t.loginForm.form();
@@ -40,7 +39,6 @@ describe('Login Form', function() {
 
   // Clear collections.
   afterEach(function(done) {
-    done();
     _t.User.collection.remove(function(err) { done(); });
   });
 
@@ -61,7 +59,7 @@ describe('Login Form', function() {
 
     });
 
-    it('should match a user in the database', function(done) {
+    it('should not match a user in the database', function(done) {
 
       form.bind({
         username: 'rosie'

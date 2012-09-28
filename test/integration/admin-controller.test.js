@@ -38,7 +38,6 @@ describe('Admin Controller', function() {
       roundLengthValue: 3,
       roundLengthUnit:  'minutes',
       sliceInterval :   1000,
-      minSubmissions :  5,
       submissionVal :   100,
       decayHalflife :   20,
       seedCapital :     1000,
@@ -55,7 +54,6 @@ describe('Admin Controller', function() {
       roundLengthValue: 3,
       roundLengthUnit:  'minutes',
       sliceInterval :   1000,
-      minSubmissions :  5,
       submissionVal :   100,
       decayHalflife :   20,
       seedCapital :     1000,
@@ -72,7 +70,6 @@ describe('Admin Controller', function() {
       roundLengthValue: 3,
       roundLengthUnit:  'minutes',
       sliceInterval :   1000,
-      minSubmissions :  5,
       submissionVal :   100,
       decayHalflife :   20,
       seedCapital :     1000,
@@ -89,7 +86,6 @@ describe('Admin Controller', function() {
       roundLengthValue: 3,
       roundLengthUnit:  'minutes',
       sliceInterval :   1000,
-      minSubmissions :  5,
       submissionVal :   100,
       decayHalflife :   20,
       seedCapital :     1000,
@@ -105,7 +101,6 @@ describe('Admin Controller', function() {
       roundLengthValue: 3,
       roundLengthUnit:  'minutes',
       sliceInterval :   1000,
-      minSubmissions :  5,
       submissionVal :   100,
       decayHalflife :   20,
       seedCapital :     1000,
@@ -169,7 +164,6 @@ describe('Admin Controller', function() {
         browser.query('form input[name="roundLengthUnit"]').should.be.ok;
         browser.query('form input[name="seedCapital"]').should.be.ok;
         browser.query('form input[name="submissionVal"]').should.be.ok;
-        browser.query('form input[name="minSubmissions"]').should.be.ok;
         browser.query('form input[name="decayHalflife"]').should.be.ok;
         browser.query('form input[name="published"]').should.be.ok;
         browser.query('form button[type="submit"]').should.be.ok;
@@ -196,7 +190,6 @@ describe('Admin Controller', function() {
       browser.fill('roundLengthValue', '');
       browser.fill('seedCapital', '');
       browser.fill('submissionVal', '');
-      browser.fill('minSubmissions', '');
       browser.fill('decayHalflife', '');
       browser.pressButton('CREATE', function() {
 
@@ -205,7 +198,6 @@ describe('Admin Controller', function() {
         browser.query('span.help-inline.roundLengthValue').should.be.ok;
         browser.query('span.help-inline.seedCapital').should.be.ok;
         browser.query('span.help-inline.submissionVal').should.be.ok;
-        browser.query('span.help-inline.minSubmissions').should.be.ok;
         browser.query('span.help-inline.decayHalflife').should.be.ok;
 
         // Check that no poem was created.
@@ -224,7 +216,6 @@ describe('Admin Controller', function() {
       browser.fill('roundLengthValue', '-5');
       browser.fill('seedCapital', '-5');
       browser.fill('submissionVal', '-5');
-      browser.fill('minSubmissions', '-5');
       browser.fill('decayHalflife', '-5');
       browser.pressButton('CREATE', function() {
 
@@ -233,7 +224,6 @@ describe('Admin Controller', function() {
         browser.query('span.help-inline.roundLengthValue').should.be.ok;
         browser.query('span.help-inline.seedCapital').should.be.ok;
         browser.query('span.help-inline.submissionVal').should.be.ok;
-        browser.query('span.help-inline.minSubmissions').should.be.ok;
         browser.query('span.help-inline.decayHalflife').should.be.ok;
 
         // Check that no poem was created.
@@ -255,7 +245,6 @@ describe('Admin Controller', function() {
         browser.fill('roundLengthUnit', 'minutes');
         browser.fill('seedCapital', '18000');
         browser.fill('submissionVal', '100');
-        browser.fill('minSubmissions', '5');
         browser.fill('decayHalflife', '20');
         browser.pressButton('CREATE', function() {
 
@@ -272,7 +261,6 @@ describe('Admin Controller', function() {
             poem.roundLengthUnit.should.eql('minutes');
             poem.seedCapital.should.eql(18000);
             poem.submissionVal.should.eql(100);
-            poem.minSubmissions.should.eql(5);
             poem.decayHalflife.should.eql(20);
             done();
           });

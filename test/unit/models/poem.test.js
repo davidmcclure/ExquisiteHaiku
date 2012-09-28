@@ -23,7 +23,6 @@ describe('Poem', function() {
       roundLengthValue: 3,
       roundLengthUnit: 'minutes',
       sliceInterval: 300,
-      minSubmissions: 5,
       submissionVal: 100,
       decayHalflife: 20,
       seedCapital: 1000,
@@ -107,7 +106,6 @@ describe('Poem', function() {
         err.errors.roundLengthValue.type.should.eql('required');
         err.errors.roundLengthUnit.type.should.eql('required');
         err.errors.sliceInterval.type.should.eql('required');
-        err.errors.minSubmissions.type.should.eql('required');
         err.errors.submissionVal.type.should.eql('required');
         err.errors.decayHalflife.type.should.eql('required');
         err.errors.seedCapital.type.should.eql('required');

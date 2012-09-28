@@ -161,7 +161,6 @@ describe('Scoring', function() {
         roundLengthValue: 10,
         roundLengthUnit: 'seconds',
         sliceInterval: 300,
-        minSubmissions: 5,
         submissionVal: 100,
         decayHalflife: 50,
         seedCapital: 1000,

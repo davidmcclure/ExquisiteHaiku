@@ -84,7 +84,6 @@ describe('Stack Voting', function() {
     expect(_t.line.circle.attr('class')).toEqual('positive');
 
     // Check for point preview.
-    console.log(_t.points);
     expect(_t.points.value.text()).toEqual('995');
     expect(_t.points.percent.text()).toEqual('0.99');
     expect(_t.points.$el).toHaveClass('preview');

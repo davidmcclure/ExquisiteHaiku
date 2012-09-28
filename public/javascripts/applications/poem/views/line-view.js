@@ -197,6 +197,7 @@ Ov.Views.Line = Backbone.View.extend({
     if (currentTotal >= 0) {
       this.total.attr('class', 'positive');
       this.circle.attr('class', 'positive');
+      $('body').css('background', 'positive');
     }
 
     // Negative.

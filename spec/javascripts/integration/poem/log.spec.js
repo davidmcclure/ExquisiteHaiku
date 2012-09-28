@@ -10,10 +10,6 @@ describe('Log Voting', function() {
     _t.loadPoem();
   });
 
-  beforeEach(function() {
-    _t.isVoting();
-  });
-
   it('should render positive votes', function() {
 
     // Ingest vote.
@@ -98,7 +94,7 @@ describe('Log Voting', function() {
     expect(_t.blank.$el.val()).toEqual('word');
 
     // Check for point preview.
-    expect(_t.points.$el.text()).toEqual('900');
+    expect(_t.points.value.text()).toEqual('900');
     expect(_t.points.$el).toHaveClass('preview');
 
     // Blur.
@@ -108,7 +104,7 @@ describe('Log Voting', function() {
     expect(_t.blank.$el.val()).toEqual('');
 
     // Check for not point preview.
-    expect(_t.points.$el.text()).toEqual('1000');
+    expect(_t.points.value.text()).toEqual('1000');
     expect(_t.points.$el).not.toHaveClass('preview');
 
   });
@@ -177,14 +173,14 @@ describe('Log Voting', function() {
       'vote', 1, 'word', 100);
 
     // Check for updated points preview.
-    expect(_t.points.$el.text()).toEqual('800');
+    expect(_t.points.value.text()).toEqual('800');
     expect(_t.points.$el).toHaveClass('preview');
 
     // Blur.
     $(rows[0]).trigger('mouseleave');
 
     // Check for updated points.
-    expect(_t.points.$el.text()).toEqual('900');
+    expect(_t.points.value.text()).toEqual('900');
     expect(_t.points.$el).not.toHaveClass('preview');
 
   });
@@ -204,7 +200,7 @@ describe('Log Voting', function() {
     $(rows[0]).trigger('mouseenter');
 
     // Check for updated points preview.
-    expect(_t.points.$el.text()).toEqual('-1');
+    expect(_t.points.value.text()).toEqual('-1');
     expect(_t.points.$el).toHaveClass('negative');
 
     // Echo.
@@ -213,12 +209,11 @@ describe('Log Voting', function() {
     // Check for vote release.
     expect(Ov.Controllers.Socket.s.emit).not.toHaveBeenCalledWith();
 
-
     // Blur.
     $(rows[0]).trigger('mouseleave');
 
     // Check for updated points.
-    expect(_t.points.$el.text()).toEqual('1000');
+    expect(_t.points.value.text()).toEqual('1000');
     expect(_t.points.$el).not.toHaveClass('preview');
 
   });

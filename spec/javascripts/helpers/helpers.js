@@ -17,8 +17,7 @@ _t.loadPoem = function() {
   // Globals.
   Ov.global = {
     isDragging: false,
-    isFrozen: false,
-    isVoting: null
+    isFrozen: false
   };
 
   // Restart components.
@@ -43,7 +42,7 @@ _t.loadPoem = function() {
   // Set testing constants.
   _t.rounds.reset();
   _t.log.options.maxLength = 5;
-  _t.points.value = 1000;
+  _t.points.balance = 1000;
 
 };
 

@@ -84,7 +84,9 @@ describe('Stack Voting', function() {
     expect(_t.line.circle.attr('class')).toEqual('positive');
 
     // Check for point preview.
-    expect(_t.points.$el.text()).toEqual('995');
+    console.log(_t.points);
+    expect(_t.points.value.text()).toEqual('995');
+    expect(_t.points.percent.text()).toEqual('0.99');
     expect(_t.points.$el).toHaveClass('preview');
 
     // Cancel drag.
@@ -125,7 +127,8 @@ describe('Stack Voting', function() {
     expect(_t.line.circle.attr('class')).toEqual('negative');
 
     // Check for point preview.
-    expect(_t.points.$el.text()).toEqual('995');
+    expect(_t.points.value.text()).toEqual('995');
+    expect(_t.points.percent.text()).toEqual('0.99');
     expect(_t.points.$el).toHaveClass('preview');
 
     // Cancel drag.
@@ -187,7 +190,8 @@ describe('Stack Voting', function() {
     expect(_t.line.circle.attr('class')).toEqual('positive');
 
     // Check for point preview.
-    expect(_t.points.$el.text()).toEqual('990');
+    expect(_t.points.value.text()).toEqual('990');
+    expect(_t.points.percent.text()).toEqual('0.99');
     expect(_t.points.$el).toHaveClass('preview');
 
     // Cancel drag.
@@ -209,7 +213,7 @@ describe('Stack Voting', function() {
 
     // Drag.
     $(window).trigger($.Event('mousemove', {
-      pageX: 3, pageY: 4 
+      pageX: 3, pageY: 4
     }));
 
     // Release.
@@ -222,7 +226,7 @@ describe('Stack Voting', function() {
 
     // Drag.
     $(window).trigger($.Event('mousemove', {
-      pageX: 4, pageY: 3 
+      pageX: 4, pageY: 3
     }));
 
     // Release.
@@ -249,7 +253,8 @@ describe('Stack Voting', function() {
     expect(_t.line.circle.attr('class')).toEqual('negative');
 
     // Check for point preview.
-    expect(_t.points.$el.text()).toEqual('990');
+    expect(_t.points.value.text()).toEqual('990');
+    expect(_t.points.percent.text()).toEqual('0.99');
     expect(_t.points.$el).toHaveClass('preview');
 
     // Cancel drag.
@@ -271,7 +276,7 @@ describe('Stack Voting', function() {
 
     // Drag.
     $(window).trigger($.Event('mousemove', {
-      pageX: 3, pageY: 4 
+      pageX: 3, pageY: 4
     }));
 
     // Release.
@@ -311,7 +316,8 @@ describe('Stack Voting', function() {
     expect(_t.line.circle.attr('class')).toEqual('positive');
 
     // Check for point preview.
-    expect(_t.points.$el.text()).toEqual('992');
+    expect(_t.points.value.text()).toEqual('992');
+    expect(_t.points.percent.text()).toEqual('0.99');
     expect(_t.points.$el).toHaveClass('preview');
 
     // Cancel drag.
@@ -333,7 +339,7 @@ describe('Stack Voting', function() {
 
     // Drag.
     $(window).trigger($.Event('mousemove', {
-      pageX: -3, pageY: -4 
+      pageX: -3, pageY: -4
     }));
 
     // Release.
@@ -373,7 +379,8 @@ describe('Stack Voting', function() {
     expect(_t.line.circle.attr('class')).toEqual('negative');
 
     // Check for point preview.
-    expect(_t.points.$el.text()).toEqual('992');
+    expect(_t.points.value.text()).toEqual('992');
+    expect(_t.points.percent.text()).toEqual('0.99');
     expect(_t.points.$el).toHaveClass('preview');
 
     // Cancel drag.
@@ -406,7 +413,7 @@ describe('Stack Voting', function() {
     // expect(_t.line.circle.attr('class')).toEqual('blocked');
 
     // Check for point preview.
-    expect(_t.points.$el.text()).toEqual('-414');
+    expect(_t.points.value.text()).toEqual('-414');
     expect(_t.points.$el).toHaveClass('negative');
 
     // Cancel drag.
@@ -439,7 +446,7 @@ describe('Stack Voting', function() {
     // expect(_t.line.circle.attr('class')).toEqual('blocked');
 
     // Check for point preview.
-    expect(_t.points.$el.text()).toEqual('-414');
+    expect(_t.points.value.text()).toEqual('-414');
     expect(_t.points.$el).toHaveClass('negative');
 
     // Cancel drag.
@@ -464,7 +471,7 @@ describe('Stack Voting', function() {
 
     // Drag.
     $(window).trigger($.Event('mousemove', {
-      pageX: -3, pageY: -4 
+      pageX: -3, pageY: -4
     }));
 
     // Commit drag.
@@ -476,7 +483,8 @@ describe('Stack Voting', function() {
     expect($('body')).not.toContain('div.drag-line');
 
     // Check for commited points.
-    expect(_t.points.$el.text()).toEqual('995');
+    expect(_t.points.value.text()).toEqual('995');
+    expect(_t.points.percent.text()).toEqual('0.99');
     expect(_t.points.$el).not.toHaveClass('preview');
 
     // Check for vote release.
@@ -497,7 +505,7 @@ describe('Stack Voting', function() {
 
     // Drag.
     $(window).trigger($.Event('mousemove', {
-      pageX: 3, pageY: 4 
+      pageX: 3, pageY: 4
     }));
 
     // Commit drag.
@@ -509,7 +517,8 @@ describe('Stack Voting', function() {
     expect($('body')).not.toContain('div.drag-line');
 
     // Check for commited points.
-    expect(_t.points.$el.text()).toEqual('995');
+    expect(_t.points.value.text()).toEqual('995');
+    expect(_t.points.percent.text()).toEqual('0.99');
     expect(_t.points.$el).not.toHaveClass('preview');
 
     // Check for vote release.
@@ -542,7 +551,8 @@ describe('Stack Voting', function() {
     expect($('body')).not.toContain('div.drag-line');
 
     // Check for commited points.
-    expect(_t.points.$el.text()).toEqual('1000');
+    expect(_t.points.value.text()).toEqual('1000');
+    expect(_t.points.percent.text()).toEqual('1.00');
     expect(_t.points.$el).not.toHaveClass('preview');
 
     // Check for vote release.
@@ -574,7 +584,8 @@ describe('Stack Voting', function() {
     expect($('body')).not.toContain('div.drag-line');
 
     // Check for commited points.
-    expect(_t.points.$el.text()).toEqual('1000');
+    expect(_t.points.value.text()).toEqual('1000');
+    expect(_t.points.percent.text()).toEqual('1.00');
     expect(_t.points.$el).not.toHaveClass('preview');
 
     // Check for vote release.
@@ -591,7 +602,7 @@ describe('Stack Voting', function() {
 
     // Drag.
     $(window).trigger($.Event('mousemove', {
-      pageX: 3, pageY: 4 
+      pageX: 3, pageY: 4
     }));
 
     // Mock new stack.

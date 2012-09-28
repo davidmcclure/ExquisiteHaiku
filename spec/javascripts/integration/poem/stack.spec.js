@@ -14,6 +14,8 @@ describe('Stack', function() {
 
   beforeEach(function() {
 
+    _t.isVoting();
+
     // Slice.
     slice = {
       stack: [],

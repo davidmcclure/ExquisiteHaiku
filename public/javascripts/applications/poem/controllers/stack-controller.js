@@ -34,7 +34,6 @@ Ov.Controllers.Stack = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('socket:slice', function(data) {
-    console.log(data);
     if (!Ov.global.isDragging) Stack.Rank.update(data.stack);
   });
 

@@ -380,8 +380,7 @@ describe('Scoring', function() {
           beforeEach(function() {
 
             // Empty trackers.
-            global.Oversoul.votes = {};
-            global.Oversoul.words = {};
+            global.Oversoul.votes[poem.round.id] = [];
 
           });
 

@@ -9,7 +9,6 @@ describe('Login Form', function() {
   var form, user1, user2;
 
   beforeEach(function(done) {
-    done();
 
     // Create the form.
     form = _t.loginForm.form();

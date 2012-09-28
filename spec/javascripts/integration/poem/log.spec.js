@@ -10,6 +10,10 @@ describe('Log Voting', function() {
     _t.loadPoem();
   });
 
+  beforeEach(function() {
+    _t.isVoting();
+  });
+
   it('should render positive votes', function() {
 
     // Ingest vote.

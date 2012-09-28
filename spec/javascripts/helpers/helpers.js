@@ -47,14 +47,13 @@ _t.loadPoem = function() {
 };
 
 
-// --------------------
-// Application loaders.
-// --------------------
+// ---------------
+// State managers.
+// ---------------
 
 /*
- * Activate voting state.
+ * Register a round.
  */
 _t.isVoting = function() {
-  _t.rounds.recordSubmission();
-  Ov.global.isVoting = true;
+  _t.rounds.recordRound('id');
 };

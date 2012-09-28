@@ -2,8 +2,10 @@
 @import url("http://fonts.googleapis.com/css?family=Bowlby+One+SC");
 @import url("http://fonts.googleapis.com/css?family=PT+Mono");
 @import url("http://fonts.googleapis.com/css?family=Quicksand:300,400,700");
+@import url("http://fonts.googleapis.com/css?family=Alfa+Slab+One");
+@import url("http://fonts.googleapis.com/css?family=Dosis:200,300,400,500,600,700,800");
 ::selection,::-moz-selection{background:#08c;color:#fff}
-body{font-family:'Source Sans Pro';font-size:18px;font-weight:300;text-rendering:optimizeLegibility;margin:.5em}
+body{font-family:'Dosis';font-size:18px;font-weight:300;text-rendering:optimizeLegibility;margin:.5em}
 p{font-size:14px}
 .nav{margin-right:1em;font-size:14px;color:#000}
 a.nav:hover,a.nav.active{color:#08c}
@@ -18,7 +20,7 @@ a.nav:hover,a.nav.active{color:#08c}
 .secondary-nav span{opacity:.8}
 form h1.form-header{font-family:'Quicksand';font-size:1.4em;margin-bottom:.5em;opacity:.8}
 form.inline{display:inline;margin-right:.4em;}
-form.inline button{padding:0;font-family:'Source Sans Pro';font-weight:300;font-size:1em}
+form.inline button{padding:0;font-family:'Dosis';font-weight:300;font-size:1em}
 form.login,form.register{margin-top:5em}
 form#new{margin-top:3.6em;}
 form#new input[type='text']{display:inline-block;font-weight:300;padding:10px;font-size:20px;width:100px;color:#bbb;}

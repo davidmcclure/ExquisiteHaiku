@@ -44,6 +44,7 @@ Ov.Controllers.Round = (function(Backbone, Ov) {
     if (_.isEmpty(round)) {
       round = Round.Rounds.recordRound(data.round);
       Ov.vent.trigger('state:newRound', round);
+      Ov.global.isDragging = false;
     }
 
     // If unstarted.

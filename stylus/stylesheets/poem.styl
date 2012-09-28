@@ -3,7 +3,7 @@
 
 
 body
-  font 400 18px "Source Sans Pro"
+  font 400 18px bodyFont
   text-rendering optimizeLegibility
   -webkit-user-select none
   -moz-user-select none
@@ -121,9 +121,13 @@ body
   left 600px
   top 25px
 
+  &.info
+    display inline-block
+    margin-right 1em
+
   .percent
-    font-size 4em
-    font-weight bold
+    font-size 6em
+    font-weight 200
     opacity 0.25
     margin-right 5px
 

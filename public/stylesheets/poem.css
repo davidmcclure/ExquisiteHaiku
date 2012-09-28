@@ -35,10 +35,13 @@ body{font:800 18px 'Lato';text-rendering:optimizeLegibility;-webkit-user-select:
 #info #points.preview{opacity:.5}
 .drag-line{position:fixed;line-height:0;z-index:-1;top:0;left:0;}
 .drag-line svg{position:fixed;stroke-width:2;top:0;left:0;}
-.drag-line svg line,.drag-line svg text{font-size:2em;}
-.drag-line svg line.positive,.drag-line svg text.positive{stroke:#08c;fill:#08c}
-.drag-line svg line.negative,.drag-line svg text.negative{stroke:#333;fill:#333}
-.drag-line svg line.blocked,.drag-line svg text.blocked{stroke:#b3b3b3;fill:#b3b3b3}
+.drag-line svg text{font-size:2em;}
+.drag-line svg text.positive{fill:#08c}
+.drag-line svg text.negative{fill:#333}
+.drag-line svg text.blocked{fill:#b3b3b3}
+.drag-line svg line.positive{stroke:#08c}
+.drag-line svg line.negative{stroke:#333}
+.drag-line svg line.blocked{stroke:#b3b3b3}
 .drag-line svg line{stroke-width:4}
 .drag-line svg circle{opacity:.08;fill:#000}
 .complete-poem{margin-left:260px;}

@@ -2,42 +2,43 @@ div.container
 
   div.row
 
-    span.span6.offset6.secondary-nav
-      a.nav(href='#') about
-      a.nav(href='#') terms of service 
-      span.nav © 2012 
-        - var twitterUrl = 'https://twitter.com/clured'
-        a.nav(href='#{twitterUrl}', target='_blank') @clured
+    span.span6
 
-  div.row
-    span.span4.offset2
+      div.nav
+        a.nav(href='#') about
+        a.nav(href='#') terms of service
+        span.nav © 2012
+          - var twitterUrl = 'https://twitter.com/clured'
+          a.nav(href='#{twitterUrl}', target='_blank') @clured
+
+      div.logo-block
+
+        div.auth
+          if user
+            a.nav(href='/admin/logout') logout
+            span.user= user.username
+          else
+            - var c = menu=='login' ? 'active' : ''
+            a.nav(href='/admin/login', class=c) login
+            - var c = menu=='register' ? 'active' : ''
+            a.nav(href='/admin/register', class=c) register
+
+        div.logo
+          h1.logo
+            a(href=(user ? '/admin' : '/'))
+              span EXQU
+              span.i I
+              span S
+              span.i I
+              span TEHA
+              span.i I
+              span KU
+          p real-time, multi-player haiku composition
+          - var c = menu=='new' ? 'btn-inverse' : 'btn-primary'
+          if user
+            a.btn.btn-large.new-poem(
+              href='/admin/new', class=c) NEW POEM
+
+    span.span6
       block content
       &nbsp;
-
-    span.span6.logo-block
-
-      div.auth
-        if user
-          span.user= user.username
-          a.nav(href='/admin/logout') logout
-        else
-          - var c = menu=='login' ? 'active' : ''
-          a.nav(href='/admin/login', class=c) login
-          - var c = menu=='register' ? 'active' : ''
-          a.nav(href='/admin/register', class=c) register
-
-      div.logo
-        h1.logo
-          a(href=(user ? '/admin' : '/'))
-            span EXQU
-            span.i I
-            span S
-            span.i I
-            span TEHA
-            span.i I
-            span KU
-        p real-time, multi-player haiku composition
-        - var c = menu=='new' ? 'btn-inverse' : 'btn-primary'
-        if user
-          a.btn.btn-large.new-poem(
-            href='/admin/new', class=c) NEW POEM

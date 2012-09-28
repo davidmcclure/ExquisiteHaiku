@@ -149,21 +149,28 @@ body
     top 0
     left 0
 
-    line
     text
       font-size 2em
 
       &.positive
-        stroke positive
         fill positive
 
       &.negative
-        stroke negative
         fill negative
 
       &.blocked
-        stroke preview
         fill preview
+
+    line
+
+      &.positive
+        stroke positive
+
+      &.negative
+        stroke negative
+
+      &.blocked
+        stroke preview
 
     line
       stroke-width 4

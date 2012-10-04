@@ -3,11 +3,11 @@ extends layout
 block js
   script(src='/javascripts/runners/add.run.js')
 
-block content
+block left
 
   form#new(method='post')
 
-    h1.form-header NEW
+    h1.form-header New
 
     // Shortcut round length fields, get error.
     - var rLenVal = form.fields.roundLengthValue

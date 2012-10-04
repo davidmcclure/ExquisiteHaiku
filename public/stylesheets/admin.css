@@ -8,7 +8,6 @@ body{font-family:'Lato';font-size:18px;font-weight:300;text-rendering:optimizeLe
 p{font-size:14px}
 .nav{font-size:14px;margin-right:1em;color:#000}
 a.nav:hover,a.nav.active{color:#08c}
-.left-col{text-align:right}
 .logo-block{margin:60px 0 30px;}
 .logo-block .user{font-family:Consolas;line-height:1em;position:relative;margin-right:.4em}
 .logo-block h1.logo{font-family:'Quicksand';margin:5px 0 0 -3px;text-transform:uppercase;}
@@ -18,7 +17,7 @@ a.nav:hover,a.nav.active{color:#08c}
 .secondary-nav{white-space:nowrap;}
 .secondary-nav span{opacity:.8}
 form{margin-top:36px;}
-form h1.form-header{font-family:'Quicksand';font-size:1.4em;margin-bottom:.5em;opacity:.8}
+form h1.form-header{font-family:'Quicksand';font-size:1.4em;margin-bottom:.5em;text-transform:uppercase;opacity:.8}
 form.inline{display:inline;margin-right:.4em;}
 form.inline button{padding:0;font-family:'Lato';font-weight:300;font-size:1em}
 form#new input[type='text']{display:inline-block;font-weight:300;padding:10px;font-size:20px;width:100px;color:#bbb;}

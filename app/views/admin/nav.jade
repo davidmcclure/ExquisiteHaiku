@@ -2,21 +2,16 @@ div.container
 
   div.row
 
-    span.span6
+    span.span4.left-col
 
-      div.nav
-        a.nav(href='#') about
-        a.nav(href='#') terms of service
-        span.nav © 2012
-          - var twitterUrl = 'https://twitter.com/clured'
-          a.nav(href='#{twitterUrl}', target='_blank') @clured
+    span.span7.offset1.right-col
 
       div.logo-block
 
         div.auth
           if user
-            a.nav(href='/admin/logout') logout
             span.user= user.username
+            a.nav(href='/admin/logout') logout
           else
             - var c = menu=='login' ? 'active' : ''
             a.nav(href='/admin/login', class=c) login
@@ -39,6 +34,4 @@ div.container
             a.btn.btn-large.new-poem(
               href='/admin/new', class=c) New Poem
 
-    span.span6
       block content
-      &nbsp;

@@ -25,8 +25,8 @@ p
   font-size 14px
 
 .nav
-  margin-right 1em
   font-size 14px
+  margin-right 1em
   color black
 
 a.nav
@@ -38,16 +38,17 @@ a.nav
 // Logo, "New Poem" button.
 // ------------------------
 
+.left-col
+  text-align right
+
 .logo-block
-  margin-top 6em
+  margin 60px 0 30px
 
   .user
-    font-family usernameFont
+    font-family Consolas
     line-height 1em
-    font-weight 200
-    margin-right 1em
     position relative
-    top 1px
+    margin-right 0.4em
 
   h1.logo
     font-family logoFont
@@ -76,6 +77,7 @@ a.nav
 // ------
 
 form
+  margin-top 36px
 
   h1.form-header
     font-family logoFont
@@ -93,12 +95,7 @@ form
       font-weight 300
       font-size 1em
 
-  &.login
-  &.register
-    margin-top 5em
-
   &#new
-    margin-top 3.6em
 
     input[type='text']
       display inline-block
@@ -135,8 +132,7 @@ form
 
       button
         padding 1px 9px
-        font-weight 400
-        font-size 12px
+        font-weight 500
         background-image none
         text-transform none
 
@@ -144,14 +140,16 @@ form
 // Poem listings.
 // --------------
 
+.right-col
+  white-space nowrap
+
 .poem
-  margin-bottom 1.6em
 
   .hash
-    display block
-    margin-bottom 0.2em
-    font-family monoFont
-    font-size 18px
+    display inline-block
+    margin 0 0.3em -0.5em 0
+    font-family Consolas
+    font-size 16px
     color black
 
     &:hover
@@ -162,16 +160,16 @@ form
 
   .word
     margin-right 3px
-    font-size 14px
+    font-size 15px
     color black
 
   .actions
-    margin-top 0.2em
 
     button
       margin-right 0.3em
-      font-size 0.9em
+      font-size 0.7em
       text-transform none
+      font-weight bold
 
       &.danger
         color #BD362F

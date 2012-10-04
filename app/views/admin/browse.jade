@@ -6,25 +6,25 @@ block content
     div.poem(hash=poem.hash)
       a.hash(href='/#{poem.hash}')= poem.hash
       each line in poem.words
-        div.line
+        span.line
           each word in line
             span.word= word
 
-      div.actions
+      // div.actions
 
-        if poem.unstarted || poem.paused
-          form.inline.start(method='post'
-            action='/admin/start/#{poem.hash}'
-            hash=poem.hash)
-            button.btn.btn-link(type='submit') start
+      //   if poem.unstarted || poem.paused
+      //     form.inline.start(method='post'
+      //       action='/admin/start/#{poem.hash}'
+      //       hash=poem.hash)
+      //       button.btn.btn-link(type='submit') start
 
-        if poem.running
-          form.inline.stop(method='post'
-            action='/admin/stop/#{poem.hash}'
-            hash=poem.hash)
-            button.btn.btn-link(type='submit') stop
+      //   if poem.running
+      //     form.inline.stop(method='post'
+      //       action='/admin/stop/#{poem.hash}'
+      //       hash=poem.hash)
+      //       button.btn.btn-link(type='submit') stop
 
-        form.inline.delete(method='post'
-          action='/admin/delete/#{poem.hash}'
-          hash=poem.hash)
-          button.btn.btn-link.danger(type='submit') delete
+      //   form.inline.delete(method='post'
+      //     action='/admin/delete/#{poem.hash}'
+      //     hash=poem.hash)
+      //     button.btn.btn-link(type='submit') delete

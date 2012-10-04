@@ -10,11 +10,10 @@ p{font-size:14px}
 a.nav:hover,a.nav.active{color:#08c}
 .logo-block{margin-top:6em;}
 .logo-block .user{font-family:'Bowlby One SC';line-height:1em;font-weight:200;margin-right:1em;position:relative;top:1px}
-.logo-block h1.logo{font-family:'Quicksand';margin:5px 0 0 -3px;}
+.logo-block h1.logo{font-family:'Quicksand';margin:5px 0 0 -3px;text-transform:uppercase;}
 .logo-block h1.logo .i{color:#333}
 .logo-block h1.logo a:hover{text-decoration:none}
 .logo-block a.new-poem{font-size:19px;margin-top:5px}
-.logo-block p.free{margin:3px 0 0 15px}
 .secondary-nav{white-space:nowrap;}
 .secondary-nav span{opacity:.8}
 form h1.form-header{font-family:'Quicksand';font-size:1.4em;margin-bottom:.5em;opacity:.8}
@@ -29,12 +28,12 @@ form#new input[name='roundLengthValue']:focus{border-color:#08c}
 form#new .control-group{margin-bottom:5px;}
 form#new .control-group.error input{border-color:#b94a48 !important}
 form#new div.roundLength{margin-bottom:.8em}
-form#new .btn-group button{padding:1px 9px;font-weight:400;font-size:12px;background-image:none}
+form#new .btn-group button{padding:1px 9px;font-weight:400;font-size:12px;background-image:none;text-transform:none}
 .poem{margin-bottom:1.6em;}
 .poem .hash{display:block;margin-bottom:.2em;font-family:'PT Mono';font-size:18px;color:#000;}
 .poem .hash:hover{color:#08c}
 .poem .line{line-height:16px}
 .poem .word{margin-right:3px;font-size:14px;color:#000}
 .poem .actions{margin-top:.2em;}
-.poem .actions button{margin-right:.3em;font-size:.9em;}
+.poem .actions button{margin-right:.3em;font-size:.9em;text-transform:none;}
 .poem .actions button.danger{color:#bd362f}

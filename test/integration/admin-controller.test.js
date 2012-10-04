@@ -191,7 +191,7 @@ describe('Admin Controller', function() {
       browser.fill('seedCapital', '');
       browser.fill('submissionVal', '');
       browser.fill('decayHalflife', '');
-      browser.pressButton('CREATE', function() {
+      browser.pressButton('Create', function() {
 
         // Check for errors.
         browser.location.pathname.should.eql('/admin/new');
@@ -217,7 +217,7 @@ describe('Admin Controller', function() {
       browser.fill('seedCapital', '-5');
       browser.fill('submissionVal', '-5');
       browser.fill('decayHalflife', '-5');
-      browser.pressButton('CREATE', function() {
+      browser.pressButton('Create', function() {
 
         // Check for errors.
         browser.location.pathname.should.eql('/admin/new');
@@ -246,7 +246,7 @@ describe('Admin Controller', function() {
         browser.fill('seedCapital', '18000');
         browser.fill('submissionVal', '100');
         browser.fill('decayHalflife', '20');
-        browser.pressButton('CREATE', function() {
+        browser.pressButton('Create', function() {
 
           // Check for redirect.
           browser.location.pathname.should.eql('/admin');

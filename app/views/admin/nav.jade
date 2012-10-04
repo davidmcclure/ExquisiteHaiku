@@ -26,18 +26,18 @@ div.container
         div.logo
           h1.logo
             a(href=(user ? '/admin' : '/'))
-              span EXQU
-              span.i I
-              span S
-              span.i I
-              span TEHA
-              span.i I
-              span KU
+              span exqu
+              span.i i
+              span s
+              span.i i
+              span teha
+              span.i i
+              span ku
           p real-time, multi-player haiku composition
           - var c = menu=='new' ? 'btn-inverse' : 'btn-primary'
           if user
             a.btn.btn-large.new-poem(
-              href='/admin/new', class=c) NEW POEM
+              href='/admin/new', class=c) New Poem
 
     span.span6
       block content

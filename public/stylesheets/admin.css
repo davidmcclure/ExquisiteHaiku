@@ -5,17 +5,14 @@
 @import url("http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900");
 ::selection,::-moz-selection{background:#08c;color:#fff}
 body{font-family:'Lato';font-size:18px;font-weight:300;text-rendering:optimizeLegibility;margin:.5em}
-p{font-size:14px}
+p{font-size:15px}
 .nav{font-size:14px;margin-right:1em;color:#000}
 a.nav:hover,a.nav.active{color:#08c}
-.logo-block{margin:60px 0 30px;}
+.logo-block{margin:1em 0;}
 .logo-block .user{font-family:Consolas;line-height:1em;position:relative;margin-right:.4em}
 .logo-block h1.logo{font-family:'Quicksand';margin:5px 0 0 -3px;text-transform:uppercase;}
 .logo-block h1.logo .i{color:#333}
 .logo-block h1.logo a:hover{text-decoration:none}
-.logo-block a.new-poem{font-size:19px;margin-top:5px}
-.secondary-nav{white-space:nowrap;}
-.secondary-nav span{opacity:.8}
 form{margin-top:36px;}
 form h1.form-header{font-family:'Quicksand';font-size:1.4em;margin-bottom:.5em;text-transform:uppercase;opacity:.8}
 form.inline{display:inline;margin-right:.4em;}
@@ -29,9 +26,10 @@ form#new .control-group.error input{border-color:#b94a48 !important}
 form#new div.roundLength{margin-bottom:.8em}
 form#new .btn-group button{padding:1px 9px;font-weight:500;background-image:none;text-transform:none}
 .right-col{white-space:nowrap}
-.poem .hash{display:inline-block;margin:0 .3em -.5em 0;font-family:Consolas;font-size:16px;color:#000;}
-.poem .hash:hover{color:#08c}
-.poem .line{line-height:16px}
-.poem .word{margin-right:3px;font-size:15px;color:#000}
-.poem .actions button{margin-right:.3em;font-size:.7em;text-transform:none;font-weight:bold;}
-.poem .actions button.danger{color:#bd362f}
+a.new-poem{font-size:1.3em;display:inline-block;margin-bottom:.4em}
+.poems .hash{display:inline-block;margin:0 .3em -.5em 0;font-family:Consolas;font-size:16px;color:#000;}
+.poems .hash:hover{color:#08c}
+.poems .line{line-height:16px}
+.poems .word{margin-right:3px;font-size:15px;color:#000}
+.poems .actions button{margin-right:.3em;font-size:.7em;text-transform:none;font-weight:bold;}
+.poems .actions button.danger{color:#bd362f}

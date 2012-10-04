@@ -3,7 +3,7 @@ extends layout
 block js
   script(src='/javascripts/runners/add.run.js')
 
-block left
+block content
 
   form#new(method='post')
 
@@ -13,7 +13,6 @@ block left
     - var rLenVal = form.fields.roundLengthValue
     - var rLenUnit = form.fields.roundLengthUnit
     - var error = rLenVal.errorHTML() != ''
-
 
     // Round length.
     div.control-group.roundLength(class=(error ? 'error' : ''))

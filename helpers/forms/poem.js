@@ -64,12 +64,12 @@ exports.form = function(poem) {
       validators: [
         validators.positiveInteger('Must be a positive integer.')
       ]
-    }),
+    })
 
     // Published.
-    published: fields.boolean({
-      value: true
-    })
+    // published: fields.boolean({
+      // value: true
+    // })
 
   });
 

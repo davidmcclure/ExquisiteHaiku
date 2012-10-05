@@ -93,8 +93,8 @@ module.exports = function(app, io) {
             submissionVal:      form.data.submissionVal,
             decayHalflife:      form.data.decayHalflife,
             sliceInterval:      config.sliceInterval,
-            visibleWords:       config.visibleWords,
-            published:          form.data.published
+            visibleWords:       config.visibleWords
+            // published:       form.data.published
           });
 
           // Save and redirect.

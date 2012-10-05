@@ -94,6 +94,8 @@ describe('Poem Form', function() {
 
     });
 
+  });
+
   describe('submissionVal', function() {
 
     it('should have a default value', function() {
@@ -175,14 +177,13 @@ describe('Poem Form', function() {
     });
 
   });
-  });
 
-  describe('published', function() {
+  // describe('published', function() {
 
-    it('should have a default value', function() {
-      form.fields.published.value.should.exist;
-    });
+    // it('should have a default value', function() {
+      // form.fields.published.value.should.exist;
+    // });
 
-  });
+  // });
 
 });

@@ -265,8 +265,8 @@ var locked = exports.locked = function(
   // submission, and (3) the rank value of the second word is
   // less than the lock ratio times the leading word rank.
   return stack.length > 1 &&
-    stack[1][1] > total * 0.1 &&
-    parseFloat(stack[1][4]) < 0.1;
+    stack[1][1] > total * global.config.lockRatio &&
+    parseFloat(stack[1][4]) < global.config.lockRatio;
 
   /*
   Polyphemus

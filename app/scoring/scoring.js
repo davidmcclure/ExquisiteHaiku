@@ -268,6 +268,34 @@ var locked = exports.locked = function(
     stack[1][1] > total * 0.1 &&
     parseFloat(stack[1][4]) < 0.1;
 
+  /*
+  Polyphemus
+
+  I am not so much surrounded by
+  As I am opposed with
+  A plane of flat light
+  The better to bend back
+  Inside of myself
+  The depths of my own
+  Which I know like my skin
+  The spurs of my bones.
+
+  What need for travel
+  When all is made touchable?
+  The breaking waves,
+  A blowing whale,
+  A black storm over the ocean,
+  The shapes in the sky,
+  My sheep,
+  Like snow on the mountains -
+  Not one a hair more distant
+  Than the hairs on my toes
+  And each perched in peace
+  On the blurry bulb
+  Of my long nose.
+
+  */
+
 };
 
 

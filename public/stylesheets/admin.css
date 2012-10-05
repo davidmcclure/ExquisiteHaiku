@@ -4,7 +4,7 @@
 @import url("http://fonts.googleapis.com/css?family=Quicksand:300,400,700");
 @import url("http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900");
 ::selection,::-moz-selection{background:#08c;color:#fff}
-body{font-family:'Lato';font-size:18px;font-weight:300;text-rendering:optimizeLegibility;margin:.5em}
+body{font-family:'Lato';font-weight:300;text-rendering:optimizeLegibility;margin:.5em}
 p{font-size:15px}
 .nav{font-size:14px;margin-right:1em;color:#000}
 a.nav:hover,a.nav.active{color:#08c}
@@ -14,21 +14,22 @@ a.nav:hover,a.nav.active{color:#08c}
 .logo-block h1.logo .i{color:#333}
 .logo-block h1.logo a:hover{text-decoration:none}
 form h1.form-header{font-family:'Quicksand';font-size:1.4em;margin-bottom:.5em;text-transform:uppercase;opacity:.8}
-form.inline{display:inline;margin-right:.4em;}
+form.inline{display:inline;margin-left:.3em;}
 form.inline button{padding:0;font-family:'Lato';font-weight:300;font-size:1em}
-form#new input[type='text']{display:inline-block;font-weight:300;padding:10px;font-size:20px;width:100px;color:#bbb;}
+form#new input[type='text']{display:inline-block;font-weight:300;padding:10px;font-size:20px;width:86px;color:#bbb;}
 form#new input[type='text']:focus{color:#555}
-form#new input[name='roundLengthValue']{padding:20px;font-size:35px;width:80px;border:2px solid #7e7e7e;color:#555;}
+form#new input[name='roundLengthValue']{padding:15px 10px;font-size:35px;width:86px;border:2px solid #7e7e7e;color:#555;}
 form#new input[name='roundLengthValue']:focus{border-color:#08c}
 form#new .control-group{margin-bottom:5px;}
 form#new .control-group.error input{border-color:#b94a48 !important}
 form#new div.roundLength{margin-bottom:.8em}
-form#new .btn-group button{padding:1px 9px;font-weight:500;background-image:none;text-transform:none}
+form#new .btn-group button{padding:1px 4px;font-weight:400;font-size:10px;background-image:none}
 .right-col{white-space:nowrap}
 a.new-poem{font-size:1.3em;display:inline-block;margin-bottom:.4em}
 .poems .hash{display:inline-block;margin:0 .3em -.5em 0;font-family:Consolas;font-size:16px;color:#000;}
 .poems .hash:hover{color:#08c}
 .poems .line{line-height:16px}
 .poems .word{margin-right:3px;font-size:15px;color:#000}
+.poems .actions{position:relative;top:-2px;}
 .poems .actions button{margin-right:.3em;font-size:.7em;text-transform:none;font-weight:bold;}
 .poems .actions button.danger{color:#bd362f}

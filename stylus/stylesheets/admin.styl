@@ -16,7 +16,6 @@
 
 body
   font-family bodyFont
-  font-size 18px
   font-weight 300
   text-rendering optimizeLegibility
   margin 0.5em
@@ -73,7 +72,7 @@ form
 
   &.inline
     display inline
-    margin-right 0.4em
+    margin-left 0.3em
 
     button
       padding 0
@@ -88,16 +87,16 @@ form
       font-weight 300
       padding 10px
       font-size 20px
-      width 100px
+      width 86px
       color #bbb
 
       &:focus
         color #555
 
     input[name='roundLengthValue']
-      padding 20px
+      padding 15px 10px
       font-size 35px
-      width 80px
+      width 86px
       border 2px solid #7e7e7e
       color #555
 
@@ -117,10 +116,10 @@ form
     .btn-group
 
       button
-        padding 1px 9px
-        font-weight 500
+        padding 1px 4px
+        font-weight 400
+        font-size 10px
         background-image none
-        text-transform none
 
 
 // Poem listings.
@@ -155,6 +154,8 @@ a.new-poem
     color black
 
   .actions
+    position relative
+    top -2px
 
     button
       margin-right 0.3em

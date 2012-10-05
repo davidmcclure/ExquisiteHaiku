@@ -68,7 +68,8 @@ var score = exports.score = function(id, now, emit, cb) {
     if (!_.isEmpty(stack)) stack = ratios(stack);
 
     // If the round is expired.
-    if (now > poem.roundExpiration || locked(stack)) {
+    if (now > poem.roundExpiration ||
+        locked(stack, decayL, poem.submissionVal)) {
 
       // Add winning word to poem.
       if (!_.isEmpty(stack)) {
@@ -232,12 +233,10 @@ var round = exports.round = function(stack) {
 
   // Round rank, +churn, -churn.
   return _.map(stack, function(word) {
-    return [
-      word[0],
+    return [word[0],
       Math.round(word[1]),
       Math.round(word[2]),
-      Math.round(word[3])
-    ];
+      Math.round(word[3])];
   });
 
 };
@@ -248,55 +247,26 @@ var round = exports.round = function(stack) {
  * for a premature lock.
  *
  * @param {Array} stack: The stack.
+ * @param {Number} decayL: Decay lifetime.
+ * @param {Number} subVal: Submission value.
  *
  * @return {Boolean}: True if the word should lock.
  */
-var locked = exports.locked = function(stack) {
+var locked = exports.locked = function(
+  stack, decayL, subVal) {
 
-  return false;
+  // Integrate decay 0 -> +inf.
+  var total = decayL * subVal * 0.001;
 
-  /*
-  Polyphemus
-
-  I am not so much surrounded by
-  As I am opposed with
-  A plane of flat light
-  The better to bend back inside myself
-  The depths of my own depths
-  Which I know like my skin
-  The spurs of my bones.
-
-  Man's great knowledge of the distance
-  Forms in front of him a ruffled cloth
-  A deep hole that scatters the reflection
-  Of the world behind his eyes.
-
-  I see him gazing off at nothing -
-  Skyward, seaward, selfward -
-  His sight seeking a small glimpse
-  Of that most distant dot
-  At the end of things
-  Where his broken ray of thought
-  Would converge at last
-  And no longer rub him down to the dock
-  To the foot of the hill
-  To the mouth of the cave.
-
-  What need for travel
-  When all is made touchable?
-  The breaking waves,
-  A blowing whale,
-  A black storm over the ocean,
-  The shapes in the sky,
-  My sheep,
-  Like snow on the mountains -
-  Not one a hair more distant
-  Than the hairs on my toes
-  And each perched in peace
-  On the blurry bulb
-  Of my long nose.
-
-  */
+  // Lock if there is (1) more than one word in the stack,
+  // (2) the rank of the second word in the stack is greater
+  // than the lock ratio times the total rank value that
+  // accrues from the starting vote triggered by a new word
+  // submission, and (3) the rank value of the second word is
+  // less than the lock ratio times the leading word rank.
+  return stack.length > 1 &&
+    stack[1][1] > total * 0.1 &&
+    parseFloat(stack[1][4]) < 0.1;
 
 };
 

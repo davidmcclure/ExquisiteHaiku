@@ -68,7 +68,7 @@ var score = exports.score = function(id, now, emit, cb) {
     if (!_.isEmpty(stack)) stack = ratios(stack);
 
     // If the round is expired.
-    if (now > poem.roundExpiration) {
+    if (now > poem.roundExpiration || locked(stack)) {
 
       // Add winning word to poem.
       if (!_.isEmpty(stack)) {
@@ -239,6 +239,64 @@ var round = exports.round = function(stack) {
       Math.round(word[3])
     ];
   });
+
+};
+
+
+/*
+ * Test to see if the current first-place word qualifies
+ * for a premature lock.
+ *
+ * @param {Array} stack: The stack.
+ *
+ * @return {Boolean}: True if the word should lock.
+ */
+var locked = exports.locked = function(stack) {
+
+  return false;
+
+  /*
+  Polyphemus
+
+  I am not so much surrounded by
+  As I am opposed with
+  A plane of flat light
+  The better to bend back inside myself
+  The depths of my own depths
+  Which I know like my skin
+  The spurs of my bones.
+
+  Man's great knowledge of the distance
+  Forms in front of him a ruffled cloth
+  A deep hole that scatters the reflection
+  Of the world behind his eyes.
+
+  I see him gazing off at nothing -
+  Skyward, seaward, selfward -
+  His sight seeking a small glimpse
+  Of that most distant dot
+  At the end of things
+  Where his broken ray of thought
+  Would converge at last
+  And no longer rub him down to the dock
+  To the foot of the hill
+  To the mouth of the cave.
+
+  What need for travel
+  When all is made touchable?
+  The breaking waves,
+  A blowing whale,
+  A black storm over the ocean,
+  The shapes in the sky,
+  My sheep,
+  Like snow on the mountains -
+  Not one a hair more distant
+  Than the hairs on my toes
+  And each perched in peace
+  On the blurry bulb
+  Of my long nose.
+
+  */
 
 };
 

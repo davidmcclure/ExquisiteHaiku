@@ -5,7 +5,7 @@
 @import url("http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900");
 body{font:800 18px 'Lato';text-rendering:optimizeLegibility;-webkit-user-select:none;-moz-user-select:none;margin:2em}
 .positive{color:#08c}
-.negative{color:#333}
+.negative{color:#980000}
 .main{margin-left:260px}
 #poem{margin-bottom:1em;}
 #poem div.poem-line{margin-bottom:.3em}
@@ -37,10 +37,10 @@ body{font:800 18px 'Lato';text-rendering:optimizeLegibility;-webkit-user-select:
 .drag-line svg{position:fixed;stroke-width:2;top:0;left:0;}
 .drag-line svg text{font-size:2em;}
 .drag-line svg text.positive{fill:#08c}
-.drag-line svg text.negative{fill:#333}
+.drag-line svg text.negative{fill:#980000}
 .drag-line svg text.blocked{fill:#b3b3b3}
 .drag-line svg line.positive{stroke:#08c}
-.drag-line svg line.negative{stroke:#333}
+.drag-line svg line.negative{stroke:#980000}
 .drag-line svg line.blocked{stroke:#b3b3b3}
 .drag-line svg line{stroke-width:4}
 .drag-line svg circle{opacity:.08;fill:#000}

@@ -13,7 +13,6 @@ a.nav:hover,a.nav.active{color:#08c}
 .logo-block h1.logo{font-family:'Quicksand';margin:5px 0 0 -3px;text-transform:uppercase;}
 .logo-block h1.logo .i{color:#333}
 .logo-block h1.logo a:hover{text-decoration:none}
-form{margin-top:36px;}
 form h1.form-header{font-family:'Quicksand';font-size:1.4em;margin-bottom:.5em;text-transform:uppercase;opacity:.8}
 form.inline{display:inline;margin-right:.4em;}
 form.inline button{padding:0;font-family:'Lato';font-weight:300;font-size:1em}

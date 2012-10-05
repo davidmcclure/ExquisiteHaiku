@@ -11,21 +11,21 @@ block content
             each word in line
               span.word= word
 
-      // div.actions
+        span.actions
 
-      //   if poem.unstarted || poem.paused
-      //     form.inline.start(method='post'
-      //       action='/admin/start/#{poem.hash}'
-      //       hash=poem.hash)
-      //       button.btn.btn-link(type='submit') start
+          if poem.unstarted || poem.paused
+            form.inline.start(method='post'
+              action='/admin/start/#{poem.hash}'
+              hash=poem.hash)
+              button.btn.btn-link(type='submit') start
 
-      //   if poem.running
-      //     form.inline.stop(method='post'
-      //       action='/admin/stop/#{poem.hash}'
-      //       hash=poem.hash)
-      //       button.btn.btn-link(type='submit') stop
+          if poem.running
+            form.inline.stop(method='post'
+              action='/admin/stop/#{poem.hash}'
+              hash=poem.hash)
+              button.btn.btn-link(type='submit') stop
 
-      //   form.inline.delete(method='post'
-      //     action='/admin/delete/#{poem.hash}'
-      //     hash=poem.hash)
-      //     button.btn.btn-link(type='submit') delete
+          form.inline.delete(method='post'
+            action='/admin/delete/#{poem.hash}'
+            hash=poem.hash)
+            button.btn.btn-link(type='submit') delete

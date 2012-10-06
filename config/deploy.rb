@@ -13,12 +13,9 @@ set :branch, 'master'
 default_run_options[:pty] = true
 set :host, "ec2-user@ec2-50-16-21-11.compute-1.amazonaws.com"
 set :deploy_via, :remote_cache
+set :user, "root"
 set :use_sudo, true
 role :app, host
-
-# Node information.
-set :node_file, "app.js"
-set :user, "root"
 
 set :bluepill, "path/to/bluepill"
 
@@ -54,5 +51,5 @@ end
 
 # Hooks.
 before 'deploy:setup', 'deploy:create_directory'
-before 'deploy:finalize_update', 'deploy:build'
+# before 'deploy:finalize_update', 'deploy:build'
 after 'deploy:setup', 'deploy:set_permissions'

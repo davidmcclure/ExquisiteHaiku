@@ -68,8 +68,8 @@ var score = exports.score = function(id, now, emit, cb) {
     if (!_.isEmpty(stack)) stack = ratios(stack);
 
     // If the round is expired.
-    if (now > poem.roundExpiration ||
-        locked(stack, decayL, poem.submissionVal)) {
+    if (now > poem.roundExpiration || locked(
+      stack, decayL, poem.submissionVal)) {
 
       // Add winning word to poem.
       if (!_.isEmpty(stack)) {
@@ -324,5 +324,5 @@ var getEmitter = exports.getEmitter = function(io, id) {
  * @return void.
  */
 var execute = exports.execute = function(id, emit, cb) {
-  score(id, Date.now(), emit, cb);  
+  score(id, Date.now(), emit, cb);
 };

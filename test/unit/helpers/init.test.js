@@ -16,12 +16,6 @@ describe('Init', function() {
       set: _t.sinon.spy()
     };
 
-    // Mock config.
-    global.config = {
-      sliceInterval: 300,
-      visibleWords: 100
-    };
-
     // Mock io.
     io = {};
 

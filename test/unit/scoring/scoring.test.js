@@ -149,43 +149,51 @@ describe('Scoring', function() {
 
   describe('locked', function() {
 
+    var decayL, subVal, total;
+
+    beforeEach(function() {
+      decayL = 10000;
+      subVal = 100;
+      total = decayL * subVal * 0.001;
+    });
+
     it('should return false when no words', function() {
       var stack = [];
-      _t.scoring.locked(stack, 10000, 100).should.be.false;
+      _t.scoring.locked(stack, decayL, subVal).should.be.false;
     });
 
     it('should return false when 1 word', function() {
       var stack = [['word1', 100, 50, -50, '1.00']];
-      _t.scoring.locked(stack, 10000, 100).should.be.false;
+      _t.scoring.locked(stack, decayL, subVal).should.be.false;
     });
 
-    // it('should return false when word 2 below threshold', function() {
+    it('should return false when word 2 below threshold', function() {
 
-    //   // Get minimum rank value.
-    //   var total = 10000*100*0.001*global.config.lockRatio-1;
+      // Get minimum rank value.
+      var total = total * global.config.lockRatio - 1;
 
-    //   var stack = _t.scoring.ratios([
-    //     ['word1', 100, 50, -50]
-    //     ['word2', total, 50, -50]
-    //   ]);
+      var stack = _t.scoring.ratios([
+        ['word1', 100, 50, -50],
+        ['word2', total, 50, -50]
+      ]);
 
-    //   _t.scoring.locked(stack, 10000, 100).should.be.false;
+      _t.scoring.locked(stack, decayL, subVal).should.be.false;
 
-    // });
+    });
 
-    // it('should return true when word 2 below lock ratio', function() {
+    it('should return true when word 2 below lock ratio', function() {
 
-    //   // Get threshold - 1.
-    //   var rank = 100*global.config.lockRatio-1;
+      // Get threshold - 1.
+      var rank = (total * 5 * global.config.lockRatio) / 2;
 
-    //   var stack = _t.scoring.ratios([
-    //     ['word1', 100, 50, -50]
-    //     ['word2', rank, 50, -50]
-    //   ]);
+      var stack = _t.scoring.ratios([
+        ['word1', 100000, 50, -50],
+        ['word2', rank, 50, -50]
+      ]);
 
-    //   _t.scoring.locked(stack, 10000, 100).should.be.true;
+      _t.scoring.locked(stack, decayL, subVal).should.be.true;
 
-    // });
+    });
 
   });
 

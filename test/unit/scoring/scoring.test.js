@@ -149,13 +149,8 @@ describe('Scoring', function() {
 
   describe('locked', function() {
 
-    var decayL, subVal, total;
-
-    beforeEach(function() {
-      decayL = 10000;
-      subVal = 100;
-      total = decayL * subVal * 0.001;
-    });
+    var decayL = 10000, subVal = 100;
+    var total = decayL * subVal * 0.001;
 
     it('should return false when no words', function() {
       var stack = [];

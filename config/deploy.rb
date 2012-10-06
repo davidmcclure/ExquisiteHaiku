@@ -9,12 +9,15 @@ set :repository,  "git@github.com:davidmcclure/ExquisiteHaiku.git"
 set :scm, :git
 set :branch, 'master'
 
+# Host information.
+set :host, "ec2-user@ec2-184-73-88-22.compute-1.amazonaws.com"
 set :deploy_via, :remote_cache
-set :use_sudo, true
 default_run_options[:pty] = true
+set :use_sudo, true
 
+# Node information.
 set :node_file, "app.js"
-set :user, "davidmcclure"
+set :user, "ec2-user"
 
 role :app, host
 set :use_sudo, true

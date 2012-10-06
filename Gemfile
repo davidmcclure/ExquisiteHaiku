@@ -1,5 +1,6 @@
 source :rubygems
-gem 'jasmine'
-gem 'json'
 
+gem 'jasmine'
+gem 'rake'
+gem 'json'
 gem 'bluepill'

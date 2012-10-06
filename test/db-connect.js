@@ -3,7 +3,7 @@
  */
 
 // Module dependencies.
-var configFile = require('yaml-config'),
+var configFile = require('yaml-config');
 
 // Load testing configuration.
 global.config = configFile.readConfig('config/config.yaml');

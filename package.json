@@ -21,6 +21,7 @@
     , "request": ">= 2.9"
     , "randomstring": ">= 1.0.1"
     , "grunt": ">= 0.3.15"
+    , "bower": ">= 0.2.0"
     , "forms": "https://github.com/davidmcclure/forms/tarball/master"
   }
 }

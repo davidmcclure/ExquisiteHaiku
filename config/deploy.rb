@@ -36,8 +36,8 @@ namespace :deploy do
     run "#{try_sudo :as => 'root'} #{bluepill} restart #{application}"
   end
 
-  task :npm_install, :roles => :app, :except => { :no_release => true } do
-    run "cd #{release_path} && npm install"
+  task :build, :roles => :app, :except => { :no_release => true } do
+    run "cd #{release_path} && rake build"
   end
 
   desc "Create deployment directory"
@@ -54,5 +54,5 @@ end
 
 # Hooks.
 before 'deploy:setup', 'deploy:create_directory'
-before 'deploy:finalize_update', 'deploy:npm_install'
+before 'deploy:finalize_update', 'deploy:build'
 after 'deploy:setup', 'deploy:set_permissions'

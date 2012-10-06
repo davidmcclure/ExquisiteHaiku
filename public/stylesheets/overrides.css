@@ -4,19 +4,18 @@
 @import url("http://fonts.googleapis.com/css?family=Quicksand:300,400,700");
 @import url("http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900");
 p{font-family:inherit;color:#000}
-.btn{font-family:'Quicksand';border:0;border-radius:2px;font-weight:bold}
+.btn{font-family:'Quicksand';text-transform:uppercase;border:0;border-radius:2px;font-weight:bold;padding:5px 7px}
 .btn-primary{background:#08c;}
 .btn-primary:hover{background:#005580}
 .btn-danger{background:#ac0000;}
 .btn-danger:hover{background:#8c0000}
-.btn-inverse{background:#333;}
-.btn-inverse:hover{background:#333}
+.btn-inverse{background:#005580;}
+.btn-inverse:hover{background:#005580}
 .btn-group button{font-family:'Lato';border:1px solid #c0c0c0;}
-.btn-group button:first-child{border-top-left-radius:2px !important;border-bottom-left-radius:2px !important}
-.btn-group button:last-child{border-top-right-radius:2px !important;border-bottom-right-radius:2px !important}
+.btn-group button:first-child{border-top-left-radius:1px !important;border-bottom-left-radius:1px !important}
+.btn-group button:last-child{border-top-right-radius:1px !important;border-bottom-right-radius:1px !important}
 .btn-group button.active{box-shadow:none;background-color:#333;border-color:#646464;color:#fff;text-shadow:none}
-input[type='text'],input[type='password'],textarea{-webkit-transition:color linear .2s;display:block;box-shadow:none;border-radius:1px;border-color:#c0c0c0;font-family:inherit;width:150px;}
+input[type='text'],input[type='password'],textarea{-webkit-transition:color linear .2s;display:block;box-shadow:none;border-radius:1px;border-color:#c0c0c0;font-family:inherit;width:120px;padding:5px;}
 input[type='text']:focus,input[type='password']:focus,textarea:focus{box-shadow:none}
 .help-inline{display:block;font-size:13px}
-form .control-group{margin-bottom:20px}
-form .form-actions{background:transparent;margin-top:25px;border:none;padding:0}
+form .form-actions{background:transparent;border:none;padding:0}

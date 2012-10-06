@@ -144,13 +144,8 @@ Ov.Views.Blank = Backbone.View.extend({
    */
   validateWord: function(word, cb) {
 
-    // If the word is a duplicate.
-    if (_.include(this.words, word)) {
-      cb(false);
-    }
-
     // If the word is cached as invalid.
-    else if (_.include(this.cache.invalid, word)) {
+    if (_.include(this.cache.invalid, word)) {
       cb(false);
     }
 

@@ -5,12 +5,12 @@
 // Module dependencies.
 var configFile = require('yaml-config'),
 
-// Load configuration.
-config = configFile.readConfig('config/config.yaml');
+// Load testing configuration.
+global.config = configFile.readConfig('config/config.yaml');
 
 // Connect.
 exports = mongoose = require('mongoose');
-mongoose.connect(config.db);
+mongoose.connect(global.config.db);
 exports = Schema = mongoose.Schema;
 
 // In-memory stores.

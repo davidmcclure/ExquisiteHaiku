@@ -17,8 +17,7 @@ _t.loadPoem = function() {
   // Globals.
   Ov.global = {
     isDragging: false,
-    isFrozen: false,
-    isVoting: null
+    isFrozen: false
   };
 
   // Restart components.
@@ -43,19 +42,18 @@ _t.loadPoem = function() {
   // Set testing constants.
   _t.rounds.reset();
   _t.log.options.maxLength = 5;
-  _t.points.value = 1000;
+  _t.points.balance = 1000;
 
 };
 
 
-// --------------------
-// Application loaders.
-// --------------------
+// ---------------
+// State managers.
+// ---------------
 
 /*
- * Activate voting state.
+ * Register a round.
  */
 _t.isVoting = function() {
-  _t.rounds.recordSubmission();
-  Ov.global.isVoting = true;
+  _t.rounds.recordRound('id');
 };

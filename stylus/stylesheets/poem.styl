@@ -149,25 +149,31 @@ body
     top 0
     left 0
 
-    line
     text
-    circle
       font-size 2em
 
       &.positive
-        stroke positive
         fill positive
+      &.negative
+        fill negative
+      &.blocked
+        fill preview
 
+    line
+
+      &.positive
+        stroke positive
       &.negative
         stroke negative
-        fill negative
-
       &.blocked
         stroke preview
-        fill preview
+
+    line
+      stroke-width 4
 
     circle
       opacity 0.08
+      fill black
 
 
 .complete-poem

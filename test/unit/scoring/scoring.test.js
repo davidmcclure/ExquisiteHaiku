@@ -17,7 +17,10 @@ describe('Scoring', function() {
       email: 'david@test.org'
     });
 
-    // Capture current time.
+    // Set lock ratio.
+    global.config.lockRatio = 0.1;
+
+    // Current time.
     now = Date.now();
 
   });
@@ -147,6 +150,48 @@ describe('Scoring', function() {
 
   });
 
+  describe('locked', function() {
+
+    it('should return false when no words', function() {
+
+      // Empty stack.
+      var stack = [];
+      _t.scoring.locked(stack, 10000, 100).should.be.false;
+
+    });
+
+    it('should return false when 1 word', function() {
+
+      // 1 word.
+      var stack = [['word1', 100, 50, -50, '1.00']];
+      _t.scoring.locked(stack, 10000, 100).should.be.false;
+
+    });
+
+    it('should return false when word 2 below threshold', function() {
+
+      var stack = _t.scoring.ratios([
+        ['word1', 10000, 50, -50],
+        ['word2', 999, 50, -50]
+      ]);
+
+      _t.scoring.locked(stack, 10000, 100).should.be.false;
+
+    });
+
+    it('should return true when word 2 below lock ratio', function() {
+
+      var stack = _t.scoring.ratios([
+        ['word1', 20000, 50, -50],
+        ['word2', 1000, 50, -50]
+      ]);
+
+      _t.scoring.locked(stack, 10000, 100).should.be.true;
+
+    });
+
+  });
+
   describe('score', function() {
 
     var poem, round;
@@ -161,7 +206,6 @@ describe('Scoring', function() {
         roundLengthValue: 10,
         roundLengthUnit: 'seconds',
         sliceInterval: 300,
-        minSubmissions: 5,
         submissionVal: 100,
         decayHalflife: 50,
         seedCapital: 1000,
@@ -301,6 +345,91 @@ describe('Scoring', function() {
 
       });
 
+      describe('when the top word wins by ratio', function() {
+
+        beforeEach(function(done) {
+
+          // Add new vote.
+          var vote4 = new _t.Vote({
+            round: poem.round.id,
+            word: 'fourth',
+            quantity: 10000,
+            applied: now
+          });
+
+          // Save.
+          vote4.save(function(err) {
+            done();
+          });
+
+        });
+
+        it('should broadcast updated poem', function(done) {
+
+          // Score the poem.
+          _t.scoring.score(poem.id, now+5000, function(result) {
+
+            // Check poem.
+            result.poem[0][0].valueOf().should.eql('it');
+            result.poem[0][1].valueOf().should.eql('is');
+            result.poem[0][2].valueOf().should.eql('fourth');
+            done();
+
+          }, function() {});
+
+        });
+
+        it('should broadcast empty stacks', function(done) {
+
+          // Score the poem.
+          _t.scoring.score(poem.id, now+5000, function(result) {
+
+            // Check stack.
+            result.stack.should.eql([]);
+            done();
+
+          }, function() {});
+
+        });
+
+        it('should save updated poem', function(done) {
+
+          // Score the poem.
+          _t.scoring.score(poem.id, now+5000, function() {}, function(result) {
+
+            // Get the poem.
+            _t.Poem.findById(poem.id, function(err, poem) {
+
+              // Check for new word.
+              poem.words[0][2].valueOf().should.eql('fourth');
+              done();
+
+            });
+
+          });
+
+        });
+
+        it('should save updated round', function(done) {
+
+          // Score the poem.
+          _t.scoring.score(poem.id, now+5000, function() {}, function(result) {
+
+            // Get the poem.
+            _t.Poem.findById(poem.id, function(err, poem) {
+
+              // Check for new round.
+              poem.round.id.should.not.eql(round.id);
+              done();
+
+            });
+
+          });
+
+        });
+
+      });
+
       describe('when the round is expired', function() {
 
         beforeEach(function(done) {
@@ -380,8 +509,7 @@ describe('Scoring', function() {
           beforeEach(function() {
 
             // Empty trackers.
-            global.Oversoul.votes = {};
-            global.Oversoul.words = {};
+            global.Oversoul.votes[poem.round.id] = [];
 
           });
 

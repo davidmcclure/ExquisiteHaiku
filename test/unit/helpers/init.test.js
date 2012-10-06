@@ -17,10 +17,8 @@ describe('Init', function() {
     };
 
     // Mock config.
-    global.config = {
-      sliceInterval: 300,
-      visibleWords: 100
-    };
+    global.config.sliceInterval = 300;
+    global.config.visibleWords = 100;
 
     // Mock io.
     io = {};
@@ -41,7 +39,6 @@ describe('Init', function() {
       roundLengthValue: 10,
       roundLengthUnit: 'seconds',
       sliceInterval: 300,
-      minSubmissions: 5,
       submissionVal: 100,
       decayHalflife: 20,
       seedCapital: 1000,
@@ -57,7 +54,6 @@ describe('Init', function() {
       roundLengthValue: 10,
       roundLengthUnit: 'seconds',
       sliceInterval: 300,
-      minSubmissions: 5,
       submissionVal: 100,
       decayHalflife: 20,
       seedCapital: 1000,

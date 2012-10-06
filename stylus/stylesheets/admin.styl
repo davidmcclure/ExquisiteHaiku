@@ -16,17 +16,16 @@
 
 body
   font-family bodyFont
-  font-size 18px
   font-weight 300
   text-rendering optimizeLegibility
   margin 0.5em
 
 p
-  font-size 14px
+  font-size 15px
 
 .nav
-  margin-right 1em
   font-size 14px
+  margin-right 1em
   color black
 
 a.nav
@@ -35,20 +34,23 @@ a.nav
     color #08C
 
 
+// Logo, "New Poem" button.
+// ------------------------
+
 .logo-block
-  margin-top 6em
+  margin 1em 0
 
   .user
-    font-family usernameFont
+    font-family Consolas
+    font-weight bold
     line-height 1em
-    font-weight 200
-    margin-right 1em
     position relative
-    top 1px
+    margin-right 0.4em
 
   h1.logo
     font-family logoFont
     margin 5px 0 0 -3px
+    text-transform uppercase
 
     .i
       color #333
@@ -56,20 +58,9 @@ a.nav
     a:hover
       text-decoration none
 
-  a.new-poem
-    font-size 19px
-    margin-top 5px
 
-  p.free
-    margin 3px 0 0 15px
-
-
-.secondary-nav
-  white-space nowrap
-
-  span
-    opacity 0.8
-
+// Forms.
+// ------
 
 form
 
@@ -77,11 +68,12 @@ form
     font-family logoFont
     font-size 1.4em
     margin-bottom 0.5em
+    text-transform uppercase
     opacity 0.8
 
   &.inline
     display inline
-    margin-right 0.4em
+    margin-left 0.3em
 
     button
       padding 0
@@ -89,61 +81,67 @@ form
       font-weight 300
       font-size 1em
 
-  &.login
-  &.register
-    margin-top 5em
-
   &#new
-    margin-top 3.6em
 
     input[type='text']
       display inline-block
       font-weight 300
-      padding 10px
-      font-size 20px
-      width 100px
-      color #bbb
+      padding 5px
+      font-size 18px
+      width 97px
+      color #777
 
       &:focus
         color #555
 
     input[name='roundLengthValue']
-      padding 20px
+      padding 15px 10px
       font-size 35px
-      width 80px
       border 2px solid #7e7e7e
+      border-radius 2px
+      width 86px
       color #555
 
       &:focus
         border-color #08C
 
     .control-group
-      margin-bottom 5px
+      margin-bottom 10px
 
       &.error
         input
           border-color #B94A48 !important
 
     div.roundLength
-      margin-bottom .8em
+      margin-bottom 15px
 
     .btn-group
 
       button
-        padding 1px 9px
+        padding 1px 4px
         font-weight 400
-        font-size 12px
+        font-size 10px
         background-image none
 
 
-.poem
-  margin-bottom 1.6em
+// Poem listings.
+// --------------
+
+.right-col
+  white-space nowrap
+
+a.new-poem
+  font-size 17px
+  display inline-block
+  margin-bottom 0.4em
+
+.poems
 
   .hash
-    display block
-    margin-bottom 0.2em
-    font-family monoFont
-    font-size 18px
+    display inline-block
+    margin 0 0.3em -0.5em 0
+    font-family Consolas
+    font-size 16px
     color black
 
     &:hover
@@ -154,15 +152,18 @@ form
 
   .word
     margin-right 3px
-    font-size 14px
+    font-size 15px
     color black
 
   .actions
-    margin-top 0.2em
+    position relative
+    top -2px
 
     button
       margin-right 0.3em
-      font-size 0.9em
+      font-size 11px
+      text-transform none
+      font-weight 400
 
       &.danger
         color #BD362F

@@ -62,7 +62,7 @@ describe('Index Controller', function() {
         browser.visit(_t.root+'admin/login', function() {
           browser.fill('username', 'user');
           browser.fill('password', 'password');
-          browser.pressButton('LOGIN', function() {
+          browser.pressButton('Login', function() {
             done();
           });
         });

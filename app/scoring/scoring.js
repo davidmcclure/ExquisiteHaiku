@@ -68,7 +68,8 @@ var score = exports.score = function(id, now, emit, cb) {
     if (!_.isEmpty(stack)) stack = ratios(stack);
 
     // If the round is expired.
-    if (now > poem.roundExpiration) {
+    if (now > poem.roundExpiration || locked(
+      stack, decayL, poem.submissionVal)) {
 
       // Add winning word to poem.
       if (!_.isEmpty(stack)) {
@@ -232,13 +233,67 @@ var round = exports.round = function(stack) {
 
   // Round rank, +churn, -churn.
   return _.map(stack, function(word) {
-    return [
-      word[0],
+    return [word[0],
       Math.round(word[1]),
       Math.round(word[2]),
-      Math.round(word[3])
-    ];
+      Math.round(word[3])];
   });
+
+};
+
+
+/*
+ * Test to see if the current first-place word qualifies
+ * for a premature lock.
+ *
+ * @param {Array} stack: The stack.
+ * @param {Number} decayL: Decay lifetime.
+ * @param {Number} subVal: Submission value.
+ *
+ * @return {Boolean}: True if the word should lock.
+ */
+var locked = exports.locked = function(
+  stack, decayL, subVal) {
+
+  // Integrate decay 0 -> +inf.
+  var total = decayL * subVal * 0.001;
+
+  // Lock if there is (1) more than one word in the stack,
+  // (2) the rank of the second word in the stack is greater
+  // than the lock ratio times the total rank value that
+  // accrues from the starting vote triggered by a new word
+  // submission, and (3) the rank value of the second word is
+  // less than the lock ratio times the leading word rank.
+  return stack.length > 1 &&
+    stack[1][1] > total * global.config.lockRatio &&
+    parseFloat(stack[1][4]) < global.config.lockRatio;
+
+  /*
+  Polyphemus
+
+  I am not so much surrounded by
+  As I am opposed with
+  A plane of flat light
+  The better to bend back
+  Inside of myself
+  The depths of my own
+  Which I know like my skin
+  The spurs of my bones.
+
+  What need for travel
+  When all is made touchable?
+  The breaking waves,
+  A blowing whale,
+  A black storm over the ocean,
+  The shapes in the sky,
+  My sheep,
+  Like snow on the mountains -
+  Not one a hair more distant
+  Than the hairs on my toes
+  And each perched in peace
+  On the blurry bulb
+  Of my long nose.
+  */
 
 };
 
@@ -268,5 +323,5 @@ var getEmitter = exports.getEmitter = function(io, id) {
  * @return void.
  */
 var execute = exports.execute = function(id, emit, cb) {
-  score(id, Date.now(), emit, cb);  
+  score(id, Date.now(), emit, cb);
 };

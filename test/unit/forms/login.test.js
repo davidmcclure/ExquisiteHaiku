@@ -59,7 +59,7 @@ describe('Login Form', function() {
 
     });
 
-    it('should match a user in the database', function(done) {
+    it('should not match a user in the database', function(done) {
 
       form.bind({
         username: 'rosie'

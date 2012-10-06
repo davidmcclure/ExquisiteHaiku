@@ -293,7 +293,6 @@ var locked = exports.locked = function(
   And each perched in peace
   On the blurry bulb
   Of my long nose.
-
   */
 
 };

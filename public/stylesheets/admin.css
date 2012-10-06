@@ -18,7 +18,7 @@ form.inline{display:inline;margin-left:.3em;}
 form.inline button{padding:0;font-family:'Lato';font-weight:300;font-size:1em}
 form#new input[type='text']{display:inline-block;font-weight:300;padding:5px;font-size:18px;width:97px;color:#777;}
 form#new input[type='text']:focus{color:#555}
-form#new input[name='roundLengthValue']{padding:15px 10px;font-size:35px;width:86px;border:2px solid #7e7e7e;color:#555;}
+form#new input[name='roundLengthValue']{padding:15px 10px;font-size:35px;border:2px solid #7e7e7e;border-radius:2px;width:86px;color:#555;}
 form#new input[name='roundLengthValue']:focus{border-color:#08c}
 form#new .control-group{margin-bottom:10px;}
 form#new .control-group.error input{border-color:#b94a48 !important}

@@ -5,7 +5,8 @@ require 'capistrano/ext/multistage'
 
 # Repository information.
 set :application, "exquisitehaiku"
-set :repository,  "git@github.com:davidmcclure/ExquisiteHaiku.git"
+set :process, "#{deploy_to}/current/app.js"
+set :repository, "git@github.com:davidmcclure/ExquisiteHaiku.git"
 set :scm, :git
 set :branch, 'master'
 
@@ -17,20 +18,18 @@ set :user, "root"
 set :use_sudo, true
 role :app, host
 
-set :bluepill, "path/to/bluepill"
-
 namespace :deploy do
 
   task :start, :roles => :app, :except => { :no_release => true } do
-    run "#{try_sudo :as => 'root'} #{bluepill} start #{application}"
+    run "#{try_sudo :as => 'root'} NODE_ENV=#{node_env} forever start #{process}"
   end
 
   task :stop, :roles => :app, :except => { :no_release => true } do
-    run "#{try_sudo :as => 'root'} #{bluepill} stop #{application}"
+    run "#{try_sudo :as => 'root'} forever stop #{process}"
   end
 
   task :restart, :roles => :app, :except => { :no_release => true } do
-    run "#{try_sudo :as => 'root'} #{bluepill} restart #{application}"
+    run "#{try_sudo :as => 'root'} forever restart #{process}"
   end
 
   task :build, :roles => :app, :except => { :no_release => true } do
@@ -51,5 +50,5 @@ end
 
 # Hooks.
 before 'deploy:setup', 'deploy:create_directory'
-# before 'deploy:finalize_update', 'deploy:build'
+before 'deploy:finalize_update', 'deploy:build'
 after 'deploy:setup', 'deploy:set_permissions'

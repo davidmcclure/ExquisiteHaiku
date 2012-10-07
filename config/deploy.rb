@@ -12,7 +12,7 @@ set :branch, 'master'
 
 # Host information.
 default_run_options[:pty] = true
-set :host, "ec2-user@ec2-50-16-21-11.compute-1.amazonaws.com"
+set :host, "ubuntu@ec2-184-73-138-79.compute-1.amazonaws.com"
 set :deploy_via, :remote_cache
 set :user, "root"
 set :use_sudo, true

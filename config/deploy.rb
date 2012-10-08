@@ -5,8 +5,7 @@ require 'capistrano/ext/multistage'
 
 # Repository information.
 set :application, "exquisitehaiku"
-set :process, "#{deploy_to}/current/app.js"
-set :repository, "git@github.com:davidmcclure/ExquisiteHaiku.git"
+set :repository, "git://github.com/davidmcclure/ExquisiteHaiku.git"
 set :scm, :git
 set :branch, 'master'
 
@@ -21,15 +20,15 @@ role :app, host
 namespace :deploy do
 
   task :start, :roles => :app, :except => { :no_release => true } do
-    run "#{try_sudo :as => 'root'} NODE_ENV=#{node_env} forever start #{process}"
+    run "#{try_sudo :as => 'root'} NODE_ENV=#{node_env} forever start #{deploy_to}/current/app"
   end
 
   task :stop, :roles => :app, :except => { :no_release => true } do
-    run "#{try_sudo :as => 'root'} forever stop #{process}"
+    run "#{try_sudo :as => 'root'} forever stop #{deploy_to}/current/app"
   end
 
   task :restart, :roles => :app, :except => { :no_release => true } do
-    run "#{try_sudo :as => 'root'} forever restart #{process}"
+    run "#{try_sudo :as => 'root'} forever restart #{deploy_to}/current/app"
   end
 
   task :build, :roles => :app, :except => { :no_release => true } do
@@ -38,12 +37,12 @@ namespace :deploy do
 
   desc "Create deployment directory"
   task :create_directory, :roles => :app, :except => { :no_release => true }  do
-    run "#{try_sudo :as => 'root'} mkdir -p #{deploy_to}"
+    run "#{try_sudo :as => 'root'} mkdir -p #{deploy_to}/current/app"
   end
 
   desc "Set permissions on deployment directories"
   task :set_permissions, :roles => :app, :except => { :no_release => true }  do
-    run "#{try_sudo :as => 'root'} chmod a+w -R #{deploy_to}"
+    run "#{try_sudo :as => 'root'} chmod a+w -R #{deploy_to}/current/app"
   end
 
 end

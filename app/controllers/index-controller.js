@@ -23,12 +23,11 @@ module.exports = function(app) {
     function(req, res) {
 
     // Render the layout.
-    // res.render('admin/index', {
-      // title: 'equisitehaiku',
-      // user: req.user,
-      // menu: 'index'
-    // });
-    res.send('test');
+    res.render('admin/index', {
+      title: 'equisitehaiku',
+      user: req.user,
+      menu: 'index'
+    });
 
   });
 

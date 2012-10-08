@@ -18,16 +18,17 @@ module.exports = function(app) {
   /*
    * Front page.
    */
-  app.get('/', 
+  app.get('/',
     auth.getUser,
     function(req, res) {
+    res.send('test');
 
     // Render the layout.
-    res.render('admin/index', {
-      title: 'equisitehaiku',
-      user: req.user,
-      menu: 'index'
-    });
+    // res.render('admin/index', {
+      // title: 'equisitehaiku',
+      // user: req.user,
+      // menu: 'index'
+    // });
 
   });
 

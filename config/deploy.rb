@@ -20,15 +20,15 @@ role :app, host
 namespace :deploy do
 
   task :start, :roles => :app, :except => { :no_release => true } do
-    run "#{try_sudo :as => 'root'} NODE_ENV=#{node_env} forever start #{deploy_to}/current/app"
+    run "cd #{current_path} && #{try_sudo :as => 'root'} NODE_ENV=#{node_env} forever start app"
   end
 
   task :stop, :roles => :app, :except => { :no_release => true } do
-    run "#{try_sudo :as => 'root'} forever stop #{deploy_to}/current/app"
+    run "cd #{current_path} && #{try_sudo :as => 'root'} forever stop app"
   end
 
   task :restart, :roles => :app, :except => { :no_release => true } do
-    run "#{try_sudo :as => 'root'} forever restart #{deploy_to}/current/app"
+    run "cd #{current_path} && #{try_sudo :as => 'root'} forever restart app"
   end
 
   task :build, :roles => :app, :except => { :no_release => true } do

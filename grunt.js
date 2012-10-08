@@ -28,7 +28,10 @@ module.exports = function(grunt) {
 
       poem: {
         src: poemVendor.concat([
-          c.apps.poem+'**/*.js'
+          c.apps.poem+'app.js',
+          c.apps.poem+'views/*.js',
+          c.apps.poem+'collections/*.js',
+          c.apps.poem+'controllers/*.js'
         ]),
         dest: c.payload+'poem.js',
         separator: ';'
@@ -37,7 +40,9 @@ module.exports = function(grunt) {
       admin: {
         src: adminVendor.concat([
           c.components+c.vendor.bootstrap,
-          c.apps.add+'**/*.js'
+          c.apps.add+'app.js',
+          c.apps.add+'views/*.js',
+          c.apps.add+'controllers/*.js'
         ]),
         dest: c.payload+'admin.js',
         separator: ';'
@@ -46,8 +51,13 @@ module.exports = function(grunt) {
       test: {
         src: poemVendor.concat([
           c.components+c.vendor.bootstrap,
-          c.apps.poem+'**/*.js',
-          c.apps.add+'**/*.js'
+          c.apps.poem+'app.js',
+          c.apps.poem+'views/*.js',
+          c.apps.poem+'collections/*.js',
+          c.apps.poem+'controllers/*.js',
+          c.apps.add+'app.js',
+          c.apps.add+'views/*.js',
+          c.apps.add+'controllers/*.js'
         ]),
         dest: c.payload+'test.js',
         separator: ';'

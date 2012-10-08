@@ -32,9 +32,8 @@ module.exports = function(app, io) {
     auth.isUser,
     function(req, res) {
 
-      // Get poems, sort by date created.
-      Poem
-      .find({ user: req.user.id })
+      // Get poems sorted by date.
+      Poem.find({ user: req.user.id })
       .sort('-created')
       .exec(function(err, poems) {
 

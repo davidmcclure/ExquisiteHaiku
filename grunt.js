@@ -12,6 +12,8 @@ module.exports = function(grunt) {
     c.components+c.vendor.jquery,
     c.components+c.vendor.underscore,
     c.components+c.vendor.backbone,
+    c.components+c.vendor.eventbinder,
+    c.components+c.vendor.wreqr,
     c.components+c.vendor.marionette
   ];
 

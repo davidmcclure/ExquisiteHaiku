@@ -28,7 +28,8 @@ namespace :deploy do
   end
 
   task :restart, :roles => :app, :except => { :no_release => true } do
-    run "cd #{current_path} && #{try_sudo :as => 'root'} forever restart app"
+    deploy.stop
+    deploy.start
   end
 
   task :build, :roles => :app, :except => { :no_release => true } do

@@ -49,3 +49,9 @@ task :clean do
   sh %{rm -rf node_modules}
   sh %{rm -rf public/javascripts/components}
 end
+
+desc 'Rebuild the application'
+task :rebuild do
+    Rake::Task['clean'].invoke
+    Rake::Task['build'].invoke
+end

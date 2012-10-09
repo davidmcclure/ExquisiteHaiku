@@ -29,6 +29,8 @@ a.new-poem{font-size:17px;display:inline-block;margin-bottom:.4em}
 .poems .hash{display:inline-block;margin:0 .3em -.5em 0;font-family:Consolas;font-size:16px;color:#000;}
 .poems .hash:hover{color:#08c}
 .poems .line{line-height:16px}
+.poems .linebreak{margin-right:3px;}
+.poems .linebreak:after{content:'•'}
 .poems .word{margin-right:3px;font-size:15px;color:#000}
 .poems .actions{position:relative;top:-2px;}
 .poems .actions button{margin-right:.3em;font-size:11px;text-transform:none;font-weight:400;}

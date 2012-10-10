@@ -96,9 +96,7 @@ Ov.Views.Points = Backbone.View.extend({
     }
 
     // Otherwise, cancel the drag.
-    else {
-      Ov.vent.trigger('words:dragCancel');
-    }
+    else Ov.vent.trigger('words:dragCancel');
 
   },
 

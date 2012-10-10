@@ -55,5 +55,5 @@ _t.loadPoem = function() {
  * Register a round.
  */
 _t.isVoting = function() {
-  _t.rounds.recordRound('id');
+  _t.rounds.registerNewRound('id');
 };

@@ -78,7 +78,7 @@ Ov.Views.Points = Backbone.View.extend({
   },
 
   /*
-   * If there are sufficient points, release the stack vote 
+   * If there are sufficient points, release the stack vote
    * to the socket controller.
    *
    * @param {String} word: The word.
@@ -101,7 +101,7 @@ Ov.Views.Points = Backbone.View.extend({
   },
 
   /*
-   * If there are sufficient points, release the log echo 
+   * If there are sufficient points, release the log echo
    * to the socket controller.
    *
    * @param {String} word: The word.

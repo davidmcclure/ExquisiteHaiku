@@ -38,7 +38,7 @@ Ov.Collections.Round = Backbone.Collection.extend({
    *
    * @return {Object}: The new round.
    */
-  recordRound: function(id) {
+  registerNewRound: function(id) {
 
     // Store id.
     this.current = id;

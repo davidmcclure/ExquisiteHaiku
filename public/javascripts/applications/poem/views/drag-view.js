@@ -2,7 +2,7 @@
  * Line view.
  */
 
-Ov.Views.Line = Backbone.View.extend({
+Ov.Views.Drag = Backbone.View.extend({
 
   tagName: 'div',
   className: 'drag-line',

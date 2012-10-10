@@ -18,7 +18,7 @@ Ov.Controllers.Stack = (function(Backbone, Ov) {
    */
   Stack.init = function() {
     Stack.Rank = new Ov.Views.Stack({ el: '#stack' });
-    Stack.Line = new Ov.Views.Line();
+    Stack.Line = new Ov.Views.Drag();
   };
 
 

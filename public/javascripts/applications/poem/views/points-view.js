@@ -82,9 +82,15 @@ Ov.Views.Points = Backbone.View.extend({
 
     // If sufficient points, commit.
     if (Ov.global.points - Math.abs(quantity) >= 0) {
+
+      // Lock preview -> value.
       this.renderValue(this.preview);
+      Ov.global.points = this.preview;
+
+      // Emit vote.
       Ov.vent.trigger('points:vote', word, quantity);
       Ov.vent.trigger('points:newValue', Ov.global.points);
+
     }
 
     // Otherwise, cancel the drag.
@@ -105,7 +111,12 @@ Ov.Views.Points = Backbone.View.extend({
 
     // If sufficient points, commit.
     if (Ov.global.points - Math.abs(quantity) >= 0) {
+
+      // Lock preview -> value.
       this.renderValue(this.preview);
+      Ov.global.points = this.preview;
+
+      // Emit vote, render new preview.
       Ov.vent.trigger('points:vote', word, quantity);
       Ov.vent.trigger('points:newValue', Ov.global.points);
       this.renderPreview(quantity);

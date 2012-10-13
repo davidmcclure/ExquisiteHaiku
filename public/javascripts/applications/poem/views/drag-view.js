@@ -50,6 +50,24 @@ Ov.Views.Drag = Backbone.View.extend({
   },
 
   /*
+   * Fit the container to fill the window.
+   *
+   * @return void.
+   */
+  fitContainer: function() {
+
+    var width = this.window.width();
+    var height = this.window.height();
+
+    // Fit the container.
+    this.$el.css({ width: width, height: height });
+
+    // Fit the SVG element.
+    this.svg.attr('width', width);
+    this.svg.attr('height', height);
+  },
+
+  /*
    * Render the line.
    *
    * @param {Object} initEvent: The initiating click event.
@@ -60,8 +78,7 @@ Ov.Views.Drag = Backbone.View.extend({
    */
   render: function(initEvent, dragEvent, total) {
 
-    // Get vertical offset, scrolltop, and the absolute
-    // value of the current total.
+    // Get vertical offset, scrolltop, and total abs.
     var height = dragEvent.pageY - initEvent.pageY;
     var scrollTop = this.body.scrollTop();
     var absTotal = Math.abs(total);
@@ -73,6 +90,17 @@ Ov.Views.Drag = Backbone.View.extend({
     // If no circle, create one.
     if (_.isNull(this.circle))
       this.circle = this.svg.append('svg:circle');
+
+    // Set colors.
+    if (Ov.global.points - absTotal < 0) this.setInvalid();
+    else this.setColor(-height, total);
+
+    // Counter.
+    this.total.text(total).attr({
+      style: 'font-size:' + (12 + absTotal*0.1),
+      y: dragEvent.pageY - scrollTop - 10,
+      x: dragEvent.pageX + 10
+    });
 
     // Line.
     this.line.attr({
@@ -89,39 +117,51 @@ Ov.Views.Drag = Backbone.View.extend({
       r: absTotal
     });
 
-    // Set colors.
-    if (Ov.global.points - absTotal < 0) this.setInvalid();
-    else this.setColor(-height, total);
+  },
 
-    // Compute font-size.
-    var fontSize = 12 + absTotal*0.1;
+  /*
+   * Set the color of the line and total.
+   *
+   * @param {Number} height: The line height.
+   * @param {Number} total: The drag magnitude.
+   *
+   * @return void.
+   */
+  setColor: function(height, total) {
 
-    // Counter.
-    this.total.text(total);
-    this.total.attr({
-      style: 'font-size:'+fontSize,
-      y: dragEvent.pageY - scrollTop - 10,
-      x: dragEvent.pageX + 10
-    });
+    // Line.
+    if (height >= 0) this.line.attr('class', 'positive');
+    else this.line.attr('class', 'negative');
+
+    // Circle, total.
+    if (total >= 0) {
+      this.total.attr('class', 'positive');
+      this.circle.attr('class', 'positive');
+    } else {
+      this.total.attr('class', 'negative');
+      this.circle.attr('class', 'negative');
+    }
 
   },
 
   /*
-   * Fit the container to fill the window.
+   * Set insufficient points for current quantity.
    *
    * @return void.
    */
-  fitContainer: function() {
+  setInvalid: function() {
 
-    var width = this.window.width();
-    var height = this.window.height();
+    // Render line.
+    if (!_.isNull(this.line))
+      this.line.attr('class', 'blocked');
 
-    // Fit the container.
-    this.$el.css({ width: width, height: height });
+    // Render circle.
+    if (!_.isNull(this.circle))
+      this.circle.attr('class', 'blocked');
 
-    // Fit the SVG element.
-    this.svg.attr('width', width);
-    this.svg.attr('height', height);
+    // Render total.
+    this.total.attr('class', 'blocked');
+
   },
 
   /*
@@ -177,46 +217,6 @@ Ov.Views.Drag = Backbone.View.extend({
       this.lines.push(this.line);
       this.line = null;
     }
-  },
-
-  /*
-   * Set the color of the line and total.
-   *
-   * @param {Number} height: The line height.
-   * @param {Number} total: The drag magnitude.
-   *
-   * @return void.
-   */
-  setColor: function(height, total) {
-
-    // Line color.
-    if (height >= 0) this.line.attr('class', 'positive');
-    else this.line.attr('class', 'negative');
-
-    // Total color.
-    if (total >= 0) this.total.attr('class', 'positive');
-    else this.total.attr('class', 'negative');
-
-  },
-
-  /*
-   * Set insufficient points for current quantity.
-   *
-   * @return void.
-   */
-  setInvalid: function() {
-
-    // Render line.
-    if (!_.isNull(this.line))
-      this.line.attr('class', 'blocked');
-
-    // Render circle.
-    if (!_.isNull(this.circle))
-      this.circle.attr('class', 'blocked');
-
-    // Render total.
-    this.total.attr('class', 'blocked');
-
   }
 
 });

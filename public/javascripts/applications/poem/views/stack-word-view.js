@@ -27,6 +27,7 @@ Ov.Views.StackWord = Backbone.View.extend({
     this.$el.append(this.template()());
 
     // Get components.
+    this.window = $(window);
     this.posChurnMarkup = this.$el.find('.churn.pos');
     this.negChurnMarkup = this.$el.find('.churn.neg');
     this.ratioMarkup = this.$el.find('.ratio');
@@ -83,10 +84,10 @@ Ov.Views.StackWord = Backbone.View.extend({
   addDrag: function(event) {
 
     // Reset listeners and trackers.
-    $(window).unbind('keydown.drag');
+    this.window.unbind('keydown.drag');
     this.dragDelta = 0;
 
-    $(window).bind({
+    this.window.bind({
 
       'mousemove.drag': _.bind(function(e) {
         this.onDragTick(event, e);
@@ -139,7 +140,7 @@ Ov.Views.StackWord = Backbone.View.extend({
       currentTotal,
       initEvent,
       dragEvent
-     );
+    );
 
   },
 
@@ -151,8 +152,8 @@ Ov.Views.StackWord = Backbone.View.extend({
   onDragComplete: function() {
 
     // Unbind mousemove event.
-    $(window).unbind('mousemove.drag');
-    $(window).unbind('mouseup.drag');
+    this.window.unbind('mousemove.drag');
+    this.window.unbind('mouseup.drag');
 
     // Commit drag total.
     this.dragTotal += this.dragDelta;
@@ -178,12 +179,10 @@ Ov.Views.StackWord = Backbone.View.extend({
       // Suppress scrolling.
       event.preventDefault();
 
-      // Gather the total, end the drag.
+      // Release vote, end drag.
       var total = this.dragDelta + this.dragTotal;
+      this.releaseVote(total);
       this.endDrag();
-
-      // Broadcast.
-      Ov.vent.trigger('words:dragCommit', this.word, total);
 
     }
 
@@ -192,6 +191,33 @@ Ov.Views.StackWord = Backbone.View.extend({
       this.endDrag();
       Ov.vent.trigger('words:dragCancel');
     }
+
+  },
+
+  /*
+   * Release the vote if there are sufficient points.
+   *
+   * @param {Number} quantity: The vote quantity.
+   *
+   * @return void.
+   */
+  releaseVote: function(quantity) {
+
+    // If sufficient points, commit.
+    var newBalance = Ov.global.points - Math.abs(quantity);
+    if (newBalance >= 0) {
+
+      // Lock new account balance.
+      Ov.global.points = newBalance;
+
+      // Emit vote.
+      Ov.vent.trigger('points:vote', this.word, quantity);
+      Ov.vent.trigger('points:newValue', Ov.global.points);
+
+    }
+
+    // Otherwise, cancel the drag.
+    else Ov.vent.trigger('words:dragCancel');
 
   },
 
@@ -222,9 +248,8 @@ Ov.Views.StackWord = Backbone.View.extend({
    * @return void.
    */
   hover: function() {
-    if (!Ov.global.isDragging) {
+    if (!Ov.global.isDragging)
       Ov.vent.trigger('words:hover', this.word);
-    }
   },
 
   /*
@@ -260,7 +285,7 @@ Ov.Views.StackWord = Backbone.View.extend({
     // Untrack and unbind.
     this.dragTotal = 0;
     Ov.global.isDragging = false;
-    $(window).unbind('.drag');
+    this.window.unbind('.drag');
 
   },
 

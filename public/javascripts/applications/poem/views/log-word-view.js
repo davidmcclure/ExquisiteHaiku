@@ -86,15 +86,28 @@ Ov.Views.LogWord = Backbone.View.extend({
   },
 
   /*
-   * Duplicate the vote.
+   * Release the echo if there are sufficient points.
    *
    * @return void.
    */
   echo: function() {
-    Ov.vent.trigger('log:echo',
-      this.word,
-      this.value
-    );
+
+    // If sufficient points, commit.
+    var newBalance = Ov.global.points - Math.abs(this.value);
+    if (newBalance >= 0) {
+
+      // Lock new account balance.
+      Ov.global.points = newBalance;
+
+      // Emit vote.
+      Ov.vent.trigger('points:vote', this.word, this.value);
+      Ov.vent.trigger('points:newValue', Ov.global.points);
+
+      // Reapply preview.
+      Ov.vent.trigger('log:preview', this.word, this.value);
+
+    }
+
   }
 
 });

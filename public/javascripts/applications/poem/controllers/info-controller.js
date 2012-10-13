@@ -66,13 +66,12 @@ Ov.Controllers.Info = (function(Backbone, Ov) {
   /*
    * Commit new point account value after a vote.
    *
-   * @param {String} word: The word.
-   * @param {Number} quantity: The vote quantity.
+   * @param {Number} value: The new account balance.
    *
    * @return void.
    */
-  Ov.vent.on('words:dragCommit', function(word, quantity) {
-    Info.Points.releaseStackVote(word, quantity);
+  Ov.vent.on('points:newValue', function(value) {
+    Info.Points.renderValue(value);
   });
 
   /*

@@ -574,6 +574,9 @@ describe('Voting', function() {
       pageX: 3, pageY: 4
     }));
 
+    // Should block rendering when dragging.
+    // -------------------------------------
+
     // Mock new stack.
     slice.stack = [
       ['word2', 100, 1000, 0, '1.00'],
@@ -581,9 +584,6 @@ describe('Voting', function() {
       ['word4', 80, 800, 0, '0.40'],
       ['word3', 70, 0, -700, '0.30']
     ];
-
-    // Should block rendering when dragging.
-    // -------------------------------------
 
     // Trigger slice.
     Ov.vent.trigger('socket:slice', slice);

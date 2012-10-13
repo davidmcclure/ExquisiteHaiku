@@ -64,64 +64,9 @@ Ov.Views.Points = Backbone.View.extend({
     this.$el.removeClass('negative').addClass('preview');
 
     // Insufficient funds.
-    if (this.preview < 0)
+    if (this.preview < 0) {
       this.$el.removeClass('preview').addClass('negative');
-
-  },
-
-  /*
-   * If there are sufficient points, release the stack vote
-   * to the socket controller.
-   *
-   * @param {String} word: The word.
-   * @param {Number} quantity: The vote quantity.
-   *
-   * @return void.
-   */
-  releaseStackVote: function(word, quantity) {
-
-    // If sufficient points, commit.
-    if (Ov.global.points - Math.abs(quantity) >= 0) {
-
-      // Lock preview -> value.
-      this.renderValue(this.preview);
-      Ov.global.points = this.preview;
-
-      // Emit vote.
-      Ov.vent.trigger('points:vote', word, quantity);
-      Ov.vent.trigger('points:newValue', Ov.global.points);
-
     }
-
-    // Otherwise, cancel the drag.
-    else Ov.vent.trigger('words:dragCancel');
-
-  },
-
-  /*
-   * If there are sufficient points, release the log echo
-   * to the socket controller.
-   *
-   * @param {String} word: The word.
-   * @param {Number} quantity: The vote quantity.
-   *
-   * @return void.
-   */
-  releaseLogEcho: function(word, quantity) {
-
-    // If sufficient points, commit.
-    if (Ov.global.points - Math.abs(quantity) >= 0) {
-
-      // Lock preview -> value.
-      this.renderValue(this.preview);
-      Ov.global.points = this.preview;
-
-      // Emit vote, render new preview.
-      Ov.vent.trigger('points:vote', word, quantity);
-      Ov.vent.trigger('points:newValue', Ov.global.points);
-      this.renderPreview(quantity);
-    }
-
   }
 
 });

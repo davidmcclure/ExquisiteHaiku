@@ -18,7 +18,7 @@ Ov.Controllers.Stack = (function(Backbone, Ov) {
    */
   Stack.init = function() {
     Stack.Rank = new Ov.Views.Stack({ el: '#stack' });
-    Stack.Line = new Ov.Views.Drag();
+    Stack.Drag = new Ov.Views.Drag();
   };
 
 
@@ -44,7 +44,7 @@ Ov.Controllers.Stack = (function(Backbone, Ov) {
    */
   Ov.vent.on('state:newRound', function() {
     Stack.Rank.empty();
-    Stack.Line.clear();
+    Stack.Drag.clear();
   });
 
   /*
@@ -67,7 +67,7 @@ Ov.Controllers.Stack = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('words:dragStart', function(word) {
-    Stack.Line.show();
+    Stack.Drag.show();
   });
 
   /*
@@ -76,7 +76,7 @@ Ov.Controllers.Stack = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('words:dragStop', function() {
-    Stack.Line.lockCurrent();
+    Stack.Drag.lockCurrent();
   });
 
   /*
@@ -91,7 +91,7 @@ Ov.Controllers.Stack = (function(Backbone, Ov) {
    */
   Ov.vent.on('words:dragTick', function(
     word, currentTotal, initEvent, dragEvent) {
-      Stack.Line.render(initEvent, dragEvent, currentTotal);
+      Stack.Drag.render(initEvent, dragEvent, currentTotal);
   });
 
   /*
@@ -101,7 +101,7 @@ Ov.Controllers.Stack = (function(Backbone, Ov) {
    */
   Ov.vent.on('words:dragCancel', function() {
     Stack.Rank.unFreeze();
-    Stack.Line.hide();
+    Stack.Drag.hide();
   });
 
   /*
@@ -112,7 +112,7 @@ Ov.Controllers.Stack = (function(Backbone, Ov) {
   Ov.vent.on('points:vote', function() {
     Stack.Rank.setSelected(null);
     Stack.Rank.unFreeze();
-    Stack.Line.hide();
+    Stack.Drag.hide();
   });
 
   /*
@@ -121,7 +121,7 @@ Ov.Controllers.Stack = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('points:invalid', function() {
-    Stack.Line.setInvalid();
+    Stack.Drag.setInvalid();
   });
 
 

@@ -185,30 +185,27 @@ Ov.Views.Drag = Backbone.View.extend({
    * @return void.
    */
   setLineColor: function(height) {
+    console.log('setLine');
     if (height >= 0) this.line.attr('class', 'positive');
     else this.line.attr('class', 'negative');
   },
 
   /*
-   * Set the color of the total and circle.
+   * Set the color of the total.
    *
    * @param {Number} currentTotal: The drag value.
    *
    * @return void.
    */
   setTotalColor: function(currentTotal) {
+    console.log('setTotal');
 
     // Positive.
-    if (currentTotal >= 0) {
+    if (currentTotal >= 0)
       this.total.attr('class', 'positive');
-      this.circle.attr('class', 'positive');
-    }
 
     // Negative.
-    else {
-      this.total.attr('class', 'negative');
-      this.circle.attr('class', 'negative');
-    }
+    else this.total.attr('class', 'negative');
 
   },
 
@@ -218,6 +215,7 @@ Ov.Views.Drag = Backbone.View.extend({
    * @return void.
    */
   setInvalid: function() {
+    console.log('setInvalid');
 
     // Render line.
     if (!_.isNull(this.line))

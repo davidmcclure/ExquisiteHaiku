@@ -2,7 +2,7 @@
  * Integration tests for stack voting.
  */
 
-describe('Stack Voting', function() {
+describe('Voting', function() {
 
   var slice, rows, word;
 
@@ -107,7 +107,7 @@ describe('Stack Voting', function() {
 
     // Drag.
     $(window).trigger($.Event('mousemove', {
-      pageX: 3, pageY: 4 
+      pageX: 3, pageY: 4
     }));
 
     // Check for values and dimensions.
@@ -149,7 +149,7 @@ describe('Stack Voting', function() {
 
     // Drag.
     $(window).trigger($.Event('mousemove', {
-      pageX: -3, pageY: -4 
+      pageX: -3, pageY: -4
     }));
 
     // Release.
@@ -162,7 +162,7 @@ describe('Stack Voting', function() {
 
     // Drag.
     $(window).trigger($.Event('mousemove', {
-      pageX: -4, pageY: -3 
+      pageX: -4, pageY: -3
     }));
 
     // Release.

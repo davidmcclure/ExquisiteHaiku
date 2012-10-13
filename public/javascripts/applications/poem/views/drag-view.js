@@ -54,15 +54,17 @@ Ov.Views.Drag = Backbone.View.extend({
    *
    * @param {Object} initEvent: The initiating click event.
    * @param {Object} dragEvent: The current mousemove event.
-   * @param {Number} currentTotal: The current drag total.
+   * @param {Number} total: The current drag total.
    *
    * @return void.
    */
-  render: function(initEvent, dragEvent, currentTotal) {
+  render: function(initEvent, dragEvent, total) {
 
-    // Get vertical offset and scrolltop.
+    // Get vertical offset, scrolltop, and the absolute
+    // value of the current total.
     var height = dragEvent.pageY - initEvent.pageY;
     var scrollTop = this.body.scrollTop();
+    var absTotal = Math.abs(total);
 
     // If no line, create one.
     if (_.isNull(this.line))
@@ -84,18 +86,18 @@ Ov.Views.Drag = Backbone.View.extend({
     this.circle.attr({
       cx: initEvent.pageX,
       cy: initEvent.pageY,
-      r: Math.abs(currentTotal)
+      r: absTotal
     });
 
-    // Set positive/negative colors.
-    this.setLineColor(-height);
-    this.setTotalColor(currentTotal);
+    // Set colors.
+    if (Ov.global.points - absTotal < 0) this.setInvalid();
+    else this.setColor(-height, total);
 
     // Compute font-size.
-    var fontSize = 12 + Math.abs(currentTotal)*0.1;
+    var fontSize = 12 + absTotal*0.1;
 
-    // Render counter.
-    this.total.text(currentTotal);
+    // Counter.
+    this.total.text(total);
     this.total.attr({
       style: 'font-size:'+fontSize,
       y: dragEvent.pageY - scrollTop - 10,
@@ -178,31 +180,21 @@ Ov.Views.Drag = Backbone.View.extend({
   },
 
   /*
-   * Set the color of the line.
+   * Set the color of the line and total.
    *
    * @param {Number} height: The line height.
+   * @param {Number} total: The drag magnitude.
    *
    * @return void.
    */
-  setLineColor: function(height) {
+  setColor: function(height, total) {
+
+    // Line color.
     if (height >= 0) this.line.attr('class', 'positive');
     else this.line.attr('class', 'negative');
-  },
 
-  /*
-   * Set the color of the total.
-   *
-   * @param {Number} currentTotal: The drag value.
-   *
-   * @return void.
-   */
-  setTotalColor: function(currentTotal) {
-
-    // Positive.
-    if (currentTotal >= 0)
-      this.total.attr('class', 'positive');
-
-    // Negative.
+    // Total color.
+    if (total >= 0) this.total.attr('class', 'positive');
     else this.total.attr('class', 'negative');
 
   },

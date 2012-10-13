@@ -95,6 +95,10 @@ module.exports = function(grunt) {
       admin: {
         files: ['<config:concat.admin.src>'],
         tasks: ['concat:admin']
+      },
+      test: {
+        files: ['<config:concat.test.src>'],
+        tasks: ['concat:test']
       }
     }
 

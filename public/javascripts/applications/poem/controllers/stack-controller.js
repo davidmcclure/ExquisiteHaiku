@@ -115,15 +115,6 @@ Ov.Controllers.Stack = (function(Backbone, Ov) {
     Stack.Drag.hide();
   });
 
-  /*
-   * Insufficient points for current drag quantity.
-   *
-   * @return void.
-   */
-  Ov.vent.on('points:invalid', function() {
-    Stack.Drag.setInvalid();
-  });
-
 
   // Export.
   Ov.addInitializer(function() { Stack.init(); });

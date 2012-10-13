@@ -21,10 +21,10 @@ Ov.Views.Drag = Backbone.View.extend({
     // Create SVG element.
     this.svg = d3.select(this.el).append('svg:svg');
     this.total = this.svg.append('svg:text');
+    this.circle = this.svg.append('svg:circle');
 
     // Trackers.
     this.line = null;
-    this.circle = null;
     this.lines = [];
 
   },
@@ -87,10 +87,6 @@ Ov.Views.Drag = Backbone.View.extend({
     if (_.isNull(this.line))
       this.line = this.svg.append('svg:line');
 
-    // If no circle, create one.
-    if (_.isNull(this.circle))
-      this.circle = this.svg.append('svg:circle');
-
     // Set colors.
     if (Ov.global.points - absTotal < 0) this.setInvalid();
     else this.setColor(-height, total);
@@ -134,13 +130,9 @@ Ov.Views.Drag = Backbone.View.extend({
     else this.line.attr('class', 'negative');
 
     // Circle, total.
-    if (total >= 0) {
-      this.total.attr('class', 'positive');
-      this.circle.attr('class', 'positive');
-    } else {
-      this.total.attr('class', 'negative');
-      this.circle.attr('class', 'negative');
-    }
+    var sign = (total >= 0) ? 'positive' : 'negative';
+    this.total.attr('class', sign);
+    this.circle.attr('class', sign);
 
   },
 
@@ -156,8 +148,7 @@ Ov.Views.Drag = Backbone.View.extend({
       this.line.attr('class', 'blocked');
 
     // Render circle.
-    if (!_.isNull(this.circle))
-      this.circle.attr('class', 'blocked');
+    this.circle.attr('class', 'blocked');
 
     // Render total.
     this.total.attr('class', 'blocked');
@@ -176,13 +167,8 @@ Ov.Views.Drag = Backbone.View.extend({
       line.remove();
     });
 
-    // Clear circle.
-    if (!_.isNull(this.circle))
-      this.circle.remove();
-
     // Clear counter.
     this.total.text('');
-    this.circle = null;
     this.lines = [];
 
     // Remove container.
@@ -196,15 +182,8 @@ Ov.Views.Drag = Backbone.View.extend({
    * @return void.
    */
   clearCurrent: function() {
-
-    // Clear line.
     if (!_.isNull(this.line))
       this.line.remove();
-
-    // Clear circle.
-    if (!_.isNull(this.circle))
-      this.circle.remove();
-
   },
 
   /*

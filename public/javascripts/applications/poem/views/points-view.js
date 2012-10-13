@@ -27,25 +27,6 @@ Ov.Views.Points = Backbone.View.extend({
   },
 
   /*
-   * Render a value.
-   *
-   * @param {Number} value: The value.
-   *
-   * @return void.
-   */
-  renderValue: function(value) {
-
-    // Compute percent.
-    var percent = value / P.seedCapital;
-
-    // Render values.
-    this.value.text(value);
-    this.percent.text(percent.toFixed(2));
-    this.$el.removeClass('preview negative');
-
-  },
-
-  /*
    * Render a preview value.
    *
    * @param {Number} quantity: The vote quantity.
@@ -67,6 +48,26 @@ Ov.Views.Points = Backbone.View.extend({
     if (this.preview < 0) {
       this.$el.removeClass('preview').addClass('negative');
     }
+
+  },
+
+  /*
+   * Render a value.
+   *
+   * @param {Number} value: The value.
+   *
+   * @return void.
+   */
+  renderValue: function(value) {
+
+    // Compute percent.
+    var percent = value / P.seedCapital;
+
+    // Render values.
+    this.value.text(value);
+    this.percent.text(percent.toFixed(2));
+    this.$el.removeClass('preview negative');
+
   }
 
 });

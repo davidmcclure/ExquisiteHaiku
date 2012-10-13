@@ -14,8 +14,9 @@ Ov.Views.Drag = Backbone.View.extend({
    */
   initialize: function() {
 
-    // Get window element.
+    // Getters.
     this.window = $(window);
+    this.body = $('body');
 
     // Create SVG element.
     this.svg = d3.select(this.el).append('svg:svg');
@@ -35,7 +36,7 @@ Ov.Views.Drag = Backbone.View.extend({
    */
   show: function() {
     this.fitContainer();
-    $('body').append(this.$el);
+    this.body.append(this.$el);
   },
 
   /*
@@ -61,7 +62,7 @@ Ov.Views.Drag = Backbone.View.extend({
 
     // Get vertical offset and scrolltop.
     var height = dragEvent.pageY - initEvent.pageY;
-    var scrollTop = $('body').scrollTop();
+    var scrollTop = this.body.scrollTop();
 
     // If no line, create one.
     if (_.isNull(this.line))
@@ -72,17 +73,19 @@ Ov.Views.Drag = Backbone.View.extend({
       this.circle = this.svg.append('svg:circle');
 
     // Line.
-    this.line
-      .attr('x1', initEvent.pageX)
-      .attr('y1', initEvent.pageY - scrollTop)
-      .attr('x2', dragEvent.pageX)
-      .attr('y2', dragEvent.pageY - scrollTop);
+    this.line.attr({
+      x1: initEvent.pageX,
+      y1: initEvent.pageY - scrollTop,
+      x2: dragEvent.pageX,
+      y2: dragEvent.pageY - scrollTop
+    });
 
     // Circle.
-    this.circle
-      .attr('cx', initEvent.pageX)
-      .attr('cy', initEvent.pageY)
-      .attr('r', Math.abs(currentTotal));
+    this.circle.attr({
+      cx: initEvent.pageX,
+      cy: initEvent.pageY,
+      r: Math.abs(currentTotal)
+    });
 
     // Set positive/negative colors.
     this.setLineColor(-height);
@@ -91,11 +94,13 @@ Ov.Views.Drag = Backbone.View.extend({
     // Compute font-size.
     var fontSize = 12 + Math.abs(currentTotal)*0.1;
 
-    // Position counter.
+    // Render counter.
     this.total.text(currentTotal);
-    this.total.attr('style', 'font-size:'+fontSize);
-    this.total.attr('y', dragEvent.pageY - scrollTop - 10);
-    this.total.attr('x', dragEvent.pageX + 10);
+    this.total.attr({
+      style: 'font-size:'+fontSize,
+      y: dragEvent.pageY - scrollTop - 10,
+      x: dragEvent.pageX + 10
+    });
 
   },
 

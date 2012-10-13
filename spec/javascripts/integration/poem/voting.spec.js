@@ -405,11 +405,9 @@ describe('Stack Voting', function() {
     }));
 
     // Check for colors.
-    // ** FIX: For some reason, these assertions fail about 1
-    // in 5 times and produce false build breaks. Why?
-    // expect(_t.line.total.attr('class')).toEqual('blocked');
-    // expect(_t.line.line.attr('class')).toEqual('blocked');
-    // expect(_t.line.circle.attr('class')).toEqual('blocked');
+    expect(_t.line.total.attr('class')).toEqual('blocked');
+    expect(_t.line.line.attr('class')).toEqual('blocked');
+    expect(_t.line.circle.attr('class')).toEqual('blocked');
 
     // Check for point preview.
     expect(_t.points.value.text()).toEqual('-414');
@@ -438,11 +436,9 @@ describe('Stack Voting', function() {
     }));
 
     // Check for colors.
-    // ** FIX: For some reason, these assertions fail about 1
-    // in 5 times and produce false build breaks. Why?
-    // expect(_t.line.total.attr('class')).toEqual('blocked');
-    // expect(_t.line.line.attr('class')).toEqual('blocked');
-    // expect(_t.line.circle.attr('class')).toEqual('blocked');
+    expect(_t.line.total.attr('class')).toEqual('blocked');
+    expect(_t.line.line.attr('class')).toEqual('blocked');
+    expect(_t.line.circle.attr('class')).toEqual('blocked');
 
     // Check for point preview.
     expect(_t.points.value.text()).toEqual('-414');

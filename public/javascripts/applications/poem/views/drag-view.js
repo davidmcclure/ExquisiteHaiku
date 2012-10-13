@@ -21,7 +21,6 @@ Ov.Views.Drag = Backbone.View.extend({
     // Create SVG element.
     this.svg = d3.select(this.el).append('svg:svg');
     this.total = this.svg.append('svg:text');
-    this.circle = this.svg.append('svg:circle');
 
     // Trackers.
     this.line = null;
@@ -78,12 +77,12 @@ Ov.Views.Drag = Backbone.View.extend({
    */
   render: function(initEvent, dragEvent, total) {
 
-    // Get vertical offset, scrolltop, and total abs.
+    // Get constants.
     var height = dragEvent.pageY - initEvent.pageY;
     var scrollTop = this.body.scrollTop();
     var absTotal = Math.abs(total);
 
-    // If no line, create one.
+    // Create line.
     if (_.isNull(this.line))
       this.line = this.svg.append('svg:line');
 
@@ -106,13 +105,6 @@ Ov.Views.Drag = Backbone.View.extend({
       y2: dragEvent.pageY - scrollTop
     });
 
-    // Circle.
-    this.circle.attr({
-      cx: initEvent.pageX,
-      cy: initEvent.pageY,
-      r: absTotal
-    });
-
   },
 
   /*
@@ -132,7 +124,6 @@ Ov.Views.Drag = Backbone.View.extend({
     // Circle, total.
     var sign = (total >= 0) ? 'positive' : 'negative';
     this.total.attr('class', sign);
-    this.circle.attr('class', sign);
 
   },
 
@@ -146,9 +137,6 @@ Ov.Views.Drag = Backbone.View.extend({
     // Render line.
     if (!_.isNull(this.line))
       this.line.attr('class', 'blocked');
-
-    // Render circle.
-    this.circle.attr('class', 'blocked');
 
     // Render total.
     this.total.attr('class', 'blocked');
@@ -164,12 +152,11 @@ Ov.Views.Drag = Backbone.View.extend({
 
     // Clear lines.
     _.each(this.lines, function(line) {
-      line.remove();
-    });
+      line.remove(); });
+    this.lines = [];
 
     // Clear counter.
     this.total.text('');
-    this.lines = [];
 
     // Remove container.
     this.$el.detach();
@@ -182,8 +169,7 @@ Ov.Views.Drag = Backbone.View.extend({
    * @return void.
    */
   clearCurrent: function() {
-    if (!_.isNull(this.line))
-      this.line.remove();
+    if (!_.isNull(this.line)) this.line.remove();
   },
 
   /*

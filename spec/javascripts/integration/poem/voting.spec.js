@@ -74,14 +74,10 @@ describe('Voting', function() {
     expect(_t.drag.line.attr('y1')).toEqual('0');
     expect(_t.drag.line.attr('x2')).toEqual('-3');
     expect(_t.drag.line.attr('y2')).toEqual('-4');
-    expect(_t.drag.circle.attr('cx')).toEqual('0');
-    expect(_t.drag.circle.attr('cy')).toEqual('0');
-    expect(_t.drag.circle.attr('r')).toEqual('5');
 
     // Check for colors.
     expect(_t.drag.total.attr('class')).toEqual('positive');
     expect(_t.drag.line.attr('class')).toEqual('positive');
-    expect(_t.drag.circle.attr('class')).toEqual('positive');
 
     // Check for point preview.
     expect(_t.points.value.text()).toEqual('995');
@@ -116,14 +112,10 @@ describe('Voting', function() {
     expect(_t.drag.line.attr('y1')).toEqual('0');
     expect(_t.drag.line.attr('x2')).toEqual('3');
     expect(_t.drag.line.attr('y2')).toEqual('4');
-    expect(_t.drag.circle.attr('cx')).toEqual('0');
-    expect(_t.drag.circle.attr('cy')).toEqual('0');
-    expect(_t.drag.circle.attr('r')).toEqual('5');
 
     // Check for colors.
     expect(_t.drag.total.attr('class')).toEqual('negative');
     expect(_t.drag.line.attr('class')).toEqual('negative');
-    expect(_t.drag.circle.attr('class')).toEqual('negative');
 
     // Check for point preview.
     expect(_t.points.value.text()).toEqual('995');
@@ -178,15 +170,11 @@ describe('Voting', function() {
     expect(_t.drag.lines[1].attr('y1')).toEqual('0');
     expect(_t.drag.lines[1].attr('x2')).toEqual('-4');
     expect(_t.drag.lines[1].attr('y2')).toEqual('-3');
-    expect(_t.drag.circle.attr('cx')).toEqual('0');
-    expect(_t.drag.circle.attr('cy')).toEqual('0');
-    expect(_t.drag.circle.attr('r')).toEqual('10');
 
     // Check for colors.
     expect(_t.drag.total.attr('class')).toEqual('positive');
     expect(_t.drag.lines[0].attr('class')).toEqual('positive');
     expect(_t.drag.lines[1].attr('class')).toEqual('positive');
-    expect(_t.drag.circle.attr('class')).toEqual('positive');
 
     // Check for point preview.
     expect(_t.points.value.text()).toEqual('990');
@@ -241,15 +229,11 @@ describe('Voting', function() {
     expect(_t.drag.lines[1].attr('y1')).toEqual('0');
     expect(_t.drag.lines[1].attr('x2')).toEqual('4');
     expect(_t.drag.lines[1].attr('y2')).toEqual('3');
-    expect(_t.drag.circle.attr('cx')).toEqual('0');
-    expect(_t.drag.circle.attr('cy')).toEqual('0');
-    expect(_t.drag.circle.attr('r')).toEqual('10');
 
     // Check for colors.
     expect(_t.drag.total.attr('class')).toEqual('negative');
     expect(_t.drag.lines[0].attr('class')).toEqual('negative');
     expect(_t.drag.lines[1].attr('class')).toEqual('negative');
-    expect(_t.drag.circle.attr('class')).toEqual('negative');
 
     // Check for point preview.
     expect(_t.points.value.text()).toEqual('990');
@@ -304,15 +288,11 @@ describe('Voting', function() {
     expect(_t.drag.lines[1].attr('y1')).toEqual('0');
     expect(_t.drag.lines[1].attr('x2')).toEqual('-5');
     expect(_t.drag.lines[1].attr('y2')).toEqual('-12');
-    expect(_t.drag.circle.attr('cx')).toEqual('0');
-    expect(_t.drag.circle.attr('cy')).toEqual('0');
-    expect(_t.drag.circle.attr('r')).toEqual('8');
 
     // Check for colors.
     expect(_t.drag.total.attr('class')).toEqual('positive');
     expect(_t.drag.lines[0].attr('class')).toEqual('negative');
     expect(_t.drag.lines[1].attr('class')).toEqual('positive');
-    expect(_t.drag.circle.attr('class')).toEqual('positive');
 
     // Check for point preview.
     expect(_t.points.value.text()).toEqual('992');
@@ -367,15 +347,11 @@ describe('Voting', function() {
     expect(_t.drag.lines[1].attr('y1')).toEqual('0');
     expect(_t.drag.lines[1].attr('x2')).toEqual('5');
     expect(_t.drag.lines[1].attr('y2')).toEqual('12');
-    expect(_t.drag.circle.attr('cx')).toEqual('0');
-    expect(_t.drag.circle.attr('cy')).toEqual('0');
-    expect(_t.drag.circle.attr('r')).toEqual('8');
 
     // Check for colors.
     expect(_t.drag.total.attr('class')).toEqual('negative');
     expect(_t.drag.lines[0].attr('class')).toEqual('positive');
     expect(_t.drag.lines[1].attr('class')).toEqual('negative');
-    expect(_t.drag.circle.attr('class')).toEqual('negative');
 
     // Check for point preview.
     expect(_t.points.value.text()).toEqual('992');
@@ -407,7 +383,6 @@ describe('Voting', function() {
     // Check for colors.
     expect(_t.drag.total.attr('class')).toEqual('blocked');
     expect(_t.drag.line.attr('class')).toEqual('blocked');
-    expect(_t.drag.circle.attr('class')).toEqual('blocked');
 
     // Check for point preview.
     expect(_t.points.value.text()).toEqual('-414');
@@ -438,7 +413,6 @@ describe('Voting', function() {
     // Check for colors.
     expect(_t.drag.total.attr('class')).toEqual('blocked');
     expect(_t.drag.line.attr('class')).toEqual('blocked');
-    expect(_t.drag.circle.attr('class')).toEqual('blocked');
 
     // Check for point preview.
     expect(_t.points.value.text()).toEqual('-414');

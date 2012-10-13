@@ -117,15 +117,6 @@ Ov.Controllers.Info = (function(Backbone, Ov) {
     Info.Points.reset();
   });
 
-  /*
-   * Cancel a point preview on round switch.
-   *
-   * @return void.
-   */
-  Ov.vent.on('state:newRound', function() {
-    Info.Points.reset();
-  });
-
 
   // Export.
   Ov.addInitializer(function() { Info.init(); });

@@ -185,7 +185,6 @@ Ov.Views.Drag = Backbone.View.extend({
    * @return void.
    */
   setLineColor: function(height) {
-    console.log('setLine');
     if (height >= 0) this.line.attr('class', 'positive');
     else this.line.attr('class', 'negative');
   },
@@ -198,7 +197,6 @@ Ov.Views.Drag = Backbone.View.extend({
    * @return void.
    */
   setTotalColor: function(currentTotal) {
-    console.log('setTotal');
 
     // Positive.
     if (currentTotal >= 0)
@@ -215,7 +213,6 @@ Ov.Views.Drag = Backbone.View.extend({
    * @return void.
    */
   setInvalid: function() {
-    console.log('setInvalid');
 
     // Render line.
     if (!_.isNull(this.line))

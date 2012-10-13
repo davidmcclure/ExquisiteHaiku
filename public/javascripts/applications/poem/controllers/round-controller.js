@@ -44,12 +44,14 @@ Ov.Controllers.Round = (function(Backbone, Ov) {
     if (_.isEmpty(round)) {
       round = Round.Rounds.registerNewRound(data.round);
       Ov.vent.trigger('state:newRound', round);
+      Ov.global.points = round.get('points');
       Ov.global.isDragging = false;
     }
 
     // If unstarted.
     else if (!Round.started) {
       Ov.vent.trigger('state:newRound', round);
+      Ov.global.points = round.get('points');
       Round.started = true;
     }
 

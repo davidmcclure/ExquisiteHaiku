@@ -79,6 +79,15 @@ Ov.Controllers.Poem = (function(Backbone, Ov) {
     if (!Ov.global.isDragging) Poem.Blank.hidePreview();
   });
 
+  /*
+   * Clear the blank on new round.
+   *
+   * @return void.
+   */
+  Ov.vent.on('state:newRound', function() {
+    Poem.Blank.clear();
+  });
+
 
   // Export.
   Ov.addInitializer(function() { Poem.init(); });

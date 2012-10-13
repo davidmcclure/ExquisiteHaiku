@@ -203,6 +203,15 @@ Ov.Views.Blank = Backbone.View.extend({
    */
   hidePreview: function() {
     this.$el.removeClass('preview');
+    this.clear();
+  },
+
+  /*
+   * Remove preview.
+   *
+   * @return void.
+   */
+  clear: function() {
     this.$el.val('');
   }
 

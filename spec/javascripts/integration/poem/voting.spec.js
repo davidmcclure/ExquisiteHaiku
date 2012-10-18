@@ -561,6 +561,32 @@ describe('Voting', function() {
     // Check for vote release.
     expect(Ov.Controllers.Socket.s.emit).toHaveBeenCalledWith(
       'vote', 1, 'word1', -1000);
+
+  });
+
+  it('should not execute 0 value vote', function() {
+
+    // Spy on socket vote release.
+    spyOn(Ov.Controllers.Socket.s, 'emit');
+
+    // Click.
+    word.trigger($.Event('mousedown', {
+      pageX: 0, pageY: 0
+    }));
+
+    // Drag.
+    $(window).trigger($.Event('mousemove', {
+      pageX: 0, pageY: 0
+    }));
+
+    // Commit drag.
+    $(window).trigger($.Event('keydown.drag', {
+      keyCode: 32
+    }));
+
+    // Check for no vote release.
+    expect(Ov.Controllers.Socket.s.emit).not.toHaveBeenCalled();
+
   });
 
   it('should not update stack during drag', function() {

@@ -179,10 +179,14 @@ Ov.Views.StackWord = Backbone.View.extend({
       // Suppress scrolling.
       event.preventDefault();
 
-      // Release vote, end drag.
+      // Gather total, end drag.
       var total = this.dragDelta + this.dragTotal;
-      Ov.vent.trigger('points:vote', this.word, total);
       this.endDrag();
+
+      // Release if not 0.
+      if (total !== 0) {
+        Ov.vent.trigger('points:vote', this.word, total);
+      }
 
     }
 

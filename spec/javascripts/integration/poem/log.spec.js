@@ -109,6 +109,7 @@ describe('Log Voting', function() {
 
     // Check for not point preview.
     expect(_t.points.value.text()).toEqual('1000');
+    expect(_t.points.percent.text()).toEqual('1.00');
     expect(_t.points.$el).not.toHaveClass('preview');
 
   });
@@ -185,6 +186,7 @@ describe('Log Voting', function() {
 
     // Check for updated points.
     expect(_t.points.value.text()).toEqual('900');
+    expect(_t.points.percent.text()).toEqual('0.90');
     expect(_t.points.$el).not.toHaveClass('preview');
 
   });
@@ -219,6 +221,7 @@ describe('Log Voting', function() {
 
     // Check for updated points.
     expect(_t.points.value.text()).toEqual('0');
+    expect(_t.points.percent.text()).toEqual('0.00');
     expect(_t.points.$el).not.toHaveClass('preview');
 
   });

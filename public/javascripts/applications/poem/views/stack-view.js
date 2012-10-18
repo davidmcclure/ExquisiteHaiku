@@ -16,12 +16,16 @@ Ov.Views.Stack = Backbone.View.extend({
    */
   initialize: function() {
 
+    // Get components.
+    this.window = $(window);
+
     // Buckets.
     this.wordRows = [];
     this.wordsToRow = {};
 
     // Trackers.
     this.selected = null;
+    this.hovering = false;
     this.frozen = false;
 
   },
@@ -88,7 +92,6 @@ Ov.Views.Stack = Backbone.View.extend({
         // Cancel an existing drag on the previous
         // selection and clear out the drag lines.
         this.wordsToRow[this.selected].endDrag();
-        Ov.vent.trigger('words:dragCancel');
 
     }
 
@@ -102,8 +105,24 @@ Ov.Views.Stack = Backbone.View.extend({
    * @return void.
    */
   freeze: function() {
+
+    // Set trackers.
     this.$el.addClass('frozen');
+    this.hovering = true;
     this.frozen = true;
+
+    // Off-stack click.
+    this.window.bind({
+
+      'mousedown.cancel': _.bind(function() {
+        if (!this.hovering) {
+          Ov.vent.trigger('words:dragCancel');
+          this.window.unbind('.cancel');
+        }
+      }, this)
+
+    });
+
   },
 
   /*
@@ -112,6 +131,8 @@ Ov.Views.Stack = Backbone.View.extend({
    * @return void.
    */
   unFreeze: function() {
+
+    this.hovering = false;
 
     // If dragging, break.
     if (!Ov.global.isDragging) {

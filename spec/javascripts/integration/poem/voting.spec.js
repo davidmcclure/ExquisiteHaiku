@@ -81,6 +81,10 @@ describe('Voting', function() {
 
   });
 
+  it('should cancel drag on off-stack click', function() {
+
+  });
+
   it('should render positive drag', function() {
 
     // Click.
@@ -90,7 +94,7 @@ describe('Voting', function() {
 
     // Drag.
     $(window).trigger($.Event('mousemove', {
-      pageX: -3, pageY: -4 
+      pageX: -3, pageY: -4
     }));
 
     // Check for values and dimensions.

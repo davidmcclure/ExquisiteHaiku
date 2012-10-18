@@ -29,7 +29,7 @@ body{font:600 18px 'Lato';text-rendering:optimizeLegibility;-webkit-user-select:
 #log .primary{z-index:2;direction:rtl;width:230px;}
 #log .primary.frozen span.word{opacity:.5}
 #log .overflow{z-index:0;left:520px;opacity:.3}
-#info{z-index:-2;position:fixed;left:600px;top:25px;}
+#info{z-index:-2;font-size:2em;position:fixed;left:600px;top:25px;}
 #info.info{display:inline-block;margin-right:1em}
 #info .percent{font-size:6em;font-weight:300;opacity:.25;margin-right:5px}
 #info #points.preview{opacity:.5}

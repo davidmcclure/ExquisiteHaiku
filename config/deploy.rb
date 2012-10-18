@@ -7,7 +7,6 @@ require 'capistrano/ext/multistage'
 set :application, "exquisitehaiku"
 set :repository, "git://github.com/davidmcclure/ExquisiteHaiku.git"
 set :scm, :git
-set :branch, 'master'
 
 # Host information.
 default_run_options[:pty] = true

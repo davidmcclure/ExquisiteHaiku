@@ -93,7 +93,7 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
   });
 
   /*
-   * Save vote.
+   * Execute vote.
    *
    * @param {String} word: The word.
    * @param {Number} quantity: The vote quantity.
@@ -101,7 +101,25 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('points:vote', function(word, quantity) {
-    Socket.s.emit('vote', P._id, word, quantity);
+
+    // Compute new balance.
+    var newBalance = Ov.global.points - Math.abs(quantity);
+
+    // If sufficient points, commit.
+    if (newBalance >= 0) {
+
+      // Lock new account balance.
+      Ov.global.points = newBalance;
+
+      // Emit vote.
+      Socket.s.emit('vote', P._id, word, quantity);
+      Ov.vent.trigger('points:newValue', Ov.global.points);
+
+    }
+
+    // Otherwise, cancel the drag.
+    else Ov.vent.trigger('words:dragCancel');
+
   });
 
 

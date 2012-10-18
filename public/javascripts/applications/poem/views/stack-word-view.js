@@ -181,7 +181,7 @@ Ov.Views.StackWord = Backbone.View.extend({
 
       // Release vote, end drag.
       var total = this.dragDelta + this.dragTotal;
-      this.releaseVote(total);
+      Ov.vent.trigger('points:vote', this.word, total);
       this.endDrag();
 
     }
@@ -191,33 +191,6 @@ Ov.Views.StackWord = Backbone.View.extend({
       this.endDrag();
       Ov.vent.trigger('words:dragCancel');
     }
-
-  },
-
-  /*
-   * Release the vote if there are sufficient points.
-   *
-   * @param {Number} quantity: The vote quantity.
-   *
-   * @return void.
-   */
-  releaseVote: function(quantity) {
-
-    // If sufficient points, commit.
-    var newBalance = Ov.global.points - Math.abs(quantity);
-    if (newBalance >= 0) {
-
-      // Lock new account balance.
-      Ov.global.points = newBalance;
-
-      // Emit vote.
-      Ov.vent.trigger('points:vote', this.word, quantity);
-      Ov.vent.trigger('points:newValue', Ov.global.points);
-
-    }
-
-    // Otherwise, cancel the drag.
-    else Ov.vent.trigger('words:dragCancel');
 
   },
 

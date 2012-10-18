@@ -56,6 +56,31 @@ describe('Voting', function() {
 
   });
 
+  it('should cancel drag on ESC', function() {
+
+    // Click.
+    word.trigger($.Event('mousedown', {
+      pageX: 0, pageY: 0
+    }));
+
+    // Drag.
+    $(window).trigger($.Event('mousemove', {
+      pageX: -3, pageY: -4
+    }));
+
+    // Check for drag.
+    expect($('body')).toContain('div.drag-line');
+
+    // Cancel drag.
+    $(window).trigger($.Event('keydown.drag', {
+      keyCode: 27
+    }));
+
+    // Check for no drag.
+    expect($('body')).not.toContain('div.drag-line');
+
+  });
+
   it('should render positive drag', function() {
 
     // Click.

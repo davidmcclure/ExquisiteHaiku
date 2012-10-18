@@ -193,7 +193,6 @@ Ov.Views.StackWord = Backbone.View.extend({
     // If the ESC key was pressed.
     else if (event.keyCode == 27) {
       this.endDrag();
-      Ov.vent.trigger('words:dragCancel');
     }
 
   },
@@ -263,6 +262,7 @@ Ov.Views.StackWord = Backbone.View.extend({
     this.dragTotal = 0;
     Ov.global.isDragging = false;
     this.window.unbind('.drag');
+    Ov.vent.trigger('words:dragCancel');
 
   },
 

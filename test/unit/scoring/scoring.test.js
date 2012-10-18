@@ -345,90 +345,90 @@ describe('Scoring', function() {
 
       });
 
-      describe('when the top word wins by ratio', function() {
+      // describe('when the top word wins by ratio', function() {
 
-        beforeEach(function(done) {
+      //   beforeEach(function(done) {
 
-          // Add new vote.
-          var vote4 = new _t.Vote({
-            round: poem.round.id,
-            word: 'fourth',
-            quantity: 10000,
-            applied: now
-          });
+      //     // Add new vote.
+      //     var vote4 = new _t.Vote({
+      //       round: poem.round.id,
+      //       word: 'fourth',
+      //       quantity: 10000,
+      //       applied: now
+      //     });
 
-          // Save.
-          vote4.save(function(err) {
-            done();
-          });
+      //     // Save.
+      //     vote4.save(function(err) {
+      //       done();
+      //     });
 
-        });
+      //   });
 
-        it('should broadcast updated poem', function(done) {
+      //   it('should broadcast updated poem', function(done) {
 
-          // Score the poem.
-          _t.scoring.score(poem.id, now+5000, function(result) {
+      //     // Score the poem.
+      //     _t.scoring.score(poem.id, now+5000, function(result) {
 
-            // Check poem.
-            result.poem[0][0].valueOf().should.eql('it');
-            result.poem[0][1].valueOf().should.eql('is');
-            result.poem[0][2].valueOf().should.eql('fourth');
-            done();
+      //       // Check poem.
+      //       result.poem[0][0].valueOf().should.eql('it');
+      //       result.poem[0][1].valueOf().should.eql('is');
+      //       result.poem[0][2].valueOf().should.eql('fourth');
+      //       done();
 
-          }, function() {});
+      //     }, function() {});
 
-        });
+      //   });
 
-        it('should broadcast empty stacks', function(done) {
+      //   it('should broadcast empty stacks', function(done) {
 
-          // Score the poem.
-          _t.scoring.score(poem.id, now+5000, function(result) {
+      //     // Score the poem.
+      //     _t.scoring.score(poem.id, now+5000, function(result) {
 
-            // Check stack.
-            result.stack.should.eql([]);
-            done();
+      //       // Check stack.
+      //       result.stack.should.eql([]);
+      //       done();
 
-          }, function() {});
+      //     }, function() {});
 
-        });
+      //   });
 
-        it('should save updated poem', function(done) {
+      //   it('should save updated poem', function(done) {
 
-          // Score the poem.
-          _t.scoring.score(poem.id, now+5000, function() {}, function(result) {
+      //     // Score the poem.
+      //     _t.scoring.score(poem.id, now+5000, function() {}, function(result) {
 
-            // Get the poem.
-            _t.Poem.findById(poem.id, function(err, poem) {
+      //       // Get the poem.
+      //       _t.Poem.findById(poem.id, function(err, poem) {
 
-              // Check for new word.
-              poem.words[0][2].valueOf().should.eql('fourth');
-              done();
+      //         // Check for new word.
+      //         poem.words[0][2].valueOf().should.eql('fourth');
+      //         done();
 
-            });
+      //       });
 
-          });
+      //     });
 
-        });
+      //   });
 
-        it('should save updated round', function(done) {
+      //   it('should save updated round', function(done) {
 
-          // Score the poem.
-          _t.scoring.score(poem.id, now+5000, function() {}, function(result) {
+      //     // Score the poem.
+      //     _t.scoring.score(poem.id, now+5000, function() {}, function(result) {
 
-            // Get the poem.
-            _t.Poem.findById(poem.id, function(err, poem) {
+      //       // Get the poem.
+      //       _t.Poem.findById(poem.id, function(err, poem) {
 
-              // Check for new round.
-              poem.round.id.should.not.eql(round.id);
-              done();
+      //         // Check for new round.
+      //         poem.round.id.should.not.eql(round.id);
+      //         done();
 
-            });
+      //       });
 
-          });
+      //     });
 
-        });
+      //   });
 
-      });
+      // });
 
       describe('when the round is expired', function() {
 

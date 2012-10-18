@@ -189,13 +189,13 @@ describe('Log Voting', function() {
 
   });
 
-  it('should block overbudget echo vote', function() {
+  it('should empty account on overbudget echo vote', function() {
 
     // Spy on socket vote release.
     spyOn(Ov.Controllers.Socket.s, 'emit');
 
     // Ingest new word.
-    Ov.vent.trigger('socket:vote:in', 'word10', 1001);
+    Ov.vent.trigger('socket:vote:in', 'word', 1001);
 
     // Get word rows.
     var rows = _t.log.primaryMarkup.find('div.log-row');
@@ -211,13 +211,14 @@ describe('Log Voting', function() {
     $(rows[0]).trigger('mousedown');
 
     // Check for vote release.
-    expect(Ov.Controllers.Socket.s.emit).not.toHaveBeenCalledWith();
+    expect(Ov.Controllers.Socket.s.emit).toHaveBeenCalledWith(
+      'vote', 1, 'word', 1000);
 
     // Blur.
     $(rows[0]).trigger('mouseleave');
 
     // Check for updated points.
-    expect(_t.points.value.text()).toEqual('1000');
+    expect(_t.points.value.text()).toEqual('0');
     expect(_t.points.$el).not.toHaveClass('preview');
 
   });

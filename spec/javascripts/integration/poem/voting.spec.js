@@ -496,7 +496,7 @@ describe('Voting', function() {
 
   });
 
-  it('should block overbudget positive vote', function() {
+  it('should empty account on overbudget positive vote', function() {
 
     // Spy on socket vote release.
     spyOn(Ov.Controllers.Socket.s, 'emit');
@@ -519,17 +519,18 @@ describe('Voting', function() {
     // Check for no drag.
     expect($('body')).not.toContain('div.drag-line');
 
-    // Check for commited points.
-    expect(_t.points.value.text()).toEqual('1000');
-    expect(_t.points.percent.text()).toEqual('1.00');
+    // Check for empty account.
+    expect(_t.points.value.text()).toEqual('0');
+    expect(_t.points.percent.text()).toEqual('0.00');
     expect(_t.points.$el).not.toHaveClass('preview');
 
     // Check for vote release.
-    expect(Ov.Controllers.Socket.s.emit).not.toHaveBeenCalled();
+    expect(Ov.Controllers.Socket.s.emit).toHaveBeenCalledWith(
+      'vote', 1, 'word1', 1000);
 
   });
 
-  it('should block overbudget negative vote', function() {
+  it('should empty account overbudget negative vote', function() {
 
     // Spy on socket vote release.
     spyOn(Ov.Controllers.Socket.s, 'emit');
@@ -553,13 +554,13 @@ describe('Voting', function() {
     expect($('body')).not.toContain('div.drag-line');
 
     // Check for commited points.
-    expect(_t.points.value.text()).toEqual('1000');
-    expect(_t.points.percent.text()).toEqual('1.00');
+    expect(_t.points.value.text()).toEqual('0');
+    expect(_t.points.percent.text()).toEqual('0.00');
     expect(_t.points.$el).not.toHaveClass('preview');
 
     // Check for vote release.
-    expect(Ov.Controllers.Socket.s.emit).not.toHaveBeenCalledWith();
-
+    expect(Ov.Controllers.Socket.s.emit).toHaveBeenCalledWith(
+      'vote', 1, 'word1', -1000);
   });
 
   it('should not update stack during drag', function() {

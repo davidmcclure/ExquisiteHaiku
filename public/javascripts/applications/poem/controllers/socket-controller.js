@@ -105,20 +105,25 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
     // Compute new balance.
     var newBalance = Ov.global.points - Math.abs(quantity);
 
-    // If sufficient points, commit.
+    // If sufficient points.
     if (newBalance >= 0) {
-
-      // Lock new account balance.
       Ov.global.points = newBalance;
+    }
 
-      // Emit vote.
-      Socket.s.emit('vote', P._id, word, quantity);
-      Ov.vent.trigger('points:newValue', Ov.global.points);
+    else {
+
+      // Get the signed vote quantity.
+      quantity = (quantity >= 0) ? Ov.global.points :
+        Ov.global.points*-1;
+
+      // Empty account.
+      Ov.global.points = 0;
 
     }
 
-    // Otherwise, cancel the drag.
-    else Ov.vent.trigger('words:dragCancel');
+    // Emit vote.
+    Socket.s.emit('vote', P._id, word, quantity);
+    Ov.vent.trigger('points:newValue', Ov.global.points);
 
   });
 

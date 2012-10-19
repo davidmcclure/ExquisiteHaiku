@@ -22,15 +22,16 @@ describe('Submission', function() {
 
     // Set word value.
     _t.blank.$el.val('valid1');
+    _t.blank.$el.trigger(e);
 
     // Spy on socket vote release.
-    spyOn(Ov.Controllers.Socket.s, 'emit');
+    spyOn(_t.socket, 'emit');
 
     // Mock enter.
     e.keyCode = 13;
     _t.blank.$el.trigger(e);
 
-    // Wait for valid1 in valid cache.
+    // Wait for input clear.
     waitsFor(function() {
       return _t.blank.$el.val() === '';
     }, 2000, 'Word never detected in valid cache.');
@@ -47,17 +48,25 @@ describe('Submission', function() {
 
     // Set word value.
     _t.blank.$el.val(' Valid1  ');
+    _t.blank.$el.trigger(e);
 
     // Spy on socket vote release.
-    spyOn(Ov.Controllers.Socket.s, 'emit');
+    spyOn(_t.socket, 'emit');
 
     // Mock enter.
     e.keyCode = 13;
     _t.blank.$el.trigger(e);
 
+    // Wait for input clear.
+    waitsFor(function() {
+      return _t.blank.$el.val() === '';
+    }, 2000, 'Word never detected in valid cache.');
+
     // Check for vote release.
-    // expect(Ov.Controllers.Socket.s.emit).toHaveBeenCalledWith(
-      // 'vote', 1, 'valid1', 100);
+    runs(function() {
+      expect(Ov.Controllers.Socket.s.emit).toHaveBeenCalledWith(
+        'vote', 1, 'valid1', 100);
+    });
 
   });
 
@@ -65,17 +74,25 @@ describe('Submission', function() {
 
     // Set word value.
     _t.blank.$el.val('invalid');
+    _t.blank.$el.trigger(e);
 
     // Spy on socket vote release.
-    spyOn(Ov.Controllers.Socket.s, 'emit');
+    var spy = spyOn(_t.blank, 'validateWord');
+    spyOn(_t.socket, 'emit');
 
     // Mock enter.
     e.keyCode = 13;
     _t.blank.$el.trigger(e);
 
+    // Wait for input clear.
+    waitsFor(function() {
+      return spy.callCount == 1;
+    }, 2000, 'Word never detected in valid cache.');
+
     // Check for vote release.
-    // expect(Ov.Controllers.Socket.s.emit).toHaveBeenCalledWith(
-      // 'vote', 1, 'invalid', 100);
+    runs(function() {
+      expect(Ov.Controllers.Socket.s.emit).not.toHaveBeenCalled();
+    });
 
   });
 

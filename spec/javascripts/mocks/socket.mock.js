@@ -48,7 +48,7 @@ io = {
             ];
 
             // Valid word.
-            if (_.include(valid, arguments[2])) {
+            if (_.contains(valid, arguments[2])) {
               arguments[3](true);
             }
 

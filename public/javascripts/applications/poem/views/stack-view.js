@@ -91,7 +91,7 @@ Ov.Views.Stack = Backbone.View.extend({
 
         // Cancel an existing drag on the previous
         // selection and clear out the drag lines.
-        this.wordsToRow[this.selected].endDrag();
+        this.endCurrentDrag();
 
     }
 
@@ -113,14 +113,9 @@ Ov.Views.Stack = Backbone.View.extend({
 
     // Off-stack click.
     this.window.bind({
-
       'mousedown.cancel': _.bind(function() {
-        if (!this.hovering) {
-          Ov.vent.trigger('words:dragCancel');
-          this.window.unbind('.cancel');
-        }
+        if (!this.hovering) this.endCurrentDrag();
       }, this)
-
     });
 
   },
@@ -137,6 +132,9 @@ Ov.Views.Stack = Backbone.View.extend({
     // If dragging, break.
     if (!Ov.global.isDragging) {
 
+      // Unbind off-stack click.
+      this.window.unbind('.cancel');
+
       // Manifest, trigger out.
       Ov.vent.trigger('words:unhover');
       this.$el.removeClass('frozen');
@@ -144,6 +142,15 @@ Ov.Views.Stack = Backbone.View.extend({
 
     }
 
+  },
+
+  /*
+   * Cancel the currently running drag.
+   *
+   * @return void.
+   */
+  endCurrentDrag: function() {
+    this.wordsToRow[this.selected].endDrag();
   },
 
   /*

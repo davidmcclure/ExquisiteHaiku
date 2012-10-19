@@ -99,10 +99,6 @@ Ov.Views.StackWord = Backbone.View.extend({
 
       'keydown.drag': _.bind(function(e) {
         this.onDragKeydown(e);
-      }, this),
-
-      'mousedown.drag': _.bind(function(e) {
-        // this.endDrag();
       }, this)
 
     });

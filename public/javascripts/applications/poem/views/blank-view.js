@@ -22,8 +22,8 @@ Ov.Views.Blank = Backbone.View.extend({
    */
   initialize: function() {
 
-    // Validation cache.
-    this.cache = { valid: [], invalid: [] };
+    // Start cache.
+    this.resetCache();
 
     // Bind events.
     this.$el.bind({
@@ -35,6 +35,15 @@ Ov.Views.Blank = Backbone.View.extend({
 
     });
 
+  },
+
+  /*
+   * Reset the validation cache.
+   *
+   * @return void.
+   */
+  resetCache: function() {
+    this.cache = { valid: [], invalid: [] };
   },
 
   /*
@@ -212,6 +221,7 @@ Ov.Views.Blank = Backbone.View.extend({
    */
   clear: function() {
     this.$el.val('');
+    this.resetCache();
   }
 
 });

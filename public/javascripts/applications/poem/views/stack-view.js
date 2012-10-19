@@ -4,11 +4,6 @@
 
 Ov.Views.Stack = Backbone.View.extend({
 
-  events: {
-    'mouseenter': 'freeze',
-    'mouseleave': 'unFreeze'
-  },
-
   /*
    * Prepare trackers.
    *

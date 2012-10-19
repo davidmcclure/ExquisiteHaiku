@@ -108,8 +108,9 @@ describe('Stack', function() {
     // Should block rendering when frozen.
     // -----------------------------------
 
-    // Trigger mouseenter.
-    _t.rank.$el.trigger('mouseenter');
+    // Trigger mouseenter on word.
+    var rows = _t.rank.$el.find('div.stack-row');
+    $(rows[0]).trigger('mouseenter');
 
     // Check for frozen class.
     expect(_t.rank.$el).toHaveClass('frozen');
@@ -126,7 +127,7 @@ describe('Stack', function() {
     Ov.vent.trigger('socket:slice', slice);
 
     // Get word rows.
-    var rows = _t.rank.$el.find('div.stack-row');
+    rows = _t.rank.$el.find('div.stack-row');
     expect(rows.length).toEqual(2);
 
     // Un-updated word1.
@@ -145,7 +146,7 @@ describe('Stack', function() {
     // ---------------------------------------
 
     // Trigger mouseleave.
-    _t.rank.$el.trigger('mouseleave');
+    $(rows[0]).trigger('mouseleave');
 
     // Trigger slice.
     Ov.vent.trigger('socket:slice', slice);

@@ -14,7 +14,7 @@ body{font:600 18px 'Lato';text-rendering:optimizeLegibility;-webkit-user-select:
 #poem .poem-word{margin-right:4px;font-size:1.1em}
 #poem .submission-stack{position:absolute;padding-top:5px}
 #poem .submission-word{cursor:pointer}
-#stack{z-index:1;display:inline-block;}
+#stack{z-index:1;display:inline-block;width:0;}
 #stack .stack-row{cursor:ns-resize;}
 #stack .stack-row:first-child .word{font-weight:bold}
 #stack .stack-row .churn{margin-left:4px}

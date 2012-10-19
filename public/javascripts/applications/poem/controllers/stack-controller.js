@@ -48,6 +48,24 @@ Ov.Controllers.Stack = (function(Backbone, Ov) {
   });
 
   /*
+   * Freeze the stack.
+   *
+   * @return void.
+   */
+  Ov.vent.on('words:hover', function() {
+    Stack.Rank.freeze();
+  });
+
+  /*
+   * Unfreeze the stack.
+   *
+   * @return void.
+   */
+  Ov.vent.on('words:unHover', function() {
+    Stack.Rank.unFreeze();
+  });
+
+  /*
    * Freeze the words when a word is selected.
    *
    * @param {String} word: The hovered word.

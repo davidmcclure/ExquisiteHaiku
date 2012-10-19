@@ -13,6 +13,7 @@ Ov.Views.StackWord = Backbone.View.extend({
 
   events: {
     'mouseenter': 'hover',
+    'mouseleave': 'unHover',
     'mousedown':  'select'
   },
 
@@ -224,8 +225,16 @@ Ov.Views.StackWord = Backbone.View.extend({
    * @return void.
    */
   hover: function() {
-    if (!Ov.global.isDragging)
-      Ov.vent.trigger('words:hover', this.word);
+    Ov.vent.trigger('words:hover', this.word);
+  },
+
+  /*
+   * Emit unHover.
+   *
+   * @return void.
+   */
+  unHover: function() {
+    Ov.vent.trigger('words:unHover', this.word);
   },
 
   /*

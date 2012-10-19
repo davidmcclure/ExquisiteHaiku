@@ -49,7 +49,7 @@ describe('Voting', function() {
     expect(_t.blank.$el.val()).toEqual('word1');
 
     // Trigger mouseleave.
-    _t.rank.$el.trigger('mouseleave');
+    word.trigger('mouseleave');
 
     // Check for no preview.
     expect(_t.blank.$el.val()).toEqual('');

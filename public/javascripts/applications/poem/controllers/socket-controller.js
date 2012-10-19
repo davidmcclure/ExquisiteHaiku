@@ -119,8 +119,10 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
     }
 
     // Emit vote.
-    Socket.s.emit('vote', P._id, word, quantity);
-    Ov.vent.trigger('points:newValue', Ov.global.points);
+    if (quantity !== 0) {
+      Socket.s.emit('vote', P._id, word, quantity);
+      Ov.vent.trigger('points:newValue', Ov.global.points);
+    }
 
   });
 

@@ -76,8 +76,7 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
    * @return void.
    */
   Ov.vent.on('blank:validate', function(word, cb) {
-    var vcb = function(valid) { cb(valid); };
-    Socket.s.emit('validate', P._id, word, vcb);
+    Socket.s.emit('validate', P._id, word, cb);
   });
 
   /*
@@ -106,9 +105,7 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
     var newBalance = Ov.global.points - Math.abs(quantity);
 
     // If sufficient points.
-    if (newBalance >= 0) {
-      Ov.global.points = newBalance;
-    }
+    if (newBalance >= 0) Ov.global.points = newBalance;
 
     else {
 

@@ -30,9 +30,16 @@ describe('Submission', function() {
     e.keyCode = 13;
     _t.blank.$el.trigger(e);
 
+    // Wait for valid1 in valid cache.
+    waitsFor(function() {
+      return _t.blank.$el.val() === '';
+    }, 2000, 'Word never detected in valid cache.');
+
     // Check for vote release.
-    // expect(Ov.Controllers.Socket.s.emit).toHaveBeenCalledWith(
-      // 'vote', 1, 'valid1', 100);
+    runs(function() {
+      expect(Ov.Controllers.Socket.s.emit).toHaveBeenCalledWith(
+        'vote', 1, 'valid1', 100);
+    });
 
   });
 

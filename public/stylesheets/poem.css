@@ -31,7 +31,7 @@ body{font:600 18px 'Lato';text-rendering:optimizeLegibility;-webkit-user-select:
 #log .overflow{z-index:0;left:520px;opacity:.3}
 #info{z-index:-2;font-size:2em;position:fixed;left:600px;top:25px;}
 #info.info{display:inline-block;margin-right:1em}
-#info .percent{font-size:6em;font-weight:300;opacity:.25;margin-right:5px}
+#info .percent{font-size:7em;font-weight:300;opacity:.25;margin-right:5px;line-height:.85em}
 #info #points.preview{opacity:.5}
 .drag-line{position:fixed;line-height:0;z-index:-1;top:0;left:0;}
 .drag-line svg{position:fixed;stroke-width:2;top:0;left:0;}

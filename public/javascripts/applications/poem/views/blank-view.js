@@ -156,8 +156,7 @@ Ov.Views.Blank = Backbone.View.extend({
 
     // Do server validation.
     else {
-      var vcb = function(valid) { cb(valid); };
-      Ov.vent.trigger('blank:validate', word, vcb);
+      Ov.vent.trigger('blank:validate', word, cb);
     }
 
   },

@@ -1,5 +1,5 @@
 # Exquisite Haiku
-## Experiments with Real-Time, Collaborative Poetry Composition
+Experiments with Real-Time, Collaborative Poetry Composition
 
 ### Introduction: The Exquisite Corpse and the "Fold"
 

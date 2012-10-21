@@ -4,53 +4,6 @@ Laxon describes a variation of the game played by Breton in the mid-1930's that 
 
 Of course, none of the actual works produced under Breton's short-lived abolishment of the fold actually get close to this hypothetical end-point - as Laxon observes, even the most polished and "corrected" of the works created during this period are still intensely disjointed by any conventional standard. They were beginning to (re)acquire some of the characteristics of single-author works, but they still bore the obvious mark of multiple hands. In one example from 1931, Laxon can easily trace out one-to-one correspondences between individual players and individual sections of the corpse - the wheel-shaped head belongs to Hugo, the table-like waist to Breton, the horse imagery to Eluard.
 
-But what if this weren't the case? What if the collaboration were _so_ granular, so completely pulverized, that it would be _ontologically_ impossible to point to any addressable section of the work and connect it to an individual author? What if this movement towards a kind of final heterogeneity could actually be _completed_ or _realized_? Could a text like this actually be created? From a different standpoint - admittedly, one largely indifferent to, and at time even in opposition with, the concerns of the Surrealist agenda - there's something intriguing and theoretically fraught about this vision of a kind of total intensification of a collaborative process that circles back in the direction of artistic unity. Far from being a drab return to the status quo, this text would be highly exotic from a theoretical standpoint - if no part of it can be defensibly attributed to anyone, does it have an author (or even really authorS, in the way that the Corpse clearly does), to be either reified or ignored in critical praxis?
+But what if this weren't the case? What if the collaboration were _so_ granular, so completely pulverized, that it would be _ontologically_ impossible to point to any addressable section of the work and connect it to an individual author? What if this movement towards a kind of final heterogeneity could actually be _completed_ or _realized_? Would it really be possible for a work to look, act, and _behave_ exactly like a single-author work, even while factually emerging from some kind of radically collaborative process completely alien to individual artistic production? From a different standpoint - admittedly, one largely indifferent to, and at time even in conflict with, the concerns of the Surrealist agenda - there's something intriguing and theoretically fraught about this vision of a kind of total intensification of a collaborative process that circles back in the direction of artistic unity. Far from being a drab return to the status quo, this text would be highly exotic from a theoretical standpoint - if no part of it can be defensibly attributed to anyone, does it have a factual, biographical, historical author (or even really authorS, in the way that the Corpse clearly does) that can be either reified or ignored in interpretive praxis?
 
-
-
-
-But from a different standpoint - admittedly, one largely indifferent to the concerns of the Surrealist agenda - there's something intriguing and theoretically fraught about this hypothetical _intensification_ of the Exquisite Corpse game mechanic, the vision of a kind of perfectly-churned, homogenous collaboration that would begin to resemble single-author art. 
-
-Could a work like this actually be created? 
-
-
-Far from being a drab return to the status quo, this text would be highly exotic from a theoretical standpoint
-
-Is it really true that a completely collaborative work 
-
-Would it really be possible to create a work so completely collaborative that it would be 
-
-Instead of asking whether collaboration can be used to destroy single-author rationalism and intention, Breton's mistake (no doubt unintentionally) quietly inverts the question - can collaboration _create_ artistic unity, authorial intention in the strict, full-throated sense of the word? Is it actually possible for people to act, speak, and _mean_ in unison?
-
-
-
-
-
-Breton's mistake (and Laxon's diagnosis of the mistake) actually provokes a very different question about artistic collaboration - instead of trying to escape `
-
-Of course, none of the actual works produced under Breton's short-lived abolishment of the fold actually get anywhere close to this implied endpoint - as Laxon observes, even the most polished and carefully "corrected" examples are still intensely disjointed by any conventional standard. They were beginning to (re)acquire some of the formal characteristics of single-author works, but they still bore the tell-tale clumpiness of multiple hands. In one example from 1931, Laxon can easily trace one-to-one correspondences beween individual players and individual sections of the corpse - the wheel-shaped head belongs to Hugo, the table-like waist to Breton, the horse imagery to Eluard.
-
-The works survive the error, which turns out to be a short-lived digression in the  history of the Corpse - the fold was reintroduced at the end of the decade (although not before George Bataille had abandoned Breton, critical of his embrace of "traditional" forms of art).
-
-But what if the collaboration were _so_ granular, so completely pulverized, that it would be completely impossible to draw a line between any section of the work and any individual author? Is it really true, 
-
-
-For Laxon, this essentially amounts to an artistic _error_. The increasing continuity of the work undercuts the Corpse's claim to originality, which inheres in the abrupt, non-rational lurching between the discrete sections. But from a different perspective, outside of the Surrealist project, Breton's mistake (and Laxon's diagnosis of the mistake) leads to a fascinating proposition - Is it really true that these hypothetical, "perfectly" or "totally" collaborative texts would approach a state of of formal identity with conventional single-author texts, even while emerging from such a diametrically opposed mode of production? What would the theoretical status of these works be? Would they have an author?
-
-
-
-As the collaboration becomes more and more atomized it approaches a kind of _perfection_ or _completion_, a recuperated homogeneity on the far side of heterogeneity where the work fades back into the (for the Surrealists, oppressive) unity of regular art.
-
-What would it mean to interpret a work that looks and acts and _behaves_ like a single-author text, but 
-
-
-
-
-sort of hypothetical, _perfectly collaborative work_, the final intensification of the 
-
-
- possible for a work of art - a drawing, a painting, a poem - to look and behave exactly like a single-author work, even while factually emerging from a radically collaborative social algorithm that 
-
-
-
-What if it were possible for a text to _behave_ exactly like a regular, single-author text, and yet factually emerge from a 
+Really, Breton's error (no doubt unintentionally) provokes a question that almost exactly inverts the Surrealist interest in collaboration. Instead of asking whether collaboration can be used to _destroy_ single-author rationalism and intention (the _cadavre exquis_), the abolition of the fold and the creeping return of unity make us wonder if collaboration can be used to _create_ single-author rationalism and intention in the strict, full-throated senses of the terms. Is it actually possible for people to act, speak, and _mean_ in unison?

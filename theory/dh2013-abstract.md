@@ -3,6 +3,13 @@ Experiments with Real-Time, Collaborative Poetry Composition
 
 ### The Exquisite Corpse and the "Fold"
 
+First played in the early 1920's at rue Fontaine #42 in Paris, the "Exquisite Corpse" was one of the earliest and most influential of the Surrealist parlor games. A group of people sit around a table and pass around a piece of paper - each player writes or sketches a new bit of content onto the page, and then folds the paper so that the next person can only see small portion of composite image closest to the next space to be filled in. The end result is a blocky, phantasmagorical mash-up of the players' contributions, all highly individuated but bound together by amorphous daisy-chain of associations emerging from each players' patrial but incomplete knowledge of the whole.
+
+For Breton and the Surrealists, this disjointedness was a feature, not a bug - these "chain games" were efforts to invent alterntive modes of artistic praxis that moved away from what was considered to be the rigid, stifling intentionalism and closure of conventional, single-author works and towards a collaborative, almost ritualistic communion with the _sur_ (super) reality of Freudian free-association. The "links" of the chain _need_ to be blocky, rough, and obviously collaborative.
+
+
+
+
 At the same time, there's a sense in which this multiplication of authorship can only go so far before it starts to undo itself. As the final product becomes increasingly fractured and decomposed, as the collaboration becomes increasingly _smooth_, the "collective individuality" of the corpse - defined by the discreteness of its components parts - starts to fade into an increasing granularity or continuousness, like a blocky, pixelated line resolving into a crisp edge at higher resolution, or the pulse of a fluorescent light disappearing into continuousness as the frequency of the oscillation increases.
 
 Laxon describes a variation of the game played by Breton in the mid-1930's that did away with the concealing "folds," instead allowing the players to see the whole of the existing work while they added their contribution. These works were also subjected to a much greater level of post-processing - "corrections" to conceal the discontinuities between the sections, touch-ups on the shading, and other after-the-fact modifications that ironed over the productive dissonance of the original Corpse. This edit to the game mechanic, Laxon argues, has the paradoxical effect of pushing the whole project back towards the compositional unity and "closure of meaning" that the Corpse (and, really, the Surrealist project at large) was trying to escape in the first place. As the collaboration becomes increasingly fluid and scrambled, the work starts to recuperate homogeneity and fall back into the (for the Surrealists, oppressive) unity and intentionality of the single-author work. For Laxon, this is essentially an artistic _error_, at least when help up against the intellectual goals of the movement. The Corpse stakes its claim to originality on the abrupt, lurching experience of moving among individuated, discrete sections in the work; as the sections bleed together the work starts to reassemble towards conceptual unity, and the corpse cedes its _raison d'être_.
@@ -31,4 +38,8 @@ The interface is shifting, growing, contracting, scrolling tableau of floating w
 
 ### Intentional Intentionlessness
 
-These texts have the interesting quality of being _unattributable_ in the conventional sense of the word.
+
+These texts have the interesting quality of being _unattributable_, at least in the conventional sense of the word.
+
+
+the game manages to peel away the fact of authorship while still retaining all of the important functional characteristics that we use to describe (and even define) authorship and intention - the possibility for unified speaker meaning and intention, the ability to formulate specific, internally consistent expressions about the world.

@@ -26,15 +26,6 @@ namespace :test do
 
 end
 
-namespace :bench do
-
-  desc 'Run scoring benchmark'
-  task :scoring do
-    sh %{node test/benchmark/scoring.benchmark.js 100 100}
-  end
-
-end
-
 desc 'Build the application'
 task :build do
   js = 'public/javascripts'

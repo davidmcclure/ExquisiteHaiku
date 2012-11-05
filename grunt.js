@@ -4,7 +4,8 @@
 
 // Get package configuration.
 var config = require('yaml-config');
-var c = config.readConfig('public/javascripts/config.yaml');
+var configPath = '/public/javascripts/config.yaml';
+var c = config.readConfig(process.cwd()+configPath);
 
 module.exports = function(grunt) {
 

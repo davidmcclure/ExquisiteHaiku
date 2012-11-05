@@ -43,6 +43,6 @@ end
 
 desc 'Rebuild the application'
 task :rebuild do
-    Rake::Task['clean'].invoke
-    Rake::Task['build'].invoke
+  Rake::Task['clean'].invoke
+  Rake::Task['build'].invoke
 end

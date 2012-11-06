@@ -6,7 +6,7 @@
 var configFile = require('yaml-config');
 
 // Load testing configuration.
-global.config = configFile.readConfig('config/config.yaml');
+global.config = config.readConfig(process.cwd()+'/config.yaml');
 
 // Connect.
 exports = mongoose = require('mongoose');

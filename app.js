@@ -5,12 +5,13 @@
 // Module dependencies.
 var express = require('express');
 var socket = require('socket.io');
-var configFile = require('yaml-config');
+var config = require('yaml-config');
 var http = require('http');
 var fs = require('fs');
 
-// Connect to database.
-global.config = configFile.readConfig('config/config.yaml');
+// Read config, connect to database.
+var configPath = '/config/config.yaml';
+global.config = config.readConfig(process.cwd()+configPath);
 require('./config/db-connect');
 
 // Create server.

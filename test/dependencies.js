@@ -4,20 +4,19 @@
 
 // Modules
 // -------
-exports.mocha = require('mocha');
-exports.should = require('should');
-exports.assert = require('assert');
-exports.browser = require('zombie');
-exports.async = require('async');
-exports.sinon = require('sinon');
-exports.config = require('yaml-config');
-exports.mongoose = require('mongoose');
-exports.io = require('socket.io-client');
-exports.init = require('../config/init');
-exports.helpers = require('./helpers');
-exports.fs = require('fs');
-exports.jade = require('jade');
-exports._ = require('underscore');
+exports.mocha =       require('mocha');
+exports.should =      require('should');
+exports.assert =      require('assert');
+exports.browser =     require('zombie');
+exports.async =       require('async');
+exports.sinon =       require('sinon');
+exports.mongoose =    require('mongoose');
+exports.io =          require('socket.io-client');
+exports.init =        require('../config/init');
+exports.helpers =     require('./helpers');
+exports.fs =          require('fs');
+exports.jade =        require('jade');
+exports._ =           require('underscore');
 
 
 // Models
@@ -66,7 +65,8 @@ exports.scoring = require('../app/scoring/scoring');
 // ------
 
 // Load configuration.
-exports.root = exports.config.readConfig('test/config.yaml').root;
+var config = require('yaml-config');
+exports.root = config.readConfig(process.cwd()+'/test/config.yaml').root;
 
 
 // Run

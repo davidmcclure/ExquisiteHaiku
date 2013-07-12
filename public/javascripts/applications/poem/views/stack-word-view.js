@@ -226,6 +226,7 @@ Ov.Views.StackWord = Backbone.View.extend({
    */
   hover: function() {
     Ov.vent.trigger('words:hover', this.word);
+    Ov.vent.trigger('stack:freeze', this.word);
   },
 
   /*

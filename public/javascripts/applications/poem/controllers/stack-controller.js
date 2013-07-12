@@ -52,7 +52,7 @@ Ov.Controllers.Stack = (function(Backbone, Ov) {
    *
    * @return void.
    */
-  Ov.vent.on('words:hover', function() {
+  Ov.vent.on('stack:freeze', function() {
     Stack.Rank.freeze();
   });
 

@@ -83,6 +83,7 @@ Ov.Views.LogWord = Backbone.View.extend({
    */
   unHover: function() {
     if (!Ov.global.isDragging) Ov.vent.trigger('log:cancel');
+    Ov.vent.trigger('words:unHover', this.word);
   },
 
   /*

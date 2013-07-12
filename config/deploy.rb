@@ -10,25 +10,24 @@ set :scm, :git
 
 # Host information.
 default_run_options[:pty] = true
-set :host, "ubuntu@ec2-23-20-123-254.compute-1.amazonaws.com"
+set :host, "ubuntu@ec2-54-224-141-129.compute-1.amazonaws.com"
 set :deploy_via, :remote_cache
 set :user, "ubuntu"
-set :use_sudo, true
+#set :use_sudo, true
 role :app, host
 
 namespace :deploy do
 
   task :start, :roles => :app, :except => { :no_release => true } do
-    run "cd #{current_path} && #{try_sudo :as => 'root'} NODE_ENV=#{node_env} forever start app"
+    run "cd #{current_path} && pm2 start app"
   end
 
   task :stop, :roles => :app, :except => { :no_release => true } do
-    run "cd #{current_path} && #{try_sudo :as => 'root'} forever stop app"
+    run "cd #{current_path} && pm2 stopAll"
   end
 
   task :restart, :roles => :app, :except => { :no_release => true } do
-    deploy.stop
-    deploy.start
+    run "cd #{current_path} && pm2 restartAll"
   end
 
   task :build, :roles => :app, :except => { :no_release => true } do

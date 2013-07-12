@@ -10,7 +10,7 @@ set :scm, :git
 
 # Host information.
 default_run_options[:pty] = true
-set :host, "ubuntu@ec2-54-224-141-129.compute-1.amazonaws.com"
+set :host, "exquisitehaiku.dclure.org"
 set :deploy_via, :remote_cache
 set :user, "ubuntu"
 #set :use_sudo, true
@@ -27,7 +27,8 @@ namespace :deploy do
   end
 
   task :restart, :roles => :app, :except => { :no_release => true } do
-    run "cd #{current_path} && pm2 restartAll"
+    deploy.stop
+    deploy.start
   end
 
   task :build, :roles => :app, :except => { :no_release => true } do

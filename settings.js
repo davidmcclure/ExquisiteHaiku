@@ -4,7 +4,7 @@
 
 // Module dependencies.
 var express = require('express');
-var mongoStore = require('connect-mongodb');
+var MongoStore = require('connect-mongo')(express);
 
 // Start-up routine.
 module.exports = function(app) {
@@ -20,7 +20,7 @@ module.exports = function(app) {
     app.use(express.bodyParser());
     app.use(express.cookieParser('dev'));
     app.use(express.session({
-      store: new mongoStore({ url: global.config.db }),
+      store: new MongoStore({ url: global.config.db }),
       secret: 'dev'
     }));
 

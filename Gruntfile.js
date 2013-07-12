@@ -9,6 +9,10 @@ var c = config.readConfig(process.cwd()+configPath);
 
 module.exports = function(grunt) {
 
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+
   var adminVendor = [
     c.components+c.vendor.jquery,
     c.components+c.vendor.underscore,
@@ -66,22 +70,22 @@ module.exports = function(grunt) {
 
     },
 
-    min: {
+    uglify: {
 
       poem: {
-        src: ['<config:concat.poem.src>'],
+        src: ['<%= concat.poem.src %>'],
         dest: c.payload+'poem.js',
         separator: ';'
       },
 
       admin: {
-        src: ['<config:concat.admin.src>'],
+        src: ['<%= concat.admin.src %>'],
         dest: c.payload+'admin.js',
         separator: ';'
       },
 
       test: {
-        src: ['<config:concat.test.src>'],
+        src: ['<%= concat.test.src %>'],
         dest: c.payload+'test.js',
         separator: ';'
       }
@@ -90,21 +94,21 @@ module.exports = function(grunt) {
 
     watch: {
       poem: {
-        files: ['<config:concat.poem.src>'],
+        files: ['<%= concat.poem.src %>'],
         tasks: ['concat:poem']
       },
       admin: {
-        files: ['<config:concat.admin.src>'],
+        files: ['<%= concat.admin.src %>'],
         tasks: ['concat:admin']
       },
       test: {
-        files: ['<config:concat.test.src>'],
+        files: ['<%= concat.test.src %>'],
         tasks: ['concat:test']
       }
     }
 
   });
 
-  grunt.registerTask('default', 'min');
+  grunt.registerTask('default', 'uglify');
 
 };

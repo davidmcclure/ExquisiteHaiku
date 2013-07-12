@@ -279,8 +279,8 @@ describe('Admin Controller', function() {
 
       // GET /admin, start unstarted.
       browser.visit(_t.root+'admin', function() {
-        browser.pressButton('div.poem[hash='+unstarted.hash+
-          '] form.start button', function() {
+        browser.pressButton('div.poem[hash="'+unstarted.hash+
+          '"] form.start button', function() {
           done();
         });
       });
@@ -333,12 +333,12 @@ describe('Admin Controller', function() {
 
       // GET /admin, start unstarted.
       browser.visit(_t.root+'admin', function() {
-        browser.pressButton('form.start[hash='+unstarted.hash+
-          '] button', function() {
+        browser.pressButton('form.start[hash="'+unstarted.hash+
+          '"] button', function() {
 
           // Then stop unstarted.
-          browser.pressButton('form.stop[hash='+unstarted.hash+
-            '] button',function() {
+          browser.pressButton('form.stop[hash="'+unstarted.hash+
+            '"] button',function() {
             done();
           });
 

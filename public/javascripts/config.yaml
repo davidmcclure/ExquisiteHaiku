@@ -15,5 +15,5 @@ default:
     eventbinder: "Backbone.EventBinder/lib/backbone.eventbinder.js"
     wreqr: "Backbone.Wreqr/lib/backbone.wreqr.js"
     localstorage: "Backbone.localStorage/backbone.localStorage.js"
-    bootstrap: "bootstrap/bootstrap/js/bootstrap.js"
+    bootstrap: "bootstrap/docs/assets/js/bootstrap.js"
     d3: "d3/d3.js"

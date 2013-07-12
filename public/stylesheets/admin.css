@@ -23,6 +23,7 @@ form#new input[name='roundLengthValue']:focus{border-color:#08c}
 form#new .control-group{margin-bottom:10px;}
 form#new .control-group.error input{border-color:#b94a48 !important}
 form#new div.roundLength{margin-bottom:15px}
+form#new .btn-group{display:block;}
 form#new .btn-group button{padding:1px 4px;font-weight:400;font-size:10px;background-image:none}
 .right-col{white-space:nowrap}
 a.new-poem{font-size:17px;display:inline-block;margin-bottom:.4em}

@@ -39,6 +39,7 @@ Ov.Views.Log = Backbone.View.extend({
   clear: function() {
     this.primaryMarkup.empty();
     this.overflowMarkup.empty();
+    this.unFreeze();
   },
 
   /*

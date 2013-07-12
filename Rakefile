@@ -31,8 +31,7 @@ task :build do
   js = 'public/javascripts'
   sh %{npm install}
   sh %{cd #{js} && bower install}
-  sh %{cd #{js}/components/bootstrap && make bootstrap}
-  sh %{grunt min}
+  sh %{grunt uglify}
 end
 
 desc 'Clean pacakges'

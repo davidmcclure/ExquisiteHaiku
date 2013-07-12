@@ -10,9 +10,9 @@ set :scm, :git
 
 # Host information.
 default_run_options[:pty] = true
-set :host, "ubuntu@ec2-184-73-138-79.compute-1.amazonaws.com"
+set :host, "ubuntu@ec2-23-20-123-254.compute-1.amazonaws.com"
 set :deploy_via, :remote_cache
-set :user, "root"
+set :user, "ubuntu"
 set :use_sudo, true
 role :app, host
 

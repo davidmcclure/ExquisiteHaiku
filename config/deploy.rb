@@ -7,13 +7,13 @@ require 'capistrano/ext/multistage'
 set :application, "exquisitehaiku"
 set :repository, "git://github.com/davidmcclure/ExquisiteHaiku.git"
 set :scm, :git
+set :keep_releases, 1
 
 # Host information.
 default_run_options[:pty] = true
 set :host, "exquisitehaiku.dclure.org"
 set :deploy_via, :remote_cache
 set :user, "ubuntu"
-#set :use_sudo, true
 role :app, host
 
 namespace :deploy do
@@ -51,3 +51,4 @@ end
 before 'deploy:setup', 'deploy:create_directory'
 before 'deploy:finalize_update', 'deploy:build'
 after 'deploy:setup', 'deploy:set_permissions'
+after "deploy", "deploy:cleanup"

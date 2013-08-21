@@ -9,7 +9,7 @@
     , "marionette": ">= 0.10.2"
     , "marionette.eventbinder": "https://github.com/marionettejs/backbone.eventbinder.git"
     , "marionette.wreqr": "https://github.com/marionettejs/backbone.wreqr.git"
-    , "bootstrap": ">= 2.1.1"
+    , "bootstrap": "2.3.2"
     , "d3": ">= 2.10.2"
   }
 }

@@ -1,6 +1,6 @@
 default:
 
-  components: "public/javascripts/bower_components/"
+  components: "node_modules/"
   dist: "public/javascripts/dist/"
 
   apps:
@@ -8,12 +8,10 @@ default:
     add: "public/javascripts/src/add/"
 
   vendor:
-    jquery: "jquery/jquery.js"
-    underscore: "underscore/underscore.js"
+    jquery: "jquery/dist/jquery.js"
+    underscore: "lodash/dist/lodash.js"
     backbone: "backbone/backbone.js"
-    marionette: "marionette/lib/backbone.marionette.js"
-    eventbinder: "Backbone.EventBinder/lib/backbone.eventbinder.js"
-    wreqr: "Backbone.Wreqr/lib/backbone.wreqr.js"
-    localstorage: "backbone.localStorage/backbone.localStorage.js"
-    bootstrap: "bootstrap/docs/assets/js/bootstrap.js"
+    marionette: "backbone.marionette/lib/backbone.marionette.js"
+    localstorage: "backbone.localstorage/backbone.localStorage.js"
+    bootstrap: "bootstrap/dist/js/bootstrap.js"
     d3: "d3/d3.js"

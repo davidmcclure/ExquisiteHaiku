@@ -22,8 +22,6 @@ var Poem = mongoose.model('Poem');
  */
 var score = exports.score = function(id, now, emit, cb) {
 
-  console.log('score');
-
   // Get poem.
   Poem.findById(id, function(err, poem) {
 

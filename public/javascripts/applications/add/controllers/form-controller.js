@@ -1,4 +1,5 @@
-/*
+
+/**
  * Form controller.
  */
 
@@ -11,10 +12,8 @@ Add.Controllers.Form = (function(Backbone, Add) {
   // Initialization.
   // ---------------
 
-  /*
+  /**
    * Instantiate form view.
-   *
-   * @return void.
    */
   Form.init = function() {
     Form.Form = new Add.Views.Form();

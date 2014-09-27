@@ -1,4 +1,5 @@
-/*
+
+/**
  * Blank view.
  */
 
@@ -15,10 +16,8 @@ Ov.Views.Blank = Backbone.View.extend({
     return _.template($('#submission-word').html());
   },
 
-  /*
+  /**
    * Prepare trackers and stack.
-   *
-   * @return void.
    */
   initialize: function() {
 
@@ -37,41 +36,33 @@ Ov.Views.Blank = Backbone.View.extend({
 
   },
 
-  /*
+  /**
    * Reset the validation cache.
-   *
-   * @return void.
    */
   resetCache: function() {
     this.cache = { valid: [], invalid: [] };
   },
 
-  /*
+  /**
    * Insert the blank at the end of the passed line.
    *
    * @param {Element} line: The line container.
-   *
-   * @return void.
    */
   insert: function(line) {
     line.append(this.$el);
   },
 
-  /*
+  /**
    * Detach the markup.
-   *
-   * @return void.
    */
   detach: function() {
     this.$el.detach();
   },
 
-  /*
+  /**
    * Handle keystroke on input.
    *
    * @param {Object} event: The keypress event.
-   *
-   * @return void.
    */
   processKeystroke: function(event) {
 
@@ -100,24 +91,20 @@ Ov.Views.Blank = Backbone.View.extend({
 
   },
 
-  /*
+  /**
    * Add new word to submission stack.
    *
    * @param {String} word: The word.
-   *
-   * @return void.
    */
   addWord: function(word) {
     Ov.vent.trigger('points:vote', word, P.submissionVal);
     this.$el.val('');
   },
 
-  /*
+  /**
    * Remove word from submission stack.
    *
    * @param {Element} wordMarkup: The stack word.
-   *
-   * @return void.
    */
   removeWord: function(wordMarkup) {
 
@@ -132,24 +119,21 @@ Ov.Views.Blank = Backbone.View.extend({
 
   },
 
-  /*
+  /**
    * Trim and lowercase word.
    *
    * @param {String} word: The word.
-   *
    * @return {String}: The scrubbed value.
    */
   scrubWord: function(word) {
     return $.trim(word).toLowerCase();
   },
 
-  /*
+  /**
    * Validate word, flash error if invalid.
    *
    * @param {String} word: The word.
    * @param {Function} cb: Callback.
-   *
-   * @return void.
    */
   validateWord: function(word, cb) {
 
@@ -170,13 +154,11 @@ Ov.Views.Blank = Backbone.View.extend({
 
   },
 
-  /*
+  /**
    * Store word validation status.
    *
    * @param {String} word: The word.
    * @param {Boolean} valid: True if valid.
-   *
-   * @return void.
    */
   cacheValidation: function(word, valid) {
 
@@ -192,32 +174,26 @@ Ov.Views.Blank = Backbone.View.extend({
 
   },
 
-  /*
+  /**
    * Preview a hovered word in the blank.
    *
    * @param {String} word: The word.
-   *
-   * @return void.
    */
   showPreview: function(word) {
     this.$el.addClass('preview');
     this.$el.val(word);
   },
 
-  /*
+  /**
    * Remove preview.
-   *
-   * @return void.
    */
   hidePreview: function() {
     this.$el.removeClass('preview');
     this.clear();
   },
 
-  /*
+  /**
    * Remove preview.
-   *
-   * @return void.
    */
   clear: function() {
     this.$el.val('');

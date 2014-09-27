@@ -1,4 +1,5 @@
-/*
+
+/**
  * Round collection.
  */
 
@@ -6,16 +7,14 @@ Ov.Collections.Round = Backbone.Collection.extend({
 
   localStorage: new Backbone.LocalStorage('Oversoul'),
 
-  /*
+  /**
    * Initialize round tracker.
-   *
-   * @return void.
    */
   initialize: function() {
     this.current = null;
   },
 
-  /*
+  /**
    * Get the current round.
    *
    * @return {Object}: The round.
@@ -31,11 +30,10 @@ Ov.Collections.Round = Backbone.Collection.extend({
 
   },
 
-  /*
+  /**
    * Register a round record.
    *
    * @param {String} id: The round id.
-   *
    * @return {Object}: The new round.
    */
   registerNewRound: function(id) {

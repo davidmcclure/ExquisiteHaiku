@@ -1,13 +1,12 @@
-/*
+
+/**
  * Points view.
  */
 
 Ov.Views.Points = Backbone.View.extend({
 
-  /*
+  /**
    * Set starting value.
-   *
-   * @return void.
    */
   initialize: function() {
 
@@ -17,21 +16,17 @@ Ov.Views.Points = Backbone.View.extend({
 
   },
 
-  /*
+  /**
    * Render the current base value.
-   *
-   * @return void.
    */
   reset: function() {
     this.renderValue(Ov.global.points);
   },
 
-  /*
+  /**
    * Render a preview value.
    *
    * @param {Number} quantity: The vote quantity.
-   *
-   * @return void.
    */
   renderPreview: function(quantity) {
 
@@ -51,12 +46,10 @@ Ov.Views.Points = Backbone.View.extend({
 
   },
 
-  /*
+  /**
    * Render a value.
    *
    * @param {Number} value: The value.
-   *
-   * @return void.
    */
   renderValue: function(value) {
 

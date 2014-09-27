@@ -1,4 +1,5 @@
-/*
+
+/**
  * Line view.
  */
 
@@ -7,10 +8,8 @@ Ov.Views.Drag = Backbone.View.extend({
   tagName: 'div',
   className: 'drag-line',
 
-  /*
+  /**
    * Initialize SVG element.
-   *
-   * @return void.
    */
   initialize: function() {
 
@@ -28,30 +27,24 @@ Ov.Views.Drag = Backbone.View.extend({
 
   },
 
-  /*
+  /**
    * Inject the element.
-   *
-   * @return void.
    */
   show: function() {
     this.fitContainer();
     this.body.append(this.$el);
   },
 
-  /*
+  /**
    * Detach the element.
-   *
-   * @return void.
    */
   hide: function() {
     this.lockCurrent();
     this.clear();
   },
 
-  /*
+  /**
    * Fit the container to fill the window.
-   *
-   * @return void.
    */
   fitContainer: function() {
 
@@ -66,14 +59,12 @@ Ov.Views.Drag = Backbone.View.extend({
     this.svg.attr('height', height);
   },
 
-  /*
+  /**
    * Render the line.
    *
    * @param {Object} initEvent: The initiating click event.
    * @param {Object} dragEvent: The current mousemove event.
    * @param {Number} total: The current drag total.
-   *
-   * @return void.
    */
   render: function(initEvent, dragEvent, total) {
 
@@ -107,13 +98,11 @@ Ov.Views.Drag = Backbone.View.extend({
 
   },
 
-  /*
+  /**
    * Set the color of the line and total.
    *
    * @param {Number} height: The line height.
    * @param {Number} total: The drag magnitude.
-   *
-   * @return void.
    */
   setColor: function(height, total) {
 
@@ -127,10 +116,8 @@ Ov.Views.Drag = Backbone.View.extend({
 
   },
 
-  /*
+  /**
    * Set insufficient points for current quantity.
-   *
-   * @return void.
    */
   setInvalid: function() {
 
@@ -143,10 +130,8 @@ Ov.Views.Drag = Backbone.View.extend({
 
   },
 
-  /*
+  /**
    * Clear all lines.
-   *
-   * @return void.
    */
   clear: function() {
 
@@ -163,19 +148,15 @@ Ov.Views.Drag = Backbone.View.extend({
 
   },
 
-  /*
+  /**
    * Clear the current line.
-   *
-   * @return void.
    */
   clearCurrent: function() {
     if (!_.isNull(this.line)) this.line.remove();
   },
 
-  /*
+  /**
    * Freeze the current line.
-   *
-   * @return void.
    */
   lockCurrent: function() {
     if (!_.isNull(this.line)) {

@@ -1,4 +1,5 @@
-/*
+
+/**
  * Round controller.
  */
 
@@ -11,10 +12,8 @@ Ov.Controllers.Round = (function(Backbone, Ov) {
   // Initialization.
   // ---------------
 
-  /*
+  /**
    * Instantiate round collection.
-   *
-   * @return void.
    */
   Round.init = function() {
     Round.Rounds = new Ov.Collections.Round();
@@ -27,13 +26,11 @@ Ov.Controllers.Round = (function(Backbone, Ov) {
   // Events.
   // -------
 
-  /*
+  /**
    * Process the incoming round id and emit the current
    * application state.
    *
    * @param {Object} data: The incoming slice data.
-   *
-   * @return void.
    */
   Ov.vent.on('socket:slice', function(data) {
 
@@ -57,12 +54,10 @@ Ov.Controllers.Round = (function(Backbone, Ov) {
 
   });
 
-  /*
+  /**
    * When a vote is committed, update the round record.
    *
    * @param {Number} value: The new value.
-   *
-   * @return void.
    */
   Ov.vent.on('points:newValue', function(value) {
 

@@ -1,4 +1,5 @@
-/*
+
+/**
  * Stack word view.
  */
 
@@ -17,10 +18,8 @@ Ov.Views.StackWord = Backbone.View.extend({
     'mousedown':  'select'
   },
 
-  /*
+  /**
    * Build template, get components.
-   *
-   * @return void.
    */
   initialize: function() {
 
@@ -45,12 +44,10 @@ Ov.Views.StackWord = Backbone.View.extend({
 
   },
 
-  /*
+  /**
    * Render new values, set word tracker.
    *
    * @param {Array} data: Array of [word, value].
-   *
-   * @return void.
    */
   update: function(data) {
 
@@ -75,12 +72,10 @@ Ov.Views.StackWord = Backbone.View.extend({
 
   },
 
-  /*
+  /**
    * Bind drag listener.
    *
    * @param {Object} event: The mousedown event.
-   *
-   * @return void.
    */
   addDrag: function(event) {
 
@@ -110,13 +105,11 @@ Ov.Views.StackWord = Backbone.View.extend({
 
   },
 
-  /*
+  /**
    * Process drag mousemove.
    *
    * @param {Object} initEvent: The initiating click event.
    * @param {Object} dragEvent: The current mousemove event.
-   *
-   * @return void.
    */
   onDragTick: function(initEvent, dragEvent) {
 
@@ -145,10 +138,8 @@ Ov.Views.StackWord = Backbone.View.extend({
 
   },
 
-  /*
+  /**
    * Process drag mouseup.
-   *
-   * @return void.
    */
   onDragComplete: function() {
 
@@ -165,12 +156,10 @@ Ov.Views.StackWord = Backbone.View.extend({
 
   },
 
-  /*
+  /**
    * Process drag keydown.
    *
    * @param {Object} event: The keydown event.
-   *
-   * @return void.
    */
   onDragKeydown: function(event) {
 
@@ -198,20 +187,16 @@ Ov.Views.StackWord = Backbone.View.extend({
 
   },
 
-  /*
+  /**
    * Render size.
-   *
-   * @return void.
    */
   renderSize: function() {
     var size = 18 + 0.05*(Math.abs(this.churn));
     this.wordMarkup.css('font-size', size);
   },
 
-  /*
+  /**
    * Render color.
-   *
-   * @return void.
    */
   renderColor: function() {
     if (this.churn === 0) this.setNeutral();
@@ -219,48 +204,38 @@ Ov.Views.StackWord = Backbone.View.extend({
     else this.setNegative();
   },
 
-  /*
+  /**
    * Render hover.
-   *
-   * @return void.
    */
   hover: function() {
     Ov.vent.trigger('words:hover', this.word);
     Ov.vent.trigger('stack:freeze', this.word);
   },
 
-  /*
+  /**
    * Emit unHover.
-   *
-   * @return void.
    */
   unHover: function() {
     Ov.vent.trigger('words:unHover', this.word);
   },
 
-  /*
+  /**
    * Render selection.
-   *
-   * @return void.
    */
   select: function(event) {
     Ov.vent.trigger('words:select', this.word);
     this.addDrag(event);
   },
 
-  /*
+  /**
    * Remove selection.
-   *
-   * @return void.
    */
   unSelect: function() {
     Ov.vent.trigger('words:unselect');
   },
 
-  /*
+  /**
    * Reset word after drag.
-   *
-   * @return void.
    */
   endDrag: function() {
 
@@ -276,60 +251,48 @@ Ov.Views.StackWord = Backbone.View.extend({
 
   },
 
-  /*
+  /**
    * Set 0 churn.
-   *
-   * @return void.
    */
   setNeutral: function() {
     this.wordMarkup.removeClass('positive');
     this.wordMarkup.removeClass('negative');
   },
 
-  /*
+  /**
    * Set positive churn.
-   *
-   * @return void.
    */
   setPositive: function() {
     this.wordMarkup.addClass('positive');
     this.wordMarkup.removeClass('negative');
   },
 
-  /*
+  /**
    * Set negative churn.
-   *
-   * @return void.
    */
   setNegative: function() {
     this.wordMarkup.addClass('negative');
     this.wordMarkup.removeClass('positive');
   },
 
-  /*
+  /**
    * Set word color to match positive drag.
-   *
-   * @return void.
    */
   setDragPositive: function() {
     this.wordMarkup.addClass('positive');
     this.wordMarkup.removeClass('negative');
   },
 
-  /*
+  /**
    * Set word color to match negative drag.
-   *
-   * @return void.
    */
   setDragNegative: function() {
     this.wordMarkup.addClass('negative');
     this.wordMarkup.removeClass('positive');
   },
 
-  /*
+  /**
    * Reset word color.
-   *
-   * @return void.
    */
   setDragNeutral: function() {
     this.renderColor();

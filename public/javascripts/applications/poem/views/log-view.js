@@ -1,4 +1,5 @@
-/*
+
+/**
  * Log view.
  */
 
@@ -13,10 +14,8 @@ Ov.Views.Log = Backbone.View.extend({
     'mouseleave .primary': 'unFreeze'
   },
 
-  /*
+  /**
    * Get markup.
-   *
-   * @return void.
    */
   initialize: function() {
 
@@ -31,10 +30,8 @@ Ov.Views.Log = Backbone.View.extend({
 
   },
 
-  /*
+  /**
    * Clear out the stacks.
-   *
-   * @return void.
    */
   clear: function() {
     this.primaryMarkup.empty();
@@ -42,13 +39,11 @@ Ov.Views.Log = Backbone.View.extend({
     this.unFreeze();
   },
 
-  /*
+  /**
    * Add a new vote to the stack.
    *
    * @param {String} word: The word.
    * @param {Number} value: The vote quantity.
-   *
-   * @return void.
    */
   add: function(word, value) {
 
@@ -74,20 +69,16 @@ Ov.Views.Log = Backbone.View.extend({
 
   },
 
-  /*
+  /**
    * Push new vote propagations onto the overflow.
-   *
-   * @return void.
    */
   freeze: function() {
     this.primaryMarkup.addClass('frozen');
     this.frozen = true;
   },
 
-  /*
+  /**
    * Merge overflow back into the primary stack.
-   *
-   * @return void.
    */
   unFreeze: function() {
 
@@ -112,10 +103,8 @@ Ov.Views.Log = Backbone.View.extend({
 
   },
 
-  /*
+  /**
    * Reduce both stacks to contain maxLength votes.
-   *
-   * @return void.
    */
   prune: function() {
 

@@ -1,4 +1,5 @@
-/*
+
+/**
  * Form view.
  */
 
@@ -12,10 +13,8 @@ Add.Views.Form = Backbone.View.extend({
     'click button.minutes': 'setUnitMinutes'
   },
 
-  /*
+  /**
    * Get components.
-   *
-   * @return void.
    */
   initialize: function() {
     this.rLenVal = this.$el.find('input.rLenVal');
@@ -23,10 +22,8 @@ Add.Views.Form = Backbone.View.extend({
     this.seedCap = this.$el.find('input.seedCap');
   },
 
-  /*
+  /**
    * Update defaults based on round length.
-   *
-   * @return void.
    */
   processKeyStroke: function() {
 
@@ -39,30 +36,24 @@ Add.Views.Form = Backbone.View.extend({
 
   },
 
-  /*
+  /**
    * Set round length unit to 'seconds'.
-   *
-   * @return void.
    */
   setUnitSeconds: function() {
     this.rLenUnit.val('seconds');
     this.processKeyStroke();
   },
 
-  /*
+  /**
    * Set round length unit to 'minutes'.
-   *
-   * @return void.
    */
   setUnitMinutes: function() {
     this.rLenUnit.val('minutes');
     this.processKeyStroke();
   },
 
-  /*
+  /**
    * Get round length in milliseconds.
-   *
-   * @return void.
    */
   _getRoundLengthMs: function() {
     var ms = parseInt(this.rLenVal.val(), 10) * 1000;

@@ -1,4 +1,5 @@
-/*
+
+/**
  * Timer view.
  */
 
@@ -8,10 +9,8 @@ Ov.Views.Timer = Backbone.View.extend({
     refresh: 250 // Ms between renders.
   },
 
-  /*
+  /**
    * Set rendering heartbeat.
-   *
-   * @return void.
    */
   initialize: function() {
 
@@ -30,22 +29,18 @@ Ov.Views.Timer = Backbone.View.extend({
 
   },
 
-  /*
+  /**
    * Ingest new time delta from scoring slice.
    *
    * @param {Number} duration: The remaining time.
-   *
-   * @return void.
    */
   update: function(duration) {
     this.updateTime = Date.now();
     this.updateQuantity = duration;
   },
 
-  /*
+  /**
    * Render the human-readable time remaining.
-   *
-   * @return void.
    */
   render: function() {
 
@@ -63,12 +58,11 @@ Ov.Views.Timer = Backbone.View.extend({
 
   },
 
-  /*
+  /**
    * Convert a millisecond duration to hours, minutes,
    * seconds, and milliseconds.
    *
    * @param {Number} d: The duration in milliseconds.
-   *
    * @return {Array}: [min, sec].
    */
   _msToDuration: function(d) {
@@ -77,12 +71,11 @@ Ov.Views.Timer = Backbone.View.extend({
     return [min, sec];
   },
 
-  /*
+  /**
    * If the passed value is a single digit, pad it with
    * a single zero. If the value is negative, set it to 0.
    *
    * @param {Number} val: The value.
-   *
    * @return {Number} val: The padded value.
    */
   _format: function(val) {

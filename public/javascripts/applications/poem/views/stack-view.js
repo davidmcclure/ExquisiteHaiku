@@ -1,13 +1,12 @@
-/*
+
+/**
  * Stack view.
  */
 
 Ov.Views.Stack = Backbone.View.extend({
 
-  /*
+  /**
    * Prepare trackers.
-   *
-   * @return void.
    */
   initialize: function() {
 
@@ -25,12 +24,10 @@ Ov.Views.Stack = Backbone.View.extend({
 
   },
 
-  /*
+  /**
    * Render stack data.
    *
    * @param {Array} stack: The word data.
-   *
-   * @return void.
    */
   update: function(stack) {
 
@@ -54,10 +51,8 @@ Ov.Views.Stack = Backbone.View.extend({
 
   },
 
-  /*
+  /**
    * Construct and inject a word row.
-   *
-   * @return void.
    */
   addRow: function() {
 
@@ -70,12 +65,10 @@ Ov.Views.Stack = Backbone.View.extend({
 
   },
 
-  /*
+  /**
    * Set the currently selected word instance.
    *
    * @param {String} word: The word.
-   *
-   * @return void.
    */
   setSelected: function(word) {
 
@@ -94,10 +87,8 @@ Ov.Views.Stack = Backbone.View.extend({
 
   },
 
-  /*
+  /**
    * Freeze stack rendering.
-   *
-   * @return void.
    */
   freeze: function() {
 
@@ -115,10 +106,8 @@ Ov.Views.Stack = Backbone.View.extend({
 
   },
 
-  /*
+  /**
    * Unfreeze stack rendering.
-   *
-   * @return void.
    */
   unFreeze: function() {
 
@@ -139,19 +128,15 @@ Ov.Views.Stack = Backbone.View.extend({
 
   },
 
-  /*
+  /**
    * Cancel the currently running drag.
-   *
-   * @return void.
    */
   endCurrentDrag: function() {
     this.wordsToRow[this.selected].endDrag();
   },
 
-  /*
+  /**
    * Empty words.
-   *
-   * @return void.
    */
   empty: function() {
     this.wordRows = [];

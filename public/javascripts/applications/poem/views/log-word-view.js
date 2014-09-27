@@ -1,4 +1,5 @@
-/*
+
+/**
  * Log word view.
  */
 
@@ -17,11 +18,10 @@ Ov.Views.LogWord = Backbone.View.extend({
     'mousedown':  'echo'
   },
 
-  /*
+  /**
    * Build template, get components.
    *
    * @param {Object} options
-   * @return void.
    */
   initialize: function(options) {
 
@@ -45,30 +45,24 @@ Ov.Views.LogWord = Backbone.View.extend({
 
   },
 
-  /*
+  /**
    * Render size.
-   *
-   * @return void.
    */
   renderSize: function() {
     var size = 10 + 0.05*(Math.abs(this.value));
     this.wordMarkup.css('font-size', size);
   },
 
-  /*
+  /**
    * Render color.
-   *
-   * @return void.
    */
   renderColor: function() {
     if (this.value > 0) this.$el.addClass('positive');
     else this.$el.addClass('negative');
   },
 
-  /*
+  /**
    * Render point preview.
-   *
-   * @return void.
    */
   hover: function() {
     if (!Ov.global.isDragging) {
@@ -77,20 +71,16 @@ Ov.Views.LogWord = Backbone.View.extend({
     }
   },
 
-  /*
+  /**
    * Cancel point preview.
-   *
-   * @return void.
    */
   unHover: function() {
     if (!Ov.global.isDragging) Ov.vent.trigger('log:cancel');
     Ov.vent.trigger('words:unHover', this.word);
   },
 
-  /*
+  /**
    * Release the echo, reapply preview.
-   *
-   * @return void.
    */
   echo: function() {
     Ov.vent.trigger('points:vote', this.word, this.value);

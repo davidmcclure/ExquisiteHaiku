@@ -1,4 +1,5 @@
-/*
+
+/**
  * Poem view.
  */
 
@@ -14,10 +15,8 @@ Ov.Views.Poem = Backbone.View.extend({
     return _.template($('#poem-word').html());
   },
 
-  /*
+  /**
    * Prepare trackers.
-   *
-   * @return void.
    */
   initialize: function() {
 
@@ -31,12 +30,11 @@ Ov.Views.Poem = Backbone.View.extend({
 
   },
 
-  /*
+  /**
    * Render poem words.
    *
    * @param {Array} poem: The poem.
    * @param {Number} syllables: The current syllable count.
-   *
    * @return {Boolean}: True if the incoming poem is rendered.
    */
   update: function(poem, syllables) {
@@ -83,12 +81,10 @@ Ov.Views.Poem = Backbone.View.extend({
 
   },
 
-  /*
+  /**
    * Render the poem.
    *
    * @param {Array} poem: The poem.
-   *
-   * @return void.
    */
   render: function(poem) {
 
@@ -108,7 +104,7 @@ Ov.Views.Poem = Backbone.View.extend({
 
   },
 
-  /*
+  /**
    * Add a new line to the container.
    *
    * @return {Element} line: The new line.

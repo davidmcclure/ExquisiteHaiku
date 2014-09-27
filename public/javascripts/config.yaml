@@ -1,6 +1,6 @@
 default:
 
-  components: "public/javascripts/components/"
+  components: "public/javascripts/bower_components/"
   payload: "public/javascripts/payloads/"
 
   apps:

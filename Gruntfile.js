@@ -38,7 +38,7 @@ module.exports = function(grunt) {
           c.apps.poem+'collections/*.js',
           c.apps.poem+'controllers/*.js'
         ]),
-        dest: c.payload+'poem.js',
+        dest: c.dist+'poem.js',
         separator: ';'
       },
 
@@ -49,7 +49,7 @@ module.exports = function(grunt) {
           c.apps.add+'views/*.js',
           c.apps.add+'controllers/*.js'
         ]),
-        dest: c.payload+'admin.js',
+        dest: c.dist+'admin.js',
         separator: ';'
       },
 
@@ -64,7 +64,7 @@ module.exports = function(grunt) {
           c.apps.add+'views/*.js',
           c.apps.add+'controllers/*.js'
         ]),
-        dest: c.payload+'test.js',
+        dest: c.dist+'test.js',
         separator: ';'
       }
 
@@ -74,19 +74,19 @@ module.exports = function(grunt) {
 
       poem: {
         src: ['<%= concat.poem.src %>'],
-        dest: c.payload+'poem.js',
+        dest: c.dist+'poem.js',
         separator: ';'
       },
 
       admin: {
         src: ['<%= concat.admin.src %>'],
-        dest: c.payload+'admin.js',
+        dest: c.dist+'admin.js',
         separator: ';'
       },
 
       test: {
         src: ['<%= concat.test.src %>'],
-        dest: c.payload+'test.js',
+        dest: c.dist+'test.js',
         separator: ';'
       }
 

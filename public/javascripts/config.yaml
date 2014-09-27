@@ -1,7 +1,7 @@
 default:
 
   components: "public/javascripts/bower_components/"
-  payload: "public/javascripts/payloads/"
+  dist: "public/javascripts/dist/"
 
   apps:
     poem: "public/javascripts/src/poem/"

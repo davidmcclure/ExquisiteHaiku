@@ -1,4 +1,4 @@
 node_modules
 public/javascripts/bower_components
-public/javascripts/payloads
+public/javascripts/dist
 public/stylesheets

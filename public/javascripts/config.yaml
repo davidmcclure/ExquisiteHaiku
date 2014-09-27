@@ -4,8 +4,8 @@ default:
   payload: "public/javascripts/payloads/"
 
   apps:
-    poem: "public/javascripts/applications/poem/"
-    add: "public/javascripts/applications/add/"
+    poem: "public/javascripts/src/poem/"
+    add: "public/javascripts/src/add/"
 
   vendor:
     jquery: "jquery/jquery.js"

@@ -6,6 +6,9 @@
 // Module dependencies.
 var express = require('express');
 var MongoStore = require('connect-mongo')(express);
+var methodOverride = require('method-override');
+var cookieParser = require('cookie-parser');
+var cookieSession = require('cookie-session');
 
 // Start-up routine.
 module.exports = function(app) {
@@ -17,14 +20,13 @@ module.exports = function(app) {
   app.set('view engine', 'jade');
 
   // Configure sessions.
-  app.use(express.bodyParser());
-  app.use(express.cookieParser('dev'));
-  app.use(express.session({
+  app.use(cookieParser('dev'));
+  app.use(cookieSession({
     store: new MongoStore({ url: global.config.db }),
     secret: 'dev'
   }));
 
-  app.use(express.methodOverride());
+  app.use(methodOverride());
   app.use(app.router);
 
   // Set stylus source.

@@ -20,13 +20,14 @@ Ov.Views.LogWord = Backbone.View.extend({
   /*
    * Build template, get components.
    *
+   * @param {Object} options
    * @return void.
    */
-  initialize: function() {
+  initialize: function(options) {
 
     // Set word and value.
-    this.word = this.options.word;
-    this.value = this.options.value;
+    this.word = options.word;
+    this.value = options.value;
 
     // Build template.
     var row = $(this.template()({

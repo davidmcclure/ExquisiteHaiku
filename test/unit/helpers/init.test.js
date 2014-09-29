@@ -3,6 +3,7 @@
  */
 
 var _t = require('../../dependencies.js');
+var should = require('should');
 
 describe('Init', function() {
 
@@ -129,7 +130,7 @@ describe('Init', function() {
   it('should start running poems', function() {
 
     // Check for round registraton.
-    _t.assert.exist(global.Oversoul.votes[running.round.id]);
+    should.exist(global.Oversoul.votes[running.round.id]);
 
     // Check for vote registrations.
     global.Oversoul.votes[running.round.id].should.have.keys('word1', 'word2');

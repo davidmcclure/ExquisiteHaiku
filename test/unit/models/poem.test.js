@@ -1,8 +1,10 @@
+
 /*
  * Unit tests for poem model.
  */
 
 var _t = require('../../dependencies.js');
+var should = require('should');
 
 describe('Poem', function() {
 
@@ -301,11 +303,11 @@ describe('Poem', function() {
     describe('id', function() {
 
       it('should have a virtual field for "id"', function() {
-        _t.assert.exist(poem.id);
+        should.exist(poem.id);
       });
 
       it('should be a string', function() {
-        poem.id.should.be.a('string');
+        poem.id.should.be.a.String;
       });
 
     });
@@ -313,7 +315,7 @@ describe('Poem', function() {
     describe('unstarted', function() {
 
       it('should have a virtual field for "unstarted"', function() {
-        _t.assert.exist(poem.unstarted);
+        should.exist(poem.unstarted);
       });
 
       it('should be true when started=false', function() {
@@ -331,7 +333,7 @@ describe('Poem', function() {
     describe('paused', function() {
 
       it('should have a virtual field for "paused"', function() {
-        _t.assert.exist(poem.paused);
+        should.exist(poem.paused);
       });
 
       it('should be false when the poem is running', function() {
@@ -368,7 +370,7 @@ describe('Poem', function() {
       });
 
       it('should return null when a round does not exist', function() {
-        _t.assert.not.exist(poem.round);
+        should.not.exist(poem.round);
       });
 
     });
@@ -797,16 +799,16 @@ describe('Poem', function() {
 
         // Check for well-formed round.
         poem.rounds.length.should.eql(1);
-        _t.assert.exist(poem.rounds[0].id);
-        _t.assert.exist(poem.rounds[0].started);
+        should.exist(poem.rounds[0].id);
+        should.exist(poem.rounds[0].started);
 
         // Add a second round.
         poem.newRound();
 
         // Check for well-formed round.
         poem.rounds.length.should.eql(2);
-        _t.assert.exist(poem.rounds[1].id);
-        _t.assert.exist(poem.rounds[1].started);
+        should.exist(poem.rounds[1].id);
+        should.exist(poem.rounds[1].started);
 
       });
 
@@ -816,8 +818,8 @@ describe('Poem', function() {
         var round = poem.newRound();
 
         // Check for well-formed round.
-        _t.assert.exist(round.id);
-        _t.assert.exist(round.started);
+        should.exist(round.id);
+        should.exist(round.started);
 
       });
 

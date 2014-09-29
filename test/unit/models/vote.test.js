@@ -3,6 +3,7 @@
  */
 
 var _t = require('../../dependencies.js');
+var should = require('should');
 
 describe('Vote', function() {
 
@@ -116,11 +117,11 @@ describe('Vote', function() {
     describe('id', function() {
 
       it('should have a virtual field for "id"', function() {
-        _t.assert.exist(round.id);
+        should.exist(round.id);
       });
 
       it('should be a string', function() {
-        round.id.should.be.a('string');
+        round.id.should.be.a.String;
       });
 
     });

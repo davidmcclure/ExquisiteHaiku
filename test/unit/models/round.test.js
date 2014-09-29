@@ -3,6 +3,7 @@
  */
 
 var _t = require('../../dependencies.js');
+var should = require('should');
 
 describe('Round', function() {
 
@@ -52,11 +53,11 @@ describe('Round', function() {
     describe('id', function() {
 
       it('should have a virtual field for "id"', function() {
-        _t.assert.exist(round.id);
+        should.exist(round.id);
       });
 
       it('should be a string', function() {
-        round.id.should.be.a('string');
+        round.id.should.be.a.String;
       });
 
     });
@@ -70,7 +71,7 @@ describe('Round', function() {
       it('should create the empty votes tracker', function() {
         round.register();
         global.Oversoul.votes.should.have.keys(round.id);
-      }); 
+      });
 
     });
 

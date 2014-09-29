@@ -1,8 +1,10 @@
-/*
+
+/**
  * Unit tests for _t.scoring routine.
  */
 
 var _t = require('../../dependencies.js');
+var should = require('should');
 
 describe('Scoring', function() {
 
@@ -279,7 +281,7 @@ describe('Scoring', function() {
             // Check order.
             result.stack[0][0].should.eql('third');
             result.stack[1][0].should.eql('second');
-            _t.assert.not.exist(result.stack[2]);
+            should.not.exist(result.stack[2]);
 
             // Check ratios.
             result.stack[0][4].should.eql('1.00');
@@ -521,7 +523,7 @@ describe('Scoring', function() {
               // Check for poem.
               result.poem[0][0].valueOf().should.eql('it');
               result.poem[0][1].valueOf().should.eql('is');
-              _t.assert.not.exist(result.poem[2]);
+              should.not.exist(result.poem[2]);
               done();
 
             }, function() {});

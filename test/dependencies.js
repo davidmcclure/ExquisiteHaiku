@@ -22,20 +22,10 @@ exports._ =           require('lodash');
 // Models
 // ------
 
-// User.
-var user = require('../app/models/user');
+require('../app/models');
 exports.User = exports.mongoose.model('User');
-
-// Poem.
-var poem = require('../app/models/poem');
 exports.Poem = exports.mongoose.model('Poem');
-
-// Round.
-var round = require('../app/models/round');
 exports.Round = exports.mongoose.model('Round');
-
-// Vote.
-var vote = require('../app/models/vote');
 exports.Vote = exports.mongoose.model('Vote');
 
 

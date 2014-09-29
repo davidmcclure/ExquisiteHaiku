@@ -4,6 +4,10 @@
  */
 
 var _t = require('../dependencies.js');
+var should = require('should');
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
+
 
 describe('Index Controller', function() {
 
@@ -16,7 +20,7 @@ describe('Index Controller', function() {
     browser = new _t.browser();
 
     // Create user.
-    user = new _t.User({
+    user = new User({
       username: 'user',
       password: 'password',
       email: 'user1@test.org'
@@ -31,7 +35,7 @@ describe('Index Controller', function() {
 
   // Clear users.
   afterEach(function(done) {
-    _t.User.remove(function(err) {
+    User.remove(function(err) {
       done();
     });
   });
@@ -71,14 +75,14 @@ describe('Index Controller', function() {
 
       it('should not show login link', function(done) {
         browser.visit(_t.root, function() {
-          _t.assert(!browser.query('a[href="/admin/login"]'));
+          should(!browser.query('a[href="/admin/login"]'));
           done();
         });
       });
 
       it('should not show register link', function(done) {
         browser.visit(_t.root, function() {
-          _t.assert(!browser.query('a[href="/admin/register"]'));
+          should(!browser.query('a[href="/admin/register"]'));
           done();
         });
       });

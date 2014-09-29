@@ -4,6 +4,10 @@
  */
 
 var _t = require('../dependencies.js');
+var should = require('should');
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
+
 
 describe('Auth Controller', function() {
 
@@ -15,7 +19,7 @@ describe('Auth Controller', function() {
     browser = new _t.browser();
 
     // Create a user.
-    user = new _t.User({
+    user = new User({
       username: 'david',
       password: 'password',
       email: 'david@test.org'
@@ -28,7 +32,7 @@ describe('Auth Controller', function() {
 
   // Clear documents.
   afterEach(function(done) {
-    _t.User.collection.remove(function(err) {
+    User.collection.remove(function(err) {
       done();
     });
   });
@@ -173,7 +177,7 @@ describe('Auth Controller', function() {
 
             // Check for error.
             browser.location.pathname.should.eql('/admin/register');
-            _t.assert(!browser.query('span.help-inline.username'));
+            should(!browser.query('span.help-inline.username'));
             done();
 
           });
@@ -256,7 +260,7 @@ describe('Auth Controller', function() {
 
             // Check for error.
             browser.location.pathname.should.eql('/admin/register');
-            _t.assert(!browser.query('span.help-inline.username'));
+            should(!browser.query('span.help-inline.username'));
             done();
 
           });
@@ -319,7 +323,7 @@ describe('Auth Controller', function() {
 
             // Check for error.
             browser.location.pathname.should.eql('/admin/register');
-            _t.assert(!browser.query('span.help-inline.password'));
+            should(!browser.query('span.help-inline.password'));
             done();
 
           });
@@ -384,7 +388,7 @@ describe('Auth Controller', function() {
 
             // Check for error.
             browser.location.pathname.should.eql('/admin/register');
-            _t.assert(!browser.query('span.help-inline.confirm'));
+            should(!browser.query('span.help-inline.confirm'));
             done();
 
           });
@@ -413,7 +417,7 @@ describe('Auth Controller', function() {
             browser.location.pathname.should.eql('/admin');
 
             // Get user.
-            _t.User.findOne({ username: 'kara' }, function(err, user) {
+            User.findOne({ username: 'kara' }, function(err, user) {
               user.should.be.ok;
               user.email.should.eql('kara@test.org');
               done();
@@ -528,7 +532,7 @@ describe('Auth Controller', function() {
 
             // Check for error.
             browser.location.pathname.should.eql('/admin/login');
-            _t.assert(!browser.query('span.help-inline.username'));
+            should(!browser.query('span.help-inline.username'));
             done();
 
           });

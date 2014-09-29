@@ -4,8 +4,13 @@
  */
 
 var should = require('should');
-var init = require('../../../config/init');
 var _t = require('../../dependencies.js');
+var init = require('../../../config/init');
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
+var Poem = mongoose.model('Poem');
+var Vote = mongoose.model('Vote');
+
 
 describe('Init', function() {
 
@@ -27,14 +32,14 @@ describe('Init', function() {
     io = {};
 
     // Create user.
-    user = new _t.User({
+    user = new User({
       username: 'david',
       password: 'password',
       email: 'david@test.org'
     });
 
     // Create running poem.
-    running = new _t.Poem({
+    running = new Poem({
       user: user.id,
       started: true,
       running: true,
@@ -49,7 +54,7 @@ describe('Init', function() {
     });
 
     // Create not running poem.
-    notRunning = new _t.Poem({
+    notRunning = new Poem({
       user: user.id,
       started: true,
       running: false,
@@ -67,22 +72,22 @@ describe('Init', function() {
     running.newRound();
     notRunning.newRound();
 
-    // _t.Vote 1.
-    var vote1 = new _t.Vote({
+    // Vote 1.
+    var vote1 = new Vote({
       round: running.round.id,
       word: 'word1',
       quantity: 100
     });
 
-    // _t.Vote 2.
-    var vote2 = new _t.Vote({
+    // Vote 2.
+    var vote2 = new Vote({
       round: running.round.id,
       word: 'word2',
       quantity: 100
     });
 
-    // _t.Vote 3.
-    var vote3 = new _t.Vote({
+    // Vote 3.
+    var vote3 = new Vote({
       round: notRunning.round.id,
       word: 'word3',
       quantity: 100
@@ -120,9 +125,9 @@ describe('Init', function() {
 
     // Truncate.
     _t.async.map([
-      _t.User,
-      _t.Poem,
-      _t.Vote
+      User,
+      Poem,
+      Vote
     ], _t.helpers.remove, function(err, models) {
       done();
     });

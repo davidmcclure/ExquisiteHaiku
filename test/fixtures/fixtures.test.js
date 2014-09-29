@@ -5,6 +5,7 @@
 
 var _t = require('../dependencies.js');
 
+
 describe('Fixtures', function() {
 
   it('render index.jade', function(done) {

@@ -5,6 +5,11 @@
 
 var _t = require('../../dependencies.js');
 var should = require('should');
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
+var Poem = mongoose.model('Poem');
+var Vote = mongoose.model('Vote');
+
 
 describe('Poem', function() {
 
@@ -13,14 +18,14 @@ describe('Poem', function() {
   beforeEach(function(done) {
 
     // Create user.
-    user = new _t.User({
+    user = new User({
       username: 'david',
       password: 'password',
       email: 'david@test.org'
     });
 
     // Create poem.
-    poem = new _t.Poem({
+    poem = new Poem({
       user: user.id,
       roundLengthValue: 3,
       roundLengthUnit: 'minutes',
@@ -48,8 +53,8 @@ describe('Poem', function() {
 
     // Clear users and poems.
     _t.async.map([
-      _t.User,
-      _t.Poem
+      User,
+      Poem
     ], _t.helpers.remove, function(err, models) {
       done();
     });
@@ -87,7 +92,7 @@ describe('Poem', function() {
     it('should require all fields', function(done) {
 
       // Create poem.
-      var poem = new _t.Poem();
+      var poem = new Poem();
 
       // Overrids defaults.
       poem.created = null;
@@ -113,7 +118,7 @@ describe('Poem', function() {
         err.errors.seedCapital.type.should.eql('required');
 
         // Check for 0 documents.
-        _t.Poem.count({}, function(err, count) {
+        Poem.count({}, function(err, count) {
           count.should.eql(1);
           done();
         });
@@ -241,7 +246,7 @@ describe('Poem', function() {
         poem.running = false;
         poem.complete = false;
         poem.save(function(err) {
-          _t.assert(!err);
+          should(!err);
           done();
         });
       });
@@ -251,7 +256,7 @@ describe('Poem', function() {
         poem.running = true;
         poem.complete = false;
         poem.save(function(err) {
-          _t.assert(!err);
+          should(!err);
           done();
         });
       });
@@ -261,7 +266,7 @@ describe('Poem', function() {
         poem.running = false;
         poem.complete = true;
         poem.save(function(err) {
-          _t.assert(!err);
+          should(!err);
           done();
         });
       });
@@ -273,7 +278,7 @@ describe('Poem', function() {
       it('should pass with "seconds"', function(done) {
         poem.roundLengthUnit = 'seconds';
         poem.save(function(err) {
-          _t.assert(!err);
+          should(!err);
           done();
         });
       });
@@ -281,7 +286,7 @@ describe('Poem', function() {
       it('should pass with "minutes"', function(done) {
         poem.roundLengthUnit = 'minutes';
         poem.save(function(err) {
-          _t.assert(!err);
+          should(!err);
           done();
         });
       });
@@ -398,7 +403,7 @@ describe('Poem', function() {
       });
 
       it('should return null when a round does not exist', function() {
-        _t.assert(!poem.roundExpiration);
+        should(!poem.roundExpiration);
       });
 
     });
@@ -837,21 +842,21 @@ describe('Poem', function() {
         var round1 = poem.newRound();
 
         // Vote 1.
-        var vote1 = new _t.Vote({
+        var vote1 = new Vote({
           round: poem.round.id,
           word: 'first',
           quantity: 100
         });
 
         // Vote 2.
-        var vote2 = new _t.Vote({
+        var vote2 = new Vote({
           round: poem.round.id,
           word: 'second',
           quantity: 200
         });
 
         // Vote 3.
-        var vote3 = new _t.Vote({
+        var vote3 = new Vote({
           round: poem.round.id,
           word: 'third',
           quantity: 300
@@ -908,7 +913,7 @@ describe('Poem', function() {
       });
 
       it('should return null when no round exists', function() {
-        _t.assert(!poem.timeLeftInRound(Date.now()));
+        should(!poem.timeLeftInRound(Date.now()));
       });
 
     });

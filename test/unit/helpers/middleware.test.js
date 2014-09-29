@@ -5,6 +5,9 @@
 
 var _t = require('../../dependencies.js');
 var middleware = require('../../../helpers/middleware');
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
+var Poem = mongoose.model('Poem');
 
 
 describe('Route Middleware', function() {
@@ -22,8 +25,8 @@ describe('Route Middleware', function() {
 
     // Truncate.
     _t.async.map([
-      _t.User,
-      _t.Poem
+      User,
+      Poem
     ], _t.helpers.remove, function(err, models) {
       done();
     });
@@ -37,7 +40,7 @@ describe('Route Middleware', function() {
     beforeEach(function(done) {
 
       // Create user.
-      user = new _t.User({
+      user = new User({
         username: 'david',
         password: 'password',
         email: 'david@test.org'
@@ -120,7 +123,7 @@ describe('Route Middleware', function() {
     it('should set req.user when user exists', function(done) {
 
       // Create user.
-      var user = new _t.User({
+      var user = new User({
         username: 'david',
         password: 'password',
         email: 'david@test.org'
@@ -145,12 +148,12 @@ describe('Route Middleware', function() {
 
   });
 
-  describe('no_t.User', function() {
+  describe('noUser', function() {
 
     it('should redirect when user session exists', function(done) {
 
       // Create user.
-      var user = new _t.User({
+      var user = new User({
         username: 'david',
         password: 'password',
         email: 'david@test.org'
@@ -162,7 +165,7 @@ describe('Route Middleware', function() {
         // Set user id.
         req.session.user_id = user.id;
 
-        // Call no_t.User, check for res.redirect().
+        // Call noUser, check for res.redirect().
         middleware.noUser(req, { redirect: function(route) {
           route.should.eql('/admin');
           done();
@@ -174,7 +177,7 @@ describe('Route Middleware', function() {
 
     it('should call next() if no session', function(done) {
 
-      // Call no_t.User.
+      // Call noUser.
       middleware.noUser(req, res, function() {
         done();
       });
@@ -190,14 +193,14 @@ describe('Route Middleware', function() {
     beforeEach(function(done) {
 
       // Create user.
-      user = new _t.User({
+      user = new User({
         username: 'david',
         password: 'password',
         email: 'david@test.org'
       });
 
       // Create poem.
-      poem = new _t.Poem({
+      poem = new Poem({
         user: user.id,
         roundLengthValue: 10,
         roundLengthUnit: 'seconds',
@@ -240,21 +243,21 @@ describe('Route Middleware', function() {
     beforeEach(function(done) {
 
       // Create user1.
-      user1 = new _t.User({
+      user1 = new User({
         username: 'david',
         password: 'password',
         email: 'david@test.org'
       });
 
       // Create user2.
-      user2 = new _t.User({
+      user2 = new User({
         username: 'kara',
         password: 'password',
         email: 'kara@test.org'
       });
 
       // Create poem1.
-      poem = new _t.Poem({
+      poem = new Poem({
         user: user1.id,
         roundLength: 10000,
         sliceInterval: 300,
@@ -311,14 +314,14 @@ describe('Route Middleware', function() {
     beforeEach(function(done) {
 
       // Create user.
-      user = new _t.User({
+      user = new User({
         username: 'david',
         password: 'password',
         email: 'david@test.org'
       });
 
       // Create poem.
-      poem = new _t.Poem({
+      poem = new Poem({
         user: user.id,
         roundLength: 10000,
         sliceInterval: 300,

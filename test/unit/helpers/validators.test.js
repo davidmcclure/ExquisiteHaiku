@@ -5,6 +5,8 @@
 
 var _t = require('../../dependencies.js');
 var validators = require('../../../helpers/validators');
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
 
 
 describe('Custom Validators', function() {
@@ -16,7 +18,7 @@ describe('Custom Validators', function() {
 
     // Truncate.
     _t.async.map([
-      _t.User
+      User
     ], _t.helpers.remove, function(err, models) {
       done();
     });
@@ -57,7 +59,7 @@ describe('Custom Validators', function() {
       });
 
       // Create a user.
-      var user = new _t.User({
+      var user = new User({
         username: 'david',
         password: 'password',
         email: 'david@test.org'
@@ -79,7 +81,7 @@ describe('Custom Validators', function() {
     beforeEach(function(done) {
 
       // Create user.
-      user = new _t.User({
+      user = new User({
         username: 'david',
         password: 'password',
         email: 'david@test.org'
@@ -162,7 +164,7 @@ describe('Custom Validators', function() {
     beforeEach(function(done) {
 
       // Create user.
-      user = new _t.User({
+      user = new User({
         username: 'david',
         password: 'password',
         email: 'david@test.org'
@@ -179,7 +181,7 @@ describe('Custom Validators', function() {
       field.data = 'david';
 
       // Get the validator.
-      var validator = validators.uniqueField(_t.User, 'username', 'err');
+      var validator = validators.uniqueField(User, 'username', 'err');
 
       // Spy on callback.
       callback = _t.sinon.spy(function() {
@@ -198,7 +200,7 @@ describe('Custom Validators', function() {
       field.data = 'kara';
 
       // Get the validator.
-      var validator = validators.uniqueField(_t.User, 'username', 'err');
+      var validator = validators.uniqueField(User, 'username', 'err');
 
       // Spy on callback.
       callback = _t.sinon.spy(function() {
@@ -220,14 +222,14 @@ describe('Custom Validators', function() {
     beforeEach(function(done) {
 
       // Create user1.
-      user1 = new _t.User({
+      user1 = new User({
         username: 'david',
         password: 'password',
         email: 'david@test.org'
       });
 
       // Create user2.
-      user2 = new _t.User({
+      user2 = new User({
         username: 'kara',
         password: 'password',
         email: 'kara@test.org'
@@ -250,7 +252,7 @@ describe('Custom Validators', function() {
 
       // Get the validator.
       var validator = validators.uniqueNonSelfField(
-        _t.User, 'username', user1, 'err'
+        User, 'username', user1, 'err'
       );
 
       // Spy on callback.
@@ -271,7 +273,7 @@ describe('Custom Validators', function() {
 
       // Get the validator.
       var validator = validators.uniqueNonSelfField(
-        _t.User, 'username', user1, 'err'
+        User, 'username', user1, 'err'
       );
 
       // Spy on callback.
@@ -292,7 +294,7 @@ describe('Custom Validators', function() {
 
       // Get the validator.
       var validator = validators.uniqueNonSelfField(
-        _t.User, 'username', user1, 'err'
+        User, 'username', user1, 'err'
       );
 
       // Spy on callback.

@@ -6,6 +6,11 @@
 var should = require('should');
 var scoring = require('../../../app/scoring/scoring');
 var _t = require('../../dependencies.js');
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
+var Poem = mongoose.model('Poem');
+var Round = mongoose.model('Round');
+var Vote = mongoose.model('Vote');
 
 
 describe('Scoring', function() {
@@ -15,7 +20,7 @@ describe('Scoring', function() {
   beforeEach(function() {
 
     // Create user.
-    user = new _t.User({
+    user = new User({
       username: 'david',
       password: 'password',
       email: 'david@test.org'
@@ -38,10 +43,10 @@ describe('Scoring', function() {
 
     // Clear users and poems.
     _t.async.map([
-      _t.User,
-      _t.Poem,
-      _t.Round,
-      _t.Vote
+      User,
+      Poem,
+      Round,
+      Vote
     ], _t.helpers.remove, function(err, models) {
       done();
     });
@@ -203,7 +208,7 @@ describe('Scoring', function() {
     beforeEach(function(done) {
 
       // Create poem.
-      poem = new _t.Poem({
+      poem = new Poem({
         user: user.id,
         started: true,
         running: true,
@@ -238,7 +243,7 @@ describe('Scoring', function() {
         poem.addWord('is');
 
         // Vote 1.
-        var vote1 = new _t.Vote({
+        var vote1 = new Vote({
           round: poem.round.id,
           word: 'first',
           quantity: 100,
@@ -246,7 +251,7 @@ describe('Scoring', function() {
         });
 
         // Vote 2.
-        var vote2 = new _t.Vote({
+        var vote2 = new Vote({
           round: poem.round.id,
           word: 'second',
           quantity: 200,
@@ -254,7 +259,7 @@ describe('Scoring', function() {
         });
 
         // Vote 3.
-        var vote3 = new _t.Vote({
+        var vote3 = new Vote({
           round: poem.round.id,
           word: 'third',
           quantity: 300,
@@ -349,91 +354,6 @@ describe('Scoring', function() {
 
       });
 
-      // describe('when the top word wins by ratio', function() {
-
-      //   beforeEach(function(done) {
-
-      //     // Add new vote.
-      //     var vote4 = new _t.Vote({
-      //       round: poem.round.id,
-      //       word: 'fourth',
-      //       quantity: 10000,
-      //       applied: now
-      //     });
-
-      //     // Save.
-      //     vote4.save(function(err) {
-      //       done();
-      //     });
-
-      //   });
-
-      //   it('should broadcast updated poem', function(done) {
-
-      //     // Score the poem.
-      //     scoring.score(poem.id, now+5000, function(result) {
-
-      //       // Check poem.
-      //       result.poem[0][0].valueOf().should.eql('it');
-      //       result.poem[0][1].valueOf().should.eql('is');
-      //       result.poem[0][2].valueOf().should.eql('fourth');
-      //       done();
-
-      //     }, function() {});
-
-      //   });
-
-      //   it('should broadcast empty stacks', function(done) {
-
-      //     // Score the poem.
-      //     scoring.score(poem.id, now+5000, function(result) {
-
-      //       // Check stack.
-      //       result.stack.should.eql([]);
-      //       done();
-
-      //     }, function() {});
-
-      //   });
-
-      //   it('should save updated poem', function(done) {
-
-      //     // Score the poem.
-      //     scoring.score(poem.id, now+5000, function() {}, function(result) {
-
-      //       // Get the poem.
-      //       _t.Poem.findById(poem.id, function(err, poem) {
-
-      //         // Check for new word.
-      //         poem.words[0][2].valueOf().should.eql('fourth');
-      //         done();
-
-      //       });
-
-      //     });
-
-      //   });
-
-      //   it('should save updated round', function(done) {
-
-      //     // Score the poem.
-      //     scoring.score(poem.id, now+5000, function() {}, function(result) {
-
-      //       // Get the poem.
-      //       _t.Poem.findById(poem.id, function(err, poem) {
-
-      //         // Check for new round.
-      //         poem.round.id.should.not.eql(round.id);
-      //         done();
-
-      //       });
-
-      //     });
-
-      //   });
-
-      // });
-
       describe('when the round is expired', function() {
 
         beforeEach(function(done) {
@@ -478,7 +398,7 @@ describe('Scoring', function() {
           scoring.score(poem.id, now, function() {}, function(result) {
 
             // Get the poem.
-            _t.Poem.findById(poem.id, function(err, poem) {
+            Poem.findById(poem.id, function(err, poem) {
 
               // Check for new word.
               poem.words[0][2].valueOf().should.eql('third');
@@ -496,7 +416,7 @@ describe('Scoring', function() {
           scoring.score(poem.id, now, function() {}, function(result) {
 
             // Get the poem.
-            _t.Poem.findById(poem.id, function(err, poem) {
+            Poem.findById(poem.id, function(err, poem) {
 
               // Check for new round.
               poem.round.id.should.not.eql(round.id);
@@ -559,7 +479,7 @@ describe('Scoring', function() {
             scoring.score(poem.id, now+1000, function() {}, function(result) {
 
               // Get the poem.
-              _t.Poem.findById(poem.id, function(err, poem) {
+              Poem.findById(poem.id, function(err, poem) {
 
                 // Check for stopped poem.
                 poem.running.should.be.false;

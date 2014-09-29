@@ -5,12 +5,14 @@
 
 var _t = require('../../dependencies.js');
 var should = require('should');
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
 
 describe('User', function() {
 
   // Clear users.
   afterEach(function(done) {
-    _t.User.collection.remove(function(err) { done(); });
+    User.collection.remove(function(err) { done(); });
   });
 
   describe('required field validations', function() {
@@ -18,7 +20,7 @@ describe('User', function() {
     it('should require username and email', function(done) {
 
       // Create user, null fields.
-      var user = new _t.User();
+      var user = new User();
       user.created = null;
 
       // Save.
@@ -30,7 +32,7 @@ describe('User', function() {
         err.errors.email.type.should.eql('required');
 
         // Check for 0 documents.
-        _t.User.count({}, function(err, count) {
+        User.count({}, function(err, count) {
           count.should.eql(0);
           done();
         });
@@ -47,7 +49,7 @@ describe('User', function() {
 
     // Stub user.
     beforeEach(function() {
-      user = new _t.User();
+      user = new User();
     });
 
     it('should set "created" to the current date by default', function() {
@@ -62,7 +64,7 @@ describe('User', function() {
     beforeEach(function(done) {
 
       // Create user.
-      var user = new _t.User({
+      var user = new User({
         username: 'david',
         email: 'david@test.org'
       });
@@ -77,7 +79,7 @@ describe('User', function() {
     it('should block duplicate usernames', function(done) {
 
       // Create a new user with duplicate username.
-      var dupUser = new _t.User({
+      var dupUser = new User({
         username: 'david',
         email: 'david2@test.org'
       });
@@ -89,7 +91,7 @@ describe('User', function() {
         err.code.should.eql(11000);
 
         // Check for 1 document.
-        _t.User.count({}, function(err, count) {
+        User.count({}, function(err, count) {
           count.should.eql(1);
           done();
         });
@@ -101,7 +103,7 @@ describe('User', function() {
     it('should block duplicate email addresses', function(done) {
 
       // Create a new user with duplicate email.
-      var dupUser = new _t.User({
+      var dupUser = new User({
         username: 'david2',
         email: 'david@test.org'
       });
@@ -113,7 +115,7 @@ describe('User', function() {
         err.code.should.eql(11000);
 
         // Check for 1 document.
-        _t.User.count({}, function(err, count) {
+        User.count({}, function(err, count) {
           count.should.eql(1);
           done();
         });
@@ -130,7 +132,7 @@ describe('User', function() {
 
     // Stub user.
     beforeEach(function() {
-      user = new _t.User();
+      user = new User();
     });
 
     it('should have a virtual field for "id"', function() {
@@ -149,7 +151,7 @@ describe('User', function() {
 
     // Stub user.
     beforeEach(function() {
-      user = new _t.User({ password: 'password' });
+      user = new User({ password: 'password' });
     });
 
     it('should set _password, salt, and hash', function() {
@@ -170,7 +172,7 @@ describe('User', function() {
 
     // Stub user.
     beforeEach(function() {
-      user = new _t.User({ password: 'password' });
+      user = new User({ password: 'password' });
     });
 
     it('should return true for correct password', function() {

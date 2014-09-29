@@ -4,6 +4,12 @@
  */
 
 var _t = require('../dependencies.js');
+var should = require('should');
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
+var Poem = mongoose.model('Poem');
+var Round = mongoose.model('Round');
+
 
 describe('Admin Controller', function() {
 
@@ -16,22 +22,22 @@ describe('Admin Controller', function() {
     // Create browser.
     browser = new _t.browser();
 
-    // _t.User 1.
-    user1 = new _t.User({
+    // User 1.
+    user1 = new User({
       username: 'user1',
       password: 'password',
       email: 'user1@test.org'
     });
 
-    // _t.User 2.
-    user2 = new _t.User({
+    // User 2.
+    user2 = new User({
       username: 'user2',
       password: 'password',
       email: 'user2@test.org'
     });
 
     // Create unstarted poem.
-    unstarted = new _t.Poem({
+    unstarted = new Poem({
       user:             user1.id,
       started:          false,
       running:          false,
@@ -46,9 +52,9 @@ describe('Admin Controller', function() {
     });
 
     // Create running poem.
-    running = new _t.Poem({
+    running = new Poem({
       user:             user1.id,
-      rounds:           [new _t.Round()],
+      rounds:           [new Round()],
       started:          true,
       running:          true,
       complete:         false,
@@ -62,9 +68,9 @@ describe('Admin Controller', function() {
     });
 
     // Create paused poem.
-    paused = new _t.Poem({
+    paused = new Poem({
       user:             user1.id,
-      rounds:           [new _t.Round()],
+      rounds:           [new Round()],
       started:          true,
       running:          false,
       complete:         false,
@@ -78,9 +84,9 @@ describe('Admin Controller', function() {
     });
 
     // Create complete poem.
-    complete = new _t.Poem({
+    complete = new Poem({
       user:             user1.id,
-      rounds:           [new _t.Round()],
+      rounds:           [new Round()],
       started:          true,
       running:          false,
       complete:         true,
@@ -94,7 +100,7 @@ describe('Admin Controller', function() {
     });
 
     // Create user2 poem.
-    user2poem = new _t.Poem({
+    user2poem = new Poem({
       user:             user2.id,
       started:          false,
       running:          false,
@@ -145,8 +151,8 @@ describe('Admin Controller', function() {
 
     // Truncate.
     _t.async.map([
-      _t.User,
-      _t.Poem
+      User,
+      Poem
     ], _t.helpers.remove, function(err, models) {
       done();
     });
@@ -201,7 +207,7 @@ describe('Admin Controller', function() {
         browser.query('span.help-inline.decayHalflife').should.be.ok;
 
         // Check that no poem was created.
-        _t.Poem.count(function(err, count) {
+        Poem.count(function(err, count) {
           count.should.eql(5);
           done();
         });
@@ -227,7 +233,7 @@ describe('Admin Controller', function() {
         browser.query('span.help-inline.decayHalflife').should.be.ok;
 
         // Check that no poem was created.
-        _t.Poem.count(function(err, count) {
+        Poem.count(function(err, count) {
           count.should.eql(5);
           done();
         });
@@ -238,7 +244,7 @@ describe('Admin Controller', function() {
 
     it('should create a new poem and redirect on success', function(done) {
 
-      _t.Poem.count(function(err, count) {
+      Poem.count(function(err, count) {
 
         // Empty form.
         browser.fill('roundLengthValue', '3');
@@ -252,7 +258,7 @@ describe('Admin Controller', function() {
           browser.location.pathname.should.eql('/admin');
 
           // Get all poem, check parameters.
-          _t.Poem.find()
+          Poem.find()
           .sort('-created')
           .exec(function(err, poems) {
             var poem = _t._.first(poems);
@@ -294,7 +300,7 @@ describe('Admin Controller', function() {
     it('should create starting round for unstarted poem', function(done) {
 
       // Re-get unstarted, check for round.
-      _t.Poem.findById(unstarted.id, function(err, unstarted) {
+      Poem.findById(unstarted.id, function(err, unstarted) {
         unstarted.rounds.length.should.eql(1);
         done();
       });
@@ -304,7 +310,7 @@ describe('Admin Controller', function() {
     it('should not create new round for paused poem', function(done) {
 
       // Re-get paused, check for 1 round.
-      _t.Poem.findById(paused.id, function(err, paused) {
+      Poem.findById(paused.id, function(err, paused) {
         paused.rounds.length.should.eql(1);
         done();
       });
@@ -314,7 +320,7 @@ describe('Admin Controller', function() {
     it('should set running = true', function(done) {
 
       // Re-get unstarted, check running.
-      _t.Poem.findById(unstarted.id, function(err, unstarted) {
+      Poem.findById(unstarted.id, function(err, unstarted) {
         unstarted.running.should.be.true;
         done();
       });
@@ -354,7 +360,7 @@ describe('Admin Controller', function() {
     it('should set running = false', function(done) {
 
       // Re-get unstarted, check running.
-      _t.Poem.findById(unstarted.id, function(err, poem) {
+      Poem.findById(unstarted.id, function(err, poem) {
         poem.running.should.be.false;
         done();
       });
@@ -386,8 +392,8 @@ describe('Admin Controller', function() {
       it('should delete the poem', function(done) {
 
         // Check for no unstarted.
-        _t.Poem.findById(unstarted.id, function(err, poem) {
-          _t.assert(!poem);
+        Poem.findById(unstarted.id, function(err, poem) {
+          should(!poem);
           done();
         });
 
@@ -420,7 +426,7 @@ describe('Admin Controller', function() {
       });
 
       it('should remove the timer', function() {
-        _t.assert(!global.Oversoul.timers[unstarted.id]);
+        should(!global.Oversoul.timers[unstarted.id]);
       });
 
     });

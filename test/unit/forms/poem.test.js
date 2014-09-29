@@ -1,10 +1,14 @@
 
 /**
- * Unit tests for _t.Poem form.
+ * Unit tests for poem form.
  */
 
 var _t = require('../../dependencies.js');
 var poemForm = require('../../../helpers/forms/poem');
+var should = require('should');
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
+var Poem = mongoose.model('Poem');
 
 
 describe('Poem Form', function() {
@@ -20,8 +24,8 @@ describe('Poem Form', function() {
 
     // Truncate.
     _t.async.map([
-      _t.User,
-      _t.Poem
+      User,
+      Poem
     ], _t.helpers.remove, function(err, models) {
       done();
     });
@@ -61,7 +65,7 @@ describe('Poem Form', function() {
       form.bind({
         roundLengthValue: 1000
       }).validate(function(err, form) {
-        _t.assert(!form.fields.roundLengthValue.error);
+        should(!form.fields.roundLengthValue.error);
         done();
       });
 
@@ -91,7 +95,7 @@ describe('Poem Form', function() {
       form.bind({
         roundLengthUnit: 'seconds'
       }).validate(function(err, form) {
-        _t.assert(!form.fields.roundLengthUnit.error);
+        should(!form.fields.roundLengthUnit.error);
         done();
       });
 
@@ -132,7 +136,7 @@ describe('Poem Form', function() {
       form.bind({
         submissionVal: 5
       }).validate(function(err, form) {
-        _t.assert(!form.fields.submissionVal.error);
+        should(!form.fields.submissionVal.error);
         done();
       });
 
@@ -173,7 +177,7 @@ describe('Poem Form', function() {
       form.bind({
         decayHalflife: 5
       }).validate(function(err, form) {
-        _t.assert(!form.fields.decayHalflife.error);
+        should(!form.fields.decayHalflife.error);
         done();
       });
 

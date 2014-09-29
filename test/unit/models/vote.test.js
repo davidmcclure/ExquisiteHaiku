@@ -5,6 +5,10 @@
 
 var _t = require('../../dependencies.js');
 var should = require('should');
+var mongoose = require('mongoose');
+var Round = mongoose.model('Round');
+var Vote = mongoose.model('Vote');
+
 
 describe('Vote', function() {
 
@@ -13,10 +17,10 @@ describe('Vote', function() {
   beforeEach(function() {
 
     // Create round.
-    round = new _t.Round();
+    round = new Round();
 
     // Create vote.
-    vote = new _t.Vote({
+    vote = new Vote({
       round: round.id,
       word: 'word',
       quantity: 100
@@ -28,8 +32,8 @@ describe('Vote', function() {
 
     // Clear rounds and votes.
     _t.async.map([
-      _t.Round,
-      _t.Vote
+      Round,
+      Vote
     ], _t.helpers.remove, function(err, models) {
       done();
     });
@@ -41,7 +45,7 @@ describe('Vote', function() {
     it('should require all fields', function(done) {
 
       // Create vote, override defaults.
-      var vote = new _t.Vote();
+      var vote = new Vote();
       vote.applied = null;
 
       // Save.
@@ -54,7 +58,7 @@ describe('Vote', function() {
         err.errors.quantity.type.should.eql('required');
 
         // Check for 0 documents.
-        _t.Vote.count({}, function(err, count) {
+        Vote.count({}, function(err, count) {
           count.should.eql(0);
           done();
         });

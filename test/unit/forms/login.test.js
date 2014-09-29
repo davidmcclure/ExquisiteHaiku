@@ -5,6 +5,9 @@
 
 var _t = require('../../dependencies.js');
 var loginForm = require('../../../helpers/forms/login');
+var should = require('should');
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
 
 
 describe('Login Form', function() {
@@ -17,14 +20,14 @@ describe('Login Form', function() {
     form = loginForm();
 
     // Create admin user.
-    user1 = new _t.User({
+    user1 = new User({
       username: 'david',
       password: 'password',
       email: 'david@test.org'
     });
 
     // Create nont-admin user.
-    user2 = new _t.User({
+    user2 = new User({
       username: 'kara',
       password: 'password',
       email: 'kara@test.org'
@@ -42,7 +45,7 @@ describe('Login Form', function() {
 
   // Clear collections.
   afterEach(function(done) {
-    _t.User.collection.remove(function(err) { done(); });
+    User.collection.remove(function(err) { done(); });
   });
 
   describe('username', function() {
@@ -78,7 +81,7 @@ describe('Login Form', function() {
       form.bind({
         username: 'david'
       }).validate(function(err, form) {
-        _t.assert(!form.fields.username.error);
+        should(!form.fields.username.error);
         done();
       });
 
@@ -109,7 +112,7 @@ describe('Login Form', function() {
         username: 'david',
         password: 'password'
       }).validate(function(err, form) {
-        _t.assert(!form.fields.password.error);
+        should(!form.fields.password.error);
         done();
       });
 

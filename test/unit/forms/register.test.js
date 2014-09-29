@@ -5,6 +5,9 @@
 
 var _t = require('../../dependencies.js');
 var registerForm = require('../../../helpers/forms/register');
+var should = require('should');
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
 
 
 describe('Register Form', function() {
@@ -18,7 +21,7 @@ describe('Register Form', function() {
 
   // Clear collections.
   afterEach(function(done) {
-    _t.User.collection.remove(function(err) { done(); });
+    User.collection.remove(function(err) { done(); });
   });
 
   describe('username', function() {
@@ -26,7 +29,7 @@ describe('Register Form', function() {
     beforeEach(function(done) {
 
       // Create a user.
-      var user = new _t.User({
+      var user = new User({
         username: 'kara',
         email: 'kara@test.org'
       });
@@ -88,7 +91,7 @@ describe('Register Form', function() {
       form.bind({
         username: 'david'
       }).validate(function(err, form) {
-        _t.assert(!form.fields.username.error);
+        should(!form.fields.username.error);
         done();
       });
 
@@ -101,7 +104,7 @@ describe('Register Form', function() {
     beforeEach(function(done) {
 
       // Create a user.
-      var user = new _t.User({
+      var user = new User({
         username: 'kara',
         email: 'kara@test.org'
       });
@@ -152,7 +155,7 @@ describe('Register Form', function() {
       form.bind({
         email: 'david@test.org'
       }).validate(function(err, form) {
-        _t.assert(!form.fields.email.error);
+        should(!form.fields.email.error);
         done();
       });
 
@@ -193,7 +196,7 @@ describe('Register Form', function() {
       form.bind({
         password: 'password'
       }).validate(function(err, form) {
-        _t.assert(!form.fields.password.error);
+        should(!form.fields.password.error);
         done();
       });
 
@@ -237,7 +240,7 @@ describe('Register Form', function() {
         password: 'password',
         confirm: 'password'
       }).validate(function(err, form) {
-        _t.assert(!form.fields.confirm.error);
+        should(!form.fields.confirm.error);
         done();
       });
 

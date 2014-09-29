@@ -5,6 +5,9 @@
 
 var _t = require('../../dependencies.js');
 var should = require('should');
+var mongoose = require('mongoose');
+var Round = mongoose.model('Round');
+
 
 describe('Round', function() {
 
@@ -12,7 +15,7 @@ describe('Round', function() {
 
   // Create round.
   beforeEach(function() {
-    round = new _t.Round();
+    round = new Round();
   });
 
   describe('required field validations', function() {
@@ -20,7 +23,7 @@ describe('Round', function() {
     it('should require all fields', function(done) {
 
       // Create round, override defaults.
-      var round = new _t.Round();
+      var round = new Round();
       round.started = null;
 
       // Save.
@@ -30,7 +33,7 @@ describe('Round', function() {
         err.errors.started.type.should.eql('required');
 
         // Check for 0 documents.
-        _t.Round.count({}, function(err, count) {
+        Round.count({}, function(err, count) {
           count.should.eql(0);
           done();
         });

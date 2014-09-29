@@ -4,6 +4,12 @@
  */
 
 var _t = require('../dependencies.js');
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
+var Poem = mongoose.model('Poem');
+var Round = mongoose.model('Round');
+var Vote = mongoose.model('Vote');
+
 
 describe('Socket Controller', function() {
 
@@ -12,7 +18,7 @@ describe('Socket Controller', function() {
   beforeEach(function(done) {
 
     // Create user.
-    user = new _t.User({
+    user = new User({
       username: 'david',
       password: 'password',
       email: 'david@test.org'
@@ -32,8 +38,8 @@ describe('Socket Controller', function() {
     };
 
     // Create poems.
-    poem1 = new _t.Poem(params);
-    poem2 = new _t.Poem(params);
+    poem1 = new Poem(params);
+    poem2 = new Poem(params);
 
     var options = {
       transports: ['websocket'],
@@ -75,10 +81,10 @@ describe('Socket Controller', function() {
 
     // Clear collections.
     _t.async.map([
-      _t.User,
-      _t.Poem,
-      _t.Round,
-      _t.Vote
+      User,
+      Poem,
+      Round,
+      Vote
     ], _t.helpers.remove, function(err, models) {
       done();
     });
@@ -160,7 +166,7 @@ describe('Socket Controller', function() {
         client1.on('submit:complete', function() {
 
           // Check for votes.
-          _t.Vote.find({ round: poem1.round.id }, function(err, votes) {
+          Vote.find({ round: poem1.round.id }, function(err, votes) {
 
             // Get words array.
             var words = _t._.map(votes, function(vote) {
@@ -252,7 +258,7 @@ describe('Socket Controller', function() {
         client1.on('vote:complete', function() {
 
           // Check for votes.
-          _t.Vote.find({ round: poem1.round.id }, function(err, votes) {
+          Vote.find({ round: poem1.round.id }, function(err, votes) {
 
             // Check vote.
             votes.length.should.eql(1);

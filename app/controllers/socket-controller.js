@@ -3,10 +3,10 @@
  * Sockets controller.
  */
 
+var _ = require('lodash');
 var mongoose = require('mongoose');
 var syllables = require('../../lib/syllables');
 var async = require('async');
-var _ = require('underscore');
 var Poem = mongoose.model('Poem');
 var Vote = mongoose.model('Vote');
 

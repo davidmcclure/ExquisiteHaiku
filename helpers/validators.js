@@ -3,8 +3,8 @@
  * Custom form validators methods.
  */
 
+var _ = require('lodash');
 var mongoose = require('mongoose');
-var _ = require('underscore');
 var User = mongoose.model('User');
 var Poem = mongoose.model('Poem');
 

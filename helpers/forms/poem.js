@@ -3,11 +3,11 @@
  * Poem form.
  */
 
+var _ = require('lodash');
 var forms = require('forms');
 var mongoose = require('mongoose');
 var validators = require('../validators');
 var fields = forms.fields;
-var _ = require('underscore');
 var Poem = mongoose.model('Poem');
 
 

@@ -3,11 +3,11 @@
  * Admin controller
  */
 
+var _ = require('lodash');
 var mongoose = require('mongoose');
 var poemForm = require('../../helpers/forms/poem');
 var scoring = require('../../app/scoring/scoring');
 var auth = require('../../helpers/middleware');
-var _ = require('underscore');
 var Poem = mongoose.model('Poem');
 var Round = mongoose.model('Round');
 

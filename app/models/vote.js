@@ -3,8 +3,9 @@
  * Vote model.
  */
 
+var _ = require('lodash');
 var mongoose = require('mongoose');
-var _ = require('underscore');
+
 
 var VoteSchema = new mongoose.Schema({
   round : {

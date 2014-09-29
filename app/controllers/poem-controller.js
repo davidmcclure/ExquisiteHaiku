@@ -3,8 +3,8 @@
  * Poems controller
  */
 
+var _ = require('lodash');
 var auth = require('../../helpers/middleware');
-var _ = require('underscore');
 
 
 module.exports = function(app) {

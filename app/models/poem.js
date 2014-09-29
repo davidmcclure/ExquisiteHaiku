@@ -3,11 +3,12 @@
  * Poem model.
  */
 
-var _ = require('underscore');
+var _ = require('lodash');
 var randomstring = require('randomstring');
 var syllables = require('../../lib/syllables');
 var mongoose = require('mongoose');
 var Round = require('./round');
+
 
 // Schema definition.
 var PoemSchema = new mongoose.Schema({

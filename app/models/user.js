@@ -6,6 +6,7 @@
 var crypto = require('crypto');
 var mongoose = require('mongoose');
 
+
 var UserSchema = new mongoose.Schema({
   username : {
     type: String,

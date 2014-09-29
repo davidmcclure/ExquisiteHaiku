@@ -6,8 +6,8 @@
  */
 
 // Module dependencies.
+var _ = require('lodash');
 var async = require('async');
-var _ = require('underscore');
 
 // Boostrap the database.
 process.env.NODE_ENV = 'testing';

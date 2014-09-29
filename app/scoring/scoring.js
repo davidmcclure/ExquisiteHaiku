@@ -3,8 +3,8 @@
  * Scoring routine.
  */
 
+var _ = require('lodash');
 var mongoose = require('mongoose');
-var _ = require('underscore');
 
 // Poem model.
 require('../models/poem');

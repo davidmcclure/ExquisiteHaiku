@@ -3,8 +3,9 @@
  * Round model.
  */
 
+var _ = require('lodash');
 var mongoose = require('mongoose');
-var _ = require('underscore');
+
 
 exports.schema = RoundSchema = new mongoose.Schema({
   started : {

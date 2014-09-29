@@ -159,9 +159,8 @@ module.exports = function(app) {
     function(req, res) {
 
       // Unset the session object.
-      req.session.destroy(function() {
-        res.redirect('/admin/login');
-      });
+      req.session = null;
+      res.redirect('/admin/login');
 
   });
 

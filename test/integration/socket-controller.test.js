@@ -168,9 +168,9 @@ describe('Socket Controller', function() {
 
             // Check for words.
             words.length.should.eql(3);
-            words.should.include('word1');
-            words.should.include('word2');
-            words.should.include('word3');
+            words.should.containEql('word1');
+            words.should.containEql('word2');
+            words.should.containEql('word3');
 
             // Check for in-memory vote registrations.
             global.Oversoul.votes[poem1.round.id]['word1'].length.should.eql(1);

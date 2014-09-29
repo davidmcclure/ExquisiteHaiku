@@ -165,7 +165,6 @@ describe('Admin Controller', function() {
         browser.query('form input[name="seedCapital"]').should.be.ok;
         browser.query('form input[name="submissionVal"]').should.be.ok;
         browser.query('form input[name="decayHalflife"]').should.be.ok;
-        // browser.query('form input[name="published"]').should.be.ok;
         browser.query('form button[type="submit"]').should.be.ok;
         done();
 

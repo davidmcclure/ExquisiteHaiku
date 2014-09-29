@@ -4,21 +4,23 @@
  */
 
 var _t = require('../dependencies.js');
+var fs = require('fs');
+var jade = require('jade');
 
 
 describe('Fixtures', function() {
 
   it('render index.jade', function(done) {
 
-    _t.fs.readFile(
+    fs.readFile(
       'app/views/poem/base.jade',
       'utf8', function(err, data) {
 
         // Compile template function.
-        var template = _t.jade.compile(data);
+        var template = jade.compile(data);
 
         // Write file.
-        _t.fs.writeFile(
+        fs.writeFile(
           'spec/javascripts/fixtures/base.html',
           template(), function(err) {
             done();
@@ -30,15 +32,15 @@ describe('Fixtures', function() {
 
   it('render templates.jade', function(done) {
 
-    _t.fs.readFile(
+    fs.readFile(
       'app/views/poem/templates.jade',
       'utf8', function(err, data) {
 
         // Compile template function.
-        var template = _t.jade.compile(data);
+        var template = jade.compile(data);
 
         // Write file.
-        _t.fs.writeFile(
+        fs.writeFile(
           'spec/javascripts/fixtures/templates.html',
           template(), function(err) {
             done();

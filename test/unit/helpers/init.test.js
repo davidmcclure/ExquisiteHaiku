@@ -4,8 +4,11 @@
  */
 
 var _t = require('../../dependencies.js');
+var helpers = require('../../helpers');
+var _ = require('lodash');
 var init = require('../../../config/init');
 var should = require('should');
+var sinon = require('sinon');
 var async = require('async');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
@@ -22,7 +25,7 @@ describe('Init', function() {
 
     // Mock app.
     app = {
-      set: _t.sinon.spy()
+      set: sinon.spy()
     };
 
     // Mock config.
@@ -102,7 +105,7 @@ describe('Init', function() {
       vote1,
       vote2,
       vote3
-    ], _t.helpers.save, function(err, documents) {
+    ], helpers.save, function(err, documents) {
 
       // Run init.
       init(app, io, function() {
@@ -117,7 +120,7 @@ describe('Init', function() {
   afterEach(function(done) {
 
     // Clear the intervals.
-    _t._.each(global.Oversoul.timers, function(int, id) {
+    _.each(global.Oversoul.timers, function(int, id) {
       clearInterval(int);
     });
 
@@ -129,7 +132,7 @@ describe('Init', function() {
       User,
       Poem,
       Vote
-    ], _t.helpers.remove, function(err, models) {
+    ], helpers.remove, function(err, models) {
       done();
     });
 

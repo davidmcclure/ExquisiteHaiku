@@ -4,8 +4,10 @@
  */
 
 var _t = require('../../dependencies.js');
+var helpers = require('../../helpers');
 var should = require('should');
 var async = require('async');
+var sinon = require('sinon');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Poem = mongoose.model('Poem');
@@ -56,7 +58,7 @@ describe('Poem', function() {
     async.map([
       User,
       Poem
-    ], _t.helpers.remove, function(err, models) {
+    ], helpers.remove, function(err, models) {
       done();
     });
 
@@ -887,14 +889,14 @@ describe('Poem', function() {
       it('should stop the poem if no votes in previous round', function() {
 
         // Spy on stop().
-        poem.stop = _t.sinon.spy();
+        poem.stop = sinon.spy();
 
         // Add new round.
         poem.newRound();
 
         // Add new round, check for stop().
         poem.newRound();
-        _t.sinon.assert.called(poem.stop);
+        sinon.assert.called(poem.stop);
 
       });
 

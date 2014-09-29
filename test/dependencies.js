@@ -3,16 +3,6 @@
  * Testing dependencies.
  */
 
-// Modules
-// -------
-exports.sinon =       require('sinon');
-exports.mongoose =    require('mongoose');
-exports.io =          require('socket.io-client');
-exports.helpers =     require('./helpers');
-exports.fs =          require('fs');
-exports.jade =        require('jade');
-exports._ =           require('lodash');
-
 require('../app/models');
 
 // Load configuration.

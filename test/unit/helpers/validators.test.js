@@ -5,7 +5,9 @@
 
 var _t = require('../../dependencies.js');
 var validators = require('../../../helpers/validators');
+var helpers = require('../../helpers');
 var should = require('should');
+var sinon = require('sinon');
 var async = require('async');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
@@ -21,7 +23,7 @@ describe('Custom Validators', function() {
     // Truncate.
     async.map([
       User
-    ], _t.helpers.remove, function(err, models) {
+    ], helpers.remove, function(err, models) {
       done();
     });
 
@@ -39,8 +41,8 @@ describe('Custom Validators', function() {
       var validator = validators.usernameExists('err');
 
       // Spy on callback.
-      callback = _t.sinon.spy(function() {
-        _t.sinon.assert.calledWith(callback, 'err');
+      callback = sinon.spy(function() {
+        sinon.assert.calledWith(callback, 'err');
         done();
       });
 
@@ -55,8 +57,8 @@ describe('Custom Validators', function() {
       var validator = validators.usernameExists('err');
 
       // Spy on callback.
-      callback = _t.sinon.spy(function() {
-        _t.sinon.assert.neverCalledWith(callback, 'err');
+      callback = sinon.spy(function() {
+        sinon.assert.neverCalledWith(callback, 'err');
         done();
       });
 
@@ -106,8 +108,8 @@ describe('Custom Validators', function() {
       var validator = validators.passwordCorrect('err');
 
       // Spy on callback.
-      callback = _t.sinon.spy(function() {
-        _t.sinon.assert.calledWith(callback, 'err');
+      callback = sinon.spy(function() {
+        sinon.assert.calledWith(callback, 'err');
         done();
       });
 
@@ -128,8 +130,8 @@ describe('Custom Validators', function() {
       var validator = validators.passwordCorrect('err');
 
       // Spy on callback.
-      callback = _t.sinon.spy(function() {
-        _t.sinon.assert.calledWith(callback, 'err');
+      callback = sinon.spy(function() {
+        sinon.assert.calledWith(callback, 'err');
         done();
       });
 
@@ -147,8 +149,8 @@ describe('Custom Validators', function() {
       var validator = validators.passwordCorrect('err');
 
       // Spy on callback.
-      callback = _t.sinon.spy(function() {
-        _t.sinon.assert.neverCalledWith(callback, 'err');
+      callback = sinon.spy(function() {
+        sinon.assert.neverCalledWith(callback, 'err');
         done();
       });
 
@@ -186,8 +188,8 @@ describe('Custom Validators', function() {
       var validator = validators.uniqueField(User, 'username', 'err');
 
       // Spy on callback.
-      callback = _t.sinon.spy(function() {
-        _t.sinon.assert.calledWith(callback, 'err');
+      callback = sinon.spy(function() {
+        sinon.assert.calledWith(callback, 'err');
         done();
       });
 
@@ -205,8 +207,8 @@ describe('Custom Validators', function() {
       var validator = validators.uniqueField(User, 'username', 'err');
 
       // Spy on callback.
-      callback = _t.sinon.spy(function() {
-        _t.sinon.assert.neverCalledWith(callback, 'err');
+      callback = sinon.spy(function() {
+        sinon.assert.neverCalledWith(callback, 'err');
         done();
       });
 
@@ -241,7 +243,7 @@ describe('Custom Validators', function() {
       async.map([
         user1,
         user2
-      ], _t.helpers.save, function(err, documents) {
+      ], helpers.save, function(err, documents) {
         done();
       });
 
@@ -258,8 +260,8 @@ describe('Custom Validators', function() {
       );
 
       // Spy on callback.
-      callback = _t.sinon.spy(function() {
-        _t.sinon.assert.calledWith(callback, 'err');
+      callback = sinon.spy(function() {
+        sinon.assert.calledWith(callback, 'err');
         done();
       });
 
@@ -279,8 +281,8 @@ describe('Custom Validators', function() {
       );
 
       // Spy on callback.
-      callback = _t.sinon.spy(function() {
-        _t.sinon.assert.neverCalledWith(callback, 'err');
+      callback = sinon.spy(function() {
+        sinon.assert.neverCalledWith(callback, 'err');
         done();
       });
 
@@ -300,8 +302,8 @@ describe('Custom Validators', function() {
       );
 
       // Spy on callback.
-      callback = _t.sinon.spy(function() {
-        _t.sinon.assert.neverCalledWith(callback, 'err');
+      callback = sinon.spy(function() {
+        sinon.assert.neverCalledWith(callback, 'err');
         done();
       });
 
@@ -326,8 +328,8 @@ describe('Custom Validators', function() {
     it('should not pass when the slug has spaces', function(done) {
 
       // Spy on callback.
-      callback = _t.sinon.spy(function() {
-        _t.sinon.assert.calledWith(callback, 'err');
+      callback = sinon.spy(function() {
+        sinon.assert.calledWith(callback, 'err');
         done();
       });
 
@@ -340,8 +342,8 @@ describe('Custom Validators', function() {
     it('should not pass when the slug has capital letters', function(done) {
 
       // Spy on callback.
-      callback = _t.sinon.spy(function() {
-        _t.sinon.assert.calledWith(callback, 'err');
+      callback = sinon.spy(function() {
+        sinon.assert.calledWith(callback, 'err');
         done();
       });
 
@@ -354,8 +356,8 @@ describe('Custom Validators', function() {
     it('should not pass when the slug has non-alphanumeric chars', function(done) {
 
       // Spy on callback.
-      callback = _t.sinon.spy(function() {
-        _t.sinon.assert.calledWith(callback, 'err');
+      callback = sinon.spy(function() {
+        sinon.assert.calledWith(callback, 'err');
         done();
       });
 
@@ -368,8 +370,8 @@ describe('Custom Validators', function() {
     it('should pass when slug is valid', function(done) {
 
       // Spy on callback.
-      callback = _t.sinon.spy(function() {
-        _t.sinon.assert.neverCalledWith(callback, 'err');
+      callback = sinon.spy(function() {
+        sinon.assert.neverCalledWith(callback, 'err');
         done();
       });
 
@@ -398,8 +400,8 @@ describe('Custom Validators', function() {
     it('should not pass when the field is present on the list', function(done) {
 
       // Spy on callback.
-      callback = _t.sinon.spy(function() {
-        _t.sinon.assert.calledWith(callback, 'err');
+      callback = sinon.spy(function() {
+        sinon.assert.calledWith(callback, 'err');
         done();
       });
 
@@ -412,8 +414,8 @@ describe('Custom Validators', function() {
     it('should not pass when the field is not present on the list', function(done) {
 
       // Spy on callback.
-      callback = _t.sinon.spy(function() {
-        _t.sinon.assert.neverCalledWith(callback, 'err');
+      callback = sinon.spy(function() {
+        sinon.assert.neverCalledWith(callback, 'err');
         done();
       });
 
@@ -439,8 +441,8 @@ describe('Custom Validators', function() {
     it('should not pass for negative integer', function(done) {
 
       // Spy on callback.
-      callback = _t.sinon.spy(function() {
-        _t.sinon.assert.calledWith(callback, 'err');
+      callback = sinon.spy(function() {
+        sinon.assert.calledWith(callback, 'err');
         done();
       });
 
@@ -453,8 +455,8 @@ describe('Custom Validators', function() {
     it('should not pass for negative float', function(done) {
 
       // Spy on callback.
-      callback = _t.sinon.spy(function() {
-        _t.sinon.assert.calledWith(callback, 'err');
+      callback = sinon.spy(function() {
+        sinon.assert.calledWith(callback, 'err');
         done();
       });
 
@@ -467,8 +469,8 @@ describe('Custom Validators', function() {
     it('should not pass for positive float', function(done) {
 
       // Spy on callback.
-      callback = _t.sinon.spy(function() {
-        _t.sinon.assert.calledWith(callback, 'err');
+      callback = sinon.spy(function() {
+        sinon.assert.calledWith(callback, 'err');
         done();
       });
 
@@ -481,8 +483,8 @@ describe('Custom Validators', function() {
     it('should not pass for NaN', function(done) {
 
       // Spy on callback.
-      callback = _t.sinon.spy(function() {
-        _t.sinon.assert.calledWith(callback, 'err');
+      callback = sinon.spy(function() {
+        sinon.assert.calledWith(callback, 'err');
         done();
       });
 
@@ -495,8 +497,8 @@ describe('Custom Validators', function() {
     it('should pass for a positive integer', function(done) {
 
       // Spy on callback.
-      callback = _t.sinon.spy(function() {
-        _t.sinon.assert.neverCalledWith(callback, 'err');
+      callback = sinon.spy(function() {
+        sinon.assert.neverCalledWith(callback, 'err');
         done();
       });
 

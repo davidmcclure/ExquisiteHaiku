@@ -4,6 +4,8 @@
  */
 
 var _t = require('../dependencies.js');
+var helpers = require('../helpers');
+var _ = require('lodash');
 var Browser = require('zombie');
 var should = require('should');
 var async = require('async');
@@ -125,7 +127,7 @@ describe('Admin Controller', function() {
       paused,
       complete,
       user2poem
-    ], _t.helpers.save, function(err, documents) {
+    ], helpers.save, function(err, documents) {
 
       // Log in as user1.
       browser.visit(_t.root+'admin/login', function() {
@@ -144,7 +146,7 @@ describe('Admin Controller', function() {
   afterEach(function(done) {
 
     // Clear the intervals.
-    _t._.each(global.Oversoul.timers, function(int, id) {
+    _.each(global.Oversoul.timers, function(int, id) {
       clearInterval(int);
     });
 
@@ -155,7 +157,7 @@ describe('Admin Controller', function() {
     async.map([
       User,
       Poem
-    ], _t.helpers.remove, function(err, models) {
+    ], helpers.remove, function(err, models) {
       done();
     });
 
@@ -263,7 +265,7 @@ describe('Admin Controller', function() {
           Poem.find()
           .sort('-created')
           .exec(function(err, poems) {
-            var poem = _t._.first(poems);
+            var poem = _.first(poems);
             poems.length.should.eql(count+1);
             poem.roundLengthValue.should.eql(3);
             poem.roundLengthUnit.should.eql('minutes');

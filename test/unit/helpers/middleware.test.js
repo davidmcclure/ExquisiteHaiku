@@ -5,7 +5,9 @@
 
 var _t = require('../../dependencies.js');
 var middleware = require('../../../helpers/middleware');
+var helpers = require('../../helpers');
 var should = require('should');
+var sinon = require('sinon');
 var async = require('async');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
@@ -29,7 +31,7 @@ describe('Route Middleware', function() {
     async.map([
       User,
       Poem
-    ], _t.helpers.remove, function(err, models) {
+    ], helpers.remove, function(err, models) {
       done();
     });
 
@@ -99,7 +101,7 @@ describe('Route Middleware', function() {
     it('should redirect when there is no session', function(done) {
 
       // Spy on res.
-      res.redirect = _t.sinon.spy();
+      res.redirect = sinon.spy();
 
       // Call isUser().
       middleware.isUser(req, { redirect: function(route) {
@@ -217,7 +219,7 @@ describe('Route Middleware', function() {
       async.map([
         user,
         poem
-      ], _t.helpers.save, function(err, documents) {
+      ], helpers.save, function(err, documents) {
         done();
       });
 
@@ -274,7 +276,7 @@ describe('Route Middleware', function() {
         user1,
         user2,
         poem
-      ], _t.helpers.save, function(err, documents) {
+      ], helpers.save, function(err, documents) {
         done();
       });
 
@@ -337,7 +339,7 @@ describe('Route Middleware', function() {
       async.map([
         user,
         poem
-      ], _t.helpers.save, function(err, documents) {
+      ], helpers.save, function(err, documents) {
         done();
       });
 

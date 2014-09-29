@@ -4,7 +4,11 @@
  */
 
 var _t = require('../dependencies.js');
+var helpers = require('../helpers');
+var _ = require('lodash');
 var async = require('async');
+var sinon = require('sinon');
+var io = require('socket.io-client');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Poem = mongoose.model('Poem');
@@ -48,15 +52,15 @@ describe('Socket Controller', function() {
     };
 
     // Connect client1.
-    client1 = _t.io.connect(_t.root, options);
+    client1 = io.connect(_t.root, options);
     client1.emit('join', poem1.id);
 
     // Connect client2.
-    client2 = _t.io.connect(_t.root, options);
+    client2 = io.connect(_t.root, options);
     client2.emit('join', poem1.id);
 
     // Connect client3.
-    client3 = _t.io.connect(_t.root, options);
+    client3 = io.connect(_t.root, options);
     client3.emit('join', poem2.id);
 
     // Create rounds on poems.
@@ -68,7 +72,7 @@ describe('Socket Controller', function() {
       user,
       poem1,
       poem2
-    ], _t.helpers.save, function(err, documents) {
+    ], helpers.save, function(err, documents) {
       done();
     });
 
@@ -86,7 +90,7 @@ describe('Socket Controller', function() {
       Poem,
       Round,
       Vote
-    ], _t.helpers.remove, function(err, models) {
+    ], helpers.remove, function(err, models) {
       done();
     });
 
@@ -170,7 +174,7 @@ describe('Socket Controller', function() {
           Vote.find({ round: poem1.round.id }, function(err, votes) {
 
             // Get words array.
-            var words = _t._.map(votes, function(vote) {
+            var words = _.map(votes, function(vote) {
               return vote.word;
             });
 
@@ -200,9 +204,9 @@ describe('Socket Controller', function() {
     it('should echo the votes', function(done) {
 
       // Spy on the 'vote' event callback.
-      var voteCallback1 = _t.sinon.spy();
-      var voteCallback2 = _t.sinon.spy();
-      var voteCallback3 = _t.sinon.spy();
+      var voteCallback1 = sinon.spy();
+      var voteCallback2 = sinon.spy();
+      var voteCallback3 = sinon.spy();
       client1.on('vote', voteCallback1);
       client2.on('vote', voteCallback2);
       client3.on('vote', voteCallback3);
@@ -221,15 +225,15 @@ describe('Socket Controller', function() {
 
             // Check client1 echoes.
             voteCallback1.callCount.should.eql(3);
-            _t.sinon.assert.calledWith(voteCallback1, 'word1', 100);
-            _t.sinon.assert.calledWith(voteCallback1, 'word2', 100);
-            _t.sinon.assert.calledWith(voteCallback1, 'word3', 100);
+            sinon.assert.calledWith(voteCallback1, 'word1', 100);
+            sinon.assert.calledWith(voteCallback1, 'word2', 100);
+            sinon.assert.calledWith(voteCallback1, 'word3', 100);
 
             // Check client2 echoes.
             voteCallback2.callCount.should.eql(3);
-            _t.sinon.assert.calledWith(voteCallback2, 'word1', 100);
-            _t.sinon.assert.calledWith(voteCallback2, 'word2', 100);
-            _t.sinon.assert.calledWith(voteCallback2, 'word3', 100);
+            sinon.assert.calledWith(voteCallback2, 'word1', 100);
+            sinon.assert.calledWith(voteCallback2, 'word2', 100);
+            sinon.assert.calledWith(voteCallback2, 'word3', 100);
 
             // Check client3 echoes.
             voteCallback3.callCount.should.eql(0);
@@ -282,9 +286,9 @@ describe('Socket Controller', function() {
     it('should echo the vote', function(done) {
 
       // Spy on the 'vote' event callback.
-      var voteCallback1 = _t.sinon.spy();
-      var voteCallback2 = _t.sinon.spy();
-      var voteCallback3 = _t.sinon.spy();
+      var voteCallback1 = sinon.spy();
+      var voteCallback2 = sinon.spy();
+      var voteCallback3 = sinon.spy();
       client1.on('vote', voteCallback1);
       client2.on('vote', voteCallback2);
       client3.on('vote', voteCallback3);
@@ -300,8 +304,8 @@ describe('Socket Controller', function() {
 
           // Wait for echo callbacks to execute.
           setTimeout(function() {
-            _t.sinon.assert.calledWith(voteCallback1, 'word', 100);
-            _t.sinon.assert.calledWith(voteCallback2, 'word', 100);
+            sinon.assert.calledWith(voteCallback1, 'word', 100);
+            sinon.assert.calledWith(voteCallback2, 'word', 100);
             voteCallback3.notCalled.should.be.true;
             done();
           }, 100);

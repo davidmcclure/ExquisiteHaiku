@@ -4,6 +4,7 @@
  */
 
 var _t = require('../../dependencies.js');
+var helpers = require('../../helpers');
 var should = require('should');
 var async = require('async');
 var mongoose = require('mongoose');
@@ -35,7 +36,7 @@ describe('Vote', function() {
     async.map([
       Round,
       Vote
-    ], _t.helpers.remove, function(err, models) {
+    ], helpers.remove, function(err, models) {
       done();
     });
 

@@ -30,15 +30,15 @@ modelFiles.forEach(function(file) {
 var server = app.listen(global.config.port);
 var io = socket.listen(server, { log: false });
 
-// Start poems.
-require('./config/init')(app, io);
-
 // Bootstrap controllers.
 var controllersPath = __dirname + '/app/controllers';
 var controllerFiles = fs.readdirSync(controllersPath);
 controllerFiles.forEach(function(file) {
   require(controllersPath + '/' + file)(app, io);
 });
+
+// Start poems.
+require('./config/init')(app, io);
 
 console.log("Listening on port %d in %s mode",
   global.config.port, app.settings.env);

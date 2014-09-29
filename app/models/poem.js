@@ -3,18 +3,11 @@
  * Poem model.
  */
 
+var _ = require('underscore');
 var randomstring = require('randomstring');
 var syllables = require('../../lib/syllables');
 var mongoose = require('mongoose');
-var _ = require('underscore');
-
-// Round model.
-var round = require('./round');
-var Round = mongoose.model('Round');
-
-// Vote model.
-var vote = require('./vote');
-var Vote = mongoose.model('Vote');
+var Round = require('./round');
 
 // Schema definition.
 var PoemSchema = new mongoose.Schema({
@@ -91,7 +84,7 @@ var PoemSchema = new mongoose.Schema({
     type: Array
   },
   rounds : [
-    round.RoundSchema
+    Round.schema
   ]
 });
 
@@ -476,5 +469,4 @@ PoemSchema.methods.addWord = function(word) {
 
 
 // Register model.
-mongoose.model('Poem', PoemSchema);
-var Poem = mongoose.model('Poem');
+module.exports = mongoose.model('Poem', PoemSchema);

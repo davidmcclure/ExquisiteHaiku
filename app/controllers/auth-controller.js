@@ -10,12 +10,6 @@ var auth = require('../../helpers/middleware');
 var User = mongoose.model('User');
 
 
-/**
- * ----------------------
- * Authentication routes.
- * ----------------------
- */
-
 module.exports = function(app) {
 
   /**

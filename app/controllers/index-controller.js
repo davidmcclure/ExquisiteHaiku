@@ -6,12 +6,6 @@
 var auth = require('../../helpers/middleware');
 
 
-/*
- * -------------
- * Admin routes.
- * -------------
- */
-
 module.exports = function(app) {
 
   /**

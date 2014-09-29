@@ -6,7 +6,7 @@
 var mongoose = require('mongoose');
 var _ = require('underscore');
 
-var RoundSchema = new mongoose.Schema({
+exports.schema = RoundSchema = new mongoose.Schema({
   started : {
     type: Date,
     'default': Date.now,
@@ -50,10 +50,4 @@ RoundSchema.methods.register = function() {
 
 
 // Register model.
-mongoose.model('Round', RoundSchema);
-var Round = mongoose.model('Round');
-
-// Expose the schema.
-module.exports = {
-  RoundSchema: RoundSchema
-};
+module.exports = mongoose.model('Round', RoundSchema);

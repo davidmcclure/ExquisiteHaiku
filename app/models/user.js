@@ -110,5 +110,4 @@ UserSchema.methods.authenticate = function(plainText) {
 
 
 // Register model.
-mongoose.model('User', UserSchema);
-var User = mongoose.model('User');
+module.exports = mongoose.model('User', UserSchema);

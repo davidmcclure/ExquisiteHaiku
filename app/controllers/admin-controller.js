@@ -12,12 +12,6 @@ var Poem = mongoose.model('Poem');
 var Round = mongoose.model('Round');
 
 
-/**
- * -------------
- * Admin routes.
- * -------------
- */
-
 module.exports = function(app, io) {
 
   /**

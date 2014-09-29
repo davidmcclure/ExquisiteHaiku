@@ -93,10 +93,4 @@ VoteSchema.methods.register = function() {
 
 
 // Register model.
-mongoose.model('Vote', VoteSchema);
-var Vote = mongoose.model('Vote');
-
-// Expose the schema.
-module.exports = {
-  VoteSchema: VoteSchema
-};
+module.exports = mongoose.model('Vote', VoteSchema);

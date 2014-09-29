@@ -7,12 +7,6 @@ var auth = require('../../helpers/middleware');
 var _ = require('underscore');
 
 
-/*
- * ------------
- * Poem routes.
- * ------------
- */
-
 module.exports = function(app) {
 
   /**

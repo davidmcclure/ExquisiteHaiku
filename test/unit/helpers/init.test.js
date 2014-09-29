@@ -3,8 +3,9 @@
  * Unit tests for application startup.
  */
 
-var _t = require('../../dependencies.js');
 var should = require('should');
+var init = require('../../../config/init');
+var _t = require('../../dependencies.js');
 
 describe('Init', function() {
 
@@ -98,7 +99,7 @@ describe('Init', function() {
     ], _t.helpers.save, function(err, documents) {
 
       // Run init.
-      _t.init(app, io, function() {
+      init(app, io, function() {
         done();
       });
 

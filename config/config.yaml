@@ -8,10 +8,10 @@ default:
   lockRatio:      0.1
 
 testing:
-  db: "mongodb://localhost/oversoul_testing"
+  db: "mongodb://localhost/eh_testing"
 development:
-  db: "mongodb://localhost/oversoul_development"
+  db: "mongodb://localhost/eh_development"
 staging:
-  db: "mongodb://localhost/oversoul_staging"
+  db: "mongodb://localhost/eh_staging"
 production:
-  db: "mongodb://localhost/oversoul_production"
+  db: "mongodb://localhost/eh_production"

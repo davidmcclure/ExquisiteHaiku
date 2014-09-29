@@ -4,6 +4,8 @@
  */
 
 var _t = require('../../dependencies.js');
+var validators = require('../../../helpers/validators');
+
 
 describe('Custom Validators', function() {
 
@@ -30,7 +32,7 @@ describe('Custom Validators', function() {
     it('should not pass if there is not a user with the username', function(done) {
 
       // Get the validator.
-      var validator = _t.validators.usernameExists('err');
+      var validator = validators.usernameExists('err');
 
       // Spy on callback.
       callback = _t.sinon.spy(function() {
@@ -46,7 +48,7 @@ describe('Custom Validators', function() {
     it('should pass if there is a user with the username', function(done) {
 
       // Get the validator.
-      var validator = _t.validators.usernameExists('err');
+      var validator = validators.usernameExists('err');
 
       // Spy on callback.
       callback = _t.sinon.spy(function() {
@@ -97,7 +99,7 @@ describe('Custom Validators', function() {
       field.data = 'incorrect';
 
       // Get the validator.
-      var validator = _t.validators.passwordCorrect('err');
+      var validator = validators.passwordCorrect('err');
 
       // Spy on callback.
       callback = _t.sinon.spy(function() {
@@ -119,7 +121,7 @@ describe('Custom Validators', function() {
       field.data = 'password';
 
       // Get the validator.
-      var validator = _t.validators.passwordCorrect('err');
+      var validator = validators.passwordCorrect('err');
 
       // Spy on callback.
       callback = _t.sinon.spy(function() {
@@ -138,7 +140,7 @@ describe('Custom Validators', function() {
       field.data = 'password';
 
       // Get the validator.
-      var validator = _t.validators.passwordCorrect('err');
+      var validator = validators.passwordCorrect('err');
 
       // Spy on callback.
       callback = _t.sinon.spy(function() {
@@ -177,7 +179,7 @@ describe('Custom Validators', function() {
       field.data = 'david';
 
       // Get the validator.
-      var validator = _t.validators.uniqueField(_t.User, 'username', 'err');
+      var validator = validators.uniqueField(_t.User, 'username', 'err');
 
       // Spy on callback.
       callback = _t.sinon.spy(function() {
@@ -196,7 +198,7 @@ describe('Custom Validators', function() {
       field.data = 'kara';
 
       // Get the validator.
-      var validator = _t.validators.uniqueField(_t.User, 'username', 'err');
+      var validator = validators.uniqueField(_t.User, 'username', 'err');
 
       // Spy on callback.
       callback = _t.sinon.spy(function() {
@@ -247,7 +249,7 @@ describe('Custom Validators', function() {
       field.data = 'kara';
 
       // Get the validator.
-      var validator = _t.validators.uniqueNonSelfField(
+      var validator = validators.uniqueNonSelfField(
         _t.User, 'username', user1, 'err'
       );
 
@@ -268,7 +270,7 @@ describe('Custom Validators', function() {
       field.data = 'david';
 
       // Get the validator.
-      var validator = _t.validators.uniqueNonSelfField(
+      var validator = validators.uniqueNonSelfField(
         _t.User, 'username', user1, 'err'
       );
 
@@ -289,7 +291,7 @@ describe('Custom Validators', function() {
       field.data = 'rosie';
 
       // Get the validator.
-      var validator = _t.validators.uniqueNonSelfField(
+      var validator = validators.uniqueNonSelfField(
         _t.User, 'username', user1, 'err'
       );
 
@@ -313,7 +315,7 @@ describe('Custom Validators', function() {
     beforeEach(function() {
 
       // Get the validator.
-      validator = _t.validators.validSlug('err');
+      validator = validators.validSlug('err');
 
     });
 
@@ -385,7 +387,7 @@ describe('Custom Validators', function() {
       blacklist = ['value1', 'value2'];
 
       // Get the validator.
-      validator = _t.validators.fieldAllowed(blacklist, 'err');
+      validator = validators.fieldAllowed(blacklist, 'err');
 
     });
 
@@ -426,7 +428,7 @@ describe('Custom Validators', function() {
     beforeEach(function() {
 
       // Get the validator.
-      validator = _t.validators.positiveInteger('err');
+      validator = validators.positiveInteger('err');
 
     });
 

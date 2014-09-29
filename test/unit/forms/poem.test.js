@@ -4,13 +4,15 @@
  */
 
 var _t = require('../../dependencies.js');
+var poemForm = require('../../../helpers/forms/poem');
+
 
 describe('Poem Form', function() {
 
   var form;
 
   beforeEach(function() {
-    form = _t.poemForm.form();
+    form = poemForm.form();
   });
 
   // Clear collections.

@@ -4,6 +4,8 @@
  */
 
 var _t = require('../../dependencies.js');
+var middleware = require('../../../helpers/middleware');
+
 
 describe('Route Middleware', function() {
 
@@ -54,7 +56,7 @@ describe('Route Middleware', function() {
       req.session.user_id = user.id;
 
       // Call getUser.
-      _t.auth.getUser(req, res, function() {
+      middleware.getUser(req, res, function() {
         req.user.should.not.be.false;
         req.user.id.should.eql(user.id);
         done();
@@ -65,7 +67,7 @@ describe('Route Middleware', function() {
     it('should set req.user = false when session does not exist', function(done) {
 
       // Call getUser with no session.
-      _t.auth.getUser(req, res, function() {
+      middleware.getUser(req, res, function() {
         req.user.should.be.false;
         done();
       });
@@ -78,7 +80,7 @@ describe('Route Middleware', function() {
       req.session.user_id = 'invalid';
 
       // Call getUser.
-      _t.auth.getUser(req, res, function() {
+      middleware.getUser(req, res, function() {
         req.user.should.be.false;
         done();
       });
@@ -95,7 +97,7 @@ describe('Route Middleware', function() {
       res.redirect = _t.sinon.spy();
 
       // Call isUser().
-      _t.auth.isUser(req, { redirect: function(route) {
+      middleware.isUser(req, { redirect: function(route) {
         route.should.eql('/admin/login');
         done();
       }}, next);
@@ -108,7 +110,7 @@ describe('Route Middleware', function() {
       req.session.user_id = 'invalid';
 
       // Call isUser.
-      _t.auth.isUser(req, { redirect: function(route) {
+      middleware.isUser(req, { redirect: function(route) {
         route.should.eql('/admin/login');
         done();
       }}, next);
@@ -131,7 +133,7 @@ describe('Route Middleware', function() {
         req.session.user_id = user.id;
 
         // Call isUser, check for next().
-        _t.auth.isUser(req, res, function() {
+        middleware.isUser(req, res, function() {
           req.user.should.be.ok;
           req.user.id.should.eql(user.id);
           done();
@@ -161,7 +163,7 @@ describe('Route Middleware', function() {
         req.session.user_id = user.id;
 
         // Call no_t.User, check for res.redirect().
-        _t.auth.noUser(req, { redirect: function(route) {
+        middleware.noUser(req, { redirect: function(route) {
           route.should.eql('/admin');
           done();
         }}, next);
@@ -173,7 +175,7 @@ describe('Route Middleware', function() {
     it('should call next() if no session', function(done) {
 
       // Call no_t.User.
-      _t.auth.noUser(req, res, function() {
+      middleware.noUser(req, res, function() {
         done();
       });
 
@@ -222,7 +224,7 @@ describe('Route Middleware', function() {
       req.params = { hash: poem.hash };
 
       // Call getPoem, check for next() and poem.
-      _t.auth.getPoem(req, res, function() {
+      middleware.getPoem(req, res, function() {
         req.poem.id.should.eql(poem.id);
         done();
       });
@@ -280,7 +282,7 @@ describe('Route Middleware', function() {
       req.user = user2;
 
       // Call ownsPoem, check for redirect.
-      _t.auth.ownsPoem(req, { redirect: function(route) {
+      middleware.ownsPoem(req, { redirect: function(route) {
         route.should.eql('/admin');
         done();
       }}, next);
@@ -294,7 +296,7 @@ describe('Route Middleware', function() {
       req.user = user1;
 
       // Call ownsPoem, check for redirect.
-      _t.auth.ownsPoem(req, res, function() {
+      middleware.ownsPoem(req, res, function() {
         done();
       });
 
@@ -348,7 +350,7 @@ describe('Route Middleware', function() {
         req.poem = poem;
 
         // Call unstartedPoem, check for redirect.
-        _t.auth.unstartedPoem(req, { redirect: function(route) {
+        middleware.unstartedPoem(req, { redirect: function(route) {
           route.should.eql('/admin');
           done();
         }}, next);
@@ -369,7 +371,7 @@ describe('Route Middleware', function() {
         req.poem = poem;
 
         // Call unstartedPoem, check for redirect.
-        _t.auth.unstartedPoem(req, res, function() {
+        middleware.unstartedPoem(req, res, function() {
           done();
         });
 

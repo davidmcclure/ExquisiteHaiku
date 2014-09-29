@@ -39,28 +39,6 @@ var vote = require('../app/models/vote');
 exports.Vote = exports.mongoose.model('Vote');
 
 
-// Helpers
-// -------
-
-// Login form.
-exports.loginForm = require('../helpers/forms/login');
-
-// Poem form.
-exports.poemForm = require('../helpers/forms/poem');
-
-// Register form.
-exports.registerForm = require('../helpers/forms/register');
-
-// Middleware.
-exports.auth = require('../helpers/middleware');
-
-// Validators.
-exports.validators = require('../helpers/validators');
-
-// Scoring.
-exports.scoring = require('../app/scoring/scoring');
-
-
 // Config
 // ------
 

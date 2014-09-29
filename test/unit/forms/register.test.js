@@ -4,6 +4,8 @@
  */
 
 var _t = require('../../dependencies.js');
+var registerForm = require('../../../helpers/forms/register');
+
 
 describe('Register Form', function() {
 
@@ -11,7 +13,7 @@ describe('Register Form', function() {
 
   // Construct form.
   beforeEach(function() {
-    form = _t.registerForm.form();
+    form = registerForm.form();
   });
 
   // Clear collections.

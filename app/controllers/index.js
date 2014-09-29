@@ -1,27 +1,15 @@
 
 /**
- * Admin controller
+ * Load all controllers.
  */
 
-var auth = require('../../helpers/middleware');
+var requireDir = require('require-directory');
 
 
-module.exports = function(app) {
-
-  /**
-   * Front page.
-   */
-  app.get('/',
-    auth.getUser,
-    function(req, res) {
-
-    // Render the layout.
-    res.render('admin/index', {
-      title: 'equisitehaiku',
-      user: req.user,
-      menu: 'index'
-    });
-
+module.exports = function(app, io) {
+  requireDir(module, {
+    visit: function(controller) {
+      controller(app, io);
+    }
   });
-
 };

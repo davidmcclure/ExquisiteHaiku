@@ -1,10 +1,12 @@
 
 /**
- * Unit tests for _t.scoring routine.
+ * Unit tests for scoring routine.
  */
 
-var _t = require('../../dependencies.js');
 var should = require('should');
+var scoring = require('../../../app/scoring/scoring');
+var _t = require('../../dependencies.js');
+
 
 describe('Scoring', function() {
 
@@ -51,7 +53,7 @@ describe('Scoring', function() {
     var result;
 
     beforeEach(function() {
-      result = _t.scoring.compute(1, 0, 500, 1/500, 10000);
+      result = scoring.compute(1, 0, 500, 1/500, 10000);
     });
 
     it('should return the correct rank', function() {
@@ -76,19 +78,19 @@ describe('Scoring', function() {
 
     it('should add rank', function() {
       score = [100, 200];
-      _t.scoring.merge(stack, score);
+      scoring.merge(stack, score);
       stack[0][1].should.eql(100);
     });
 
     it('should add negative churn', function() {
       score = [100, -200];
-      _t.scoring.merge(stack, score);
+      scoring.merge(stack, score);
       stack[0][3].should.eql(-200);
     });
 
     it('should add positive churn', function() {
       score = [100, 200];
-      _t.scoring.merge(stack, score);
+      scoring.merge(stack, score);
       stack[0][2].should.eql(200);
     });
 
@@ -104,7 +106,7 @@ describe('Scoring', function() {
         ['word3', 3]
       ];
 
-      _t.scoring.sort(stack).should.eql([
+      scoring.sort(stack).should.eql([
         ['word3', 3],
         ['word2', 2],
         ['word1', 1]
@@ -124,7 +126,7 @@ describe('Scoring', function() {
         ['word1', 1]
       ];
 
-      _t.scoring.ratios(stack).should.eql([
+      scoring.ratios(stack).should.eql([
         ['word3', 3, '1.00'],
         ['word2', 2, '0.67'],
         ['word1', 1, '0.33']
@@ -143,7 +145,7 @@ describe('Scoring', function() {
         ['word2', 2.14, 1.14, 0.14]
       ];
 
-      _t.scoring.round(stack).should.eql([
+      scoring.round(stack).should.eql([
         ['word3', 3, 2, 1],
         ['word2', 2, 1, 0]
       ]);
@@ -158,7 +160,7 @@ describe('Scoring', function() {
 
       // Empty stack.
       var stack = [];
-      _t.scoring.locked(stack, 10000, 100).should.be.false;
+      scoring.locked(stack, 10000, 100).should.be.false;
 
     });
 
@@ -166,29 +168,29 @@ describe('Scoring', function() {
 
       // 1 word.
       var stack = [['word1', 100, 50, -50, '1.00']];
-      _t.scoring.locked(stack, 10000, 100).should.be.false;
+      scoring.locked(stack, 10000, 100).should.be.false;
 
     });
 
     it('should return false when word 2 below threshold', function() {
 
-      var stack = _t.scoring.ratios([
+      var stack = scoring.ratios([
         ['word1', 10000, 50, -50],
         ['word2', 999, 50, -50]
       ]);
 
-      _t.scoring.locked(stack, 10000, 100).should.be.false;
+      scoring.locked(stack, 10000, 100).should.be.false;
 
     });
 
     it('should return true when word 2 below lock ratio', function() {
 
-      var stack = _t.scoring.ratios([
+      var stack = scoring.ratios([
         ['word1', 20000, 50, -50],
         ['word2', 1000, 50, -50]
       ]);
 
-      _t.scoring.locked(stack, 10000, 100).should.be.true;
+      scoring.locked(stack, 10000, 100).should.be.true;
 
     });
 
@@ -276,7 +278,7 @@ describe('Scoring', function() {
         it('should broadcast stacks', function(done) {
 
           // Score the poem.
-          _t.scoring.score(poem.id, now+1000, function(result) {
+          scoring.score(poem.id, now+1000, function(result) {
 
             // Check order.
             result.stack[0][0].should.eql('third');
@@ -295,7 +297,7 @@ describe('Scoring', function() {
         it('should broadcast poem', function(done) {
 
           // Score the poem.
-          _t.scoring.score(poem.id, now+1000, function(result) {
+          scoring.score(poem.id, now+1000, function(result) {
 
             // Check poem.
             result.poem[0][0].valueOf().should.eql('it');
@@ -309,7 +311,7 @@ describe('Scoring', function() {
         it('should broadcast syllable count', function(done) {
 
           // Score the poem.
-          _t.scoring.score(poem.id, now+1000, function(result) {
+          scoring.score(poem.id, now+1000, function(result) {
 
             // Check poem.
             result.syllables.should.eql(2);
@@ -322,7 +324,7 @@ describe('Scoring', function() {
         it('should broadcast round id', function(done) {
 
           // Score the poem.
-          _t.scoring.score(poem.id, now+1000, function(result) {
+          scoring.score(poem.id, now+1000, function(result) {
 
             // Check poem.
             result.round.should.eql(poem.round.id);
@@ -335,7 +337,7 @@ describe('Scoring', function() {
         it('should broadcast clock', function(done) {
 
           // Score the poem.
-          _t.scoring.score(poem.id, now+1000, function(result) {
+          scoring.score(poem.id, now+1000, function(result) {
 
             // Check clock.
             result.clock.should.be.above(0);
@@ -369,7 +371,7 @@ describe('Scoring', function() {
       //   it('should broadcast updated poem', function(done) {
 
       //     // Score the poem.
-      //     _t.scoring.score(poem.id, now+5000, function(result) {
+      //     scoring.score(poem.id, now+5000, function(result) {
 
       //       // Check poem.
       //       result.poem[0][0].valueOf().should.eql('it');
@@ -384,7 +386,7 @@ describe('Scoring', function() {
       //   it('should broadcast empty stacks', function(done) {
 
       //     // Score the poem.
-      //     _t.scoring.score(poem.id, now+5000, function(result) {
+      //     scoring.score(poem.id, now+5000, function(result) {
 
       //       // Check stack.
       //       result.stack.should.eql([]);
@@ -397,7 +399,7 @@ describe('Scoring', function() {
       //   it('should save updated poem', function(done) {
 
       //     // Score the poem.
-      //     _t.scoring.score(poem.id, now+5000, function() {}, function(result) {
+      //     scoring.score(poem.id, now+5000, function() {}, function(result) {
 
       //       // Get the poem.
       //       _t.Poem.findById(poem.id, function(err, poem) {
@@ -415,7 +417,7 @@ describe('Scoring', function() {
       //   it('should save updated round', function(done) {
 
       //     // Score the poem.
-      //     _t.scoring.score(poem.id, now+5000, function() {}, function(result) {
+      //     scoring.score(poem.id, now+5000, function() {}, function(result) {
 
       //       // Get the poem.
       //       _t.Poem.findById(poem.id, function(err, poem) {
@@ -445,7 +447,7 @@ describe('Scoring', function() {
         it('should broadcast updated poem', function(done) {
 
           // Score the poem.
-          _t.scoring.score(poem.id, now, function(result) {
+          scoring.score(poem.id, now, function(result) {
 
             // Check poem.
             result.poem[0][0].valueOf().should.eql('it');
@@ -460,7 +462,7 @@ describe('Scoring', function() {
         it('should broadcast empty stacks', function(done) {
 
           // Score the poem.
-          _t.scoring.score(poem.id, now, function(result) {
+          scoring.score(poem.id, now, function(result) {
 
             // Check stack.
             result.stack.should.eql([]);
@@ -473,7 +475,7 @@ describe('Scoring', function() {
         it('should save updated poem', function(done) {
 
           // Score the poem.
-          _t.scoring.score(poem.id, now, function() {}, function(result) {
+          scoring.score(poem.id, now, function() {}, function(result) {
 
             // Get the poem.
             _t.Poem.findById(poem.id, function(err, poem) {
@@ -491,7 +493,7 @@ describe('Scoring', function() {
         it('should save updated round', function(done) {
 
           // Score the poem.
-          _t.scoring.score(poem.id, now, function() {}, function(result) {
+          scoring.score(poem.id, now, function() {}, function(result) {
 
             // Get the poem.
             _t.Poem.findById(poem.id, function(err, poem) {
@@ -518,7 +520,7 @@ describe('Scoring', function() {
           it('should return unchanged poem', function(done) {
 
             // Score the poem.
-            _t.scoring.score(poem.id, now+1000, function(result) {
+            scoring.score(poem.id, now+1000, function(result) {
 
               // Check for poem.
               result.poem[0][0].valueOf().should.eql('it');
@@ -554,7 +556,7 @@ describe('Scoring', function() {
           it('should stop the poem', function(done) {
 
             // Score the poem.
-            _t.scoring.score(poem.id, now+1000, function() {}, function(result) {
+            scoring.score(poem.id, now+1000, function() {}, function(result) {
 
               // Get the poem.
               _t.Poem.findById(poem.id, function(err, poem) {

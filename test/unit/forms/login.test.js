@@ -4,6 +4,8 @@
  */
 
 var _t = require('../../dependencies.js');
+var loginForm = require('../../../helpers/forms/login');
+
 
 describe('Login Form', function() {
 
@@ -12,7 +14,7 @@ describe('Login Form', function() {
   beforeEach(function(done) {
 
     // Create the form.
-    form = _t.loginForm.form();
+    form = loginForm.form();
 
     // Create admin user.
     user1 = new _t.User({

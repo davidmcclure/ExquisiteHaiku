@@ -1,4 +1,5 @@
 
+
 var vendor = [
   'node_modules/jquery/dist/jquery.js',
   'node_modules/lodash/dist/lodash.js',
@@ -22,24 +23,26 @@ var poemSource = [
   'public/javascripts/src/poem/controllers/*.js'
 ];
 
+
 module.exports = {
+
+  options: {
+    separator: ';'
+  },
 
   poem: {
     src: [].concat(vendor, poemSource),
-    dest: 'public/javascripts/dist/poem.js',
-    separator: ';'
+    dest: 'public/javascripts/dist/poem.js'
   },
 
   admin: {
     src: [].concat(vendor, adminSource),
-    dest: 'public/javascripts/dist/admin.js',
-    separator: ';'
+    dest: 'public/javascripts/dist/admin.js'
   },
 
   test: {
     src: [].concat(vendor, adminSource, poemSource),
-    dest: 'public/javascripts/dist/test.js',
-    separator: ';'
+    dest: 'public/javascripts/dist/test.js'
   }
 
 };

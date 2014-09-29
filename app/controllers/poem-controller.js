@@ -1,8 +1,8 @@
-/*
+
+/**
  * Poems controller
  */
 
-// Module dependencies.
 var auth = require('../../helpers/middleware');
 var _ = require('underscore');
 
@@ -13,11 +13,9 @@ var _ = require('underscore');
  * ------------
  */
 
-
-// Controller actions.
 module.exports = function(app) {
 
-  /*
+  /**
    * Run the poem.
    *
    * @middleware auth.getPoem: Pass the poem identified by :slug.

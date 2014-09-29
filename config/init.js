@@ -1,8 +1,8 @@
-/*
+
+/**
  * Startup.
  */
 
-// Module dependencies.
 var scoring = require('../app/scoring/scoring');
 var mongoose = require('mongoose');
 var async = require('async');
@@ -13,15 +13,13 @@ var Poem = mongoose.model('Poem');
 var Vote = mongoose.model('Vote');
 
 
-/*
+/**
  * Create memory stores for votes and timers, restart
  * running poems.
  *
  * @param {Object} app: The node server.
  * @param {Object} io: The socket.io server.
  * @param {Function} cb: Callback.
- *
- * @return void.
  */
 module.exports = function(app, io, cb) {
   cb = cb || function() {};

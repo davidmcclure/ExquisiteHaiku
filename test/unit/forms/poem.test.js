@@ -1,4 +1,5 @@
-/*
+
+/**
  * Unit tests for _t.Poem form.
  */
 
@@ -177,13 +178,5 @@ describe('Poem Form', function() {
     });
 
   });
-
-  // describe('published', function() {
-
-    // it('should have a default value', function() {
-      // form.fields.published.value.should.exist;
-    // });
-
-  // });
 
 });

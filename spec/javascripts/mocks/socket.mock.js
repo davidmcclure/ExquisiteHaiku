@@ -1,10 +1,11 @@
-/*
+
+/**
  * Socket.io mock.
  */
 
 io = {
 
-  /*
+  /**
    * Connect socket.
    *
    * @return {Object} socket: The socket instance.
@@ -13,24 +14,18 @@ io = {
 
     return {
 
-      /*
+      /**
        * Event handler.
        *
        * @param {String} event: The event name.
        * @param {Function} cb: The callback.
-       *
-       * @return void.
        */
-      on: function(event, cb) {
+      on: function(event, cb) {},
 
-      },
-
-      /*
+      /**
        * Emit event.
        *
        * @param {String} event: The event name.
-       *
-       * @return void.
        */
       emit: function(event) {
 

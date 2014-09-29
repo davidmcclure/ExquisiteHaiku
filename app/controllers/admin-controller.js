@@ -1,29 +1,26 @@
-/*
+
+/**
  * Admin controller
  */
 
-// Module dependencies.
 var mongoose = require('mongoose');
 var poemForm = require('../../helpers/forms/poem');
 var scoring = require('../../app/scoring/scoring');
 var auth = require('../../helpers/middleware');
 var _ = require('underscore');
-
-// Models.
 var Poem = mongoose.model('Poem');
 var Round = mongoose.model('Round');
 
 
-/*
+/**
  * -------------
  * Admin routes.
  * -------------
  */
 
-// Controller actions.
 module.exports = function(app, io) {
 
-  /*
+  /**
    * Show poems.
    *
    * @middleware auth.isUser: Block if there is no user session.
@@ -49,7 +46,7 @@ module.exports = function(app, io) {
 
   });
 
-  /*
+  /**
    * New poem form.
    *
    * @middleware auth.getUser: Try to get a user session.
@@ -68,7 +65,7 @@ module.exports = function(app, io) {
 
   });
 
-  /*
+  /**
    * Handle poem form submission.
    *
    * @middleware auth.getUser: Try to get a user session.
@@ -120,7 +117,7 @@ module.exports = function(app, io) {
 
   });
 
-  /*
+  /**
    * Delete poem.
    *
    * @middleware auth.isUser: Block if there is no user session.
@@ -143,7 +140,7 @@ module.exports = function(app, io) {
 
   });
 
-  /*
+  /**
    * Start poem.
    *
    * @middleware auth.isUser: Block if there is no user session.
@@ -170,7 +167,7 @@ module.exports = function(app, io) {
 
   });
 
-  /*
+  /**
    * Stop poem.
    *
    * @middleware auth.isUser: Block if there is no user session.

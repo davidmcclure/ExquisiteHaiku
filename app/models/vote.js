@@ -1,12 +1,11 @@
-/*
+
+/**
  * Vote model.
  */
 
-// Module dependencies.
 var mongoose = require('mongoose');
 var _ = require('underscore');
 
-// Schema definition.
 var VoteSchema = new mongoose.Schema({
   round : {
     type: mongoose.Schema.ObjectId,
@@ -29,14 +28,14 @@ var VoteSchema = new mongoose.Schema({
 });
 
 
-/*
+/**
  * -------------------
  * Virtual attributes.
  * -------------------
  */
 
 
-/*
+/**
  * Get id.
  *
  * @return {String}: The id.
@@ -46,14 +45,14 @@ VoteSchema.virtual('id').get(function() {
 });
 
 
-/*
+/**
  * -----------
  * Middleware.
  * -----------
  */
 
 
-/*
+/**
  * Call register on save.
  *
  * @return void.
@@ -64,14 +63,14 @@ VoteSchema.pre('save', function(next) {
 });
 
 
-/*
+/**
  * -----------------
  * Document methods.
  * -----------------
  */
 
 
-/*
+/**
  * Register the vote in memory.
  *
  * @return void.

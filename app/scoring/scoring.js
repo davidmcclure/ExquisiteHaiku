@@ -1,8 +1,8 @@
-/*
+
+/**
  * Scoring routine.
  */
 
-// Module dependencies.
 var mongoose = require('mongoose');
 var _ = require('underscore');
 
@@ -11,14 +11,12 @@ require('../models/poem');
 var Poem = mongoose.model('Poem');
 
 
-/*
+/**
  * Top-level scoring routine.
  *
  * @param {Number} id: The id of the poem to score.
  * @param {Function} emit: The emission callback.
  * @param {Function} cb: The save callback.
- *
- * @return void.
  */
 var score = exports.score = function(id, now, emit, cb) {
 
@@ -101,7 +99,7 @@ var score = exports.score = function(id, now, emit, cb) {
 };
 
 
-/*
+/**
  * Compute the rank and churn values of a vote.
  *
  * @param {Number} quantity: The vote quantity.
@@ -109,7 +107,6 @@ var score = exports.score = function(id, now, emit, cb) {
  * @param {Number} decayL: The decay lifetime.
  * @param {Number} decayI: The decay lifetime inverse.
  * @param {Date} now: The current time.
- *
  * @return {Array}: [rank, churn].
  */
 var compute = exports.compute = function(
@@ -165,12 +162,11 @@ var compute = exports.compute = function(
 };
 
 
-/*
+/**
  * Merge new vote score into stack.
  *
  * @param {Array} stack: The stack.
  * @param {Array} score: [rank, churn] for vote.
- *
  * @return {Array} stack: The updated stack.
  */
 var merge = exports.merge = function(stack, score) {
@@ -187,11 +183,10 @@ var merge = exports.merge = function(stack, score) {
 };
 
 
-/*
+/**
  * Sort the stack by rank.
  *
  * @param {Array} stack: The unsorted stack.
- *
  * @return {Array} stack: The sorted stack.
  */
 var sort = exports.sort = function(stack) {
@@ -201,11 +196,10 @@ var sort = exports.sort = function(stack) {
 };
 
 
-/*
+/**
  * Add ratios to stack.
  *
  * @param {Array} stack: The stack.
- *
  * @return {Array} stack: The stack with ratios.
  */
 var ratios = exports.ratios = function(stack) {
@@ -221,11 +215,10 @@ var ratios = exports.ratios = function(stack) {
 };
 
 
-/*
+/**
  * Round the rank and churn values.
  *
  * @param {Array} stack: The stack.
- *
  * @return {Array} stack: The rounded stack.
  */
 var round = exports.round = function(stack) {
@@ -241,14 +234,13 @@ var round = exports.round = function(stack) {
 };
 
 
-/*
+/**
  * Test to see if the current first-place word qualifies
  * for a premature lock.
  *
  * @param {Array} stack: The stack.
  * @param {Number} decayL: Decay lifetime.
  * @param {Number} subVal: Submission value.
- *
  * @return {Boolean}: True if the word should lock.
  */
 var locked = exports.locked = function(
@@ -297,13 +289,11 @@ var locked = exports.locked = function(
 };
 
 
-/*
+/**
  * Generate the data slice emitter.
  *
  * @param {Object} io: The socket.io server.
  * @param {String} id: The poem id.
- *
- * @return void.
  */
 var getEmitter = exports.getEmitter = function(io, id) {
   return function(result) {
@@ -312,14 +302,12 @@ var getEmitter = exports.getEmitter = function(io, id) {
 };
 
 
-/*
+/**
  * Call score() with current Date.
  *
  * @param {Number} id: The id of the poem to score.
  * @param {Function} emit: The emission callback.
  * @param {Function} cb: The save callback.
- *
- * @return void.
  */
 var execute = exports.execute = function(id, emit, cb) {
   score(id, Date.now(), emit, cb);

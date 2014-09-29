@@ -1,28 +1,24 @@
-/*
+
+/**
  * Authentication controller
  */
 
-// Module dependencies.
 var mongoose = require('mongoose');
 var loginForm = require('../../helpers/forms/login');
 var registerForm = require('../../helpers/forms/register');
 var auth = require('../../helpers/middleware');
-
-// Models.
 var User = mongoose.model('User');
 
 
-/*
+/**
  * ----------------------
  * Authentication routes.
  * ----------------------
  */
 
-
-// Controller actions.
 module.exports = function(app) {
 
-  /*
+  /**
    * Show registration form.
    *
    * @middleware auth.noUser: Block if there is a user session.
@@ -41,7 +37,7 @@ module.exports = function(app) {
 
   });
 
-  /*
+  /**
    * Process registration form.
    *
    * @middleware auth.noUser: Block if there is a user session.
@@ -87,7 +83,7 @@ module.exports = function(app) {
 
   });
 
-  /*
+  /**
    * Show login form.
    *
    * @middleware auth.noUser: Block if there is a user session.
@@ -106,7 +102,7 @@ module.exports = function(app) {
 
   });
 
-  /*
+  /**
    * Process login form.
    *
    * @middleware auth.noUser: Block if there is a user session.
@@ -152,13 +148,13 @@ module.exports = function(app) {
 
   });
 
-  /*
+  /**
    * Log user out.
    */
   app.get('/admin/logout',
     function(req, res) {
 
-      // Unset the session object.
+      // Clear the session.
       req.session = null;
       res.redirect('/admin/login');
 

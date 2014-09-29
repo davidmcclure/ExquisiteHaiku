@@ -1,4 +1,5 @@
-/*
+
+/**
  * Testing helpers.
  */
 
@@ -9,7 +10,7 @@ _t = {};
 // Application loaders.
 // --------------------
 
-/*
+/**
  * Load poem application.
  */
 _t.loadPoem = function() {
@@ -51,7 +52,7 @@ _t.loadPoem = function() {
 // State managers.
 // ---------------
 
-/*
+/**
  * Register a round.
  */
 _t.isVoting = function() {

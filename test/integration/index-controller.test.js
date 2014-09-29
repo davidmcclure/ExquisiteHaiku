@@ -1,4 +1,5 @@
-/*
+
+/**
  * Integration tests for index controller.
  */
 

@@ -1,4 +1,5 @@
-/*
+
+/**
  * Fixture generator for front-end test suite.
  */
 

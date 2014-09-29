@@ -1,14 +1,12 @@
-/*
+
+/**
  * Sockets controller.
  */
 
-// Module dependencies.
 var mongoose = require('mongoose');
 var syllables = require('../../lib/syllables');
 var async = require('async');
 var _ = require('underscore');
-
-// Models.
 var Poem = mongoose.model('Poem');
 var Vote = mongoose.model('Vote');
 
@@ -16,26 +14,22 @@ module.exports = function(app, io) {
 
   io.sockets.on('connection', function (socket) {
 
-    /*
+    /**
      * Connect to a poem room.
      *
      * @param {String} id: The poem id.
-     *
-     * @return void.
      */
     socket.on('join', function(id) {
       socket.join(id);
       socket.emit('join:complete');
     });
 
-    /*
+    /**
      * Validate a word.
      *
      * @param {String} id: The id of the poem.
      * @param {String} word: The word.
      * @param {Function} cb: Callback.
-     *
-     * @return void.
      */
     socket.on('validate', function(id, word, cb) {
 
@@ -56,13 +50,11 @@ module.exports = function(app, io) {
 
     });
 
-    /*
+    /**
      * Process blind submissions.
      *
      * @param {String} id: The id of the poem.
      * @param {Array} words: The words.
-     *
-     * @return void.
      */
     socket.on('submit', function(id, words) {
 
@@ -110,14 +102,12 @@ module.exports = function(app, io) {
 
     });
 
-    /*
+    /**
      * Process vote.
      *
      * @param {String} id: The id of the poem.
      * @param {String} word: The word.
      * @param {Number} quantity: The vote quantity.
-     *
-     * @return void.
      */
     socket.on('vote', function(id, word, quantity) {
 

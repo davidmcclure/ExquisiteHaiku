@@ -1,12 +1,11 @@
-/*
+
+/**
  * Round model.
  */
 
-// Module dependencies.
 var mongoose = require('mongoose');
 var _ = require('underscore');
 
-// Schema definition.
 var RoundSchema = new mongoose.Schema({
   started : {
     type: Date,
@@ -16,14 +15,14 @@ var RoundSchema = new mongoose.Schema({
 });
 
 
-/*
+/**
  * -------------------
  * Virtual attributes.
  * -------------------
  */
 
 
-/*
+/**
  * Get id.
  *
  * @return {String}: The id.
@@ -33,14 +32,14 @@ RoundSchema.virtual('id').get(function() {
 });
 
 
-/*
+/**
  * -----------------
  * Document methods.
  * -----------------
  */
 
 
-/*
+/**
  * Register the round in memory.
  *
  * @return void.

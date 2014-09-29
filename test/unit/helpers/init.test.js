@@ -1,4 +1,5 @@
-/*
+
+/**
  * Unit tests for application startup.
  */
 

@@ -1,4 +1,5 @@
-/*
+
+/**
  * Database connector for model unit tests.
  */
 

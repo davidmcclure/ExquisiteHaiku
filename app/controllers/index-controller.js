@@ -1,8 +1,8 @@
-/*
+
+/**
  * Admin controller
  */
 
-// Module dependencies.
 var auth = require('../../helpers/middleware');
 
 
@@ -12,10 +12,9 @@ var auth = require('../../helpers/middleware');
  * -------------
  */
 
-// Controller actions.
 module.exports = function(app) {
 
-  /*
+  /**
    * Front page.
    */
   app.get('/',

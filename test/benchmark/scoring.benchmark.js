@@ -1,4 +1,5 @@
-/*
+
+/**
  * Performance benchmark for the scoring routine.
  *
  * To run: >> node scoring.benchmark.js {#words} {#votes/word}

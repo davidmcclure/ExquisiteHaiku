@@ -1,12 +1,11 @@
-/*
+
+/**
  * User model.
  */
 
-// Module dependencies.
 var crypto = require('crypto');
 var mongoose = require('mongoose');
 
-// Schema definition.
 var UserSchema = new mongoose.Schema({
   username : {
     type: String,
@@ -32,14 +31,14 @@ var UserSchema = new mongoose.Schema({
 });
 
 
-/*
+/**
  * -------------------
  * Virtual attributes.
  * -------------------
  */
 
 
-/*
+/**
  * Get id.
  *
  * @return {String}: The id.
@@ -49,10 +48,8 @@ UserSchema.virtual('id').get(function() {
 });
 
 
-/*
+/**
  * Generate salt and store encrypted password.
- *
- * @return void.
  */
 UserSchema.virtual('password').set(function(password) {
   this._password = password;
@@ -61,7 +58,7 @@ UserSchema.virtual('password').set(function(password) {
 });
 
 
-/*
+/**
  * Get encrypted password.
  *
  * @return {String}: The password.
@@ -71,14 +68,14 @@ UserSchema.virtual('password').get(function() {
 });
 
 
-/*
+/**
  * -----------------
  * Document methods.
  * -----------------
  */
 
 
-/*
+/**
  * Generate salt.
  *
  * @return {String}: The salt.
@@ -88,12 +85,11 @@ UserSchema.methods.generateSalt = function() {
 };
 
 
-/*
+/**
  * Encrypt plaintext password.
  *
  * @param {String} password: The plaintext.
- *
- * @param {String}: The encrypted password.
+ * @return {String}: The encrypted password.
  */
 UserSchema.methods.encryptPassword = function(password) {
   return crypto.createHmac('sha1', this.salt).
@@ -102,11 +98,10 @@ UserSchema.methods.encryptPassword = function(password) {
 };
 
 
-/*
+/**
  * Check plaintext string against encrypted password.
  *
  * @param {String} plainText: The plaintext submission.
- *
  * @return {Boolean}: True the plaintext is the password.
  */
 UserSchema.methods.authenticate = function(plainText) {

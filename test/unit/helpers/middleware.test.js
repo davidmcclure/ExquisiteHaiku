@@ -1,4 +1,5 @@
-/*
+
+/**
  * Unit tests for route middleware methods.
  */
 

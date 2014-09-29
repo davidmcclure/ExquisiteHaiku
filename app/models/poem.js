@@ -1,8 +1,8 @@
-/*
+
+/**
  * Poem model.
  */
 
-// Module dependencies.
 var randomstring = require('randomstring');
 var syllables = require('../../lib/syllables');
 var mongoose = require('mongoose');
@@ -96,17 +96,15 @@ var PoemSchema = new mongoose.Schema({
 });
 
 
-/*
+/**
  * -----------
  * Middleware.
  * -----------
  */
 
 
-/*
+/**
  * Populate the hash and roundLength values.
- *
- * @return void.
  */
 PoemSchema.pre('validate', function(next) {
 
@@ -120,14 +118,14 @@ PoemSchema.pre('validate', function(next) {
 });
 
 
-/*
+/**
  * -------------------
  * Virtual attributes.
  * -------------------
  */
 
 
-/*
+/**
  * Get id.
  *
  * @return {String}: The id.
@@ -137,7 +135,7 @@ PoemSchema.virtual('id').get(function() {
 });
 
 
-/*
+/**
  * Get unstarted status.
  *
  * @return {Boolean}: True if unstarted.
@@ -147,7 +145,7 @@ PoemSchema.virtual('unstarted').get(function() {
 });
 
 
-/*
+/**
  * Get paused status.
  *
  * @return {Boolean}: True if paused.
@@ -157,7 +155,7 @@ PoemSchema.virtual('paused').get(function() {
 });
 
 
-/*
+/**
  * Get current round.
  *
  * @return {Object}: The current round.
@@ -167,7 +165,7 @@ PoemSchema.virtual('round').get(function() {
 });
 
 
-/*
+/**
  * Get round expiration.
  *
  * @return {Date}: The expiration stamp.
@@ -187,7 +185,7 @@ PoemSchema.virtual('roundExpiration').get(function() {
 });
 
 
-/*
+/**
  * Get total syllables.
  *
  * @return {Number}: The syllable count.
@@ -208,7 +206,7 @@ PoemSchema.virtual('syllableCount').get(function() {
 });
 
 
-/*
+/**
  * Convert decay halflife in seconds to mean decay
  * lifetime in milliseconds.
  *
@@ -219,14 +217,14 @@ PoemSchema.virtual('decayLifetime').get(function() {
 });
 
 
-/*
+/**
  * -----------
  * Validators.
  * -----------
  */
 
 
-/*
+/**
  * If the poem has not been started, then running and complete
  * must be false.
  *
@@ -237,7 +235,7 @@ PoemSchema.path('started').validate(function(v) {
 });
 
 
-/*
+/**
  * If the poem is running, started must be true and complete
  * must be false.
  *
@@ -248,7 +246,7 @@ PoemSchema.path('running').validate(function(v) {
 });
 
 
-/*
+/**
  * If the poem is complete, started must be true and running
  * must be false.
  *
@@ -259,7 +257,7 @@ PoemSchema.path('complete').validate(function(v) {
 });
 
 
-/*
+/**
  * Round length unit can only be 'seconds' or 'minutes'.
  *
  * @return {Boolean}: True if the unit is valid.
@@ -270,20 +268,19 @@ PoemSchema.path('roundLengthUnit').validate(function(v) {
 });
 
 
-/*
+/**
  * -----------------
  * Document methods.
  * -----------------
  */
 
 
-/*
+/**
  * Start timer.
  *
  * @param {Function} slicer: The slicer.
  * @param {Function} emit: Broadcast callback.
  * @param {Function} cb: Save callback.
- *
  * @return {Boolean}: True if a new timer is set, false if
  * one already exists.
  */
@@ -310,10 +307,8 @@ PoemSchema.methods.start = function(slicer, emit, cb) {
 };
 
 
-/*
+/**
  * Stop slicer.
- *
- * @return void.
  */
 PoemSchema.methods.stop = function() {
 
@@ -331,7 +326,7 @@ PoemSchema.methods.stop = function() {
 
 };
 
-/*
+/**
  * Create a new round.
  *
  * @return void.
@@ -365,11 +360,10 @@ PoemSchema.methods.newRound = function() {
 };
 
 
-/*
+/**
  * Get time remaining in current round.
  *
  * @param {Date} now: The current time.
- *
  * @return {Number}: The remaining time in ms.
  */
 PoemSchema.methods.timeLeftInRound = function(now) {
@@ -386,11 +380,10 @@ PoemSchema.methods.timeLeftInRound = function(now) {
 };
 
 
-/*
+/**
  * Add a word to the poem array.
  *
  * @param {Function} cb: Callback.
- *
  * @return {Boolean}: True if the word fits in the syllable
  * pattern of the poem, False if not.
  */

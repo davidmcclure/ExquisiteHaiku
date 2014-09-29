@@ -1,23 +1,14 @@
-/*
+
+/**
  * Poem form.
  */
 
- // Module dependencies.
 var forms = require('forms');
 var mongoose = require('mongoose');
 var validators = require('../validators');
 var fields = forms.fields;
 var _ = require('underscore');
-
-// Models.
 var Poem = mongoose.model('Poem');
-
-
-/*
- * -----------
- * Poem forms.
- * -----------
- */
 
 
 exports.form = function(poem) {
@@ -65,11 +56,6 @@ exports.form = function(poem) {
         validators.positiveInteger('Must be a positive integer.')
       ]
     })
-
-    // Published.
-    // published: fields.boolean({
-      // value: true
-    // })
 
   });
 

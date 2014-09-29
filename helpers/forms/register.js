@@ -1,23 +1,14 @@
-/*
+
+/**
  * Register form.
  */
 
- // Module dependencies.
 var forms = require('forms');
 var mongoose = require('mongoose');
 var fields = forms.fields;
 var validators = forms.validators;
 var custom = require('../validators');
-
-// Models.
 var User = mongoose.model('User');
-
-
-/*
- * --------------
- * Register form.
- * --------------
- */
 
 
 exports.form = function() {

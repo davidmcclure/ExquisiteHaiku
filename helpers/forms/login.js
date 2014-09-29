@@ -1,18 +1,11 @@
-/*
+
+/**
  * Login form.
  */
 
- // Module dependencies.
 var forms = require('forms');
 var fields = forms.fields;
 var validators = require('../validators');
-
-
-/*
- * -----------
- * Login form.
- * -----------
- */
 
 
 exports.form = function() {

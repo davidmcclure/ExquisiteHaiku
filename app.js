@@ -20,11 +20,7 @@ var app = module.exports.app = express(express.favicon());
 require('./settings')(app);
 
 // Bootstrap models.
-var modelsPath = __dirname + '/app/models';
-var modelFiles = fs.readdirSync(modelsPath);
-modelFiles.forEach(function(file) {
-  require(modelsPath + '/' + file);
-});
+require('./app/models');
 
 // Run server and socket.io.
 var server = app.listen(global.config.port);

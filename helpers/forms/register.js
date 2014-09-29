@@ -11,7 +11,7 @@ var custom = require('../validators');
 var User = mongoose.model('User');
 
 
-exports.form = function() {
+module.exports = function() {
 
   return forms.create({
 

@@ -13,7 +13,7 @@ describe('Register Form', function() {
 
   // Construct form.
   beforeEach(function() {
-    form = registerForm.form();
+    form = registerForm();
   });
 
   // Clear collections.

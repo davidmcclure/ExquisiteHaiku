@@ -53,7 +53,7 @@ module.exports = function(app, io) {
       res.render('admin/new', {
         title: 'New Poem',
         user: req.user,
-        form: poemForm.form(),
+        form: poemForm(),
         menu: 'new'
       });
 
@@ -69,7 +69,7 @@ module.exports = function(app, io) {
     function(req, res) {
 
       // Pass control to the form.
-      poemForm.form().handle(req, {
+      poemForm().handle(req, {
 
         // If validations pass.
         success: function(form) {

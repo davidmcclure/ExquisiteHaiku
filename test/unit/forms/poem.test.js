@@ -12,7 +12,7 @@ describe('Poem Form', function() {
   var form;
 
   beforeEach(function() {
-    form = poemForm.form();
+    form = poemForm();
   });
 
   // Clear collections.

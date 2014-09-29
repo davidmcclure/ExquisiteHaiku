@@ -24,7 +24,7 @@ module.exports = function(app) {
       // Render form.
       res.render('auth/register', {
         title: 'Register',
-        form: registerForm.form(),
+        form: registerForm(),
         user: false,
         menu: 'register'
       });
@@ -40,7 +40,7 @@ module.exports = function(app) {
     auth.noUser,
     function(req, res) {
 
-      registerForm.form().handle(req, {
+      registerForm().handle(req, {
 
         // If validations pass.
         success: function(form) {
@@ -89,7 +89,7 @@ module.exports = function(app) {
       // Render form.
       res.render('auth/login', {
         title: 'Login',
-        form: loginForm.form(),
+        form: loginForm(),
         user: false,
         menu: 'login'
       });
@@ -105,7 +105,7 @@ module.exports = function(app) {
     auth.noUser,
     function(req, res) {
 
-      loginForm.form().handle(req, {
+      loginForm().handle(req, {
 
         // If validations pass.
         success: function(form) {

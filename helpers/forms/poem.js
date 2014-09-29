@@ -11,7 +11,7 @@ var fields = forms.fields;
 var Poem = mongoose.model('Poem');
 
 
-exports.form = function(poem) {
+module.exports = function(poem) {
 
   return forms.create({
 

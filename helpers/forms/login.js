@@ -8,7 +8,7 @@ var fields = forms.fields;
 var validators = require('../validators');
 
 
-exports.form = function() {
+module.exports = function() {
 
   return forms.create({
 

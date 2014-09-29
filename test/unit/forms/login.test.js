@@ -14,7 +14,7 @@ describe('Login Form', function() {
   beforeEach(function(done) {
 
     // Create the form.
-    form = loginForm.form();
+    form = loginForm();
 
     // Create admin user.
     user1 = new _t.User({

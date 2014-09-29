@@ -41,10 +41,13 @@ module.exports = function(app) {
 
   // Development.
   if (env == 'development') {
+
+    // Show errors.
     app.use(express.errorHandler({
       dumpExceptions: true,
       showStack: true
     }));
+
   }
 
   // Production.

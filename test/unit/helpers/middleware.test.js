@@ -5,6 +5,8 @@
 
 var _t = require('../../dependencies.js');
 var middleware = require('../../../helpers/middleware');
+var should = require('should');
+var async = require('async');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Poem = mongoose.model('Poem');
@@ -24,7 +26,7 @@ describe('Route Middleware', function() {
   afterEach(function(done) {
 
     // Truncate.
-    _t.async.map([
+    async.map([
       User,
       Poem
     ], _t.helpers.remove, function(err, models) {
@@ -212,7 +214,7 @@ describe('Route Middleware', function() {
       });
 
       // Save.
-      _t.async.map([
+      async.map([
         user,
         poem
       ], _t.helpers.save, function(err, documents) {
@@ -268,7 +270,7 @@ describe('Route Middleware', function() {
       });
 
       // Save.
-      _t.async.map([
+      async.map([
         user1,
         user2,
         poem
@@ -332,7 +334,7 @@ describe('Route Middleware', function() {
       });
 
       // Save.
-      _t.async.map([
+      async.map([
         user,
         poem
       ], _t.helpers.save, function(err, documents) {

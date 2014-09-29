@@ -6,6 +6,7 @@
 var _t = require('../../dependencies.js');
 var poemForm = require('../../../helpers/forms/poem');
 var should = require('should');
+var async = require('async');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Poem = mongoose.model('Poem');
@@ -23,7 +24,7 @@ describe('Poem Form', function() {
   afterEach(function(done) {
 
     // Truncate.
-    _t.async.map([
+    async.map([
       User,
       Poem
     ], _t.helpers.remove, function(err, models) {

@@ -3,9 +3,10 @@
  * Unit tests for application startup.
  */
 
-var should = require('should');
 var _t = require('../../dependencies.js');
 var init = require('../../../config/init');
+var should = require('should');
+var async = require('async');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Poem = mongoose.model('Poem');
@@ -94,7 +95,7 @@ describe('Init', function() {
     });
 
     // Save.
-    _t.async.map([
+    async.map([
       user,
       running,
       notRunning,
@@ -124,7 +125,7 @@ describe('Init', function() {
     global.Oversoul = { timers: {}, votes: {} };
 
     // Truncate.
-    _t.async.map([
+    async.map([
       User,
       Poem,
       Vote

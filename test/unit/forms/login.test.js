@@ -6,6 +6,7 @@
 var _t = require('../../dependencies.js');
 var loginForm = require('../../../helpers/forms/login');
 var should = require('should');
+var async = require('async');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
@@ -34,7 +35,7 @@ describe('Login Form', function() {
     });
 
     // Save.
-    _t.async.map([
+    async.map([
       user1,
       user2
     ], _t.helpers.save, function(err, documents) {

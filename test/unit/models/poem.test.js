@@ -5,6 +5,7 @@
 
 var _t = require('../../dependencies.js');
 var should = require('should');
+var async = require('async');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Poem = mongoose.model('Poem');
@@ -52,7 +53,7 @@ describe('Poem', function() {
     global.Oversoul.timers = {};
 
     // Clear users and poems.
-    _t.async.map([
+    async.map([
       User,
       Poem
     ], _t.helpers.remove, function(err, models) {

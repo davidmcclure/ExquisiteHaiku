@@ -4,6 +4,7 @@
  */
 
 var _t = require('../dependencies.js');
+var Browser = require('zombie');
 var should = require('should');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
@@ -17,7 +18,7 @@ describe('Index Controller', function() {
   beforeEach(function(done) {
 
     // Create browser.
-    browser = new _t.browser();
+    browser = new Browser();
 
     // Create user.
     user = new User({

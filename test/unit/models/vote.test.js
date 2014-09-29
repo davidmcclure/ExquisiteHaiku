@@ -5,6 +5,7 @@
 
 var _t = require('../../dependencies.js');
 var should = require('should');
+var async = require('async');
 var mongoose = require('mongoose');
 var Round = mongoose.model('Round');
 var Vote = mongoose.model('Vote');
@@ -31,7 +32,7 @@ describe('Vote', function() {
   afterEach(function(done) {
 
     // Clear rounds and votes.
-    _t.async.map([
+    async.map([
       Round,
       Vote
     ], _t.helpers.remove, function(err, models) {

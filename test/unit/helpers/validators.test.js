@@ -5,6 +5,8 @@
 
 var _t = require('../../dependencies.js');
 var validators = require('../../../helpers/validators');
+var should = require('should');
+var async = require('async');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
@@ -17,7 +19,7 @@ describe('Custom Validators', function() {
   afterEach(function(done) {
 
     // Truncate.
-    _t.async.map([
+    async.map([
       User
     ], _t.helpers.remove, function(err, models) {
       done();
@@ -236,7 +238,7 @@ describe('Custom Validators', function() {
       });
 
       // Save.
-      _t.async.map([
+      async.map([
         user1,
         user2
       ], _t.helpers.save, function(err, documents) {

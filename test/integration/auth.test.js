@@ -4,6 +4,7 @@
  */
 
 var _t = require('../dependencies.js');
+var Browser = require('zombie');
 var should = require('should');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
@@ -16,7 +17,7 @@ describe('Auth Controller', function() {
   // Create user.
   beforeEach(function(done) {
 
-    browser = new _t.browser();
+    browser = new Browser();
 
     // Create a user.
     user = new User({

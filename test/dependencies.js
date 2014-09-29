@@ -5,9 +5,6 @@
 
 // Modules
 // -------
-exports.should =      require('should');
-exports.browser =     require('zombie');
-exports.async =       require('async');
 exports.sinon =       require('sinon');
 exports.mongoose =    require('mongoose');
 exports.io =          require('socket.io-client');

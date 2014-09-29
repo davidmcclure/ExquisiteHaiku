@@ -4,7 +4,9 @@
  */
 
 var _t = require('../dependencies.js');
+var Browser = require('zombie');
 var should = require('should');
+var async = require('async');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Poem = mongoose.model('Poem');
@@ -20,7 +22,7 @@ describe('Admin Controller', function() {
   beforeEach(function(done) {
 
     // Create browser.
-    browser = new _t.browser();
+    browser = new Browser();
 
     // User 1.
     user1 = new User({
@@ -115,7 +117,7 @@ describe('Admin Controller', function() {
     });
 
     // Save.
-    _t.async.map([
+    async.map([
       user1,
       user2,
       unstarted,
@@ -150,7 +152,7 @@ describe('Admin Controller', function() {
     global.Oversoul.timers = {};
 
     // Truncate.
-    _t.async.map([
+    async.map([
       User,
       Poem
     ], _t.helpers.remove, function(err, models) {

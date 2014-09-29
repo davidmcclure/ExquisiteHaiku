@@ -3,9 +3,10 @@
  * Unit tests for scoring routine.
  */
 
-var should = require('should');
 var scoring = require('../../../app/scoring/scoring');
 var _t = require('../../dependencies.js');
+var should = require('should');
+var async = require('async');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Poem = mongoose.model('Poem');
@@ -42,7 +43,7 @@ describe('Scoring', function() {
   after(function(done) {
 
     // Clear users and poems.
-    _t.async.map([
+    async.map([
       User,
       Poem,
       Round,
@@ -267,7 +268,7 @@ describe('Scoring', function() {
         });
 
         // Save.
-        _t.async.map([
+        async.map([
           poem,
           vote1,
           vote2,

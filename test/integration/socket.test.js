@@ -4,6 +4,7 @@
  */
 
 var _t = require('../dependencies.js');
+var async = require('async');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Poem = mongoose.model('Poem');
@@ -63,7 +64,7 @@ describe('Socket Controller', function() {
     poem2.newRound();
 
     // Save.
-    _t.async.map([
+    async.map([
       user,
       poem1,
       poem2
@@ -80,7 +81,7 @@ describe('Socket Controller', function() {
     global.Oversoul.votes = {};
 
     // Clear collections.
-    _t.async.map([
+    async.map([
       User,
       Poem,
       Round,

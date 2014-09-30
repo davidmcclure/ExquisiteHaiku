@@ -15,6 +15,8 @@ module.exports = function(app, io) {
 
   io.sockets.on('connection', function (socket) {
 
+    console.log(socket.id);
+
     /**
      * Connect to a poem room.
      *

@@ -13,6 +13,10 @@ var VoteSchema = new mongoose.Schema({
     ref: 'Round',
     required: true
   },
+  user : {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User'
+  },
   applied : {
     type: Date,
     required: true,

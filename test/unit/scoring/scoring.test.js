@@ -246,6 +246,7 @@ describe('Scoring', function() {
 
         // Vote 1.
         var vote1 = new Vote({
+          session: 's1',
           round: poem.round.id,
           word: 'first',
           quantity: 100,
@@ -254,6 +255,7 @@ describe('Scoring', function() {
 
         // Vote 2.
         var vote2 = new Vote({
+          session: 's2',
           round: poem.round.id,
           word: 'second',
           quantity: 200,
@@ -262,6 +264,7 @@ describe('Scoring', function() {
 
         // Vote 3.
         var vote3 = new Vote({
+          session: 's3',
           round: poem.round.id,
           word: 'third',
           quantity: 300,

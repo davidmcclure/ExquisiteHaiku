@@ -78,6 +78,7 @@ describe('Restart', function() {
 
     // Vote 1.
     var vote1 = new Vote({
+      session: 's1',
       round: running.round.id,
       word: 'word1',
       quantity: 100
@@ -85,6 +86,7 @@ describe('Restart', function() {
 
     // Vote 2.
     var vote2 = new Vote({
+      session: 's2',
       round: running.round.id,
       word: 'word2',
       quantity: 100
@@ -92,6 +94,7 @@ describe('Restart', function() {
 
     // Vote 3.
     var vote3 = new Vote({
+      session: 's3',
       round: notRunning.round.id,
       word: 'word3',
       quantity: 100

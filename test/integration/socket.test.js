@@ -81,7 +81,6 @@ describe('Socket Controller', function() {
   // Clear.
   afterEach(function(done) {
 
-    // Empty votes tracker.
     global.Oversoul.votes = {};
 
     // Clear collections.

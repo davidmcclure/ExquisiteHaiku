@@ -3,8 +3,8 @@
  * Unit tests for scoring routine.
  */
 
+require('../../dependencies');
 var scoring = require('../../../app/scoring/scoring');
-var _t = require('../../dependencies.js');
 var helpers = require('../../helpers');
 var should = require('should');
 var async = require('async');

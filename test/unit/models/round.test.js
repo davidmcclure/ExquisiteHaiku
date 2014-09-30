@@ -3,7 +3,7 @@
  * Unit tests for round model.
  */
 
-var _t = require('../../dependencies.js');
+require('../../dependencies');
 var should = require('should');
 var mongoose = require('mongoose');
 var Round = mongoose.model('Round');

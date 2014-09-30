@@ -3,7 +3,7 @@
  * Unit tests for route middleware methods.
  */
 
-var _t = require('../../dependencies.js');
+require('../../dependencies');
 var validators = require('../../../helpers/validators');
 var helpers = require('../../helpers');
 var should = require('should');

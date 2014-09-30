@@ -39,4 +39,4 @@ var io = socket.listen(server, { log: false });
 require('./app/controllers')(app, io);
 
 // Start poems.
-require('./config/init')(app, io);
+require('./config/restart')(app, io);

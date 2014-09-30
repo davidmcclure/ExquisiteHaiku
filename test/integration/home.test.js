@@ -10,7 +10,7 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
 
-describe('Index Controller', function() {
+describe('Home Controller', function() {
 
   var browser, user;
 

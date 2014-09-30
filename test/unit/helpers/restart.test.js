@@ -3,10 +3,10 @@
  * Unit tests for application startup.
  */
 
-var _t = require('../../dependencies.js');
+require('../../dependencies');
 var helpers = require('../../helpers');
+var restart = require('../../../config/restart');
 var _ = require('lodash');
-var init = require('../../../config/init');
 var should = require('should');
 var sinon = require('sinon');
 var async = require('async');
@@ -108,7 +108,7 @@ describe('Init', function() {
     ], helpers.save, function(err, documents) {
 
       // Run init.
-      init(app, io, function() {
+      restart(app, io, function() {
         done();
       });
 

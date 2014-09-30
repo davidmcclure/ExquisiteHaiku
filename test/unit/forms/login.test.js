@@ -3,7 +3,7 @@
  * Unit tests for login form.
  */
 
-var _t = require('../../dependencies.js');
+require('../../dependencies');
 var loginForm = require('../../../helpers/forms/login');
 var helpers = require('../../helpers');
 var should = require('should');

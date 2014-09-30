@@ -3,7 +3,7 @@
  * Unit tests for poem form.
  */
 
-var _t = require('../../dependencies.js');
+require('../../dependencies');
 var poemForm = require('../../../helpers/forms/poem');
 var helpers = require('../../helpers');
 var should = require('should');

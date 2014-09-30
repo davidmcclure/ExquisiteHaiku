@@ -3,8 +3,6 @@
  * Testing dependencies.
  */
 
-require('../app/models');
-
 // Load configuration.
 var config = require('yaml-config');
 exports.root = config.readConfig(process.cwd()+'/test/config.yaml').root;

@@ -7,8 +7,6 @@ var _ = require('lodash');
 var scoring = require('../app/scoring/scoring');
 var mongoose = require('mongoose');
 var async = require('async');
-
-// Models.
 var Poem = mongoose.model('Poem');
 var Vote = mongoose.model('Vote');
 

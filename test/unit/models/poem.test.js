@@ -887,20 +887,6 @@ describe('Poem', function() {
 
       });
 
-      it('should stop the poem if no votes in previous round', function() {
-
-        // Spy on stop().
-        poem.stop = sinon.spy();
-
-        // Add new round.
-        poem.newRound();
-
-        // Add new round, check for stop().
-        poem.newRound();
-        sinon.assert.called(poem.stop);
-
-      });
-
     });
 
     describe('timeLeftInRound', function() {

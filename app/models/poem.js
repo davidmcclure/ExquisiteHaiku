@@ -338,11 +338,6 @@ PoemSchema.methods.newRound = function() {
   // If previous rounds exist.
   if (this.rounds.length > 1) {
 
-    // If no votes in previous round, stop.
-    if (_.isEmpty(global.Oversoul.votes[
-      this.rounds[this.rounds.length-2].id
-    ])) this.stop();
-
     // Delete votes for previous round.
     delete global.Oversoul.votes[
       this.rounds[this.rounds.length-2].id

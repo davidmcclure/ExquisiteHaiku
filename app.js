@@ -35,6 +35,9 @@ var server = app.listen(app.get('port'), function() {
 // Start socket.io.
 var io = socket.listen(server, { log: false });
 
+// Configure Socket.io.
+require('./config/socket')(io);
+
 // Attach the routes.
 require('./app/controllers')(app, io);
 

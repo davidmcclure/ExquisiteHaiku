@@ -24,20 +24,15 @@ module.exports = function(app) {
   app.set('views', root + '/app/views');
   app.set('view engine', 'jade');
 
-  // Configure sessions.
+  // Cookies.
   app.use(cookieParser());
+
+  // Sessions.
   app.use(session({
     store: new MongoStore({ url: global.config.db }),
     secret: process.env.EH_SECRET,
     saveUninitialized: true,
     resave: true
-  }));
-
-  // Set stylus source.
-  app.use(require("stylus").middleware({
-    src: root + "/stylus",
-    dest: root + "/public",
-    compress: true
   }));
 
   // Set public directory.

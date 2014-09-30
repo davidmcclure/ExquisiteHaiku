@@ -3,7 +3,7 @@
  * Unit tests for user model.
  */
 
-require('../../dependencies');
+require('../../server');
 var should = require('should');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');

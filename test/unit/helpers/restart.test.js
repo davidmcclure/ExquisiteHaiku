@@ -3,7 +3,7 @@
  * Unit tests for application startup.
  */
 
-require('../../dependencies');
+require('../../server');
 var helpers = require('../../helpers');
 var restart = require('../../../config/restart');
 var _ = require('lodash');

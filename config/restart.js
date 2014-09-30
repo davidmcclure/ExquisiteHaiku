@@ -20,6 +20,7 @@ var Vote = mongoose.model('Vote');
  * @param {Function} cb: Callback.
  */
 module.exports = function(app, io, cb) {
+
   cb = cb || function() {};
 
   // Get running poems.

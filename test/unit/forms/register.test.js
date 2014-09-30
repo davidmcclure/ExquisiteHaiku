@@ -3,7 +3,7 @@
  * Unit tests for registration form.
  */
 
-require('../../dependencies');
+require('../../server');
 var registerForm = require('../../../helpers/forms/register');
 var should = require('should');
 var mongoose = require('mongoose');

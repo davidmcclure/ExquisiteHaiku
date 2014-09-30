@@ -3,7 +3,7 @@
  * Unit tests for route middleware methods.
  */
 
-require('../../dependencies');
+require('../../server');
 var middleware = require('../../../helpers/middleware');
 var helpers = require('../../helpers');
 var should = require('should');

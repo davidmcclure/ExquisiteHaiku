@@ -3,7 +3,7 @@
  * Unit tests for poem model.
  */
 
-require('../../dependencies');
+require('../../server');
 var helpers = require('../../helpers');
 var should = require('should');
 var async = require('async');

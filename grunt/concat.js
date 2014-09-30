@@ -13,16 +13,14 @@ var vendor = [
 var adminSource = [
   'public/javascripts/src/add/app.js',
   'public/javascripts/src/add/views/*.js',
-  'public/javascripts/src/add/controllers/*.js',
-  'public/javascripts/src/add/init.js'
+  'public/javascripts/src/add/controllers/*.js'
 ];
 
 var poemSource = [
   'public/javascripts/src/poem/app.js',
   'public/javascripts/src/poem/views/*.js',
   'public/javascripts/src/poem/collections/*.js',
-  'public/javascripts/src/poem/controllers/*.js',
-  'public/javascripts/src/poem/init.js'
+  'public/javascripts/src/poem/controllers/*.js'
 ];
 
 

@@ -1,6 +1,5 @@
-
-/**
- * Start the poem.
+/*
+ * Run poem.
  */
 
 $(function() {

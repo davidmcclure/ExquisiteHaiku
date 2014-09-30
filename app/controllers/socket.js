@@ -4,10 +4,9 @@
  */
 
 var _ = require('lodash');
-var syllables = require('../../lib/syllables');
 var mongoose = require('mongoose');
+var syllables = require('../../lib/syllables');
 var async = require('async');
-var cookieParser = require('cookie-parser');
 var Poem = mongoose.model('Poem');
 var Vote = mongoose.model('Vote');
 
@@ -15,6 +14,8 @@ var Vote = mongoose.model('Vote');
 module.exports = function(app, io) {
 
   io.sockets.on('connection', function (socket) {
+
+    console.log(socket.id);
 
     /**
      * Connect to a poem room.

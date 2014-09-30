@@ -1,6 +1,5 @@
-
-/**
- * Start the add form.
+/*
+ * Run add form.
  */
 
 $(function() {

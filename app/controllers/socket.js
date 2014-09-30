@@ -70,9 +70,10 @@ module.exports = function(app, io) {
 
           // Create the vote.
           votes.push(new Vote({
-            round: poem.round.id,
+            session:  socket.request.sid,
+            round:    poem.round.id,
             quantity: poem.submissionVal,
-            word: word
+            word:     word
           }));
 
         });
@@ -117,9 +118,10 @@ module.exports = function(app, io) {
 
         // Create the vote.
         var vote = new Vote({
-          round: poem.round.id,
-          word: word,
-          quantity: quantity
+          session:  socket.request.sid,
+          round:    poem.round.id,
+          quantity: quantity,
+          word:     word
         });
 
         // Save.

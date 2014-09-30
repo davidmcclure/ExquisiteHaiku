@@ -23,9 +23,7 @@ module.exports = function(app, io, cb) {
   cb = cb || function() {};
 
   // Get running poems.
-  Poem.find({
-    running: true
-  }, function(err, poems) {
+  Poem.find({ running: true }, function(err, poems) {
 
     // Walk poems async.
     async.map(poems, function(poem, callback) {
@@ -47,8 +45,9 @@ module.exports = function(app, io, cb) {
         var emit = scoring.getEmitter(io, poem.id);
         poem.start(scoring.execute, emit, function() {});
 
-        if (process.env.NODE_ENV != 'testing')
+        if (process.env.NODE_ENV != 'testing') {
           console.log('Started %s', poem.hash);
+        }
 
         // Continue.
         callback(null, poem);

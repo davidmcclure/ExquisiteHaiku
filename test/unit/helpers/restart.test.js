@@ -16,7 +16,7 @@ var Poem = mongoose.model('Poem');
 var Vote = mongoose.model('Vote');
 
 
-describe('Init', function() {
+describe('Restart', function() {
 
   var app, config, io, user, running,
     notRunning, vote1, vote2, vote3;

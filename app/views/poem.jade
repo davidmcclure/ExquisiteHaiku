@@ -1,0 +1,66 @@
+
+extends layout
+
+block head
+
+  link(rel='stylesheet', href='/stylesheets/dist/poem.css')
+  script(src='socket.io/socket.io.js')
+  script(src='/javascripts/dist/poem.js')
+  script(src='/javascripts/init/poem.js')
+
+block content
+
+  // Markup:
+
+  div#log
+    div.primary
+    div.overflow
+
+  div.main
+    div#poem
+    div#stack
+
+  div#info
+
+    div.info#points
+      span.percent
+      span.value
+
+    div.info#timer
+      span.percent
+      span.min
+      span.sec
+
+  // Templates:
+
+  script(id="poem-line", type="text/template")
+    div.poem-line
+
+  script(id="poem-word", type="text/template")
+    span.poem-word <%= word %>
+
+  script(id="submission-stack", type="text/template")
+    div.submission-stack
+
+  script(id="submission-word", type="text/template")
+    div.submission-word <%= word %>
+
+  script(id="stack-word", type="text/template")
+    span.ratio
+    span.word
+    span.churn.pos.positive
+    span.churn.neg.negative
+
+  script(id="log-word", type="text/template")
+    span.value <%= value %>
+    span.word <%= word %>
+
+  script(id="end-state", type="text/template")
+    div.complete-poem
+      div.hash
+      div.poem
+
+  // Globals:
+
+  script.
+    var P = !{poem}

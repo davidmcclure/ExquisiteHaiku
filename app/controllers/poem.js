@@ -17,7 +17,7 @@ module.exports = function(app) {
   app.get('/:hash', auth.getPoem, function(req, res) {
 
     // Render the layout.
-    res.render('poem/index', {
+    res.render('poem', {
       title: req.params.hash,
       poem: JSON.stringify(req.poem)
     });

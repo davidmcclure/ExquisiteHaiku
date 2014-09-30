@@ -14,7 +14,7 @@ global.config = config.readConfig(process.cwd()+configPath);
 require('./config/db-connect');
 
 // Create server.
-var app = module.exports.app = express(express.favicon());
+var app = express(express.favicon());
 require('./settings')(app);
 
 // Run server and socket.io.
@@ -31,3 +31,5 @@ console.log(
   global.config.port,
   app.settings.env
 );
+
+module.exports = app;

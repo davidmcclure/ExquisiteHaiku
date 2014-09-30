@@ -48,11 +48,11 @@ describe('Admin Controller', function() {
       complete:         false,
       roundLengthValue: 3,
       roundLengthUnit:  'minutes',
-      sliceInterval :   1000,
-      submissionVal :   100,
-      decayHalflife :   20,
-      seedCapital :     1000,
-      visibleWords :    500
+      sliceInterval:    1000,
+      submissionVal:    100,
+      decayHalflife:    20,
+      seedCapital:      1000,
+      visibleWords:     500
     });
 
     // Create running poem.
@@ -64,11 +64,11 @@ describe('Admin Controller', function() {
       complete:         false,
       roundLengthValue: 3,
       roundLengthUnit:  'minutes',
-      sliceInterval :   1000,
-      submissionVal :   100,
-      decayHalflife :   20,
-      seedCapital :     1000,
-      visibleWords :    500
+      sliceInterval:    1000,
+      submissionVal:    100,
+      decayHalflife:    20,
+      seedCapital:      1000,
+      visibleWords:     500
     });
 
     // Create paused poem.
@@ -80,11 +80,11 @@ describe('Admin Controller', function() {
       complete:         false,
       roundLengthValue: 3,
       roundLengthUnit:  'minutes',
-      sliceInterval :   1000,
-      submissionVal :   100,
-      decayHalflife :   20,
-      seedCapital :     1000,
-      visibleWords :    500
+      sliceInterval:    1000,
+      submissionVal:    100,
+      decayHalflife:    20,
+      seedCapital:      1000,
+      visibleWords:     500
     });
 
     // Create complete poem.
@@ -96,11 +96,11 @@ describe('Admin Controller', function() {
       complete:         true,
       roundLengthValue: 3,
       roundLengthUnit:  'minutes',
-      sliceInterval :   1000,
-      submissionVal :   100,
-      decayHalflife :   20,
-      seedCapital :     1000,
-      visibleWords :    500
+      sliceInterval:    1000,
+      submissionVal:    100,
+      decayHalflife:    20,
+      seedCapital:      1000,
+      visibleWords:     500
     });
 
     // Create user2 poem.
@@ -111,11 +111,11 @@ describe('Admin Controller', function() {
       complete:         false,
       roundLengthValue: 3,
       roundLengthUnit:  'minutes',
-      sliceInterval :   1000,
-      submissionVal :   100,
-      decayHalflife :   20,
-      seedCapital :     1000,
-      visibleWords :    500
+      sliceInterval:    1000,
+      submissionVal:    100,
+      decayHalflife:    20,
+      seedCapital:      1000,
+      visibleWords:     500
     });
 
     // Save.

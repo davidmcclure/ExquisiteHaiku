@@ -2,8 +2,3 @@
 default:
   - concat
   - watch
-
-mocha: mochaTest
-
-test:
-  - mocha

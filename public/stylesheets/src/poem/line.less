@@ -1,0 +1,43 @@
+
+.drag-line {
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  svg {
+
+    position: fixed;
+    stroke-width: 2;
+    top: 0;
+    left: 0;
+
+    text {
+      font-size: 2em;
+      &.positive {
+        fill: @positive;
+      }
+      &.negative {
+        fill: @negative;
+      }
+      &.blocked {
+        fill: @preview;
+      }
+    }
+
+    line {
+      stroke-width: 4;
+      &.positive {
+        stroke: @positive;
+      }
+      &.negative {
+        stroke: @negative;
+      }
+      &.blocked {
+        stroke: @preview;
+      }
+    }
+
+  }
+
+}

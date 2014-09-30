@@ -43,7 +43,7 @@ Ov.Collections.Round = Backbone.Collection.extend({
 
     // Create round.
     return this.create({
-      id: id, points: P.seedCapital
+      id: id, points: P.seedCapital,
     });
 
   }

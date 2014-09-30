@@ -3,20 +3,25 @@
  * Define application settings and middleware.
  */
 
-// Module dependencies.
 var express = require('express');
 var MongoStore = require('connect-mongo')(express);
 var methodOverride = require('method-override');
 var cookieParser = require('cookie-parser');
 var cookieSession = require('cookie-session');
+var path = require('path');
 
-// Start-up routine.
+
 module.exports = function(app) {
 
+  // Get the root directory.
+  var root = path.normalize(__dirname+'/..');
   var env = app.get('env');
 
-  // Set view directory and template directory.
-  app.set('views', __dirname + '/app/views');
+  // Assign the port.
+  app.set('port', process.env.port || 3000);
+
+  // Set view / template directory.
+  app.set('views', root + '/app/views');
   app.set('view engine', 'jade');
 
   // Configure sessions.
@@ -31,13 +36,13 @@ module.exports = function(app) {
 
   // Set stylus source.
   app.use(require("stylus").middleware({
-    src: __dirname + "/stylus",
-    dest: __dirname + "/public",
+    src: root + "/stylus",
+    dest: root + "/public",
     compress: true
   }));
 
   // Set public directory.
-  app.use(express.static(__dirname + '/public'));
+  app.use(express.static(root + '/public'));
 
   // Development.
   if (env == 'development') {

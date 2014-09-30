@@ -1,35 +1,42 @@
 
 /**
- * Application runner.
+ * Construct the application instance.
  */
 
 var express = require('express');
-var socket = require('socket.io');
 var config = require('yaml-config');
+var socket = require('socket.io');
 
+var app = express();
 
-// Read config, connect to database.
-var configPath = '/config/config.yaml';
-global.config = config.readConfig(process.cwd()+configPath);
-require('./config/db-connect');
-
-// Create server.
-var app = express(express.favicon());
-require('./settings')(app);
-
-// Run server and socket.io.
-var server = app.listen(global.config.port);
-var io = socket.listen(server, { log: false });
-
-// Start the application.
-require('./app/models');
-require('./app/controllers')(app, io)
-require('./config/init')(app, io);
-
-console.log(
-  'Listening on port %d in %s mode',
-  global.config.port,
-  app.settings.env
+// Apply the configuration.
+global.config = config.readConfig(
+  process.cwd()+'/config/config.yaml'
 );
 
-module.exports = app;
+// Connect to Mongo.
+require('./config/mongo');
+
+// Configure Express.
+require('./config/express')(app);
+
+// Bootstrap models.
+require('./app/models');
+
+// Start Express.
+var server = app.listen(app.get('port'), function() {
+  console.log(
+    'Listening on port %d in %s mode.',
+    app.get('port'),
+    app.settings.env
+  );
+});
+
+// Start socket.io.
+var io = socket.listen(server, { log: false });
+
+// Attach the routes.
+require('./app/controllers')(app, io);
+
+// Start poems.
+require('./config/init')(app, io);

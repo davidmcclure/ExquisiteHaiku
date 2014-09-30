@@ -1,4 +1,12 @@
 
-default:
+compile:
   - concat
+  - less
+
+compile:min:
+  - compile
+  - uglify
+
+default:
+  - compile
   - concurrent:watch

@@ -5,15 +5,14 @@ module.exports = {
   livereload: {
     files: [
       'app/views/**/*.jade',
-      'public/javascripts/src/**/*.js',
-      'stylus/**/*.styl'
+      'public/**/src/**/*.js'
     ],
     options: { livereload: true }
   },
 
   dist: {
     files: 'public/javascripts/src/**/*.js',
-    tasks: 'concat'
+    tasks: 'compile'
   }
 
 };

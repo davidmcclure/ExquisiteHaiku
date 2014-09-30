@@ -1,4 +1,3 @@
 node_modules
-public/javascripts/bower_components
 public/javascripts/dist
-public/stylesheets
+public/stylesheets/dist

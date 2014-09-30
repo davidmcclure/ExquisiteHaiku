@@ -38,11 +38,6 @@ module.exports = {
   admin: {
     src: [].concat(vendor, adminSource),
     dest: 'public/javascripts/dist/admin.js'
-  },
-
-  test: {
-    src: [].concat(vendor, adminSource, poemSource),
-    dest: 'public/javascripts/dist/test.js'
   }
 
 };

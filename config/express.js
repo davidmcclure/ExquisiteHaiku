@@ -4,8 +4,8 @@
  */
 
 var express = require('express');
-var MongoStore = require('connect-mongo')(express);
-var methodOverride = require('method-override');
+var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
 var cookieParser = require('cookie-parser');
 var cookieSession = require('cookie-session');
 var path = require('path');
@@ -25,14 +25,11 @@ module.exports = function(app) {
   app.set('view engine', 'jade');
 
   // Configure sessions.
-  app.use(cookieParser('dev'));
+  app.use(cookieParser('secret'));
   app.use(cookieSession({
     store: new MongoStore({ url: global.config.db }),
-    secret: 'dev'
+    secret: 'secret'
   }));
-
-  app.use(methodOverride());
-  app.use(app.router);
 
   // Set stylus source.
   app.use(require("stylus").middleware({
@@ -43,21 +40,5 @@ module.exports = function(app) {
 
   // Set public directory.
   app.use(express.static(root + '/public'));
-
-  // Development.
-  if (env == 'development') {
-
-    // Show errors.
-    app.use(express.errorHandler({
-      dumpExceptions: true,
-      showStack: true
-    }));
-
-  }
-
-  // Production.
-  if (env == 'production') {
-    app.use(express.errorHandler());
-  }
 
 };

@@ -15,6 +15,7 @@ module.exports = function(io) {
       accept('Session cookie required.', false);
     }
 
+    console.log(data.headers.cookie);
     accept(null, true);
 
   });

@@ -25,10 +25,12 @@ module.exports = function(app) {
   app.set('view engine', 'jade');
 
   // Configure sessions.
-  app.use(cookieParser('secret'));
-  app.use(cookieSession({
+  app.use(cookieParser());
+  app.use(session({
     store: new MongoStore({ url: global.config.db }),
-    secret: 'secret'
+    secret: process.env.EH_SECRET,
+    saveUninitialized: true,
+    resave: true
   }));
 
   // Set stylus source.

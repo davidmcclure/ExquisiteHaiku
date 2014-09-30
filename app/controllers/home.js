@@ -15,6 +15,8 @@ module.exports = function(app) {
     auth.getUser,
     function(req, res) {
 
+    console.log(req.cookies);
+
     // Render the layout.
     res.render('admin/index', {
       title: 'equisitehaiku',

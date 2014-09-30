@@ -3,6 +3,7 @@
  * Configure the Socket.io instance.
  */
 
+var cookie = require('cookie');
 var parser = require('cookie-parser');
 
 
@@ -15,7 +16,11 @@ module.exports = function(io) {
       accept('Session cookie required.', false);
     }
 
-    console.log(data.headers.cookie);
+    // Parse the cookie and set the value.
+    var cookies = cookie.parse(data.headers.cookie);
+    cookies = parser.signedCookies(cookies, process.env.EH_SECRET);
+    data.sid = cookies['connect.sid'];
+
     accept(null, true);
 
   });

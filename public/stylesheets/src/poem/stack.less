@@ -1,0 +1,40 @@
+
+#stack {
+
+  display: inline-block;
+  width: 0;
+
+  .stack-row {
+
+    cursor: ns-resize;
+
+    &:first-child {
+      font-weight: bold;
+    }
+
+    .churn {
+      margin-left: 4px;
+    }
+
+  }
+
+  .word {
+    padding-left: 5px;
+  }
+
+  .ratio, .churn {
+    font-size: 12px;
+    text-align: right;
+  }
+
+  &.frozen .stack-row {
+
+    opacity: 0.5;
+
+    &:hover {
+      opacity: 1;
+    }
+
+  }
+
+}

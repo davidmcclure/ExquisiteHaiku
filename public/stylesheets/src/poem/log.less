@@ -1,0 +1,37 @@
+
+#log {
+
+  .primary, .overflow {
+
+    position: fixed;
+    top: 10px;
+
+    .log-row {
+
+      cursor: pointer;
+
+      &:hover .word {
+        opacity: 1;
+      }
+
+    }
+
+  }
+
+  .primary {
+
+    direction: rtl;
+    width: 230px;
+
+    &.frozen .word {
+      opacity: 0.5;
+    }
+
+  }
+
+  .overflow {
+    left: 520px;
+    opacity: 0.3;
+  }
+
+}

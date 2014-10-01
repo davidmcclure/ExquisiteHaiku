@@ -2,6 +2,6 @@
 
 module.exports = {
   dev: {
-    script: 'app.js'
+    script: 'index.js'
   }
 };

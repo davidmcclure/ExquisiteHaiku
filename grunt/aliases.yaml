@@ -13,3 +13,6 @@ default:
 
 test:
   - mochaTest
+
+heroku:
+  - compile:min

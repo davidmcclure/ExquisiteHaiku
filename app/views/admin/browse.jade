@@ -6,13 +6,6 @@ block content
     each poem in poems
       div.poem(hash=poem.hash)
         a.hash(href='/#{poem.hash}')= poem.hash
-        each line, i in poem.words
-          span.line
-            each word in line
-              span.word= word
-          if i !== poem.words.length-1
-            span.linebreak
-
         span.actions
 
           if poem.unstarted || poem.paused

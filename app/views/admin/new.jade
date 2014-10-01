@@ -14,89 +14,83 @@ block content
     - var error = rLenVal.errorHTML() != ''
 
     // Round length.
-    div.control-group.roundLength(class=(error ? 'error' : ''))
-      label.control-label(for='roundLengthValue') Word Duration
-      div.controls
+    div.form-group.roundLength(class=(error ? 'error' : ''))
+      label(for='roundLengthValue') Word Duration
 
-        // Length input
-        input.rLenVal(
-          type='text'
-          name='roundLengthValue'
-          autocomplete='off'
-          value=rLenVal.value)
+      // Length input
+      input.form-control.rLenVal(
+        type='text'
+        name='roundLengthValue'
+        autocomplete='off'
+        value=rLenVal.value)
 
-        // Unit radio buttons.
-        div.btn-group(data-toggle='buttons-radio')
+      // Unit radio buttons.
+      div.btn-group(data-toggle='buttons')
 
-          // Get active class.
-          - var sClass = rLenUnit.value=='seconds'?'active':''
-          - var mClass = rLenUnit.value=='minutes'?'active':''
+        // Get active class.
+        - var sClass = rLenUnit.value == 'seconds' ? 'active' : ''
+        - var mClass = rLenUnit.value == 'minutes' ? 'active' : ''
 
-          // Render the buttons.
-          button.seconds.btn.btn-small(
-            type='button', class=sClass) seconds
-          button.minutes.btn.btn-small(
-            type='button', class=mClass) minutes
+        // Render the buttons.
+        button.seconds.btn.btn-default.btn-sm(type='button') seconds
+        button.minutes.btn.btn-default.btn-sm(type='button') minutes
 
-        // Hidden unit input.
-        input.rLenUnit(
-          type='hidden'
-          name='roundLengthUnit'
-          value=rLenUnit.value)
+      // Hidden unit input.
+      input.form-control.rLenUnit(
+        type='hidden'
+        name='roundLengthUnit'
+        value=rLenUnit.value)
 
-        if error
-          span.help-inline.roundLengthValue= rLenVal.error
+      if error
+        .alert.alert-danger.roundLengthValue= rLenVal.error
 
 
     // Seed capital.
     - var seedCap = form.fields.seedCapital
     - var error = seedCap.errorHTML() != ''
-    div.control-group(class=(error ? 'error' : ''))
-      label.control-label(for='seedCapital') Points per Word
-      div.controls
+    div.form-group(class=(error ? 'error' : ''))
+      label(for='seedCapital') Points per Word
 
-        input.seedCap(
-          type='text'
-          name='seedCapital'
-          autocomplete='off'
-          value=seedCap.value)
+      input.form-control.seedCap(
+        type='text'
+        name='seedCapital'
+        autocomplete='off'
+        value=seedCap.value)
 
-        if error
-          span.help-inline.seedCapital= seedCap.error
+      if error
+        .alert.alert-danger.seedCapital= seedCap.error
 
 
     // Submission value.
     - var subVal = form.fields.submissionVal
     - var error = subVal.errorHTML() != ''
-    div.control-group(class=(error ? 'error' : ''))
-      label.control-label(for='submissionVal') Submission value
-      div.controls
+    div.form-group(class=(error ? 'error' : ''))
+      label(for='submissionVal') Submission value
 
-        input.subVal(
-          type='text'
-          name='submissionVal'
-          autocomplete='off'
-          value=subVal.value)
+      input.form-control.subVal(
+        type='text'
+        name='submissionVal'
+        autocomplete='off'
+        value=subVal.value)
 
-        if error
-          span.help-inline.submissionVal= subVal.error
+      if error
+        .alert.alert-danger.submissionVal= subVal.error
 
 
     // Decay halflife.
     - var decLife = form.fields.decayHalflife
     - var error = decLife.errorHTML() != ''
-    div.control-group(class=(error ? 'error' : ''))
-      label.control-label(for='decayHalflife') Decay Halflife
-      div.controls
+    div.form-group(class=(error ? 'error' : ''))
+      label(for='decayHalflife') Decay Halflife
 
-        input.decLife(
-          type='text'
-          name='decayHalflife'
-          autocomplete='off'
-          value=decLife.value)
+      input.form-control.decLife(
+        type='text'
+        name='decayHalflife'
+        autocomplete='off'
+        value=decLife.value)
 
-        if error
-          span.help-inline.decayHalflife= decLife.error
+      if error
+        .alert.alert-danger.decayHalflife= decLife.error
 
 
     div.form-actions

@@ -20,7 +20,7 @@ div.container
           h1.logo
             a(href=(user ? '/admin' : '/')) exquisitehaiku
 
-        - var c = menu=='new' ? 'btn-inverse' : 'btn-primary'
+        - var c = menu=='new' ? 'btn-default' : 'btn-primary'
         if user
           a.btn.btn-large.new-poem(
             href='/admin/new', class=c) New Poem

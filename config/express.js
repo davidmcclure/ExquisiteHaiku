@@ -18,7 +18,7 @@ module.exports = function(app) {
   var env = app.get('env');
 
   // Assign the port.
-  app.set('port', process.env.port || 3000);
+  app.set('port', process.env.PORT || 3000);
 
   // Set view / template directory.
   app.set('views', root + '/app/views');

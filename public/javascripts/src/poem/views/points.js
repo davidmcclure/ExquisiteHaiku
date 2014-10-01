@@ -61,7 +61,7 @@ Ov.Views.Points = Backbone.View.extend({
    */
   renderValue: function(value) {
     var percent = (value / P.seedCapital) * 100;
-    this.percent.text(Math.round(percent) + '%');
+    this.percent.text(Math.round(percent));
     this.value.text(value);
   }
 

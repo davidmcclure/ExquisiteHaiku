@@ -15,9 +15,9 @@ Ov.Views.Timer = Backbone.View.extend({
   initialize: function() {
 
     // Getters.
-    this.percent = this.$el.find('span.percent');
-    this.minutes = this.$el.find('span.min');
-    this.seconds = this.$el.find('span.sec');
+    this.percent = this.$el.find('.percent');
+    this.minutes = this.$el.find('.min');
+    this.seconds = this.$el.find('.sec');
 
     // Initialize update trackers.
     this.updateTime = null;

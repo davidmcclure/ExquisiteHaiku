@@ -14,6 +14,11 @@ global.config = config.readConfig(
   process.cwd()+'/config/config.yaml'
 );
 
+// If present, use MongoLab.
+if (process.env.MONGOLAB_URI) {
+  global.config.db = process.env.MONGOLAB_URI;
+}
+
 // Connect to Mongo.
 require('./config/mongo');
 

@@ -5,9 +5,8 @@
 
 var mongoose = require('mongoose');
 
-// Connect to MongoLab, if available.
-var uri = process.env.MONGOLAB_URI || global.config.db;
-mongoose.connect(uri);
+// Connect to Mongo.
+mongoose.connect(global.config.db);
 
-// In-memory stores.
+// Initialize in-memory stores.
 global.Oversoul = { timers: {}, votes: {} };

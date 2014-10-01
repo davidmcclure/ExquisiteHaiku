@@ -49,7 +49,7 @@ module.exports = function() {
     // Password confirmation.
     confirm: fields.password({
       name: 'confirm',
-      label: 'Retype Password',
+      label: 'Confirm',
       required: 'Confirm your password.',
       validators: [
         validators.matchField('password', 'Does not match.')

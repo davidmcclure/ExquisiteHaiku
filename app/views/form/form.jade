@@ -2,28 +2,16 @@ each field in form.fields
 
   if field.widget.type == 'text'
     - var error = field.errorHTML() != ''
-    div.control-group(class=(error ? 'error' : ''))
-      label.control-label(for=field.name)= field.label
-      div.controls
-        input(type="text", name=field.name, value=field.value)
-        if error
-          span.help-inline(class=field.name)= field.error
+    div.form-group(class=(error ? 'error' : ''))
+      label(for=field.name)= field.label
+      input.form-control(type="text", name=field.name, value=field.value)
+      if error
+        .alert.alert-danger(class=field.name)= field.error
 
   else if field.widget.type == 'password'
     - var error = field.errorHTML() != ''
-    div.control-group(class=(error ? 'error' : ''))
-      label.control-label(for=field.name)= field.label
-      div.controls
-        input(type="password", name=field.name, value=field.data)
-        if error
-          span.help-inline(class=field.name)= field.error
-
-  else if field.widget.type == 'checkbox'
-    div.control-group
-      label.control-label(for=field.name)= field.label
-      div.controls
-        label.checkbox
-          if field.data
-            input(type="checkbox", name=field.name, checked="checked")
-          else
-            input(type="checkbox", name=field.name)
+    div.form-group(class=(error ? 'error' : ''))
+      label(for=field.name)= field.label
+      input.form-control(type="password", name=field.name, value=field.data)
+      if error
+        .alert.alert-danger(class=field.name)= field.error

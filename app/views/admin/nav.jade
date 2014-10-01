@@ -2,31 +2,23 @@ div.container
 
   div.row
 
-    span.span12.right-col
+    div.col-md-3
 
-      div.logo-block
+      #header
 
-        div.auth
+        ul.auth.list-inline
           if user
-            span.user= user.username
-            a.nav(href='/admin/logout') logout
+            li.user= user.username
+            li: a.nav(href='/admin/logout') logout
           else
             - var c = menu=='login' ? 'active' : ''
-            a.nav(href='/admin/login', class=c) login
+            li: a.nav(href='/admin/login', class=c) login
             - var c = menu=='register' ? 'active' : ''
-            a.nav(href='/admin/register', class=c) register
+            li: a.nav(href='/admin/register', class=c) register
 
         div.logo
           h1.logo
-            a(href=(user ? '/admin' : '/'))
-              span exqu
-              span.i i
-              span s
-              span.i i
-              span teha
-              span.i i
-              span ku
-          p Quake 3 for haiku.
+            a(href=(user ? '/admin' : '/')) exquisitehaiku
 
         - var c = menu=='new' ? 'btn-inverse' : 'btn-primary'
         if user

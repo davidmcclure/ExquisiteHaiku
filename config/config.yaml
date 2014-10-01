@@ -1,11 +1,9 @@
 
 default:
-  port:           3000
   sliceInterval:  300
   visibleWords:   200
   submissionVal:  100
   decayLifetime:  20000
-  lockRatio:      0.1
 
 testing:
   db: "mongodb://localhost/eh_testing"

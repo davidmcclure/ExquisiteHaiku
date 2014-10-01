@@ -1,9 +1,15 @@
-extends layout
+
+extends ../layout
+
+block head
+
+  link(rel='stylesheet', href='/stylesheets/dist/poem.css')
+  script(src='socket.io/socket.io.js')
+  script(src='/javascripts/dist/poem.js')
+  script(src='/javascripts/init/poem.js')
 
 block content
-
-  include base
+  include markup
   include templates
-
   script.
     var P = !{poem}

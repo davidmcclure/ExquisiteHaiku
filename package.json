@@ -52,7 +52,7 @@
     "time-grunt": "^1.0.0"
   },
   "scripts": {
-    "start": "index.js"
+    "start": "node index.js"
   },
   "engines": {
     "node": "0.10.x"

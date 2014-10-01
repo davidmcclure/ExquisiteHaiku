@@ -5,8 +5,8 @@
 
 Ov.Views.Blank = Backbone.View.extend({
 
-  tagName: 'input',
-  className: 'blank',
+  tagName:    'input',
+  className:  'blank form-control',
 
   stackTemplate: function() {
     return _.template($('#submission-stack').html());

@@ -27,6 +27,7 @@
     "mongoose": "^3.8.16",
     "randomstring": "^1.0.3",
     "request": "^2.44.0",
+    "require-directory": "^2.0.0",
     "should": "^4.0.4",
     "sinon": "^1.10.3",
     "socket.io": "^1.1.0",
@@ -48,7 +49,6 @@
     "grunt-nodemon": "^0.3.0",
     "jit-grunt": "^0.8.0",
     "load-grunt-config": "^0.13.1",
-    "require-directory": "^2.0.0",
     "time-grunt": "^1.0.0"
   },
   "scripts": {

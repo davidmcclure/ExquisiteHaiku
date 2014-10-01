@@ -10,3 +10,6 @@ compile:min:
 default:
   - compile
   - concurrent:watch
+
+test:
+  - mochaTest

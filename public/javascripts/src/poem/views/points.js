@@ -11,8 +11,8 @@ Ov.Views.Points = Backbone.View.extend({
   initialize: function() {
 
     // Getters.
-    this.percent = this.$el.find('span.percent');
-    this.value = this.$el.find('span.value');
+    this.percent = this.$el.find('.percent');
+    this.value = this.$el.find('.value');
 
   },
 
@@ -20,30 +20,38 @@ Ov.Views.Points = Backbone.View.extend({
    * Render the current base value.
    */
   reset: function() {
-    this.renderValue(Ov.global.points);
+    this.setPoints(Ov.global.points);
   },
 
   /**
    * Render a preview value.
    *
-   * @param {Number} quantity: The vote quantity.
+   * @param {Number} value: The vote value.
    */
-  renderPreview: function(quantity) {
+  setPreview: function(value) {
 
     // Compute preview and percent.
-    this.preview = Ov.global.points - Math.abs(quantity);
-    var percent = this.preview / P.seedCapital;
+    this.preview = Ov.global.points - Math.abs(value);
 
-    // Render values.
-    this.value.text(this.preview);
-    this.percent.text(percent.toFixed(2));
-    this.$el.removeClass('negative').addClass('preview');
+    // Render the preview.
+    this.renderValue(this.preview);
+    this.$el.addClass('preview');
 
     // Insufficient funds.
     if (this.preview < 0) {
-      this.$el.removeClass('preview').addClass('negative');
+      this.$el.addClass('negative');
     }
 
+  },
+
+  /**
+   * Update the current point count.
+   *
+   * @param {Number} value: The value.
+   */
+  setPoints: function(value) {
+    this.renderValue(value);
+    this.$el.removeClass('preview negative');
   },
 
   /**
@@ -52,15 +60,9 @@ Ov.Views.Points = Backbone.View.extend({
    * @param {Number} value: The value.
    */
   renderValue: function(value) {
-
-    // Compute percent.
-    var percent = value / P.seedCapital;
-
-    // Render values.
+    var percent = (value / P.seedCapital) * 100;
+    this.percent.text(Math.round(percent) + '%');
     this.value.text(value);
-    this.percent.text(percent.toFixed(2));
-    this.$el.removeClass('preview negative');
-
   }
 
 });

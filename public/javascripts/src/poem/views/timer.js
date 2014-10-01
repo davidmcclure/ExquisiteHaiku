@@ -49,10 +49,10 @@ Ov.Views.Timer = Backbone.View.extend({
     var now = this._msToDuration(d);
 
     // Get percent.
-    var percent = this.updateQuantity / P.roundLength;
+    var percent = (this.updateQuantity / P.roundLength) * 100;
 
     // Render text.
-    this.percent.text(percent.toFixed(2));
+    this.percent.text(Math.round(percent));
     this.minutes.text(now[0]+':');
     this.seconds.text(now[1]);
 

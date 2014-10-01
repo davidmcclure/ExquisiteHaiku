@@ -40,7 +40,7 @@ Ov.Controllers.Info = (function(Backbone, Ov) {
    * @param {Object} round: The round record.
    */
   Ov.vent.on('state:newRound', function(round) {
-    Info.Points.renderValue(round.get('points'));
+    Info.Points.setPoints(round.get('points'));
   });
 
   /**
@@ -53,7 +53,7 @@ Ov.Controllers.Info = (function(Backbone, Ov) {
    */
   Ov.vent.on('words:dragTick', function(
     word, currentTotal, initEvent, dragEvent) {
-      Info.Points.renderPreview(currentTotal);
+      Info.Points.setPreview(currentTotal);
   });
 
   /**
@@ -62,7 +62,7 @@ Ov.Controllers.Info = (function(Backbone, Ov) {
    * @param {Number} value: The new account balance.
    */
   Ov.vent.on('points:newValue', function(value) {
-    Info.Points.renderValue(value);
+    Info.Points.setPoints(value);
   });
 
   /**
@@ -72,7 +72,7 @@ Ov.Controllers.Info = (function(Backbone, Ov) {
    * @param {Number} quantity: The vote quantity.
    */
   Ov.vent.on('log:preview', function(word, quantity) {
-    Info.Points.renderPreview(quantity);
+    Info.Points.setPreview(quantity);
   });
 
   /**

@@ -191,7 +191,7 @@ Ov.Views.StackWord = Backbone.View.extend({
    * Render size.
    */
   renderSize: function() {
-    var size = 18 + 0.05*(Math.abs(this.churn));
+    var size = 20 + 0.05*(Math.abs(this.churn));
     this.wordMarkup.css('font-size', size);
   },
 

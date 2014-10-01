@@ -149,7 +149,7 @@ module.exports = function(app) {
     function(req, res) {
 
       // Clear the session.
-      req.session = null;
+      req.session.destroy();
       res.redirect('/admin/login');
 
   });

@@ -22,7 +22,7 @@ module.exports = function(app) {
     function(req, res) {
 
       // Render form.
-      res.render('auth/register', {
+      res.render('admin/register', {
         title: 'Register',
         form: registerForm(),
         user: false,
@@ -64,7 +64,7 @@ module.exports = function(app) {
         other: function(form) {
 
           // Re-render form.
-          res.render('auth/register', {
+          res.render('admin/register', {
             title: 'Register',
             form: form,
             user: false,
@@ -87,7 +87,7 @@ module.exports = function(app) {
     function(req, res) {
 
       // Render form.
-      res.render('auth/login', {
+      res.render('admin/login', {
         title: 'Login',
         form: loginForm(),
         user: false,
@@ -129,7 +129,7 @@ module.exports = function(app) {
         other: function(form) {
 
           // Re-render the form.
-          res.render('auth/login', {
+          res.render('admin/login', {
             title: 'Login',
             form: form,
             user: false,

@@ -1,97 +1,96 @@
 
+include nav
 extends layout
 
-block js
-  script(src='/javascripts/init/add.js')
-
 block content
+  +nav
 
-  form#new(method='post')
+    form#new(method='post')
 
-    // Shortcut round length fields, get error.
-    - var rLenVal = form.fields.roundLengthValue
-    - var rLenUnit = form.fields.roundLengthUnit
-    - var error = rLenVal.errorHTML() != ''
+      // Shortcut round length fields, get error.
+      - var rLenVal = form.fields.roundLengthValue
+      - var rLenUnit = form.fields.roundLengthUnit
+      - var error = rLenVal.errorHTML() != ''
 
-    // Round length.
-    div.form-group.roundLength(class=(error ? 'error' : ''))
-      label(for='roundLengthValue') Word Duration
+      // Round length.
+      div.form-group.roundLength(class=(error ? 'error' : ''))
+        label(for='roundLengthValue') Word Duration
 
-      // Length input
-      input.form-control.rLenVal(
-        type='text'
-        name='roundLengthValue'
-        autocomplete='off'
-        value=rLenVal.value)
+        // Length input
+        input.form-control.rLenVal(
+          type='text'
+          name='roundLengthValue'
+          autocomplete='off'
+          value=rLenVal.value)
 
-      // Unit radio buttons.
-      div.btn-group(data-toggle='buttons')
+        // Unit radio buttons.
+        div.btn-group(data-toggle='buttons')
 
-        // Get active class.
-        - var sClass = rLenUnit.value == 'seconds' ? 'active' : ''
-        - var mClass = rLenUnit.value == 'minutes' ? 'active' : ''
+          // Get active class.
+          - var sClass = rLenUnit.value == 'seconds' ? 'active' : ''
+          - var mClass = rLenUnit.value == 'minutes' ? 'active' : ''
 
-        // Render the buttons.
-        button.seconds.btn.btn-default.btn-sm(type='button') seconds
-        button.minutes.btn.btn-default.btn-sm(type='button') minutes
+          // Render the buttons.
+          button.seconds.btn.btn-default.btn-sm(type='button') seconds
+          button.minutes.btn.btn-default.btn-sm(type='button') minutes
 
-      // Hidden unit input.
-      input.form-control.rLenUnit(
-        type='hidden'
-        name='roundLengthUnit'
-        value=rLenUnit.value)
+        // Hidden unit input.
+        input.form-control.rLenUnit(
+          type='hidden'
+          name='roundLengthUnit'
+          value=rLenUnit.value)
 
-      if error
-        .alert.alert-danger.roundLengthValue= rLenVal.error
-
-
-    // Seed capital.
-    - var seedCap = form.fields.seedCapital
-    - var error = seedCap.errorHTML() != ''
-    div.form-group(class=(error ? 'error' : ''))
-      label(for='seedCapital') Points per Word
-
-      input.form-control.seedCap(
-        type='text'
-        name='seedCapital'
-        autocomplete='off'
-        value=seedCap.value)
-
-      if error
-        .alert.alert-danger.seedCapital= seedCap.error
+        if error
+          .alert.alert-danger.roundLengthValue= rLenVal.error
 
 
-    // Submission value.
-    - var subVal = form.fields.submissionVal
-    - var error = subVal.errorHTML() != ''
-    div.form-group(class=(error ? 'error' : ''))
-      label(for='submissionVal') Submission value
+      // Seed capital.
+      - var seedCap = form.fields.seedCapital
+      - var error = seedCap.errorHTML() != ''
+      div.form-group(class=(error ? 'error' : ''))
+        label(for='seedCapital') Points per Word
 
-      input.form-control.subVal(
-        type='text'
-        name='submissionVal'
-        autocomplete='off'
-        value=subVal.value)
+        input.form-control.seedCap(
+          type='text'
+          name='seedCapital'
+          autocomplete='off'
+          value=seedCap.value)
 
-      if error
-        .alert.alert-danger.submissionVal= subVal.error
-
-
-    // Decay halflife.
-    - var decLife = form.fields.decayHalflife
-    - var error = decLife.errorHTML() != ''
-    div.form-group(class=(error ? 'error' : ''))
-      label(for='decayHalflife') Decay Halflife
-
-      input.form-control.decLife(
-        type='text'
-        name='decayHalflife'
-        autocomplete='off'
-        value=decLife.value)
-
-      if error
-        .alert.alert-danger.decayHalflife= decLife.error
+        if error
+          .alert.alert-danger.seedCapital= seedCap.error
 
 
-    div.form-actions
-      button.btn.btn-large.btn-primary(type='submit') Create
+      // Submission value.
+      - var subVal = form.fields.submissionVal
+      - var error = subVal.errorHTML() != ''
+      div.form-group(class=(error ? 'error' : ''))
+        label(for='submissionVal') Submission value
+
+        input.form-control.subVal(
+          type='text'
+          name='submissionVal'
+          autocomplete='off'
+          value=subVal.value)
+
+        if error
+          .alert.alert-danger.submissionVal= subVal.error
+
+
+      // Decay halflife.
+      - var decLife = form.fields.decayHalflife
+      - var error = decLife.errorHTML() != ''
+      div.form-group(class=(error ? 'error' : ''))
+        label(for='decayHalflife') Decay Halflife
+
+        input.form-control.decLife(
+          type='text'
+          name='decayHalflife'
+          autocomplete='off'
+          value=decLife.value)
+
+        if error
+          .alert.alert-danger.decayHalflife= decLife.error
+
+
+      div.form-actions
+        button.btn.btn-large.btn-primary(type='submit') Create

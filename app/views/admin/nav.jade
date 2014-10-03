@@ -1,28 +1,28 @@
-div.container
 
-  div.row
+mixin nav
+  div.container
+    div.row
+      div.col-md-3
 
-    div.col-md-3
+        #header
 
-      #header
+          ul.auth.list-inline
+            if user
+              li.user= user.username
+              li: a.nav(href='/admin/logout') logout
+            else
+              - var c = menu=='login' ? 'active' : ''
+              li: a.nav(href='/admin/login', class=c) login
+              - var c = menu=='register' ? 'active' : ''
+              li: a.nav(href='/admin/register', class=c) register
 
-        ul.auth.list-inline
+          div.logo
+            h1.logo
+              a(href=(user ? '/admin' : '/')) exquisitehaiku
+
+          - var c = menu=='new' ? 'btn-default' : 'btn-primary'
           if user
-            li.user= user.username
-            li: a.nav(href='/admin/logout') logout
-          else
-            - var c = menu=='login' ? 'active' : ''
-            li: a.nav(href='/admin/login', class=c) login
-            - var c = menu=='register' ? 'active' : ''
-            li: a.nav(href='/admin/register', class=c) register
+            a.btn.btn-large.new-poem(
+              href='/admin/new', class=c) New Poem
 
-        div.logo
-          h1.logo
-            a(href=(user ? '/admin' : '/')) exquisitehaiku
-
-        - var c = menu=='new' ? 'btn-default' : 'btn-primary'
-        if user
-          a.btn.btn-large.new-poem(
-            href='/admin/new', class=c) New Poem
-
-      block content
+        block

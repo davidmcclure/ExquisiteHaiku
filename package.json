@@ -17,7 +17,7 @@
     "d3": "^3.4.11",
     "express": "^4.9.5",
     "express-session": "^1.8.2",
-    "forms": "https://github.com/davidmcclure/forms/tarball/master",
+    "forms": "^1.0.0",
     "grunt": "^0.4.5",
     "grunt-concurrent": "^1.0.0",
     "grunt-contrib-clean": "^0.6.0",

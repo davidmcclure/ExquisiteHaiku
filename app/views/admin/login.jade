@@ -1,5 +1,6 @@
 
 include nav
+include form
 extends layout
 
 block content
@@ -7,6 +8,6 @@ block content
     form.form-stacked.login(method='post')
       h3.form-header Login
       fieldset
-        include ../form/form
+        +form(form)
       div.form-actions
         button.btn.btn-large.btn-primary(type='submit') Login

@@ -4,34 +4,37 @@
  */
 
 var forms = require('forms');
-var fields = forms.fields;
-var validators = require('../validators');
+var customValidators = require('../validators');
 
 
 module.exports = function() {
 
+  var opts = {
+    validatePastFirstError: true
+  };
+
   return forms.create({
 
     // Username.
-    username: fields.string({
+    username: forms.fields.string({
       name: 'username',
       label: 'Username',
-      required: 'Enter a username.',
+      required: forms.validators.required('Enter a username.'),
       validators: [
-        validators.usernameExists('Does not exist.')
+        customValidators.usernameExists('Does not exist.')
       ]
     }),
 
     // Password.
-    password: fields.password({
+    password: forms.fields.password({
       name: 'password',
       label: 'Password',
-      required: 'Enter a password.',
+      required: forms.validators.required('Enter a password.'),
       validators: [
-        validators.passwordCorrect('Incorrect.')
+        customValidators.passwordCorrect('Incorrect.')
       ]
     })
 
-  });
+  }, opts);
 
 };

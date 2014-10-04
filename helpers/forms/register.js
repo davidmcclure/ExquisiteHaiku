@@ -3,59 +3,61 @@
  * Register form.
  */
 
-var forms = require('forms');
 var mongoose = require('mongoose');
-var fields = forms.fields;
-var validators = forms.validators;
-var custom = require('../validators');
+var forms = require('forms');
+var customValidators = require('../validators');
 var User = mongoose.model('User');
 
 
 module.exports = function() {
 
+  var opts = {
+    validatePastFirstError: true
+  };
+
   return forms.create({
 
     // Username.
-    username: fields.string({
+    username: forms.fields.string({
       name: 'username',
       label: 'Username',
-      required: 'Enter a username.',
+      required: forms.validators.required('Enter a username.'),
       validators: [
-        validators.rangeLength(4, 20, '4-20 characters.'),
-        custom.uniqueField(User, 'username', 'Username taken.')
+        forms.validators.rangelength(4, 20, '4-20 characters.'),
+        customValidators.uniqueField(User, 'username', 'Username taken.')
       ]
     }),
 
     // Email.
-    email: fields.email({
+    email: forms.fields.email({
       name: 'email',
       label: 'Email',
-      required: 'Enter an email address.',
+      required: forms.validators.required('Enter an email address.'),
       validators: [
-        custom.uniqueField(User, 'email', 'Email taken.')
+        customValidators.uniqueField(User, 'email', 'Email taken.')
       ]
     }),
 
     // Password.
-    password: fields.password({
+    password: forms.fields.password({
       name: 'password',
       label: 'Password',
-      required: 'Enter a password.',
+      required: forms.validators.required('Enter a password.'),
       validators: [
-        validators.minLength(6, 'At least 6 characters.')
+        forms.validators.minlength(6, 'At least 6 characters.')
       ]
     }),
 
     // Password confirmation.
-    confirm: fields.password({
+    confirm: forms.fields.password({
       name: 'confirm',
       label: 'Confirm',
-      required: 'Confirm your password.',
+      required: forms.validators.required('Retype the password.'),
       validators: [
-        validators.matchField('password', 'Does not match.')
+        forms.validators.matchField('password', 'Does not match.')
       ]
     })
 
-  });
+  }, opts);
 
 };

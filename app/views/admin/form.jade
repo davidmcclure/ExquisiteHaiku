@@ -1,0 +1,26 @@
+
+
+mixin form(form)
+  each field in form.fields
+
+    if field.widget.type == 'text'
+      +input(field)
+
+    if field.widget.type == 'password'
+      +input(field)
+
+    if field.widget.type == 'email'
+      +input(field)
+
+
+mixin input(field)
+
+  - var isError = field.errorHTML() != ''
+  div.form-group(class=(isError ? 'error' : ''))
+    label(for=field.name)= field.label
+    input.form-control(
+      type=field.widget.type,
+      name=field.name,
+      value=field.value)
+    if isError
+      .alert.alert-danger= field.error

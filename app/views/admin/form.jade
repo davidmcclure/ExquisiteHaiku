@@ -21,6 +21,7 @@ mixin input(field)
     input.form-control(
       type=field.widget.type,
       name=field.name,
-      value=field.value)
+      value=field.value
+      class=field.name)
     if isError
       .alert.alert-danger= field.error

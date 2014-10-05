@@ -5,7 +5,7 @@ var vendor = [
   'node_modules/lodash/dist/lodash.js',
   'node_modules/backbone/backbone.js',
   'node_modules/backbone.marionette/lib/backbone.marionette.js',
-  'node_modules/bootstrap/dist/bootstrap.js',
+  'node_modules/bootstrap/dist/js/bootstrap.js',
   'node_modules/backbone.localstorage/backbone.localStorage.js',
   'node_modules/d3/d3.js'
 ];

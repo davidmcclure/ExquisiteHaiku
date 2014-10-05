@@ -3,6 +3,10 @@ include nav
 include form
 extends layout
 
+block append head
+  script(src='/javascripts/dist/admin.js')
+  script(src='/javascripts/init/add.js')
+
 block content
   +nav
 
@@ -15,40 +19,32 @@ block content
 
       // Round length.
       div.form-group.roundLength(class=(error ? 'error' : ''))
-        label(for='roundLengthValue') Word Duration
 
-        // Length input
-        input.form-control.rLenVal(
-          type='text'
-          name='roundLengthValue'
-          autocomplete='off'
-          value=rLenVal.value)
+        +input(form.fields.roundLengthValue)
 
-        // Unit radio buttons.
         div.btn-group(data-toggle='buttons')
 
           // Get active class.
           - var sClass = rLenUnit.value == 'seconds' ? 'active' : ''
           - var mClass = rLenUnit.value == 'minutes' ? 'active' : ''
 
-          // Render the buttons.
-          button.seconds.btn.btn-default.btn-sm(type='button') seconds
-          button.minutes.btn.btn-default.btn-sm(type='button') minutes
-
-        // Hidden unit input.
-        input.form-control.rLenUnit(
-          type='hidden'
-          name='roundLengthUnit'
-          value=rLenUnit.value)
-
-        if error
-          .alert.alert-danger.roundLengthValue= rLenVal.error
-
+          // Unit ratio buttons.
+          label.btn.btn-default.btn-sm(class=sClass)
+            input.seconds(
+              type='radio'
+              name='roundLengthUnit'
+              value="seconds")
+            | seconds
+          label.btn.btn-default.btn-sm(class=mClass)
+            input.minutes(
+              type='radio'
+              name='roundLengthUnit'
+              value="minutes")
+            | minutes
 
       +input(form.fields.seedCapital)
       +input(form.fields.submissionVal)
       +input(form.fields.decayHalflife)
-
 
       div.form-actions
         button.btn.btn-large.btn-primary(type='submit') Create

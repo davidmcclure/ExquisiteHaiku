@@ -6,20 +6,29 @@ block content
   +nav
     div.poems
       each poem in poems
+
+        // Hash class.
+        - hClass = 'paused'
+        if poem.running
+          - hClass = 'running'
+        else if poem.complete
+          - hClass = 'complete'
+
         div.poem(hash=poem.hash)
 
-          a.hash(href='/#{poem.hash}')= poem.hash
+          a.hash(href='/#{poem.hash}' class=hClass)= poem.hash
 
           span.divider
 
-          // Poem.
-          span.poem
-            each line in poem.words
-              span.line
-                each word in line
-                  span.word= word
+          - if (poem.syllableCount)
 
-          span.divider
+            span.words
+              each line in poem.words
+                span.line
+                  each word in line
+                    span.word= word
+
+            span.divider
 
           // Buttons.
           span.actions

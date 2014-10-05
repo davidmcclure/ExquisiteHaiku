@@ -13,6 +13,15 @@
   .hash {
     font-weight: bold;
     font-family: Inconsolata;
+    color: lighten(black, 60%);
+
+    &.running {
+      color: @brand-success;
+    }
+
+    &.complete {
+      color: @brand-primary;
+    }
   }
 
   .word:not(:last-child),

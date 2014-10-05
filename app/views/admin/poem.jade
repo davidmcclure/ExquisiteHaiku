@@ -1,0 +1,12 @@
+
+include mixins
+extends layout
+
+block content
+  +container
+    #poem
+      div.hash= poem.hash
+      each line in poem.words
+        div.line
+          each word in line
+            span.word= word

@@ -50,11 +50,14 @@ mixin input(field)
 
   - var isError = field.errorHTML() != ''
   div.form-group(class=(isError ? 'error' : ''))
+
     label(for=field.name)= field.label
+
     input.form-control(
       type=field.widget.type,
       name=field.name,
       value=field.value
+      autocomplete='off'
       class=field.name)
 
     if isError

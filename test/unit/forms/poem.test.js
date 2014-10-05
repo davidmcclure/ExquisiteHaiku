@@ -51,10 +51,21 @@ describe('Poem Form', function() {
 
     });
 
-    it('should be a positive integer', function(done) {
+    it('should be positive', function(done) {
 
       form.bind({
         roundLengthValue: -5
+      }).validate(function(err, form) {
+        form.fields.roundLengthValue.error.should.be.ok;
+        done();
+      });
+
+    });
+
+    it('should be an integer', function(done) {
+
+      form.bind({
+        roundLengthValue: 5.5
       }).validate(function(err, form) {
         form.fields.roundLengthValue.error.should.be.ok;
         done();
@@ -122,10 +133,21 @@ describe('Poem Form', function() {
 
     });
 
-    it('should be a positive integer', function(done) {
+    it('should be positive', function(done) {
 
       form.bind({
         submissionVal: -5
+      }).validate(function(err, form) {
+        form.fields.submissionVal.error.should.be.ok;
+        done();
+      });
+
+    });
+
+    it('should be an integer', function(done) {
+
+      form.bind({
+        submissionVal: 5.5
       }).validate(function(err, form) {
         form.fields.submissionVal.error.should.be.ok;
         done();
@@ -163,10 +185,21 @@ describe('Poem Form', function() {
 
     });
 
-    it('should be a positive integer', function(done) {
+    it('should be positive', function(done) {
 
       form.bind({
         decayHalflife: -5
+      }).validate(function(err, form) {
+        form.fields.decayHalflife.error.should.be.ok;
+        done();
+      });
+
+    });
+
+    it('should be an integer', function(done) {
+
+      form.bind({
+        decayHalflife: 5.5
       }).validate(function(err, form) {
         form.fields.decayHalflife.error.should.be.ok;
         done();

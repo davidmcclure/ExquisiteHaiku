@@ -102,18 +102,3 @@ exports.validSlug = function (msg) {
     else callback(msg);
   };
 };
-
-
-/**
- * Check to see a value is a positive integer.
- *
- * @param string msg: The failure error message.
- */
-exports.positiveInteger = function(msg) {
-  return function(form, field, callback) {
-    if ((parseFloat(field.data) == parseInt(field.data, 10)) &&
-      !isNaN(field.data) && parseInt(field.data, 10) >= 0) {
-        callback();
-    } else callback(msg);
-  };
-};

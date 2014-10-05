@@ -23,14 +23,19 @@ module.exports = function(poem) {
       value: 3,
       required: forms.validators.required('Enter a round length.'),
       validators: [
-        customValidators.positiveInteger('Must be a positive integer.')
+        forms.validators.integer('Must be an integer.'),
+        forms.validators.min(0, 'Must be greater than 0.')
       ]
     }),
 
     // Word round unit.
     roundLengthUnit: forms.fields.string({
       value: 'minutes',
-      required: forms.validators.required('Enter a round length unit.')
+      required: forms.validators.required('Enter a round length unit.'),
+      validators: [
+        forms.validators.integer('Must be an integer.'),
+        forms.validators.min(0, 'Must be greater than 0.')
+      ]
     }),
 
     // Seed capital.
@@ -38,7 +43,8 @@ module.exports = function(poem) {
       value: 18000,
       required: forms.validators.required('Enter a seed capital amount.'),
       validators: [
-        customValidators.positiveInteger('Must be a positive integer.')
+        forms.validators.integer('Must be an integer.'),
+        forms.validators.min(0, 'Must be greater than 0.')
       ]
     }),
 
@@ -47,7 +53,8 @@ module.exports = function(poem) {
       value: 100,
       required: forms.validators.required('Enter a submission value.'),
       validators: [
-        customValidators.positiveInteger('Must be a positive integer.')
+        forms.validators.integer('Must be an integer.'),
+        forms.validators.min(0, 'Must be greater than 0.')
       ]
     }),
 
@@ -56,7 +63,8 @@ module.exports = function(poem) {
       value: 10,
       required: forms.validators.required('Enter a decay halflife.'),
       validators: [
-        customValidators.positiveInteger('Must be a positive integer.')
+        forms.validators.integer('Must be an integer.'),
+        forms.validators.min(0, 'Must be greater than 0.')
       ]
     })
 

@@ -6,57 +6,60 @@
 var _ = require('lodash');
 var mongoose = require('mongoose');
 var forms = require('forms');
-var validators = require('../validators');
-var fields = forms.fields;
+var customValidators = require('../validators');
 var Poem = mongoose.model('Poem');
 
 
 module.exports = function(poem) {
 
+  var opts = {
+    validatePastFirstError: true
+  };
+
   return forms.create({
 
     // Word round value.
-    roundLengthValue: fields.string({
-      required: 'Enter a round length.',
+    roundLengthValue: forms.fields.string({
       value: 3,
+      required: forms.validators.required('Enter a round length.'),
       validators: [
-        validators.positiveInteger('Must be a positive integer.')
+        customValidators.positiveInteger('Must be a positive integer.')
       ]
     }),
 
     // Word round unit.
-    roundLengthUnit: fields.string({
-      required: 'Enter a round length unit.',
-      value: 'minutes'
+    roundLengthUnit: forms.fields.string({
+      value: 'minutes',
+      required: forms.validators.required('Enter a round length unit.')
     }),
 
     // Seed capital.
-    seedCapital: fields.string({
-      required: 'Enter a seed capital amount.',
+    seedCapital: forms.fields.string({
       value: 18000,
+      required: forms.validators.required('Enter a seed capital amount.'),
       validators: [
-        validators.positiveInteger('Must be a positive integer.')
+        customValidators.positiveInteger('Must be a positive integer.')
       ]
     }),
 
     // Submission value.
-    submissionVal: fields.string({
-      required: 'Enter a point value for blind submissions.',
+    submissionVal: forms.fields.string({
       value: 100,
+      required: forms.validators.required('Enter a submission value.'),
       validators: [
-        validators.positiveInteger('Must be a positive integer.')
+        customValidators.positiveInteger('Must be a positive integer.')
       ]
     }),
 
     // Decay halflife.
-    decayHalflife: fields.string({
-      required: 'Enter a decay halflife.',
+    decayHalflife: forms.fields.string({
       value: 10,
+      required: forms.validators.required('Enter a decay halflife.'),
       validators: [
-        validators.positiveInteger('Must be a positive integer.')
+        customValidators.positiveInteger('Must be a positive integer.')
       ]
     })
 
-  });
+  }, opts);
 
 };

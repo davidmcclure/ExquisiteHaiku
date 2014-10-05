@@ -111,6 +111,27 @@ module.exports = function(app, io) {
   });
 
   /**
+   * Delete confirm.
+   *
+   * @middleware auth.isUser: Block if there is no user session.
+   * @middleware auth.getPoem: Pass the poem identified by :slug.
+   * @middleware auth.ownsPoem: Pass if the poem belongs to the user.
+   */
+  app.get('/admin/delete/confirm/:hash',
+    auth.isUser,
+    auth.getPoem,
+    auth.ownsPoem,
+    function(req, res) {
+
+      // Show confirmation.
+      res.render('admin/delete', {
+        title: 'Delete '+req.poem.hash,
+        poem: req.poem
+      });
+
+  });
+
+  /**
    * Delete poem.
    *
    * @middleware auth.isUser: Block if there is no user session.

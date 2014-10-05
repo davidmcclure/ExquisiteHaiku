@@ -47,8 +47,5 @@ block content
                 hash=poem.hash)
                 button.btn.btn-link(type='submit') stop
 
-            form.inline.delete(
-              method='post'
-              action='/admin/delete/#{poem.hash}'
-              hash=poem.hash)
-              button.btn.btn-link(type='submit') delete
+            - url = '/admin/delete/confirm/'+poem.hash
+            a.btn.btn-link(href=url) delete

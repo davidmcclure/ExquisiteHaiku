@@ -1,0 +1,12 @@
+
+include nav
+extends layout
+
+block content
+  +nav
+    h5 Really delete #{poem.hash}?
+    form.inline.delete(
+      method='post'
+      action='/admin/delete/#{poem.hash}'
+      hash=poem.hash)
+      button.btn.btn-danger(type='submit') Delete

@@ -23,5 +23,8 @@ mixin input(field)
       name=field.name,
       value=field.value
       class=field.name)
+
     if isError
       .alert.alert-danger= field.error
+
+    block

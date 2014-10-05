@@ -18,10 +18,7 @@ block content
       - var error = rLenVal.errorHTML() != ''
 
       // Round length.
-      div.form-group.roundLength(class=(error ? 'error' : ''))
-
-        +input(form.fields.roundLengthValue)
-
+      +input(form.fields.roundLengthValue)
         div.btn-group(data-toggle='buttons')
 
           // Get active class.
@@ -47,4 +44,4 @@ block content
       +input(form.fields.decayHalflife)
 
       div.form-actions
-        button.btn.btn-large.btn-primary(type='submit') Create
+        button.btn.btn-primary(type='submit') Create

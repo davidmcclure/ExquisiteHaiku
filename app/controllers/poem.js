@@ -14,7 +14,7 @@ module.exports = function(app) {
    *
    * @middleware auth.getPoem: Pass the poem identified by :slug.
    */
-  app.get('/:hash', auth.getPoem, function(req, res) {
+  app.get('/poem/:hash', auth.getPoem, function(req, res) {
 
     // Render the layout.
     res.render('poem', {

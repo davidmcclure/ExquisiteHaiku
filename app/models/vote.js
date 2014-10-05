@@ -59,8 +59,6 @@ VoteSchema.virtual('id').get(function() {
 
 /**
  * Call register on save.
- *
- * @return void.
  */
 VoteSchema.pre('save', function(next) {
   this.register();
@@ -77,8 +75,6 @@ VoteSchema.pre('save', function(next) {
 
 /**
  * Register the vote in memory.
- *
- * @return void.
  */
 VoteSchema.methods.register = function() {
 

@@ -48,3 +48,5 @@ require('./app/controllers')(app, io);
 
 // Start poems.
 require('./config/restart')(app, io);
+
+module.exports = app;

@@ -5,6 +5,7 @@
 
 var _ = require('lodash');
 var randomstring = require('randomstring');
+var moment = require('moment');
 var syllables = require('../../lib/syllables');
 var mongoose = require('mongoose');
 var Round = require('./round');
@@ -213,6 +214,36 @@ PoemSchema.virtual('decayLifetime').get(function() {
 
 
 /**
+ * How many votes have been cast for the poem?
+ *
+ * @return {Number}: The number of votes.
+ */
+PoemSchema.virtual('numberOfVotes').get(function() {
+  // TODO
+});
+
+
+/**
+ * How many distinct players have submitted votes?
+ *
+ * @return {Number}: The number of players.
+ */
+PoemSchema.virtual('numberOfPlayers').get(function() {
+  // TODO
+});
+
+
+/**
+ * How many words are in the poem?
+ *
+ * @return {Number}: The number of words.
+ */
+PoemSchema.virtual('wordCount').get(function() {
+  return _.flatten(this.words).length;
+});
+
+
+/**
  * -----------
  * Validators.
  * -----------
@@ -358,7 +389,7 @@ PoemSchema.methods.newRound = function() {
  */
 PoemSchema.methods.timeLeftInRound = function(now) {
 
-  var remaining = null;
+  var remaining = 0;
 
   // If there is a round, get remaining time.
   if (!_.isUndefined(this.round)) {
@@ -462,6 +493,18 @@ PoemSchema.methods.addWord = function(word) {
 
   return false;
 
+};
+
+
+/**
+ * How long has the poem been running for?
+ *
+ * @param {String} unit: The time unit.
+ * @return {Number}: The formatted duration.
+ */
+PoemSchema.methods.duration = function(unit) {
+  var ms = this.wordCount * this.roundLength;
+  return moment.duration(ms).as(unit);
 };
 
 

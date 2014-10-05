@@ -36,6 +36,7 @@
     "lodash": "^2.4.1",
     "method-override": "^2.2.0",
     "mocha": "^1.21.4",
+    "moment": "^2.8.3",
     "mongoose": "^3.8.16",
     "randomstring": "^1.0.3",
     "request": "^2.44.0",

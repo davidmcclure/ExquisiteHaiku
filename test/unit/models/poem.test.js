@@ -903,7 +903,7 @@ describe('Poem', function() {
       });
 
       it('should return null when no round exists', function() {
-        should(!poem.timeLeftInRound(Date.now()));
+        poem.timeLeftInRound(Date.now()).should.eql(0);
       });
 
     });

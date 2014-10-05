@@ -39,6 +39,7 @@ Ov.Controllers.Socket = (function(Backbone, Ov) {
      */
     Socket.s.on('slice', function(data) {
       Ov.vent.trigger('socket:slice', data);
+      if (data.syllables == 17) location.reload();
     });
 
     /**

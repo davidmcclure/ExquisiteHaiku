@@ -4,7 +4,7 @@ extends layout
 
 block content
   +nav
-    h5 Really delete #{poem.hash}?
+    h5 Really delete <code>#{poem.hash}</code>?
     form.inline.delete(
       method='post'
       action='/admin/delete/#{poem.hash}'

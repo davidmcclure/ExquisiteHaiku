@@ -19,8 +19,8 @@ module.exports = function() {
 
     // Username.
     username: forms.fields.string({
-      name: 'username',
       label: 'Username',
+      name: 'username',
       required: forms.validators.required('Enter a username.'),
       validators: [
         forms.validators.rangelength(4, 20, '4-20 characters.'),
@@ -30,8 +30,8 @@ module.exports = function() {
 
     // Email.
     email: forms.fields.email({
-      name: 'email',
       label: 'Email',
+      name: 'email',
       required: forms.validators.required('Enter an email address.'),
       validators: [
         customValidators.uniqueField(User, 'email', 'Email taken.')
@@ -40,8 +40,8 @@ module.exports = function() {
 
     // Password.
     password: forms.fields.password({
-      name: 'password',
       label: 'Password',
+      name: 'password',
       required: forms.validators.required('Enter a password.'),
       validators: [
         forms.validators.minlength(6, 'At least 6 characters.')
@@ -50,8 +50,8 @@ module.exports = function() {
 
     // Password confirmation.
     confirm: forms.fields.password({
-      name: 'confirm',
       label: 'Confirm',
+      name: 'confirm',
       required: forms.validators.required('Retype the password.'),
       validators: [
         forms.validators.matchField('password', 'Does not match.')

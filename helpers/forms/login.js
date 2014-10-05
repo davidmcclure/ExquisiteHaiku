@@ -17,8 +17,8 @@ module.exports = function() {
 
     // Username.
     username: forms.fields.string({
-      name: 'username',
       label: 'Username',
+      name: 'username',
       required: forms.validators.required('Enter a username.'),
       validators: [
         customValidators.usernameExists('Does not exist.')
@@ -27,8 +27,8 @@ module.exports = function() {
 
     // Password.
     password: forms.fields.password({
-      name: 'password',
       label: 'Password',
+      name: 'password',
       required: forms.validators.required('Enter a password.'),
       validators: [
         customValidators.passwordCorrect('Incorrect.')

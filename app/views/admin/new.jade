@@ -1,5 +1,6 @@
 
 include nav
+include form
 extends layout
 
 block content
@@ -44,52 +45,9 @@ block content
           .alert.alert-danger.roundLengthValue= rLenVal.error
 
 
-      // Seed capital.
-      - var seedCap = form.fields.seedCapital
-      - var error = seedCap.errorHTML() != ''
-      div.form-group(class=(error ? 'error' : ''))
-        label(for='seedCapital') Points per Word
-
-        input.form-control.seedCap(
-          type='text'
-          name='seedCapital'
-          autocomplete='off'
-          value=seedCap.value)
-
-        if error
-          .alert.alert-danger.seedCapital= seedCap.error
-
-
-      // Submission value.
-      - var subVal = form.fields.submissionVal
-      - var error = subVal.errorHTML() != ''
-      div.form-group(class=(error ? 'error' : ''))
-        label(for='submissionVal') Submission value
-
-        input.form-control.subVal(
-          type='text'
-          name='submissionVal'
-          autocomplete='off'
-          value=subVal.value)
-
-        if error
-          .alert.alert-danger.submissionVal= subVal.error
-
-
-      // Decay halflife.
-      - var decLife = form.fields.decayHalflife
-      - var error = decLife.errorHTML() != ''
-      div.form-group(class=(error ? 'error' : ''))
-        label(for='decayHalflife') Decay Halflife
-
-        input.form-control.decLife(
-          type='text'
-          name='decayHalflife'
-          autocomplete='off'
-          value=decLife.value)
-
-        if error
-          .alert.alert-danger.decayHalflife= decLife.error
+      +input(form.fields.seedCapital)
+      +input(form.fields.submissionVal)
+      +input(form.fields.decayHalflife)
 
 
       div.form-actions

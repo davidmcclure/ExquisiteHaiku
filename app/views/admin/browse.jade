@@ -7,22 +7,39 @@ block content
     div.poems
       each poem in poems
         div.poem(hash=poem.hash)
+
           a.hash(href='/#{poem.hash}')= poem.hash
+
+          span.divider
+
+          // Poem.
+          span.poem
+            each line in poem.words
+              span.line
+                each word in line
+                  span.word= word
+
+          span.divider
+
+          // Buttons.
           span.actions
 
             if poem.unstarted || poem.paused
-              form.inline.start(method='post'
+              form.inline.start(
+                method='post'
                 action='/admin/start/#{poem.hash}'
                 hash=poem.hash)
                 button.btn.btn-link(type='submit') start
 
             if poem.running
-              form.inline.stop(method='post'
+              form.inline.stop(
+                method='post'
                 action='/admin/stop/#{poem.hash}'
                 hash=poem.hash)
                 button.btn.btn-link(type='submit') stop
 
-            form.inline.delete(method='post'
+            form.inline.delete(
+              method='post'
               action='/admin/delete/#{poem.hash}'
               hash=poem.hash)
               button.btn.btn-link(type='submit') delete

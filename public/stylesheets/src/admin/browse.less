@@ -1,10 +1,28 @@
 
 .poems {
 
+  .divider {
+    margin: 0 5px;
+    font-size: 10px;
+  }
+
+  .divider:after {
+    content: "•";
+  }
+
   .hash {
     font-weight: bold;
     font-family: Inconsolata;
-    color: @brand-danger;
+  }
+
+  .word:not(:last-child),
+  .line:not(:last-child) {
+    margin-right: 4px;
+  }
+
+  .line + .line:before {
+    margin-right: 4px;
+    content: "/"
   }
 
   form.inline {
@@ -14,7 +32,7 @@
   button {
     padding: 0;
     vertical-align: inherit;
-    margin-left: 5px;
+    margin-right: 4px;
   }
 
 }
